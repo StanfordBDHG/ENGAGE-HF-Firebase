@@ -16,7 +16,10 @@ A LocalizedText object shall be used whenever text requires localization or may 
 
 Some localizations may require to include regions as well (e.g. Australian/British/American English), so the clients should be aware of this and prioritize the language code with the correct region (`en-us`) over the general code (`en`), if it is present.
 
-Example:
+A LocalizedText object cannot be used in FHIR-conforming types due to its incompatibility with the standard. FHIR types commonly contain text in one language only to be specified using the `language` property.
+
+#### Example
+
 ```
 {
 	"en":"Welcome to the Engage-HF app!",
@@ -25,7 +28,6 @@ Example:
 }
 ```
 
-A LocalizedText object cannot be used in FHIR-conforming types due to its incompatibility with the standard. FHIR types commonly contain text in one language only to be specified using the `language` property.
 
 ## /questionnaires
 
@@ -60,6 +62,8 @@ Items are commonly encoded using the following properties:
 |date|DateTime|-|last modified date|
 
 #### Example
+
+TODO: Create KCCQ-12 questionnaire using FHIR data format.
 
 ## /medications
 
@@ -96,11 +100,9 @@ Based on the [Extension](https://hl7.org/fhir/R4B/extensibility.html#Extension) 
 |name|LocalizedText|-|A name for a given medicationClass to be displayed to a user.|
 |videoPath|string|e.g. "/videoSectionId/1/videos/2"|The path to retrieve the respective video from Firestore.|
 
-## /videoSections
+## /videoSections/$videoSectionId$
 
 In this section, we describe all data related to educational videos to be shown in the Engage-HF mobile apps. The videos are grouped into different categories to be displayed as sections in the mobile apps.
-
-### /videoSections/$videoSectionId$
 
 |Property|Type|Values|Comments|
 |-|-|-|-|
@@ -201,11 +203,13 @@ Q: Which codes should we use for contra-indications? We could simply assume a li
 |timing|optional [Timing](https://hl7.org/fhir/R4B/datatypes.html#timing)|-|When medication should be administered|
 |doseAndRate|list of Element|-|Amount of medication administered|
 |doseAndRate>type|optional [DoseRateType](https://hl7.org/fhir/R4B/codesystem-dose-rate-type.html)|e.g. "calculated", "ordered"||
-|doseAndRate>dose|[Range](https://hl7.org/fhir/R4B/datatypes.html#Range) or [SimpleQuantity](https://hl7.org/fhir/R4B/datatypes.html#SimpleQuantity)|-|-|
-|doseAndRate>rate|[Ratio](https://build.fhir.org/datatypes.html#ratio) or [Range](https://hl7.org/fhir/R4B/datatypes.html#Range) or [SimpleQuantity](https://hl7.org/fhir/R4B/datatypes.html#SimpleQuantity)|-|-|
+|doseAndRate>dose|optional [Range](https://hl7.org/fhir/R4B/datatypes.html#Range) or [SimpleQuantity](https://hl7.org/fhir/R4B/datatypes.html#SimpleQuantity)|-|-|
+|doseAndRate>rate|optional [Ratio](https://build.fhir.org/datatypes.html#ratio) or [Range](https://hl7.org/fhir/R4B/datatypes.html#Range) or [SimpleQuantity](https://hl7.org/fhir/R4B/datatypes.html#SimpleQuantity)|-|-|
 |maxDosePerPeriod|optional [Ratio](https://build.fhir.org/datatypes.html#ratio)|-|Upper limit on medication per unit of time|
 |maxDosePerAdministration|optional [SimpleQuantity](https://build.fhir.org/datatypes.html#SimpleQuantity)|-|Upper limit on medication per administration|
 |maxDosePerLifetime|optional [SimpleQuantity](https://build.fhir.org/datatypes.html#SimpleQuantity)|-|Upper limit on medication per unit of time|
+
+TBD: Do we need to be able to specify rate vs dose? i.e. are there scenarios where a clinician would like to just specify "take this amount in this time" rather than "take one pill every evening"?
 
 TBD: Which timings, doses and rates does the system need to be able to work with? How does this differ between input and processing (e.g. an algorithm might only be interested in the total amount administered per day/week)?
 
@@ -216,84 +220,39 @@ Based on [FHIR Observation](https://hl7.org/fhir/R4B/observation.html), the foll
 |Property|Type|Values|Comments|
 |-|-|-|-|
 |id|string|-|[Resource](https://hl7.org/fhir/R4B/resource.html): Logical id of this artifact|
-|identifier|string|-|[Resource](https://hl7.org/fhir/R4B/resource.html): Logical id of this artifact|
+|status|[ObservationStatus](https://hl7.org/fhir/R4B/valueset-observation-status.html)|e.g. "final"|This value is most likely "final" in every case.|
+|code|[Code](https://hl7.org/fhir/R4B/valueset-observation-codes.html)|e.g. `{"system":"http://loinc.org","code":"55423-8","display":"Number of steps"}`|Use one of the codes mentioned below.|
+|value|optional [Quantity](https://hl7.org/fhir/R4B/datatypes.html#Quantity)|e.g. `{"code":"mm[Hg]","system":"http://unitsofmeasure.org","unit":"mmHg","value":120}`|Use one of the units listed below.|
+|component|list of components|-|Instead of containing a single `value` property, some observations are composed of multiple components (e.g. a blood pressure observation contains a diastolic and systolic component).|
+|component[x]>code|[Code](https://hl7.org/fhir/R4B/valueset-observation-codes.html)|e.g. `{"system":"http://loinc.org","code":"55423-8","display":"Number of steps"}`|Use one of the codes mentioned below.|
+|component[x]>value|optional [Quantity](https://hl7.org/fhir/R4B/datatypes.html#Quantity)|e.g. `{"code":"mm[Hg]","system":"http://unitsofmeasure.org","unit":"mmHg","value":120}`|Use one of the units listed below.|
+|effective|[Period](https://fhir-ru.github.io/datatypes.html#Period)|-|For observations that happened in only one instant, we use periods with the same start and end time.|
 
-#### Blood Pressure
+TBD: The fixed use of the period type in the `effective` property originates in HealthConnectOnFHIR. Should we also allow DateTime for instant observations?
 
-```
-{
-	"code": "mm[Hg]",
-	"system": "http://unitsofmeasure.org",
-	"unit": "mmHg",
-	"value": 120
-}
-```
+#### Compound Observations
 
-#### Body Mass
+|code>system|code>code|code>display|value|components|
+|-|-|-|-|-|-|
+|"http://loinc.org"|"85354-9"|"Blood pressure panel with all children optional"|-|"Diastolic blood pressure", "Systolic blood pressure"|
 
-codes:
+#### Simple Observations
 
-```
-{
-	"code": "29463-7",
-	"display": "Body weight",
-	"system": "http://loinc.org"
-}
-```
+|code>system|code>code|code>display|value>value|value>code|value>unit|
+|-|-|-|-|-|-|
+|"http://loinc.org"|"55423-8"|"Number of steps"|double|?|"steps"|
+|"http://loinc.org"|"91557-9"|"Lean body weight"|double|"[lb_av]"|"g" or "lbs"|
+|"http://loinc.org"|"29463-7"|"Body weight"|double|"[lb_av]"|"g" or "lbs"|
+|"http://loinc.org"|"41981-2"|"Calories burned"|double|?|"kcal"|
+|"http://loinc.org"|"8302-2"|"Body height"|double|?|"m"|
+|"http://loinc.org"|"8867-4"|"Heart rate"|double|?|"beats/minute"|
+|"http://loinc.org"|"8310-5"|"Body temperature"|double|?|"°C"|
+|"http://loinc.org"|"8462-4"|"Diastolic blood pressure"|double|"mm[Hg]"|"mmHg"|
+|"http://loinc.org"|"8480-6"|"Systolic blood pressure"|double|"mm[Hg]"|"mmHg"|
 
-```
-{
-	"code": "HKQuantityTypeIdentifierBodyMass",
-	"display": "Body Mass",
-	"system": "http://developer.apple.com/documentation/healthkit"
-}
-```
+TODO: Currently, HealthKitOnFHIR and HealthConnectOnFHIR still use different units to encode the same observations. We should probably aim to always use the same unit to reduce unit conversions, but each client would need to be able to handle multiple units for each observation type. We should probably aim for SI units, even though the system will primarily be used in the US. TBD.
 
-TODO: Health Connect?!
-
-values:
-
-```
-{
-	"code": "[lb_av]",
-	"system": "http://unitsofmeasure.org",
-	"unit": "lbs",
-	"value": 60
-}
-```
-
-#### Body Mass (Lean)
-
-codes:
-
-```
-{
-	"code": "91557-9",
-	"display": "Lean body weight",
-	"system": "http://loinc.org"
-}
-```
-
-```
-{
-	"code": "HKQuantityTypeIdentifierLeanBodyMass",
-	"display": "Lean Body Mass",
-	"system": "http://developer.apple.com/documentation/healthkit"
-}
-```
-
-TODO: HealthConnect?!
-
-values:
-
-```
-{
-	"code": "[lb_av]",
-	"system": "http://unitsofmeasure.org",
-	"unit": "lbs",
-	"value": 60
-}
-```
+[Codes/Units in HealthKitOnFHIR](https://github.com/StanfordBDHG/HealthKitOnFHIR/blob/main/Sources/HealthKitOnFHIR/Resources/HKSampleMapping.json)
 
 ### /users/$userId$/questionnaireResponses/$questionnaireResponseId$
 
@@ -302,3 +261,16 @@ Based on [FHIR QuestionnaireResponse](https://hl7.org/fhir/R4B/questionnaireresp
 |Property|Type|Values|Comments|
 |-|-|-|-|
 |id|string|-|[Resource](https://hl7.org/fhir/R4B/resource.html): Logical id of this artifact|
+|questionnaire|string|-|canonical representation of the questionnaire, i.e. t|
+|author|string|-|The patient's id|
+|source|string|-|The patient's id|
+|authored|DateTime|-|The date the answers were gathered.|
+|status|[QuestionnaireResponseStatus](https://hl7.org/fhir/R4B/valueset-questionnaire-answers-status.html)|-|Will most likely always be `completed`.|
+|item|list of Item|-|-|
+|item[x]>linkId|string|-|Pointer to specific item from questionnaire|
+|item[x]>definition|optional uri|-|details for item|
+|item[x]>text|optional string|-|Name for group or question text|
+|item[x]>answer|list of Answer|-|response(s) to the question|
+|item[x]>answer[y]>value|any|-|Value depending on the type of question in the survey, e.g. boolean, integer, date, string, etc|
+
+TBD: Should we use `source` and/or `patient` to store a reference to the patient?
