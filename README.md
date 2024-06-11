@@ -166,6 +166,8 @@ Based on [FHIR AllergyIntolerance](https://hl7.org/fhir/R4B/allergyintolerance.h
 |code|CodableContent|e.g. "{"coding":[{"system":"https://hl7.org/fhir/R4B/valueset-allergyintolerance-code.html","code":"293963004","display":"Cardioselective beta-blocker allergy"}],"text":"Cardioselective beta-blocker allergy"}"|Uses either [AllergyIntoleranceCode](https://hl7.org/fhir/R4B/valueset-allergyintolerance-code.html), `medicationId` as used in /medications/$medicationId$ and/or `medicationId` as used in /medicationClasses/$medicationClassId$.|
 |patient|string|-|`userId` as used in /users/$userId$ and related collections.|
 
+Q: Which codes should we use for contra-indications? We could simply assume a limited set for now (i.e. the ones we allow for selection in the web dashboard), but when interfacing with an EHR, we would need to be able to consider all relevant codes in the algorithm(s).
+
 ### /users/$userId$/medicationRequests/$medicationRequestId$
 
 Based on [FHIR MedicationRequest](https://hl7.org/fhir/R4B/medicationrequest.html), the following properties may be used, while additional properties are ignored by the Engage-HF system.
@@ -173,13 +175,11 @@ Based on [FHIR MedicationRequest](https://hl7.org/fhir/R4B/medicationrequest.htm
 |Property|Type|Values|Comments|
 |-|-|-|-|
 |id|string|-|[Resource](https://hl7.org/fhir/R4B/resource.html): Logical id of this artifact|
-|code|CodableContent|e.g. "{"coding":[{"system":"https://hl7.org/fhir/R4B/valueset-allergyintolerance-code.html","code":"293963004","display":"Cardioselective beta-blocker allergy"}],"text":"Cardioselective beta-blocker allergy"}"|Uses either [AllergyIntoleranceCode](https://hl7.org/fhir/R4B/valueset-allergyintolerance-code.html), `medicationId` as used in /medications/$medicationId$ and/or `medicationId` as used in /medicationClasses/$medicationClassId$.|
+|medication|Reference(Medication) or CodeableConcept|-|TBD: `medicationId` as used in /medications/$medicationId$ or a CodeableConcept containing the same information as one of the medications listed in /medications/$medicationId$|
 |dosageInstruction|Dosage|-|-|
 |patient|string|e.g. "allergy", "intolerance"|`userId` as used in /users/$userId$ and related collections.|
 
-Q: Which codes should we use for contra-indications? We could simply assume a limited set for now (i.e. the ones we allow for selection in the web dashboard), but when interfacing with an EHR, we would need to be able to consider all relevant codes in the algorithm(s).
-
-#### /users/$userId$/medicationRequests/$medicationRequestId$/dosageInstruction
+The `dosageInstruction` property may contain values containing the following properties:
 
 |Property|Type|Values|Comments|
 |-|-|-|-|
