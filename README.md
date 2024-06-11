@@ -173,7 +173,6 @@ Based on [FHIR MedicationRequest](https://hl7.org/fhir/R4B/medicationrequest.htm
 |Property|Type|Values|Comments|
 |-|-|-|-|
 |id|string|-|[Resource](https://hl7.org/fhir/R4B/resource.html): Logical id of this artifact|
-|type|optional [allergyIntoleranceType](https://hl7.org/fhir/R4B/valueset-allergy-intolerance-type.html)|e.g. "allergy", "intolerance"||
 |code|CodableContent|e.g. "{"coding":[{"system":"https://hl7.org/fhir/R4B/valueset-allergyintolerance-code.html","code":"293963004","display":"Cardioselective beta-blocker allergy"}],"text":"Cardioselective beta-blocker allergy"}"|Uses either [AllergyIntoleranceCode](https://hl7.org/fhir/R4B/valueset-allergyintolerance-code.html), `medicationId` as used in /medications/$medicationId$ and/or `medicationId` as used in /medicationClasses/$medicationClassId$.|
 |dosageInstruction|Dosage|-|-|
 |patient|string|e.g. "allergy", "intolerance"|`userId` as used in /users/$userId$ and related collections.|
