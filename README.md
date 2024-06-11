@@ -183,7 +183,7 @@ Based on [FHIR MedicationRequest](https://hl7.org/fhir/R4B/medicationrequest.htm
 |-|-|-|-|
 |id|string|-|[Resource](https://hl7.org/fhir/R4B/resource.html): Logical id of this artifact|
 |medication|Reference(Medication) or CodeableConcept|-|TBD: `medicationId` as used in /medications/$medicationId$ or a CodeableConcept containing the same information as one of the medications listed in /medications/$medicationId$|
-|dosageInstruction|Dosage|-|-|
+|dosageInstruction|list of Dosage|-|-|
 |patient|string|e.g. "allergy", "intolerance"|`userId` as used in /users/$userId$ and related collections.|
 
 The `dosageInstruction` property may contain values containing the following properties:
