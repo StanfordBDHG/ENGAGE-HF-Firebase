@@ -45,21 +45,13 @@ Based on [FHIR Questionnaire](https://hl7.org/fhir/R4B/questionnaire.html):
 |title|string|-|Human-friendly title of the questionnaire.|
 |date|DateTime|-|last modified date|
 |version|string|-|Business version of the questionnaire.|
-|item|list of BackboneElement|-|items as defined in [FHIR Questionnaire](https://hl7.org/fhir/R4B/questionnaire.html)|
 |language|optional string|e.g. "en"|Following IETF BCP-47 / [FHIR ValueSet languages](https://hl7.org/fhir/R4B/valueset-languages.html)|
-
-#### Items
-
-Items are commonly encoded using the following properties:
-
-|Property|Type|Values|Comments|
-|-|-|-|-|
-|linkId|string|-|Unique id for item in questionnaire|
-|definition|optional uri|-|Details for the item|
-|prefix|optional string|e.g. "1(a)", "2.5.3"|Prefix of the item that isn't actually part of the name but may still be displayed.|
-|text|string|-|Primary text for the item|
-|type|code|e.g. "group", "display", "boolean", "decimal", "integer", "date", etc|See [QuestionnaireItemType](https://hl7.org/fhir/R4B/valueset-item-type.html) for available values.|
-|date|DateTime|-|last modified date|
+|item|list of BackboneElement|-|items as defined in [FHIR Questionnaire](https://hl7.org/fhir/R4B/questionnaire.html)|
+|item[x]>linkId|string|-|Unique id for item in questionnaire|
+|item[x]>definition|optional uri|-|Details for the item|
+|item[x]>prefix|optional string|e.g. "1(a)", "2.5.3"|Prefix of the item that isn't actually part of the name but may still be displayed.|
+|item[x]>text|string|-|Primary text for the item|
+|item[x]>type|code|e.g. "group", "display", "boolean", "decimal", "integer", "date", etc|See [QuestionnaireItemType](https://hl7.org/fhir/R4B/valueset-item-type.html) for available values.|
 
 #### Example
 
@@ -80,11 +72,7 @@ Based on [FHIR Medication](https://hl7.org/fhir/R4B/medication.html):
 |identifier|list of Identifier|-|Business identifier for this medication|
 |extension|list of Extension|-|See /medications/$medicationId$/extension for possible values|
 
-Technically, we could use [FHIR MedicationKnowledge](https://hl7.org/fhir/R4B/medicationknowledge.html), but it doesn't seem to be ready for use - or at least take over the `medicineClassification` property from it.
-
-### /medications/$medicationId$/extension
-
-Based on the [Extension](https://hl7.org/fhir/R4B/extensibility.html#Extension) format specified in FHIR, a medication may contain a list of these following properties. Each property will need to get a url assigned to fit the FHIR data format.
+Based on the [Extension](https://hl7.org/fhir/R4B/extensibility.html#Extension) format specified in FHIR, a medication may contain a list of these following extension properties. Each property will need to get a url assigned to fit the FHIR data format.
 
 |Property|Type|Values|Comments|
 |-|-|-|-|
