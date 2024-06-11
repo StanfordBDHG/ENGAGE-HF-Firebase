@@ -112,10 +112,14 @@ In this section, we describe all user-related data to be stored. The security ru
 
 |Property|Type|Values|Comments|
 |-|-|-|-|
-|fullName|string|-|Contains a user's full name. TBD: May potentially be split up into firstName/lastName or firstName/middleNames/familyName.|
 |dateOfBirth|Date|-|To be used for verification purposes.|
 |invitationCode|string|-|The invitationCode to be used when logging in to the app for the first time.|
 |language|optional string|e.g. "en"|Following IETF BCP-47 / [FHIR ValueSet languages](https://hl7.org/fhir/R4B/valueset-languages.html)|
+|dailyRemindersAreActive|boolean|true, false|Decides whether to send out daily reminder messages for this user.|
+|textNotificationsAreActive|boolean|true, false|Decides whether to send text notifications for this user.|
+|medicationRemindersAreActive|boolean|true, false|Decides whether to send medication reminder messages for this user.|
+
+TBD: We might want to group `dailyRemindersAreActive`, `textNotificationsAreActive ` and `medicationRemindersAreActive ` into one object, e.g. `MessagesSettings`.
 
 ### /users/$userId$/devices/$deviceId$
 
