@@ -74,7 +74,7 @@ Based on the [Extension](https://hl7.org/fhir/R4B/extensibility.html#Extension) 
 
 |Property|Type|Values|Comments|
 |-|-|-|-|
-|medicationClass|string|e.g. "BETABLOCKER"|A medicationClassId referring to a medicationClass specified in /medicationClasses/$medicationClassId$. One medication object may contain multiple medicationClass extension properties.|
+|medicationClass|string|-|A `medicationClassId` referring to a medicationClass specified in /medicationClasses/$medicationClassId$. One medication object may contain multiple medicationClass extension properties.|
 |minimumDailyDose|double|e.g. 6.25|Unit: mg/day. May only occur once.|
 |targetDailyDose|double|e.g. 50.0|Unit: mg/day. May only occur once.|
 
@@ -82,7 +82,7 @@ Based on the [Extension](https://hl7.org/fhir/R4B/extensibility.html#Extension) 
 
 |Property|Type|Values|Comments|
 |-|-|-|-|
-|id|string|e.g. "BETABLOCKER"||
+|id|string|-|-|
 |name|LocalizedText|-|A name for a given medicationClass to be displayed to a user.|
 |videoPath|string|e.g. "/videoSectionId/1/videos/2"|The path to retrieve the respective video from Firestore.|
 
@@ -112,17 +112,16 @@ In this section, we describe all user-related data to be stored. The security ru
 |-|-|-|-|
 |dateOfBirth|Date|-|To be used for verification purposes.|
 |invitationCode|string|-|The invitationCode to be used when logging in to the app for the first time.|
-|language|optional string|e.g. "en"|Following IETF BCP-47 / [FHIR ValueSet languages](https://hl7.org/fhir/R4B/valueset-languages.html)|
-|dailyRemindersAreActive|boolean|true, false|Decides whether to send out daily reminder messages for this user.|
-|textNotificationsAreActive|boolean|true, false|Decides whether to send text notifications for this user.|
-|medicationRemindersAreActive|boolean|true, false|Decides whether to send medication reminder messages for this user.|
+|language|optional string|e.g. "en"|Following IETF BCP-47 / [FHIR ValueSet languages](https://hl7.org/fhir/R4B/valueset-languages.html).|
+|messagesSettings|-|-|See properties below.|
+|messagesSettings>dailyRemindersAreActive|boolean|true, false|Decides whether to send out daily reminder messages for this user.|
+|messagesSettings>textNotificationsAreActive|boolean|true, false|Decides whether to send text notifications for this user.|
+|messagesSettings>medicationRemindersAreActive|boolean|true, false|Decides whether to send medication reminder messages for this user.|
 |timeZone|string|e.g. "America/Los_Angeles"|The value needs to correspond to an identifier from [TZDB](https://nodatime.org/TimeZones). It must not be an offset to UTC/GMT, since that wouldn't work well with daylight-savings (even if there is no daylight-savings time at that location). Also, don't use common abbreviations like PST, PDT, CEST, etc (they may be ambiguous, e.g. CST). If the timeZone is unknown, then "America/Los_Angeles" should be used.|
-
-TBD: We might want to group `dailyRemindersAreActive`, `textNotificationsAreActive ` and `medicationRemindersAreActive ` into one object, e.g. `MessagesSettings`.
 
 ### /users/$userId$/appointments/$appointmentId$
 
-Based on [FHIR Appointment](https://hl7.org/fhir/R4B/appointment.html).
+Based on [FHIR Appointment](https://hl7.org/fhir/R4B/appointment.html), the following properties may be used, while additional properties are ignored by the Engage-HF system.
 
 |Property|Type|Values|Comments|
 |-|-|-|-|
@@ -143,7 +142,7 @@ This data is required to send push notifications over the [Firebase Cloud Messag
 |Property|Type|Values|Comments|
 |-|-|-|-|
 |modifiedDate|DateTime|-|This date is updated whenever the token is sent to the server, even if it is not replaced by a different token. It simply reflects the last date we can definitely confirm the token was active. Idea: We may ignore some devices, if the token has not been updated for a long time, since the app has not been opened for a long time.|
-|notificationToken|string|-|The FCM token as received from Firebase in the app. TBD: We may want to make this non-optional and simply not store device information, if there is no available token (e.g. if notifications are restricted).|
+|notificationToken|string|-|The FCM token as received from Firebase in the app.|
 |platform|optional string|e.g. "iOS", "Android"|This information is important as context for the `osVersion`, `appVersion` and `appBuild` properties.|
 |osVersion|optional string|e.g. "17.5.1"|The version of the OS. Depending on the OS, they may have different formats to be specified separately.|
 |appVersion|optional string|e.g. "1.0.1"|The version of the app as it is specified on the App/Play Store.|
@@ -160,24 +159,27 @@ A device may receive a different notification token at any time though. Therefor
 
 ### /users/$userId$/messages/$messageId$
 
+This data is used to display messages to the patient describing recent changes in their respective data from clinicians (e.g. updated medication requests) or calls-to-action to the patient.
+
 |Property|Type|Values|Comments|
 |-|-|-|-|
 |dueDate|optional DateTime|-|The due date of the message to be shown in-app.|
-|triggerDate|optional DateTime|-|A date to trigger a notification on the device. If not set, then there is no notification to trigger. The notification should be triggered by the server. TBD: Are there cases where a message would trigger multiple times or event- rather than date-driven?|
 |completionDate|optional DateTime|-|Specifies when a message has been completed. TBD: Messages containing a completionDate may either be hidden on user's devices or be shown crossed out.|
 |type|optional string|e.g. "questionnaireReminder"|Some messages are sent out on a regular basis, where only the most recent message is really relevant for the patient (e.g. a reminder for a questionnaire). With this property, we can easily find existing messages of the same type and replace them with a new one, if necessary.|
 |title|LocalizedText|e.g. "Watch Welcome Video in Education Page."|May be localized.|
 |description|optional LocalizedText|e.g. "The video shows how you will be able to use this app."|May be localized.|
-|action|optional string|e.g. "engage-hf:/videoSections/engage-hf/videos/welcome"|See "Message types".|
+|action|optional string|e.g. "/videoSections/engage-hf/videos/welcome"|See "Message types".|
 
 #### Message types
+
+The following list describes all different types a message could have. Expiration of messages should only be handled by the server, but clients may communicate to the server that a message has been tapped. A client doesn't need to know about the `type` property, since we would otherwise need to check whether a new message type is supported by a client. It may also sort out message types unknown for the client's version.
 
 |Type|Trigger|Expiration|Action|
 |-|-|-|-|
 |MedicationChange|Server: /users/$userId$/medicationRequests changed for a given user. Maximum 1 per day.|Tap|/videoSections/$videoSectionId$/videos/$videoId$|
 |WeightGain|Server: New body weight observation received with 3 lbs increase over prior week's median. Do not trigger again for 7 days.|Tap|/medications|
 |MedicationUptitration|Server:|Tap|/medications|
-|Welcome|Server: When creating new user.|Video start? TBD: Tap?|/videoSections/$videoSectionId$/videos/$videoId$|
+|Welcome|Server: When creating new user.|Tap|/videoSections/$videoSectionId$/videos/$videoId$|
 |Vitals|Server: Daily at certain time (respect timezone!)|When receiving blood pressure and weight measurements on the server from current day.|/measurements|
 |SymptomQuestionnaire|Server: Every 14 days.|After questionnaire responses received on server.|/questionnaires/$questionnaireId$|
 |PreVisit|Server: Day (24h) before visit.|After visit time or when visit is cancelled.|/healthSummary|
@@ -197,6 +199,20 @@ Based on [FHIR AllergyIntolerance](https://hl7.org/fhir/R4B/allergyintolerance.h
 
 Q: Which codes should we use for contra-indications? We could simply assume a limited set for now (i.e. the ones we allow for selection in the web dashboard), but when interfacing with an EHR, we would need to be able to consider all relevant codes in the algorithm(s).
 
+#### Relevant codes
+
+TBD: We need to define a list of relevant codes for each medication class and medication to be used as input by clinicians and further be checked by the algorithm(s). Whenever we interface with an EHR, we will need to add checks for parents/children of the given codes to make sure, we do not ignore a given contra-indication, even though it is input correctly.
+
+Medication classes:
+
+|Medication Class|Code|
+|-|-|
+
+Medications:
+
+|Medication|Code|Alternative|
+|-|-|-|
+
 ### /users/$userId$/medicationRequests/$medicationRequestId$
 
 Based on [FHIR MedicationRequest](https://hl7.org/fhir/R4B/medicationrequest.html), the following properties may be used, while additional properties are ignored by the Engage-HF system.
@@ -204,11 +220,11 @@ Based on [FHIR MedicationRequest](https://hl7.org/fhir/R4B/medicationrequest.htm
 |Property|Type|Values|Comments|
 |-|-|-|-|
 |id|string|-|[Resource](https://hl7.org/fhir/R4B/resource.html): Logical id of this artifact|
-|medication|Reference(Medication) or CodeableConcept|-|TBD: `medicationId` as used in /medications/$medicationId$ or a CodeableConcept containing the same information as one of the medications listed in /medications/$medicationId$|
-|dosageInstruction|list of Dosage|-|-|
+|medication|Reference(Medication) or CodeableConcept|-|CodeableConcept containing one of the codes from /medications/$medicationId$|
+|dosageInstruction|Dosage|-|-|
 |patient|string|e.g. "allergy", "intolerance"|`userId` as used in /users/$userId$ and related collections.|
 
-The `dosageInstruction` property may contain values containing the following properties:
+The `dosageInstruction` property may contain values with the following properties:
 
 |Property|Type|Values|Comments|
 |-|-|-|-|
@@ -220,9 +236,9 @@ The `dosageInstruction` property may contain values containing the following pro
 |doseAndRate|list of Element|-|Amount of medication administered|
 |doseAndRate>type|optional [DoseRateType](https://hl7.org/fhir/R4B/codesystem-dose-rate-type.html)|e.g. "calculated", "ordered"||
 |doseAndRate>dose|optional [SimpleQuantity](https://hl7.org/fhir/R4B/datatypes.html#SimpleQuantity)|-|TBD: We should either use "pills" or some weight unit here.|
-|maxDosePerPeriod|optional [Ratio](https://build.fhir.org/datatypes.html#ratio)|-|Upper limit on medication per unit of time|
-|maxDosePerAdministration|optional [SimpleQuantity](https://build.fhir.org/datatypes.html#SimpleQuantity)|-|Upper limit on medication per administration|
-|maxDosePerLifetime|optional [SimpleQuantity](https://build.fhir.org/datatypes.html#SimpleQuantity)|-|Upper limit on medication per unit of time|
+|maxDosePerPeriod|optional [Ratio](https://hl7.org/fhir/R4B/datatypes.html#ratio)|-|Upper limit on medication per unit of time|
+|maxDosePerAdministration|optional [SimpleQuantity](https://hl7.org/fhir/R4B/datatypes.html#SimpleQuantity)|-|Upper limit on medication per administration|
+|maxDosePerLifetime|optional [SimpleQuantity](https://hl7.org/fhir/R4B/datatypes.html#SimpleQuantity)|-|Upper limit on medication per unit of time|
 
 There may be up to three intakes per day (morning, mid-day and evening) with either 0.5, 1 or 2 pills. The dosages should always be grouped by medication, i.e. there should not be multiple medication elements concerning the same medication but different dosage instructions. Instead, one medication element shall be used for that medication with multiple dosage instructions.
 
@@ -239,33 +255,38 @@ Based on [FHIR Observation](https://hl7.org/fhir/R4B/observation.html), the foll
 |component|list of components|-|Instead of containing a single `value` property, some observations are composed of multiple components (e.g. a blood pressure observation contains a diastolic and systolic component).|
 |component[x]>code|[Code](https://hl7.org/fhir/R4B/valueset-observation-codes.html)|e.g. `{"system":"http://loinc.org","code":"55423-8","display":"Number of steps"}`|Use one of the codes mentioned below.|
 |component[x]>value|optional [Quantity](https://hl7.org/fhir/R4B/datatypes.html#Quantity)|e.g. `{"code":"mm[Hg]","system":"http://unitsofmeasure.org","unit":"mmHg","value":120}`|Use one of the units listed below.|
-|effective|[Period](https://fhir-ru.github.io/datatypes.html#Period)|-|For observations that happened in only one instant, we use periods with the same start and end time.|
+|effective|[Period](https://hl7.org/fhir/R4B/datatypes.html#period), [Instant](https://hl7.org/fhir/R4B/datatypes.html#instant) or [DateTime](https://hl7.org/fhir/R4B/datatypes.html#dateTime)|-|Use DateTime/Instant for instant observation and periods for longer observations (e.g. more than 1 minute).|
 
-TBD: The fixed use of the period type in the `effective` property originates in HealthConnectOnFHIR. Should we also allow DateTime for instant observations?
+#### Blood Pressure
 
-#### Compound Observations
+Blood pressure observations contain the following code and no value.
 
-|code>system|code>code|code>display|value|components|
+|code>system|code>code|code>display|
+|-|-|-|
+|"https://loinc.org"|"85354-9"|"Blood pressure panel with all children optional"|
+
+Further, blood pressure observations have two components.
+
+|code>system|code>code|code>display|value>system|value>value|value>code|value>unit|
 |-|-|-|-|-|-|
-|"http://loinc.org"|"85354-9"|"Blood pressure panel with all children optional"|-|"Diastolic blood pressure", "Systolic blood pressure"|
+|"http://loinc.org"|"8462-4"|"Diastolic blood pressure"|"http://unitsofmeasure.org"|double|"mm[Hg]"|"mmHg"|
+|"http://loinc.org"|"8480-6"|"Systolic blood pressure"|"http://unitsofmeasure.org"|double|"mm[Hg]"|"mmHg"|
 
-#### Simple Observations
+#### Body Weight
 
-|code>system|code>code|code>display|value>value|value>code|value>unit|
+Body mass observations contain the following code and value.
+
+|code>system|code>code|code>display|value>system|value>value|value>code|value>unit|
 |-|-|-|-|-|-|
-|"http://loinc.org"|"55423-8"|"Number of steps"|double|?|"steps"|
-|"http://loinc.org"|"91557-9"|"Lean body weight"|double|"[lb_av]"|"g" or "lbs"|
-|"http://loinc.org"|"29463-7"|"Body weight"|double|"[lb_av]"|"g" or "lbs"|
-|"http://loinc.org"|"41981-2"|"Calories burned"|double|?|"kcal"|
-|"http://loinc.org"|"8302-2"|"Body height"|double|?|"m"|
-|"http://loinc.org"|"8867-4"|"Heart rate"|double|?|"beats/minute"|
-|"http://loinc.org"|"8310-5"|"Body temperature"|double|?|"°C"|
-|"http://loinc.org"|"8462-4"|"Diastolic blood pressure"|double|"mm[Hg]"|"mmHg"|
-|"http://loinc.org"|"8480-6"|"Systolic blood pressure"|double|"mm[Hg]"|"mmHg"|
+|"http://loinc.org"|"29463-7"|"Body weight"|double|"http://unitsofmeasure.org"|"kg"|"kg"|
 
-TODO: Currently, HealthKitOnFHIR and HealthConnectOnFHIR still use different units to encode the same observations. We should probably aim to always use the same unit to reduce unit conversions, but each client would need to be able to handle multiple units for each observation type. We should probably aim for SI units, even though the system will primarily be used in the US. TBD.
+#### Heart Rate
 
-[Codes/Units in HealthKitOnFHIR](https://github.com/StanfordBDHG/HealthKitOnFHIR/blob/main/Sources/HealthKitOnFHIR/Resources/HKSampleMapping.json)
+Heart rate observations contain the following code and value.
+
+|code>system|code>code|code>display|value>system|value>value|value>code|value>unit|
+|-|-|-|-|-|-|
+|"http://loinc.org"|"8867-4"|"Heart rate"|double|"http://unitsofmeasure.org"|"/min"|"beats/minute"|
 
 ### /users/$userId$/questionnaireResponses/$questionnaireResponseId$
 
@@ -275,8 +296,7 @@ Based on [FHIR QuestionnaireResponse](https://hl7.org/fhir/R4B/questionnaireresp
 |-|-|-|-|
 |id|string|-|[Resource](https://hl7.org/fhir/R4B/resource.html): Logical id of this artifact|
 |questionnaire|string|-|canonical representation of the questionnaire, i.e. t|
-|author|string|-|The patient's id|
-|source|string|-|The patient's id|
+|author|string|-|The patient's `userId`|
 |authored|DateTime|-|The date the answers were gathered.|
 |status|[QuestionnaireResponseStatus](https://hl7.org/fhir/R4B/valueset-questionnaire-answers-status.html)|-|Will most likely always be `completed`.|
 |item|list of Item|-|-|
@@ -285,5 +305,3 @@ Based on [FHIR QuestionnaireResponse](https://hl7.org/fhir/R4B/questionnaireresp
 |item[x]>text|optional string|-|Name for group or question text|
 |item[x]>answer|list of Answer|-|response(s) to the question|
 |item[x]>answer[y]>value|any|-|Value depending on the type of question in the survey, e.g. boolean, integer, date, string, etc|
-
-TBD: Should we use `source` and/or `patient` to store a reference to the patient?
