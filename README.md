@@ -53,9 +53,7 @@ Based on [FHIR Questionnaire](https://hl7.org/fhir/R4B/questionnaire.html):
 |item[x]>text|string|-|Primary text for the item|
 |item[x]>type|code|e.g. "group", "display", "boolean", "decimal", "integer", "date", etc|See [QuestionnaireItemType](https://hl7.org/fhir/R4B/valueset-item-type.html) for available values.|
 
-#### Example
-
-TODO: Create KCCQ-12 questionnaire using FHIR data format.
+You can find an example KCCQ-12 questionnaire in [kccq-12-en-US.json](kccq-12-en-US.json).
 
 ## /medications
 
@@ -118,11 +116,25 @@ In this section, we describe all user-related data to be stored. The security ru
 |dailyRemindersAreActive|boolean|true, false|Decides whether to send out daily reminder messages for this user.|
 |textNotificationsAreActive|boolean|true, false|Decides whether to send text notifications for this user.|
 |medicationRemindersAreActive|boolean|true, false|Decides whether to send medication reminder messages for this user.|
-|timeZone|string|e.g. "America/Los_Angeles"|The value needs to correspond to an identifier from [TZDB](https://nodatime.org/TimeZones). It must not be an offset to UTC/GMT, since that wouldn't work well with daylight-savings (even if there is no daylight-savings time at that location). Also, don't use common abbreviations like PST, PDT, CEST, etc (they may be ambiguous, e.g. CST).|
-
-TBD: What happens if the timeZone could not be identified? When would we send out messages?
+|timeZone|string|e.g. "America/Los_Angeles"|The value needs to correspond to an identifier from [TZDB](https://nodatime.org/TimeZones). It must not be an offset to UTC/GMT, since that wouldn't work well with daylight-savings (even if there is no daylight-savings time at that location). Also, don't use common abbreviations like PST, PDT, CEST, etc (they may be ambiguous, e.g. CST). If the timeZone is unknown, then "America/Los_Angeles" should be used.|
 
 TBD: We might want to group `dailyRemindersAreActive`, `textNotificationsAreActive ` and `medicationRemindersAreActive ` into one object, e.g. `MessagesSettings`.
+
+### /users/$userId$/appointments/$appointmentId$
+
+Based on [FHIR Appointment](https://hl7.org/fhir/R4B/appointment.html).
+
+|Property|Type|Values|Comments|
+|-|-|-|-|
+|status|[AppointmentStatus](https://hl7.org/fhir/R4B/valueset-appointmentstatus.html)|e.g. "booked"|-|
+|created|[DateTime](https://hl7.org/fhir/R4B/datatypes.html#datetime)||
+|start|[Instant](https://hl7.org/fhir/R4B/datatypes.html#instant)|-|-|
+|end|[Instant](https://hl7.org/fhir/R4B/datatypes.html#instant)|-|-|
+|comment|optional string|-|May not be shown to the patient.|
+|patientInstruction|optional string|-|May be shown to the patient.|
+|participant|list of CodeableConcept|-|Must contain at least one element.|
+|participant[x]>actor|Reference(Patient)|-|Usually just the `userId` of the patient.|
+|participant[x]>status|[ParticipationStatus](https://hl7.org/fhir/R4B/valueset-participationstatus.html)|e.g. accepted, declined, tentative, needs-action|-|
 
 ### /users/$userId$/devices/$deviceId$
 
@@ -156,11 +168,21 @@ A device may receive a different notification token at any time though. Therefor
 |type|optional string|e.g. "questionnaireReminder"|Some messages are sent out on a regular basis, where only the most recent message is really relevant for the patient (e.g. a reminder for a questionnaire). With this property, we can easily find existing messages of the same type and replace them with a new one, if necessary.|
 |title|LocalizedText|e.g. "Watch Welcome Video in Education Page."|May be localized.|
 |description|optional LocalizedText|e.g. "The video shows how you will be able to use this app."|May be localized.|
-|action|optional string|e.g. "engage-hf:/videoSections/engage-hf/videos/welcome"|See "Available message actions".|
+|action|optional string|e.g. "engage-hf:/videoSections/engage-hf/videos/welcome"|See "Message types".|
 
-#### Available message actions
+#### Message types
 
-TODO: This subsection shall describe the format of actions to be performed by the clients on tap of a message.
+|Type|Trigger|Expiration|Action|
+|-|-|-|-|
+|MedicationChange|Server: /users/$userId$/medicationRequests changed for a given user. Maximum 1 per day.|Tap|/videoSections/$videoSectionId$/videos/$videoId$|
+|WeightGain|Server: New body weight observation received with 3 lbs increase over prior week's median. Do not trigger again for 7 days.|Tap|/medications|
+|MedicationUptitration|Server:|Tap|/medications|
+|Welcome|Server: When creating new user.|Video start? TBD: Tap?|/videoSections/$videoSectionId$/videos/$videoId$|
+|Vitals|Server: Daily at certain time (respect timezone!)|When receiving blood pressure and weight measurements on the server from current day.|/measurements|
+|SymptomQuestionnaire|Server: Every 14 days.|After questionnaire responses received on server.|/questionnaires/$questionnaireId$|
+|PreVisit|Server: Day (24h) before visit.|After visit time or when visit is cancelled.|/healthSummary|
+
+TBD: Should we really inform the patient about being eligible for medication uptitration or weight gain? I assume that the algorithms shouldn't themselves decide how to change medication for the patient, so wouldn't it make more sense to inform the clinicians instead and then trigger a MedicationChange later on, if they decide to change the meds?
 
 ### /users/$userId$/allergyIntolerances/$allergyIntoleranceId$
 
@@ -197,15 +219,12 @@ The `dosageInstruction` property may contain values containing the following pro
 |timing|optional [Timing](https://hl7.org/fhir/R4B/datatypes.html#timing)|-|When medication should be administered|
 |doseAndRate|list of Element|-|Amount of medication administered|
 |doseAndRate>type|optional [DoseRateType](https://hl7.org/fhir/R4B/codesystem-dose-rate-type.html)|e.g. "calculated", "ordered"||
-|doseAndRate>dose|optional [Range](https://hl7.org/fhir/R4B/datatypes.html#Range) or [SimpleQuantity](https://hl7.org/fhir/R4B/datatypes.html#SimpleQuantity)|-|-|
-|doseAndRate>rate|optional [Ratio](https://build.fhir.org/datatypes.html#ratio) or [Range](https://hl7.org/fhir/R4B/datatypes.html#Range) or [SimpleQuantity](https://hl7.org/fhir/R4B/datatypes.html#SimpleQuantity)|-|-|
+|doseAndRate>dose|optional [SimpleQuantity](https://hl7.org/fhir/R4B/datatypes.html#SimpleQuantity)|-|TBD: We should either use "pills" or some weight unit here.|
 |maxDosePerPeriod|optional [Ratio](https://build.fhir.org/datatypes.html#ratio)|-|Upper limit on medication per unit of time|
 |maxDosePerAdministration|optional [SimpleQuantity](https://build.fhir.org/datatypes.html#SimpleQuantity)|-|Upper limit on medication per administration|
 |maxDosePerLifetime|optional [SimpleQuantity](https://build.fhir.org/datatypes.html#SimpleQuantity)|-|Upper limit on medication per unit of time|
 
-TBD: Do we need to be able to specify rate vs dose? i.e. are there scenarios where a clinician would like to just specify "take this amount in this time" rather than "take one pill every evening"?
-
-TBD: Which timings, doses and rates does the system need to be able to work with? How does this differ between input and processing (e.g. an algorithm might only be interested in the total amount administered per day/week)?
+There may be up to three intakes per day (morning, mid-day and evening) with either 0.5, 1 or 2 pills. The dosages should always be grouped by medication, i.e. there should not be multiple medication elements concerning the same medication but different dosage instructions. Instead, one medication element shall be used for that medication with multiple dosage instructions.
 
 ### /users/$userId$/observations/$observationId$
 
