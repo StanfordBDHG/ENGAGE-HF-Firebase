@@ -268,7 +268,7 @@ Blood pressure observations contain the following code and no value.
 Further, blood pressure observations have two components.
 
 |code>system|code>code|code>display|value>system|value>value|value>code|value>unit|
-|-|-|-|-|-|-|
+|-|-|-|-|-|-|-|
 |"http://loinc.org"|"8462-4"|"Diastolic blood pressure"|"http://unitsofmeasure.org"|double|"mm[Hg]"|"mmHg"|
 |"http://loinc.org"|"8480-6"|"Systolic blood pressure"|"http://unitsofmeasure.org"|double|"mm[Hg]"|"mmHg"|
 
@@ -277,7 +277,7 @@ Further, blood pressure observations have two components.
 Body mass observations contain the following code and value.
 
 |code>system|code>code|code>display|value>system|value>value|value>code|value>unit|
-|-|-|-|-|-|-|
+|-|-|-|-|-|-|-|
 |"http://loinc.org"|"29463-7"|"Body weight"|double|"http://unitsofmeasure.org"|"kg"|"kg"|
 
 #### Heart Rate
@@ -285,7 +285,7 @@ Body mass observations contain the following code and value.
 Heart rate observations contain the following code and value.
 
 |code>system|code>code|code>display|value>system|value>value|value>code|value>unit|
-|-|-|-|-|-|-|
+|-|-|-|-|-|-|-|
 |"http://loinc.org"|"8867-4"|"Heart rate"|double|"http://unitsofmeasure.org"|"/min"|"beats/minute"|
 
 ### /users/$userId$/questionnaireResponses/$questionnaireResponseId$
