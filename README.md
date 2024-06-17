@@ -399,7 +399,9 @@ The `dosageInstruction` property may contain values with the following propertie
 
 There may be up to three intakes per day (morning, mid-day and evening) with either 0.5, 1 or 2 pills. The dosages should always be grouped by medication, i.e. there should not be multiple medication elements concerning the same medication but different dosage instructions. Instead, one medication element shall be used for that medication with multiple dosage instructions.
 
-### /users/$userId$/observations/$observationId$
+### /users/$userId$/observations
+
+In this collection, we are storing different observations grouped by their type, e.g. we use /users/$userId$/observations/bodyWeight/$observationId$ for body weight observations and /users/$userId$/observations/bloodPressure/$observationId$ for blood pressure observations. The different subcollections are all listed below and they follow the specification of a FHIR observation as defined here with more strict specification following in the respective subsections.
 
 Based on [FHIR Observation](https://hl7.org/fhir/R4B/observation.html), the following properties may be used, while additional properties are ignored by the Engage-HF system.
 
@@ -414,7 +416,7 @@ Based on [FHIR Observation](https://hl7.org/fhir/R4B/observation.html), the foll
 |component[x]>value|optional [Quantity](https://hl7.org/fhir/R4B/datatypes.html#Quantity)|e.g. `{"code":"mm[Hg]","system":"http://unitsofmeasure.org","unit":"mmHg","value":120}`|Use one of the units listed below.|
 |effective|[Period](https://hl7.org/fhir/R4B/datatypes.html#period), [Instant](https://hl7.org/fhir/R4B/datatypes.html#instant) or [DateTime](https://hl7.org/fhir/R4B/datatypes.html#dateTime)|-|Use DateTime/Instant for instant observation and periods for longer observations (e.g. more than 1 minute).|
 
-#### Blood Pressure
+#### /users/$userId$/observations/bloodPressure/$observationId$
 
 Blood pressure observations contain the following code and no value.
 
@@ -429,15 +431,15 @@ Further, blood pressure observations have two components.
 |"http://loinc.org"|"8462-4"|"Diastolic blood pressure"|"http://unitsofmeasure.org"|double|"mm[Hg]"|"mmHg"|
 |"http://loinc.org"|"8480-6"|"Systolic blood pressure"|"http://unitsofmeasure.org"|double|"mm[Hg]"|"mmHg"|
 
-#### Body Weight
+#### /users/$userId$/observations/bodyWeight/$observationId$
 
-Body mass observations contain the following code and value.
+Body weight observations contain the following code and value.
 
 |code>system|code>code|code>display|value>system|value>value|value>code|value>unit|
 |-|-|-|-|-|-|-|
 |"http://loinc.org"|"29463-7"|"Body weight"|double|"http://unitsofmeasure.org"|"kg"|"kg"|
 
-#### Heart Rate
+#### /users/$userId$/observations/heartRate/$observationId$
 
 Heart rate observations contain the following code and value.
 
