@@ -17,7 +17,7 @@ const {beforeUserCreated} = require("firebase-functions/v2/identity");
 
 admin.initializeApp();
 
-exports.checkInvitationCode = onCall(async (request) => {
+exports.checkInvitationCode = onCall(async (request: any) => {
   if (!request.auth.uid) {
     throw new https.HttpsError(
         "unauthenticated",
@@ -47,7 +47,7 @@ exports.checkInvitationCode = onCall(async (request) => {
       throw new https.HttpsError("already-exists", "User is already enrolled in the study.");
     }
 
-    await firestore.runTransaction(async (transaction) => {
+    await firestore.runTransaction(async (transaction: any) => {
       transaction.set(userStudyRef, {
         invitationCode: invitationCode,
         dateOfEnrollment: FieldValue.serverTimestamp(),
@@ -62,7 +62,7 @@ exports.checkInvitationCode = onCall(async (request) => {
     logger.debug(`User (${userId}) successfully enrolled in study (ENGAGE-HF) with invitation code: ${invitationCode}`);
 
     return {};
-  } catch (error) {
+  } catch (error: any) {
     logger.error(`Error processing request: ${error.message}`);
     if (!error.code) {
       throw new https.HttpsError("internal", "Internal server error.");
@@ -71,7 +71,7 @@ exports.checkInvitationCode = onCall(async (request) => {
   }
 });
 
-exports.beforecreated = beforeUserCreated(async (event) => {
+exports.beforecreated = beforeUserCreated(async (event: any) => {
   const firestore = admin.firestore();
   const userId = event.data.uid;
 
@@ -94,7 +94,7 @@ exports.beforecreated = beforeUserCreated(async (event) => {
     if (!userDoc.exists || userDoc.data().invitationCode !== invitationQuerySnapshot.docs[0].id) {
       throw new https.HttpsError("failed-precondition", "User document does not exist or contains incorrect invitation code.");
     }
-  } catch (error) {
+  } catch (error: any) {
     logger.error(`Error processing request: ${error.message}`);
     if (!error.code) {
       throw new https.HttpsError("internal", "Internal server error.");
