@@ -9,16 +9,20 @@
 // Based on:
 // https://github.com/StanfordBDHG/PediatricAppleWatchStudy/pull/54/files
 
-const {onCall} = require("firebase-functions/v2/https");
-const {logger, https} = require("firebase-functions/v2");
-const {FieldValue} = require("firebase-admin/firestore");
-const admin = require("firebase-admin");
-const {beforeUserCreated} = require("firebase-functions/v2/identity");
+import { CallableRequest, onCall } from "firebase-functions/v2/https";
+import { logger, https } from "firebase-functions/v2";
+import { FieldValue } from "firebase-admin/firestore";
+import admin = require("firebase-admin");
+import { AuthBlockingEvent, beforeUserCreated } from "firebase-functions/v2/identity";
 
 admin.initializeApp();
 
-exports.checkInvitationCode = onCall(async (request: any) => {
-  if (!request.auth.uid) {
+type InvitationCodeInput = {
+    invitationCode: string
+}
+
+exports.checkInvitationCode = onCall(async (request: CallableRequest<InvitationCodeInput>) => {
+  if (!request.auth?.uid) {
     throw new https.HttpsError(
         "unauthenticated",
         "User is not properly authenticated.",
@@ -36,7 +40,7 @@ exports.checkInvitationCode = onCall(async (request: any) => {
     const invitationCodeRef = firestore.doc(`invitationCodes/${invitationCode}`);
     const invitationCodeDoc = await invitationCodeRef.get();
 
-    if (!invitationCodeDoc.exists || invitationCodeDoc.data().used) {
+    if (!invitationCodeDoc.exists || invitationCodeDoc.data()?.used) {
       throw new https.HttpsError("not-found", "Invitation code not found or already used.");
     }
 
@@ -71,7 +75,7 @@ exports.checkInvitationCode = onCall(async (request: any) => {
   }
 });
 
-exports.beforecreated = beforeUserCreated(async (event: any) => {
+exports.beforecreated = beforeUserCreated(async (event: AuthBlockingEvent) => {
   const firestore = admin.firestore();
   const userId = event.data.uid;
 
@@ -91,7 +95,7 @@ exports.beforecreated = beforeUserCreated(async (event: any) => {
     const userDoc = await firestore.doc(`users/${userId}`).get();
 
     // Check if the user document exists and contains the correct invitation code.
-    if (!userDoc.exists || userDoc.data().invitationCode !== invitationQuerySnapshot.docs[0].id) {
+    if (!userDoc.exists || userDoc.data()?.invitationCode !== invitationQuerySnapshot.docs[0].id) {
       throw new https.HttpsError("failed-precondition", "User document does not exist or contains incorrect invitation code.");
     }
   } catch (error: any) {
