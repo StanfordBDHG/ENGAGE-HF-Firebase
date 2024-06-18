@@ -1,15 +1,20 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
-    "noImplicitReturns": true,
-    "noUnusedLocals": true,
-    "outDir": "lib",
-    "sourceMap": true,
+    "composite": true,
+    "target": "es5",
+    "lib": [],
+    "allowJs": true,
+    "skipLibCheck": true,
     "strict": true,
-    "target": "es2017"
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
   },
-  "compileOnSave": true,
-  "include": [
-    "src"
-  ]
+  "include": ["src/**/*.ts", ".eslintrc.js"],
+  "exclude": []
 }
