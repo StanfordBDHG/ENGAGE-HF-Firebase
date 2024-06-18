@@ -13,7 +13,9 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "incremental": true,
+    "outDir": "lib",
+    "rootDir": "src",
   },
-  "include": ["src/**/*.ts", ".eslintrc.js"],
+  "include": ["src/**/*.ts"],
   "exclude": []
 }
