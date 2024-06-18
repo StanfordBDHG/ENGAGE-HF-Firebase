@@ -205,7 +205,7 @@ Here we keep a list of relevant codes for medication classes & medications for u
 ##### Medication classes
 
 |Medication class|SNOMED CT name|code|
-|-|-|
+|-|-|-|
 |Beta blocker|Substance with beta adrenergic receptor antagonist mechanism of action (substance)|[373254001](https://browser.ihtsdotools.org/?perspective=full&conceptId1=373254001)|
 |SGLT2i|Substance with sodium glucose cotransporter subtype 2 inhibitor mechanism of action (substance)|[703673007](https://browser.ihtsdotools.org/?perspective=full&conceptId1=703673007)|
 |MRA|Substance with aldosterone receptor antagonist mechanism of action (substance)|[372603003](https://browser.ihtsdotools.org/?perspective=full&conceptId1=372603003)|
