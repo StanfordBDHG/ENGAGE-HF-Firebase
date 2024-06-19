@@ -9,11 +9,27 @@ admin.initializeApp({
 
 const useIndicesAsKeys = true
 
+async function setUnstructuredCollection(collection, data) {
+    if (Array.isArray(data)) {
+        for (let index = 0; index < data.length; index++) {
+            await (useIndicesAsKeys ? collection.doc(String(index)) : collection.doc())
+                .set(data[index])
+        }
+    } else {
+        for (const key of Object.keys(data)) {
+            collection.doc(key).set(data[key])
+        }
+    }
+}
+
 async function setStructuredCollection(collection, data) {
     if (Array.isArray(data)) {
-        data.forEach(async (value, index) => {
-            await setStructuredDocument(useIndicesAsKeys ? collection.doc(String(index)) : collection.doc(), value)
-        })
+        for (let index = 0; index < data.length; index++) {
+            await setStructuredDocument(
+                useIndicesAsKeys ? collection.doc(String(index)) : collection.doc(),
+                data[index]
+            )
+        }
     } else {
         for (const key of Object.keys(data)) {
             await setStructuredDocument(collection.doc(key), data[key])
@@ -28,7 +44,6 @@ async function setStructuredDocument(document, data) {
         const dataWithoutSubcollections = {}
         for (const key of Object.keys(data)) {
             const value = data[key]
-    
             if (Array.isArray(value)) {
                 await setStructuredCollection(document.collection(key), value)
             } else {
@@ -39,16 +54,18 @@ async function setStructuredDocument(document, data) {
     }
 }
 
-async function setStructuredCollectionFromFile(collection, filename) {
-    const data = JSON.parse(fs.readFileSync(filename, 'utf8'))
-    await setStructuredCollection(collection, data)
+async function readJSON(filename) {
+    return JSON.parse(fs.readFileSync(filename, 'utf8'))
 }
 
-const db = admin.firestore()
-setStructuredCollectionFromFile(db.collection('videoSections'), 'data/videoSections.json')
-    .then(() => console.log('Video sections successfully uploaded to Firestore'))
-    .catch(error => console.error('Video sections upload failed due to', error))
+async function main() {
+    const db = admin.firestore()
+    await setStructuredCollection(db.collection('videoSections'), await readJSON('data/videoSections.json'))
+    console.log('Video sections uploaded')
+    await setUnstructuredCollection(db.collection('questionnaires'), await readJSON('data/questionnaires.json'))
+    console.log('Questionnaires uploaded')
+}
 
-setStructuredCollectionFromFile(db.collection('questionnaires'), 'data/questionnaires.json')
-    .then(() => console.log('Questionnaires successfully uploaded to Firestore'))
-    .catch(error => console.error('Questionnaires upload failed due to', error))
+main()
+    .then(() => console.log('Success!'))
+    .catch(error => console.error('Error:', error))
