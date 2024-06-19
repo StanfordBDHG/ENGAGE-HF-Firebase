@@ -22,7 +22,10 @@
     },
     {
         "title": "Medication Videos",
-        "description": "Learn about heart failure medications and their effects.",
+        "description": {
+            "en": "Learn about heart failure medications and their effects.",
+            "de": "Erfahren Sie mehr über Herzmedikamente und ihre Wirkungen."
+        },
         "orderIndex": 2,
         "videos": [
             {
@@ -35,7 +38,10 @@
             },
             {
                 "title": "Beta Blockers",
-                "url": "https://youtu.be/XfgcXkq61k0",
+                "url": {
+                    "en": "https://youtu.be/XfgcXkq61k0",
+                    "de": "https://youtu.be/XfgcXkq61k0"
+                },
                 "orderIndex": 2
             },
             {
@@ -62,6 +68,50 @@
                 "title": "Diuretics",
                 "url": "https://youtu.be/16UFTq-mZro",
                 "orderIndex": 7
+            }
+        ]
+    },
+    {
+        "title": "Vitals and Lifestyle Videos",
+        "description": "Learn about your vitals and how it affects your heart failure.",
+        "orderIndex": 3,
+        "videos": [
+            {
+                "title": "Introduction to Heart Failure",
+                "url": "https://youtu.be/mRPNY5-Px5g",
+                "orderIndex": 1
+            },
+            {
+                "title": "Blood Pressure Monitoring",
+                "url": "https://youtu.be/3EMV3nqIajE",
+                "orderIndex": 2
+            },
+            {
+                "title": "Weight Monitoring",
+                "url": "https://youtu.be/OGyf_jMI4IM",
+                "orderIndex": 3
+            },
+            {
+                "title": "Diet and Exercise",
+                "url": "https://youtu.be/8ETOXtCyO9k",
+                "orderIndex": 4
+            }
+        ]
+    },
+    {
+        "title": "Symptom Videos",
+        "description": "Learn about the significance of the Symptom Survey, otherwise known as the KCCQ-12, and dizziness score.",
+        "orderIndex": 4,
+        "videos": [
+            {
+                "title": "Health Status",
+                "url": "https://youtu.be/-TV8T8LDFTE",
+                "orderIndex": 1
+            },
+            {
+                "title": "Dizziness",
+                "url": "https://youtu.be/3dsWVdo6jLo",
+                "orderIndex": 2
             }
         ]
     }

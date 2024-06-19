@@ -1,18 +1,18 @@
 #!/usr/bin/node
 
-const admin = require('firebase-admin')
-const fs = require('node:fs')
+import * as admin from 'firebase-admin'
+import * as fs from 'node:fs'
 
-admin.initializeApp({
-    credential: admin.credential.cert("credentials.json")
+initializeApp({
+    credential: admin.credential.cert('credentials.json')
 })
 
-const useUUIDs = true
+const useIndices = true
 
 async function setStructuredCollection(collection, data) {
     if (Array.isArray(data)) {
         data.forEach(async (value, index) => {
-            await setStructuredDocument(useUUIDs ? collection.doc() : collection.doc(String(index)), value)
+            await setStructuredDocument(useIndices ? collection.doc(String(index)) : collection.doc(), value)
         })
     } else {
         for (const key of Object.keys(data)) {
@@ -25,7 +25,7 @@ async function setStructuredCollection(collection, data) {
 }
 
 async function setStructuredDocument(document, data) {
-    if (typeof data !== "object") {
+    if (typeof data !== 'object') {
         await document.set(data)
     } else {
         const dataWithoutSubcollections = {}
@@ -48,5 +48,6 @@ async function setStructuredCollectionFromFile(collection, filename) {
 }
 
 const db = admin.firestore()
-setStructuredCollectionFromFile(db.collection("videoSections"), "videoSections.json")
-    .then(() => console.log("Data successfully uploaded to Firestore"))
+setStructuredCollectionFromFile(db.collection('videoSections'), 'videoSections.json')
+    .then(() => console.log('Video sections successfully uploaded to Firestore'))
+    .catch(error => console.error('Video sections failed due to', error))
