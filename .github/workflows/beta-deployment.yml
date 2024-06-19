@@ -21,7 +21,7 @@ jobs:
     name: Deploy Firebase Project
     uses: StanfordBDHG/.github/.github/workflows/firebase-deploy.yml@v2
     with:
-        customcommand: "npm i -g eslint"
+        customcommand: "npm i -g eslint@^8.57"
     permissions:
       contents: read
     secrets:
