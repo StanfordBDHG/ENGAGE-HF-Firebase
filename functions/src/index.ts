@@ -9,7 +9,7 @@
 // Based on:
 // https://github.com/StanfordBDHG/PediatricAppleWatchStudy/pull/54/files
 
-import * as admin from 'firebase-admin'
+import admin from 'firebase-admin'
 import { FieldValue, type Transaction } from 'firebase-admin/firestore'
 import { type BlockingFunction } from 'firebase-functions'
 import { logger, https } from 'firebase-functions/v2'
