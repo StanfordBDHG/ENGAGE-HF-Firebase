@@ -1,0 +1,31 @@
+#
+# This source file is part of the ENGAGE-HF based on the Stanford Spezi Template Application project
+#
+# SPDX-FileCopyrightText: 2023 Stanford University
+#
+# SPDX-License-Identifier: MIT
+#
+
+name: Lint and Build
+
+on: [pull_request]
+
+jobs:
+  deploy:
+    name: Lint and Build Functions
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Use Node.js 22.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: 22.x
+      - name: Install Dependencies
+        run: npm install --prefix functions --save-dev
+      - name: Lint
+        run: npm --prefix functions run lint
+      - name: Build
+        run: npm --prefix functions run build
+    permissions:
+      contents: read
