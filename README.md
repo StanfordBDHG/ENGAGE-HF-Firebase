@@ -28,6 +28,15 @@ A LocalizedText object cannot be used in FHIR-conforming types due to its incomp
 }
 ```
 
+## /invitations/$invitationId$
+
+When a patient joins Engage-HF, we first create an invitation code on demand of an operator of the web dashboard. Upon activation, we create a user associated with the invitationCode and remove the entry in this collection.
+
+|Property|Type|Values|Comments|
+|-|-|-|-|
+|used|boolean|true, false|Whether the invitation code has already been used or not. If this property is true, the invitation code can no longer be used.|
+|usedBy|optional string|-|The user created from this invitation code.|
+
 ## /questionnaires
 
 In this section, we describe all the information stored for questionnaires.
@@ -110,6 +119,7 @@ In this section, we describe all user-related data to be stored. The security ru
 |Property|Type|Values|Comments|
 |-|-|-|-|
 |dateOfBirth|Date|-|To be used for verification purposes.|
+|dateOfEnrollment|Date|-|The date when the invitation code was used to create this user.|
 |invitationCode|string|-|The invitationCode to be used when logging in to the app for the first time.|
 |language|optional string|e.g. "en"|Following IETF BCP-47 / [FHIR ValueSet languages](https://hl7.org/fhir/R4B/valueset-languages.html).|
 |messagesSettings|-|-|See properties below.|
