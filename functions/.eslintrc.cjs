@@ -11,7 +11,7 @@ module.exports = {
   parserOptions: {
     project: './tsconfig.json',
   },
-  ignorePatterns: ['**/*.js', '**/*.jsx'],
+  ignorePatterns: ['**/*.d.ts','**/*.js', '**/*.jsx'],
   parser: '@typescript-eslint/parser',
   extends: [
     'plugin:@typescript-eslint/strict-type-checked',
