@@ -44,12 +44,12 @@ export const checkInvitationCode = onCall(
 
     try {
       // Based on https://github.com/StanfordSpezi/SpeziStudyApplication/blob/main/functions/index.js
-      const invitationCodeRef = firestore.doc(
-        `invitationCodes/${invitationCode}`,
+      const invitationRef = firestore.doc(
+        `invitations/${invitationCode}`,
       )
-      const invitationCodeDoc = await invitationCodeRef.get()
+      const invitationDoc = await invitationRef.get()
 
-      if (!invitationCodeDoc.exists || invitationCodeDoc.data()?.used) {
+      if (!invitationDoc.exists || invitationDoc.data()?.used) {
         throw new https.HttpsError(
           'not-found',
           'Invitation code not found or already used.',
@@ -73,7 +73,7 @@ export const checkInvitationCode = onCall(
           dateOfEnrollment: FieldValue.serverTimestamp(),
         })
 
-        transaction.update(invitationCodeRef, {
+        transaction.update(invitationRef, {
           used: true,
           usedBy: userId,
         })
@@ -106,13 +106,13 @@ export const beforecreated: BlockingFunction = beforeUserCreated(
     try {
       // Check Firestore to confirm whether an invitation code has been associated with a user.
       const invitationQuerySnapshot = await firestore
-        .collection('invitationCodes')
+        .collection('invitations')
         .where('usedBy', '==', userId)
         .limit(1)
         .get()
 
       logger.info(
-        `Invitation code query snapshot: ${invitationQuerySnapshot.size}`,
+        `Invitation query snapshot: ${invitationQuerySnapshot.size}`,
       )
 
       if (invitationQuerySnapshot.empty) {
