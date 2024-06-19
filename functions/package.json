@@ -4,7 +4,7 @@
   "scripts": {
     "lint": "eslint .",
     "lintfix": "eslint . --fix",
-    "compile": "tsc",
+    "build": "tsc",
     "serve": "firebase emulators:start --only functions",
     "shell": "firebase functions:shell",
     "start": "npm run shell",
