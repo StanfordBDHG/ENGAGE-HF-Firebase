@@ -7,21 +7,18 @@ admin.initializeApp({
     credential: admin.credential.cert('credentials.json')
 })
 
-const useIndices = false
+const useIndicesAsKeys = false
 
 async function setStructuredCollection(collection, data) {
     if (Array.isArray(data)) {
         data.forEach(async (value, index) => {
-            await setStructuredDocument(useIndices ? collection.doc(String(index)) : collection.doc(), value)
+            await setStructuredDocument(useIndicesAsKeys ? collection.doc(String(index)) : collection.doc(), value)
         })
     } else {
         for (const key of Object.keys(data)) {
-            const value = data[key]
-    
-            await setStructuredDocument(collection.doc(key), value)
+            await setStructuredDocument(collection.doc(key), data[key])
         }
     }
-    
 }
 
 async function setStructuredDocument(document, data) {
