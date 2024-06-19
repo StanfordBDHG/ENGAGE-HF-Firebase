@@ -44,9 +44,7 @@ export const checkInvitationCode = onCall(
 
     try {
       // Based on https://github.com/StanfordSpezi/SpeziStudyApplication/blob/main/functions/index.js
-      const invitationRef = firestore.doc(
-        `invitations/${invitationCode}`,
-      )
+      const invitationRef = firestore.doc(`invitations/${invitationCode}`)
       const invitationDoc = await invitationRef.get()
 
       if (!invitationDoc.exists || invitationDoc.data()?.used) {
@@ -111,9 +109,7 @@ export const beforecreated: BlockingFunction = beforeUserCreated(
         .limit(1)
         .get()
 
-      logger.info(
-        `Invitation query snapshot: ${invitationQuerySnapshot.size}`,
-      )
+      logger.info(`Invitation query snapshot: ${invitationQuerySnapshot.size}`)
 
       if (invitationQuerySnapshot.empty) {
         throw new https.HttpsError(
