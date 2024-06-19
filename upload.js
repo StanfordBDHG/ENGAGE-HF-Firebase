@@ -64,6 +64,8 @@ async function main() {
     console.log('Video sections uploaded')
     await setUnstructuredCollection(db.collection('questionnaires'), await readJSON('data/questionnaires.json'))
     console.log('Questionnaires uploaded')
+    await setStructuredCollection(db.collection('medicationClasses'), await readJSON('data/medicationClasses.json'))
+    console.log('MedicationClasses uploaded')
 }
 
 main()
