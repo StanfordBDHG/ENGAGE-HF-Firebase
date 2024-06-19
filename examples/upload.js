@@ -1,13 +1,13 @@
 #!/usr/bin/node
 
-import * as admin from 'firebase-admin'
-import * as fs from 'node:fs'
+const admin = require('firebase-admin')
+const fs = require('node:fs')
 
-initializeApp({
+admin.initializeApp({
     credential: admin.credential.cert('credentials.json')
 })
 
-const useIndices = true
+const useIndices = false
 
 async function setStructuredCollection(collection, data) {
     if (Array.isArray(data)) {
