@@ -7,7 +7,7 @@ admin.initializeApp({
     credential: admin.credential.cert('credentials.json')
 })
 
-const useIndicesAsKeys = false
+const useIndicesAsKeys = true
 
 async function setStructuredCollection(collection, data) {
     if (Array.isArray(data)) {
@@ -47,4 +47,8 @@ async function setStructuredCollectionFromFile(collection, filename) {
 const db = admin.firestore()
 setStructuredCollectionFromFile(db.collection('videoSections'), 'data/videoSections.json')
     .then(() => console.log('Video sections successfully uploaded to Firestore'))
-    .catch(error => console.error('Video sections failed due to', error))
+    .catch(error => console.error('Video sections upload failed due to', error))
+
+setStructuredCollectionFromFile(db.collection('questionnaires'), 'data/questionnaires.json')
+    .then(() => console.log('Questionnaires successfully uploaded to Firestore'))
+    .catch(error => console.error('Questionnaires upload failed due to', error))
