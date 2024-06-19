@@ -45,6 +45,6 @@ async function setStructuredCollectionFromFile(collection, filename) {
 }
 
 const db = admin.firestore()
-setStructuredCollectionFromFile(db.collection('videoSections'), 'videoSections.json')
+setStructuredCollectionFromFile(db.collection('videoSections'), 'data/videoSections.json')
     .then(() => console.log('Video sections successfully uploaded to Firestore'))
     .catch(error => console.error('Video sections failed due to', error))
