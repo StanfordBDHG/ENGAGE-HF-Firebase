@@ -109,8 +109,12 @@ In this section, we describe all data related to educational videos to be shown 
 |Property|Type|Values|Comments|
 |-|-|-|-|
 |title|LocalizedText|e.g. "Beta Blockers for Heart Failure"|May be localized.|
-|url|LocalizedText|e.g. "https://youtu.be/XfgcXkq61k0"|May be localized.|
+|youtubeId|LocalizedText|e.g. "XfgcXkq61k0"|Contains the video id from YouTube.|
 |orderIndex|integer|e.g. 1|Since Firestore collections aren't necessarily ordered, we have this property to order the elements by on the clients. The list is supposed to be ordered ascending by `orderIndex`.|
+
+Embed links for YouTube: `https://youtube.com/embed/${youtubeId}`.
+Short links for YouTube: `https://youtu.be/${youtubeId}`. 
+Watch links for YouTube: `https://youtube.com/watch?v=${youtubeId}`. 
 
 ## /users/$userId$
 
