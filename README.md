@@ -61,7 +61,7 @@ Based on [FHIR Questionnaire](https://hl7.org/fhir/R4B/questionnaire.html), the 
 |item[x]>text|string|-|Primary text for the item|
 |item[x]>type|code|e.g. "group", "display", "boolean", "decimal", "integer", "date", etc|See [QuestionnaireItemType](https://hl7.org/fhir/R4B/valueset-item-type.html) for available values.|
 
-You can find an example KCCQ-12 questionnaire in [kccq-12-en-US.json](kccq-12-en-US.json).
+You can find an example KCCQ-12 questionnaire in [data/questionnaires.json](data/questionnaires.json).
 
 ## /medications
 
@@ -74,8 +74,7 @@ Based on [FHIR Medication](https://hl7.org/fhir/R4B/medication.html), the follow
 |Property|Type|Values|Comments|
 |-|-|-|-|
 |id|string|-|[Resource](https://hl7.org/fhir/R4B/resource.html): Logical id of this artifact|
-|meta|Meta|-|[Resource](https://hl7.org/fhir/R4B/resource.html#Meta): Metadata about the resource|
-|identifier|list of Identifier|-|Business identifier for this medication|
+|text|string|-|Full name of the given medication.|
 |extension|list of Extension|-|See /medications/$medicationId$/extension for possible values|
 
 Based on the [Extension](https://hl7.org/fhir/R4B/extensibility.html#Extension) format specified in FHIR, a medication may contain a list of these following extension properties. Each property will need to get a url assigned to fit the FHIR data format.
@@ -83,8 +82,18 @@ Based on the [Extension](https://hl7.org/fhir/R4B/extensibility.html#Extension) 
 |Property|Type|Values|Comments|
 |-|-|-|-|
 |medicationClass|string|-|A `medicationClassId` referring to a medicationClass specified in /medicationClasses/$medicationClassId$. One medication object may contain multiple medicationClass extension properties.|
-|minimumDailyDose|double|e.g. 6.25|Unit: mg/day. May only occur once.|
-|targetDailyDose|double|e.g. 50.0|Unit: mg/day. May only occur once.|
+|minimumDailyDose|[SimpleQuantity](https://www.hl7.org/fhir/r4b/datatypes.html#SimpleQuantity)|-|Unit: mg/day. Occurs exactly once. Multi-ingredient pills contain an array of double rather than a double.|
+|targetDailyDose|[SimpleQuantity](https://www.hl7.org/fhir/r4b/datatypes.html#SimpleQuantity)|-|Unit: mg/day. Occurs exactly once. Multi-ingredient pills contain an array of double rather than a double.|
+
+### /medications/$medicationId$/drugs/$drugId$
+
+|Property|Type|Values|Comments|
+|-|-|-|-|
+|id|string|-|[Resource](https://hl7.org/fhir/R4B/resource.html): Logical id of this artifact|
+|text|string|-|Full name of the given medication including dosage information.|
+|ingredient|list of Ingredient|-|Use references to medications and strength for quantity information.|
+|ingredient[x]>item|Reference(Medication)|-|-|
+|ingredient[x]>strength|Ratio|-|Uses "mg" as numerator unit, no denominator unit and denominator value is always 1.|
 
 ### /medicationClasses/$medicationClassId$
 
@@ -109,8 +118,12 @@ In this section, we describe all data related to educational videos to be shown 
 |Property|Type|Values|Comments|
 |-|-|-|-|
 |title|LocalizedText|e.g. "Beta Blockers for Heart Failure"|May be localized.|
-|url|LocalizedText|e.g. "https://youtu.be/XfgcXkq61k0"|May be localized.|
+|youtubeId|LocalizedText|e.g. "XfgcXkq61k0"|Contains the video id from YouTube.|
 |orderIndex|integer|e.g. 1|Since Firestore collections aren't necessarily ordered, we have this property to order the elements by on the clients. The list is supposed to be ordered ascending by `orderIndex`.|
+
+Embed links for YouTube: `https://youtube.com/embed/${youtubeId}`.
+Short links for YouTube: `https://youtu.be/${youtubeId}`. 
+Watch links for YouTube: `https://youtube.com/watch?v=${youtubeId}`. 
 
 ## /users/$userId$
 

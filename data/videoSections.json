@@ -1,0 +1,118 @@
+[
+    {
+        "title": {
+            "en": "ENGAGE-HF Application",
+            "en-CA": "ENGAGE-HF Application (Canada)",
+            "de": "ENGAGE-HF Anwendung"
+        },
+        "description": "Helpful videos on the ENGAGE-HF mobile application.",
+        "orderIndex": 1,
+        "videos": [
+            {
+                "title": "Welcome Video",
+                "youtubeId": "y2ziZVWossE",
+                "orderIndex": 1
+            },
+            {
+                "title": "How to Install the App and Connect Omron Devices",
+                "youtubeId": "VUImvk3CNik",
+                "orderIndex": 2
+            }
+        ]
+    },
+    {
+        "title": "Medication Videos",
+        "description": {
+            "en": "Learn about heart failure medications and their effects.",
+            "de": "Erfahren Sie mehr über Herzmedikamente und ihre Wirkungen."
+        },
+        "orderIndex": 2,
+        "videos": [
+            {
+                "title": {
+                    "en": "Importance of Heart Meds",
+                    "de": "Wichtigkeit von Herzmedikamenten"
+                },
+                "youtubeId": "2scYfWSFkAc",
+                "orderIndex": 1
+            },
+            {
+                "title": "Beta Blockers",
+                "youtubeId": {
+                    "en": "XfgcXkq61k0",
+                    "de": "XfgcXkq61k0"
+                },
+                "orderIndex": 2
+            },
+            {
+                "title": "ACE inhibitors and ARBs",
+                "youtubeId": "iY7I1g5Vxck",
+                "orderIndex": 3
+            },
+            {
+                "title": "Angiotensin Receptor/Neprilysin Inhibitors (ARNI)",
+                "youtubeId": "bh-_1GkZmok",
+                "orderIndex": 4
+            },
+            {
+                "title": "Mineralocorticoid Receptor Antagonists (MRAs)",
+                "youtubeId": "YhfPNHtvnLk",
+                "orderIndex": 4
+            },
+            {
+                "title": "SGLT2 Inhibitors",
+                "youtubeId": "SKrk3OuIiyE",
+                "orderIndex": 6
+            },
+            {
+                "title": "Diuretics",
+                "youtubeId": "16UFTq-mZro",
+                "orderIndex": 7
+            }
+        ]
+    },
+    {
+        "title": "Vitals and Lifestyle Videos",
+        "description": "Learn about your vitals and how it affects your heart failure.",
+        "orderIndex": 3,
+        "videos": [
+            {
+                "title": "Introduction to Heart Failure",
+                "youtubeId": "mRPNY5-Px5g",
+                "orderIndex": 1
+            },
+            {
+                "title": "Blood Pressure Monitoring",
+                "youtubeId": "3EMV3nqIajE",
+                "orderIndex": 2
+            },
+            {
+                "title": "Weight Monitoring",
+                "youtubeId": "OGyf_jMI4IM",
+                "orderIndex": 3
+            },
+            {
+                "title": "Diet and Exercise",
+                "youtubeId": "8ETOXtCyO9k",
+                "orderIndex": 4
+            }
+        ]
+    },
+    {
+        "title": "Symptom Videos",
+        "description": "Learn about the significance of the Symptom Survey, otherwise known as the KCCQ-12, and dizziness score.",
+        "orderIndex": 4,
+        "videos": [
+            {
+                "title": "Health Status",
+                "youtubeId": "-TV8T8LDFTE",
+                "orderIndex": 1
+            },
+            {
+                "title": "Dizziness",
+                "youtubeId": "3dsWVdo6jLo",
+                "orderIndex": 2
+            }
+        ]
+    }
+]
