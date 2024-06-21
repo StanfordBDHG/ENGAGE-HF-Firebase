@@ -52,7 +52,7 @@ Based on [FHIR Questionnaire](https://hl7.org/fhir/R4B/questionnaire.html), the 
 |item[x]>text|string|-|Primary text for the item|
 |item[x]>type|code|e.g. "group", "display", "boolean", "decimal", "integer", "date", etc|See [QuestionnaireItemType](https://hl7.org/fhir/R4B/valueset-item-type.html) for available values.|
 
-You can find an example KCCQ-12 questionnaire in [data/kccq-12-en-US.json](data/kccq-12-en-US.json).
+You can find an example KCCQ-12 questionnaire in [data/questionnaires.json](data/questionnaires.json).
 
 ## /medications
 
