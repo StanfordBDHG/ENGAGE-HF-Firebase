@@ -65,8 +65,7 @@ Based on [FHIR Medication](https://hl7.org/fhir/R4B/medication.html), the follow
 |Property|Type|Values|Comments|
 |-|-|-|-|
 |id|string|-|[Resource](https://hl7.org/fhir/R4B/resource.html): Logical id of this artifact|
-|meta|Meta|-|[Resource](https://hl7.org/fhir/R4B/resource.html#Meta): Metadata about the resource|
-|identifier|list of Identifier|-|Business identifier for this medication|
+|text|string|-|Full name of the given medication.|
 |extension|list of Extension|-|See /medications/$medicationId$/extension for possible values|
 
 Based on the [Extension](https://hl7.org/fhir/R4B/extensibility.html#Extension) format specified in FHIR, a medication may contain a list of these following extension properties. Each property will need to get a url assigned to fit the FHIR data format.
@@ -74,8 +73,18 @@ Based on the [Extension](https://hl7.org/fhir/R4B/extensibility.html#Extension) 
 |Property|Type|Values|Comments|
 |-|-|-|-|
 |medicationClass|string|-|A `medicationClassId` referring to a medicationClass specified in /medicationClasses/$medicationClassId$. One medication object may contain multiple medicationClass extension properties.|
-|minimumDailyDose|double|e.g. 6.25|Unit: mg/day. May only occur once.|
-|targetDailyDose|double|e.g. 50.0|Unit: mg/day. May only occur once.|
+|minimumDailyDose|[SimpleQuantity](https://www.hl7.org/fhir/r4b/datatypes.html#SimpleQuantity)|-|Unit: mg/day. Occurs exactly once. Multi-ingredient pills contain an array of double rather than a double.|
+|targetDailyDose|[SimpleQuantity](https://www.hl7.org/fhir/r4b/datatypes.html#SimpleQuantity)|-|Unit: mg/day. Occurs exactly once. Multi-ingredient pills contain an array of double rather than a double.|
+
+### /medications/$medicationId$/drugs/$drugId$
+
+|Property|Type|Values|Comments|
+|-|-|-|-|
+|id|string|-|[Resource](https://hl7.org/fhir/R4B/resource.html): Logical id of this artifact|
+|text|string|-|Full name of the given medication including dosage information.|
+|ingredient|list of Ingredient|-|Use references to medications and strength for quantity information.|
+|ingredient[x]>item|Reference(Medication)|-|-|
+|ingredient[x]>strength|Ratio|-|Uses "mg" as numerator unit, no denominator unit and denominator value is always 1.|
 
 ### /medicationClasses/$medicationClassId$
 

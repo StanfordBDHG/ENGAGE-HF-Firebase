@@ -2,6 +2,8 @@
 
 const admin = require('firebase-admin')
 const fs = require('node:fs')
+const rxnorm = require('./rxnorm')
+
 
 admin.initializeApp({
     credential: admin.credential.cert('credentials.json')
@@ -66,6 +68,12 @@ async function main() {
     console.log('Questionnaires uploaded')
     await setStructuredCollection(db.collection('medicationClasses'), await readJSON('data/medicationClasses.json'))
     console.log('MedicationClasses uploaded')
+
+    const { medications, drugs } = await rxnorm.createFHIRCollections('data/medicationCodes.json')
+    await setUnstructuredCollection(db.collection('medications'), medications)
+    for (const medicationId in drugs) {
+        await setUnstructuredCollection(db.collection('medications').doc(medicationId).collection('drugs'), drugs[medicationId])
+    }
 }
 
 main()

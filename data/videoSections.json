@@ -10,12 +10,12 @@
         "videos": [
             {
                 "title": "Welcome Video",
-                "url": "https://youtu.be/y2ziZVWossE",
+                "youtubeId": "y2ziZVWossE",
                 "orderIndex": 1
             },
             {
                 "title": "How to Install the App and Connect Omron Devices",
-                "url": "https://youtu.be/VUImvk3CNik",
+                "youtubeId": "VUImvk3CNik",
                 "orderIndex": 2
             }
         ]
@@ -33,40 +33,40 @@
                     "en": "Importance of Heart Meds",
                     "de": "Wichtigkeit von Herzmedikamenten"
                 },
-                "url": "https://youtu.be/2scYfWSFkAc",
+                "youtubeId": "2scYfWSFkAc",
                 "orderIndex": 1
             },
             {
                 "title": "Beta Blockers",
-                "url": {
-                    "en": "https://youtu.be/XfgcXkq61k0",
-                    "de": "https://youtu.be/XfgcXkq61k0"
+                "youtubeId": {
+                    "en": "XfgcXkq61k0",
+                    "de": "XfgcXkq61k0"
                 },
                 "orderIndex": 2
             },
             {
                 "title": "ACE inhibitors and ARBs",
-                "url": "https://youtu.be/iY7I1g5Vxck",
+                "youtubeId": "iY7I1g5Vxck",
                 "orderIndex": 3
             },
             {
                 "title": "Angiotensin Receptor/Neprilysin Inhibitors (ARNI)",
-                "url": "https://youtu.be/bh-_1GkZmok",
+                "youtubeId": "bh-_1GkZmok",
                 "orderIndex": 4
             },
             {
                 "title": "Mineralocorticoid Receptor Antagonists (MRAs)",
-                "url": "https://youtu.be/YhfPNHtvnLk",
+                "youtubeId": "YhfPNHtvnLk",
                 "orderIndex": 4
             },
             {
                 "title": "SGLT2 Inhibitors",
-                "url": "https://youtu.be/SKrk3OuIiyE",
+                "youtubeId": "SKrk3OuIiyE",
                 "orderIndex": 6
             },
             {
                 "title": "Diuretics",
-                "url": "https://youtu.be/16UFTq-mZro",
+                "youtubeId": "16UFTq-mZro",
                 "orderIndex": 7
             }
         ]
@@ -78,22 +78,22 @@
         "videos": [
             {
                 "title": "Introduction to Heart Failure",
-                "url": "https://youtu.be/mRPNY5-Px5g",
+                "youtubeId": "mRPNY5-Px5g",
                 "orderIndex": 1
             },
             {
                 "title": "Blood Pressure Monitoring",
-                "url": "https://youtu.be/3EMV3nqIajE",
+                "youtubeId": "3EMV3nqIajE",
                 "orderIndex": 2
             },
             {
                 "title": "Weight Monitoring",
-                "url": "https://youtu.be/OGyf_jMI4IM",
+                "youtubeId": "OGyf_jMI4IM",
                 "orderIndex": 3
             },
             {
                 "title": "Diet and Exercise",
-                "url": "https://youtu.be/8ETOXtCyO9k",
+                "youtubeId": "8ETOXtCyO9k",
                 "orderIndex": 4
             }
         ]
@@ -105,12 +105,12 @@
         "videos": [
             {
                 "title": "Health Status",
-                "url": "https://youtu.be/-TV8T8LDFTE",
+                "youtubeId": "-TV8T8LDFTE",
                 "orderIndex": 1
             },
             {
                 "title": "Dizziness",
-                "url": "https://youtu.be/3dsWVdo6jLo",
+                "youtubeId": "3dsWVdo6jLo",
                 "orderIndex": 2
             }
         ]
