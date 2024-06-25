@@ -12,12 +12,14 @@
 import admin from 'firebase-admin'
 import { FieldValue, type Transaction } from 'firebase-admin/firestore'
 import { type BlockingFunction } from 'firebase-functions'
+import { onRequest } from 'firebase-functions/v1/https'
 import { logger, https } from 'firebase-functions/v2'
 import { type CallableRequest, onCall } from 'firebase-functions/v2/https'
 import {
   type AuthBlockingEvent,
   beforeUserCreated,
 } from 'firebase-functions/v2/identity'
+import { generateHealthSummary } from './healthSummary/generate.js'
 
 admin.initializeApp()
 
@@ -143,3 +145,80 @@ export const beforecreated: BlockingFunction = beforeUserCreated(
     }
   },
 )
+
+export const exportHealthSummary = onRequest(async (req, res) => {
+  const data = await generateHealthSummary({
+    name: 'John Doe',
+    dateOfBirth: new Date('1970-01-02'),
+    provider: 'Dr. XXX',
+    nextAppointment: new Date('2024-02-03'),
+    currentMedications: [
+      { name: 'Dapagliflozin 5mg', instruction: 'Take Once Daily' },
+      { name: 'Losartan 25mg', instruction: 'Take Once Daily' },
+    ],
+    proposedMedications: [
+      { name: 'Carvediol 3.125mg', instruction: 'Take Once Daily', isBold: true },
+      {
+        name: 'Sacubitril-Valsartan 24-25mg',
+        instruction: 'Take Twice Daily',
+      },
+    ],
+    vitals: {
+      systolicBloodPressure: [
+        { date: new Date('2024-02-01'), value: 109 }
+      ],
+      diastolicBloodPressure: [
+        { date: new Date('2024-02-01'), value: 76 }
+      ],
+      heartRate: [
+        { date: new Date('2024-02-01'), value: 62 }
+      ],
+      weight: [
+        { date: new Date('2024-02-01'), value: 270 },
+        { date: new Date('2024-01-31'), value: 266 }
+      ],
+      dryWeight: 267,
+    },
+    symptomScores: [
+      {
+        overall: 40,
+        physicalLimits: 50,
+        socialLimits: 38,
+        qualityOfLife: 20,
+        specificSymptoms: 60,
+        dizziness: 50,
+        date: new Date('2024-01-24'),
+      },
+      {
+        overall: 60,
+        physicalLimits: 58,
+        socialLimits: 75,
+        qualityOfLife: 37,
+        specificSymptoms: 72,
+        dizziness: 70,
+        date: new Date('2024-01-15'),
+      },
+      {
+        overall: 44,
+        physicalLimits: 50,
+        socialLimits: 41,
+        qualityOfLife: 25,
+        specificSymptoms: 60,
+        dizziness: 50,
+        date: new Date('2023-12-30'),
+      },
+      {
+        overall: 75,
+        physicalLimits: 58,
+        socialLimits: 75,
+        qualityOfLife: 60,
+        specificSymptoms: 80,
+        dizziness: 100,
+        date: new Date('2023-12-15'),
+      },
+    ],
+  })
+
+  res.write(data)
+  res.end()
+})
