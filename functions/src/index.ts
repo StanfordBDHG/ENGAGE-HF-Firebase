@@ -165,17 +165,48 @@ export const exportHealthSummary = onRequest(async (req, res) => {
     ],
     vitals: {
       systolicBloodPressure: [
-        { date: new Date('2024-02-01'), value: 109 }
+        { date: new Date('2024-02-01'), value: 110 },
+        { date: new Date('2024-01-31'), value: 114 },
+        { date: new Date('2024-01-30'), value: 123 },
+        { date: new Date('2024-01-29'), value: 109 },
+        { date: new Date('2024-01-28'), value: 105 },
+        { date: new Date('2024-01-27'), value: 98 },
+        { date: new Date('2024-01-26'), value: 94 },
+        { date: new Date('2024-01-25'), value: 104 },
+        { date: new Date('2024-01-24'), value: 102 }
       ],
       diastolicBloodPressure: [
-        { date: new Date('2024-02-01'), value: 76 }
+        { date: new Date('2024-02-01'), value: 70 },
+        { date: new Date('2024-01-31'), value: 82 },
+        { date: new Date('2024-01-30'), value: 75 },
+        { date: new Date('2024-01-29'), value: 77 },
+        { date: new Date('2024-01-28'), value: 72 },
+        { date: new Date('2024-01-27'), value: 68 },
+        { date: new Date('2024-01-26'), value: 65 },
+        { date: new Date('2024-01-25'), value: 72 },
+        { date: new Date('2024-01-24'), value: 80 }
       ],
       heartRate: [
-        { date: new Date('2024-02-01'), value: 62 }
+        { date: new Date('2024-02-01'), value: 79 },
+        { date: new Date('2024-01-31'), value: 62 },
+        { date: new Date('2024-01-30'), value: 77 },
+        { date: new Date('2024-01-29'), value: 63 },
+        { date: new Date('2024-01-28'), value: 61 },
+        { date: new Date('2024-01-27'), value: 70 },
+        { date: new Date('2024-01-26'), value: 67 },
+        { date: new Date('2024-01-25'), value: 80 },
+        { date: new Date('2024-01-24'), value: 65 }
       ],
       weight: [
-        { date: new Date('2024-02-01'), value: 270 },
-        { date: new Date('2024-01-31'), value: 266 }
+        { date: new Date('2024-02-01'), value: 269 },
+        { date: new Date('2024-01-31'), value: 267 },
+        { date: new Date('2024-01-30'), value: 267 },
+        { date: new Date('2024-01-29'), value: 265 },
+        { date: new Date('2024-01-28'), value: 268 },
+        { date: new Date('2024-01-27'), value: 268 },
+        { date: new Date('2024-01-26'), value: 266 },
+        { date: new Date('2024-01-25'), value: 266 },
+        { date: new Date('2024-01-24'), value: 267 }
       ],
       dryWeight: 267,
     },
