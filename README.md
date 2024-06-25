@@ -239,159 +239,159 @@ Here we keep a list of relevant codes for medication classes & medications for u
 
 ###### Medications & Doses
 
-|Medication|Dose|Code|
-|-|-|-|
-|Metoprolol succinate|-|[412432007](https://browser.ihtsdotools.org/?perspective=full&conceptId1=412432007)|
-|Metoprolol succinate ER|25mg|[879978003](https://browser.ihtsdotools.org/?perspective=full&conceptId1=879978003)|
-|Metoprolol succinate ER|50mg|[879979006](https://browser.ihtsdotools.org/?perspective=full&conceptId1=879979006)|
-|Metoprolol succinate ER|100mg|[879980009](https://browser.ihtsdotools.org/?perspective=full&conceptId1=879980009)|
-|Metoprolol succinate ER|200mg|[879981008](https://browser.ihtsdotools.org/?perspective=full&conceptId1=879981008)|
-|Carvedilol|-|[386870007](https://browser.ihtsdotools.org/?perspective=full&conceptId1=386870007)|
-|Carvedilol|3.125mg|[318633000](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318633000)|
-|Carvedilol|6.25mg|[318635007](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318635007)|
-|Carvedilol|12.5mg|[318631003](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318631003)|
-|Carvedilol|25mg|[318632005](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318632005)|
-|Carvedilol phosphate|-|[426471008](https://browser.ihtsdotools.org/?perspective=full&conceptId1=426471008)|
-|Carvedilol phosphate ER|10mg|[1187445001](https://browser.ihtsdotools.org/?perspective=full&conceptId1=1187445001)|
-|Carvedilol phosphate ER|20mg|[1187446000](https://browser.ihtsdotools.org/?perspective=full&conceptId1=1187446000)|
-|Carvedilol phosphate ER|40mg|[1208576006](https://browser.ihtsdotools.org/?perspective=full&conceptId1=1208576006)|
-|Carvedilol phosphate ER|80mg|[1208577002](https://browser.ihtsdotools.org/?perspective=full&conceptId1=1208577002)|
-|Bisoprolol|-|[386868003](https://browser.ihtsdotools.org/?perspective=full&conceptId1=386868003)|
-|Bisoprolol|5mg|[318590006](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318590006)|
-|Bisoprolol|10mg|[318591005](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318591005)|
-|Dapagliflozin|-|[703674001](https://browser.ihtsdotools.org/?perspective=full&conceptId1=703674001)|
-|Dapagliflozin|10mg|[1145541007](https://browser.ihtsdotools.org/?perspective=full&conceptId1=1145541007)|
-|Empagliflozin|-|[703894008](https://browser.ihtsdotools.org/?perspective=full&conceptId1=703894008)|
-|Empagliflozin|10mg|[703896005](https://browser.ihtsdotools.org/?perspective=full&conceptId1=703896005)|
-|Empagliflozin|25mg|[703897001](https://browser.ihtsdotools.org/?perspective=full&conceptId1=703897001)|
-|Sotagliflozin|-|TBD|
-|Sotagliflozin|200mg|TBD|
-|Sotagliflozin|400mg|TBD|
-|Bexagliflozin|-|TBD|
-|Bexagliflozin|20mg|TBD|
-|Canagliflozin|-|[703676004](https://browser.ihtsdotools.org/?perspective=full&conceptId1=703676004)|
-|Canagliflozin|100mg|[703682001](https://browser.ihtsdotools.org/?perspective=full&conceptId1=703682001)|
-|Canagliflozin|300mg|[765627002](https://browser.ihtsdotools.org/?perspective=full&conceptId1=765627002)|
-|Ertugliflozin|-|[764274008](https://browser.ihtsdotools.org/?perspective=full&conceptId1=764274008)|
-|Ertugliflozin|5mg|[1162397007](https://browser.ihtsdotools.org/?perspective=full&conceptId1=1162397007)|
-|Ertugliflozin|15mg|[1162394000](https://browser.ihtsdotools.org/?perspective=full&conceptId1=1162394000)|
-|Spironolactone|-|[387078006](https://browser.ihtsdotools.org/?perspective=full&conceptId1=387078006)|
-|Spironolactone|25mg|[318056008](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318056008)|
-|Spironolactone|50mg|[318057004](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318057004)|
-|Spironolactone|100mg|[318058009](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318058009)|
-|Eplerenone|-|[407010008](https://browser.ihtsdotools.org/?perspective=full&conceptId1=407010008)|
-|Eplerenone|25mg|[407011007](https://browser.ihtsdotools.org/?perspective=full&conceptId1=407011007)|
-|Eplerenone|50mg|[407012000](https://browser.ihtsdotools.org/?perspective=full&conceptId1=407012000)|
-|Quinapril|-|[386874003](https://browser.ihtsdotools.org/?perspective=full&conceptId1=386874003)|
-|Quinapril|5mg|[318885001](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318885001)|
-|Quinapril|10mg|[318886000](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318886000)|
-|Quinapril|20mg|[318887009](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318887009)|
-|Quinapril|40mg|[318894007](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318894007)|
-|Perindopril|-|[372916001](https://browser.ihtsdotools.org/?perspective=full&conceptId1=372916001)|
-|Perindopril|2mg|[318896009](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318896009)|
-|Perindopril|4mg|[318897000](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318897000)|
-|Perindopril|8mg|[374667004](https://browser.ihtsdotools.org/?perspective=full&conceptId1=374667004)|
-|Ramipril|-|[386872004](https://browser.ihtsdotools.org/?perspective=full&conceptId1=386872004)|
-|Ramipril|1.25mg|tablet: [408040007](https://browser.ihtsdotools.org/?perspective=full&conceptId1=408040007), capsule: [318900007](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318900007)|
-|Ramipril|2.5mg|tablet: [408050008](https://browser.ihtsdotools.org/?perspective=full&conceptId1=408050008), capsule: [318901006](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318901006)|
-|Ramipril|5mg|tablet: [408051007](https://browser.ihtsdotools.org/?perspective=full&conceptId1=408051007), capsule: [318902004](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318902004)|
-|Ramipril|10mg|tablet: [408052000](https://browser.ihtsdotools.org/?perspective=full&conceptId1=408052000), capsule: [318906001](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318906001)|
-|Benazepril|-|[372511001](https://browser.ihtsdotools.org/?perspective=full&conceptId1=372511001)|
-|Benazepril|5mg|[376516008](https://browser.ihtsdotools.org/?perspective=full&conceptId1=376516008)|
-|Benazepril|10mg|[376518009](https://browser.ihtsdotools.org/?perspective=full&conceptId1=376518009)|
-|Benazepril|20mg|[376520007](https://browser.ihtsdotools.org/?perspective=full&conceptId1=376520007)|
-|Benazepril|40mg|[376521006](https://browser.ihtsdotools.org/?perspective=full&conceptId1=376521006)|
-|Captopril|-|[387160004](https://browser.ihtsdotools.org/?perspective=full&conceptId1=387160004)|
-|Captopril|12.5mg|[318820009](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318820009)|
-|Captopril|25mg|[318821008](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318821008)|
-|Captopril|50mg|[318824000](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318824000)|
-|Captopril|100mg|[375105000](https://browser.ihtsdotools.org/?perspective=full&conceptId1=375105000)|
-|Enalapril|-|[372658000](https://browser.ihtsdotools.org/?perspective=full&conceptId1=372658000)|
-|Enalapril|2.5mg|[318850001](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318850001)|
-|Enalapril|5mg|[318851002](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318851002)|
-|Enalapril|10mg|[318853004](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318853004)|
-|Enalapril|20mg|[318855006](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318855006)|
-|Lisinopril|-|[386873009](https://browser.ihtsdotools.org/?perspective=full&conceptId1=386873009)|
-|Lisinopril|2.5mg|[318857003](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318857003)|
-|Lisinopril|5mg|[318858008](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318858008)|
-|Lisinopril|10mg|[318859000](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318859000)|
-|Lisinopril|20mg|[318860005](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318860005)|
-|Lisinopril|30mg|[374040006](https://browser.ihtsdotools.org/?perspective=full&conceptId1=374040006)|
-|Lisinopril|40mg|[376772000](https://browser.ihtsdotools.org/?perspective=full&conceptId1=376772000)|
-|Fosinopril|-|[372510000](https://browser.ihtsdotools.org/?perspective=full&conceptId1=372510000), sodium: [108570006](https://browser.ihtsdotools.org/?perspective=full&conceptId1=108570006)|
-|Fosinopril|10mg|sodium: [318909008](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318909008)|
-|Fosinopril|20mg|sodium: [318910003](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318910003)|
-|Fosinopril|40mg|sodium: [376699008](https://browser.ihtsdotools.org/?perspective=full&conceptId1=376699008)|
-|Trandolapril|-|[386871006](https://browser.ihtsdotools.org/?perspective=full&conceptId1=386871006)|
-|Trandolapril|1mg|[375094007](https://browser.ihtsdotools.org/?perspective=full&conceptId1=375094007)|
-|Trandolapril|2mg|[375095008](https://browser.ihtsdotools.org/?perspective=full&conceptId1=375095008)|
-|Trandolapril|4mg|[375096009](https://browser.ihtsdotools.org/?perspective=full&conceptId1=375096009)|
-|Moexipril|-|[373442003](https://browser.ihtsdotools.org/?perspective=full&conceptId1=373442003)|
-|Moexipril|7.5mg|[318934008](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318934008)|
-|Moexipril|15mg|[318935009](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318935009)|
-|Losartan|-|[373567002](https://browser.ihtsdotools.org/?perspective=full&conceptId1=373567002), potassium: [108582002](https://browser.ihtsdotools.org/?perspective=full&conceptId1=108582002)|
-|Losartan|25mg|potassium: [318955005](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318955005)|
-|Losartan|50mg|potassium: [318956006](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318956006)|
-|Losartan|100mg|potassium: [407784004](https://browser.ihtsdotools.org/?perspective=full&conceptId1=407784004)|
-|Valsartan|-|[386876001](https://browser.ihtsdotools.org/?perspective=full&conceptId1=386876001)|
-|Valsartan|40mg|[416515008](https://browser.ihtsdotools.org/?perspective=full&conceptId1=416515008)|
-|Valsartan|80mg|[375034009](https://browser.ihtsdotools.org/?perspective=full&conceptId1=375034009)|
-|Valsartan|160mg|[375035005](https://browser.ihtsdotools.org/?perspective=full&conceptId1=375035005)|
-|Valsartan|320mg|[376487009](https://browser.ihtsdotools.org/?perspective=full&conceptId1=376487009)|
-|Candesartan|-|[372512008](https://browser.ihtsdotools.org/?perspective=full&conceptId1=372512008)|
-|Candesartan|2mg|cilexetil: [318977009](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318977009)|
-|Candesartan|4mg|cilexetil: [318978004](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318978004)|
-|Candesartan|8mg|cilexetil: [318979007](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318979007)|
-|Candesartan|16mg|cilexetil: [318980005](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318980005)|
-|Candesartan|32mg|cilexetil: [376998003](https://browser.ihtsdotools.org/?perspective=full&conceptId1=376998003)|
-|Irbesartan|-|[386877005](https://browser.ihtsdotools.org/?perspective=full&conceptId1=386877005)|
-|Irbesartan|75mg|[318968002](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318968002)|
-|Irbesartan|150mg|[318969005](https://browser.ihtsdotools.org/?perspective=full&conceptId1318969005)|
-|Irbesartan|300mg|[318970006](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318970006)|
-|Telmisartan|-|[387069000](https://browser.ihtsdotools.org/?perspective=full&conceptId1=387069000)|
-|Telmisartan|20mg|[134463001](https://browser.ihtsdotools.org/?perspective=full&conceptId1=134463001)|
-|Telmisartan|40mg|[318986004](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318986004)|
-|Telmisartan|80mg|[318987008](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318987008)|
-|Olmesartan|-|[412259001](https://browser.ihtsdotools.org/?perspective=full&conceptId1=412259001), medoxomil: [412260006](https://browser.ihtsdotools.org/?perspective=full&conceptId1=412260006)|
-|Olmesartan|5mg|medoxomil: [385541002](https://browser.ihtsdotools.org/?perspective=full&conceptId1=385541002)|
-|Olmesartan|10mg|medoxomil: [408055003](https://browser.ihtsdotools.org/?perspective=full&conceptId1=408055003)|
-|Olmesartan|20mg|medoxomil: [385542009](https://browser.ihtsdotools.org/?perspective=full&conceptId1=385542009)|
-|Olmesartan|40mg|medoxomil: [385543004](https://browser.ihtsdotools.org/?perspective=full&conceptId1=385543004)|
-|Azilsartan|-|[385542009](https://browser.ihtsdotools.org/?perspective=full&conceptId1=385542009), medoxomil: [449561004](https://browser.ihtsdotools.org/?perspective=full&conceptId1=449561004)|
-|Azilsartan|20mg|medoxomil: [895430006](https://browser.ihtsdotools.org/?perspective=full&conceptId1=895430006)|
-|Azilsartan|40mg|medoxomil: [1137333005](https://browser.ihtsdotools.org/?perspective=full&conceptId1=1137333005)|
-|Azilsartan|80mg|medoxomil: [1137623008](https://browser.ihtsdotools.org/?perspective=full&conceptId1=1137623008)|
-|Eprosartan|-|[396044005](https://browser.ihtsdotools.org/?perspective=full&conceptId1=396044005), mesilate: [129488003](https://browser.ihtsdotools.org/?perspective=full&conceptId1=129488003)|
-|Eprosartan|300mg|mesilate: [318994006](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318994006)|
-|Eprosartan|400mg|mesilate: [318995007](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318995007)|
-|Eprosartan|600mg|mesilate: [318996008](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318995007)|
-|Eprosartan|800mg|TBD|
-|Sacubitril- Valsartan|-|[777480008](https://browser.ihtsdotools.org/?perspective=full&conceptId1=777480008)|
-|Sacubitril- Valsartan|24-26mg|[1162681006](https://browser.ihtsdotools.org/?perspective=full&conceptId1=1162681006)|
-|Sacubitril- Valsartan|49-51mg|[1162682004](https://browser.ihtsdotools.org/?perspective=full&conceptId1=1162682004)|
-|Sacubitril- Valsartan|97-103mg|[1162718004](https://browser.ihtsdotools.org/?perspective=full&conceptId1=1162718004)|
-|Furosemide|-|[387475002](https://browser.ihtsdotools.org/?perspective=full&conceptId1=387475002)|
-|Furosemide|20mg|[317971007](https://browser.ihtsdotools.org/?perspective=full&conceptId1=317971007)|
-|Furosemide|40mg|[317972000](https://browser.ihtsdotools.org/?perspective=full&conceptId1=317972000)|
-|Furosemide|80mg|[395510001](https://browser.ihtsdotools.org/?perspective=full&conceptId1=395510001)|
-|Furosemide|100mg|[1187430008](https://browser.ihtsdotools.org/?perspective=full&conceptId1=1187430008)|
-|Furosemide|500mg|[317973005](https://browser.ihtsdotools.org/?perspective=full&conceptId1=317973005)|
-|Bumetanide|-|[387498005](https://browser.ihtsdotools.org/?perspective=full&conceptId1=387498005)|
-|Bumetanide|0.5mg|[375553009](https://browser.ihtsdotools.org/?perspective=full&conceptId1=375553009)|
-|Bumetanide|1mg|[318021009](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318021009)|
-|Bumetanide|2mg|[375648005](https://browser.ihtsdotools.org/?perspective=full&conceptId1=375648005)|
-|Bumetanide|5mg|[318022002](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318022002)|
-|Torsemide|-|[108476002](https://browser.ihtsdotools.org/?perspective=full&conceptId1=108476002)|
-|Torsemide|2.5mg|[318040003](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318040003)|
-|Torsemide|5mg|[318041004](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318041004)|
-|Torsemide|10mg|[318042006](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318042006)|
-|Torsemide|20mg|[375711005](https://browser.ihtsdotools.org/?perspective=full&conceptId1=375711005)|
-|Torsemide|40mg|TBD|
-|Torsemide|60mg|TBD|
-|Torsemide|100mg|[375714002](https://browser.ihtsdotools.org/?perspective=full&conceptId1=375714002)|
-|Ethacrynic Acid|-|[373536004](https://browser.ihtsdotools.org/?perspective=full&conceptId1=373536004)|
-|Ethacrynic Acid|25mg|[376668007](https://browser.ihtsdotools.org/?perspective=full&conceptId1=376668007)|
-|Ethacrynic Acid|50mg|[376679002](https://browser.ihtsdotools.org/?perspective=full&conceptId1=376679002)|
+|Medication|Dose|SNOMED CT Code|RxCUI|
+|-|-|-|-|
+|Metoprolol succinate|-|[412432007](https://browser.ihtsdotools.org/?perspective=full&conceptId1=412432007)|221124|
+|Metoprolol succinate ER|25mg|[879978003](https://browser.ihtsdotools.org/?perspective=full&conceptId1=879978003)|1999035|
+|Metoprolol succinate ER|50mg|[879979006](https://browser.ihtsdotools.org/?perspective=full&conceptId1=879979006)|1999037|
+|Metoprolol succinate ER|100mg|[879980009](https://browser.ihtsdotools.org/?perspective=full&conceptId1=879980009)|1999031|
+|Metoprolol succinate ER|200mg|[879981008](https://browser.ihtsdotools.org/?perspective=full&conceptId1=879981008)|1999033|
+|Carvedilol|-|[386870007](https://browser.ihtsdotools.org/?perspective=full&conceptId1=386870007)|20352|
+|Carvedilol|3.125mg|[318633000](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318633000)|686923|
+|Carvedilol|6.25mg|[318635007](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318635007)|315577|
+|Carvedilol|12.5mg|[318631003](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318631003)|315575|
+|Carvedilol|25mg|[318632005](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318632005)|315576|
+|Carvedilol phosphate|-|[426471008](https://browser.ihtsdotools.org/?perspective=full&conceptId1=426471008)|668310|
+|Carvedilol phosphate ER|10mg|[1187445001](https://browser.ihtsdotools.org/?perspective=full&conceptId1=1187445001)|860510|
+|Carvedilol phosphate ER|20mg|[1187446000](https://browser.ihtsdotools.org/?perspective=full&conceptId1=1187446000)|860516|
+|Carvedilol phosphate ER|40mg|[1208576006](https://browser.ihtsdotools.org/?perspective=full&conceptId1=1208576006)|860522|
+|Carvedilol phosphate ER|80mg|[1208577002](https://browser.ihtsdotools.org/?perspective=full&conceptId1=1208577002)|860532|
+|Bisoprolol|-|[386868003](https://browser.ihtsdotools.org/?perspective=full&conceptId1=386868003)|19484|
+|Bisoprolol|5mg|[318590006](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318590006)|854904|
+|Bisoprolol|10mg|[318591005](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318591005)|854900|
+|Dapagliflozin|-|[703674001](https://browser.ihtsdotools.org/?perspective=full&conceptId1=703674001)|1488564|
+|Dapagliflozin|10mg|[1145541007](https://browser.ihtsdotools.org/?perspective=full&conceptId1=1145541007)|1488565|
+|Empagliflozin|-|[703894008](https://browser.ihtsdotools.org/?perspective=full&conceptId1=703894008)|1545653|
+|Empagliflozin|10mg|[703896005](https://browser.ihtsdotools.org/?perspective=full&conceptId1=703896005)|1545654|
+|Empagliflozin|25mg|[703897001](https://browser.ihtsdotools.org/?perspective=full&conceptId1=703897001)|1545665|
+|Sotagliflozin|-|TBD|2638675|
+|Sotagliflozin|200mg|TBD|2638679|
+|Sotagliflozin|400mg|TBD|2638690|
+|Bexagliflozin|-|TBD|2627044|
+|Bexagliflozin|20mg|TBD|2637858|
+|Canagliflozin|-|[703676004](https://browser.ihtsdotools.org/?perspective=full&conceptId1=703676004)|1373458|
+|Canagliflozin|100mg|[703682001](https://browser.ihtsdotools.org/?perspective=full&conceptId1=703682001)|1373459|
+|Canagliflozin|300mg|[765627002](https://browser.ihtsdotools.org/?perspective=full&conceptId1=765627002)|1373470|
+|Ertugliflozin|-|[764274008](https://browser.ihtsdotools.org/?perspective=full&conceptId1=764274008)|1992672|
+|Ertugliflozin|5mg|[1162397007](https://browser.ihtsdotools.org/?perspective=full&conceptId1=1162397007)|1992806|
+|Ertugliflozin|15mg|[1162394000](https://browser.ihtsdotools.org/?perspective=full&conceptId1=1162394000)|1992818|
+|Spironolactone|-|[387078006](https://browser.ihtsdotools.org/?perspective=full&conceptId1=387078006)|9997|
+|Spironolactone|25mg|[318056008](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318056008)|316728|
+|Spironolactone|50mg|[318057004](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318057004)|317508|
+|Spironolactone|100mg|[318058009](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318058009)|316727|
+|Eplerenone|-|[407010008](https://browser.ihtsdotools.org/?perspective=full&conceptId1=407010008)|298869|
+|Eplerenone|25mg|[407011007](https://browser.ihtsdotools.org/?perspective=full&conceptId1=407011007)|353386|
+|Eplerenone|50mg|[407012000](https://browser.ihtsdotools.org/?perspective=full&conceptId1=407012000)|353387|
+|Quinapril|-|[386874003](https://browser.ihtsdotools.org/?perspective=full&conceptId1=386874003)|35208|
+|Quinapril|5mg|[318885001](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318885001)|316619|
+|Quinapril|10mg|[318886000](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318886000)|316616|
+|Quinapril|20mg|[318887009](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318887009)|316617|
+|Quinapril|40mg|[318894007](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318894007)|316618|
+|Perindopril|-|[372916001](https://browser.ihtsdotools.org/?perspective=full&conceptId1=372916001)|54552|
+|Perindopril|2mg|[318896009](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318896009)|854983|
+|Perindopril|4mg|[318897000](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318897000)|854987|
+|Perindopril|8mg|[374667004](https://browser.ihtsdotools.org/?perspective=full&conceptId1=374667004)|854923|
+|Ramipril|-|[386872004](https://browser.ihtsdotools.org/?perspective=full&conceptId1=386872004)|35296|
+|Ramipril|1.25mg|tablet: [408040007](https://browser.ihtsdotools.org/?perspective=full&conceptId1=408040007), capsule: [318900007](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318900007)|316626|
+|Ramipril|2.5mg|tablet: [408050008](https://browser.ihtsdotools.org/?perspective=full&conceptId1=408050008), capsule: [318901006](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318901006)|316628|
+|Ramipril|5mg|tablet: [408051007](https://browser.ihtsdotools.org/?perspective=full&conceptId1=408051007), capsule: [318902004](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318902004)|317482|
+|Ramipril|10mg|tablet: [408052000](https://browser.ihtsdotools.org/?perspective=full&conceptId1=408052000), capsule: [318906001](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318906001)|316627|
+|Benazepril|-|[372511001](https://browser.ihtsdotools.org/?perspective=full&conceptId1=372511001)|18867|
+|Benazepril|5mg|[376516008](https://browser.ihtsdotools.org/?perspective=full&conceptId1=376516008)|898377|
+|Benazepril|10mg|[376518009](https://browser.ihtsdotools.org/?perspective=full&conceptId1=376518009)|898349|
+|Benazepril|20mg|[376520007](https://browser.ihtsdotools.org/?perspective=full&conceptId1=376520007)|898341|
+|Benazepril|40mg|[376521006](https://browser.ihtsdotools.org/?perspective=full&conceptId1=376521006)|898345|
+|Captopril|-|[387160004](https://browser.ihtsdotools.org/?perspective=full&conceptId1=387160004)|1998|
+|Captopril|12.5mg|[318820009](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318820009)|315560|
+|Captopril|25mg|[318821008](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318821008)|315561|
+|Captopril|50mg|[318824000](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318824000)|315562|
+|Captopril|100mg|[375105000](https://browser.ihtsdotools.org/?perspective=full&conceptId1=375105000)|315559|
+|Enalapril|-|[372658000](https://browser.ihtsdotools.org/?perspective=full&conceptId1=372658000)|3827|
+|Enalapril|2.5mg|[318850001](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318850001)|858803|
+|Enalapril|5mg|[318851002](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318851002)|833236|
+|Enalapril|10mg|[318853004](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318853004)|858816|
+|Enalapril|20mg|[318855006](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318855006)|858809|
+|Lisinopril|-|[386873009](https://browser.ihtsdotools.org/?perspective=full&conceptId1=386873009)|29046|
+|Lisinopril|2.5mg|[318857003](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318857003)|316152|
+|Lisinopril|5mg|[318858008](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318858008)|316156|
+|Lisinopril|10mg|[318859000](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318859000)|316151|
+|Lisinopril|20mg|[318860005](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318860005)|316153|
+|Lisinopril|30mg|[374040006](https://browser.ihtsdotools.org/?perspective=full&conceptId1=374040006)|316154|
+|Lisinopril|40mg|[376772000](https://browser.ihtsdotools.org/?perspective=full&conceptId1=376772000)|316155|
+|Fosinopril|-|[372510000](https://browser.ihtsdotools.org/?perspective=full&conceptId1=372510000), sodium: [108570006](https://browser.ihtsdotools.org/?perspective=full&conceptId1=108570006)|50166|
+|Fosinopril|10mg|sodium: [318909008](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318909008)|857165|
+|Fosinopril|20mg|sodium: [318910003](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318910003)|857173|
+|Fosinopril|40mg|sodium: [376699008](https://browser.ihtsdotools.org/?perspective=full&conceptId1=376699008)|857186|
+|Trandolapril|-|[386871006](https://browser.ihtsdotools.org/?perspective=full&conceptId1=386871006)|38454|
+|Trandolapril|1mg|[375094007](https://browser.ihtsdotools.org/?perspective=full&conceptId1=375094007)|317522|
+|Trandolapril|2mg|[375095008](https://browser.ihtsdotools.org/?perspective=full&conceptId1=375095008)|316847|
+|Trandolapril|4mg|[375096009](https://browser.ihtsdotools.org/?perspective=full&conceptId1=375096009)|316848|
+|Moexipril|-|[373442003](https://browser.ihtsdotools.org/?perspective=full&conceptId1=373442003)|30131|
+|Moexipril|7.5mg|[318934008](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318934008)|1299870|
+|Moexipril|15mg|[318935009](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318935009)|1299858|
+|Losartan|-|[373567002](https://browser.ihtsdotools.org/?perspective=full&conceptId1=373567002), potassium: [108582002](https://browser.ihtsdotools.org/?perspective=full&conceptId1=108582002)|52175|
+|Losartan|25mg|potassium: [318955005](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318955005)|979484|
+|Losartan|50mg|potassium: [318956006](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318956006)|979467|
+|Losartan|100mg|potassium: [407784004](https://browser.ihtsdotools.org/?perspective=full&conceptId1=407784004)|979463|
+|Valsartan|-|[386876001](https://browser.ihtsdotools.org/?perspective=full&conceptId1=386876001)|69749|
+|Valsartan|40mg|[416515008](https://browser.ihtsdotools.org/?perspective=full&conceptId1=416515008)|335831|
+|Valsartan|80mg|[375034009](https://browser.ihtsdotools.org/?perspective=full&conceptId1=375034009)|316882|
+|Valsartan|160mg|[375035005](https://browser.ihtsdotools.org/?perspective=full&conceptId1=375035005)|316881|
+|Valsartan|320mg|[376487009](https://browser.ihtsdotools.org/?perspective=full&conceptId1=376487009)|350561|
+|Candesartan|-|[372512008](https://browser.ihtsdotools.org/?perspective=full&conceptId1=372512008)|214354|
+|Candesartan|2mg|cilexetil: [318977009](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318977009)|639535|
+|Candesartan|4mg|cilexetil: [318978004](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318978004)|540781|
+|Candesartan|8mg|cilexetil: [318979007](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318979007)|540788|
+|Candesartan|16mg|cilexetil: [318980005](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318980005)|577775|
+|Candesartan|32mg|cilexetil: [376998003](https://browser.ihtsdotools.org/?perspective=full&conceptId1=376998003)|577780|
+|Irbesartan|-|[386877005](https://browser.ihtsdotools.org/?perspective=full&conceptId1=386877005)|83818|
+|Irbesartan|75mg|[318968002](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318968002)|316100|
+|Irbesartan|150mg|[318969005](https://browser.ihtsdotools.org/?perspective=full&conceptId1318969005)|316098|
+|Irbesartan|300mg|[318970006](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318970006)|316099|
+|Telmisartan|-|[387069000](https://browser.ihtsdotools.org/?perspective=full&conceptId1=387069000)|73494|
+|Telmisartan|20mg|[134463001](https://browser.ihtsdotools.org/?perspective=full&conceptId1=134463001)|331555|
+|Telmisartan|40mg|[318986004](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318986004)|316764|
+|Telmisartan|80mg|[318987008](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318987008)|316765|
+|Olmesartan|-|[412259001](https://browser.ihtsdotools.org/?perspective=full&conceptId1=412259001), medoxomil: [412260006](https://browser.ihtsdotools.org/?perspective=full&conceptId1=412260006)|321064|
+|Olmesartan|5mg|medoxomil: [385541002](https://browser.ihtsdotools.org/?perspective=full&conceptId1=385541002)|359115|
+|Olmesartan|10mg|medoxomil: [408055003](https://browser.ihtsdotools.org/?perspective=full&conceptId1=408055003)|402407|
+|Olmesartan|20mg|medoxomil: [385542009](https://browser.ihtsdotools.org/?perspective=full&conceptId1=385542009)|358775|
+|Olmesartan|40mg|medoxomil: [385543004](https://browser.ihtsdotools.org/?perspective=full&conceptId1=385543004)|359114|
+|Azilsartan|-|[385542009](https://browser.ihtsdotools.org/?perspective=full&conceptId1=385542009), medoxomil: [449561004](https://browser.ihtsdotools.org/?perspective=full&conceptId1=449561004)|1091643|
+|Azilsartan|20mg|medoxomil: [895430006](https://browser.ihtsdotools.org/?perspective=full&conceptId1=895430006)|N/A|
+|Azilsartan|40mg|medoxomil: [1137333005](https://browser.ihtsdotools.org/?perspective=full&conceptId1=1137333005)|1091644|
+|Azilsartan|80mg|medoxomil: [1137623008](https://browser.ihtsdotools.org/?perspective=full&conceptId1=1137623008)|1091651|
+|Eprosartan|-|[396044005](https://browser.ihtsdotools.org/?perspective=full&conceptId1=396044005), mesilate: [129488003](https://browser.ihtsdotools.org/?perspective=full&conceptId1=129488003)|83515|
+|Eprosartan|300mg|mesilate: [318994006](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318994006)|393447|
+|Eprosartan|400mg|mesilate: [318995007](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318995007)|330329|
+|Eprosartan|600mg|mesilate: [318996008](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318995007)|330330|
+|Eprosartan|800mg|TBD|N/A|
+|Sacubitril- Valsartan|-|[777480008](https://browser.ihtsdotools.org/?perspective=full&conceptId1=777480008)|1656339|
+|Sacubitril- Valsartan|24-26mg|[1162681006](https://browser.ihtsdotools.org/?perspective=full&conceptId1=1162681006)|1656340|
+|Sacubitril- Valsartan|49-51mg|[1162682004](https://browser.ihtsdotools.org/?perspective=full&conceptId1=1162682004)|1656349|
+|Sacubitril- Valsartan|97-103mg|[1162718004](https://browser.ihtsdotools.org/?perspective=full&conceptId1=1162718004)|1656354|
+|Furosemide|-|[387475002](https://browser.ihtsdotools.org/?perspective=full&conceptId1=387475002)|4603|
+|Furosemide|20mg|[317971007](https://browser.ihtsdotools.org/?perspective=full&conceptId1=317971007)|315970|
+|Furosemide|40mg|[317972000](https://browser.ihtsdotools.org/?perspective=full&conceptId1=317972000)|315971|
+|Furosemide|80mg|[395510001](https://browser.ihtsdotools.org/?perspective=full&conceptId1=395510001)|317377|
+|Furosemide|100mg|[1187430008](https://browser.ihtsdotools.org/?perspective=full&conceptId1=1187430008)|N/A|
+|Furosemide|500mg|[317973005](https://browser.ihtsdotools.org/?perspective=full&conceptId1=317973005)|331965|
+|Bumetanide|-|[387498005](https://browser.ihtsdotools.org/?perspective=full&conceptId1=387498005)|1808|
+|Bumetanide|0.5mg|[375553009](https://browser.ihtsdotools.org/?perspective=full&conceptId1=375553009)|315500|
+|Bumetanide|1mg|[318021009](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318021009)|315501|
+|Bumetanide|2mg|[375648005](https://browser.ihtsdotools.org/?perspective=full&conceptId1=375648005)|315502|
+|Bumetanide|5mg|[318022002](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318022002)|332696|
+|Torsemide|-|[108476002](https://browser.ihtsdotools.org/?perspective=full&conceptId1=108476002)|38413|
+|Torsemide|2.5mg|[318040003](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318040003)|335760|
+|Torsemide|5mg|[318041004](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318041004)|316845|
+|Torsemide|10mg|[318042006](https://browser.ihtsdotools.org/?perspective=full&conceptId1=318042006)|316842|
+|Torsemide|20mg|[375711005](https://browser.ihtsdotools.org/?perspective=full&conceptId1=375711005)|317521|
+|Torsemide|40mg|TBD|2589880|
+|Torsemide|60mg|TBD|2589884|
+|Torsemide|100mg|[375714002](https://browser.ihtsdotools.org/?perspective=full&conceptId1=375714002)|316844|
+|Ethacrynic Acid|-|[373536004](https://browser.ihtsdotools.org/?perspective=full&conceptId1=373536004)|4109|
+|Ethacrynic Acid|25mg|[376668007](https://browser.ihtsdotools.org/?perspective=full&conceptId1=376668007)|1251902|
+|Ethacrynic Acid|50mg|[376679002](https://browser.ihtsdotools.org/?perspective=full&conceptId1=376679002)|1251906|
 
 ### /users/$userId$/medicationRequests/$medicationRequestId$
 
