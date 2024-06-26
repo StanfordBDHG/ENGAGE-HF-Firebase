@@ -492,32 +492,27 @@ class HealthSummaryPDFGenerator {
     this.addText(
       `Next Appointment: ${this.formatDate(this.data.nextAppointment)}`,
     )
-    this.moveDown(8)
-
+    
     const innerWidth = this.pageWidth - this.margins.left - this.margins.right
+    const pageNumberText = `Page ${this.doc.getNumberOfPages()}`
+    const pageNumberWidth = this.doc.getTextWidth(pageNumberText)
+    this.cursor.x = this.margins.left + innerWidth - pageNumberWidth
+    this.cursor.y -= this.textStyles.body.fontSize
+    this.addText(
+      pageNumberText,
+      this.textStyles.body,
+      pageNumberWidth,
+    )
+    this.cursor.x = this.margins.left
+
+    this.moveDown(8)
     this.addLine(
       { x: this.cursor.x, y: this.cursor.y },
       { x: this.cursor.x + innerWidth, y: this.cursor.y },
       this.colors.black,
       1,
     )
-    this.addLine(
-      { x: this.cursor.x + innerWidth - 18, y: this.cursor.y - 30 },
-      { x: this.cursor.x + innerWidth + 18, y: this.cursor.y - 30 },
-      this.colors.lightGray,
-      0.5,
-    )
     this.moveDown(8)
-
-    const headerFinalCursor = { x: this.cursor.x, y: this.cursor.y }
-    this.cursor.x = this.cursor.x + innerWidth - 18
-    this.cursor.y = this.cursor.y - 30
-    this.addText(
-      `Page ${this.doc.getNumberOfPages()}`,
-      this.textStyles.body,
-      36,
-    )
-    this.cursor = headerFinalCursor
   }
 
   addSectionTitle(title: string) {
