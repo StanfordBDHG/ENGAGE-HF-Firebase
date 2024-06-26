@@ -1,9 +1,10 @@
 import { jsPDF } from 'jspdf'
-import { type UserOptions } from 'jspdf-autotable'
+import { CellDef, RowInput, type UserOptions } from 'jspdf-autotable'
 import 'jspdf-autotable'
 import svg2img from 'svg2img'
 import { generateChartSvg } from './generateChart.js'
 import { generateSpeedometerSvg } from './generateSpeedometer.js'
+import { color } from 'd3'
 
 export async function generateHealthSummary(
   data: HealthSummaryData,
@@ -104,39 +105,93 @@ class HealthSummaryPDFGenerator {
           columnWidth,
         )
         this.moveDown(this.textStyles.body.fontSize + 4)
-        this.data.currentMedications.forEach((medication) => {
-          this.addText(
-            `${medication.name} - ${medication.instruction}`,
-            medication.isBold ? this.textStyles.bodyBold : this.textStyles.body,
-            columnWidth,
-          )
-          this.moveDown(4)
-        })
+        this.addText(
+          'Before your next clinic appointment, check off which medications you have been taking below:',
+          this.textStyles.body,
+          columnWidth,
+        )
+        this.moveDown(this.textStyles.body.fontSize)
       },
       async (columnWidth) => {
         this.addText(
-          'Potential Medication Optimizations',
+          'Potential Positive Changes',
           this.textStyles.bodyBold,
           columnWidth,
         )
         this.moveDown(this.textStyles.body.fontSize + 4)
-        this.data.proposedMedications.forEach((medication) => {
-          this.addText(
-            `${medication.name} - ${medication.instruction}`,
-            medication.isBold ? this.textStyles.bodyBold : this.textStyles.body,
-            columnWidth,
-          )
-          this.moveDown(4)
-        })
-        this.moveDown(this.textStyles.body.fontSize)
         this.addText(
-          'Based on your current vitals, labs, and symptoms, consider discussing optimizing these medications with your care team. Please consider starting with the bolded medication change.',
-          this.textStyles.bodyColored,
+          'Please discuss optimizing these medications with your care them at your next clinic appointment. Aim to make one positive change!',
+          this.textStyles.body,
           columnWidth,
         )
-        this.moveDown(4)
+        this.moveDown(this.textStyles.body.fontSize)
       },
     )
+
+    function colorForCategory(category: MedicationRequest['category']): string | undefined {
+      switch (category) {
+        case 'targetDoseReached':
+          return 'rgb(0,255,0)'
+        case 'improvementAvailable':
+          return 'rgb(255,255,0)'
+        case 'notStarted':
+          return 'rgb(211,211,211)'
+      }
+    }
+
+    const tableContent: CellDef[][] = [
+     [
+      {
+          title:'My medications',
+      }, 
+      {
+          title:'Dose', 
+      },
+      {
+          title:'Target dose', 
+      },
+      {
+          title:'Potential Positive Change',
+      }, 
+      {
+          title:'Questions/Comments'
+      },
+    ],
+    ...this.data.medicationRequests.map((request, index) => [
+        {
+          title: '[ ] ' + request.name
+        },
+        {
+          styles: { 
+            fillColor: colorForCategory(request.category)
+          },
+          title: request.dose
+        },
+        {
+          styles: { 
+            fillColor: colorForCategory(request.category)
+          },
+          title: request.targetDose
+        },
+        {
+          title: request.potentialPositiveChange
+        },
+        {
+          styles: {
+            lineWidth: {
+              bottom: index === this.data.medicationRequests.length - 1 ? 0.5 : 0,
+              top: 0,
+              left: 0.5,
+              right: 0.5,
+            },
+          },
+          title: ''
+        },
+      ])
+    ]
+
+    this.addTable(tableContent)
+    this.moveDown(this.textStyles.body.fontSize)
   }
 
   async addVitalsSection() {
@@ -176,7 +231,7 @@ class HealthSummaryPDFGenerator {
           this.textStyles.body,
           columnWidth,
         )
-        this.moveDown(4)
+        this.moveDown(this.textStyles.body.fontSize)
       },
       async (columnWidth) => {
         this.addText(
@@ -196,7 +251,7 @@ class HealthSummaryPDFGenerator {
           this.textStyles.body,
           columnWidth,
         )
-        this.moveDown(4)
+        this.moveDown(this.textStyles.body.fontSize)
       },
     )
   }
@@ -234,9 +289,9 @@ class HealthSummaryPDFGenerator {
           this.textStyles.bodyColored,
           columnWidth,
         )
+        this.moveDown(this.textStyles.body.fontSize)
       },
     )
-    this.moveDown(8)
 
     const tableContent = [
       [
@@ -343,64 +398,10 @@ class HealthSummaryPDFGenerator {
           this.textStyles.bodyBold,
           columnWidth,
         )
-        await this.addChart(this.data.vitals.systolicBloodPressure, columnWidth)
-        const systolicValues = [...this.data.vitals.systolicBloodPressure].sort(
-          (a, b) => a.value - b.value,
+        await this.addChart(
+          this.data.vitals.systolicBloodPressure, 
+          columnWidth
         )
-        const systolicMedian =
-          systolicValues[Math.floor(systolicValues.length / 2)]
-        const systolicUpperMedian =
-          systolicValues[Math.floor(systolicValues.length * 0.75)]
-        const systolicLowerMedian =
-          systolicValues[Math.floor(systolicValues.length * 0.25)]
-
-        const diastolicValues = [
-          ...this.data.vitals.diastolicBloodPressure,
-        ].sort((a, b) => a.value - b.value)
-        const diastolicMedian =
-          diastolicValues[Math.floor(diastolicValues.length / 2)]
-        const diastolicUpperMedian =
-          diastolicValues[Math.floor(diastolicValues.length * 0.75)]
-        const diastolicLowerMedian =
-          diastolicValues[Math.floor(diastolicValues.length * 0.25)]
-
-        const percentageBelow =
-          (this.data.vitals.systolicBloodPressure.filter(
-            (observation) => observation.value < 50,
-          ).length /
-            systolicValues.length) *
-          100
-        const percentageAbove =
-          (this.data.vitals.systolicBloodPressure.filter(
-            (observation) => observation.value > 120,
-          ).length /
-            systolicValues.length) *
-          100
-        this.addTable(
-          [
-            [' ', 'Median', 'IQR', '% Under 50', '% Over 120'],
-            [
-              'Systolic',
-              systolicMedian.value.toFixed(0),
-              (systolicUpperMedian.value - systolicLowerMedian.value).toFixed(
-                0,
-              ),
-              percentageBelow.toFixed(0),
-              percentageAbove.toFixed(0),
-            ],
-            [
-              'Diastolic',
-              diastolicMedian.value.toFixed(0),
-              (diastolicUpperMedian.value - diastolicLowerMedian.value).toFixed(
-                0,
-              ),
-              '-',
-              '-',
-            ],
-          ],
-          columnWidth,
-        )
-        this.moveDown(this.textStyles.body.fontSize * 2)
       },
       async (columnWidth) => {
         this.addText(
@@ -414,6 +415,63 @@ class HealthSummaryPDFGenerator {
         )
       },
     )
+
+    const systolicValues = [...this.data.vitals.systolicBloodPressure].sort(
+      (a, b) => a.value - b.value,
+    )
+    const systolicMedian =
+      systolicValues[Math.floor(systolicValues.length / 2)]
+    const systolicUpperMedian =
+      systolicValues[Math.floor(systolicValues.length * 0.75)]
+    const systolicLowerMedian =
+      systolicValues[Math.floor(systolicValues.length * 0.25)]
+
+    const diastolicValues = [
+      ...this.data.vitals.diastolicBloodPressure,
+    ].sort((a, b) => a.value - b.value)
+    const diastolicMedian =
+      diastolicValues[Math.floor(diastolicValues.length / 2)]
+    const diastolicUpperMedian =
+      diastolicValues[Math.floor(diastolicValues.length * 0.75)]
+    const diastolicLowerMedian =
+      diastolicValues[Math.floor(diastolicValues.length * 0.25)]
+
+    const percentageBelow =
+      (this.data.vitals.systolicBloodPressure.filter(
+        (observation) => observation.value < 90,
+      ).length /
+        systolicValues.length) *
+      100
+    const percentageAbove =
+      (this.data.vitals.systolicBloodPressure.filter(
+        (observation) => observation.value > 180,
+      ).length /
+        systolicValues.length) *
+      100
+    this.addTable(
+      [
+        [' ', 'Median', 'IQR', '% Under 90 mmHg', '% Over 180 mmHg'],
+        [
+          'Systolic',
+          systolicMedian.value.toFixed(0),
+          (systolicUpperMedian.value - systolicLowerMedian.value).toFixed(
+            0,
+          ),
+          percentageBelow.toFixed(0),
+          percentageAbove.toFixed(0),
+        ],
+        [
+          'Diastolic',
+          diastolicMedian.value.toFixed(0),
+          (diastolicUpperMedian.value - diastolicLowerMedian.value).toFixed(
+            0,
+          ),
+          '-',
+          '-',
+        ],
+      ],
+    )
+    this.moveDown(this.textStyles.body.fontSize * 2)
   }
 
   addPage() {
@@ -531,7 +589,7 @@ class HealthSummaryPDFGenerator {
     this.moveDown(height)
   }
 
-  addTable(rows: string[][], maxWidth?: number) {
+  addTable(rows: RowInput[], maxWidth?: number) {
     const options: UserOptions = {
       margin: { left: this.cursor.x },
       theme: 'grid',

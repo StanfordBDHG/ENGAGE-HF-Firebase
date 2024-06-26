@@ -3,8 +3,7 @@ interface HealthSummaryData {
   dateOfBirth: Date
   provider: string
   nextAppointment: Date
-  currentMedications: MedicationRequest[]
-  proposedMedications: MedicationRequest[]
+  medicationRequests: MedicationRequest[]
   vitals: Vitals
   symptomScores: SymptomScore[]
 }

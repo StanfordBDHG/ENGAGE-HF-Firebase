@@ -152,19 +152,27 @@ export const exportHealthSummary = onRequest(async (req, res) => {
     dateOfBirth: new Date('1970-01-02'),
     provider: 'Dr. XXX',
     nextAppointment: new Date('2024-02-03'),
-    currentMedications: [
-      { name: 'Dapagliflozin 5mg', instruction: 'Take Once Daily' },
-      { name: 'Losartan 25mg', instruction: 'Take Once Daily' },
-    ],
-    proposedMedications: [
-      {
-        name: 'Carvediol 3.125mg',
-        instruction: 'Take Once Daily',
-        isBold: true,
+    medicationRequests: [
+      { 
+        name: 'Losartan (Cozaar)',
+        dose: '25mg Daily',
+        targetDose: '100mg Daily', 
+        potentialPositiveChange: 'Switch to Sacubitril-Valsartan (More Effective Medication)',
+        category: 'improvementAvailable',
       },
-      {
-        name: 'Sacubitril-Valsartan 24-25mg',
-        instruction: 'Take Twice Daily',
+      { 
+        name: 'Dapagliflozin (Farxiga)',
+        dose: '10mg Daily',
+        targetDose: '10mg Daily',
+        potentialPositiveChange: 'Continue Dose',
+        category: 'targetDoseReached',
+      },
+      { 
+        name: 'Carvedilol (Coreg)',
+        dose: 'Not Taking',
+        targetDose: '25-50mg Twice Daily',
+        potentialPositiveChange: 'Start Medication',
+        category: 'notStarted',
       },
     ],
     vitals: {

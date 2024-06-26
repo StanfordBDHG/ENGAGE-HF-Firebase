@@ -20,14 +20,15 @@ export function generateSpeedometerSvg(
   }
   generator.addArc(markers)
   generator.addZeroLabel()
+  generator.addLegend()
   return generator.finish()
 }
 
 class SpeedometerSvgGenerator {
   primaryColor = 'rgb(0,121,251)'
   secondaryColor = 'rgb(145,145,145)'
-  positiveColor = 'rgb(0,255,39)'
-  negativeColor = 'rgb(255,0,39)'
+  positiveColor = 'rgb(0,127,63)'
+  negativeColor = 'rgb(255,0,31)'
   trendFontSize = 10
 
   dom = new JSDOM('<!DOCTYPE html><html><body></body></html>')
@@ -79,15 +80,15 @@ class SpeedometerSvgGenerator {
     gradient
       .append('stop')
       .attr('offset', '0%')
-      .attr('stop-color', 'rgb(255,0,37)')
+      .attr('stop-color', 'rgb(255,0,31)')
     gradient
       .append('stop')
       .attr('offset', '50%')
-      .attr('stop-color', 'rgb(255,191,45)')
+      .attr('stop-color', 'rgb(255,191,47)')
     gradient
       .append('stop')
       .attr('offset', '100%')
-      .attr('stop-color', 'rgb(0,122,49)')
+      .attr('stop-color', 'rgb(0,127,63)')
 
       console.log(this.innerArcRadius, ' ', this.outerArcRadius, this.size.width)
     this.svg
@@ -119,7 +120,7 @@ class SpeedometerSvgGenerator {
       const transform = `translate(${translationX},${translationY}) rotate(${rotation},${arcCenter.x},${arcCenter.y})`
       this.svg.append('path')
         .attr('d', path)
-        .attr('stroke-width', 2)
+        .attr('stroke-width', 4)
         .attr('stroke', marker.color)
         .attr('fill', 'none')
         .attr('transform', transform)
@@ -170,6 +171,44 @@ class SpeedometerSvgGenerator {
       .style('font-weight', 'bold')
       .style('stroke', this.secondaryColor)
       .text('0%')
+  }
+
+  addLegend() {
+    const legendFontSize = 8
+    const legendMargin = this.legendHeight - legendFontSize
+    const legendBaselineY = this.margins.top + this.innerSize.height + legendFontSize + legendMargin
+    const legendLineLength = this.size.width * 0.075
+    const legendLinesY = legendBaselineY - legendFontSize / 2
+    
+    this.svg
+      .append('text')
+      .attr('x', this.margins.left + this.size.width * 0.1)
+      .attr('y', legendBaselineY)
+      .style('text-anchor', 'left')
+      .style('font-size', `${legendFontSize}pt`)
+      .text('Previous')
+
+      const previousPath = `M ${this.margins.left} ${legendLinesY} L ${this.margins.left + legendLineLength} ${legendLinesY}`
+      this.svg.append('path')
+        .attr('d', previousPath)
+        .attr('stroke-width', 2)
+        .attr('stroke', this.secondaryColor)
+        .attr('fill', 'none')
+
+    this.svg
+      .append('text')
+      .attr('x', this.size.width * 0.6)
+      .attr('y', legendBaselineY)
+      .style('text-anchor', 'left')
+      .style('font-size', `${legendFontSize}pt`)
+      .text('Current')
+
+      const currentPath = `M ${this.size.width / 2} ${legendLinesY} L ${this.size.width / 2 + legendLineLength} ${legendLinesY}`
+      this.svg.append('path')
+        .attr('d', currentPath)
+        .attr('stroke-width', 2)
+        .attr('stroke', this.primaryColor)
+        .attr('fill', 'none')
   }
 
   finish(): string {
