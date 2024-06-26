@@ -58,15 +58,15 @@ The clinicianId corresponds to the userId of the clinicians similar to how it is
 
 |Property|Type|Values|Comments|
 |-|-|-|-|
-|organization|string|-|organizationId as can be used with /organizations/$organizationId$|
-||||
+|id|string|-|SUNetID or equivalent id from another organization.|
+|organization|string|-|organizationId as can be used with /organizations/$organizationId$.|
 
-TBD: Can any user query for a userId and get their name? If not, we would need to include the name here as well, which would complicate renaming.
-TBD: Can a clinician belong to multiple organizations?
-TBD: Can a clinician move organization or would they get a new account in the new organization without connection to the old one?
-TBD: What happens if a clinician is removed from the database with patients connected to that clinician?
-TBD: How do clinicians get onboarded? Do we also have invitation codes for them?
-TBD: How is the connection between clinician and patient established? Does the patient select the clinician or vice-versa, or does the organization assign them?
+TBD: Can any user query for a userId and get their name? If not, we would need to include the name here as well, which would complicate renaming. They should probably be, but not sure.
+TBD: Can a clinician belong to multiple organizations? No.
+TBD: Can a clinician move organization or would they get a new account in the new organization without connection to the old one? Create new one.
+TBD: What happens if a clinician is removed from the database with patients connected to that clinician? Then just set the clinician to null for all of these patients.
+TBD: How do clinicians get onboarded? Do we also have invitation codes for them? As an admin of an organization, these entries here are created and then when logging in with SSO they are matched to these entries.
+TBD: How is the connection between clinician and patient established? Does the patient select the clinician or vice-versa, or does the organization assign them? Clinicians can assign clinicians to patients.
 
 ## /questionnaires
 
