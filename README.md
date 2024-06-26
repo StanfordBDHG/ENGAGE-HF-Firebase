@@ -43,6 +43,31 @@ When a patient joins Engage-HF, we first create an invitation code on demand of 
 |used|boolean|true, false|Whether the invitation code has already been used or not. If this property is true, the invitation code can no longer be used.|
 |usedBy|optional string|-|The user created from this invitation code.|
 
+## /organizations/$organizationId$
+
+|Property|Type|Values|Comments|
+|-|-|-|-|
+|name|string|e.g. "Stanford University"|-|
+|leader|string|e.g. "Alex Sandhu, MD"|-|
+|phoneNumber|string|e.g. "(650) 493-5000"|-|
+|emailAddress|string|e.g. "dothfteam@stanford.edu"|-|
+
+## /clinicians/$clinicianId$
+
+The clinicianId corresponds to the userId of the clinicians similar to how it is used with /users/$userId$.
+
+|Property|Type|Values|Comments|
+|-|-|-|-|
+|organization|string|-|organizationId as can be used with /organizations/$organizationId$|
+||||
+
+TBD: Can any user query for a userId and get their name? If not, we would need to include the name here as well, which would complicate renaming.
+TBD: Can a clinician belong to multiple organizations?
+TBD: Can a clinician move organization or would they get a new account in the new organization without connection to the old one?
+TBD: What happens if a clinician is removed from the database with patients connected to that clinician?
+TBD: How do clinicians get onboarded? Do we also have invitation codes for them?
+TBD: How is the connection between clinician and patient established? Does the patient select the clinician or vice-versa, or does the organization assign them?
+
 ## /questionnaires
 
 In this section, we describe all the information stored for questionnaires.
@@ -140,12 +165,18 @@ In this section, we describe all user-related data to be stored. The security ru
 |dateOfBirth|Date|-|To be used for verification purposes.|
 |dateOfEnrollment|Date|-|The date when the invitation code was used to create this user.|
 |invitationCode|string|-|The invitationCode to be used when logging in to the app for the first time.|
+|clinician|optional string|-|clinicianId as used in /clinicians/$clinicianId$.|
+|organization|string|-|organizationId as used in /organizations/$organizationId$.|
 |language|optional string|e.g. "en"|Following IETF BCP-47 / [FHIR ValueSet languages](https://hl7.org/fhir/R4B/valueset-languages.html).|
 |messagesSettings|-|-|See properties below.|
 |messagesSettings>dailyRemindersAreActive|boolean|true, false|Decides whether to send out daily reminder messages for this user.|
 |messagesSettings>textNotificationsAreActive|boolean|true, false|Decides whether to send text notifications for this user.|
 |messagesSettings>medicationRemindersAreActive|boolean|true, false|Decides whether to send medication reminder messages for this user.|
 |timeZone|string|e.g. "America/Los_Angeles"|The value needs to correspond to an identifier from [TZDB](https://nodatime.org/TimeZones). It must not be an offset to UTC/GMT, since that wouldn't work well with daylight-savings (even if there is no daylight-savings time at that location). Also, don't use common abbreviations like PST, PDT, CEST, etc (they may be ambiguous, e.g. CST). If the timeZone is unknown, then "America/Los_Angeles" should be used.|
+
+TBD: Can patients be transfered from one organization to another?
+TBD: Do patients possibly belong to multiple organizations?
+TBD: Do patients always have one clinician, a team of clinicians or none assigned and it might be anyone in the organization?
 
 ### /users/$userId$/appointments/$appointmentId$
 
@@ -492,3 +523,18 @@ Based on [FHIR QuestionnaireResponse](https://hl7.org/fhir/R4B/questionnaireresp
 |item[x]>text|optional string|-|Name for group or question text|
 |item[x]>answer|list of Answer|-|response(s) to the question|
 |item[x]>answer[y]>value|any|-|Value depending on the type of question in the survey, e.g. boolean, integer, date, string, etc|
+
+### /users/$userId$/kccqResults/$kccqResultId$
+
+Whenever a new questionnaire response is uploaded to Firestore, we calculate the score and keep the results here for easy retrieval later on. We also do not compute the score anywhere but simply refer to the scores listed in this collection.
+
+|Property|Type|Values|Comments|
+|-|-|-|-|
+|questionnaireResponseId|string|-|questionnaireResponseId as used in /users/$userId$/questionnaireResponses/$questionnaireResponseId$ to be able to verify score calculations afterwards.|
+|date|DateTime|-|must be equivalent to the date specified in the linked questionnaire response.|
+|overallScore|number|must be between 0 and 100|-|
+|physicalLimitsScore|number|must be between 0 and 100|-|
+|socialLimitsScore|number|must be between 0 and 100|-|
+|qualityOfLifeScore|number|must be between 0 and 100|-|
+|specificSymptomsScore|number|must be between 0 and 100|-|
+|dizzinessScore|number|must be between 0 and 100|-|
