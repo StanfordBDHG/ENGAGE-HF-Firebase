@@ -157,7 +157,11 @@ export const exportHealthSummary = onRequest(async (req, res) => {
       { name: 'Losartan 25mg', instruction: 'Take Once Daily' },
     ],
     proposedMedications: [
-      { name: 'Carvediol 3.125mg', instruction: 'Take Once Daily', isBold: true },
+      {
+        name: 'Carvediol 3.125mg',
+        instruction: 'Take Once Daily',
+        isBold: true,
+      },
       {
         name: 'Sacubitril-Valsartan 24-25mg',
         instruction: 'Take Twice Daily',
@@ -173,7 +177,7 @@ export const exportHealthSummary = onRequest(async (req, res) => {
         { date: new Date('2024-01-27'), value: 98 },
         { date: new Date('2024-01-26'), value: 94 },
         { date: new Date('2024-01-25'), value: 104 },
-        { date: new Date('2024-01-24'), value: 102 }
+        { date: new Date('2024-01-24'), value: 102 },
       ],
       diastolicBloodPressure: [
         { date: new Date('2024-02-01'), value: 70 },
@@ -184,7 +188,7 @@ export const exportHealthSummary = onRequest(async (req, res) => {
         { date: new Date('2024-01-27'), value: 68 },
         { date: new Date('2024-01-26'), value: 65 },
         { date: new Date('2024-01-25'), value: 72 },
-        { date: new Date('2024-01-24'), value: 80 }
+        { date: new Date('2024-01-24'), value: 80 },
       ],
       heartRate: [
         { date: new Date('2024-02-01'), value: 79 },
@@ -195,7 +199,7 @@ export const exportHealthSummary = onRequest(async (req, res) => {
         { date: new Date('2024-01-27'), value: 70 },
         { date: new Date('2024-01-26'), value: 67 },
         { date: new Date('2024-01-25'), value: 80 },
-        { date: new Date('2024-01-24'), value: 65 }
+        { date: new Date('2024-01-24'), value: 65 },
       ],
       weight: [
         { date: new Date('2024-02-01'), value: 269 },
@@ -206,7 +210,7 @@ export const exportHealthSummary = onRequest(async (req, res) => {
         { date: new Date('2024-01-27'), value: 268 },
         { date: new Date('2024-01-26'), value: 266 },
         { date: new Date('2024-01-25'), value: 266 },
-        { date: new Date('2024-01-24'), value: 267 }
+        { date: new Date('2024-01-24'), value: 267 },
       ],
       dryWeight: 267,
     },
