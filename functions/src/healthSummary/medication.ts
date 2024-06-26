@@ -1,5 +1,5 @@
 interface MedicationRequest {
   name: string
-  instruction: string,
+  instruction: string
   isBold?: boolean
 }
