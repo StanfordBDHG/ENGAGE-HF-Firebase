@@ -1,10 +1,8 @@
 import { jsPDF } from 'jspdf'
-import { CellDef, RowInput, type UserOptions } from 'jspdf-autotable'
-import 'jspdf-autotable'
+import { type CellDef, type RowInput, type UserOptions } from 'jspdf-autotable'
 import svg2img from 'svg2img'
 import { generateChartSvg } from './generateChart.js'
 import { generateSpeedometerSvg } from './generateSpeedometer.js'
-import { color } from 'd3'
 
 export async function generateHealthSummary(
   data: HealthSummaryData,
@@ -98,7 +96,7 @@ class HealthSummaryPDFGenerator {
     this.moveDown(4)
 
     await this.splitTwoColumns(
-      async (columnWidth) => {
+      (columnWidth) => {
         this.addText(
           'Current Medications',
           this.textStyles.bodyBold,
@@ -112,7 +110,7 @@ class HealthSummaryPDFGenerator {
         )
         this.moveDown(this.textStyles.body.fontSize)
       },
-      async (columnWidth) => {
+      (columnWidth) => {
         this.addText(
           'Potential Positive Changes',
           this.textStyles.bodyBold,
@@ -128,7 +126,9 @@ class HealthSummaryPDFGenerator {
       },
     )
 
-    function colorForCategory(category: MedicationRequest['category']): string | undefined {
+    function colorForCategory(
+      category: MedicationRequest['category'],
+    ): string | undefined {
       switch (category) {
         case 'targetDoseReached':
           return 'rgb(0,255,0)'
@@ -140,54 +140,55 @@ class HealthSummaryPDFGenerator {
     }
 
     const tableContent: CellDef[][] = [
-     [
-      {
-          title:'My medications',
-      }, 
-      {
-          title:'Dose', 
-      },
-      {
-          title:'Target dose', 
-      },
-      {
-          title:'Potential Positive Change',
-      }, 
-      {
-          title:'Questions/Comments'
-      },
-    ],
-    ...this.data.medicationRequests.map((request, index) => [
+      [
         {
-          title: '[ ] ' + request.name
+          title: 'My medications',
         },
         {
-          styles: { 
-            fillColor: colorForCategory(request.category)
+          title: 'Dose',
+        },
+        {
+          title: 'Target dose',
+        },
+        {
+          title: 'Potential Positive Change',
+        },
+        {
+          title: 'Questions/Comments',
+        },
+      ],
+      ...this.data.medicationRequests.map((request, index) => [
+        {
+          title: '[ ] ' + request.name,
+        },
+        {
+          styles: {
+            fillColor: colorForCategory(request.category),
           },
-          title: request.dose
+          title: request.dose,
         },
         {
-          styles: { 
-            fillColor: colorForCategory(request.category)
+          styles: {
+            fillColor: colorForCategory(request.category),
           },
-          title: request.targetDose
+          title: request.targetDose,
         },
         {
-          title: request.potentialPositiveChange
+          title: request.potentialPositiveChange,
         },
         {
           styles: {
             lineWidth: {
-              bottom: index === this.data.medicationRequests.length - 1 ? 0.5 : 0,
+              bottom:
+                index === this.data.medicationRequests.length - 1 ? 0.5 : 0,
               top: 0,
               left: 0.5,
               right: 0.5,
             },
           },
-          title: ''
+          title: '',
         },
-      ])
+      ]),
     ]
 
     this.addTable(tableContent)
@@ -198,7 +199,7 @@ class HealthSummaryPDFGenerator {
     this.addSectionTitle('VITALS OVER LAST 2 WEEKS')
     this.moveDown(4)
     await this.splitTwoColumns(
-      async (columnWidth) => {
+      (columnWidth) => {
         const avgSystolic =
           this.data.vitals.systolicBloodPressure.reduce(
             (acc, observation) => acc + observation.value,
@@ -233,7 +234,7 @@ class HealthSummaryPDFGenerator {
         )
         this.moveDown(this.textStyles.body.fontSize)
       },
-      async (columnWidth) => {
+      async (columnWidth) => { // eslint-disable-line
         this.addText(
           `Current Weight: ${this.data.vitals.weight[0].value.toFixed(0)} lbs`,
           this.textStyles.body,
@@ -264,7 +265,7 @@ class HealthSummaryPDFGenerator {
       async (columnWidth) => {
         await this.addSpeedometer(columnWidth)
       },
-      async (columnWidth) => {
+      (columnWidth) => {
         this.moveDown(this.textStyles.body.fontSize)
         this.addText(
           'These symptom scores range from 0-100.',
@@ -398,10 +399,7 @@ class HealthSummaryPDFGenerator {
           this.textStyles.bodyBold,
           columnWidth,
         )
-        await this.addChart(
-          this.data.vitals.systolicBloodPressure, 
-          columnWidth
-        )
+        await this.addChart(this.data.vitals.systolicBloodPressure, columnWidth)
       },
       async (columnWidth) => {
         this.addText(
@@ -419,16 +417,15 @@ class HealthSummaryPDFGenerator {
     const systolicValues = [...this.data.vitals.systolicBloodPressure].sort(
       (a, b) => a.value - b.value,
     )
-    const systolicMedian =
-      systolicValues[Math.floor(systolicValues.length / 2)]
+    const systolicMedian = systolicValues[Math.floor(systolicValues.length / 2)]
     const systolicUpperMedian =
       systolicValues[Math.floor(systolicValues.length * 0.75)]
     const systolicLowerMedian =
       systolicValues[Math.floor(systolicValues.length * 0.25)]
 
-    const diastolicValues = [
-      ...this.data.vitals.diastolicBloodPressure,
-    ].sort((a, b) => a.value - b.value)
+    const diastolicValues = [...this.data.vitals.diastolicBloodPressure].sort(
+      (a, b) => a.value - b.value,
+    )
     const diastolicMedian =
       diastolicValues[Math.floor(diastolicValues.length / 2)]
     const diastolicUpperMedian =
@@ -448,29 +445,23 @@ class HealthSummaryPDFGenerator {
       ).length /
         systolicValues.length) *
       100
-    this.addTable(
+    this.addTable([
+      [' ', 'Median', 'IQR', '% Under 90 mmHg', '% Over 180 mmHg'],
       [
-        [' ', 'Median', 'IQR', '% Under 90 mmHg', '% Over 180 mmHg'],
-        [
-          'Systolic',
-          systolicMedian.value.toFixed(0),
-          (systolicUpperMedian.value - systolicLowerMedian.value).toFixed(
-            0,
-          ),
-          percentageBelow.toFixed(0),
-          percentageAbove.toFixed(0),
-        ],
-        [
-          'Diastolic',
-          diastolicMedian.value.toFixed(0),
-          (diastolicUpperMedian.value - diastolicLowerMedian.value).toFixed(
-            0,
-          ),
-          '-',
-          '-',
-        ],
+        'Systolic',
+        systolicMedian.value.toFixed(0),
+        (systolicUpperMedian.value - systolicLowerMedian.value).toFixed(0),
+        percentageBelow.toFixed(0),
+        percentageAbove.toFixed(0),
       ],
-    )
+      [
+        'Diastolic',
+        diastolicMedian.value.toFixed(0),
+        (diastolicUpperMedian.value - diastolicLowerMedian.value).toFixed(0),
+        '-',
+        '-',
+      ],
+    ])
     this.moveDown(this.textStyles.body.fontSize * 2)
   }
 
@@ -492,17 +483,13 @@ class HealthSummaryPDFGenerator {
     this.addText(
       `Next Appointment: ${this.formatDate(this.data.nextAppointment)}`,
     )
-    
+
     const innerWidth = this.pageWidth - this.margins.left - this.margins.right
     const pageNumberText = `Page ${this.doc.getNumberOfPages()}`
     const pageNumberWidth = this.doc.getTextWidth(pageNumberText)
     this.cursor.x = this.margins.left + innerWidth - pageNumberWidth
     this.cursor.y -= this.textStyles.body.fontSize
-    this.addText(
-      pageNumberText,
-      this.textStyles.body,
-      pageNumberWidth,
-    )
+    this.addText(pageNumberText, this.textStyles.body, pageNumberWidth)
     this.cursor.x = this.margins.left
 
     this.moveDown(8)
@@ -530,23 +517,7 @@ class HealthSummaryPDFGenerator {
       { width: width, height: height },
       { top: 20, right: 40, bottom: 40, left: 40 },
     )
-    const img = await new Promise<Buffer>((resolve, reject) => {
-      svg2img(
-        svg,
-        {
-          resvg: {
-            shapeRendering: 2,
-            textRendering: 1,
-            imageRendering: 0,
-            fitTo: { mode: 'zoom', value: 5 },
-          },
-        },
-        (error, buffer) => {
-          if (error) reject(error)
-          else resolve(buffer)
-        },
-      )
-    })
+    const img = await this.convertSvgToPng(svg)
     this.addPNG(img, width)
   }
 
@@ -554,7 +525,12 @@ class HealthSummaryPDFGenerator {
     const width =
       maxWidth ?? this.pageWidth - this.cursor.x - this.margins.right
     const svg = generateSpeedometerSvg(this.data.symptomScores, width)
-    const img = await new Promise<Buffer>((resolve, reject) => {
+    const img = await this.convertSvgToPng(svg)
+    this.addPNG(img, width)
+  }
+
+  async convertSvgToPng(svg: string): Promise<Buffer> {
+    return new Promise<Buffer>((resolve, reject) => {
       svg2img(
         svg,
         {
@@ -566,12 +542,11 @@ class HealthSummaryPDFGenerator {
           },
         },
         (error, buffer) => {
-          if (error) reject(error)
-          else resolve(buffer)
+          if (error) reject(new Error(`Error converting SVG to PNG: ${error}`))
+          else resolve(buffer as Buffer)
         },
       )
     })
-    this.addPNG(img, width)
   }
 
   addPNG(data: Buffer, maxWidth?: number) {
@@ -592,9 +567,8 @@ class HealthSummaryPDFGenerator {
       tableWidth: maxWidth ?? 'auto',
       body: rows,
     }
-    ;(this.doc as any).autoTable(options)
-
-    this.cursor.y = (this.doc as any).lastAutoTable.finalY
+    ;(this.doc as any).autoTable(options) // eslint-disable-line
+    this.cursor.y = (this.doc as any).lastAutoTable.finalY // eslint-disable-line
   }
 
   addText(
@@ -640,8 +614,8 @@ class HealthSummaryPDFGenerator {
   }
 
   async splitTwoColumns(
-    firstColumn: (width: number) => Promise<void>,
-    secondColumn: (width: number) => Promise<void>,
+    firstColumn: (width: number) => Promise<void> | void,
+    secondColumn: (width: number) => Promise<void> | void,
   ) {
     const cursorBeforeSplit = structuredClone(this.cursor)
     const splitMargin = 8

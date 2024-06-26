@@ -5,17 +5,23 @@ export function generateSpeedometerSvg(
   scores: SymptomScore[],
   width: number,
 ): string {
-
   const recentScore = scores.length >= 1 ? scores[scores.length - 1] : undefined
-  const previousScore = scores.length >= 2 ? scores[scores.length - 2] : undefined
+  const previousScore =
+    scores.length >= 2 ? scores[scores.length - 2] : undefined
   const generator = new SpeedometerSvgGenerator(width)
-  let markers: { percentage: number, color: string }[] = []
+  const markers: Array<{ percentage: number; color: string }> = []
   if (recentScore) {
     generator.addCurrentScoreLabel(recentScore.overall)
-    markers.push({ percentage: recentScore.overall, color: generator.primaryColor })
+    markers.push({
+      percentage: recentScore.overall,
+      color: generator.primaryColor,
+    })
     if (previousScore) {
       generator.addTrendLabel(recentScore.overall - previousScore.overall)
-      markers.push({ percentage: previousScore.overall, color: generator.secondaryColor })
+      markers.push({
+        percentage: previousScore.overall,
+        color: generator.secondaryColor,
+      })
     }
   }
   generator.addArc(markers)
@@ -36,9 +42,9 @@ class SpeedometerSvgGenerator {
   svg: d3.Selection<SVGGElement, unknown, null, undefined>
   defs: d3.Selection<SVGDefsElement, unknown, null, undefined>
 
-  margins: { top: number, right: number, bottom: number, left: number }
-  size: { width: number, height: number }
-  innerSize: { width: number, height: number }
+  margins: { top: number; right: number; bottom: number; left: number }
+  size: { width: number; height: number }
+  innerSize: { width: number; height: number }
   legendHeight = 20
   arcWidth: number
   innerArcRadius: number
@@ -56,12 +62,19 @@ class SpeedometerSvgGenerator {
       width: innerWidth,
       height: innerWidth / 2,
     }
-    this.size = { 
-      width, 
-      height: this.margins.top + this.innerSize.height + this.legendHeight + this.margins.bottom 
+    this.size = {
+      width,
+      height:
+        this.margins.top +
+        this.innerSize.height +
+        this.legendHeight +
+        this.margins.bottom,
     }
     this.arcWidth = width * 0.05
-    this.outerArcRadius = Math.min(this.innerSize.width / 2, this.innerSize.height)
+    this.outerArcRadius = Math.min(
+      this.innerSize.width / 2,
+      this.innerSize.height,
+    )
     this.innerArcRadius = this.outerArcRadius - this.arcWidth
     this.svg = this.body
       .append('svg')
@@ -72,11 +85,9 @@ class SpeedometerSvgGenerator {
     this.defs = this.svg.append('defs')
   }
 
-  addArc(markers: { percentage: number, color: string }[]) {
+  addArc(markers: Array<{ percentage: number; color: string }>) {
     const gradientId = 'gradient'
-    const gradient = this.defs
-      .append('linearGradient')
-      .attr('id', gradientId)
+    const gradient = this.defs.append('linearGradient').attr('id', gradientId)
     gradient
       .append('stop')
       .attr('offset', '0%')
@@ -90,10 +101,13 @@ class SpeedometerSvgGenerator {
       .attr('offset', '100%')
       .attr('stop-color', 'rgb(0,127,63)')
 
-      console.log(this.innerArcRadius, ' ', this.outerArcRadius, this.size.width)
+    console.log(this.innerArcRadius, ' ', this.outerArcRadius, this.size.width)
     this.svg
       .append('path')
-      .attr('transform', `translate(${this.margins.left + this.innerSize.width / 2}, ${this.margins.top + this.innerSize.height})`)
+      .attr(
+        'transform',
+        `translate(${this.margins.left + this.innerSize.width / 2}, ${this.margins.top + this.innerSize.height})`,
+      )
       .style('fill', `url(#${gradientId})`)
       .attr(
         'd',
@@ -109,16 +123,19 @@ class SpeedometerSvgGenerator {
     const middleArcRadius = this.innerArcRadius + arcWidth / 2
     const arcCenter = {
       x: this.margins.left + this.innerSize.width / 2,
-      y: this.margins.top + this.innerSize.height
+      y: this.margins.top + this.innerSize.height,
     }
     for (const marker of markers) {
       console.log(marker)
       const path = `M ${arcCenter.x - arcWidth} ${arcCenter.y} L ${arcCenter.x + arcWidth} ${arcCenter.y}`
       const rotation = (marker.percentage / 100) * 180 - 180
-      const translationX = middleArcRadius * Math.cos(rotation * Math.PI / 180)
-      const translationY = middleArcRadius * Math.sin(rotation * Math.PI / 180)
+      const translationX =
+        middleArcRadius * Math.cos((rotation * Math.PI) / 180)
+      const translationY =
+        middleArcRadius * Math.sin((rotation * Math.PI) / 180)
       const transform = `translate(${translationX},${translationY}) rotate(${rotation},${arcCenter.x},${arcCenter.y})`
-      this.svg.append('path')
+      this.svg
+        .append('path')
         .attr('d', path)
         .attr('stroke-width', 4)
         .attr('stroke', marker.color)
@@ -131,17 +148,17 @@ class SpeedometerSvgGenerator {
     const scoreText = this.svg
       .append('text')
       .attr('x', this.margins.left + this.innerSize.width / 2)
-      .attr('y', this.margins.top + this.innerSize.height - this.trendFontSize - 24)
+      .attr(
+        'y',
+        this.margins.top + this.innerSize.height - this.trendFontSize - 24,
+      )
       .style('text-anchor', 'middle')
       .style('font-size', '36pt')
       .style('font-weight', 'bold')
       .style('fill', this.primaryColor)
       .text(score.toFixed(0))
 
-    scoreText
-      .append('tspan')
-      .style('font-size', '18pt')
-      .text('  %')
+    scoreText.append('tspan').style('font-size', '18pt').text('  %')
   }
 
   addTrendLabel(trend: number) {
@@ -155,10 +172,10 @@ class SpeedometerSvgGenerator {
     trendText
       .append('tspan')
       .style('fill', trend >= 0 ? this.positiveColor : this.negativeColor)
-      .text(trendIcon + (trend >= 0 ? '+' : '-') + Math.abs(trend).toFixed(0) + '%')
-    trendText
-      .append('tspan')
-      .text(' from previous')
+      .text(
+        trendIcon + (trend >= 0 ? '+' : '-') + Math.abs(trend).toFixed(0) + '%',
+      )
+    trendText.append('tspan').text(' from previous')
   }
 
   addZeroLabel() {
@@ -176,10 +193,11 @@ class SpeedometerSvgGenerator {
   addLegend() {
     const legendFontSize = 8
     const legendMargin = this.legendHeight - legendFontSize
-    const legendBaselineY = this.margins.top + this.innerSize.height + legendFontSize + legendMargin
+    const legendBaselineY =
+      this.margins.top + this.innerSize.height + legendFontSize + legendMargin
     const legendLineLength = this.size.width * 0.075
     const legendLinesY = legendBaselineY - legendFontSize / 2
-    
+
     this.svg
       .append('text')
       .attr('x', this.margins.left + this.size.width * 0.1)
@@ -188,12 +206,13 @@ class SpeedometerSvgGenerator {
       .style('font-size', `${legendFontSize}pt`)
       .text('Previous')
 
-      const previousPath = `M ${this.margins.left} ${legendLinesY} L ${this.margins.left + legendLineLength} ${legendLinesY}`
-      this.svg.append('path')
-        .attr('d', previousPath)
-        .attr('stroke-width', 2)
-        .attr('stroke', this.secondaryColor)
-        .attr('fill', 'none')
+    const previousPath = `M ${this.margins.left} ${legendLinesY} L ${this.margins.left + legendLineLength} ${legendLinesY}`
+    this.svg
+      .append('path')
+      .attr('d', previousPath)
+      .attr('stroke-width', 2)
+      .attr('stroke', this.secondaryColor)
+      .attr('fill', 'none')
 
     this.svg
       .append('text')
@@ -203,12 +222,13 @@ class SpeedometerSvgGenerator {
       .style('font-size', `${legendFontSize}pt`)
       .text('Current')
 
-      const currentPath = `M ${this.size.width / 2} ${legendLinesY} L ${this.size.width / 2 + legendLineLength} ${legendLinesY}`
-      this.svg.append('path')
-        .attr('d', currentPath)
-        .attr('stroke-width', 2)
-        .attr('stroke', this.primaryColor)
-        .attr('fill', 'none')
+    const currentPath = `M ${this.size.width / 2} ${legendLinesY} L ${this.size.width / 2 + legendLineLength} ${legendLinesY}`
+    this.svg
+      .append('path')
+      .attr('d', currentPath)
+      .attr('stroke-width', 2)
+      .attr('stroke', this.primaryColor)
+      .attr('fill', 'none')
   }
 
   finish(): string {
