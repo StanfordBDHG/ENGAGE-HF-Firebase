@@ -153,21 +153,22 @@ export const exportHealthSummary = onRequest(async (req, res) => {
     provider: 'Dr. XXX',
     nextAppointment: new Date('2024-02-03'),
     medicationRequests: [
-      { 
+      {
         name: 'Losartan (Cozaar)',
         dose: '25mg Daily',
-        targetDose: '100mg Daily', 
-        potentialPositiveChange: 'Switch to Sacubitril-Valsartan (More Effective Medication)',
+        targetDose: '100mg Daily',
+        potentialPositiveChange:
+          'Switch to Sacubitril-Valsartan (More Effective Medication)',
         category: 'improvementAvailable',
       },
-      { 
+      {
         name: 'Dapagliflozin (Farxiga)',
         dose: '10mg Daily',
         targetDose: '10mg Daily',
         potentialPositiveChange: 'Continue Dose',
         category: 'targetDoseReached',
       },
-      { 
+      {
         name: 'Carvedilol (Coreg)',
         dose: 'Not Taking',
         targetDose: '25-50mg Twice Daily',
