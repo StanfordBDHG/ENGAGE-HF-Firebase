@@ -10,9 +10,8 @@
 // https://github.com/StanfordBDHG/PediatricAppleWatchStudy/pull/54/files
 
 import admin from 'firebase-admin'
-import { FieldValue, type Transaction } from 'firebase-admin/firestore'
+import { FirebaseService } from './services/firebaseService.js' // Replace './firestoreService' with the correct path to the module containing the 'FirestoreService' class
 import { type BlockingFunction } from 'firebase-functions'
-import { onRequest } from 'firebase-functions/v1/https'
 import { logger, https } from 'firebase-functions/v2'
 import { type CallableRequest, onCall } from 'firebase-functions/v2/https'
 import {
@@ -20,6 +19,8 @@ import {
   beforeUserCreated,
 } from 'firebase-functions/v2/identity'
 import { generateHealthSummary } from './healthSummary/generate.js'
+import { FhirService } from './services/fhirService.js'
+import { HealthSummaryService } from './services/healthSummaryService.js'
 
 admin.initializeApp()
 
@@ -39,45 +40,13 @@ export const checkInvitationCode = onCall(
     const userId = request.auth.uid
     const { invitationCode } = request.data
 
-    const firestore = admin.firestore()
+    const service = new FirebaseService()
     logger.debug(
       `User (${userId}) -> ENGAGE-HF, InvitationCode ${invitationCode}`,
     )
 
     try {
-      // Based on https://github.com/StanfordSpezi/SpeziStudyApplication/blob/main/functions/index.js
-      const invitationRef = firestore.doc(`invitations/${invitationCode}`)
-      const invitationDoc = await invitationRef.get()
-
-      if (!invitationDoc.exists || invitationDoc.data()?.used) {
-        throw new https.HttpsError(
-          'not-found',
-          'Invitation code not found or already used.',
-        )
-      }
-
-      const userStudyRef = firestore.doc(`users/${userId}`)
-      const userStudyDoc = await userStudyRef.get()
-
-      if (userStudyDoc.exists) {
-        throw new https.HttpsError(
-          'already-exists',
-          'User is already enrolled in the study.',
-        )
-      }
-
-      // eslint-disable-next-line @typescript-eslint/require-await
-      await firestore.runTransaction(async (transaction: Transaction) => {
-        transaction.set(userStudyRef, {
-          invitationCode: invitationCode,
-          dateOfEnrollment: FieldValue.serverTimestamp(),
-        })
-
-        transaction.update(invitationRef, {
-          used: true,
-          usedBy: userId,
-        })
-      })
+      await service.enrollUser(invitationCode, userId)
 
       logger.debug(
         `User (${userId}) successfully enrolled in study (ENGAGE-HF) with invitation code: ${invitationCode}`,
@@ -100,33 +69,24 @@ export const checkInvitationCode = onCall(
 
 export const beforecreated: BlockingFunction = beforeUserCreated(
   async (event: AuthBlockingEvent) => {
-    const firestore = admin.firestore()
+    const service = new FirebaseService()
     const userId = event.data.uid
 
     try {
       // Check Firestore to confirm whether an invitation code has been associated with a user.
-      const invitationQuerySnapshot = await firestore
-        .collection('invitations')
-        .where('usedBy', '==', userId)
-        .limit(1)
-        .get()
+      const invitation = await service.getInvitationUsedBy(userId)
 
-      logger.info(`Invitation query snapshot: ${invitationQuerySnapshot.size}`)
-
-      if (invitationQuerySnapshot.empty) {
+      if (!invitation) {
         throw new https.HttpsError(
           'not-found',
           `No valid invitation code found for user ${userId}.`,
         )
       }
 
-      const userDoc = await firestore.doc(`users/${userId}`).get()
+      const user = await service.getUser(userId)
 
-      // Check if the user document exists and contains the correct invitation code.
-      if (
-        !userDoc.exists ||
-        userDoc.data()?.invitationCode !== invitationQuerySnapshot.docs[0].id
-      ) {
+      // Check if the user document contains the correct invitation code.
+      if (user.content?.invitationCode !== invitation.id) {
         throw new https.HttpsError(
           'failed-precondition',
           'User document does not exist or contains incorrect invitation code.',
@@ -146,123 +106,20 @@ export const beforecreated: BlockingFunction = beforeUserCreated(
   },
 )
 
-export const exportHealthSummary = onRequest(async (req, res) => {
-  const data = await generateHealthSummary({
-    name: 'John Doe',
-    dateOfBirth: new Date('1970-01-02'),
-    provider: 'Dr. XXX',
-    nextAppointment: new Date('2024-02-03'),
-    medicationRequests: [
-      {
-        name: 'Losartan (Cozaar)',
-        dose: '25mg Daily',
-        targetDose: '100mg Daily',
-        potentialPositiveChange:
-          'Switch to Sacubitril-Valsartan (More Effective Medication)',
-        category: 'improvementAvailable',
-      },
-      {
-        name: 'Dapagliflozin (Farxiga)',
-        dose: '10mg Daily',
-        targetDose: '10mg Daily',
-        potentialPositiveChange: 'Continue Dose',
-        category: 'targetDoseReached',
-      },
-      {
-        name: 'Carvedilol (Coreg)',
-        dose: 'Not Taking',
-        targetDose: '25-50mg Twice Daily',
-        potentialPositiveChange: 'Start Medication',
-        category: 'notStarted',
-      },
-    ],
-    vitals: {
-      systolicBloodPressure: [
-        { date: new Date('2024-02-01'), value: 110 },
-        { date: new Date('2024-01-31'), value: 114 },
-        { date: new Date('2024-01-30'), value: 123 },
-        { date: new Date('2024-01-29'), value: 109 },
-        { date: new Date('2024-01-28'), value: 105 },
-        { date: new Date('2024-01-27'), value: 98 },
-        { date: new Date('2024-01-26'), value: 94 },
-        { date: new Date('2024-01-25'), value: 104 },
-        { date: new Date('2024-01-24'), value: 102 },
-      ],
-      diastolicBloodPressure: [
-        { date: new Date('2024-02-01'), value: 70 },
-        { date: new Date('2024-01-31'), value: 82 },
-        { date: new Date('2024-01-30'), value: 75 },
-        { date: new Date('2024-01-29'), value: 77 },
-        { date: new Date('2024-01-28'), value: 72 },
-        { date: new Date('2024-01-27'), value: 68 },
-        { date: new Date('2024-01-26'), value: 65 },
-        { date: new Date('2024-01-25'), value: 72 },
-        { date: new Date('2024-01-24'), value: 80 },
-      ],
-      heartRate: [
-        { date: new Date('2024-02-01'), value: 79 },
-        { date: new Date('2024-01-31'), value: 62 },
-        { date: new Date('2024-01-30'), value: 77 },
-        { date: new Date('2024-01-29'), value: 63 },
-        { date: new Date('2024-01-28'), value: 61 },
-        { date: new Date('2024-01-27'), value: 70 },
-        { date: new Date('2024-01-26'), value: 67 },
-        { date: new Date('2024-01-25'), value: 80 },
-        { date: new Date('2024-01-24'), value: 65 },
-      ],
-      weight: [
-        { date: new Date('2024-02-01'), value: 269 },
-        { date: new Date('2024-01-31'), value: 267 },
-        { date: new Date('2024-01-30'), value: 267 },
-        { date: new Date('2024-01-29'), value: 265 },
-        { date: new Date('2024-01-28'), value: 268 },
-        { date: new Date('2024-01-27'), value: 268 },
-        { date: new Date('2024-01-26'), value: 266 },
-        { date: new Date('2024-01-25'), value: 266 },
-        { date: new Date('2024-01-24'), value: 267 },
-      ],
-      dryWeight: 267,
-    },
-    symptomScores: [
-      {
-        overall: 40,
-        physicalLimits: 50,
-        socialLimits: 38,
-        qualityOfLife: 20,
-        specificSymptoms: 60,
-        dizziness: 50,
-        date: new Date('2024-01-24'),
-      },
-      {
-        overall: 60,
-        physicalLimits: 58,
-        socialLimits: 75,
-        qualityOfLife: 37,
-        specificSymptoms: 72,
-        dizziness: 70,
-        date: new Date('2024-01-15'),
-      },
-      {
-        overall: 44,
-        physicalLimits: 50,
-        socialLimits: 41,
-        qualityOfLife: 25,
-        specificSymptoms: 60,
-        dizziness: 50,
-        date: new Date('2023-12-30'),
-      },
-      {
-        overall: 75,
-        physicalLimits: 58,
-        socialLimits: 75,
-        qualityOfLife: 60,
-        specificSymptoms: 80,
-        dizziness: 100,
-        date: new Date('2023-12-15'),
-      },
-    ],
-  })
+interface HealthSummaryInput {
+  userId?: string
+}
 
-  res.write(data)
-  res.end()
-})
+export const exportHealthSummary = onCall(
+  async (req: CallableRequest<HealthSummaryInput>) => {
+    if (!req.data.userId)
+      throw new https.HttpsError('invalid-argument', 'User ID is required')
+
+    const service = new HealthSummaryService(
+      new FhirService(), 
+      new FirebaseService()
+    )
+    const data = await service.fetchHealthSummaryData(req.data.userId)
+    return await generateHealthSummary(data)
+  }
+)
