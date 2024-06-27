@@ -3,7 +3,7 @@ interface Vitals {
   systolicBloodPressure: Observation[]
   diastolicBloodPressure: Observation[]
   heartRate: Observation[]
-  weight: Observation[]
+  bodyWeight: Observation[]
   dryWeight: number
 }
 

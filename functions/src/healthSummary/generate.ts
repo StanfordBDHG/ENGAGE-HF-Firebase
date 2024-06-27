@@ -236,13 +236,13 @@ class HealthSummaryPDFGenerator {
       },
       async (columnWidth) => { // eslint-disable-line
         this.addText(
-          `Current Weight: ${this.data.vitals.weight[0].value.toFixed(0)} lbs`,
+          `Current Weight: ${this.data.vitals.bodyWeight[0].value.toFixed(0)} lbs`,
           this.textStyles.body,
           columnWidth,
         )
         this.moveDown(4)
         this.addText(
-          `Last Week Average Weight: ${this.data.vitals.weight.reduce((acc, val) => acc + val.value, 0) / this.data.vitals.weight.length} lbs`,
+          `Last Week Average Weight: ${this.data.vitals.bodyWeight.reduce((acc, val) => acc + val.value, 0) / this.data.vitals.bodyWeight.length} lbs`,
           this.textStyles.body,
           columnWidth,
         )
@@ -306,12 +306,12 @@ class HealthSummaryPDFGenerator {
       ],
       ...this.data.symptomScores.map((survey) => [
         this.formatDate(survey.date),
-        String(survey.overall),
-        String(survey.physicalLimits),
-        String(survey.socialLimits),
-        String(survey.qualityOfLife),
-        String(survey.specificSymptoms),
-        String(survey.dizziness),
+        String(survey.overallScore),
+        String(survey.physicalLimitsScore),
+        String(survey.socialLimitsScore),
+        String(survey.qualityOfLifeScore),
+        String(survey.specificSymptomsScore),
+        String(survey.dizzinessScore),
       ]),
     ]
     this.addTable(tableContent)
@@ -324,17 +324,17 @@ class HealthSummaryPDFGenerator {
     await this.splitTwoColumns(
       async (columnWidth) => {
         this.addText('Weight', this.textStyles.bodyBold, columnWidth)
-        await this.addChart(this.data.vitals.weight, columnWidth)
+        await this.addChart(this.data.vitals.bodyWeight, columnWidth)
         const avgWeight =
-          this.data.vitals.weight.reduce(
+          this.data.vitals.bodyWeight.reduce(
             (acc, observation) => acc + observation.value,
             0,
-          ) / this.data.vitals.weight.length
-        const maxWeight = this.data.vitals.weight.reduce(
+          ) / this.data.vitals.bodyWeight.length
+        const maxWeight = this.data.vitals.bodyWeight.reduce(
           (acc, observation) => Math.max(acc, observation.value),
           0,
         )
-        const minWeight = this.data.vitals.weight.reduce(
+        const minWeight = this.data.vitals.bodyWeight.reduce(
           (acc, observation) => Math.min(acc, observation.value),
           Infinity,
         )
@@ -343,7 +343,7 @@ class HealthSummaryPDFGenerator {
             [' ', 'Current', '7-Day Average', 'Last Visit', 'Range'],
             [
               'Weight',
-              this.data.vitals.weight[0].value.toFixed(0),
+              this.data.vitals.bodyWeight[0].value.toFixed(0),
               avgWeight.toFixed(0),
               '-',
               (maxWeight - minWeight).toFixed(0),
@@ -476,12 +476,12 @@ class HealthSummaryPDFGenerator {
     this.moveDown(4)
     this.addText(this.data.name, this.textStyles.h1)
     this.moveDown(4)
-    this.addText(`DOB: ${this.formatDate(this.data.dateOfBirth)}`)
+    this.addText(`DOB: ${this.data.dateOfBirth ? this.formatDate(this.data.dateOfBirth) : '---'}`)
     this.moveDown(4)
-    this.addText(`Provider: ${this.data.provider}`)
+    this.addText(`Provider: ${this.data.clinicianName}`)
     this.moveDown(4)
     this.addText(
-      `Next Appointment: ${this.formatDate(this.data.nextAppointment)}`,
+      `Next Appointment: ${this.data.nextAppointment ? this.formatDate(this.data.nextAppointment) : '---'}`,
     )
 
     const innerWidth = this.pageWidth - this.margins.left - this.margins.right
