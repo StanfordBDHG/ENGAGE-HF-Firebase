@@ -1,13 +1,12 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-interface Vitals {
+export interface Vitals {
   systolicBloodPressure: Observation[]
   diastolicBloodPressure: Observation[]
   heartRate: Observation[]
-  weight: Observation[]
+  bodyWeight: Observation[]
   dryWeight: number
 }
 
-interface Observation {
+export interface Observation {
   date: Date
   value: number
 }
