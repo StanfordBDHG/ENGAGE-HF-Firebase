@@ -1,12 +1,13 @@
+import { type LocalizedText } from './helpers'
 
-interface VideoSection {
-    title: LocalizedText
-    description: LocalizedText
-    orderIndex: number
+export interface VideoSection {
+  title: LocalizedText
+  description: LocalizedText
+  orderIndex: number
 }
 
-interface Video {
-    title: LocalizedText
-    youtubeId: string
-    orderIndex: number
+export interface Video {
+  title: LocalizedText
+  youtubeId: string
+  orderIndex: number
 }

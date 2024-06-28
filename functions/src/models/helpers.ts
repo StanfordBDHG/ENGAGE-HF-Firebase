@@ -1,2 +1,1 @@
-
-type LocalizedText = string | { [key: string]: string }
+export type LocalizedText = string | Record<string, string>

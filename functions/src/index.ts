@@ -10,7 +10,6 @@
 // https://github.com/StanfordBDHG/PediatricAppleWatchStudy/pull/54/files
 
 import admin from 'firebase-admin'
-import { FirebaseService } from './services/firebaseService.js' // Replace './firestoreService' with the correct path to the module containing the 'FirestoreService' class
 import { type BlockingFunction } from 'firebase-functions'
 import { logger, https } from 'firebase-functions/v2'
 import { type CallableRequest, onCall } from 'firebase-functions/v2/https'
@@ -18,9 +17,10 @@ import {
   type AuthBlockingEvent,
   beforeUserCreated,
 } from 'firebase-functions/v2/identity'
-import { generateHealthSummary } from './healthSummary/generate.js'
-import { FhirService } from './services/fhirService.js'
-import { HealthSummaryService } from './services/healthSummaryService.js'
+import { generateHealthSummary } from './healthSummary/generate'
+import { FhirService } from './services/fhirService'
+import { FirebaseService } from './services/firebaseService' // Replace './firestoreService' with the correct path to the module containing the 'FirestoreService' class
+import { HealthSummaryService } from './services/healthSummaryService'
 
 admin.initializeApp()
 
@@ -116,10 +116,10 @@ export const exportHealthSummary = onCall(
       throw new https.HttpsError('invalid-argument', 'User ID is required')
 
     const service = new HealthSummaryService(
-      new FhirService(), 
-      new FirebaseService()
+      new FhirService(),
+      new FirebaseService(),
     )
     const data = await service.fetchHealthSummaryData(req.data.userId)
-    return await generateHealthSummary(data)
-  }
+    return generateHealthSummary(data)
+  },
 )

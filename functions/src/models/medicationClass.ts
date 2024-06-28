@@ -1,5 +1,6 @@
+import { type LocalizedText } from './helpers'
 
-interface MedicationClass {
-    name: LocalizedText
-    videoPath: string
+export interface MedicationClass {
+  name: LocalizedText
+  videoPath: string
 }
