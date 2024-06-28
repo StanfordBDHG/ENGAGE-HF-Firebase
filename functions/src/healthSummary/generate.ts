@@ -3,6 +3,9 @@ import { type CellDef, type RowInput, type UserOptions } from 'jspdf-autotable'
 import svg2img from 'svg2img'
 import { generateChartSvg } from './generateChart.js'
 import { generateSpeedometerSvg } from './generateSpeedometer.js'
+import { type HealthSummaryData } from './healthSummaryData.js'
+import { MedicationRequestCategory } from './medication.js'
+import { type Observation } from './vitals.js'
 
 export async function generateHealthSummary(
   data: HealthSummaryData,
@@ -127,14 +130,14 @@ class HealthSummaryPDFGenerator {
     )
 
     function colorForCategory(
-      category: MedicationRequest['category'],
+      category: MedicationRequestCategory,
     ): string | undefined {
       switch (category) {
-        case 'targetDoseReached':
+        case MedicationRequestCategory.targetDoseReached:
           return 'rgb(0,255,0)'
-        case 'improvementAvailable':
+        case MedicationRequestCategory.improvementAvailable:
           return 'rgb(255,255,0)'
-        case 'notStarted':
+        case MedicationRequestCategory.notStarted:
           return 'rgb(211,211,211)'
       }
     }
@@ -234,7 +237,8 @@ class HealthSummaryPDFGenerator {
         )
         this.moveDown(this.textStyles.body.fontSize)
       },
-      async (columnWidth) => { // eslint-disable-line
+      // eslint-disable-next-line @typescript-eslint/require-await
+      async (columnWidth) => {
         this.addText(
           `Current Weight: ${this.data.vitals.bodyWeight[0].value.toFixed(0)} lbs`,
           this.textStyles.body,
@@ -476,7 +480,9 @@ class HealthSummaryPDFGenerator {
     this.moveDown(4)
     this.addText(this.data.name, this.textStyles.h1)
     this.moveDown(4)
-    this.addText(`DOB: ${this.data.dateOfBirth ? this.formatDate(this.data.dateOfBirth) : '---'}`)
+    this.addText(
+      `DOB: ${this.data.dateOfBirth ? this.formatDate(this.data.dateOfBirth) : '---'}`,
+    )
     this.moveDown(4)
     this.addText(`Provider: ${this.data.clinicianName}`)
     this.moveDown(4)

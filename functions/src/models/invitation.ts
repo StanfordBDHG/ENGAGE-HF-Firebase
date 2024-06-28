@@ -1,5 +1,4 @@
-
-interface Invitation {
-    used: boolean
-    usedBy?: string
+export interface Invitation {
+  used: boolean
+  usedBy?: string
 }

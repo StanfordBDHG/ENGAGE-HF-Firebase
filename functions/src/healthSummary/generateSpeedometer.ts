@@ -1,8 +1,9 @@
 import * as d3 from 'd3'
 import { JSDOM } from 'jsdom'
+import { type KccqScore } from '../models/kccqScore'
 
 export function generateSpeedometerSvg(
-  scores: SymptomScore[],
+  scores: KccqScore[],
   width: number,
 ): string {
   const recentScore = scores.length >= 1 ? scores[scores.length - 1] : undefined
@@ -11,15 +12,17 @@ export function generateSpeedometerSvg(
   const generator = new SpeedometerSvgGenerator(width)
   const markers: Array<{ percentage: number; color: string }> = []
   if (recentScore) {
-    generator.addCurrentScoreLabel(recentScore.overall)
+    generator.addCurrentScoreLabel(recentScore.overallScore)
     markers.push({
-      percentage: recentScore.overall,
+      percentage: recentScore.overallScore,
       color: generator.primaryColor,
     })
     if (previousScore) {
-      generator.addTrendLabel(recentScore.overall - previousScore.overall)
+      generator.addTrendLabel(
+        recentScore.overallScore - previousScore.overallScore,
+      )
       markers.push({
-        percentage: previousScore.overall,
+        percentage: previousScore.overallScore,
         color: generator.secondaryColor,
       })
     }

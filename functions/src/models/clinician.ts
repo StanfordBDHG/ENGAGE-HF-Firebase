@@ -1,5 +1,4 @@
-
-interface Clinician {
-    id: string
-    organization: string
+export interface Clinician {
+  id: string
+  organization: string
 }

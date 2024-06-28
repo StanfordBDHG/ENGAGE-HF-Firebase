@@ -1,10 +1,16 @@
+import {
+  type FHIRCodeableConcept,
+  type FHIRElement,
+  type FHIRRatio,
+  type FHIRReference,
+} from './baseTypes'
 
-interface FHIRMedication extends FHIRElement {
-    code?: FHIRCodeableConcept
-    ingredient?: FHIRMedicationIngredient[]
+export interface FHIRMedication extends FHIRElement {
+  code?: FHIRCodeableConcept
+  ingredient?: FHIRMedicationIngredient[]
 }
 
-interface FHIRMedicationIngredient {
-    strength?: FHIRRatio
-    itemReference?: FHIRReference<FHIRMedication>
+export interface FHIRMedicationIngredient {
+  strength?: FHIRRatio
+  itemReference?: FHIRReference<FHIRMedication>
 }
