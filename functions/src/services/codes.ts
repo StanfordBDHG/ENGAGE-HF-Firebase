@@ -4,10 +4,11 @@ export enum CodingSystem {
   snomedCt = 'http://snomed.info/sct',
 }
 
-export enum ObservationUnit {
+export enum ObservationUnitCode {
   mmHg = 'mm[Hg]',
   bpm = '/min',
   kg = 'kg',
+  lbs = '[lb_av]',
 }
 
 export enum LoincCode {

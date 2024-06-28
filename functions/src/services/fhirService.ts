@@ -1,4 +1,4 @@
-import { type CodingSystem, type ObservationUnit } from './codes'
+import { type CodingSystem, type ObservationUnitCode } from './codes'
 import { type Observation } from '../healthSummary/vitals'
 import { type FHIRObservation } from '../models/fhir/observation'
 
@@ -8,7 +8,8 @@ export class FhirService {
     options: {
       code: string
       system: CodingSystem
-      unit: ObservationUnit
+      unit: ObservationUnitCode
+      convert?: (value: number, unit: string) => (number | undefined)
       component?: {
         code: string
         system: CodingSystem
@@ -41,13 +42,25 @@ export class FhirService {
             )
           )
             continue
-          const value = component.valueQuantity?.value
-          if (!value || component.valueQuantity?.unit !== options.unit) continue
-          result.push({ date: date, value: value })
+            const unit = component.valueQuantity?.code
+            if (!unit) continue
+            let value = component.valueQuantity?.value
+            if (!value) continue
+            if (unit !== options.unit) {
+                value = options.convert ? options.convert(value, unit) : undefined
+                if (!value) continue
+            }
+            result.push({ date: date, value: value })
         }
       } else {
-        const value = observation.valueQuantity?.value
-        if (!value || observation.valueQuantity?.unit !== options.unit) continue
+        const unit = observation.valueQuantity?.code
+        if (!unit) continue
+        let value = observation.valueQuantity?.value
+        if (!value) continue
+        if (unit !== options.unit) {
+            value = options.convert ? options.convert(value, unit) : undefined
+            if (!value) continue
+        }
         result.push({ date: date, value: value })
       }
     }
