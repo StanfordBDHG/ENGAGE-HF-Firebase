@@ -237,8 +237,7 @@ class HealthSummaryPDFGenerator {
         )
         this.moveDown(this.textStyles.body.fontSize)
       },
-      // eslint-disable-next-line @typescript-eslint/require-await
-      async (columnWidth) => {
+      (columnWidth) => {
         this.addText(
           `Current Weight: ${this.data.vitals.bodyWeight[0].value.toFixed(0)} lbs`,
           this.textStyles.body,
