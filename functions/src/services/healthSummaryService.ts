@@ -1,4 +1,4 @@
-import { CodingSystem, LoincCode, ObservationUnit } from './codes'
+import { CodingSystem, LoincCode, ObservationUnitCode } from './codes'
 import { type FhirService } from './fhirService'
 import { type FirebaseDocument, type FirebaseService } from './firebaseService'
 import { type HealthSummaryData } from '../healthSummary/healthSummaryData'
@@ -56,7 +56,7 @@ export class HealthSummaryService {
       {
         code: LoincCode.bloodPressure,
         system: CodingSystem.loinc,
-        unit: ObservationUnit.mmHg,
+        unit: ObservationUnitCode.mmHg,
         component: {
           code: LoincCode.systolicBloodPressure,
           system: CodingSystem.loinc,
@@ -68,7 +68,7 @@ export class HealthSummaryService {
       {
         code: LoincCode.bloodPressure,
         system: CodingSystem.loinc,
-        unit: ObservationUnit.mmHg,
+        unit: ObservationUnitCode.mmHg,
         component: {
           code: LoincCode.diastolicBloodPressure,
           system: CodingSystem.loinc,
@@ -83,7 +83,7 @@ export class HealthSummaryService {
       {
         code: LoincCode.heartRate,
         system: CodingSystem.loinc,
-        unit: ObservationUnit.bpm,
+        unit: ObservationUnitCode.bpm,
       },
     )
     const bodyWeightObservations = await this.compactMap<FHIRObservation>(
@@ -94,7 +94,8 @@ export class HealthSummaryService {
       {
         code: LoincCode.bodyWeight,
         system: CodingSystem.loinc,
-        unit: ObservationUnit.kg,
+        unit: ObservationUnitCode.kg,
+        convert: (value, unit) => unit === ObservationUnitCode.lbs ? value * 0.45359237 : undefined,
       },
     )
     return {
