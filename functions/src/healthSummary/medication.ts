@@ -1,19 +1,13 @@
-export enum MedicationRequestCategory {
+export enum MedicationOptimizationCategory {
   targetDoseReached = 'targetDoseReached',
   improvementAvailable = 'improvementAvailable',
   notStarted = 'notStarted',
 }
 
-export interface MedicationRequest {
+export interface MedicationOptimization {
   name: string
   dose: string
   targetDose: string
   potentialPositiveChange: string
-  category: MedicationRequestCategory
-}
-
-export interface Medication {
-  name: string
-  dose: string
-  targetDose: string
+  category: MedicationOptimizationCategory
 }

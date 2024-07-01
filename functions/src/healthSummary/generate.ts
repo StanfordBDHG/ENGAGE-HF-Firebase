@@ -4,7 +4,7 @@ import svg2img from 'svg2img'
 import { generateChartSvg } from './generateChart.js'
 import { generateSpeedometerSvg } from './generateSpeedometer.js'
 import { type HealthSummaryData } from './healthSummaryData.js'
-import { MedicationRequestCategory } from './medication.js'
+import { MedicationOptimizationCategory } from './medication.js'
 import { type Observation } from './vitals.js'
 
 export async function generateHealthSummary(
@@ -130,14 +130,14 @@ class HealthSummaryPDFGenerator {
     )
 
     function colorForCategory(
-      category: MedicationRequestCategory,
+      category: MedicationOptimizationCategory,
     ): string | undefined {
       switch (category) {
-        case MedicationRequestCategory.targetDoseReached:
+        case MedicationOptimizationCategory.targetDoseReached:
           return 'rgb(0,255,0)'
-        case MedicationRequestCategory.improvementAvailable:
+        case MedicationOptimizationCategory.improvementAvailable:
           return 'rgb(255,255,0)'
-        case MedicationRequestCategory.notStarted:
+        case MedicationOptimizationCategory.notStarted:
           return 'rgb(211,211,211)'
       }
     }
@@ -160,30 +160,29 @@ class HealthSummaryPDFGenerator {
           title: 'Questions/Comments',
         },
       ],
-      ...this.data.medicationRequests.map((request, index) => [
+      ...this.data.medications.map((medication, index) => [
         {
-          title: '[ ] ' + request.name,
+          title: '[ ] ' + medication.name,
         },
         {
           styles: {
-            fillColor: colorForCategory(request.category),
+            fillColor: colorForCategory(medication.category),
           },
-          title: request.dose,
+          title: medication.dose,
         },
         {
           styles: {
-            fillColor: colorForCategory(request.category),
+            fillColor: colorForCategory(medication.category),
           },
-          title: request.targetDose,
+          title: medication.targetDose,
         },
         {
-          title: request.potentialPositiveChange,
+          title: medication.potentialPositiveChange,
         },
         {
           styles: {
             lineWidth: {
-              bottom:
-                index === this.data.medicationRequests.length - 1 ? 0.5 : 0,
+              bottom: index === this.data.medications.length - 1 ? 0.5 : 0,
               top: 0,
               left: 0.5,
               right: 0.5,

@@ -6,19 +6,23 @@ import {
   type Transaction,
 } from 'firebase-admin/firestore'
 import { https } from 'firebase-functions'
-import { type Appointment } from '../models/appointment'
-import { type Clinician } from '../models/clinician'
-import { type FHIRObservation } from '../models/fhir/observation'
-import { type Invitation } from '../models/invitation'
-import { type KccqScore } from '../models/kccqScore'
-import { type User } from '../models/user'
+import {
+  type DatabaseDocument,
+  type DatabaseService,
+} from './databaseService.js'
+import { type Appointment } from '../../models/appointment.js'
+import { type Clinician } from '../../models/clinician.js'
+import {
+  type FHIRMedication,
+  type FHIRMedicationRequest,
+} from '../../models/fhir/medication.js'
+import { type FHIRObservation } from '../../models/fhir/observation.js'
+import { type Invitation } from '../../models/invitation.js'
+import { type KccqScore } from '../../models/kccqScore.js'
+import { type MedicationClass } from '../../models/medicationClass.js'
+import { type User } from '../../models/user.js'
 
-export interface FirebaseDocument<Content> {
-  id: string
-  content: Content | undefined
-}
-
-export class FirebaseService {
+export class FirestoreService implements DatabaseService {
   // Properties
 
   private auth: Auth
@@ -106,6 +110,38 @@ export class FirebaseService {
     })
   }
 
+  // Medications
+
+  async getMedicationClasses() {
+    return this.getCollection<FHIRMedication>(`medicationClasses`)
+  }
+
+  async getMedicationClass(medicationClassId: string) {
+    return this.getDocument<MedicationClass>(
+      `medicationClasses/${medicationClassId}`,
+    )
+  }
+
+  async getMedications() {
+    return this.getCollection<FHIRMedication>(`medications`)
+  }
+
+  async getMedication(medicationId: string) {
+    return this.getDocument<FHIRMedication>(`medications/${medicationId}`)
+  }
+
+  async getDrugs(medicationId: string) {
+    return this.getCollection<FHIRMedication>(
+      `medications/${medicationId}/drugs`,
+    )
+  }
+
+  async getDrug(medicationId: string, drugId: string) {
+    return this.getDocument<FHIRMedication>(
+      `medications/${medicationId}/drugs/${drugId}`,
+    )
+  }
+
   // Users
 
   async getUser(userId: string) {
@@ -114,6 +150,20 @@ export class FirebaseService {
 
   async getUserRecord(userId: string) {
     return this.auth.getUser(userId)
+  }
+
+  // Users - Medication Requests
+
+  async getMedicationRecommendations(userId: string) {
+    return this.getCollection<FHIRMedicationRequest>(
+      `users/${userId}/medicationRecommendations`,
+    )
+  }
+
+  async getMedicationRequests(userId: string) {
+    return this.getCollection<FHIRMedicationRequest>(
+      `users/${userId}/medicationRequests`,
+    )
   }
 
   // Users - Observations
@@ -146,7 +196,7 @@ export class FirebaseService {
 
   private async getCollection<T>(
     path: string,
-  ): Promise<Array<FirebaseDocument<T>>> {
+  ): Promise<Array<DatabaseDocument<T>>> {
     const collection = await this.firestore.collection(path).get()
     return collection.docs.map((doc) => ({
       id: doc.id,
@@ -154,7 +204,7 @@ export class FirebaseService {
     }))
   }
 
-  private async getDocument<T>(path: string): Promise<FirebaseDocument<T>> {
+  private async getDocument<T>(path: string): Promise<DatabaseDocument<T>> {
     const doc = await this.firestore.doc(path).get()
     return { id: doc.id, content: doc.data() as T | undefined }
   }

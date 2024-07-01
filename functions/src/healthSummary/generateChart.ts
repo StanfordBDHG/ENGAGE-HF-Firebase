@@ -1,6 +1,6 @@
 import * as d3 from 'd3'
 import { JSDOM } from 'jsdom'
-import { type Observation } from './vitals'
+import { type Observation } from './vitals.js'
 
 export function generateChartSvg(
   data: Observation[],

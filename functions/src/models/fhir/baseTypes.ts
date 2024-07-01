@@ -1,5 +1,5 @@
 export interface FHIRCodeableConcept extends FHIRElement {
-  coding: FHIRCoding[]
+  coding?: FHIRCoding[]
   text?: string
 }
 

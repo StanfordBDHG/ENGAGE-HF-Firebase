@@ -3,7 +3,7 @@ import {
   type FHIRElement,
   type FHIRPeriod,
   type FHIRSimpleQuantity,
-} from './baseTypes'
+} from './baseTypes.js'
 
 export enum FHIRObservationStatus {
   registered = 'registered',
