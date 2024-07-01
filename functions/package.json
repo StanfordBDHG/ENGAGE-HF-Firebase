@@ -6,7 +6,7 @@
     "lint": "eslint .",
     "lintfix": "eslint . --fix",
     "build": "tsc",
-    "serve": "npm run build -- --watch | firebase emulators:start --only functions",
+    "serve": "npm run build -- --watch | firebase emulators:start --only firestore,functions",
     "shell": "firebase functions:shell",
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions",

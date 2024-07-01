@@ -89,41 +89,41 @@ async function getDrugsContaining(rxcui) {
 
 async function buildFHIRMedication(rxcui, name, medicationClass, minimumDailyDose, targetDailyDose) {
     const result = {
-        "id": rxcui,
-        "code": {
-            "coding": [
+        id: rxcui,
+        code: {
+            coding: [
                 {
-                    "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                    "code": rxcui,
-                    "display": name
+                    system: "http://www.nlm.nih.gov/research/umls/rxnorm",
+                    code: rxcui,
+                    display: name
                 }
             ]
         },
-        "text" : name,
-        "status": "active",
-        "extension": []
+        text : name,
+        status: "active",
+        extension: []
     }
     if (medicationClass) {
         result.extension.push({
-            "url": "http://engage-hf.com/fhir/StructureDefinition/Medication/extension/medication-class",
-            "value": medicationClass
+            url: "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+            valueString: medicationClass
         })
     }
     if (minimumDailyDose) {
         result.extension.push({
-            "url": "http://engage-hf.com/fhir/StructureDefinition/Medication/extension/minimum-daily-dose",
-            "value": {
-                "value": minimumDailyDose,
-                "unit": "mg/day"
+            url: "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+            valueQuantity: {
+                value: minimumDailyDose,
+                unit: "mg/day"
             }
         })
     }
     if (targetDailyDose) {
         result.extension.push({
-            "url": "http://engage-hf.com/fhir/StructureDefinition/Medication/extension/target-daily-dose",
-            "value": {
-                "value": targetDailyDose,
-                "unit": "mg/day"
+            url: "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+            valueQuantity: {
+                value: targetDailyDose,
+                unit: "mg/day"
             }
         })
     }

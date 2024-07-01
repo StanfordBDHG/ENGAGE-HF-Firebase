@@ -14,3 +14,7 @@ export interface User {
   language?: string
   timeZone?: string
 }
+
+export interface UserRecord {
+  displayName?: string
+}

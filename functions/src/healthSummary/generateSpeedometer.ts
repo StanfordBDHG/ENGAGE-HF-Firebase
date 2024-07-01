@@ -1,6 +1,6 @@
 import * as d3 from 'd3'
 import { JSDOM } from 'jsdom'
-import { type KccqScore } from '../models/kccqScore'
+import { type KccqScore } from '../models/kccqScore.js'
 
 export function generateSpeedometerSvg(
   scores: KccqScore[],
