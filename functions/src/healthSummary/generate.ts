@@ -1,5 +1,6 @@
 import { jsPDF } from 'jspdf'
-import { type CellDef, type RowInput, type UserOptions } from 'jspdf-autotable'
+import 'jspdf-autotable' /* eslint-disable-line */
+import { type CellDef, type RowInput, type UserOptions } from 'jspdf-autotable' /* eslint-disable-line */
 import svg2img from 'svg2img'
 import { generateChartSvg } from './generateChart.js'
 import { generateSpeedometerSvg } from './generateSpeedometer.js'
