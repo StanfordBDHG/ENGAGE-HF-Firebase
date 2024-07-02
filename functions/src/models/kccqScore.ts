@@ -1,5 +1,5 @@
 export interface KccqScore {
-  questionnaireResponseId: string
+  questionnaireResponseId?: string
   date: Date
   overallScore: number
   physicalLimitsScore: number

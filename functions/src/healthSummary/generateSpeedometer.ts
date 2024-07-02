@@ -6,16 +6,25 @@ export function generateSpeedometerSvg(
   scores: KccqScore[],
   width: number,
 ): string {
+  const baselineScore = scores.length >= 1 ? scores[0] : undefined
   const recentScore = scores.length >= 1 ? scores[scores.length - 1] : undefined
   const previousScore =
     scores.length >= 2 ? scores[scores.length - 2] : undefined
   const generator = new SpeedometerSvgGenerator(width)
-  const markers: Array<{ percentage: number; color: string }> = []
+  const markers: Array<{ percentage: number; color: string, isDashed: boolean }> = []
+  if (baselineScore) {
+    markers.push({
+      percentage: baselineScore.overallScore,
+      color: generator.secondaryColor,
+      isDashed: true,
+    })
+  }
   if (recentScore) {
     generator.addCurrentScoreLabel(recentScore.overallScore)
     markers.push({
       percentage: recentScore.overallScore,
       color: generator.primaryColor,
+      isDashed: false,
     })
     if (previousScore) {
       generator.addTrendLabel(
@@ -24,6 +33,7 @@ export function generateSpeedometerSvg(
       markers.push({
         percentage: previousScore.overallScore,
         color: generator.secondaryColor,
+        isDashed: false,
       })
     }
   }
@@ -52,13 +62,14 @@ class SpeedometerSvgGenerator {
   arcWidth: number
   innerArcRadius: number
   outerArcRadius: number
+  markerLineWidth: number
 
   constructor(width: number) {
     this.margins = {
-      top: width * 0.05,
-      right: width * 0.05,
+      top: width * 0.01,
+      right: width * 0.1,
       bottom: width * 0.05,
-      left: width * 0.05,
+      left: width * 0.1,
     }
     const innerWidth = width - this.margins.left - this.margins.right
     this.innerSize = {
@@ -74,6 +85,7 @@ class SpeedometerSvgGenerator {
         this.margins.bottom,
     }
     this.arcWidth = width * 0.05
+    this.markerLineWidth = this.arcWidth / 3.5
     this.outerArcRadius = Math.min(
       this.innerSize.width / 2,
       this.innerSize.height,
@@ -88,7 +100,7 @@ class SpeedometerSvgGenerator {
     this.defs = this.svg.append('defs')
   }
 
-  addArc(markers: Array<{ percentage: number; color: string }>) {
+  addArc(markers: Array<{ percentage: number; color: string, isDashed: boolean }>) {
     const gradientId = 'gradient'
     const gradient = this.defs.append('linearGradient').attr('id', gradientId)
     gradient
@@ -140,7 +152,8 @@ class SpeedometerSvgGenerator {
       this.svg
         .append('path')
         .attr('d', path)
-        .attr('stroke-width', 4)
+        .attr('stroke-dasharray', marker.isDashed ? `${this.markerLineWidth},${this.markerLineWidth}` : 'none')
+        .attr('stroke-width', this.markerLineWidth)
         .attr('stroke', marker.color)
         .attr('fill', 'none')
         .attr('transform', transform)
@@ -194,43 +207,39 @@ class SpeedometerSvgGenerator {
   }
 
   addLegend() {
+    this.addLegendItem(0, 3, 'Baseline', this.secondaryColor, true)
+    this.addLegendItem(1, 3, 'Previous', this.secondaryColor)
+    this.addLegendItem(2, 3, 'Current', this.primaryColor)
+  }
+
+  addLegendItem(index: number, count: number, title: string, color: string, isDashed: boolean = false) {
     const legendFontSize = 8
     const legendMargin = this.legendHeight - legendFontSize
     const legendBaselineY =
       this.margins.top + this.innerSize.height + legendFontSize + legendMargin
-    const legendLineLength = this.size.width * 0.075
+    const legendLineLength = this.arcWidth * 1.5
+    const legendLinePadding = this.markerLineWidth
     const legendLinesY = legendBaselineY - legendFontSize / 2
+    const itemWidth = this.innerSize.width / count
 
+    const lineStartX = this.margins.left + itemWidth * index
+    const lineEndX = lineStartX + legendLineLength
+    const textStartX = lineEndX + legendLinePadding
     this.svg
       .append('text')
-      .attr('x', this.margins.left + this.size.width * 0.1)
+      .attr('x', textStartX)
       .attr('y', legendBaselineY)
       .style('text-anchor', 'left')
       .style('font-size', `${legendFontSize}pt`)
-      .text('Previous')
+      .text(title)
 
-    const previousPath = `M ${this.margins.left} ${legendLinesY} L ${this.margins.left + legendLineLength} ${legendLinesY}`
-    this.svg
-      .append('path')
-      .attr('d', previousPath)
-      .attr('stroke-width', 2)
-      .attr('stroke', this.secondaryColor)
-      .attr('fill', 'none')
-
-    this.svg
-      .append('text')
-      .attr('x', this.size.width * 0.6)
-      .attr('y', legendBaselineY)
-      .style('text-anchor', 'left')
-      .style('font-size', `${legendFontSize}pt`)
-      .text('Current')
-
-    const currentPath = `M ${this.size.width / 2} ${legendLinesY} L ${this.size.width / 2 + legendLineLength} ${legendLinesY}`
+    const currentPath = `M ${lineStartX} ${legendLinesY} L ${lineEndX} ${legendLinesY}`
     this.svg
       .append('path')
       .attr('d', currentPath)
-      .attr('stroke-width', 2)
-      .attr('stroke', this.primaryColor)
+      .attr('stroke-dasharray', isDashed ? `${this.markerLineWidth},${this.markerLineWidth}` : 'none')
+      .attr('stroke-width', this.markerLineWidth)
+      .attr('stroke', color)
       .attr('fill', 'none')
   }
 

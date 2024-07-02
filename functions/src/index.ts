@@ -10,7 +10,7 @@
 // https://github.com/StanfordBDHG/PediatricAppleWatchStudy/pull/54/files
 
 import admin from 'firebase-admin'
-import { exportHealthSummaryFunction } from './functions/healthSummary.js'
+import { exportDefaultHealthSummaryFunction, exportHealthSummaryFunction } from './functions/healthSummary.js'
 import {
   beforeUserCreatedFunction,
   checkInvitationCodeFunction,
@@ -23,5 +23,6 @@ admin.initializeApp()
 export const beforeUserCreated = beforeUserCreatedFunction
 export const buildDebugData = buildDebugDataFunction
 export const checkInvitationCode = checkInvitationCodeFunction
+export const exportDefaultHealthSummary = exportDefaultHealthSummaryFunction
 export const exportHealthSummary = exportHealthSummaryFunction
 export const rebuildStaticData = rebuildStaticDataFunction

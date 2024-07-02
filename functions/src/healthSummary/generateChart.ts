@@ -6,12 +6,14 @@ export function generateChartSvg(
   data: Observation[],
   size: { width: number; height: number },
   margins: { top: number; right: number; bottom: number; left: number },
+  baseline?: number,
 ): string {
   const dom = new JSDOM('<!DOCTYPE html><html><body></body></html>')
   const body = d3.select(dom.window.document).select('body')
 
   const primaryColor = 'rgb(57, 101, 174)'
   const secondaryColor = 'rgb(211, 211, 211)'
+  const tertiaryColor = 'rgb(255, 0, 0)'
   const gridLineWidth = 0.5
   const innerWidth = size.width - margins.left - margins.right
   const innerHeight = size.height - margins.top - margins.bottom
@@ -72,6 +74,17 @@ export function generateChartSvg(
     .attr('stroke', primaryColor)
     .attr('stroke-width', 2)
     .attr('d', line)
+
+  if (baseline) {
+    svg
+      .append('path')
+      .datum([{ date: data[0].date, value: baseline }, { date: data[data.length - 1].date, value: baseline }])
+      .attr('fill', 'none')
+      .attr('stroke-dasharray', '4,4')
+      .attr('stroke', tertiaryColor)
+      .attr('stroke-width', 2)
+      .attr('d', line)
+  }
 
   return body.html()
 }

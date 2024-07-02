@@ -1,4 +1,5 @@
 import { jsPDF } from 'jspdf'
+import 'jspdf-autotable'
 import { type CellDef, type RowInput, type UserOptions } from 'jspdf-autotable'
 import svg2img from 'svg2img'
 import { generateChartSvg } from './generateChart.js'
@@ -121,8 +122,14 @@ class HealthSummaryPDFGenerator {
         )
         this.moveDown(this.textStyles.body.fontSize + 4)
         this.addText(
-          'Please discuss optimizing these medications with your care them at your next clinic appointment. Aim to make one positive change!',
+          'Please discuss optimizing these medications with your care them at your next clinic appointment.',
           this.textStyles.body,
+          columnWidth,
+        )
+        this.moveDown(4)
+        this.addText(
+          'Aim to make one positive change!',
+          this.textStyles.bodyColored,
           columnWidth,
         )
         this.moveDown(this.textStyles.body.fontSize)
@@ -296,24 +303,55 @@ class HealthSummaryPDFGenerator {
       },
     )
 
-    const tableContent = [
+    const tableContent: CellDef[][] = [
       [
-        ' ',
-        'Overall Score',
-        'Physical Limits',
-        'Social Limits',
-        'Quality of Life',
-        'Heart Failure Symptoms',
-        'Dizziness',
+        {
+          title: ' '
+        },
+        {
+          title: 'Overall Score',
+        },
+        {
+          title: 'Physical Limits',
+        },
+        {
+          title: 'Social Limits',
+        },
+        {
+          title: 'Quality of Life',
+        },
+        {
+          title: 'Heart Failure Symptoms',
+        },
+        {
+          title: 'Dizziness',
+        },
       ],
-      ...this.data.symptomScores.map((survey) => [
-        this.formatDate(survey.date),
-        String(survey.overallScore),
-        String(survey.physicalLimitsScore),
-        String(survey.socialLimitsScore),
-        String(survey.qualityOfLifeScore),
-        String(survey.specificSymptomsScore),
-        String(survey.dizzinessScore),
+      ...this.data.symptomScores.map((survey, index) => [
+        {
+          title: this.formatDate(survey.date),
+          styles: {
+            fontStyle: index == this.data.symptomScores.length-1 ? 'bold' : 'normal',
+          },
+        } as CellDef,
+        {
+          title: String(survey.overallScore),
+        },
+        {
+          title: String(survey.physicalLimitsScore),
+        },
+        {
+          title: String(survey.socialLimitsScore),
+        },
+        {
+          title: String(survey.qualityOfLifeScore),
+        },
+        {
+          title: String(survey.specificSymptomsScore),
+        },
+        {
+          title: String(survey.dizzinessScore)
+        },
       ]),
     ]
     this.addTable(tableContent)
@@ -326,7 +364,7 @@ class HealthSummaryPDFGenerator {
     await this.splitTwoColumns(
       async (columnWidth) => {
         this.addText('Weight', this.textStyles.bodyBold, columnWidth)
-        await this.addChart(this.data.vitals.bodyWeight, columnWidth)
+        await this.addChart(this.data.vitals.bodyWeight, columnWidth, this.data.vitals.dryWeight)
         const avgWeight =
           this.data.vitals.bodyWeight.reduce(
             (acc, observation) => acc + observation.value,
@@ -512,7 +550,7 @@ class HealthSummaryPDFGenerator {
     this.moveDown(4)
   }
 
-  async addChart(data: Observation[], maxWidth?: number) {
+  async addChart(data: Observation[], maxWidth?: number, baseline?: number) {
     const width =
       maxWidth ?? this.pageWidth - this.cursor.x - this.margins.right
     const height = width * 0.75
@@ -520,6 +558,7 @@ class HealthSummaryPDFGenerator {
       data,
       { width: width, height: height },
       { top: 20, right: 40, bottom: 40, left: 40 },
+      baseline,
     )
     const img = await this.convertSvgToPng(svg)
     this.addPNG(img, width)
@@ -571,7 +610,7 @@ class HealthSummaryPDFGenerator {
       tableWidth: maxWidth ?? 'auto',
       body: rows,
     }
-    ;(this.doc as any).autoTable(options) // eslint-disable-line
+      ; (this.doc as any).autoTable(options) // eslint-disable-line
     this.cursor.y = (this.doc as any).lastAutoTable.finalY // eslint-disable-line
   }
 
