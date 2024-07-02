@@ -26,6 +26,8 @@ export function generateChartSvg(
     .append('g')
     .attr('transform', `translate(${margins.left}, ${margins.top})`)
 
+  if (data.length === 0) return body.html()
+
   const xAxisScale = d3
     .scaleTime()
     .domain(d3.extent(data, (d) => d.date) as [Date, Date])
@@ -47,12 +49,14 @@ export function generateChartSvg(
     .attr('transform', 'rotate(-45)')
 
   const yAxisExtent = d3.extent(data, (d) => d.value) as [number, number]
-  const yAxisExtentSize = yAxisExtent[1] - yAxisExtent[0]
+  const yAxisExtentMin = Math.min(yAxisExtent[0], baseline ?? yAxisExtent[0])
+  const yAxisExtentMax = Math.max(yAxisExtent[1], baseline ?? yAxisExtent[1])
+  const yAxisExtentSize = yAxisExtentMax - yAxisExtentMin
   const yAxisScale = d3
     .scaleLinear()
     .domain([
-      yAxisExtent[0] - yAxisExtentSize * 0.2,
-      yAxisExtent[1] + yAxisExtentSize * 0.2,
+      yAxisExtentMin - yAxisExtentSize * 0.2,
+      yAxisExtentMax + yAxisExtentSize * 0.2,
     ])
     .range([innerHeight, 0])
   const yAxis = d3.axisLeft(yAxisScale).ticks(5).tickSize(-innerWidth)
@@ -78,7 +82,10 @@ export function generateChartSvg(
   if (baseline) {
     svg
       .append('path')
-      .datum([{ date: data[0].date, value: baseline }, { date: data[data.length - 1].date, value: baseline }])
+      .datum([
+        { date: data[0].date, value: baseline },
+        { date: data[data.length - 1].date, value: baseline },
+      ])
       .attr('fill', 'none')
       .attr('stroke-dasharray', '4,4')
       .attr('stroke', tertiaryColor)

@@ -11,7 +11,11 @@ export function generateSpeedometerSvg(
   const previousScore =
     scores.length >= 2 ? scores[scores.length - 2] : undefined
   const generator = new SpeedometerSvgGenerator(width)
-  const markers: Array<{ percentage: number; color: string, isDashed: boolean }> = []
+  const markers: Array<{
+    percentage: number
+    color: string
+    isDashed: boolean
+  }> = []
   if (baselineScore) {
     markers.push({
       percentage: baselineScore.overallScore,
@@ -100,7 +104,9 @@ class SpeedometerSvgGenerator {
     this.defs = this.svg.append('defs')
   }
 
-  addArc(markers: Array<{ percentage: number; color: string, isDashed: boolean }>) {
+  addArc(
+    markers: Array<{ percentage: number; color: string; isDashed: boolean }>,
+  ) {
     const gradientId = 'gradient'
     const gradient = this.defs.append('linearGradient').attr('id', gradientId)
     gradient
@@ -152,7 +158,12 @@ class SpeedometerSvgGenerator {
       this.svg
         .append('path')
         .attr('d', path)
-        .attr('stroke-dasharray', marker.isDashed ? `${this.markerLineWidth},${this.markerLineWidth}` : 'none')
+        .attr(
+          'stroke-dasharray',
+          marker.isDashed ?
+            `${this.markerLineWidth},${this.markerLineWidth}`
+          : 'none',
+        )
         .attr('stroke-width', this.markerLineWidth)
         .attr('stroke', marker.color)
         .attr('fill', 'none')
@@ -212,7 +223,13 @@ class SpeedometerSvgGenerator {
     this.addLegendItem(2, 3, 'Current', this.primaryColor)
   }
 
-  addLegendItem(index: number, count: number, title: string, color: string, isDashed: boolean = false) {
+  addLegendItem(
+    index: number,
+    count: number,
+    title: string,
+    color: string,
+    isDashed = false,
+  ) {
     const legendFontSize = 8
     const legendMargin = this.legendHeight - legendFontSize
     const legendBaselineY =
@@ -237,7 +254,10 @@ class SpeedometerSvgGenerator {
     this.svg
       .append('path')
       .attr('d', currentPath)
-      .attr('stroke-dasharray', isDashed ? `${this.markerLineWidth},${this.markerLineWidth}` : 'none')
+      .attr(
+        'stroke-dasharray',
+        isDashed ? `${this.markerLineWidth},${this.markerLineWidth}` : 'none',
+      )
       .attr('stroke-width', this.markerLineWidth)
       .attr('stroke', color)
       .attr('fill', 'none')

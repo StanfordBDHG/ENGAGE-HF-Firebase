@@ -1,5 +1,4 @@
 import { jsPDF } from 'jspdf'
-import 'jspdf-autotable'
 import { type CellDef, type RowInput, type UserOptions } from 'jspdf-autotable'
 import svg2img from 'svg2img'
 import { generateChartSvg } from './generateChart.js'
@@ -312,7 +311,7 @@ class HealthSummaryPDFGenerator {
     const tableContent: CellDef[][] = [
       [
         {
-          title: ' '
+          title: ' ',
         },
         {
           title: 'Overall Score',
@@ -337,7 +336,8 @@ class HealthSummaryPDFGenerator {
         {
           title: this.formatDate(survey.date),
           styles: {
-            fontStyle: index == this.data.symptomScores.length-1 ? 'bold' : 'normal',
+            fontStyle:
+              index == this.data.symptomScores.length - 1 ? 'bold' : 'normal',
           },
         } as CellDef,
         {
@@ -356,7 +356,7 @@ class HealthSummaryPDFGenerator {
           title: String(survey.specificSymptomsScore),
         },
         {
-          title: String(survey.dizzinessScore)
+          title: String(survey.dizzinessScore),
         },
       ]),
     ]
@@ -370,7 +370,11 @@ class HealthSummaryPDFGenerator {
     await this.splitTwoColumns(
       async (columnWidth) => {
         this.addText('Weight', this.textStyles.bodyBold, columnWidth)
-        await this.addChart(this.data.vitals.bodyWeight, columnWidth, this.data.vitals.dryWeight)
+        await this.addChart(
+          this.data.vitals.bodyWeight,
+          columnWidth,
+          this.data.vitals.dryWeight,
+        )
         const avgWeight =
           this.data.vitals.bodyWeight.reduce(
             (acc, observation) => acc + observation.value,
