@@ -67,6 +67,12 @@ class HealthSummaryPDFGenerator {
       fontSize: 10,
       color: this.colors.primary,
     } as TextStyle,
+    bodyColoredBold: {
+      fontName: 'Helvetica',
+      fontStyle: 'Bold',
+      fontSize: 10,
+      color: this.colors.primary,
+    } as TextStyle,
     bodyBold: {
       fontName: 'Helvetica',
       fontStyle: 'Bold',
@@ -129,7 +135,7 @@ class HealthSummaryPDFGenerator {
         this.moveDown(4)
         this.addText(
           'Aim to make one positive change!',
-          this.textStyles.bodyColored,
+          this.textStyles.bodyColoredBold,
           columnWidth,
         )
         this.moveDown(this.textStyles.body.fontSize)
