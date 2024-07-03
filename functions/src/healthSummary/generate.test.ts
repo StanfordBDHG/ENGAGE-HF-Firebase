@@ -9,9 +9,9 @@ describe('generateHealthSummary', () => {
   const regenerateValues = process.env.REGENERATE_VALUES === 'true'
   const pdfMetadataSuffixLength = 1000
 
-  it('should still create as nice of a PDF as before', async () => {
+  it('should still create as nice of a PDF as before', () => {
     const inputData = mockHealthSummaryData()
-    const actualData = await generateHealthSummary(inputData)
+    const actualData = generateHealthSummary(inputData)
     const expectedPath = 'src/tests/resources/mockHealthSummary.pdf'
     if (regenerateValues) {
       fs.writeFileSync(expectedPath, actualData)
@@ -28,7 +28,7 @@ describe('generateHealthSummary', () => {
     }
   })
 
-  it('should not fail on empty data', async () => {
+  it('should not fail on empty data', () => {
     const inputData = mockHealthSummaryData()
     inputData.dateOfBirth = undefined
     inputData.nextAppointment = undefined
@@ -39,7 +39,7 @@ describe('generateHealthSummary', () => {
     inputData.vitals.heartRate = []
     inputData.vitals.bodyWeight = [{ date: new Date('2000-01-01'), value: NaN }]
     inputData.vitals.dryWeight = NaN
-    const actualData = await generateHealthSummary(inputData)
+    const actualData = generateHealthSummary(inputData)
     const expectedPath = 'src/tests/resources/emptyHealthSummary.pdf'
     if (regenerateValues) {
       fs.writeFileSync(expectedPath, actualData)

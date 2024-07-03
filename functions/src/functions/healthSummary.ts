@@ -11,8 +11,8 @@ interface ExportHealthSummaryInput {
   userId?: string
 }
 
-export const exportDefaultHealthSummaryFunction = onRequest(async (_, res) => {
-  const result = await generateHealthSummary({
+export const exportDefaultHealthSummaryFunction = onRequest((_, res) => {
+  const result = generateHealthSummary({
     name: 'John Doe',
     dateOfBirth: new Date('1970-01-02'),
     clinicianName: 'Dr. XXX',
