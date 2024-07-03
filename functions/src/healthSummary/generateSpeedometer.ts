@@ -70,7 +70,7 @@ class SpeedometerSvgGenerator {
 
   constructor(width: number) {
     this.margins = {
-      top: width * 0.01,
+      top: width * 0.025,
       right: width * 0.1,
       bottom: width * 0.05,
       left: width * 0.1,
