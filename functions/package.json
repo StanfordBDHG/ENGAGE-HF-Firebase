@@ -6,7 +6,7 @@
     "lint": "eslint .",
     "lintfix": "eslint . --fix",
     "build": "tsc",
-    "serve": "firebase emulators:start --only functions",
+    "serve": "npm run build -- --watch | firebase emulators:start --only functions",
     "shell": "firebase functions:shell",
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions",
@@ -17,21 +17,28 @@
   },
   "main": "lib/index.js",
   "dependencies": {
+    "d3": "^7.9.0",
     "firebase-admin": "^12.0",
-    "firebase-functions": "^5.0.1"
+    "firebase-functions": "^5.0.1",
+    "jsdom": "^24.1.0",
+    "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.8.2",
+    "svg2img": "^1.0.0-beta.2"
   },
   "devDependencies": {
-    "eslint": "^8.57",
-    "eslint-config-google": "^0.14",
-    "firebase-functions-test": "^3.1",
+    "@types/d3": "^7.4.3",
+    "@types/jsdom": "^21.1.7",
+    "@types/node": "^20",
     "@typescript-eslint/eslint-plugin": "^7",
     "@typescript-eslint/parser": "^7",
-    "prettier": "^3",
-    "typescript": "^5",
-    "@types/node": "^20",
+    "eslint": "^8.57",
+    "eslint-config-google": "^0.14",
     "eslint-config-prettier": "^9",
     "eslint-plugin-import": "^2",
-    "eslint-plugin-prettier": "^5"
+    "eslint-plugin-prettier": "^5",
+    "firebase-functions-test": "^3.1",
+    "prettier": "^3",
+    "typescript": "^5"
   },
   "private": true
 }
