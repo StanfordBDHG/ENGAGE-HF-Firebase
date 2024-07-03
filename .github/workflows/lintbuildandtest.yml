@@ -33,5 +33,12 @@ jobs:
         run: npm --prefix functions run build
       - name: Test
         run: npm --prefix functions run test
+      - name: Regenerate Test Results
+        run: npm --prefix functions run test:regenerate
+      - name: Archive Regenerated Test Results
+        uses: actions/upload-artifact@v4
+        with:
+          name: test results
+          path: functions/tests/resources
     permissions:
       contents: read
