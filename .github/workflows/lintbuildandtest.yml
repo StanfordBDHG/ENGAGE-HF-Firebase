@@ -6,13 +6,13 @@
 # SPDX-License-Identifier: MIT
 #
 
-name: Lint and Build
+name: Lint, Build and Test
 
 on: [pull_request]
 
 jobs:
   deploy:
-    name: Lint and Build Functions
+    name: Lint, Build and Test Functions
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -27,5 +27,7 @@ jobs:
         run: npm --prefix functions run lint
       - name: Build
         run: npm --prefix functions run build
+      - name: Test
+        run: npm --prefix functions run test
     permissions:
       contents: read
