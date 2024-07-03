@@ -18,10 +18,13 @@ describe('generateHealthSummary', () => {
     } else {
       const expectedData = fs.readFileSync(expectedPath)
       assert.equal(actualData.length, expectedData.length)
-      const maxIndex = actualData.length - pdfMetadataSuffixLength
-      expect(
-        Buffer.from(actualData).toString('utf8').substring(0, maxIndex),
-      ).to.equal(expectedData.toString('utf8').substring(0, maxIndex))
+      const actualString = Buffer.from(actualData)
+        .toString('utf8')
+        .slice(0, -pdfMetadataSuffixLength)
+      const expectedString = expectedData
+        .toString('utf8')
+        .slice(0, -pdfMetadataSuffixLength)
+      expect(actualString).to.equal(expectedString)
     }
   })
 
@@ -43,10 +46,13 @@ describe('generateHealthSummary', () => {
     } else {
       const expectedData = fs.readFileSync(expectedPath)
       assert.equal(actualData.length, expectedData.length)
-      const maxIndex = actualData.length - pdfMetadataSuffixLength
-      expect(
-        Buffer.from(actualData).toString('utf8').substring(0, maxIndex),
-      ).to.equal(expectedData.toString('utf8').substring(0, maxIndex))
+      const actualString = Buffer.from(actualData)
+        .toString('utf8')
+        .slice(0, -pdfMetadataSuffixLength)
+      const expectedString = expectedData
+        .toString('utf8')
+        .slice(0, -pdfMetadataSuffixLength)
+      expect(actualString).to.equal(expectedString)
     }
   })
 })
