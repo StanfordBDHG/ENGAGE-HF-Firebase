@@ -122,7 +122,6 @@ class SpeedometerSvgGenerator {
       .attr('offset', '100%')
       .attr('stop-color', 'rgb(0,127,63)')
 
-    console.log(this.innerArcRadius, ' ', this.outerArcRadius, this.size.width)
     this.svg
       .append('path')
       .attr(
@@ -147,7 +146,6 @@ class SpeedometerSvgGenerator {
       y: this.margins.top + this.innerSize.height,
     }
     for (const marker of markers) {
-      console.log(marker)
       const path = `M ${arcCenter.x - arcWidth} ${arcCenter.y} L ${arcCenter.x + arcWidth} ${arcCenter.y}`
       const rotation = (marker.percentage / 100) * 180 - 180
       const translationX =
@@ -264,8 +262,6 @@ class SpeedometerSvgGenerator {
   }
 
   finish(): string {
-    const result = this.body.html()
-    console.log(result)
-    return result
+    return this.body.html()
   }
 }

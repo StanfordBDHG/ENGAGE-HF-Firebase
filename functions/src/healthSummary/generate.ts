@@ -251,7 +251,7 @@ class HealthSummaryPDFGenerator {
       },
       (columnWidth) => {
         this.addText(
-          `Current Weight: ${this.data.vitals.bodyWeight[0].value.toFixed(0)} lbs`,
+          `Current Weight: ${this.data.vitals.bodyWeight.at(0)?.value.toFixed(0) ?? '---'} lbs`,
           this.textStyles.body,
           columnWidth,
         )
@@ -394,7 +394,7 @@ class HealthSummaryPDFGenerator {
             [' ', 'Current', '7-Day Average', 'Last Visit', 'Range'],
             [
               'Weight',
-              this.data.vitals.bodyWeight[0].value.toFixed(0),
+              this.data.vitals.bodyWeight.at(0)?.value.toFixed(0) ?? '---',
               avgWeight.toFixed(0),
               '-',
               (maxWeight - minWeight).toFixed(0),
@@ -410,9 +410,9 @@ class HealthSummaryPDFGenerator {
         const values = [...this.data.vitals.heartRate].sort(
           (a, b) => a.value - b.value,
         )
-        const median = values[Math.floor(values.length / 2)]
-        const upperMedian = values[Math.floor(values.length * 0.75)]
-        const lowerMedian = values[Math.floor(values.length * 0.25)]
+        const median = values.at(Math.floor(values.length / 2))
+        const upperMedian = values.at(Math.floor(values.length * 0.75))
+        const lowerMedian = values.at(Math.floor(values.length * 0.25))
 
         const percentageBelow =
           (this.data.vitals.heartRate.filter(
@@ -431,8 +431,10 @@ class HealthSummaryPDFGenerator {
             [' ', 'Median', 'IQR', '% Under 50', '% Over 120'],
             [
               'Heart Rate',
-              median.value.toFixed(0),
-              (upperMedian.value - lowerMedian.value).toFixed(0),
+              median?.value.toFixed(0) ?? '---',
+              upperMedian && lowerMedian ?
+                (upperMedian.value - lowerMedian.value).toFixed(0)
+              : '---',
               percentageBelow.toFixed(0),
               percentageAbove.toFixed(0),
             ],
@@ -468,21 +470,28 @@ class HealthSummaryPDFGenerator {
     const systolicValues = [...this.data.vitals.systolicBloodPressure].sort(
       (a, b) => a.value - b.value,
     )
-    const systolicMedian = systolicValues[Math.floor(systolicValues.length / 2)]
-    const systolicUpperMedian =
-      systolicValues[Math.floor(systolicValues.length * 0.75)]
-    const systolicLowerMedian =
-      systolicValues[Math.floor(systolicValues.length * 0.25)]
+    const systolicMedian = systolicValues.at(
+      Math.floor(systolicValues.length / 2),
+    )
+    const systolicUpperMedian = systolicValues.at(
+      Math.floor(systolicValues.length * 0.75),
+    )
+    const systolicLowerMedian = systolicValues.at(
+      Math.floor(systolicValues.length * 0.25),
+    )
 
     const diastolicValues = [...this.data.vitals.diastolicBloodPressure].sort(
       (a, b) => a.value - b.value,
     )
-    const diastolicMedian =
-      diastolicValues[Math.floor(diastolicValues.length / 2)]
-    const diastolicUpperMedian =
-      diastolicValues[Math.floor(diastolicValues.length * 0.75)]
-    const diastolicLowerMedian =
-      diastolicValues[Math.floor(diastolicValues.length * 0.25)]
+    const diastolicMedian = diastolicValues.at(
+      Math.floor(diastolicValues.length / 2),
+    )
+    const diastolicUpperMedian = diastolicValues.at(
+      Math.floor(diastolicValues.length * 0.75),
+    )
+    const diastolicLowerMedian = diastolicValues.at(
+      Math.floor(diastolicValues.length * 0.25),
+    )
 
     const percentageBelow =
       (this.data.vitals.systolicBloodPressure.filter(
@@ -500,15 +509,19 @@ class HealthSummaryPDFGenerator {
       [' ', 'Median', 'IQR', '% Under 90 mmHg', '% Over 180 mmHg'],
       [
         'Systolic',
-        systolicMedian.value.toFixed(0),
-        (systolicUpperMedian.value - systolicLowerMedian.value).toFixed(0),
+        systolicMedian?.value.toFixed(0) ?? '---',
+        systolicUpperMedian && systolicLowerMedian ?
+          (systolicUpperMedian.value - systolicLowerMedian.value).toFixed(0)
+        : '---',
         percentageBelow.toFixed(0),
         percentageAbove.toFixed(0),
       ],
       [
         'Diastolic',
-        diastolicMedian.value.toFixed(0),
-        (diastolicUpperMedian.value - diastolicLowerMedian.value).toFixed(0),
+        diastolicMedian?.value.toFixed(0) ?? '---',
+        diastolicUpperMedian && diastolicLowerMedian ?
+          (diastolicUpperMedian.value - diastolicLowerMedian.value).toFixed(0)
+        : '---',
         '-',
         '-',
       ],
