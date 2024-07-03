@@ -602,6 +602,10 @@ class HealthSummaryPDFGenerator {
         svg,
         {
           resvg: {
+            font: {
+              loadSystemFonts: true,
+              defaultFontFamily: 'Helvetica',
+            },
             shapeRendering: 2,
             textRendering: 1,
             imageRendering: 0,
