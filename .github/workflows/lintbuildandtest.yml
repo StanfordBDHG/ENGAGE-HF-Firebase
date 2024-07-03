@@ -27,6 +27,8 @@ jobs:
           node-version: 22.x
       - name: Install Dependencies
         run: npm install --prefix functions --save-dev
+      - name: List available fonts
+        run: fc-list :family
       - name: Lint
         run: npm --prefix functions run lint
       - name: Build
