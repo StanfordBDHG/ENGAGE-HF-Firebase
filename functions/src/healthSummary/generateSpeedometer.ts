@@ -208,7 +208,7 @@ class SpeedometerSvgGenerator {
       .append('text')
       .attr('x', this.margins.left + this.arcWidth + 4)
       .attr('y', this.margins.top + this.innerSize.height - 4)
-      .style('text-anchor', 'left')
+      .style('text-anchor', 'start')
       .style('font-size', '8pt')
       .style('font-weight', 'bold')
       .style('fill', this.secondaryColor)
