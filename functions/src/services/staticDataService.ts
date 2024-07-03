@@ -78,7 +78,7 @@ export class StaticDataService {
 
   // Helpers
 
-  async setUnstructuredCollection(collection: any, data: any) {
+  private async setUnstructuredCollection(collection: any, data: any) {
     if (Array.isArray(data)) {
       for (let index = 0; index < data.length; index++) {
         const document =
@@ -94,7 +94,7 @@ export class StaticDataService {
     }
   }
 
-  async setStructuredCollection(collection: any, data: any) {
+  private async setStructuredCollection(collection: any, data: any) {
     if (Array.isArray(data)) {
       for (let index = 0; index < data.length; index++) {
         const document =
@@ -110,7 +110,7 @@ export class StaticDataService {
     }
   }
 
-  async setStructuredDocument(document: any, data: any) {
+  private async setStructuredDocument(document: any, data: any) {
     if (typeof data !== 'object') {
       await document.set(data)
     } else {
@@ -127,7 +127,7 @@ export class StaticDataService {
     }
   }
 
-  readJSON(filename: string) {
+  private readJSON(filename: string) {
     return JSON.parse(fs.readFileSync(this.path + filename, 'utf8'))
   }
 }

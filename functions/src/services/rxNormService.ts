@@ -186,10 +186,9 @@ export class RxNormService {
       rxTermInfo = fallbackTerms ?? {}
     }
     const amounts = this.removingSuffix(
-      (rxTermInfo.strength ?? '').toUpperCase().trim(),
-      'MG',
+      (rxTermInfo.strength ?? '').toUpperCase(),
+      'MG'
     )
-      .trim()
       .split('-')
       .map(parseFloat)
     return {
@@ -371,9 +370,11 @@ export class RxNormService {
     }
   }
 
-  private removingSuffix(string: string, suffix: string) {
-    return string.endsWith(suffix) ?
-        string.toString().slice(0, -suffix.length)
-      : string
+  private removingSuffix(string: string, suffix: string, trim: boolean = true) {
+    const input = trim ? string.trim() : string
+      const output = input.endsWith(suffix) ?
+      input.slice(0, -suffix.length).trim()
+    : input
+      return trim ? output.trim() : output
   }
 }
