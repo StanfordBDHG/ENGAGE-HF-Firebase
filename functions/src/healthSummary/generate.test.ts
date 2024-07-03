@@ -6,14 +6,14 @@ import { mockHealthSummaryData } from '../tests/mocks/healthSummaryData.js'
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 
 describe('generateHealthSummary', () => {
-  const overrideValues = process.env.OVERRIDE_VALUES === 'true'
+  const regenerateValues = process.env.REGENERATE_VALUES === 'true'
   const pdfMetadataSuffixLength = 1000
 
   it('should still create as nice of a PDF as before', async () => {
     const inputData = mockHealthSummaryData()
     const actualData = await generateHealthSummary(inputData)
     const expectedPath = 'src/tests/resources/mockHealthSummary.pdf'
-    if (overrideValues) {
+    if (regenerateValues) {
       fs.writeFileSync(expectedPath, actualData)
     } else {
       const expectedData = fs.readFileSync(expectedPath)
@@ -41,7 +41,7 @@ describe('generateHealthSummary', () => {
     inputData.vitals.dryWeight = NaN
     const actualData = await generateHealthSummary(inputData)
     const expectedPath = 'src/tests/resources/emptyHealthSummary.pdf'
-    if (overrideValues) {
+    if (regenerateValues) {
       fs.writeFileSync(expectedPath, actualData)
     } else {
       const expectedData = fs.readFileSync(expectedPath)

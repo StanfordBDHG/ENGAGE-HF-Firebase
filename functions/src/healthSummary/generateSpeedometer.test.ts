@@ -7,13 +7,13 @@ import { mockHealthSummaryData } from '../tests/mocks/healthSummaryData.js'
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 
 describe('generateSpeedometer', () => {
-  const overrideValues = process.env.OVERRIDE_VALUES === 'true'
+  const regenerateValues = process.env.REGENERATE_VALUES === 'true'
 
   it('should generate the same chart on mock data', () => {
     const inputData = mockHealthSummaryData()
     const actualData = generateSpeedometerSvg(inputData.symptomScores, 258)
     const expectedPath = 'src/tests/resources/mockSpeedometer.svg'
-    if (overrideValues) {
+    if (regenerateValues) {
       fs.writeFileSync(expectedPath, actualData)
     } else {
       const expectedData = fs.readFileSync(expectedPath)
@@ -24,7 +24,7 @@ describe('generateSpeedometer', () => {
   it('should generate an empty chart the same way', () => {
     const actualData = generateSpeedometerSvg([], 258)
     const expectedPath = 'src/tests/resources/emptySpeedometer.svg'
-    if (overrideValues) {
+    if (regenerateValues) {
       fs.writeFileSync(expectedPath, actualData)
     } else {
       const expectedData = fs.readFileSync(expectedPath)

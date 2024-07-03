@@ -7,7 +7,7 @@ import { mockHealthSummaryData } from '../tests/mocks/healthSummaryData.js'
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 
 describe('generateChart', () => {
-  const overrideValues = process.env.OVERRIDE_VALUES === 'true'
+  const regenerateValues = process.env.REGENERATE_VALUES === 'true'
 
   it('should generate the same chart on mock data', () => {
     const inputData = mockHealthSummaryData()
@@ -18,7 +18,7 @@ describe('generateChart', () => {
       inputData.vitals.dryWeight,
     )
     const expectedPath = 'src/tests/resources/mockChart.svg'
-    if (overrideValues) {
+    if (regenerateValues) {
       fs.writeFileSync(expectedPath, actualData)
     } else {
       const expectedData = fs.readFileSync(expectedPath)
@@ -33,7 +33,7 @@ describe('generateChart', () => {
       { top: 20, right: 40, bottom: 40, left: 40 },
     )
     const expectedPath = 'src/tests/resources/emptyChart.svg'
-    if (overrideValues) {
+    if (regenerateValues) {
       fs.writeFileSync(expectedPath, actualData)
     } else {
       const expectedData = fs.readFileSync(expectedPath)
