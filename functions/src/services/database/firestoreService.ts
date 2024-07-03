@@ -79,8 +79,9 @@ export class FirestoreService implements DatabaseService {
   async enrollUser(invitationId: string, userId: string) {
     const invitationRef = this.firestore.doc(`invitations/${invitationId}`)
     const invitation = await invitationRef.get()
+    const invitationData = invitation.data()
 
-    if (!invitation.exists || invitation.data()?.used) {
+    if (!invitation.exists || invitationData?.used) {
       throw new https.HttpsError(
         'not-found',
         'Invitation code not found or already used.',
@@ -101,6 +102,7 @@ export class FirestoreService implements DatabaseService {
       transaction.set(userRef, {
         invitationCode: invitation.id,
         dateOfEnrollment: FieldValue.serverTimestamp(),
+        ...invitationData?.user,
       })
 
       transaction.update(invitationRef, {
