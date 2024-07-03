@@ -4,10 +4,10 @@
   "type": "module",
   "scripts": {
     "lint": "eslint .",
-    "lintfix": "eslint . --fix",
+    "lint:fix": "eslint . --fix",
     "build": "tsc",
-    "test": "npm run build && mocha",
-    "testOverrideValues": "npm run build && env OVERRIDE_VALUES=true mocha",
+    "test": "npm run build && env TZ=UTC mocha",
+    "test:regenerate": "npm run build && env OVERRIDE_VALUES=true TZ=UTC mocha",
     "serve": "npm run build -- --watch | firebase emulators:start --only firestore,functions",
     "shell": "firebase functions:shell",
     "start": "npm run shell",
