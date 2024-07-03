@@ -604,7 +604,12 @@ class HealthSummaryPDFGenerator {
           resvg: {
             font: {
               loadSystemFonts: true,
-              defaultFontFamily: 'Helvetica',
+              defaultFontFamily: 'Arial, Lucida Grande, sans-serif',
+              serifFamily: 'Arial, Lucida Grande, sans-serif',
+              sansSerifFamily: 'Arial, Lucida Grande, sans-serif',
+              cursiveFamily: 'Arial, Lucida Grande, sans-serif',
+              fantasyFamily: 'Arial, Lucida Grande, sans-serif',
+              monospaceFamily: 'Arial, Lucida Grande, sans-serif',
             },
             shapeRendering: 2,
             textRendering: 1,
