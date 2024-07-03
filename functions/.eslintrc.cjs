@@ -21,7 +21,6 @@ module.exports = {
     'prettier',
   ],
   rules: {
-    'no-unused-vars': 'off',
     'prettier/prettier': 'error',
     'import/order': [
       'warn',

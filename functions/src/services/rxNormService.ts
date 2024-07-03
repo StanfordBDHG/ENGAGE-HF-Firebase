@@ -187,7 +187,7 @@ export class RxNormService {
     }
     const amounts = this.removingSuffix(
       (rxTermInfo.strength ?? '').toUpperCase(),
-      'MG'
+      'MG',
     )
       .split('-')
       .map(parseFloat)
@@ -370,11 +370,10 @@ export class RxNormService {
     }
   }
 
-  private removingSuffix(string: string, suffix: string, trim: boolean = true) {
+  private removingSuffix(string: string, suffix: string, trim = true) {
     const input = trim ? string.trim() : string
-      const output = input.endsWith(suffix) ?
-      input.slice(0, -suffix.length).trim()
-    : input
-      return trim ? output.trim() : output
+    const output =
+      input.endsWith(suffix) ? input.slice(0, -suffix.length).trim() : input
+    return trim ? output.trim() : output
   }
 }
