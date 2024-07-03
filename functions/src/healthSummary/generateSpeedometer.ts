@@ -211,7 +211,7 @@ class SpeedometerSvgGenerator {
       .style('text-anchor', 'left')
       .style('font-size', '8pt')
       .style('font-weight', 'bold')
-      .style('stroke', this.secondaryColor)
+      .style('fill', this.secondaryColor)
       .text('0%')
   }
 
