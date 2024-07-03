@@ -6,7 +6,7 @@ import { mockHealthSummaryData } from '../tests/mocks/healthSummaryData.js'
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 
 describe('generateHealthSummary', () => {
-  const exportActualPdfs = true
+  const exportActualPdfs = false
   const pdfMetadataSuffixLength = 1000
 
   it('should still create as nice of a PDF as before', async () => {
