@@ -244,7 +244,7 @@ class SpeedometerSvgGenerator {
       .append('text')
       .attr('x', textStartX)
       .attr('y', legendBaselineY)
-      .style('text-anchor', 'left')
+      .style('text-anchor', 'start')
       .style('font-size', `${legendFontSize}pt`)
       .text(title)
 
