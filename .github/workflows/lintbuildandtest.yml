@@ -31,12 +31,18 @@ jobs:
         run: npm --prefix functions run lint
       - name: Build
         run: npm --prefix functions run build
+      - name: Test
+        id: test
+        run: npm --prefix functions run test
       - name: Regenerate Test Results
+        id: test-regenerate
         run: npm --prefix functions run test:regenerate
+        if: ${{ steps.test.conclusion == 'failure' }}
       - name: Archive Regenerated Test Results
         uses: actions/upload-artifact@v4
         with:
           name: test results
           path: functions/src/tests/resources
+        if: ${{ steps.test-regenerate.conclusion == 'success' }}
     permissions:
       contents: read
