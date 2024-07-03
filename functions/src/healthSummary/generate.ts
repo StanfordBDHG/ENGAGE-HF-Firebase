@@ -595,12 +595,12 @@ class HealthSummaryPDFGenerator {
     const options: ResvgRenderOptions = {
       font: {
         loadSystemFonts: true,
-        defaultFontFamily: 'Helvetica',
-        serifFamily: 'Helvetica',
-        sansSerifFamily: 'Helvetica',
-        cursiveFamily: 'Helvetica',
-        fantasyFamily: 'Helvetica',
-        monospaceFamily: 'Helvetica',
+        defaultFontFamily: 'Liberation Sans',
+        serifFamily: 'Liberation Sans',
+        sansSerifFamily: 'Liberation Sans',
+        cursiveFamily: 'Liberation Sans',
+        fantasyFamily: 'Liberation Sans',
+        monospaceFamily: 'Liberation Sans',
       },
       shapeRendering: 2,
       textRendering: 1,
