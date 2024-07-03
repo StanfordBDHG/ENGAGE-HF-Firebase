@@ -19,9 +19,9 @@ describe('generateHealthSummary', () => {
       const expectedData = fs.readFileSync(expectedPath)
       assert.equal(actualData.length, expectedData.length)
       const maxIndex = actualData.length - pdfMetadataSuffixLength
-      expect(
-        Buffer.from(actualData).compare(expectedData, 0, maxIndex, 0, maxIndex),
-      ).to.equal(0)
+      expect(Buffer.from(actualData).toString('utf8').substring(0, maxIndex)).to.equal(
+        expectedData.toString('utf8').substring(0, maxIndex),
+      )
     }
   })
 
@@ -44,9 +44,9 @@ describe('generateHealthSummary', () => {
       const expectedData = fs.readFileSync(expectedPath)
       assert.equal(actualData.length, expectedData.length)
       const maxIndex = actualData.length - pdfMetadataSuffixLength
-      expect(
-        Buffer.from(actualData).compare(expectedData, 0, maxIndex, 0, maxIndex),
-      ).to.equal(0)
+      expect(Buffer.from(actualData).toString('utf8').substring(0, maxIndex)).to.equal(
+        expectedData.toString('utf8').substring(0, maxIndex),
+      )
     }
   })
 })
