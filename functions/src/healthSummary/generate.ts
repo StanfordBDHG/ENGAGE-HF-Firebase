@@ -606,7 +606,7 @@ class HealthSummaryPDFGenerator {
       textRendering: 1,
       imageRendering: 0,
       fitTo: { mode: 'zoom', value: 5 },
-      logLevel: 'debug',
+      logLevel: 'warn',
     }
     return new Resvg(svg, options).render().asPng()
   }
