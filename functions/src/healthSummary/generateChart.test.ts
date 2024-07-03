@@ -7,7 +7,7 @@ import { mockHealthSummaryData } from '../tests/mocks/healthSummaryData.js'
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 
 describe('generateChart', () => {
-  const overrideValues = false
+  const overrideValues = process.env.OVERRIDE_VALUES === 'true'
 
   it('should generate the same chart on mock data', () => {
     const inputData = mockHealthSummaryData()

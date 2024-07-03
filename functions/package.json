@@ -7,6 +7,7 @@
     "lintfix": "eslint . --fix",
     "build": "tsc",
     "test": "npm run build && mocha",
+    "testOverrideValues": "npm run build && env OVERRIDE_VALUES=true mocha",
     "serve": "npm run build -- --watch | firebase emulators:start --only firestore,functions",
     "shell": "firebase functions:shell",
     "start": "npm run shell",
