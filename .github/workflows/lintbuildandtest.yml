@@ -37,12 +37,12 @@ jobs:
       - name: Regenerate Test Results
         id: test-regenerate
         run: npm --prefix functions run test:regenerate
-        if: ${{ steps.test.conclusion == 'failure' }}
+        if: ${{ failure() && steps.test.conclusion == 'failure' }}
       - name: Archive Regenerated Test Results
         uses: actions/upload-artifact@v4
         with:
           name: test results
           path: functions/src/tests/resources
-        if: ${{ steps.test-regenerate.conclusion == 'success' }}
+        if: ${{ failure() && steps.test-regenerate.conclusion == 'success' }}
     permissions:
       contents: read
