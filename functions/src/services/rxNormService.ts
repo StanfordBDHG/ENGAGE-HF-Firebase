@@ -126,6 +126,20 @@ export class RxNormService {
     return { medications, drugs }
   }
 
+  async logDrugs(medicationClasses: MedicationClassSpecification[]) {
+    for (const medicationClass of medicationClasses) {
+      for (const medication of medicationClass.medications) {
+        try {
+          await this.logDrugsContainingMedication(medication.code)
+        } catch (error) {
+          console.error(
+            `Error processing medication ${medication.code}: ${JSON.stringify(error)}`,
+          )
+        }
+      }
+    }
+  }
+
   buildFHIRMedication(
     rxcui: string,
     name: string,
@@ -138,7 +152,7 @@ export class RxNormService {
       code: {
         coding: [
           {
-            system: 'http://www.nlm.nih.gov/research/umls/rxnorm',
+            system: CodingSystem.rxNorm,
             code: rxcui,
             display: name,
           },
@@ -340,20 +354,6 @@ export class RxNormService {
       request.on('error', reject)
       request.end()
     })
-  }
-
-  private async logDrugs(medicationClasses: MedicationClassSpecification[]) {
-    for (const medicationClass of medicationClasses) {
-      for (const medication of medicationClass.medications) {
-        try {
-          await this.logDrugsContainingMedication(medication.code)
-        } catch (error) {
-          console.error(
-            `Error processing medication ${medication.code}: ${JSON.stringify(error)}`,
-          )
-        }
-      }
-    }
   }
 
   private async logDrugsContainingMedication(rxcui: string) {

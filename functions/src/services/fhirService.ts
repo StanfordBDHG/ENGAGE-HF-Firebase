@@ -32,15 +32,21 @@ export class FhirService {
   extractDailyDose(
     reference: string,
     requests: FHIRMedicationRequest[],
+    convert?: (value: number, unit: string) => { value: number, unit: string } | undefined,
   ): FHIRSimpleQuantity[] {
     const result = new Map<string, number>()
     for (const request of requests) {
       if (request.medicationReference?.reference !== reference) continue
       for (const dosage of request.dosageInstruction ?? []) {
         for (const dose of dosage.doseAndRate ?? []) {
-          const unit = dose.doseQuantity?.unit
-          const value = dose.doseQuantity?.value
+          let unit = dose.doseQuantity?.unit
+          let value = dose.doseQuantity?.value
           if (!unit || !value) continue
+          const converted = convert?.(value, unit)
+          if (converted) {
+            unit = converted.unit
+            value = converted.value
+          }
           result.set(unit, (result.get(unit) ?? 0) + value)
         }
       }

@@ -32,13 +32,19 @@ interface FHIRMedicationRequestContext {
 }
 
 export class HealthSummaryService {
-  private fhirService: FhirService
-  private databaseService: DatabaseService
+  // Properties
 
-  constructor(fhirService: FhirService, databaseService: DatabaseService) {
-    this.fhirService = fhirService
+  private databaseService: DatabaseService
+  private fhirService: FhirService
+
+  // Constructor
+
+  constructor(databaseService: DatabaseService, fhirService: FhirService) {
     this.databaseService = databaseService
+    this.fhirService = fhirService
   }
+
+  // Methods
 
   async fetchHealthSummaryData(userId: string): Promise<HealthSummaryData> {
     const [userRecord, user, nextAppointment, medications, kccqScores, vitals] =
@@ -67,13 +73,13 @@ export class HealthSummaryService {
     }
   }
 
-  // KCCQ Scores
+  // Methods - KCCQ Scores
 
   private async getKccqScores(userId: string): Promise<KccqScore[]> {
     return this.compactMapDocuments(this.databaseService.getKccqScores(userId))
   }
 
-  // Medication Requests
+  // Methods - Medication Requests
 
   private async getMedications(
     userId: string,
@@ -212,7 +218,7 @@ export class HealthSummaryService {
     return [medicationId, drugId]
   }
 
-  // Vitals
+  // Methods - Vitals
 
   private async getVitals(userId: string): Promise<Vitals> {
     const [
@@ -289,6 +295,10 @@ export class HealthSummaryService {
 
   private convertLbsToKg(value: number): number {
     return value * 0.45359237
+  }
+
+  private convertKgToLbs(value: number): number {
+    return value / 0.45359237
   }
 
   private async compactMapDocuments<T>(
