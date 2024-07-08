@@ -88,8 +88,16 @@ class HealthSummaryPDFGenerator {
   constructor(data: HealthSummaryData) {
     this.data = data
     this.doc = new jsPDF('p', 'pt', [this.pageWidth, this.pageHeight])
-    this.addFont('resources/fonts/OpenSans-Regular.ttf', this.fontName, FontStyle.normal)
-    this.addFont('resources/fonts/OpenSans-Bold.ttf', this.fontName, FontStyle.bold)
+    this.addFont(
+      'resources/fonts/OpenSans-Regular.ttf',
+      this.fontName,
+      FontStyle.normal,
+    )
+    this.addFont(
+      'resources/fonts/OpenSans-Bold.ttf',
+      this.fontName,
+      FontStyle.bold,
+    )
   }
 
   addFirstPage() {
@@ -631,6 +639,7 @@ class HealthSummaryPDFGenerator {
   }
 
   addTable(rows: RowInput[], maxWidth?: number) {
+    const textStyle = this.textStyles.body
     const options: UserOptions = {
       margin: { left: this.cursor.x },
       theme: 'grid',
@@ -638,9 +647,9 @@ class HealthSummaryPDFGenerator {
       tableWidth: maxWidth ?? 'auto',
       body: rows,
       styles: {
-        font: this.textStyles.body.fontName,
-        fontStyle: 'normal',
-        fontSize: this.textStyles.body.fontSize,
+        font: textStyle.fontName,
+        fontStyle: textStyle.fontStyle,
+        fontSize: textStyle.fontSize,
       },
     }
       ; (this.doc as any).autoTable(options) // eslint-disable-line
