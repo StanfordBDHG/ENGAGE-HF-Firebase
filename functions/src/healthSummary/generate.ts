@@ -24,6 +24,11 @@ interface TextStyle {
   color?: [number, number, number]
 }
 
+enum FontStyle {
+  regular = 'regular',
+  bold = 'bold',
+}
+
 class HealthSummaryPDFGenerator {
   data: HealthSummaryData
   doc: jsPDF
@@ -38,43 +43,44 @@ class HealthSummaryPDFGenerator {
     lightGray: [211, 211, 211] as [number, number, number],
   }
 
+  fontName = 'Open Sans'
   textStyles = {
     h1: {
-      fontName: 'Open Sans',
-      fontStyle: 'bold',
+      fontName: this.fontName,
+      fontStyle: FontStyle.bold.toString(),
       fontSize: 18,
     } as TextStyle,
     h2: {
-      fontName: 'Open Sans',
-      fontStyle: 'regular',
+      fontName: this.fontName,
+      fontStyle: FontStyle.regular.toString(),
       fontSize: 16,
       color: this.colors.primary,
     } as TextStyle,
     h3: {
-      fontName: 'Open Sans',
-      fontStyle: 'regular',
+      fontName: this.fontName,
+      fontStyle: FontStyle.regular.toString(),
       fontSize: 15,
     } as TextStyle,
     body: {
-      fontName: 'Open Sans',
-      fontStyle: 'regular',
+      fontName: this.fontName,
+      fontStyle: FontStyle.regular.toString(),
       fontSize: 10,
     } as TextStyle,
     bodyColored: {
-      fontName: 'Open Sans',
-      fontStyle: 'regular',
+      fontName: this.fontName,
+      fontStyle: FontStyle.regular.toString(),
       fontSize: 10,
       color: this.colors.primary,
     } as TextStyle,
     bodyColoredBold: {
-      fontName: 'Open Sans',
-      fontStyle: 'bold',
+      fontName: this.fontName,
+      fontStyle: FontStyle.bold.toString(),
       fontSize: 10,
       color: this.colors.primary,
     } as TextStyle,
     bodyBold: {
-      fontName: 'Open Sans',
-      fontStyle: 'bold',
+      fontName: this.fontName,
+      fontStyle: FontStyle.bold.toString(),
       fontSize: 10,
     } as TextStyle,
   }
@@ -82,8 +88,8 @@ class HealthSummaryPDFGenerator {
   constructor(data: HealthSummaryData) {
     this.data = data
     this.doc = new jsPDF('p', 'pt', [this.pageWidth, this.pageHeight])
-    this.addFont('resources/fonts/OpenSans-Regular.ttf', 'Open Sans', 'regular')
-    this.addFont('resources/fonts/OpenSans-Bold.ttf', 'Open Sans', 'bold')
+    this.addFont('resources/fonts/OpenSans-Regular.ttf', this.fontName, FontStyle.regular)
+    this.addFont('resources/fonts/OpenSans-Bold.ttf', this.fontName, FontStyle.bold)
   }
 
   addFirstPage() {
@@ -714,10 +720,10 @@ class HealthSummaryPDFGenerator {
     })
   }
 
-  addFont(file: string, name: string, style: string) {
+  addFont(file: string, name: string, style: FontStyle) {
     const fontFileContent = fs.readFileSync(file).toString('base64')
     const fileName = file.split('/').at(-1) ?? file
     this.doc.addFileToVFS(fileName, fontFileContent)
-    this.doc.addFont(fileName, name, style)
+    this.doc.addFont(fileName, name, style.toString())
   }
 }
