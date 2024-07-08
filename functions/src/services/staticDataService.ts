@@ -24,7 +24,6 @@ export class StaticDataService {
     firestore: Firestore,
     rxNormService: RxNormService,
   ) {
-    console.log(fs.readdirSync(path))
     this.db = firestore
     this.path = path
     this.rxNormService = rxNormService
@@ -33,97 +32,145 @@ export class StaticDataService {
   // Methods
 
   async updateAll() {
-    await this.updateMedicationClasses()
-    await this.updateMedications()
-    await this.updateQuestionnaires()
-    await this.updateVideoSections()
+    await Promise.all([
+      this.updateMedicationClasses(),
+      this.updateMedications(),
+      this.updateQuestionnaires(),
+      this.updateVideoSections(),
+    ])
   }
 
   async updateMedications() {
     const data = await this.readJSON('medicationCodes.json')
     const { medications, drugs } =
       await this.rxNormService.buildFHIRCollections(data)
-    await this.setUnstructuredCollection(
-      this.db.collection('medications'),
-      medications,
-    )
-    for (const medicationId in drugs) {
-      await this.setUnstructuredCollection(
-        this.db.collection('medications').doc(medicationId).collection('drugs'),
-        drugs[medicationId],
+    await this.db.runTransaction(async (transaction) => {
+      await this.deleteCollection('medications', transaction)
+      this.setUnstructuredCollection(
+        this.db.collection('medications'),
+        medications,
+        transaction,
       )
-    }
+      for (const medicationId in drugs) {
+        this.setUnstructuredCollection(
+          this.db
+            .collection('medications')
+            .doc(medicationId)
+            .collection('drugs'),
+          drugs[medicationId],
+          transaction,
+        )
+      }
+    })
   }
 
   async updateMedicationClasses() {
-    await this.setStructuredCollection(
-      this.db.collection('medicationClasses'),
-      this.readJSON('medicationClasses.json'),
-    )
+    await this.db.runTransaction(async (transaction) => {
+      await this.deleteCollection('medicationClasses', transaction)
+      this.setStructuredCollection(
+        this.db.collection('medicationClasses'),
+        this.readJSON('medicationClasses.json'),
+        transaction,
+      )
+    })
   }
 
   async updateQuestionnaires() {
-    await this.setUnstructuredCollection(
-      this.db.collection('questionnaires'),
-      this.readJSON('questionnaires.json'),
-    )
+    await this.db.runTransaction(async (transaction) => {
+      await this.deleteCollection('questionnaires', transaction)
+      this.setUnstructuredCollection(
+        this.db.collection('questionnaires'),
+        this.readJSON('questionnaires.json'),
+        transaction,
+      )
+    })
   }
 
   async updateVideoSections() {
-    await this.setStructuredCollection(
-      this.db.collection('videoSections'),
-      this.readJSON('videoSections.json'),
-    )
+    await this.db.runTransaction(async (transaction) => {
+      await this.deleteCollection('videoSections', transaction)
+      this.setStructuredCollection(
+        this.db.collection('videoSections'),
+        this.readJSON('videoSections.json'),
+        transaction,
+      )
+    })
   }
 
   // Helpers
 
-  private async setUnstructuredCollection(collection: any, data: any) {
+  private setUnstructuredCollection(
+    collection: any,
+    data: any,
+    transaction: FirebaseFirestore.Transaction,
+  ) {
     if (Array.isArray(data)) {
       for (let index = 0; index < data.length; index++) {
         const document =
           this.useIndicesAsKeys ?
             collection.doc(String(index))
           : collection.doc()
-        await document.set(data[index])
+        transaction.set(document, data[index])
       }
     } else {
       for (const key of Object.keys(data)) {
-        collection.doc(key).set(data[key])
+        transaction.set(collection.doc(key), data[key])
       }
     }
   }
 
-  private async setStructuredCollection(collection: any, data: any) {
+  private setStructuredCollection(
+    collection: any,
+    data: any,
+    transaction: FirebaseFirestore.Transaction,
+  ) {
     if (Array.isArray(data)) {
       for (let index = 0; index < data.length; index++) {
         const document =
           this.useIndicesAsKeys ?
             collection.doc(String(index))
           : collection.doc()
-        await this.setStructuredDocument(document, data[index])
+        this.setStructuredDocument(document, data[index], transaction)
       }
     } else {
       for (const key of Object.keys(data)) {
-        await this.setStructuredDocument(collection.doc(key), data[key])
+        this.setStructuredDocument(collection.doc(key), data[key], transaction)
       }
     }
   }
 
-  private async setStructuredDocument(document: any, data: any) {
+  private setStructuredDocument(
+    document: any,
+    data: any,
+    transaction: FirebaseFirestore.Transaction,
+  ) {
     if (typeof data !== 'object') {
-      await document.set(data)
+      transaction.set(document, data)
     } else {
       const dataWithoutSubcollections: Record<string, any> = {}
       for (const key of Object.keys(data)) {
         const value = data[key]
         if (Array.isArray(value)) {
-          await this.setStructuredCollection(document.collection(key), value)
+          this.setStructuredCollection(
+            document.collection(key),
+            value,
+            transaction,
+          )
         } else {
           dataWithoutSubcollections[key] = value
         }
       }
-      await document.set(dataWithoutSubcollections)
+      transaction.set(document, dataWithoutSubcollections)
+    }
+  }
+
+  private async deleteCollection(
+    name: string,
+    transaction: FirebaseFirestore.Transaction,
+  ) {
+    const result = await transaction.get(this.db.collection(name))
+    for (const doc of result.docs) {
+      transaction.delete(doc.ref)
     }
   }
 

@@ -179,14 +179,14 @@ export class RxNormService {
     fallbackTerms: any,
   ): Promise<FHIRMedication> {
     let rxTermInfo = await this.getAllRxTermInfo(rxcui)
-    if (Object.entries(rxTermInfo).length === 0) {
+    if (!rxTermInfo || Object.entries(rxTermInfo ?? {}).length === 0) {
       console.error(
         `Error getting term info for ${rxcui}. Using fallback terms...`,
       )
       rxTermInfo = fallbackTerms ?? {}
     }
     const amounts = this.removingSuffix(
-      (rxTermInfo.strength ?? '').toUpperCase(),
+      (rxTermInfo?.strength ?? '').toUpperCase(),
       'MG',
     )
       .split('-')
@@ -198,7 +198,7 @@ export class RxNormService {
           {
             system: CodingSystem.rxNorm,
             code: rxcui,
-            display: rxTermInfo.displayName ?? rxTermInfo.fullName,
+            display: rxTermInfo?.displayName ?? rxTermInfo?.fullName,
           },
         ],
       },
@@ -206,8 +206,8 @@ export class RxNormService {
         coding: [
           {
             system: CodingSystem.rxNorm,
-            code: rxTermInfo.rxnormDoseForm,
-            display: rxTermInfo.rxnormDoseForm,
+            code: rxTermInfo?.rxnormDoseForm,
+            display: rxTermInfo?.rxnormDoseForm,
           },
         ],
       },
@@ -275,9 +275,9 @@ export class RxNormService {
   }
 
   // docs: https://lhncbc.nlm.nih.gov/RxNav/APIs/api-RxTerms.getAllRxTermInfo.html
-  async getAllRxTermInfo(rxcui: string): Promise<RxTermInfo> {
+  async getAllRxTermInfo(rxcui: string): Promise<RxTermInfo | undefined> {
     const data = await this.get(`RxTerms/rxcui/${rxcui}/allinfo.json`)
-    return data.rxtermsProperties as RxTermInfo
+    return data.rxtermsProperties as RxTermInfo | undefined
   }
 
   // docs: https://lhncbc.nlm.nih.gov/RxNav/APIs/api-RxNorm.getRelatedByType.html
