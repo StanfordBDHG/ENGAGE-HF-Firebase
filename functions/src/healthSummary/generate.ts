@@ -16,17 +16,17 @@ export function generateHealthSummary(data: HealthSummaryData): Buffer {
   return generator.finish()
 }
 
+enum FontStyle {
+  normal = 'normal',
+  bold = 'bold',
+}
+
 interface TextStyle {
   fontName: string
-  fontStyle: string
+  fontStyle: FontStyle
   fontWeight?: string
   fontSize: number
   color?: [number, number, number]
-}
-
-enum FontStyle {
-  regular = 'regular',
-  bold = 'bold',
 }
 
 class HealthSummaryPDFGenerator {
@@ -47,40 +47,40 @@ class HealthSummaryPDFGenerator {
   textStyles = {
     h1: {
       fontName: this.fontName,
-      fontStyle: FontStyle.bold.toString(),
+      fontStyle: FontStyle.bold,
       fontSize: 18,
     } as TextStyle,
     h2: {
       fontName: this.fontName,
-      fontStyle: FontStyle.regular.toString(),
+      fontStyle: FontStyle.normal,
       fontSize: 16,
       color: this.colors.primary,
     } as TextStyle,
     h3: {
       fontName: this.fontName,
-      fontStyle: FontStyle.regular.toString(),
+      fontStyle: FontStyle.normal,
       fontSize: 15,
     } as TextStyle,
     body: {
       fontName: this.fontName,
-      fontStyle: FontStyle.regular.toString(),
+      fontStyle: FontStyle.normal,
       fontSize: 10,
     } as TextStyle,
     bodyColored: {
       fontName: this.fontName,
-      fontStyle: FontStyle.regular.toString(),
+      fontStyle: FontStyle.normal,
       fontSize: 10,
       color: this.colors.primary,
     } as TextStyle,
     bodyColoredBold: {
       fontName: this.fontName,
-      fontStyle: FontStyle.bold.toString(),
+      fontStyle: FontStyle.bold,
       fontSize: 10,
       color: this.colors.primary,
     } as TextStyle,
     bodyBold: {
       fontName: this.fontName,
-      fontStyle: FontStyle.bold.toString(),
+      fontStyle: FontStyle.bold,
       fontSize: 10,
     } as TextStyle,
   }
@@ -88,7 +88,7 @@ class HealthSummaryPDFGenerator {
   constructor(data: HealthSummaryData) {
     this.data = data
     this.doc = new jsPDF('p', 'pt', [this.pageWidth, this.pageHeight])
-    this.addFont('resources/fonts/OpenSans-Regular.ttf', this.fontName, FontStyle.regular)
+    this.addFont('resources/fonts/OpenSans-Regular.ttf', this.fontName, FontStyle.normal)
     this.addFont('resources/fonts/OpenSans-Bold.ttf', this.fontName, FontStyle.bold)
   }
 
@@ -603,14 +603,14 @@ class HealthSummaryPDFGenerator {
   convertSvgToPng(svg: string): Buffer {
     const options: ResvgRenderOptions = {
       font: {
-        loadSystemFonts: true,
+        loadSystemFonts: false,
         fontDirs: ['resources/fonts'],
-        defaultFontFamily: 'Open Sans',
-        serifFamily: 'Open Sans',
-        sansSerifFamily: 'Open Sans',
-        cursiveFamily: 'Open Sans',
-        fantasyFamily: 'Open Sans',
-        monospaceFamily: 'Open Sans',
+        defaultFontFamily: this.fontName,
+        serifFamily: this.fontName,
+        sansSerifFamily: this.fontName,
+        cursiveFamily: this.fontName,
+        fantasyFamily: this.fontName,
+        monospaceFamily: this.fontName,
       },
       shapeRendering: 2,
       textRendering: 1,
