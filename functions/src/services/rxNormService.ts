@@ -179,7 +179,7 @@ export class RxNormService {
     fallbackTerms: any,
   ): Promise<FHIRMedication> {
     let rxTermInfo = await this.getAllRxTermInfo(rxcui)
-    if (!rxTermInfo || Object.entries(rxTermInfo ?? {}).length === 0) {
+    if (!rxTermInfo || Object.entries(rxTermInfo).length === 0) {
       console.error(
         `Error getting term info for ${rxcui}. Using fallback terms...`,
       )
