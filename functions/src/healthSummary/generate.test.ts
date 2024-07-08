@@ -7,7 +7,22 @@ import { mockHealthSummaryData } from '../tests/mocks/healthSummaryData.js'
 
 describe('generateHealthSummary', () => {
   const regenerateValues = process.env.REGENERATE_VALUES === 'true'
-  const pdfMetadataSuffixLength = 1000
+
+  function comparePdf(actual: Buffer, expected: Buffer) {
+    assert.equal(actual.length, expected.length)
+    function removeUniqueValues(pdf: string): string {
+      return pdf
+        .split('\n')
+        .filter(
+          (line) =>
+            !line.startsWith('/CreationDate ') && !line.startsWith('/ID '),
+        )
+        .join('\n')
+    }
+    expect(removeUniqueValues(actual.toString('utf8'))).to.equal(
+      removeUniqueValues(expected.toString('utf8')),
+    )
+  }
 
   it('should still create as nice of a PDF as before', () => {
     const inputData = mockHealthSummaryData()
@@ -17,14 +32,7 @@ describe('generateHealthSummary', () => {
       fs.writeFileSync(expectedPath, actualData)
     } else {
       const expectedData = fs.readFileSync(expectedPath)
-      assert.equal(actualData.length, expectedData.length)
-      const actualString = Buffer.from(actualData)
-        .toString('utf8')
-        .slice(0, -pdfMetadataSuffixLength)
-      const expectedString = expectedData
-        .toString('utf8')
-        .slice(0, -pdfMetadataSuffixLength)
-      expect(actualString).to.equal(expectedString)
+      comparePdf(actualData, expectedData)
     }
   })
 
@@ -45,14 +53,7 @@ describe('generateHealthSummary', () => {
       fs.writeFileSync(expectedPath, actualData)
     } else {
       const expectedData = fs.readFileSync(expectedPath)
-      assert.equal(actualData.length, expectedData.length)
-      const actualString = Buffer.from(actualData)
-        .toString('utf8')
-        .slice(0, -pdfMetadataSuffixLength)
-      const expectedString = expectedData
-        .toString('utf8')
-        .slice(0, -pdfMetadataSuffixLength)
-      expect(actualString).to.equal(expectedString)
+      comparePdf(actualData, expectedData)
     }
   })
 })

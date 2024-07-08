@@ -187,7 +187,6 @@ class SpeedometerSvgGenerator {
   }
 
   addTrendLabel(trend: number) {
-    const trendIcon = trend >= 0 ? '▲' : '▼'
     const trendText = this.svg
       .append('text')
       .attr('x', this.margins.left + this.innerSize.width / 2)
@@ -197,9 +196,7 @@ class SpeedometerSvgGenerator {
     trendText
       .append('tspan')
       .style('fill', trend >= 0 ? this.positiveColor : this.negativeColor)
-      .text(
-        trendIcon + (trend >= 0 ? '+' : '-') + Math.abs(trend).toFixed(0) + '%',
-      )
+      .text((trend >= 0 ? '+' : '-') + Math.abs(trend).toFixed(0) + '%')
     trendText.append('tspan').text(' from previous')
   }
 

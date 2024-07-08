@@ -1,3 +1,4 @@
+import fs from 'fs'
 import { Resvg, type ResvgRenderOptions } from '@resvg/resvg-js'
 import { jsPDF } from 'jspdf'
 import 'jspdf-autotable' /* eslint-disable-line */
@@ -39,41 +40,41 @@ class HealthSummaryPDFGenerator {
 
   textStyles = {
     h1: {
-      fontName: 'Helvetica',
-      fontStyle: 'Bold',
+      fontName: 'Open Sans',
+      fontStyle: 'bold',
       fontSize: 18,
     } as TextStyle,
     h2: {
-      fontName: 'Helvetica',
-      fontStyle: '',
+      fontName: 'Open Sans',
+      fontStyle: 'regular',
       fontSize: 16,
       color: this.colors.primary,
     } as TextStyle,
     h3: {
-      fontName: 'Helvetica',
-      fontStyle: '',
+      fontName: 'Open Sans',
+      fontStyle: 'regular',
       fontSize: 15,
     } as TextStyle,
     body: {
-      fontName: 'Helvetica',
-      fontStyle: '',
+      fontName: 'Open Sans',
+      fontStyle: 'regular',
       fontSize: 10,
     } as TextStyle,
     bodyColored: {
-      fontName: 'Helvetica',
-      fontStyle: '',
+      fontName: 'Open Sans',
+      fontStyle: 'regular',
       fontSize: 10,
       color: this.colors.primary,
     } as TextStyle,
     bodyColoredBold: {
-      fontName: 'Helvetica',
-      fontStyle: 'Bold',
+      fontName: 'Open Sans',
+      fontStyle: 'bold',
       fontSize: 10,
       color: this.colors.primary,
     } as TextStyle,
     bodyBold: {
-      fontName: 'Helvetica',
-      fontStyle: 'Bold',
+      fontName: 'Open Sans',
+      fontStyle: 'bold',
       fontSize: 10,
     } as TextStyle,
   }
@@ -81,6 +82,8 @@ class HealthSummaryPDFGenerator {
   constructor(data: HealthSummaryData) {
     this.data = data
     this.doc = new jsPDF('p', 'pt', [this.pageWidth, this.pageHeight])
+    this.addFont('resources/fonts/OpenSans-Regular.ttf', 'Open Sans', 'regular')
+    this.addFont('resources/fonts/OpenSans-Bold.ttf', 'Open Sans', 'bold')
   }
 
   addFirstPage() {
@@ -595,18 +598,18 @@ class HealthSummaryPDFGenerator {
     const options: ResvgRenderOptions = {
       font: {
         loadSystemFonts: true,
-        defaultFontFamily: 'Liberation Sans',
-        serifFamily: 'Liberation Sans',
-        sansSerifFamily: 'Liberation Sans',
-        cursiveFamily: 'Liberation Sans',
-        fantasyFamily: 'Liberation Sans',
-        monospaceFamily: 'Liberation Sans',
+        fontDirs: ['resources/fonts'],
+        defaultFontFamily: 'Open Sans',
+        serifFamily: 'Open Sans',
+        sansSerifFamily: 'Open Sans',
+        cursiveFamily: 'Open Sans',
+        fantasyFamily: 'Open Sans',
+        monospaceFamily: 'Open Sans',
       },
       shapeRendering: 2,
       textRendering: 1,
       imageRendering: 0,
       fitTo: { mode: 'zoom', value: 5 },
-      logLevel: 'warn',
     }
     return new Resvg(svg, options).render().asPng()
   }
@@ -628,6 +631,11 @@ class HealthSummaryPDFGenerator {
       startY: this.cursor.y,
       tableWidth: maxWidth ?? 'auto',
       body: rows,
+      styles: {
+        font: this.textStyles.body.fontName,
+        fontStyle: 'normal',
+        fontSize: this.textStyles.body.fontSize,
+      },
     }
       ; (this.doc as any).autoTable(options) // eslint-disable-line
     this.cursor.y = (this.doc as any).lastAutoTable.finalY // eslint-disable-line
@@ -704,5 +712,12 @@ class HealthSummaryPDFGenerator {
       month: '2-digit',
       day: '2-digit',
     })
+  }
+
+  addFont(file: string, name: string, style: string) {
+    const fontFileContent = fs.readFileSync(file).toString('base64')
+    const fileName = file.split('/').at(-1) ?? file
+    this.doc.addFileToVFS(fileName, fontFileContent)
+    this.doc.addFont(fileName, name, style)
   }
 }
