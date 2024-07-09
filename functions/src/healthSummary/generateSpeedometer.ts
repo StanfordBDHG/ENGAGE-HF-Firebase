@@ -10,6 +10,12 @@ import * as d3 from 'd3'
 import { JSDOM } from 'jsdom'
 import { type KccqScore } from '../models/kccqScore.js'
 
+interface SpeedometerMarker {
+  percentage: number
+  color: string
+  isDashed: boolean
+}
+
 export function generateSpeedometerSvg(
   scores: KccqScore[],
   width: number,
@@ -19,11 +25,7 @@ export function generateSpeedometerSvg(
   const previousScore =
     scores.length >= 2 ? scores[scores.length - 2] : undefined
   const generator = new SpeedometerSvgGenerator(width)
-  const markers: Array<{
-    percentage: number
-    color: string
-    isDashed: boolean
-  }> = []
+  const markers: SpeedometerMarker[] = []
   if (baselineScore) {
     markers.push({
       percentage: baselineScore.overallScore,
@@ -112,9 +114,7 @@ class SpeedometerSvgGenerator {
     this.defs = this.svg.append('defs')
   }
 
-  addArc(
-    markers: Array<{ percentage: number; color: string; isDashed: boolean }>,
-  ) {
+  addArc(markers: SpeedometerMarker[]) {
     const gradientId = 'gradient'
     const gradient = this.defs.append('linearGradient').attr('id', gradientId)
     gradient

@@ -1,0 +1,34 @@
+{
+    "stanford": {
+        "id": "stanford",
+        "name": "Stanford University",
+        "contactName": "Alex Sandhu",
+        "phoneNumber": "+1 (555) 123-4567",
+        "emailAddress": "engagehf@stanford.edu",
+        "owners": []
+    },
+    "jhu": {
+        "id": "jhu",
+        "name": "Johns Hopkins University",
+        "contactName": "Someone from JHU",
+        "phoneNumber": "+1 (555) 123-4567",
+        "emailAddress": "engagehf@jhu.edu",
+        "owners": []
+    },
+    "umich": {
+        "id": "umich",
+        "name": "University of Michigan",
+        "contactName": "Someone from UMich",
+        "phoneNumber": "+1 (555) 123-4567",
+        "emailAddress": "engagehf@umich.edu",
+        "owners": []
+    },
+    "uw": {
+        "id": "uw",
+        "name": "University of Washington",
+        "contactName": "Someone from UW",
+        "phoneNumber": "+1 (555) 123-4567",
+        "emailAddress": "engagehf@uw.edu",
+        "owners": []
+    }
+}

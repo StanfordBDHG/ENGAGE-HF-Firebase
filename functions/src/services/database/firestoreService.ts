@@ -28,6 +28,7 @@ import { type Invitation } from '../../models/invitation.js'
 import { type KccqScore } from '../../models/kccqScore.js'
 import { type MedicationClass } from '../../models/medicationClass.js'
 import { type UserMessage } from '../../models/message.js'
+import { type Organization } from '../../models/organization.js'
 import { type User } from '../../models/user.js'
 
 export class FirestoreService implements DatabaseService {
@@ -150,6 +151,16 @@ export class FirestoreService implements DatabaseService {
     return this.getDocument<FHIRMedication>(
       `medications/${medicationId}/drugs/${drugId}`,
     )
+  }
+
+  // Organizations
+
+  getOrganizations() {
+    return this.getCollection<Organization>('organizations')
+  }
+
+  async getOrganization(organizationId: string) {
+    return this.getDocument<Organization>(`organizations/${organizationId}`)
   }
 
   // Users
