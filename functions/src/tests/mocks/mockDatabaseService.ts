@@ -59,7 +59,6 @@ export class MockDatabaseService implements DatabaseService {
     return {
       id: userId,
       content: {
-        id: userId,
         organization: 'stanford',
       },
     }

@@ -8,6 +8,17 @@ SPDX-License-Identifier: MIT
 
 Firebase cloud hosting infrastructure for the ENGAGE-HF project.
 
+# Security
+
+A user can have one or more of the following roles assigned:
+
+|Role Identifier|Description|Rights|
+|-|-|-|
+|admin|-|Full read and write access.|
+|owner:<organization>|An owner account for an organization.|R/W of data within organization.|
+|practitioner:<organization>|A clinician or otherwise involved person that needs access to patient data.|R/W of patient data within organization.|
+|patient:<organization>|A patient of a given organization.|R/W of their own data.|
+
 # Data Scheme
 
 This document describes how data is stored in Firestore for the Engage-HF app.

@@ -6,8 +6,10 @@
 // SPDX-License-Identifier: MIT
 //
 export interface Organization {
+  id: string
   name: string
   contactName: string
   phoneNumber: string
   emailAddress: string
+  owners: string[]
 }
