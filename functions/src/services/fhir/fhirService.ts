@@ -79,12 +79,14 @@ export class FhirService {
   // CodeableConcept
 
   containsCoding(concept: FHIRCodeableConcept, filter: FHIRCoding): boolean {
-    return concept.coding?.some((coding) => {
-      if (filter.code && coding.code !== filter.code) return false
-      if (filter.system && coding.system !== filter.system) return false
-      if (filter.version && coding.version !== filter.version) return false
-      return true
-    }) ?? false
+    return (
+      concept.coding?.some((coding) => {
+        if (filter.code && coding.code !== filter.code) return false
+        if (filter.system && coding.system !== filter.system) return false
+        if (filter.version && coding.version !== filter.version) return false
+        return true
+      }) ?? false
+    )
   }
 
   // Extension
