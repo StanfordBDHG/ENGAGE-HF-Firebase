@@ -1,0 +1,18 @@
+#
+# This source file is part of the ENGAGE-HF based on the Stanford Spezi Template Application project
+#
+# SPDX-FileCopyrightText: 2023 Stanford University
+#
+# SPDX-License-Identifier: MIT
+#
+
+name: REUSE Compliance Check
+
+on: [pull_request]
+
+jobs:
+  deploy:
+    name: REUSE Compliance Check
+    uses: StanfordBDHG/.github/.github/workflows/reuse.yml@v2
+    permissions:
+      contents: read
