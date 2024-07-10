@@ -37,7 +37,7 @@ export interface DatabaseService {
 
   // Medications
 
-  getMedicationClasses(): Promise<Array<DatabaseDocument<FHIRMedication>>>
+  getMedicationClasses(): Promise<Array<DatabaseDocument<MedicationClass>>>
   getMedicationClass(
     medicationClassId: string,
   ): Promise<DatabaseDocument<MedicationClass>>

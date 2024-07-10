@@ -24,7 +24,7 @@ export interface FHIRObservationComponent {
 export interface FHIRObservation extends FHIRElement {
   status: FHIRObservationStatus
   code: FHIRCodeableConcept
-  component: FHIRObservationComponent[]
+  component?: FHIRObservationComponent[]
   valueQuantity?: FHIRSimpleQuantity
   effectivePeriod?: FHIRPeriod
   effectiveDateTime?: Date

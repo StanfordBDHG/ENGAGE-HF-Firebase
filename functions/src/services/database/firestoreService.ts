@@ -115,7 +115,7 @@ export class FirestoreService implements DatabaseService {
   // Medications
 
   async getMedicationClasses() {
-    return this.getCollection<FHIRMedication>(`medicationClasses`)
+    return this.getCollection<MedicationClass>(`medicationClasses`)
   }
 
   async getMedicationClass(medicationClassId: string) {

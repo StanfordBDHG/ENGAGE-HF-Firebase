@@ -11,13 +11,6 @@ export enum CodingSystem {
   snomedCt = 'http://snomed.info/sct',
 }
 
-export enum ObservationUnitCode {
-  mmHg = 'mm[Hg]',
-  bpm = '/min',
-  kg = 'kg',
-  lbs = '[lb_av]',
-}
-
 export enum LoincCode {
   bloodPressure = '85354-9',
   systolicBloodPressure = '8480-6',

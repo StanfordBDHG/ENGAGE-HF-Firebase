@@ -3,7 +3,7 @@ import { type CallableRequest, onCall } from 'firebase-functions/v2/https'
 import { generateHealthSummary } from '../healthSummary/generate.js'
 import { CacheDatabaseService } from '../services/database/cacheDatabaseService.js'
 import { FirestoreService } from '../services/database/firestoreService.js'
-import { FhirService } from '../services/fhirService.js'
+import { FhirService } from '../services/fhir/fhirService.js'
 import { HealthSummaryService } from '../services/healthSummaryService.js'
 
 export interface ExportHealthSummaryInput {

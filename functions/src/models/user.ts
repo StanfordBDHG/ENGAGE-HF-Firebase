@@ -1,3 +1,5 @@
+import { type FHIRSimpleQuantity } from './fhir/baseTypes.js'
+
 export interface UserMessagesSettings {
   dailyRemindersAreActive: boolean
   textNotificationsAreActive: boolean
@@ -13,6 +15,7 @@ export interface User {
   organization?: string
   language?: string
   timeZone?: string
+  dryWeight?: FHIRSimpleQuantity
 }
 
 export interface UserRecord {

@@ -29,11 +29,13 @@
     "jspdf-autotable": "^3.8.2"
   },
   "devDependencies": {
+    "@firebase/rules-unit-testing": "^3.0.3",
     "@types/chai": "^4.3.16",
     "@types/d3": "^7.4.3",
     "@types/jsdom": "^21.1.7",
     "@types/mocha": "^10.0.7",
     "@types/node": "^20",
+    "@types/sinon": "^17.0.3",
     "@typescript-eslint/eslint-plugin": "^7",
     "@typescript-eslint/parser": "^7",
     "chai": "^5.1.1",
@@ -45,6 +47,7 @@
     "firebase-functions-test": "^3.3.0",
     "mocha": "^10.6.0",
     "prettier": "^3",
+    "sinon": "^18.0.0",
     "typescript": "^5"
   },
   "private": true
