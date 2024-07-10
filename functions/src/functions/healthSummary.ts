@@ -1,3 +1,11 @@
+//
+// This source file is part of the ENGAGE-HF based on the Stanford Spezi Template Application project
+//
+// SPDX-FileCopyrightText: 2023 Stanford University
+//
+// SPDX-License-Identifier: MIT
+//
+
 import { https } from 'firebase-functions/v2'
 import { type CallableRequest, onCall } from 'firebase-functions/v2/https'
 import { generateHealthSummary } from '../healthSummary/generate.js'

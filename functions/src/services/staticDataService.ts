@@ -1,3 +1,10 @@
+//
+// This source file is part of the ENGAGE-HF based on the Stanford Spezi Template Application project
+//
+// SPDX-FileCopyrightText: 2023 Stanford University
+//
+// SPDX-License-Identifier: MIT
+//
 import fs from 'fs'
 import { type Firestore } from 'firebase-admin/firestore'
 import { type RxNormService } from './rxNormService.js'
