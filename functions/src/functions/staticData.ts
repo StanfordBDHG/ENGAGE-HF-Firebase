@@ -15,13 +15,14 @@ import {
 import { Flags } from '../flags.js'
 import { RxNormService } from '../services/rxNormService.js'
 import { StaticDataService } from '../services/staticDataService.js'
+import { ClaimsService } from '../services/claimsService.js'
 
 async function rebuildStaticData(userId: string | undefined) {
   if (!Flags.isEmulator) {
     if (!userId) throw new Error('User is not properly authenticated')
-
-    const user = await admin.auth().getUser(userId)
-    if (!user.customClaims?.admin) throw new Error('User is not an admin')
+    
+    const claimsService = new ClaimsService()
+    await claimsService.ensureAdmin(userId)
   }
   const service = new StaticDataService(admin.firestore(), new RxNormService())
   await service.updateAll()
