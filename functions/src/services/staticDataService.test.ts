@@ -11,51 +11,58 @@ describe('StaticDataService', () => {
   const rxNormService = new RxNormService()
   const staticDataService = new StaticDataService(firestore, rxNormService)
 
-  it('actually creates static data', async () => {
-    if (!TestFlags.forceRunExpensiveTests) {
-      console.log('Skipping expensive test')
-      return
-    }
-
+  it('actually creates medication classes', async () => {
     const medicationClasses = await firestore
       .collection('medicationClasses')
       .get()
     expect(medicationClasses.size).to.equal(0)
 
-    const medications = await firestore.collection('medications').get()
-    expect(medications.size).to.equal(0)
-
-    const questionnaires = await firestore.collection('questionnaires').get()
-    expect(questionnaires.size).to.equal(0)
-
-    const videoSections = await firestore.collection('videoSections').get()
-    expect(videoSections.size).to.equal(0)
-
-    await staticDataService.updateAll()
+    await staticDataService.updateMedicationClasses()
 
     const updatedMedicationClasses = await firestore
       .collection('medicationClasses')
       .get()
-    expect(updatedMedicationClasses.size).to.not.equal(0)
+    expect(updatedMedicationClasses.size).to.be.greaterThan(0)
+  })
 
-    const updatedMedications = await firestore.collection('medications').get()
-    expect(updatedMedications.size).to.not.equal(0)
-    console.log(
-      JSON.stringify(updatedMedications.docs.map((med) => med.data())),
-    )
-    for (const medication of updatedMedications.docs) {
-      const drugs = await medication.ref.collection('drugs').get()
-      console.log(JSON.stringify(drugs.docs.map((med) => med.data())))
-    }
+  if (TestFlags.forceRunExpensiveTests) {
+    it('actually creates medications and drugs', async () => {
+      const medications = await firestore.collection('medications').get()
+      expect(medications.size).to.equal(0)
+
+      await staticDataService.updateMedications()
+
+      const updatedMedications = await firestore.collection('medications').get()
+      expect(updatedMedications.size).to.be.greaterThan(0)
+
+      for (const medication of updatedMedications.docs) {
+        const drugs = await medication.ref.collection('drugs').get()
+        expect(drugs.size).to.be.greaterThan(0)
+      }
+    })
+  }
+
+  it('actually creates questionnaires', async () => {
+    const questionnaires = await firestore.collection('questionnaires').get()
+    expect(questionnaires.size).to.equal(0)
+
+    await staticDataService.updateQuestionnaires()
 
     const updatedQuestionnaires = await firestore
       .collection('questionnaires')
       .get()
-    expect(updatedQuestionnaires.size).to.not.equal(0)
+    expect(updatedQuestionnaires.size).to.be.greaterThan(0)
+  })
+
+  it('actually creates videoSections', async () => {
+    const videoSections = await firestore.collection('videoSections').get()
+    expect(videoSections.size).to.equal(0)
+
+    await staticDataService.updateVideoSections()
 
     const updatedVideoSections = await firestore
       .collection('videoSections')
       .get()
-    expect(updatedVideoSections.size).to.not.equal(0)
+    expect(updatedVideoSections.size).to.be.greaterThan(0)
   })
 })
