@@ -7,12 +7,12 @@
 //
 import admin from 'firebase-admin'
 import { stub } from 'sinon'
-import { MockFirestore } from './mocks/mockFirestore.js'
 import { MockAuth } from './mocks/mockAuth.js'
+import { MockFirestore } from './mocks/mockFirestore.js'
 
 export function setupMockAuth() {
-    const auth = new MockAuth()
-    stub(admin, 'auth').get(() => () => auth)
+  const auth = new MockAuth()
+  stub(admin, 'auth').get(() => () => auth)
 }
 
 export function setupMockFirestore() {

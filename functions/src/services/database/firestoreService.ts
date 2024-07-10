@@ -29,7 +29,6 @@ import { type KccqScore } from '../../models/kccqScore.js'
 import { type MedicationClass } from '../../models/medicationClass.js'
 import { type UserMessage, UserMessageType } from '../../models/message.js'
 import { type User } from '../../models/user.js'
-import { user } from 'firebase-functions/v1/auth'
 
 export class FirestoreService implements DatabaseService {
   // Properties
@@ -185,7 +184,8 @@ export class FirestoreService implements DatabaseService {
     didPerformAction: boolean,
   ): Promise<void> {
     console.log(
-      `didTapMessage for user/${userId}/message/${messageId} with didPerformAction ${didPerformAction}`)
+      `didTapMessage for user/${userId}/message/${messageId} with didPerformAction ${didPerformAction}`,
+    )
     await this.firestore.runTransaction(async (transaction) => {
       const messageRef = this.firestore.doc(
         `users/${userId}/messages/${messageId}`,

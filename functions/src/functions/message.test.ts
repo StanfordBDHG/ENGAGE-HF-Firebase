@@ -18,7 +18,7 @@ describe('message', () => {
       description: 'You have a new medication!',
       action: 'medications',
     }
-    firestore.doc('users/mockUser/messages/0').set(message)
+    await firestore.doc('users/mockUser/messages/0').set(message)
     await service.didTapMessage('mockUser', '0', true)
     const updatedMessage = await firestore
       .doc('users/mockUser/messages/0')
@@ -34,7 +34,7 @@ describe('message', () => {
       description: 'You have an upcoming appointment!',
       action: 'healthSummary',
     }
-    firestore.doc('users/mockUser/messages/0').set(message)
+    await firestore.doc('users/mockUser/messages/0').set(message)
     await service.didTapMessage('mockUser', '0', true)
     const updatedMessage = await firestore
       .doc('users/mockUser/messages/0')
