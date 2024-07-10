@@ -12,17 +12,15 @@ import {
   onCall,
   onRequest,
 } from 'firebase-functions/v2/https'
+import { type AuthData } from 'firebase-functions/v2/tasks'
 import { Flags } from '../flags.js'
+import { ClaimsService } from '../services/claimsService.js'
 import { RxNormService } from '../services/rxNormService.js'
 import { StaticDataService } from '../services/staticDataService.js'
-import { ClaimsService } from '../services/claimsService.js'
 
-async function rebuildStaticData(userId: string | undefined) {
+async function rebuildStaticData(authData: AuthData | undefined) {
   if (!Flags.isEmulator) {
-    if (!userId) throw new Error('User is not properly authenticated')
-    
-    const claimsService = new ClaimsService()
-    await claimsService.ensureAdmin(userId)
+    new ClaimsService().ensureAdmin(authData)
   }
   const service = new StaticDataService(admin.firestore(), new RxNormService())
   await service.updateAll()
@@ -30,7 +28,7 @@ async function rebuildStaticData(userId: string | undefined) {
 
 const rebuildStaticDataFunctionProduction = onCall(
   async (request: CallableRequest<void>) => {
-    await rebuildStaticData(request.auth?.uid)
+    await rebuildStaticData(request.auth)
     return 'Success'
   },
 )
