@@ -1,14 +1,12 @@
 import { expect } from 'chai'
 import admin from 'firebase-admin'
-import { stub } from 'sinon'
 import { RxNormService } from './rxNormService.js'
 import { StaticDataService } from './staticDataService.js'
-import { MockFirestore } from '../tests/mocks/mockFirestore.js'
+import { setupMockFirestore } from '../tests/setup.js'
+import { TestFlags } from '../tests/testFlags.js'
 
 describe('StaticDataService', () => {
-  const forceRunExpensiveTests =
-    process.env.FORCE_RUN_EXPENSIVE_TESTS === 'true'
-  stub(admin, 'firestore').get(() => () => new MockFirestore())
+  setupMockFirestore()
   const firestore = admin.firestore()
   const rxNormService = new RxNormService()
   const staticDataService = new StaticDataService(
@@ -18,7 +16,7 @@ describe('StaticDataService', () => {
   )
 
   it('actually creates static data', async () => {
-    if (!forceRunExpensiveTests) {
+    if (!TestFlags.forceRunExpensiveTests) {
       console.log('Skipping expensive test')
       return
     }

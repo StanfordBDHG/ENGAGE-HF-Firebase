@@ -1,6 +1,12 @@
 import { type QuantityUnit } from './quantityUnit.js'
 import { type Observation } from '../../healthSummary/vitals.js'
-import { type FHIRReference } from '../../models/fhir/baseTypes.js'
+import {
+  type FHIRCoding,
+  type FHIRCodeableConcept,
+  type FHIRReference,
+  type FHIRExtension,
+  type FHIRElement,
+} from '../../models/fhir/baseTypes.js'
 import {
   type FHIRMedication,
   type FHIRMedicationRequest,
@@ -20,19 +26,18 @@ export class FhirService {
   extractCurrentMedicationRequestReferenceForRecommendation(
     request: FHIRMedicationRequest,
   ): FHIRReference<FHIRMedicationRequest> | undefined {
-    const string = request.extension?.find(
-      (extension) =>
-        extension.url === FHIRExtensionUrl.currentMedication.toString(),
-    )?.valueString
+    const string = this.findExtensions(
+      request,
+      FHIRExtensionUrl.currentMedication,
+    ).at(0)?.valueString
     return string ? { reference: string } : undefined
   }
 
   extractTargetDailyDose(
     medication: FHIRMedication,
   ): number | number[] | undefined {
-    return medication.extension?.find(
-      (extension) =>
-        extension.url === FHIRExtensionUrl.targetDailyDose.toString(),
+    return this.findExtensions(medication, FHIRExtensionUrl.targetDailyDose).at(
+      0,
     )?.valueQuantity?.value
   }
 
@@ -41,22 +46,13 @@ export class FhirService {
   extractObservationValues(
     observations: FHIRObservation[],
     options: {
-      code: string
-      system: CodingSystem
       unit: QuantityUnit
-      component?: {
-        code: string
-        system: CodingSystem
-      }
-    },
+      component?: FHIRCoding
+    } & FHIRCoding,
   ): Observation[] {
     const result: Observation[] = []
     for (const observation of observations) {
-      const containsCode = observation.code.coding?.find(
-        (coding) =>
-          coding.code === options.code && coding.system === options.system,
-      )
-      if (!containsCode) continue
+      if (!this.containsCoding(observation.code, options)) continue
       const date =
         observation.effectiveDateTime ??
         observation.effectiveInstant ??
@@ -66,12 +62,7 @@ export class FhirService {
 
       if (options.component) {
         for (const component of observation.component ?? []) {
-          const containsCode = component.code.coding?.find(
-            (coding) =>
-              coding.code === options.component?.code &&
-              coding.system === options.component?.system,
-          )
-          if (!containsCode) continue
+          if (!this.containsCoding(component.code, options.component)) continue
           const value = options.unit.valueOf(component.valueQuantity)
           if (!value) continue
           result.push({ date: date, value: value })
@@ -83,5 +74,26 @@ export class FhirService {
       }
     }
     return result
+  }
+
+  // CodeableConcept
+
+  containsCoding(concept: FHIRCodeableConcept, filter: FHIRCoding) {
+    return concept.coding?.some((coding) => {
+      if (filter.code && coding.code !== filter.code) return false
+      if (filter.system && coding.system !== filter.system) return false
+      if (filter.version && coding.version !== filter.version) return false
+      return true
+    })
+  }
+
+  // Extension
+
+  findExtensions(element: FHIRElement, url: FHIRExtensionUrl): FHIRExtension[] {
+    return (
+      element.extension?.filter(
+        (extension) => extension.url === url.toString(),
+      ) ?? []
+    )
   }
 }

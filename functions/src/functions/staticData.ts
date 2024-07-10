@@ -4,13 +4,12 @@ import {
   onCall,
   onRequest,
 } from 'firebase-functions/v2/https'
+import { Flags } from '../flags.js'
 import { RxNormService } from '../services/rxNormService.js'
 import { StaticDataService } from '../services/staticDataService.js'
 
-const isEmulator = process.env.FUNCTIONS_EMULATOR === 'true'
-
 async function rebuildStaticData(userId: string | undefined) {
-  if (!isEmulator) {
+  if (!Flags.isEmulator) {
     if (!userId) throw new Error('User is not properly authenticated')
 
     const user = await admin.auth().getUser(userId)
@@ -38,6 +37,6 @@ const rebuildStaticDataFunctionDebug = onRequest(async (_, response) => {
 })
 
 export const rebuildStaticDataFunction =
-  isEmulator ?
+  Flags.isEmulator ?
     rebuildStaticDataFunctionDebug
   : rebuildStaticDataFunctionProduction

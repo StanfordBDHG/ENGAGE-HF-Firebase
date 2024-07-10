@@ -2,12 +2,11 @@ import fs from 'fs'
 import { assert, expect } from 'chai'
 import { generateHealthSummary } from './generate.js'
 import { mockHealthSummaryData } from '../tests/mocks/healthSummaryData.js'
+import { TestFlags } from '../tests/testFlags.js'
 
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 
 describe('generateHealthSummary', () => {
-  const regenerateValues = process.env.REGENERATE_VALUES === 'true'
-
   function comparePdf(actual: Buffer, expected: Buffer) {
     assert.equal(actual.length, expected.length)
     function removeUniqueValues(pdf: string): string {
@@ -28,7 +27,7 @@ describe('generateHealthSummary', () => {
     const inputData = mockHealthSummaryData()
     const actualData = generateHealthSummary(inputData)
     const expectedPath = 'src/tests/resources/mockHealthSummary.pdf'
-    if (regenerateValues) {
+    if (TestFlags.regenerateValues) {
       fs.writeFileSync(expectedPath, actualData)
     } else {
       const expectedData = fs.readFileSync(expectedPath)
@@ -49,7 +48,7 @@ describe('generateHealthSummary', () => {
     inputData.vitals.dryWeight = NaN
     const actualData = generateHealthSummary(inputData)
     const expectedPath = 'src/tests/resources/emptyHealthSummary.pdf'
-    if (regenerateValues) {
+    if (TestFlags.regenerateValues) {
       fs.writeFileSync(expectedPath, actualData)
     } else {
       const expectedData = fs.readFileSync(expectedPath)

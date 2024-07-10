@@ -96,7 +96,7 @@ class MockFirestoreDocRef extends MockFirestoreRef {
     const pathComponents = this.path.split('/')
     const collectionPath = pathComponents.slice(0, -1).join('/')
     if (
-      !Object.keys(this.firestore.collections).find(
+      !Object.keys(this.firestore.collections).some(
         (key) => key === collectionPath,
       )
     )

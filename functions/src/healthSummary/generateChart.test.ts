@@ -3,12 +3,11 @@ import fs from 'fs'
 import { describe, it } from 'mocha'
 import { generateChartSvg } from './generateChart.js'
 import { mockHealthSummaryData } from '../tests/mocks/healthSummaryData.js'
+import { TestFlags } from '../tests/testFlags.js'
 
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 
 describe('generateChart', () => {
-  const regenerateValues = process.env.REGENERATE_VALUES === 'true'
-
   it('should generate the same chart on mock data', () => {
     const inputData = mockHealthSummaryData()
     const actualData = generateChartSvg(
@@ -18,7 +17,7 @@ describe('generateChart', () => {
       inputData.vitals.dryWeight,
     )
     const expectedPath = 'src/tests/resources/mockChart.svg'
-    if (regenerateValues) {
+    if (TestFlags.regenerateValues) {
       fs.writeFileSync(expectedPath, actualData)
     } else {
       const expectedData = fs.readFileSync(expectedPath)
@@ -33,7 +32,7 @@ describe('generateChart', () => {
       { top: 20, right: 40, bottom: 40, left: 40 },
     )
     const expectedPath = 'src/tests/resources/emptyChart.svg'
-    if (regenerateValues) {
+    if (TestFlags.regenerateValues) {
       fs.writeFileSync(expectedPath, actualData)
     } else {
       const expectedData = fs.readFileSync(expectedPath)

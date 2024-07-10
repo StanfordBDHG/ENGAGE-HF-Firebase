@@ -6,8 +6,8 @@ export class QuantityUnit {
   static mg = new QuantityUnit('mg', 'mg')
   static lbs = new QuantityUnit('[lb_av]', 'lbs')
   static kg = new QuantityUnit('kg', 'kg')
-  static bpm = new QuantityUnit('/min', '/min')
-  static mmHg = new QuantityUnit('mm[Hg]', 'mm[Hg]')
+  static bpm = new QuantityUnit('/min', 'beats/minute')
+  static mmHg = new QuantityUnit('mm[Hg]', 'mmHg')
 
   // Properties
 
@@ -18,8 +18,8 @@ export class QuantityUnit {
   // Constructor
 
   constructor(
-    unit: string,
     code: string,
+    unit: string,
     system = 'http://unitsofmeasure.org',
   ) {
     this.unit = unit
@@ -46,13 +46,13 @@ export class QuantityUnit {
   }
 
   convert(value: number, target: QuantityUnit): number | undefined {
-    const converter = QuantityUnitConverter.allValues.find(
-      (converter) =>
-        converter.sourceUnit.equals(this) &&
-        converter.targetUnit.equals(target),
-    )
-    if (!converter) return undefined
-    return converter.convert(value)
+    return QuantityUnitConverter.allValues
+      .find(
+        (converter) =>
+          converter.sourceUnit.equals(this) &&
+          converter.targetUnit.equals(target),
+      )
+      ?.convert(value)
   }
 
   fhirQuantity(value: number): FHIRSimpleQuantity {
