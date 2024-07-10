@@ -20,13 +20,13 @@ export class StaticDataService {
   // Constructor
 
   constructor(
-    path: string,
     firestore: Firestore,
     rxNormService: RxNormService,
+    path = './data/',
   ) {
     this.db = firestore
-    this.path = path
     this.rxNormService = rxNormService
+    this.path = path
   }
 
   // Methods

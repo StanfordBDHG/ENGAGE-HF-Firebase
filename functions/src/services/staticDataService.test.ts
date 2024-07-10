@@ -9,11 +9,7 @@ describe('StaticDataService', () => {
   setupMockFirestore()
   const firestore = admin.firestore()
   const rxNormService = new RxNormService()
-  const staticDataService = new StaticDataService(
-    './data/',
-    firestore,
-    rxNormService,
-  )
+  const staticDataService = new StaticDataService(firestore, rxNormService)
 
   it('actually creates static data', async () => {
     if (!TestFlags.forceRunExpensiveTests) {

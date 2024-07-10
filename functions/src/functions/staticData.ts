@@ -15,11 +15,7 @@ async function rebuildStaticData(userId: string | undefined) {
     const user = await admin.auth().getUser(userId)
     if (!user.customClaims?.admin) throw new Error('User is not an admin')
   }
-  const service = new StaticDataService(
-    './data/',
-    admin.firestore(),
-    new RxNormService(),
-  )
+  const service = new StaticDataService(admin.firestore(), new RxNormService())
   await service.updateAll()
 }
 
