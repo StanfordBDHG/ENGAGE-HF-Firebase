@@ -45,6 +45,10 @@ class MockFirestoreTransaction {
   set(reference: MockFirestoreRef, data: any) {
     ;(reference as any).set(data)
   }
+
+  update(reference: MockFirestoreRef, data: any) {
+    ;(reference as any).update(data)
+  }
 }
 
 class MockFirestoreRef {
@@ -112,5 +116,10 @@ class MockFirestoreDocRef extends MockFirestoreRef {
     this.firestore.collections[collectionPath][
       pathComponents[pathComponents.length - 1]
     ] = data
+  }
+
+  update(data: any) {
+    const value = this.get().data()
+    this.set({ ...value, ...data })
   }
 }

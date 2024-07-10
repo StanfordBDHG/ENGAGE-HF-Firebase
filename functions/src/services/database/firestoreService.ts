@@ -27,7 +27,9 @@ import { type FHIRObservation } from '../../models/fhir/observation.js'
 import { type Invitation } from '../../models/invitation.js'
 import { type KccqScore } from '../../models/kccqScore.js'
 import { type MedicationClass } from '../../models/medicationClass.js'
+import { type UserMessage, UserMessageType } from '../../models/message.js'
 import { type User } from '../../models/user.js'
+import { user } from 'firebase-functions/v1/auth'
 
 export class FirestoreService implements DatabaseService {
   // Properties
@@ -173,6 +175,41 @@ export class FirestoreService implements DatabaseService {
     return this.getCollection<FHIRMedicationRequest>(
       `users/${userId}/medicationRequests`,
     )
+  }
+
+  // Users - Messages
+
+  async didTapMessage(
+    userId: string,
+    messageId: string,
+    didPerformAction: boolean,
+  ): Promise<void> {
+    console.log(
+      `didTapMessage for user/${userId}/message/${messageId} with didPerformAction ${didPerformAction}`)
+    await this.firestore.runTransaction(async (transaction) => {
+      const messageRef = this.firestore.doc(
+        `users/${userId}/messages/${messageId}`,
+      )
+      const message = await transaction.get(messageRef)
+      if (!message.exists)
+        throw new https.HttpsError('not-found', 'Message not found.')
+      const messageContent = message.data() as UserMessage
+
+      switch (messageContent.type) {
+        case UserMessageType.medicationChange:
+        case UserMessageType.weightGain:
+        case UserMessageType.medicationUptitration:
+        case UserMessageType.welcome:
+          transaction.update(messageRef, {
+            completionDate: FieldValue.serverTimestamp(),
+          })
+          break
+        case UserMessageType.vitals:
+        case UserMessageType.symptomQuestionnaire:
+        case UserMessageType.preVisit:
+          break
+      }
+    })
   }
 
   // Users - Observations

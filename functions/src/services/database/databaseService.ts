@@ -74,6 +74,14 @@ export interface DatabaseService {
     userId: string,
   ): Promise<Array<DatabaseDocument<FHIRMedicationRequest>>>
 
+  // Users - Messages
+
+  didTapMessage(
+    userId: string,
+    messageId: string,
+    didPerformAction: boolean,
+  ): Promise<void>
+
   // Users - Observations
 
   getBloodPressureObservations(

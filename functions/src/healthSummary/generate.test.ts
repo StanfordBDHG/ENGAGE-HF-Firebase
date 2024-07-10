@@ -12,8 +12,6 @@ import { generateHealthSummary } from './generate.js'
 import { mockHealthSummaryData } from '../tests/mocks/healthSummaryData.js'
 import { TestFlags } from '../tests/testFlags.js'
 
-/* eslint-disable @typescript-eslint/no-unnecessary-condition */
-
 describe('generateHealthSummary', () => {
   function comparePdf(actual: Buffer, expected: Buffer) {
     assert.equal(actual.length, expected.length)
