@@ -1,5 +1,6 @@
 import admin from 'firebase-admin'
 import { type Auth } from 'firebase-admin/auth'
+import { type AuthData } from 'firebase-functions/v2/tasks'
 import { FirestoreService } from './database/firestoreService.js'
 
 enum UserRoleKey {
@@ -26,34 +27,38 @@ export class ClaimsService {
 
   // Methods - Checks
 
-  async ensureAdmin(userId: string) {
-    const roles = await this.getRolesForUser(userId)
+  ensureAdmin(authData: AuthData | undefined) {
+    const roles = this.getRolesForUser(authData)
     if (roles.includes(UserRoleKey.admin)) return
     throw new Error('User is not an admin')
   }
 
-  async ensureOwner(userId: string, organizationId: string) {
-    const roles = await this.getRolesForUser(userId)
+  ensureOwner(authData: AuthData | undefined, organizationId: string) {
+    const roles = this.getRolesForUser(authData)
     if (roles.includes(UserRoleKey.admin)) return
     if (roles.includes(this.ownerRole(organizationId))) return
     throw new Error('User is not an owner')
   }
 
-  async ensureClinician(userId: string, organizationId: string) {
-    const roles = await this.getRolesForUser(userId)
+  ensureClinician(authData: AuthData | undefined, organizationId: string) {
+    const roles = this.getRolesForUser(authData)
     if (roles.includes(UserRoleKey.admin)) return
     if (roles.includes(this.ownerRole(organizationId))) return
     if (roles.includes(this.clinicianRole(organizationId))) return
     throw new Error('User is not a clinician')
   }
 
-  async ensurePatient(userId: string, organizationId: string) {
-    const roles = await this.getRolesForUser(userId)
+  ensurePatient(authData: AuthData | undefined, organizationId: string) {
+    const roles = this.getRolesForUser(authData)
     if (roles.includes(UserRoleKey.admin)) return
     if (roles.includes(this.ownerRole(organizationId))) return
     if (roles.includes(this.clinicianRole(organizationId))) return
     if (roles.includes(this.patientRole(organizationId))) return
     throw new Error('User is not a patient')
+  }
+
+  ensureAuthenticated(authData: AuthData | undefined) {
+    this.getRolesForUser(authData)
   }
 
   // Methods - Update Claims
@@ -99,10 +104,10 @@ export class ClaimsService {
 
   // Methods - Access Roles
 
-  private async getRolesForUser(userId: string) {
-    const user = await this.auth.getUser(userId)
-    const claims = (user.customClaims ?? {}) as UserClaims
-    return claims.roles ?? []
+  private getRolesForUser(authData: AuthData | undefined) {
+    const roles = authData?.token.roles // eslint-disable-line @typescript-eslint/no-unsafe-assignment
+    if (!roles || !Array.isArray(roles)) throw new Error('User has no roles')
+    return roles as string[]
   }
 
   private async setRolesForUser(roles: string[], userId: string) {
