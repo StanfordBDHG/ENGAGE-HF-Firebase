@@ -1,14 +1,40 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Allow only authenticated content owners access
-    match /users/{userId}/{documents=**} {
-      allow read, write: if request.auth != null && request.auth.uid == userId;
+    match /invitations/{invitationId} {
+      allow read, write: if request.auth != null && "admin" in request.auth.token.roles;
     }
     
-    // Allow authenticated users to view the video sections
+    match /medications/{documents=**} {
+    	allow read: if request.auth != null;
+      allow read, write: if request.auth != null && "admin" in request.auth.token.roles;
+    }
+    
+    match /organizations/{organizationId} {
+    	allow read: if request.auth != null;
+      allow read, write: if request.auth != null && "admin" in request.auth.token.roles;
+      allow read, write: if request.auth != null && ("owner:" + organizationId) in request.auth.token.roles;
+    }
+    
+    match /questionnaires/{questionnaireId} {
+      allow read: if request.auth != null;
+    	allow read, write: if request.auth != null && "admin" in request.auth.token.roles;
+    }
+    
+    match /users/{userId}/{documents=**} {
+      allow read, write:
+      	if request.auth != null && "admin" in request.auth.token.roles;
+      allow read, write:
+      	if request.auth != null && ("owner:" + resource.data.organization) in request.auth.token.roles;
+			allow read, write:
+      	if request.auth != null && ("clinician:" + resource.data.organization) in request.auth.token.roles;
+      allow read, write:
+      	if request.auth != null && request.auth.uid == userId;
+		}
+    
     match /videoSections/{documents=**} {
-      allow read: if request.auth != null
+      allow read: if request.auth != null;
+      allow read, write: if request.auth != null && "admin" in request.auth.token.roles;
     }
   }
 }

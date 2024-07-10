@@ -1,3 +1,4 @@
+import admin from 'firebase-admin'
 import { type Auth } from 'firebase-admin/auth'
 import { FirestoreService } from './database/firestoreService.js'
 
@@ -12,18 +13,24 @@ interface UserClaims {
   roles?: string[]
 }
 
-class ClaimsService {
+export class ClaimsService {
   // Properties
 
   private auth: Auth
 
   // Constructor
 
-  constructor(auth: Auth) {
+  constructor(auth: Auth = admin.auth()) {
     this.auth = auth
   }
 
   // Methods - Checks
+
+  async ensureAdmin(userId: string) {
+    const roles = await this.getRolesForUser(userId)
+    if (roles.includes(UserRoleKey.admin)) return
+    throw new Error('User is not an admin')
+  }
 
   async ensureOwner(userId: string, organizationId: string) {
     const roles = await this.getRolesForUser(userId)
