@@ -22,7 +22,11 @@ export const didDismissMessageFunction = onCall(
 
     try {
       const service = new FirestoreService()
-      await service.didDismissMessage(userId, messageId, didPerformAction ?? false)
+      await service.didDismissMessage(
+        userId,
+        messageId,
+        didPerformAction ?? false,
+      )
     } catch (error) {
       console.error(error)
       throw new https.HttpsError('internal', 'Internal server error.')

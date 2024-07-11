@@ -27,7 +27,7 @@ import { type FHIRObservation } from '../../models/fhir/observation.js'
 import { type Invitation } from '../../models/invitation.js'
 import { type KccqScore } from '../../models/kccqScore.js'
 import { type MedicationClass } from '../../models/medicationClass.js'
-import { type UserMessage, UserMessageType } from '../../models/message.js'
+import { type UserMessage } from '../../models/message.js'
 import { type User } from '../../models/user.js'
 
 export class FirestoreService implements DatabaseService {
@@ -196,7 +196,10 @@ export class FirestoreService implements DatabaseService {
 
       const messageContent = message.data() as UserMessage
       if (!messageContent.isDismissable)
-        throw new https.HttpsError('invalid-argument', 'Message is not dismissable.')
+        throw new https.HttpsError(
+          'invalid-argument',
+          'Message is not dismissable.',
+        )
 
       transaction.update(messageRef, {
         completionDate: FieldValue.serverTimestamp(),
