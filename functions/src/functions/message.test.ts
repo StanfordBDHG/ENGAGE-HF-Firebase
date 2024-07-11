@@ -17,9 +17,10 @@ describe('message', () => {
       title: 'Medication Change',
       description: 'You have a new medication!',
       action: 'medications',
+      isDismissable: true,
     }
     await firestore.doc('users/mockUser/messages/0').set(message)
-    await service.didTapMessage('mockUser', '0', true)
+    await service.didDismissMessage('mockUser', '0', true)
     const updatedMessage = await firestore
       .doc('users/mockUser/messages/0')
       .get()
@@ -33,9 +34,10 @@ describe('message', () => {
       title: 'Upcoming appointment',
       description: 'You have an upcoming appointment!',
       action: 'healthSummary',
+      isDismissable: false,
     }
     await firestore.doc('users/mockUser/messages/0').set(message)
-    await service.didTapMessage('mockUser', '0', true)
+    await service.didDismissMessage('mockUser', '0', true)
     const updatedMessage = await firestore
       .doc('users/mockUser/messages/0')
       .get()

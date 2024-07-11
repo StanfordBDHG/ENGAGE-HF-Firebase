@@ -1236,7 +1236,7 @@ export class MockDatabaseService implements DatabaseService {
 
   // Methods - Users - Messages
 
-  async didTapMessage(
+  async didDismissMessage(
     userId: string,
     messageId: string,
     didPerformAction: boolean,

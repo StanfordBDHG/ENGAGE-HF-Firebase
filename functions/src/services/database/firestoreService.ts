@@ -178,13 +178,13 @@ export class FirestoreService implements DatabaseService {
 
   // Users - Messages
 
-  async didTapMessage(
+  async didDismissMessage(
     userId: string,
     messageId: string,
     didPerformAction: boolean,
   ): Promise<void> {
     console.log(
-      `didTapMessage for user/${userId}/message/${messageId} with didPerformAction ${didPerformAction}`,
+      `didDismissMessage for user/${userId}/message/${messageId} with didPerformAction ${didPerformAction}`,
     )
     await this.firestore.runTransaction(async (transaction) => {
       const messageRef = this.firestore.doc(
@@ -193,22 +193,14 @@ export class FirestoreService implements DatabaseService {
       const message = await transaction.get(messageRef)
       if (!message.exists)
         throw new https.HttpsError('not-found', 'Message not found.')
-      const messageContent = message.data() as UserMessage
 
-      switch (messageContent.type) {
-        case UserMessageType.medicationChange:
-        case UserMessageType.weightGain:
-        case UserMessageType.medicationUptitration:
-        case UserMessageType.welcome:
-          transaction.update(messageRef, {
-            completionDate: FieldValue.serverTimestamp(),
-          })
-          break
-        case UserMessageType.vitals:
-        case UserMessageType.symptomQuestionnaire:
-        case UserMessageType.preVisit:
-          break
-      }
+      const messageContent = message.data() as UserMessage
+      if (!messageContent.isDismissable)
+        throw new https.HttpsError('invalid-argument', 'Message is not dismissable.')
+
+      transaction.update(messageRef, {
+        completionDate: FieldValue.serverTimestamp(),
+      })
     })
   }
 

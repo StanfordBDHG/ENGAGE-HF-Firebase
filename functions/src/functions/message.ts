@@ -7,7 +7,7 @@ export interface DidTapMessageInput {
   didPerformAction?: boolean
 }
 
-export const didTapMessageFunction = onCall(
+export const didDismissMessageFunction = onCall(
   async (request: CallableRequest<DidTapMessageInput>) => {
     if (!request.auth?.uid)
       throw new https.HttpsError(
@@ -22,7 +22,7 @@ export const didTapMessageFunction = onCall(
 
     try {
       const service = new FirestoreService()
-      await service.didTapMessage(userId, messageId, didPerformAction ?? false)
+      await service.didDismissMessage(userId, messageId, didPerformAction ?? false)
     } catch (error) {
       console.error(error)
       throw new https.HttpsError('internal', 'Internal server error.')

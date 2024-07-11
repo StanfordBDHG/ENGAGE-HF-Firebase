@@ -76,7 +76,7 @@ export interface DatabaseService {
 
   // Users - Messages
 
-  didTapMessage(
+  didDismissMessage(
     userId: string,
     messageId: string,
     didPerformAction: boolean,
