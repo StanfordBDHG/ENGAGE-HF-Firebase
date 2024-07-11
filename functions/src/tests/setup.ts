@@ -15,7 +15,8 @@ export function setupMockAuth() {
   stub(admin, 'auth').get(() => () => auth)
 }
 
-export function setupMockFirestore() {
+export function setupMockFirestore(): MockFirestore {
   const firestore = new MockFirestore()
   stub(admin, 'firestore').get(() => () => firestore)
+  return firestore
 }
