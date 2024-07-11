@@ -14,13 +14,13 @@ import {
 } from 'firebase-functions/v2/https'
 import { type AuthData } from 'firebase-functions/v2/tasks'
 import { Flags } from '../flags.js'
-import { ClaimsService } from '../services/claimsService.js'
 import { RxNormService } from '../services/rxNormService.js'
+import { SecurityService } from '../services/securityService.js'
 import { StaticDataService } from '../services/staticDataService.js'
 
 async function rebuildStaticData(authData: AuthData | undefined) {
   if (!Flags.isEmulator) {
-    new ClaimsService().ensureAdmin(authData)
+    await new SecurityService().ensureAdmin(authData)
   }
   const service = new StaticDataService(admin.firestore(), new RxNormService())
   await service.updateAll()
