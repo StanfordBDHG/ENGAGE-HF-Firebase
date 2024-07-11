@@ -2,26 +2,26 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{databaseId}/documents {
     function isAuthenticated(request) {
-        return request.auth != null
+      return request.auth != null
     }
     
     function isClinician(request, organizationId) {
-        return isAuthenticated(request) 
-        	&& get(/databases/$(databaseId)/documents/clinicians/$(request.auth.uid)).data.organization == organizationId
+      return isAuthenticated(request) 
+        && get(/databases/$(databaseId)/documents/clinicians/$(request.auth.uid)).data.organization == organizationId
     }
     
     function isOwner(request, organizationId) {
-    		return isAuthenticated(request) 
-        	&& request.auth.uid in get(/databases/$(databaseId)/documents/organizations/$(organizationId)).data.owners
+    	return isAuthenticated(request) 
+        && request.auth.uid in get(/databases/$(databaseId)/documents/organizations/$(organizationId)).data.owners
     }
     
     function isAdmin(request) {
-        return isAuthenticated(request)
-        	&& exists(/databases/$(databaseId)/documents/admins/$(request.auth.uid))
+      return isAuthenticated(request)
+        && exists(/databases/$(databaseId)/documents/admins/$(request.auth.uid))
     }
     
     function isUser(request, userId) {
-        return isAuthenticated(request) && request.auth.uid == userId
+      return isAuthenticated(request) && request.auth.uid == userId
     }
 
     match /clinicians/{clinicianId} {
@@ -38,29 +38,29 @@ service cloud.firestore {
     }
     
     match /medications/{documents=**} {
-    	allow read: if isAuthenticated(request)
+      allow read: if isAuthenticated(request)
       allow read, write: if isAdmin(request)
     }
     
     match /organizations/{organizationId} {
-    	allow read: if isAuthenticated(request)
+      allow read: if isAuthenticated(request)
       allow read, write: if isAdmin(request)
       allow read, write: if isOwner(request, organizationId)
     }
     
     match /questionnaires/{questionnaireId} {
       allow read: if isAuthenticated(request)
-    	allow read, write: if isAdmin(request)
+      allow read, write: if isAdmin(request)
     }
     
     match /users/{userId}/{documents=**} {
-    	function organizationId() {
-      	return get(/databases/$(databaseId)/documents/users/$(userId)).data.organization
+      function organizationId() {
+        return get(/databases/$(databaseId)/documents/users/$(userId)).data.organization
       }
-    	allow read, write: if isUser(request, userId)
+      allow read, write: if isUser(request, userId)
       allow read, write: if isAdmin(request)
       allow read, write: if isOwner(request, organizationId())
-			allow read, write: if isClinician(request, organizationId())
+		  allow read, write: if isClinician(request, organizationId())
 		}
     
     match /videoSections/{documents=**} {
