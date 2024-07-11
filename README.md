@@ -196,23 +196,22 @@ This data is used to display messages to the patient describing recent changes i
 |type|optional string|e.g. "questionnaireReminder"|Some messages are sent out on a regular basis, where only the most recent message is really relevant for the patient (e.g. a reminder for a questionnaire). With this property, we can easily find existing messages of the same type and replace them with a new one, if necessary.|
 |title|LocalizedText|e.g. "Watch Welcome Video in Education Page."|May be localized.|
 |description|optional LocalizedText|e.g. "The video shows how you will be able to use this app."|May be localized.|
-|action|optional string|e.g. "/videoSections/engage-hf/videos/welcome"|See "Message types".|
+|action|optional string|e.g. "videoSections/1/videos/0"|See "Message types".|
+|isDismissable|boolean|true,false|Whether or not the message is dismissable by the user or is solely controlled by the server.|
 
 #### Message types
 
-The following list describes all different types a message could have. Expiration of messages should only be handled by the server, but clients may communicate to the server that a message has been tapped. A client doesn't need to know about the `type` property, since we would otherwise need to check whether a new message type is supported by a client. It may also sort out message types unknown for the client's version.
+The following list describes all different types a message could have. Expiration of messages should only be handled by the server, except for triggering the `didDismissMessage` Firebase function call that adds a completion date when the message is dismissable and has been dismissed by the user. A client doesn't need to know about the `type` property, since we would otherwise need to check whether a new message type is supported by a client. It may also sort out message types unknown for the client's version.
 
 |Type|Trigger|Expiration|Action|
 |-|-|-|-|
-|MedicationChange|Server: /users/$userId$/medicationRequests changed for a given user. Maximum 1 per day.|Tap|/videoSections/$videoSectionId$/videos/$videoId$|
-|WeightGain|Server: New body weight observation received with 3 lbs increase over prior week's median. Do not trigger again for 7 days.|Tap|/medications|
-|MedicationUptitration|Server:|Tap|/medications|
-|Welcome|Server: When creating new user.|Tap|/videoSections/$videoSectionId$/videos/$videoId$|
-|Vitals|Server: Daily at certain time (respect timezone!)|When receiving blood pressure and weight measurements on the server from current day.|/measurements|
-|SymptomQuestionnaire|Server: Every 14 days.|After questionnaire responses received on server.|/questionnaires/$questionnaireId$|
-|PreVisit|Server: Day (24h) before visit.|After visit time or when visit is cancelled.|/healthSummary|
-
-TBD: Should we really inform the patient about being eligible for medication uptitration or weight gain? I assume that the algorithms shouldn't themselves decide how to change medication for the patient, so wouldn't it make more sense to inform the clinicians instead and then trigger a MedicationChange later on, if they decide to change the meds?
+|MedicationChange|Server: /users/$userId$/medicationRequests changed for a given user. Maximum 1 per day.|Tap|videoSections/$videoSectionId$/videos/$videoId$|
+|WeightGain|Server: New body weight observation received with 3 lbs increase over prior week's median. Do not trigger again for 7 days.|Tap|medications|
+|MedicationUptitration|Server: /users/$userId$/medicationRecommendations changed.|Tap|medications|
+|Welcome|Server: When creating new user.|Tap|videoSections/$videoSectionId$/videos/$videoId$|
+|Vitals|Server: Daily at certain time (respect timezone!)|When receiving blood pressure and weight observations on the server from current day.|observations|
+|SymptomQuestionnaire|Server: Every 14 days.|After questionnaire responses received on server.|questionnaires/$questionnaireId$|
+|PreAppointment|Server: Day (24h) before appointment.|After appointment time or when it is cancelled.|healthSummary|
 
 ### /users/$userId$/allergyIntolerances/$allergyIntoleranceId$
 
