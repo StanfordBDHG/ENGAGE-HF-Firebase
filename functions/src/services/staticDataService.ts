@@ -40,11 +40,24 @@ export class StaticDataService {
 
   async updateAll() {
     await Promise.all([
+      this.updateAdmins(),
       this.updateMedicationClasses(),
       this.updateMedications(),
+      this.updateOrganizations(),
       this.updateQuestionnaires(),
       this.updateVideoSections(),
     ])
+  }
+
+  async updateAdmins() {
+    await this.db.runTransaction(async (transaction) => {
+      await this.deleteCollection('admins', transaction)
+      this.setUnstructuredCollection(
+        this.db.collection('admins'),
+        this.readJSON('admins.json'),
+        transaction,
+      )
+    })
   }
 
   async updateMedications() {
@@ -77,6 +90,17 @@ export class StaticDataService {
       this.setStructuredCollection(
         this.db.collection('medicationClasses'),
         this.readJSON('medicationClasses.json'),
+        transaction,
+      )
+    })
+  }
+
+  async updateOrganizations() {
+    await this.db.runTransaction(async (transaction) => {
+      await this.deleteCollection('organizations', transaction)
+      this.setUnstructuredCollection(
+        this.db.collection('organizations'),
+        this.readJSON('organizations.json'),
         transaction,
       )
     })

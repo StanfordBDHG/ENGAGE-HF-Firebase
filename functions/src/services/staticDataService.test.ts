@@ -7,16 +7,35 @@
 //
 import { expect } from 'chai'
 import admin from 'firebase-admin'
+import { type Firestore } from 'firebase-admin/firestore'
 import { RxNormService } from './rxNormService.js'
 import { StaticDataService } from './staticDataService.js'
-import { setupMockFirestore } from '../tests/setup.js'
+import { cleanupMocks, setupMockFirestore } from '../tests/setup.js'
 import { TestFlags } from '../tests/testFlags.js'
 
 describe('StaticDataService', () => {
-  setupMockFirestore()
-  const firestore = admin.firestore()
-  const rxNormService = new RxNormService()
-  const staticDataService = new StaticDataService(firestore, rxNormService)
+  let firestore: Firestore
+  let staticDataService: StaticDataService
+
+  before(() => {
+    setupMockFirestore()
+    firestore = admin.firestore()
+    staticDataService = new StaticDataService(firestore, new RxNormService())
+  })
+
+  after(() => {
+    cleanupMocks()
+  })
+
+  it('actually creates admins', async () => {
+    const admins = await firestore.collection('admins').get()
+    expect(admins.size).to.equal(0)
+
+    await staticDataService.updateAdmins()
+
+    const updatedAdmins = await firestore.collection('admins').get()
+    expect(updatedAdmins.size).to.be.greaterThan(0)
+  })
 
   it('actually creates medication classes', async () => {
     const medicationClasses = await firestore
@@ -48,6 +67,18 @@ describe('StaticDataService', () => {
       }
     })
   }
+
+  it('actually creates organizations', async () => {
+    const organizations = await firestore.collection('organizations').get()
+    expect(organizations.size).to.equal(0)
+
+    await staticDataService.updateOrganizations()
+
+    const updatedOrganizations = await firestore
+      .collection('organizations')
+      .get()
+    expect(updatedOrganizations.size).to.be.greaterThan(0)
+  })
 
   it('actually creates questionnaires', async () => {
     const questionnaires = await firestore.collection('questionnaires').get()
