@@ -12,12 +12,12 @@ Firebase cloud hosting infrastructure for the ENGAGE-HF project.
 
 A user can have one or more of the following roles assigned:
 
-|Role Identifier|Description|Rights|
-|-|-|-|
-|admin|-|Full read and write access.|
-|owner:<organization>|An owner account for an organization.|R/W of data within organization.|
-|practitioner:<organization>|A clinician or otherwise involved person that needs access to patient data.|R/W of patient data within organization.|
-|patient:<organization>|A patient of a given organization.|R/W of their own data.|
+|Role|Scope|Rights|Source of Truth|
+|-|-|-|-|
+|Admin|Everything|R/W|`admins/$userId$` exists|
+|Owner|In organization|R/W of users, R/W of organization|`organization/$organizationId$` contains `userId` in `owners` property|
+|Clinician|In organization|R/W of users|`clincians/$userId$` exists|
+|User|Own data|R/W of `users/$userId$`|auth has same userId|
 
 # Data Scheme
 
