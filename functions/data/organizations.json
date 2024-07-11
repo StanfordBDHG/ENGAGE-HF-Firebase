@@ -2,10 +2,12 @@
     "stanford": {
         "id": "stanford",
         "name": "Stanford University",
-        "contactName": "Alex Sandhu",
-        "phoneNumber": "+1 (555) 123-4567",
-        "emailAddress": "engagehf@stanford.edu",
-        "owners": []
+        "contactName": "Alex Sandhu, MD",
+        "phoneNumber": "+1 (650) 493-5000",
+        "emailAddress": "dothfteam@stanford.edu",
+        "owners": [
+            "alex"
+        ]
     },
     "jhu": {
         "id": "jhu",
