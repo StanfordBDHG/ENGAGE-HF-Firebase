@@ -14,7 +14,7 @@ export enum UserMessageType {
   welcome = 'Welcome',
   vitals = 'Vitals',
   symptomQuestionnaire = 'SymptomQuestionnaire',
-  preVisit = 'PreVisit',
+  preAppointment = 'PreAppointment',
 }
 
 export interface UserMessage {
