@@ -31,7 +31,10 @@ export interface RebuildStaticDataInput {
   only?: StaticDataComponent[]
 }
 
-async function rebuildStaticData(authData: AuthData | undefined, input: RebuildStaticDataInput) {
+async function rebuildStaticData(
+  authData: AuthData | undefined,
+  input: RebuildStaticDataInput,
+) {
   if (!Flags.isEmulator) {
     await new SecurityService().ensureAdmin(authData)
   }
@@ -68,7 +71,10 @@ const rebuildStaticDataFunctionProduction = onCall(
 )
 
 const rebuildStaticDataFunctionDebug = onRequest(async (request, response) => {
-  await rebuildStaticData(undefined, (request.body ?? {}) as RebuildStaticDataInput)
+  await rebuildStaticData(
+    undefined,
+    (request.body ?? {}) as RebuildStaticDataInput,
+  )
   response.write('Success', 'utf8')
   response.end()
 })
