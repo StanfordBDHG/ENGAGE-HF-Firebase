@@ -31,7 +31,7 @@ describe('message', () => {
   it('should not update the completionDate of messages', async () => {
     const message: UserMessage = {
       dueDate: new Date('2024-01-01'),
-      type: UserMessageType.preVisit,
+      type: UserMessageType.preAppointment,
       title: 'Upcoming appointment',
       description: 'You have an upcoming appointment!',
       action: 'healthSummary',
