@@ -1,8 +1,9 @@
-import { expect } from 'chai'
+import { assert, expect } from 'chai'
 import admin from 'firebase-admin'
 import { type UserMessage, UserMessageType } from '../models/message.js'
 import { FirestoreService } from '../services/database/firestoreService.js'
 import { setupMockAuth, setupMockFirestore } from '../tests/setup.js'
+import { https } from 'firebase-functions/v2'
 
 describe('message', () => {
   setupMockAuth()
@@ -37,10 +38,11 @@ describe('message', () => {
       isDismissable: false,
     }
     await firestore.doc('users/mockUser/messages/0').set(message)
-    await service.didDismissMessage('mockUser', '0', true)
-    const updatedMessage = await firestore
-      .doc('users/mockUser/messages/0')
-      .get()
-    expect(updatedMessage.data()?.completionDate).to.be.undefined
+    try {
+      await service.didDismissMessage('mockUser', '0', true)
+      assert.fail('Message should not be dismissable.')
+    } catch (error) {
+      expect(error).to.deep.equal(new https.HttpsError('invalid-argument', 'Message is not dismissable.'));
+    }
   })
 })
