@@ -16,7 +16,7 @@ A user can have one or more of the following roles assigned:
 |-|-|-|-|
 |Admin|Everything|R/W|`admins/$userId$` exists|
 |Owner|In organization|R/W of users, R/W of organization|`organization/$organizationId$` contains `userId` in `owners` property|
-|Clinician|In organization|R/W of users|`clincians/$userId$` exists|
+|Clinician|In organization|R/W of users|`clinicians/$userId$` exists|
 |User|Own data|R/W of `users/$userId$`|auth has same userId|
 
 # Data Scheme
