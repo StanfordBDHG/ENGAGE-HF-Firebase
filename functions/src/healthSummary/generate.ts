@@ -3,6 +3,8 @@ import { type CellDef, type RowInput, type UserOptions } from 'jspdf-autotable'
 import svg2img from 'svg2img'
 import { generateChartSvg } from './generateChart.js'
 import { generateSpeedometerSvg } from './generateSpeedometer.js'
+import { applyPlugin } from 'jspdf-autotable'
+applyPlugin(jsPDF)
 
 export async function generateHealthSummary(
   data: HealthSummaryData,
