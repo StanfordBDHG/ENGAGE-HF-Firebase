@@ -1,3 +1,11 @@
+//
+// This source file is part of the ENGAGE-HF project based on the Stanford Spezi Template Application project
+//
+// SPDX-FileCopyrightText: 2023 Stanford University
+//
+// SPDX-License-Identifier: MIT
+//
+
 import { expect } from 'chai'
 import { type AuthData } from 'firebase-functions/v2/tasks'
 import { describe } from 'mocha'
