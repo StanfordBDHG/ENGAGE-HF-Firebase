@@ -6,7 +6,6 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "build": "tsc",
-    "check-coverage": "c8 check-coverage",
     "test": "npm run build && npm run test:nobuild",
     "test:coverage": "c8 npm run test",
     "test:nobuild": "env TZ=UTC mocha --reporter-option maxDiffSize=0",
