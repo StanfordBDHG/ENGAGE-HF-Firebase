@@ -34,6 +34,9 @@ jobs:
       - name: Test
         id: test
         run: npm --prefix functions run test
+      - name: Check Code Coverage
+        id: check-coverage
+        run: npm --prefix functions run check-coverage
       - name: Regenerate Test Results
         id: test-regenerate
         run: npm --prefix functions run test:regenerate
