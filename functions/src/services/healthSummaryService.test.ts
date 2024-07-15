@@ -9,8 +9,8 @@
 import { expect } from 'chai'
 import { FhirService } from './fhir/fhirService.js'
 import { HealthSummaryService } from './healthSummaryService.js'
+import { MockDatabaseService } from '../tests/mocks/databaseService.js'
 import { mockHealthSummaryData } from '../tests/mocks/healthSummaryData.js'
-import { MockDatabaseService } from '../tests/mocks/mockDatabaseService.js'
 import { TestFlags } from '../tests/testFlags.js'
 
 describe('HealthSummaryService', () => {

@@ -15,7 +15,11 @@
         "videoPath": "/videoSections/1/videos/2"
     },
     {
-        "name": "ACE inhibitors and ARBs",
+        "name": "ACE inhibitors",
+        "videoPath": "/videoSections/1/videos/3"
+    },
+    {
+        "name": "ARBs",
         "videoPath": "/videoSections/1/videos/3"
     },
     {

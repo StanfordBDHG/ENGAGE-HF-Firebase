@@ -8,8 +8,8 @@
 
 import admin from 'firebase-admin'
 import { stub, restore } from 'sinon'
-import { MockAuth } from './mocks/mockAuth.js'
-import { MockFirestore } from './mocks/mockFirestore.js'
+import { MockAuth } from './mocks/auth.js'
+import { MockFirestore } from './mocks/firestore.js'
 
 export function setupMockAuth() {
   const auth = new MockAuth()

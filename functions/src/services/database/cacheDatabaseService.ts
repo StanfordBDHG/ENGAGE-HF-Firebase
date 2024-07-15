@@ -216,9 +216,9 @@ export class CacheDatabaseService implements DatabaseService {
 
   // Users - Questionnaire Responses
 
-  async getKccqScores(userId: string) {
+  async getSymptomScores(userId: string) {
     return this.accessCache(CacheKeyPrefix.getKccqScores, [userId], () =>
-      this.databaseService.getKccqScores(userId),
+      this.databaseService.getSymptomScores(userId),
     )
   }
 

@@ -13,9 +13,9 @@ import 'jspdf-autotable' /* eslint-disable-line */
 import { type CellDef, type RowInput, type UserOptions } from 'jspdf-autotable' /* eslint-disable-line */
 import { generateChartSvg } from './generateChart.js'
 import { generateSpeedometerSvg } from './generateSpeedometer.js'
-import { type HealthSummaryData } from './healthSummaryData.js'
-import { MedicationOptimizationCategory } from './medication.js'
-import { type Observation } from './vitals.js'
+import { type HealthSummaryData } from '../models/healthSummaryData.js'
+import { MedicationRecommendationCategory } from '../models/medicationRecommendation.js'
+import { type Observation } from '../models/vitals.js'
 
 export function generateHealthSummary(data: HealthSummaryData): Buffer {
   const generator = new HealthSummaryPDFGenerator(data)
@@ -166,14 +166,14 @@ class HealthSummaryPDFGenerator {
     )
 
     function colorForCategory(
-      category: MedicationOptimizationCategory,
+      category: MedicationRecommendationCategory,
     ): string | undefined {
       switch (category) {
-        case MedicationOptimizationCategory.targetDoseReached:
+        case MedicationRecommendationCategory.targetDoseReached:
           return 'rgb(0,255,0)'
-        case MedicationOptimizationCategory.improvementAvailable:
+        case MedicationRecommendationCategory.improvementAvailable:
           return 'rgb(255,255,0)'
-        case MedicationOptimizationCategory.notStarted:
+        case MedicationRecommendationCategory.notStarted:
           return 'rgb(211,211,211)'
       }
     }
@@ -286,7 +286,7 @@ class HealthSummaryPDFGenerator {
         )
         this.moveDown(4)
         this.addText(
-          `Prior Dry Weight: ${this.data.vitals.dryWeight.toFixed(0)} lbs`,
+          `Prior Dry Weight: ${this.data.vitals.dryWeight?.value.toFixed(0) ?? '---'} lbs`,
           this.textStyles.body,
           columnWidth,
         )
@@ -397,7 +397,7 @@ class HealthSummaryPDFGenerator {
         this.addChart(
           this.data.vitals.bodyWeight,
           columnWidth,
-          this.data.vitals.dryWeight,
+          this.data.vitals.dryWeight?.value,
         )
         const avgWeight =
           this.data.vitals.bodyWeight.reduce(
@@ -514,15 +514,11 @@ class HealthSummaryPDFGenerator {
     )
 
     const percentageBelow =
-      (this.data.vitals.systolicBloodPressure.filter(
-        (observation) => observation.value < 90,
-      ).length /
+      (systolicValues.filter((observation) => observation.value < 90).length /
         systolicValues.length) *
       100
     const percentageAbove =
-      (this.data.vitals.systolicBloodPressure.filter(
-        (observation) => observation.value > 180,
-      ).length /
+      (systolicValues.filter((observation) => observation.value > 180).length /
         systolicValues.length) *
       100
     this.addTable([

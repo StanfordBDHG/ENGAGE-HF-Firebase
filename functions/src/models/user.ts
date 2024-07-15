@@ -6,6 +6,14 @@
 // SPDX-License-Identifier: MIT
 //
 
+import { type QuantityObservation } from './vitals.js'
+
+export interface UserMessagesSettings {
+  dailyRemindersAreActive?: boolean
+  textNotificationsAreActive?: boolean
+  medicationRemindersAreActive?: boolean
+}
+
 export interface Admin {}
 
 export interface Clinician {}
@@ -13,12 +21,10 @@ export interface Clinician {}
 export interface Patient {
   dateOfBirth: Date
   clinician?: string
-}
-
-export interface UserMessagesSettings {
-  dailyRemindersAreActive?: boolean
-  textNotificationsAreActive?: boolean
-  medicationRemindersAreActive?: boolean
+  creatinine?: QuantityObservation
+  dryWeight?: QuantityObservation
+  estimatedGlomerularFiltrationRate?: QuantityObservation
+  potassium?: QuantityObservation
 }
 
 export interface User {

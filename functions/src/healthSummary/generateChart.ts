@@ -8,7 +8,7 @@
 
 import * as d3 from 'd3'
 import { JSDOM } from 'jsdom'
-import { type Observation } from './vitals.js'
+import { type Observation } from '../models/vitals.js'
 
 export function generateChartSvg(
   data: Observation[],

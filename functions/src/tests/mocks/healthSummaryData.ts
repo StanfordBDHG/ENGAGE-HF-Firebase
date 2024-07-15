@@ -5,8 +5,8 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import { type HealthSummaryData } from '../../healthSummary/healthSummaryData.js'
-import { MedicationOptimizationCategory } from '../../healthSummary/medication.js'
+import { HealthSummaryData } from '../../models/healthSummaryData.js'
+import { MedicationRecommendationCategory } from '../../models/medicationRecommendation.js'
 
 export function mockHealthSummaryData(): HealthSummaryData {
   return {
@@ -21,21 +21,21 @@ export function mockHealthSummaryData(): HealthSummaryData {
         targetDose: '100mg Daily',
         potentialPositiveChange:
           'Switch to Sacubitril-Valsartan (More Effective Medication)',
-        category: MedicationOptimizationCategory.improvementAvailable,
+        category: MedicationRecommendationCategory.improvementAvailable,
       },
       {
         name: 'Dapagliflozin (Farxiga)',
         dose: '10mg Daily',
         targetDose: '10mg Daily',
         potentialPositiveChange: 'Continue Dose',
-        category: MedicationOptimizationCategory.targetDoseReached,
+        category: MedicationRecommendationCategory.targetDoseReached,
       },
       {
         name: 'Carvedilol (Coreg)',
         dose: 'Not Taking',
         targetDose: '25-50mg Twice Daily',
         potentialPositiveChange: 'Start Medication',
-        category: MedicationOptimizationCategory.notStarted,
+        category: MedicationRecommendationCategory.notStarted,
       },
     ],
     vitals: {
@@ -83,7 +83,10 @@ export function mockHealthSummaryData(): HealthSummaryData {
         { date: new Date('2024-01-25'), value: 266 },
         { date: new Date('2024-01-24'), value: 267 },
       ],
-      dryWeight: 267.5,
+      dryWeight: {
+        date: new Date('2024-04-02'),
+        value: 267.5,
+      },
     },
     symptomScores: [
       {

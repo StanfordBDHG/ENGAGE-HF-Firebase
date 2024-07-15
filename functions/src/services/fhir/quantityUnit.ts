@@ -10,11 +10,19 @@ import { type FHIRSimpleQuantity } from '../../models/fhir/baseTypes.js'
 export class QuantityUnit {
   // Static Properties
 
-  static mg = new QuantityUnit('mg', 'mg')
-  static lbs = new QuantityUnit('[lb_av]', 'lbs')
-  static kg = new QuantityUnit('kg', 'kg')
-  static bpm = new QuantityUnit('/min', 'beats/minute')
-  static mmHg = new QuantityUnit('mm[Hg]', 'mmHg')
+  static readonly mg = new QuantityUnit('mg', 'mg')
+  static readonly lbs = new QuantityUnit('[lb_av]', 'lbs')
+  static readonly kg = new QuantityUnit('kg', 'kg')
+  static readonly bpm = new QuantityUnit('/min', 'beats/minute')
+  static readonly mmHg = new QuantityUnit('mm[Hg]', 'mmHg')
+
+  static readonly allValues = [
+    QuantityUnit.mg,
+    QuantityUnit.lbs,
+    QuantityUnit.kg,
+    QuantityUnit.bpm,
+    QuantityUnit.mmHg,
+  ]
 
   // Properties
 
@@ -86,9 +94,9 @@ export class QuantityUnit {
 }
 
 class QuantityUnitConverter {
-  sourceUnit: QuantityUnit
-  targetUnit: QuantityUnit
-  convert: (value: number) => number
+  readonly sourceUnit: QuantityUnit
+  readonly targetUnit: QuantityUnit
+  readonly convert: (value: number) => number
 
   constructor(
     sourceUnit: QuantityUnit,
@@ -100,7 +108,7 @@ class QuantityUnitConverter {
     this.convert = convert
   }
 
-  static allValues = [
+  static readonly allValues = [
     new QuantityUnitConverter(
       QuantityUnit.lbs,
       QuantityUnit.kg,
