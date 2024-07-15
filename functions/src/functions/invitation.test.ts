@@ -13,7 +13,7 @@ import { describe } from 'mocha'
 import { type Invitation } from '../models/invitation.js'
 import { type Admin, type Patient, type User } from '../models/user.js'
 import { FirestoreService } from '../services/database/firestoreService.js'
-import { type MockFirestore } from '../tests/mocks/mockFirestore.js'
+import { type MockFirestore } from '../tests/mocks/firestore.js'
 import {
   cleanupMocks,
   setupMockAuth,

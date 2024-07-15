@@ -5,7 +5,8 @@
 //
 // SPDX-License-Identifier: MIT
 //
-export interface KccqScore {
+
+export interface SymptomScores {
   questionnaireResponseId?: string
   date: Date
   overallScore: number

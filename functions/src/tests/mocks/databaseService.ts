@@ -19,8 +19,8 @@ import {
   type FHIRObservation,
 } from '../../models/fhir/observation.js'
 import { type Invitation } from '../../models/invitation.js'
-import { type KccqScore } from '../../models/kccqScore.js'
 import { type MedicationClass } from '../../models/medicationClass.js'
+import { type SymptomScores } from '../../models/symptomScores.js'
 import {
   type Clinician,
   type Patient,
@@ -1064,8 +1064,14 @@ export class MockDatabaseService implements DatabaseService {
             },
             ingredient: [
               {
-                itemReference: {
-                  reference: 'medications/203160',
+                itemCodeableConcept: {
+                  coding: [
+                    {
+                      system: 'http://www.nlm.nih.gov/research/umls/rxnorm',
+                      code: '203160',
+                      display: 'Losartan potassium',
+                    },
+                  ],
                 },
                 strength: {
                   numerator: { value: 100, unit: 'mg' },
@@ -1096,8 +1102,14 @@ export class MockDatabaseService implements DatabaseService {
             },
             ingredient: [
               {
-                itemReference: {
-                  reference: 'medications/203160',
+                itemCodeableConcept: {
+                  coding: [
+                    {
+                      system: 'http://www.nlm.nih.gov/research/umls/rxnorm',
+                      code: '203160',
+                      display: 'Losartan potassium',
+                    },
+                  ],
                 },
                 strength: {
                   numerator: { value: 25, unit: 'mg' },
@@ -1128,8 +1140,14 @@ export class MockDatabaseService implements DatabaseService {
             },
             ingredient: [
               {
-                itemReference: {
-                  reference: 'medications/203160',
+                itemCodeableConcept: {
+                  coding: [
+                    {
+                      system: 'http://www.nlm.nih.gov/research/umls/rxnorm',
+                      code: '203160',
+                      display: 'Losartan potassium',
+                    },
+                  ],
                 },
                 strength: {
                   numerator: { value: 50, unit: 'mg' },
@@ -1173,8 +1191,11 @@ export class MockDatabaseService implements DatabaseService {
       dateOfBirth: new Date('1970-01-02'),
       clinician: 'mockClinician',
       dryWeight: {
-        ...QuantityUnit.lbs,
-        value: 267.5,
+        date: new Date('2024-04-02'),
+        valueQuantity: {
+          ...QuantityUnit.lbs,
+          value: 267.5,
+        },
       },
     })
   }
@@ -1470,9 +1491,9 @@ export class MockDatabaseService implements DatabaseService {
 
   // Methods - Users - Questionnaire Responses
 
-  async getKccqScores(
+  async getSymptomScores(
     userId: string,
-  ): Promise<Array<DatabaseDocument<KccqScore>>> {
+  ): Promise<Array<DatabaseDocument<SymptomScores>>> {
     const values = [
       {
         overallScore: 40,

@@ -1,0 +1,101 @@
+import { Recommender } from './recommender.js'
+import {
+  MedicationRecommendationCategory,
+  type MedicationRecommendation,
+} from '../../../models/medicationRecommendation.js'
+import { MedicationClassReference, MedicationReference } from '../../codes.js'
+import { ContraindicationCategory } from '../../contraindication/contraindicationService.js'
+import { type RecommendationInput } from '../recommendationService.js'
+
+export class MraRecommender extends Recommender {
+  // Methods
+
+  compute(input: RecommendationInput): MedicationRecommendation[] {
+    const currentMedication = this.findCurrentMedication(input.requests, [
+      MedicationClassReference.mineralocorticoidReceptorAntagonists,
+    ])
+    if (!currentMedication) return this.computeNew(input)
+
+    if (this.isTargetDoseReached(currentMedication))
+      return this.createRecommendation(
+        currentMedication,
+        undefined,
+        MedicationRecommendationCategory.targetDoseReached,
+      )
+
+    const durationOfOneWeekInMilliseconds = 1000 * 60 * 60 * 24 * 7
+    const lastMonth = new Date().getTime() - durationOfOneWeekInMilliseconds * 4
+
+    const creatinineObservation = input.vitals.creatinine
+    const potassiumObservation = input.vitals.potassium
+
+    if (
+      !creatinineObservation ||
+      !potassiumObservation ||
+      creatinineObservation.date.getTime() < lastMonth ||
+      potassiumObservation.date.getTime() < lastMonth
+    )
+      return this.createRecommendation(
+        currentMedication,
+        undefined,
+        MedicationRecommendationCategory.moreLabObservationsRequired,
+      )
+
+    if (creatinineObservation.value < 2.5 && potassiumObservation.value < 5)
+      return this.createRecommendation(
+        currentMedication,
+        undefined,
+        MedicationRecommendationCategory.personalTargetDoseReached,
+      )
+
+    return this.createRecommendation(
+      currentMedication,
+      undefined,
+      MedicationRecommendationCategory.improvementAvailable,
+    )
+  }
+
+  // Helpers
+
+  private computeNew(input: RecommendationInput): MedicationRecommendation[] {
+    const contraindication = this.contraindicationService.checkMedicationClass(
+      input.contraindications,
+      MedicationClassReference.mineralocorticoidReceptorAntagonists,
+    )
+    switch (contraindication) {
+      case ContraindicationCategory.severeAllergyIntolerance:
+      case ContraindicationCategory.allergyIntolerance:
+        return []
+      case ContraindicationCategory.clinicianListed:
+        return this.createRecommendation(
+          undefined,
+          MedicationReference.spironolactone,
+          MedicationRecommendationCategory.noActionRequired,
+        )
+      case ContraindicationCategory.none:
+        break
+    }
+
+    const creatinine = input.vitals.creatinine?.value
+    if (creatinine && creatinine >= 2.5)
+      return this.createRecommendation(
+        undefined,
+        MedicationReference.spironolactone,
+        MedicationRecommendationCategory.noActionRequired,
+      )
+
+    const potassium = input.vitals.potassium?.value
+    if (potassium && potassium >= 5)
+      return this.createRecommendation(
+        undefined,
+        MedicationReference.spironolactone,
+        MedicationRecommendationCategory.noActionRequired,
+      )
+
+    return this.createRecommendation(
+      undefined,
+      MedicationReference.spironolactone,
+      MedicationRecommendationCategory.notStarted,
+    )
+  }
+}

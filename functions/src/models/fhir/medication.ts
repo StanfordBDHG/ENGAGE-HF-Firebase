@@ -22,7 +22,7 @@ export interface FHIRMedication extends FHIRElement {
 
 export interface FHIRMedicationIngredient {
   strength?: FHIRRatio
-  itemReference?: FHIRReference<FHIRMedication>
+  itemCodeableConcept?: FHIRCodeableConcept
 }
 
 export interface FHIRMedicationRequest extends FHIRElement {

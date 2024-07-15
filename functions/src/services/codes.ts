@@ -29,3 +29,25 @@ export enum LoincCode {
 export enum RxNormCode {}
 
 export enum SnomedCtCode {}
+
+export enum MedicationClassReference {
+  betaBlockers = 'medicationClasses/0',
+  sglt2inhibitors = 'medicationClasses/1',
+  mineralocorticoidReceptorAntagonists = 'medicationClasses/2',
+  angiotensinConvertingEnzymeInhibitors = 'medicationClasses/3',
+  angiotensinReceptorBlockers = 'medicationClasses/4',
+  angiotensinReceptorNeprilysinInhibitors = 'medicationClasses/5',
+  diuretics = 'medicationClasses/6',
+}
+
+export enum MedicationReference {
+  spironolactone = 'medications/54279',
+  carvedilol = 'medications/20352',
+  carvedilolPhosphate = 'medications/668310',
+  eplerenone = 'medications/54280',
+  dapagliflozin = 'medications/54281',
+  empagliflozin = 'medications/54282',
+  losartan = 'medications/203160',
+  sotagliflozin = 'medications/54283',
+  sacubitrilValsartan = 'medications/1656339',
+}

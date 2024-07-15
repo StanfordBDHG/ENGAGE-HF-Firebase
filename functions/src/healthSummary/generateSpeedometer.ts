@@ -8,7 +8,7 @@
 
 import * as d3 from 'd3'
 import { JSDOM } from 'jsdom'
-import { type KccqScore } from '../models/kccqScore.js'
+import { type SymptomScores } from '../models/symptomScores.js'
 
 interface SpeedometerMarker {
   percentage: number
@@ -17,7 +17,7 @@ interface SpeedometerMarker {
 }
 
 export function generateSpeedometerSvg(
-  scores: KccqScore[],
+  scores: SymptomScores[],
   width: number,
 ): string {
   const baselineScore = scores.length >= 1 ? scores[0] : undefined
