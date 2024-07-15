@@ -1,3 +1,11 @@
+//
+// This source file is part of the ENGAGE-HF project based on the Stanford Spezi Template Application project
+//
+// SPDX-FileCopyrightText: 2023 Stanford University
+//
+// SPDX-License-Identifier: MIT
+//
+
 import { BetaBlockerRecommender } from './recommenders/betaBlockersRecommender.js'
 import { MraRecommender } from './recommenders/mraRecommender.js'
 import { RasiRecommender } from './recommenders/rasiRecommender.js'
