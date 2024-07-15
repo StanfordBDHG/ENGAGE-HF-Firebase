@@ -1,3 +1,10 @@
+//
+// This source file is part of the ENGAGE-HF project based on the Stanford Spezi Template Application project
+//
+// SPDX-FileCopyrightText: 2023 Stanford University
+//
+// SPDX-License-Identifier: MIT
+//
 import { type HealthSummaryData } from '../../healthSummary/healthSummaryData.js'
 import { MedicationOptimizationCategory } from '../../healthSummary/medication.js'
 
