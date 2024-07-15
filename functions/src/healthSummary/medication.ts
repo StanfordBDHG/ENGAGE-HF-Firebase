@@ -1,15 +1,13 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-interface MedicationRequest {
+export enum MedicationOptimizationCategory {
+  targetDoseReached = 'targetDoseReached',
+  improvementAvailable = 'improvementAvailable',
+  notStarted = 'notStarted',
+}
+
+export interface MedicationOptimization {
   name: string
   dose: string
   targetDose: string
   potentialPositiveChange: string
-  category: 'targetDoseReached' | 'improvementAvailable' | 'notStarted'
-}
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-interface Medication {
-  name: string
-  dose: string
-  targetDose: string
+  category: MedicationOptimizationCategory
 }

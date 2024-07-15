@@ -4,8 +4,8 @@
         "medications": [
             {
                 "code": "221124",
-                "minimumDailyDosage": 12.5,
-                "maximumDailyDosage": 200,
+                "minimumDailyDose": 12.5,
+                "targetDailyDose": 200,
                 "drugs": [
                     1999031,
                     1999033,
@@ -19,8 +19,8 @@
             },
             {
                 "code": "20352",
-                "minimumDailyDosage": 6.25,
-                "maximumDailyDosage": 50,
+                "minimumDailyDose": 6.25,
+                "targetDailyDose": 50,
                 "drugs": [
                     200031,
                     200032,
@@ -30,8 +30,8 @@
             },
             {
                 "code": "668310",
-                "minimumDailyDosage": 10,
-                "maximumDailyDosage": 80,
+                "minimumDailyDose": 10,
+                "targetDailyDose": 80,
                 "drugs": [
                     860510,
                     860516,
@@ -41,8 +41,8 @@
             },
             {
                 "code": "19484",
-                "minimumDailyDosage": 1.25,
-                "maximumDailyDosage": 10,
+                "minimumDailyDose": 1.25,
+                "targetDailyDose": 10,
                 "drugs": [
                     854901,
                     854905
@@ -55,8 +55,8 @@
         "medications": [
             {
                 "code": "1488564",
-                "minimumDailyDosage": 5,
-                "maximumDailyDosage": 10,
+                "minimumDailyDose": 5,
+                "targetDailyDose": 10,
                 "drugs": [
                     1488569,
                     1488574
@@ -64,8 +64,8 @@
             },
             {
                 "code": "1545653",
-                "minimumDailyDosage": 5,
-                "maximumDailyDosage": 10,
+                "minimumDailyDose": 5,
+                "targetDailyDose": 10,
                 "drugs": [
                     1545658,
                     1545666
@@ -73,8 +73,8 @@
             },
             {
                 "code": "2638675",
-                "minimumDailyDosage": 200,
-                "maximumDailyDosage": 400,
+                "minimumDailyDose": 200,
+                "targetDailyDose": 400,
                 "drugs": [
                     2638683,
                     2638691
@@ -82,16 +82,16 @@
             },
             {
                 "code": "2627044",
-                "minimumDailyDosage": 20,
-                "maximumDailyDosage": 20,
+                "minimumDailyDose": 20,
+                "targetDailyDose": 20,
                 "drugs": [
                     2637859
                 ]
             },
             {
                 "code": "1373458",
-                "minimumDailyDosage": 100,
-                "maximumDailyDosage": 100,
+                "minimumDailyDose": 100,
+                "targetDailyDose": 100,
                 "drugs": [
                     1373463,
                     1373471
@@ -99,8 +99,8 @@
             },
             {
                 "code": "1992672",
-                "minimumDailyDosage": 5,
-                "maximumDailyDosage": 15,
+                "minimumDailyDose": 5,
+                "targetDailyDose": 15,
                 "drugs": [
                     1992810,
                     1992819
@@ -113,8 +113,8 @@
         "medications": [
             {
                 "code": "9997",
-                "minimumDailyDosage": 12.5,
-                "maximumDailyDosage": 25,
+                "minimumDailyDose": 12.5,
+                "targetDailyDose": 25,
                 "drugs": [
                     198222,
                     198223,
@@ -123,8 +123,8 @@
             },
             {
                 "code": "298869",
-                "minimumDailyDosage": 12.5,
-                "maximumDailyDosage": 50,
+                "minimumDailyDose": 12.5,
+                "targetDailyDose": 50,
                 "drugs": [
                     351256,
                     351257
@@ -137,8 +137,8 @@
         "medications": [
             {
                 "code": "35208",
-                "minimumDailyDosage": 10,
-                "maximumDailyDosage": 40,
+                "minimumDailyDose": 10,
+                "targetDailyDose": 40,
                 "drugs": [
                     312748,
                     312749,
@@ -148,8 +148,8 @@
             },
             {
                 "code": "54552",
-                "minimumDailyDosage": 2,
-                "maximumDailyDosage": 16,
+                "minimumDailyDose": 2,
+                "targetDailyDose": 16,
                 "drugs": [
                     854925,
                     854984,
@@ -158,8 +158,8 @@
             },
             {
                 "code": "35296",
-                "minimumDailyDosage": 1.25,
-                "maximumDailyDosage": 10,
+                "minimumDailyDose": 1.25,
+                "targetDailyDose": 10,
                 "drugs": [
                     401965,
                     251856,
@@ -174,8 +174,8 @@
             },
             {
                 "code": "18867",
-                "minimumDailyDosage": 5,
-                "maximumDailyDosage": 40,
+                "minimumDailyDose": 5,
+                "targetDailyDose": 40,
                 "drugs": [
                     898723,
                     898687,
@@ -185,8 +185,8 @@
             },
             {
                 "code": "1998",
-                "minimumDailyDosage": 18.75,
-                "maximumDailyDosage": 150,
+                "minimumDailyDose": 18.75,
+                "targetDailyDose": 150,
                 "drugs": [
                     308963,
                     317173,
@@ -196,8 +196,8 @@
             },
             {
                 "code": "3827",
-                "minimumDailyDosage": 5,
-                "maximumDailyDosage": 40,
+                "minimumDailyDose": 5,
+                "targetDailyDose": 40,
                 "drugs": [
                     858804,
                     858813,
@@ -207,8 +207,8 @@
             },
             {
                 "code": "29046",
-                "minimumDailyDosage": 2.5,
-                "maximumDailyDosage": 40,
+                "minimumDailyDose": 2.5,
+                "targetDailyDose": 40,
                 "drugs": [
                     311353,
                     311354,
@@ -219,8 +219,8 @@
             },
             {
                 "code": "227278",
-                "minimumDailyDosage": 5,
-                "maximumDailyDosage": 40,
+                "minimumDailyDose": 5,
+                "targetDailyDose": 40,
                 "drugs": [
                     857169,
                     857183,
@@ -229,8 +229,8 @@
             },
             {
                 "code": "38454",
-                "minimumDailyDosage": 1,
-                "maximumDailyDosage": 4,
+                "minimumDailyDose": 1,
+                "targetDailyDose": 4,
                 "drugs": [
                     199353,
                     199351,
@@ -239,8 +239,8 @@
             },
             {
                 "code": "30131",
-                "minimumDailyDosage": 7.5,
-                "maximumDailyDosage": 15,
+                "minimumDailyDose": 7.5,
+                "targetDailyDose": 15,
                 "drugs": [
                     1299897,
                     1299896
@@ -253,8 +253,8 @@
         "medications": [
             {
                 "code": "203160",
-                "minimumDailyDosage": 25,
-                "maximumDailyDosage": 150,
+                "minimumDailyDose": 25,
+                "targetDailyDose": 150,
                 "drugs": [
                     979480,
                     979485,
@@ -263,8 +263,8 @@
             },
             {
                 "code": "69749",
-                "minimumDailyDosage": 20,
-                "maximumDailyDosage": 320,
+                "minimumDailyDose": 20,
+                "targetDailyDose": 320,
                 "drugs": [
                     349483,
                     349199,
@@ -274,8 +274,8 @@
             },
             {
                 "code": "214354",
-                "minimumDailyDosage": 4,
-                "maximumDailyDosage": 32,
+                "minimumDailyDose": 4,
+                "targetDailyDose": 32,
                 "drugs": [
                     153822,
                     153823,
@@ -285,8 +285,8 @@
             },
             {
                 "code": "83818",
-                "minimumDailyDosage": 75,
-                "maximumDailyDosage": 300,
+                "minimumDailyDose": 75,
+                "targetDailyDose": 300,
                 "drugs": [
                     200094,
                     200095,
@@ -295,8 +295,8 @@
             },
             {
                 "code": "73494",
-                "minimumDailyDosage": 40,
-                "maximumDailyDosage": 80,
+                "minimumDailyDose": 40,
+                "targetDailyDose": 80,
                 "drugs": [
                     282755,
                     205304,
@@ -305,8 +305,8 @@
             },
             {
                 "code": "118463",
-                "minimumDailyDosage": 10,
-                "maximumDailyDosage": 40,
+                "minimumDailyDose": 10,
+                "targetDailyDose": 40,
                 "drugs": [
                     349373,
                     349401,
@@ -315,8 +315,8 @@
             },
             {
                 "code": "1091642",
-                "minimumDailyDosage": 40,
-                "maximumDailyDosage": 80,
+                "minimumDailyDose": 40,
+                "targetDailyDose": 80,
                 "drugs": [
                     1091646,
                     1091652
@@ -324,8 +324,8 @@
             },
             {
                 "code": "83515",
-                "minimumDailyDosage": 400,
-                "maximumDailyDosage": 800,
+                "minimumDailyDose": 400,
+                "targetDailyDose": 800,
                 "drugs": [
                     310139,
                     310140
@@ -346,8 +346,8 @@
         "medications": [
             {
                 "code": "1656339",
-                "minimumDailyDosage": [48,52],
-                "maximumDailyDosage": [194,206],
+                "minimumDailyDose": [48,52],
+                "targetDailyDose": [194,206],
                 "ingredients": [
                     1656328,
                     69749

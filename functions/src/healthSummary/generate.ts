@@ -1,21 +1,29 @@
+import fs from 'fs'
+import { Resvg, type ResvgRenderOptions } from '@resvg/resvg-js'
 import { jsPDF } from 'jspdf'
-import { type CellDef, type RowInput, type UserOptions } from 'jspdf-autotable'
-import svg2img from 'svg2img'
+import 'jspdf-autotable' /* eslint-disable-line */
+import { type CellDef, type RowInput, type UserOptions } from 'jspdf-autotable' /* eslint-disable-line */
 import { generateChartSvg } from './generateChart.js'
 import { generateSpeedometerSvg } from './generateSpeedometer.js'
+import { type HealthSummaryData } from './healthSummaryData.js'
+import { MedicationOptimizationCategory } from './medication.js'
+import { type Observation } from './vitals.js'
 
-export async function generateHealthSummary(
-  data: HealthSummaryData,
-): Promise<Uint8Array> {
+export function generateHealthSummary(data: HealthSummaryData): Buffer {
   const generator = new HealthSummaryPDFGenerator(data)
-  await generator.addFirstPage()
-  await generator.addSecondPage()
+  generator.addFirstPage()
+  generator.addSecondPage()
   return generator.finish()
+}
+
+enum FontStyle {
+  normal = 'normal',
+  bold = 'bold',
 }
 
 interface TextStyle {
   fontName: string
-  fontStyle: string
+  fontStyle: FontStyle
   fontWeight?: string
   fontSize: number
   color?: [number, number, number]
@@ -35,37 +43,44 @@ class HealthSummaryPDFGenerator {
     lightGray: [211, 211, 211] as [number, number, number],
   }
 
+  fontName = 'Open Sans'
   textStyles = {
     h1: {
-      fontName: 'Helvetica',
-      fontStyle: 'Bold',
+      fontName: this.fontName,
+      fontStyle: FontStyle.bold,
       fontSize: 18,
     } as TextStyle,
     h2: {
-      fontName: 'Helvetica',
-      fontStyle: '',
+      fontName: this.fontName,
+      fontStyle: FontStyle.normal,
       fontSize: 16,
       color: this.colors.primary,
     } as TextStyle,
     h3: {
-      fontName: 'Helvetica',
-      fontStyle: '',
+      fontName: this.fontName,
+      fontStyle: FontStyle.normal,
       fontSize: 15,
     } as TextStyle,
     body: {
-      fontName: 'Helvetica',
-      fontStyle: '',
+      fontName: this.fontName,
+      fontStyle: FontStyle.normal,
       fontSize: 10,
     } as TextStyle,
     bodyColored: {
-      fontName: 'Helvetica',
-      fontStyle: '',
+      fontName: this.fontName,
+      fontStyle: FontStyle.normal,
+      fontSize: 10,
+      color: this.colors.primary,
+    } as TextStyle,
+    bodyColoredBold: {
+      fontName: this.fontName,
+      fontStyle: FontStyle.bold,
       fontSize: 10,
       color: this.colors.primary,
     } as TextStyle,
     bodyBold: {
-      fontName: 'Helvetica',
-      fontStyle: 'Bold',
+      fontName: this.fontName,
+      fontStyle: FontStyle.bold,
       fontSize: 10,
     } as TextStyle,
   }
@@ -73,29 +88,39 @@ class HealthSummaryPDFGenerator {
   constructor(data: HealthSummaryData) {
     this.data = data
     this.doc = new jsPDF('p', 'pt', [this.pageWidth, this.pageHeight])
+    this.addFont(
+      'resources/fonts/OpenSans-Regular.ttf',
+      this.fontName,
+      FontStyle.normal,
+    )
+    this.addFont(
+      'resources/fonts/OpenSans-Bold.ttf',
+      this.fontName,
+      FontStyle.bold,
+    )
   }
 
-  async addFirstPage() {
+  addFirstPage() {
     this.addPageHeader()
-    await this.addMedicationSection()
-    await this.addVitalsSection()
-    await this.addSymptomsSurveySection()
+    this.addMedicationSection()
+    this.addVitalsSection()
+    this.addSymptomsSurveySection()
   }
 
-  async addSecondPage() {
+  addSecondPage() {
     this.addPage()
-    await this.addVitalsChartsSection()
+    this.addVitalsChartsSection()
   }
 
-  finish(): Uint8Array {
+  finish(): Buffer {
     return Buffer.from(this.doc.output('arraybuffer'))
   }
 
-  async addMedicationSection() {
+  addMedicationSection() {
     this.addSectionTitle('MEDICATIONS')
     this.moveDown(4)
 
-    await this.splitTwoColumns(
+    this.splitTwoColumns(
       (columnWidth) => {
         this.addText(
           'Current Medications',
@@ -118,8 +143,14 @@ class HealthSummaryPDFGenerator {
         )
         this.moveDown(this.textStyles.body.fontSize + 4)
         this.addText(
-          'Please discuss optimizing these medications with your care them at your next clinic appointment. Aim to make one positive change!',
+          'Please discuss optimizing these medications with your care them at your next clinic appointment.',
           this.textStyles.body,
+          columnWidth,
+        )
+        this.moveDown(4)
+        this.addText(
+          'Aim to make one positive change!',
+          this.textStyles.bodyColoredBold,
           columnWidth,
         )
         this.moveDown(this.textStyles.body.fontSize)
@@ -127,14 +158,14 @@ class HealthSummaryPDFGenerator {
     )
 
     function colorForCategory(
-      category: MedicationRequest['category'],
+      category: MedicationOptimizationCategory,
     ): string | undefined {
       switch (category) {
-        case 'targetDoseReached':
+        case MedicationOptimizationCategory.targetDoseReached:
           return 'rgb(0,255,0)'
-        case 'improvementAvailable':
+        case MedicationOptimizationCategory.improvementAvailable:
           return 'rgb(255,255,0)'
-        case 'notStarted':
+        case MedicationOptimizationCategory.notStarted:
           return 'rgb(211,211,211)'
       }
     }
@@ -157,30 +188,29 @@ class HealthSummaryPDFGenerator {
           title: 'Questions/Comments',
         },
       ],
-      ...this.data.medicationRequests.map((request, index) => [
+      ...this.data.medications.map((medication, index) => [
         {
-          title: '[ ] ' + request.name,
+          title: '[ ] ' + medication.name,
         },
         {
           styles: {
-            fillColor: colorForCategory(request.category),
+            fillColor: colorForCategory(medication.category),
           },
-          title: request.dose,
+          title: medication.dose,
         },
         {
           styles: {
-            fillColor: colorForCategory(request.category),
+            fillColor: colorForCategory(medication.category),
           },
-          title: request.targetDose,
+          title: medication.targetDose,
         },
         {
-          title: request.potentialPositiveChange,
+          title: medication.potentialPositiveChange,
         },
         {
           styles: {
             lineWidth: {
-              bottom:
-                index === this.data.medicationRequests.length - 1 ? 0.5 : 0,
+              bottom: index === this.data.medications.length - 1 ? 0.5 : 0,
               top: 0,
               left: 0.5,
               right: 0.5,
@@ -195,10 +225,10 @@ class HealthSummaryPDFGenerator {
     this.moveDown(this.textStyles.body.fontSize)
   }
 
-  async addVitalsSection() {
+  addVitalsSection() {
     this.addSectionTitle('VITALS OVER LAST 2 WEEKS')
     this.moveDown(4)
-    await this.splitTwoColumns(
+    this.splitTwoColumns(
       (columnWidth) => {
         const avgSystolic =
           this.data.vitals.systolicBloodPressure.reduce(
@@ -234,15 +264,15 @@ class HealthSummaryPDFGenerator {
         )
         this.moveDown(this.textStyles.body.fontSize)
       },
-      async (columnWidth) => { // eslint-disable-line
+      (columnWidth) => {
         this.addText(
-          `Current Weight: ${this.data.vitals.weight[0].value.toFixed(0)} lbs`,
+          `Current Weight: ${this.data.vitals.bodyWeight.at(0)?.value.toFixed(0) ?? '---'} lbs`,
           this.textStyles.body,
           columnWidth,
         )
         this.moveDown(4)
         this.addText(
-          `Last Week Average Weight: ${this.data.vitals.weight.reduce((acc, val) => acc + val.value, 0) / this.data.vitals.weight.length} lbs`,
+          `Last Week Average Weight: ${this.data.vitals.bodyWeight.reduce((acc, val) => acc + val.value, 0) / this.data.vitals.bodyWeight.length} lbs`,
           this.textStyles.body,
           columnWidth,
         )
@@ -257,13 +287,13 @@ class HealthSummaryPDFGenerator {
     )
   }
 
-  async addSymptomsSurveySection() {
+  addSymptomsSurveySection() {
     this.addSectionTitle('SYMPTOM SURVEY [KCCQ-12] REPORT')
     this.moveDown(4)
 
-    await this.splitTwoColumns(
-      async (columnWidth) => {
-        await this.addSpeedometer(columnWidth)
+    this.splitTwoColumns(
+      (columnWidth) => {
+        this.addSpeedometer(columnWidth)
       },
       (columnWidth) => {
         this.moveDown(this.textStyles.body.fontSize)
@@ -294,47 +324,83 @@ class HealthSummaryPDFGenerator {
       },
     )
 
-    const tableContent = [
+    const tableContent: CellDef[][] = [
       [
-        ' ',
-        'Overall Score',
-        'Physical Limits',
-        'Social Limits',
-        'Quality of Life',
-        'Heart Failure Symptoms',
-        'Dizziness',
+        {
+          title: ' ',
+        },
+        {
+          title: 'Overall Score',
+        },
+        {
+          title: 'Physical Limits',
+        },
+        {
+          title: 'Social Limits',
+        },
+        {
+          title: 'Quality of Life',
+        },
+        {
+          title: 'Heart Failure Symptoms',
+        },
+        {
+          title: 'Dizziness',
+        },
       ],
-      ...this.data.symptomScores.map((survey) => [
-        this.formatDate(survey.date),
-        String(survey.overall),
-        String(survey.physicalLimits),
-        String(survey.socialLimits),
-        String(survey.qualityOfLife),
-        String(survey.specificSymptoms),
-        String(survey.dizziness),
+      ...this.data.symptomScores.map((survey, index) => [
+        {
+          title: this.formatDate(survey.date),
+          styles: {
+            fontStyle:
+              index == this.data.symptomScores.length - 1 ? 'bold' : 'normal',
+          },
+        } as CellDef,
+        {
+          title: String(survey.overallScore),
+        },
+        {
+          title: String(survey.physicalLimitsScore),
+        },
+        {
+          title: String(survey.socialLimitsScore),
+        },
+        {
+          title: String(survey.qualityOfLifeScore),
+        },
+        {
+          title: String(survey.specificSymptomsScore),
+        },
+        {
+          title: String(survey.dizzinessScore),
+        },
       ]),
     ]
     this.addTable(tableContent)
     this.moveDown(this.textStyles.body.fontSize)
   }
 
-  async addVitalsChartsSection() {
+  addVitalsChartsSection() {
     this.addSectionTitle('DETAILS OF VITALS')
 
-    await this.splitTwoColumns(
-      async (columnWidth) => {
+    this.splitTwoColumns(
+      (columnWidth) => {
         this.addText('Weight', this.textStyles.bodyBold, columnWidth)
-        await this.addChart(this.data.vitals.weight, columnWidth)
+        this.addChart(
+          this.data.vitals.bodyWeight,
+          columnWidth,
+          this.data.vitals.dryWeight,
+        )
         const avgWeight =
-          this.data.vitals.weight.reduce(
+          this.data.vitals.bodyWeight.reduce(
             (acc, observation) => acc + observation.value,
             0,
-          ) / this.data.vitals.weight.length
-        const maxWeight = this.data.vitals.weight.reduce(
+          ) / this.data.vitals.bodyWeight.length
+        const maxWeight = this.data.vitals.bodyWeight.reduce(
           (acc, observation) => Math.max(acc, observation.value),
           0,
         )
-        const minWeight = this.data.vitals.weight.reduce(
+        const minWeight = this.data.vitals.bodyWeight.reduce(
           (acc, observation) => Math.min(acc, observation.value),
           Infinity,
         )
@@ -343,7 +409,7 @@ class HealthSummaryPDFGenerator {
             [' ', 'Current', '7-Day Average', 'Last Visit', 'Range'],
             [
               'Weight',
-              this.data.vitals.weight[0].value.toFixed(0),
+              this.data.vitals.bodyWeight.at(0)?.value.toFixed(0) ?? '---',
               avgWeight.toFixed(0),
               '-',
               (maxWeight - minWeight).toFixed(0),
@@ -353,15 +419,15 @@ class HealthSummaryPDFGenerator {
         )
         this.moveDown(this.textStyles.body.fontSize * 2)
       },
-      async (columnWidth) => {
+      (columnWidth) => {
         this.addText('Heart Rate', this.textStyles.bodyBold, columnWidth)
-        await this.addChart(this.data.vitals.heartRate, columnWidth)
+        this.addChart(this.data.vitals.heartRate, columnWidth)
         const values = [...this.data.vitals.heartRate].sort(
           (a, b) => a.value - b.value,
         )
-        const median = values[Math.floor(values.length / 2)]
-        const upperMedian = values[Math.floor(values.length * 0.75)]
-        const lowerMedian = values[Math.floor(values.length * 0.25)]
+        const median = values.at(Math.floor(values.length / 2))
+        const upperMedian = values.at(Math.floor(values.length * 0.75))
+        const lowerMedian = values.at(Math.floor(values.length * 0.25))
 
         const percentageBelow =
           (this.data.vitals.heartRate.filter(
@@ -380,8 +446,10 @@ class HealthSummaryPDFGenerator {
             [' ', 'Median', 'IQR', '% Under 50', '% Over 120'],
             [
               'Heart Rate',
-              median.value.toFixed(0),
-              (upperMedian.value - lowerMedian.value).toFixed(0),
+              median?.value.toFixed(0) ?? '---',
+              upperMedian && lowerMedian ?
+                (upperMedian.value - lowerMedian.value).toFixed(0)
+              : '---',
               percentageBelow.toFixed(0),
               percentageAbove.toFixed(0),
             ],
@@ -392,46 +460,50 @@ class HealthSummaryPDFGenerator {
       },
     )
 
-    await this.splitTwoColumns(
-      async (columnWidth) => {
+    this.splitTwoColumns(
+      (columnWidth) => {
         this.addText(
           'Systolic Blood Pressure',
           this.textStyles.bodyBold,
           columnWidth,
         )
-        await this.addChart(this.data.vitals.systolicBloodPressure, columnWidth)
+        this.addChart(this.data.vitals.systolicBloodPressure, columnWidth)
       },
-      async (columnWidth) => {
+      (columnWidth) => {
         this.addText(
           'Diastolic Blood Pressure',
           this.textStyles.bodyBold,
           columnWidth,
         )
-        await this.addChart(
-          this.data.vitals.diastolicBloodPressure,
-          columnWidth,
-        )
+        this.addChart(this.data.vitals.diastolicBloodPressure, columnWidth)
       },
     )
 
     const systolicValues = [...this.data.vitals.systolicBloodPressure].sort(
       (a, b) => a.value - b.value,
     )
-    const systolicMedian = systolicValues[Math.floor(systolicValues.length / 2)]
-    const systolicUpperMedian =
-      systolicValues[Math.floor(systolicValues.length * 0.75)]
-    const systolicLowerMedian =
-      systolicValues[Math.floor(systolicValues.length * 0.25)]
+    const systolicMedian = systolicValues.at(
+      Math.floor(systolicValues.length / 2),
+    )
+    const systolicUpperMedian = systolicValues.at(
+      Math.floor(systolicValues.length * 0.75),
+    )
+    const systolicLowerMedian = systolicValues.at(
+      Math.floor(systolicValues.length * 0.25),
+    )
 
     const diastolicValues = [...this.data.vitals.diastolicBloodPressure].sort(
       (a, b) => a.value - b.value,
     )
-    const diastolicMedian =
-      diastolicValues[Math.floor(diastolicValues.length / 2)]
-    const diastolicUpperMedian =
-      diastolicValues[Math.floor(diastolicValues.length * 0.75)]
-    const diastolicLowerMedian =
-      diastolicValues[Math.floor(diastolicValues.length * 0.25)]
+    const diastolicMedian = diastolicValues.at(
+      Math.floor(diastolicValues.length / 2),
+    )
+    const diastolicUpperMedian = diastolicValues.at(
+      Math.floor(diastolicValues.length * 0.75),
+    )
+    const diastolicLowerMedian = diastolicValues.at(
+      Math.floor(diastolicValues.length * 0.25),
+    )
 
     const percentageBelow =
       (this.data.vitals.systolicBloodPressure.filter(
@@ -449,15 +521,19 @@ class HealthSummaryPDFGenerator {
       [' ', 'Median', 'IQR', '% Under 90 mmHg', '% Over 180 mmHg'],
       [
         'Systolic',
-        systolicMedian.value.toFixed(0),
-        (systolicUpperMedian.value - systolicLowerMedian.value).toFixed(0),
+        systolicMedian?.value.toFixed(0) ?? '---',
+        systolicUpperMedian && systolicLowerMedian ?
+          (systolicUpperMedian.value - systolicLowerMedian.value).toFixed(0)
+        : '---',
         percentageBelow.toFixed(0),
         percentageAbove.toFixed(0),
       ],
       [
         'Diastolic',
-        diastolicMedian.value.toFixed(0),
-        (diastolicUpperMedian.value - diastolicLowerMedian.value).toFixed(0),
+        diastolicMedian?.value.toFixed(0) ?? '---',
+        diastolicUpperMedian && diastolicLowerMedian ?
+          (diastolicUpperMedian.value - diastolicLowerMedian.value).toFixed(0)
+        : '---',
         '-',
         '-',
       ],
@@ -476,12 +552,14 @@ class HealthSummaryPDFGenerator {
     this.moveDown(4)
     this.addText(this.data.name, this.textStyles.h1)
     this.moveDown(4)
-    this.addText(`DOB: ${this.formatDate(this.data.dateOfBirth)}`)
+    this.addText(
+      `DOB: ${this.data.dateOfBirth ? this.formatDate(this.data.dateOfBirth) : '---'}`,
+    )
     this.moveDown(4)
-    this.addText(`Provider: ${this.data.provider}`)
+    this.addText(`Provider: ${this.data.clinicianName}`)
     this.moveDown(4)
     this.addText(
-      `Next Appointment: ${this.formatDate(this.data.nextAppointment)}`,
+      `Next Appointment: ${this.data.nextAppointment ? this.formatDate(this.data.nextAppointment) : '---'}`,
     )
 
     const innerWidth = this.pageWidth - this.margins.left - this.margins.right
@@ -508,7 +586,7 @@ class HealthSummaryPDFGenerator {
     this.moveDown(4)
   }
 
-  async addChart(data: Observation[], maxWidth?: number) {
+  addChart(data: Observation[], maxWidth?: number, baseline?: number) {
     const width =
       maxWidth ?? this.pageWidth - this.cursor.x - this.margins.right
     const height = width * 0.75
@@ -516,37 +594,38 @@ class HealthSummaryPDFGenerator {
       data,
       { width: width, height: height },
       { top: 20, right: 40, bottom: 40, left: 40 },
+      baseline,
     )
-    const img = await this.convertSvgToPng(svg)
+    const img = this.convertSvgToPng(svg)
     this.addPNG(img, width)
   }
 
-  async addSpeedometer(maxWidth?: number) {
+  addSpeedometer(maxWidth?: number) {
     const width =
       maxWidth ?? this.pageWidth - this.cursor.x - this.margins.right
     const svg = generateSpeedometerSvg(this.data.symptomScores, width)
-    const img = await this.convertSvgToPng(svg)
+    const img = this.convertSvgToPng(svg)
     this.addPNG(img, width)
   }
 
-  async convertSvgToPng(svg: string): Promise<Buffer> {
-    return new Promise<Buffer>((resolve, reject) => {
-      svg2img(
-        svg,
-        {
-          resvg: {
-            shapeRendering: 2,
-            textRendering: 1,
-            imageRendering: 0,
-            fitTo: { mode: 'zoom', value: 5 },
-          },
-        },
-        (error, buffer) => {
-          if (error) reject(new Error(`Error converting SVG to PNG: ${error}`))
-          else resolve(buffer as Buffer)
-        },
-      )
-    })
+  convertSvgToPng(svg: string): Buffer {
+    const options: ResvgRenderOptions = {
+      font: {
+        loadSystemFonts: false,
+        fontDirs: ['resources/fonts'],
+        defaultFontFamily: this.fontName,
+        serifFamily: this.fontName,
+        sansSerifFamily: this.fontName,
+        cursiveFamily: this.fontName,
+        fantasyFamily: this.fontName,
+        monospaceFamily: this.fontName,
+      },
+      shapeRendering: 2,
+      textRendering: 1,
+      imageRendering: 0,
+      fitTo: { mode: 'zoom', value: 5 },
+    }
+    return new Resvg(svg, options).render().asPng()
   }
 
   addPNG(data: Buffer, maxWidth?: number) {
@@ -560,14 +639,20 @@ class HealthSummaryPDFGenerator {
   }
 
   addTable(rows: RowInput[], maxWidth?: number) {
+    const textStyle = this.textStyles.body
     const options: UserOptions = {
       margin: { left: this.cursor.x },
       theme: 'grid',
       startY: this.cursor.y,
       tableWidth: maxWidth ?? 'auto',
       body: rows,
+      styles: {
+        font: textStyle.fontName,
+        fontStyle: textStyle.fontStyle,
+        fontSize: textStyle.fontSize,
+      },
     }
-    ;(this.doc as any).autoTable(options) // eslint-disable-line
+      ; (this.doc as any).autoTable(options) // eslint-disable-line
     this.cursor.y = (this.doc as any).lastAutoTable.finalY // eslint-disable-line
   }
 
@@ -613,19 +698,19 @@ class HealthSummaryPDFGenerator {
     this.doc.line(start.x, start.y, end.x, end.y)
   }
 
-  async splitTwoColumns(
-    firstColumn: (width: number) => Promise<void> | void,
-    secondColumn: (width: number) => Promise<void> | void,
+  splitTwoColumns(
+    firstColumn: (width: number) => void,
+    secondColumn: (width: number) => void,
   ) {
     const cursorBeforeSplit = structuredClone(this.cursor)
     const splitMargin = 8
     const innerWidth = this.pageWidth - this.margins.left - this.margins.right
     const columnWidth = innerWidth / 2 - splitMargin
-    await firstColumn(columnWidth)
+    firstColumn(columnWidth)
     const firstColumnMaxY = this.cursor.y
     this.cursor = structuredClone(cursorBeforeSplit)
     this.cursor.x += columnWidth + splitMargin
-    await secondColumn(columnWidth)
+    secondColumn(columnWidth)
     this.cursor = {
       x: cursorBeforeSplit.x,
       y: Math.max(firstColumnMaxY, this.cursor.y),
@@ -642,5 +727,12 @@ class HealthSummaryPDFGenerator {
       month: '2-digit',
       day: '2-digit',
     })
+  }
+
+  addFont(file: string, name: string, style: FontStyle) {
+    const fontFileContent = fs.readFileSync(file).toString('base64')
+    const fileName = file.split('/').at(-1) ?? file
+    this.doc.addFileToVFS(fileName, fontFileContent)
+    this.doc.addFont(fileName, name, style.toString())
   }
 }

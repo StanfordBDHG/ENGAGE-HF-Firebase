@@ -6,17 +6,21 @@
 # SPDX-License-Identifier: MIT
 #
 
-name: Lint and Build
+name: Lint, Build and Test
 
 on: [pull_request]
 
 jobs:
   deploy:
-    name: Lint and Build Functions
+    name: Lint, Build and Test Functions
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          lfs: 'true'
+      - name: Git LFS Pull
+        run: git lfs pull
       - name: Use Node.js 22.x
         uses: actions/setup-node@v4
         with:
@@ -27,5 +31,18 @@ jobs:
         run: npm --prefix functions run lint
       - name: Build
         run: npm --prefix functions run build
+      - name: Test
+        id: test
+        run: npm --prefix functions run test
+      - name: Regenerate Test Results
+        id: test-regenerate
+        run: npm --prefix functions run test:regenerate
+        if: ${{ failure() && steps.test.conclusion == 'failure' }}
+      - name: Archive Regenerated Test Results
+        uses: actions/upload-artifact@v4
+        with:
+          name: test results
+          path: functions/src/tests/resources
+        if: ${{ failure() && steps.test-regenerate.conclusion == 'success' }}
     permissions:
       contents: read

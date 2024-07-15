@@ -1,0 +1,38 @@
+import admin from 'firebase-admin'
+import {
+  type CallableRequest,
+  onCall,
+  onRequest,
+} from 'firebase-functions/v2/https'
+import { Flags } from '../flags.js'
+import { RxNormService } from '../services/rxNormService.js'
+import { StaticDataService } from '../services/staticDataService.js'
+
+async function rebuildStaticData(userId: string | undefined) {
+  if (!Flags.isEmulator) {
+    if (!userId) throw new Error('User is not properly authenticated')
+
+    const user = await admin.auth().getUser(userId)
+    if (!user.customClaims?.admin) throw new Error('User is not an admin')
+  }
+  const service = new StaticDataService(admin.firestore(), new RxNormService())
+  await service.updateAll()
+}
+
+const rebuildStaticDataFunctionProduction = onCall(
+  async (request: CallableRequest<void>) => {
+    await rebuildStaticData(request.auth?.uid)
+    return 'Success'
+  },
+)
+
+const rebuildStaticDataFunctionDebug = onRequest(async (_, response) => {
+  await rebuildStaticData(undefined)
+  response.write('Success', 'utf8')
+  response.end()
+})
+
+export const rebuildStaticDataFunction =
+  Flags.isEmulator ?
+    rebuildStaticDataFunctionDebug
+  : rebuildStaticDataFunctionProduction
