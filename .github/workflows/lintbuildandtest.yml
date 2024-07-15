@@ -30,7 +30,7 @@ jobs:
       - name: Lint
         run: npm --prefix functions run lint
       - name: Build
-        run: npm --prefix functions run build
+        run: npm --prefix functions run build:clean
       - name: Test
         id: test
         run: npm --prefix functions run test:coverage
