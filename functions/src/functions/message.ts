@@ -10,13 +10,13 @@ import { https } from 'firebase-functions'
 import { type CallableRequest, onCall } from 'firebase-functions/v2/https'
 import { FirestoreService } from '../services/database/firestoreService'
 
-export interface DidTapMessageInput {
+export interface DismissMessageInput {
   messageId?: string
   didPerformAction?: boolean
 }
 
-export const didDismissMessageFunction = onCall(
-  async (request: CallableRequest<DidTapMessageInput>) => {
+export const dismissMessageFunction = onCall(
+  async (request: CallableRequest<DismissMessageInput>) => {
     if (!request.auth?.uid)
       throw new https.HttpsError(
         'unauthenticated',
@@ -30,7 +30,7 @@ export const didDismissMessageFunction = onCall(
 
     try {
       const service = new FirestoreService()
-      await service.didDismissMessage(
+      await service.dismissMessage(
         userId,
         messageId,
         didPerformAction ?? false,

@@ -178,7 +178,7 @@ export class FirestoreService implements DatabaseService {
 
   // Users - Messages
 
-  async didDismissMessage(
+  async dismissMessage(
     userId: string,
     messageId: string,
     didPerformAction: boolean,

@@ -29,7 +29,7 @@ describe('message', () => {
       isDismissable: true,
     }
     await firestore.doc('users/mockUser/messages/0').set(message)
-    await service.didDismissMessage('mockUser', '0', true)
+    await service.dismissMessage('mockUser', '0', true)
     const updatedMessage = await firestore
       .doc('users/mockUser/messages/0')
       .get()
@@ -47,7 +47,7 @@ describe('message', () => {
     }
     await firestore.doc('users/mockUser/messages/0').set(message)
     try {
-      await service.didDismissMessage('mockUser', '0', true)
+      await service.dismissMessage('mockUser', '0', true)
       assert.fail('Message should not be dismissable.')
     } catch (error) {
       expect(error).to.deep.equal(

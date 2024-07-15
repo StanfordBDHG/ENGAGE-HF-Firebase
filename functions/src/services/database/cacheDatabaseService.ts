@@ -162,12 +162,12 @@ export class CacheDatabaseService implements DatabaseService {
 
   // Users - Messages
 
-  async didDismissMessage(
+  async dismissMessage(
     userId: string,
     messageId: string,
     didPerformAction: boolean,
   ) {
-    return this.databaseService.didDismissMessage(
+    return this.databaseService.dismissMessage(
       userId,
       messageId,
       didPerformAction,
