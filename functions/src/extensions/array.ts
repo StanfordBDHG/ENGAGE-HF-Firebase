@@ -9,39 +9,41 @@ export function average(values: number[]): number | undefined {
 // Median
 
 export function median(values: number[]): number | undefined {
-  return presortedMedian([...values].sort((a, b) => a - b))
+  return presortedPercentile(
+    [...values].sort((a, b) => a - b),
+    0.5,
+  )
 }
 
 export function presortedMedian(values: number[]): number | undefined {
+  return presortedPercentile(values, 0.5)
+}
+
+export function percentile(
+  values: number[],
+  percentile: number,
+): number | undefined {
+  return presortedPercentile(
+    [...values].sort((a, b) => a - b),
+    percentile,
+  )
+}
+
+export function presortedPercentile(
+  values: number[],
+  percentile: number,
+): number | undefined {
   if (values.length === 0) return undefined
-  const middle = Math.floor(values.length * 0.5)
-  return values.length % 2 === 0 ?
-      (values[middle - 1] + values[middle]) * 0.5
-    : values[middle]
-}
+  const index = values.length * percentile
+  const lowerIndex = Math.floor(index)
+  const upperIndex = Math.ceil(index)
 
-export function upperMedian(values: number[]): number | undefined {
-  return presortedUpperMedian([...values].sort((a, b) => a - b))
-}
-
-export function presortedUpperMedian(values: number[]): number | undefined {
-  if (values.length === 0) return undefined
-  const middle = Math.floor(values.length * 0.75)
-  return values.length % 2 === 0 ?
-      (values[middle - 1] + values[middle]) * 0.75
-    : values[middle]
-}
-
-export function lowerMedian(values: number[]): number | undefined {
-  return presortedLowerMedian([...values].sort((a, b) => a - b))
-}
-
-export function presortedLowerMedian(values: number[]): number | undefined {
-  if (values.length === 0) return undefined
-  const middle = Math.floor(values.length * 0.25)
-  return values.length % 2 === 0 ?
-      (values[middle - 1] + values[middle]) * 0.25
-    : values[middle]
+  if (lowerIndex === upperIndex) {
+    return values[lowerIndex]
+  } else {
+    const weight = index - lowerIndex
+    return values[lowerIndex] * (1 - weight) + values[upperIndex] * weight
+  }
 }
 
 // Percentage
