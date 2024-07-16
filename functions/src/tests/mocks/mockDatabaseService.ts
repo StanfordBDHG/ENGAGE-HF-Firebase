@@ -1234,6 +1234,16 @@ export class MockDatabaseService implements DatabaseService {
     )
   }
 
+  // Methods - Users - Messages
+
+  async dismissMessage(
+    userId: string,
+    messageId: string,
+    didPerformAction: boolean,
+  ): Promise<void> {
+    // TODO
+  }
+
   // Methods - Users - Observations
 
   async getBloodPressureObservations(

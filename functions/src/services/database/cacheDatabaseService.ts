@@ -160,6 +160,20 @@ export class CacheDatabaseService implements DatabaseService {
     )
   }
 
+  // Users - Messages
+
+  async dismissMessage(
+    userId: string,
+    messageId: string,
+    didPerformAction: boolean,
+  ) {
+    return this.databaseService.dismissMessage(
+      userId,
+      messageId,
+      didPerformAction,
+    )
+  }
+
   // Users - Observations
 
   async getBloodPressureObservations(userId: string) {

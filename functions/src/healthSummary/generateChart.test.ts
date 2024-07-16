@@ -13,8 +13,6 @@ import { generateChartSvg } from './generateChart.js'
 import { mockHealthSummaryData } from '../tests/mocks/healthSummaryData.js'
 import { TestFlags } from '../tests/testFlags.js'
 
-/* eslint-disable @typescript-eslint/no-unnecessary-condition */
-
 describe('generateChart', () => {
   it('should generate the same chart on mock data', () => {
     const inputData = mockHealthSummaryData()
