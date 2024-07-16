@@ -47,13 +47,12 @@ class MockFirestoreTransaction {
     ;(reference as any).set(data)
   }
 
-<<<<<<< HEAD
   update(reference: MockFirestoreRef, data: any) {
     ;(reference as any).update(data)
-=======
+  }
+  
   delete(reference: MockFirestoreRef) {
     ;(reference as any).delete()
->>>>>>> 82a1cde (Add admins and organizations to update script)
   }
 }
 
@@ -124,17 +123,16 @@ class MockFirestoreDocRef extends MockFirestoreRef {
     ] = data
   }
 
-<<<<<<< HEAD
   update(data: any) {
     const value = this.get().data()
     this.set({ ...value, ...data })
-=======
+  }
+  
   delete() {
     const pathComponents = this.path.split('/')
     const collectionPath = pathComponents.slice(0, -1).join('/')
     delete this.firestore.collections[collectionPath][
       pathComponents[pathComponents.length - 1]
     ]
->>>>>>> 82a1cde (Add admins and organizations to update script)
   }
 }
