@@ -7,6 +7,7 @@
 //
 
 import { Recommender } from './recommender.js'
+import { median } from '../../../extensions/array.js'
 import {
   MedicationRecommendationCategory,
   type MedicationRecommendation,
@@ -61,12 +62,14 @@ export class BetaBlockerRecommender extends Recommender {
         break
     }
 
-    const medianSystolic = input.vitals.systolicBloodPressure.at(
-      input.vitals.systolicBloodPressure.length / 2,
-    )?.value
-    const medianHeartRate = input.vitals.heartRate.at(
-      input.vitals.heartRate.length / 2,
-    )?.value
+    const medianSystolic = median(
+      input.vitals.systolicBloodPressure.map(
+        (observation) => observation.value,
+      ),
+    )
+    const medianHeartRate = median(
+      input.vitals.heartRate.map((observation) => observation.value),
+    )
     if (
       !medianSystolic ||
       medianSystolic < 100 ||
