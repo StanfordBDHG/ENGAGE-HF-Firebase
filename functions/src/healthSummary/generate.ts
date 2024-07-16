@@ -16,9 +16,8 @@ import { generateSpeedometerSvg } from './generateSpeedometer.js'
 import {
   average,
   percentage,
-  presortedLowerMedian,
   presortedMedian,
-  presortedUpperMedian,
+  presortedPercentile,
 } from '../extensions/array.js'
 import { type HealthSummaryData } from '../models/healthSummaryData.js'
 import { MedicationRecommendationCategory } from '../models/medicationRecommendation.js'
@@ -437,8 +436,8 @@ class HealthSummaryPDFGenerator {
         const values = [
           ...this.data.vitals.heartRate.map((observation) => observation.value),
         ].sort((a, b) => a - b)
-        const upperMedian = presortedUpperMedian(values)
-        const lowerMedian = presortedLowerMedian(values)
+        const upperMedian = presortedPercentile(values, 0.75)
+        const lowerMedian = presortedPercentile(values, 0.25)
         this.addTable(
           [
             [' ', 'Median', 'IQR', '% Under 50', '% Over 120'],
@@ -482,16 +481,16 @@ class HealthSummaryPDFGenerator {
         (observation) => observation.value,
       ),
     ].sort((a, b) => a - b)
-    const systolicUpperMedian = presortedUpperMedian(systolicValues)
-    const systolicLowerMedian = presortedLowerMedian(systolicValues)
+    const systolicUpperMedian = presortedPercentile(systolicValues, 0.75)
+    const systolicLowerMedian = presortedPercentile(systolicValues, 0.25)
 
     const diastolicValues = [
       ...this.data.vitals.diastolicBloodPressure.map(
         (observation) => observation.value,
       ),
     ].sort((a, b) => a - b)
-    const diastolicUpperMedian = presortedUpperMedian(diastolicValues)
-    const diastolicLowerMedian = presortedLowerMedian(diastolicValues)
+    const diastolicUpperMedian = presortedPercentile(diastolicValues, 0.75)
+    const diastolicLowerMedian = presortedPercentile(diastolicValues, 0.25)
 
     this.addTable([
       [' ', 'Median', 'IQR', '% Under 90 mmHg', '% Over 180 mmHg'],
