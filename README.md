@@ -201,7 +201,7 @@ This data is used to display messages to the patient describing recent changes i
 
 #### Message types
 
-The following list describes all different types a message could have. Expiration of messages should only be handled by the server, except for triggering the `didDismissMessage` Firebase function call that adds a completion date when the message is dismissible and has been dismissed by the user. A client doesn't need to know about the `type` property, since we would otherwise need to check whether a new message type is supported by a client. It may also sort out message types unknown for the client's version.
+The following list describes all different types a message could have. Expiration of messages should only be handled by the server, except for triggering the `dismissMessage` Firebase function call that adds a completion date when the message is dismissible and has been dismissed by the user. A client doesn't need to know about the `type` property, since we would otherwise need to check whether a new message type is supported by a client. It may also sort out message types unknown for the client's version.
 
 |Type|Trigger|Expiration|Action|
 |-|-|-|-|

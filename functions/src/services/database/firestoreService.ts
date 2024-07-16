@@ -184,7 +184,7 @@ export class FirestoreService implements DatabaseService {
     didPerformAction: boolean,
   ): Promise<void> {
     console.log(
-      `didDismissMessage for user/${userId}/message/${messageId} with didPerformAction ${didPerformAction}`,
+      `dismissMessage for user/${userId}/message/${messageId} with didPerformAction ${didPerformAction}`,
     )
     await this.firestore.runTransaction(async (transaction) => {
       const messageRef = this.firestore.doc(
