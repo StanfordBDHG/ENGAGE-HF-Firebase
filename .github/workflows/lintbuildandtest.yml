@@ -34,6 +34,13 @@ jobs:
       - name: Test
         id: test
         run: npm --prefix functions run test:coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          fail_ci_if_error: true
+          files: ./functions/coverage/lcov.info
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
       - name: Regenerate Test Results
         id: test-regenerate
         run: npm --prefix functions run test:regenerate
