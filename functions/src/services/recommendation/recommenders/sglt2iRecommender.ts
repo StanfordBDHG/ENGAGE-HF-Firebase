@@ -7,6 +7,7 @@
 //
 
 import { Recommender } from './recommender.js'
+import { median } from '../../../extensions/array.js'
 import {
   MedicationRecommendationCategory,
   type MedicationRecommendation,
@@ -38,9 +39,12 @@ export class Sglt2iRecommender extends Recommender {
         MedicationRecommendationCategory.morePatientObservationsRequired,
       )
 
-    const medianSystolic = input.vitals.systolicBloodPressure.at(
-      input.vitals.systolicBloodPressure.length / 2,
-    )?.value
+    const medianSystolic = median(
+      input.vitals.systolicBloodPressure.map(
+        (observation) => observation.value,
+      ),
+    )
+
     if (medianSystolic && medianSystolic < 100)
       return this.createRecommendation(
         currentMedication,
@@ -88,9 +92,11 @@ export class Sglt2iRecommender extends Recommender {
         MedicationRecommendationCategory.morePatientObservationsRequired,
       )
 
-    const medianSystolic = input.vitals.systolicBloodPressure.at(
-      input.vitals.systolicBloodPressure.length / 2,
-    )?.value
+    const medianSystolic = median(
+      input.vitals.systolicBloodPressure.map(
+        (observation) => observation.value,
+      ),
+    )
 
     if (medianSystolic && medianSystolic < 100)
       return this.createRecommendation(

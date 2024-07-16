@@ -50,8 +50,8 @@ describe('generateHealthSummary', () => {
     inputData.vitals.systolicBloodPressure = []
     inputData.vitals.diastolicBloodPressure = []
     inputData.vitals.heartRate = []
-    inputData.vitals.bodyWeight = [{ date: new Date('2000-01-01'), value: NaN }]
-    inputData.vitals.dryWeight = { date: new Date('2000-01-01'), value: NaN }
+    inputData.vitals.bodyWeight = []
+    inputData.vitals.dryWeight = undefined
     const actualData = generateHealthSummary(inputData)
     const expectedPath = 'src/tests/resources/emptyHealthSummary.pdf'
     if (TestFlags.regenerateValues) {

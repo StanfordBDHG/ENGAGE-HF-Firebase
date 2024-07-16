@@ -5,7 +5,7 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import { HealthSummaryData } from '../../models/healthSummaryData.js'
+import { type HealthSummaryData } from '../../models/healthSummaryData.js'
 import { MedicationRecommendationCategory } from '../../models/medicationRecommendation.js'
 
 export function mockHealthSummaryData(): HealthSummaryData {
