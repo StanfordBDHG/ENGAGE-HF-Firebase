@@ -24,5 +24,5 @@ export interface UserMessage {
   title: LocalizedText
   description?: LocalizedText
   action?: string
-  isDismissable: boolean
+  isDismissible: boolean
 }

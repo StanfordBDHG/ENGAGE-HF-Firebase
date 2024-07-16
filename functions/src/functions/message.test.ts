@@ -26,7 +26,7 @@ describe('message', () => {
       title: 'Medication Change',
       description: 'You have a new medication!',
       action: 'medications',
-      isDismissable: true,
+      isDismissible: true,
     }
     await firestore.doc('users/mockUser/messages/0').set(message)
     await service.dismissMessage('mockUser', '0', true)
@@ -43,7 +43,7 @@ describe('message', () => {
       title: 'Upcoming appointment',
       description: 'You have an upcoming appointment!',
       action: 'healthSummary',
-      isDismissable: false,
+      isDismissible: false,
     }
     await firestore.doc('users/mockUser/messages/0').set(message)
     try {

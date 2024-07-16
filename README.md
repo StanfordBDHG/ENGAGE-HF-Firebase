@@ -197,7 +197,7 @@ This data is used to display messages to the patient describing recent changes i
 |title|LocalizedText|e.g. "Watch Welcome Video in Education Page."|May be localized.|
 |description|optional LocalizedText|e.g. "The video shows how you will be able to use this app."|May be localized.|
 |action|optional string|e.g. "videoSections/1/videos/0"|See "Message types".|
-|isDismissable|boolean|true,false|Whether or not the message is dismissable by the user or is solely controlled by the server.|
+|isDismissible|boolean|true,false|Whether or not the message is dismissable by the user or is solely controlled by the server.|
 
 #### Message types
 

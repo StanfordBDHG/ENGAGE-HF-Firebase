@@ -195,7 +195,7 @@ export class FirestoreService implements DatabaseService {
         throw new https.HttpsError('not-found', 'Message not found.')
 
       const messageContent = message.data() as UserMessage
-      if (!messageContent.isDismissable)
+      if (!messageContent.isDismissible)
         throw new https.HttpsError(
           'invalid-argument',
           'Message is not dismissable.',
