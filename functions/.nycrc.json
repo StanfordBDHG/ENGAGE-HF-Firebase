@@ -1,0 +1,21 @@
+{
+  "all": true,
+  "check-coverage": true,
+  "extension": [
+    ".js",
+    ".cjs",
+    ".mjs"
+  ],
+  "include": [
+    "lib"
+  ],
+  "exclude": [
+    "lib/tests",
+    "**/*.test.js",
+    "**/*.no-coverage.js"
+  ],
+  "branches": 45,
+  "lines": 45,
+  "functions": 45,
+  "statements": 45
+}
