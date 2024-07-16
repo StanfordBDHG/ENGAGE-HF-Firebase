@@ -198,7 +198,7 @@ export class FirestoreService implements DatabaseService {
       if (!messageContent.isDismissible)
         throw new https.HttpsError(
           'invalid-argument',
-          'Message is not dismissable.',
+          'Message is not dismissible.',
         )
 
       transaction.update(messageRef, {

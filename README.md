@@ -197,11 +197,11 @@ This data is used to display messages to the patient describing recent changes i
 |title|LocalizedText|e.g. "Watch Welcome Video in Education Page."|May be localized.|
 |description|optional LocalizedText|e.g. "The video shows how you will be able to use this app."|May be localized.|
 |action|optional string|e.g. "videoSections/1/videos/0"|See "Message types".|
-|isDismissible|boolean|true,false|Whether or not the message is dismissable by the user or is solely controlled by the server.|
+|isDismissible|boolean|true,false|Whether or not the message is dismissible by the user or is solely controlled by the server.|
 
 #### Message types
 
-The following list describes all different types a message could have. Expiration of messages should only be handled by the server, except for triggering the `didDismissMessage` Firebase function call that adds a completion date when the message is dismissable and has been dismissed by the user. A client doesn't need to know about the `type` property, since we would otherwise need to check whether a new message type is supported by a client. It may also sort out message types unknown for the client's version.
+The following list describes all different types a message could have. Expiration of messages should only be handled by the server, except for triggering the `didDismissMessage` Firebase function call that adds a completion date when the message is dismissible and has been dismissed by the user. A client doesn't need to know about the `type` property, since we would otherwise need to check whether a new message type is supported by a client. It may also sort out message types unknown for the client's version.
 
 |Type|Trigger|Expiration|Action|
 |-|-|-|-|

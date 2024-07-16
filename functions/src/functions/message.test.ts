@@ -48,10 +48,10 @@ describe('message', () => {
     await firestore.doc('users/mockUser/messages/0').set(message)
     try {
       await service.dismissMessage('mockUser', '0', true)
-      assert.fail('Message should not be dismissable.')
+      assert.fail('Message should not be dismissible.')
     } catch (error) {
       expect(error).to.deep.equal(
-        new https.HttpsError('invalid-argument', 'Message is not dismissable.'),
+        new https.HttpsError('invalid-argument', 'Message is not dismissible.'),
       )
     }
   })
