@@ -17,9 +17,5 @@
   "branches": 45,
   "lines": 45,
   "functions": 45,
-  "statements": 45,
-  "reporter": [
-    "lcov",
-    "text-summary"
-  ]
+  "statements": 45
 }
