@@ -30,7 +30,7 @@ export class DefaultContraindicationService implements ContraindicationService {
   /// Medication class contraindications
   /// - Key: SNOMED CT code used in FHIRAllergyIntolerance
   /// - Value: List of Medication references
-  private readonly medicationContraindications = new Map<
+  private readonly snomedMedicationContraindications = new Map<
     string,
     MedicationReference[]
   >([
@@ -43,7 +43,7 @@ export class DefaultContraindicationService implements ContraindicationService {
   /// Medication class contraindications
   /// - Key: SNOMED CT code used in FHIRAllergyIntolerance
   /// - Value: List of MedicationClass references
-  private readonly medicationClassContraindications = new Map<
+  private readonly snomedMedicationClassContraindications = new Map<
     string,
     MedicationClassReference[]
   >([
@@ -99,36 +99,56 @@ export class DefaultContraindicationService implements ContraindicationService {
     contraindications: FHIRAllergyIntolerance[],
     medicationReference: MedicationReference,
   ): ContraindicationCategory {
-    return this.checkAll(contraindications, CodingSystem.snomedCt, (code) => {
-      const references = this.medicationContraindications.get(code) ?? []
-      return references.some((reference) => reference === medicationReference)
-    })
+    const rxNormCode = medicationReference.split('/').at(-1)
+    return this.checkAll(
+      contraindications,
+      [CodingSystem.snomedCt, CodingSystem.rxNorm],
+      (system, code) => {
+        switch (system) {
+          case CodingSystem.snomedCt:
+            return (
+              this.snomedMedicationContraindications
+                .get(code)
+                ?.includes(medicationReference) ?? false
+            )
+          case CodingSystem.rxNorm:
+            return code === rxNormCode
+          default:
+            return false
+        }
+      },
+    )
   }
 
   checkMedicationClass(
     contraindications: FHIRAllergyIntolerance[],
     medicationClassReference: MedicationClassReference,
   ): ContraindicationCategory {
-    return this.checkAll(contraindications, CodingSystem.snomedCt, (code) => {
-      const references = this.medicationClassContraindications.get(code) ?? []
-      return references.some(
-        (reference) => reference === medicationClassReference,
-      )
-    })
+    return this.checkAll(
+      contraindications,
+      [CodingSystem.snomedCt],
+      (_, code) => {
+        return (
+          this.snomedMedicationClassContraindications
+            .get(code)
+            ?.includes(medicationClassReference) ?? false
+        )
+      },
+    )
   }
 
   // Helpers
 
   private checkAll(
     contraindications: FHIRAllergyIntolerance[],
-    system: CodingSystem,
-    check: (code: string) => boolean,
+    systems: CodingSystem[],
+    check: (system: CodingSystem, code: string) => boolean,
   ): ContraindicationCategory {
     const categories = contraindications.map((contraindication) => {
-      if (!this.check(contraindication, system, check))
+      if (!this.check(contraindication, systems, check))
         return ContraindicationCategory.none
       if (
-        contraindication.criticality == FHIRAllergyIntoleranceCriticality.high
+        contraindication.criticality === FHIRAllergyIntoleranceCriticality.high
       )
         return ContraindicationCategory.severeAllergyIntolerance
       return this.category(contraindication.type)
@@ -144,14 +164,16 @@ export class DefaultContraindicationService implements ContraindicationService {
 
   private check(
     contraindication: FHIRAllergyIntolerance,
-    system: CodingSystem,
-    check: (code: string) => boolean,
+    systems: CodingSystem[],
+    check: (system: CodingSystem, code: string) => boolean,
   ): boolean {
-    const codes = this.fhirService.extractCodes(contraindication, {
-      system: system,
-    })
-    for (const code of codes) {
-      if (check(code)) return true
+    for (const system of systems) {
+      const codes = this.fhirService.extractCodes(contraindication.code, {
+        system: system,
+      })
+      for (const code of codes) {
+        if (check(system, code)) return true
+      }
     }
     return false
   }

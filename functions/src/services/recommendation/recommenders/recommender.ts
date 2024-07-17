@@ -6,11 +6,13 @@
 // SPDX-License-Identifier: MIT
 //
 
+import { median } from '../../../extensions/array.js'
 import {
   type MedicationRecommendationCategory,
   type MedicationRecommendation,
 } from '../../../models/medicationRecommendation.js'
 import { type MedicationRequestContext } from '../../../models/medicationRequestContext.js'
+import { type Observation } from '../../../models/vitals.js'
 import {
   type MedicationClassReference,
   type MedicationReference,
@@ -49,9 +51,12 @@ export abstract class Recommender {
     return [
       {
         currentMedication: currentMedication?.requestReference,
-        recommendedMedication: {
-          reference: recommendedMedication,
-        },
+        recommendedMedication:
+          recommendedMedication ?
+            {
+              reference: recommendedMedication,
+            }
+          : undefined,
         category,
       },
     ]
@@ -96,6 +101,20 @@ export abstract class Recommender {
         (medicationReference) =>
           request.medicationClassReference?.reference === medicationReference,
       ),
+    )
+  }
+
+  protected medianValue(observations: Observation[]): number | undefined {
+    if (observations.length < 3) return undefined
+    return median(observations.map((observation) => observation.value)) ?? 0
+  }
+
+  protected observationsInLastTwoWeeks(
+    observations: Observation[],
+  ): Observation[] {
+    const twoWeeksAgo = new Date().getTime() - 1000 * 60 * 60 * 24 * 14
+    return observations.filter(
+      (observation) => observation.date.getTime() >= twoWeeksAgo,
     )
   }
 }

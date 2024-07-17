@@ -50,4 +50,9 @@ export enum MedicationReference {
   losartan = 'medications/203160',
   sotagliflozin = 'medications/54283',
   sacubitrilValsartan = 'medications/1656339',
+  bisoprolol = 'medications/19484',
+}
+
+export enum DrugReference {
+  bisoprolol5 = 'medications/19484/drugs/854904',
 }

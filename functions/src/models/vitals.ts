@@ -7,6 +7,7 @@
 //
 
 import { type FHIRSimpleQuantity } from './fhir/baseTypes'
+import { type QuantityUnit } from '../services/fhir/quantityUnit'
 
 export interface Vitals {
   systolicBloodPressure: Observation[]
@@ -14,15 +15,16 @@ export interface Vitals {
   heartRate: Observation[]
   bodyWeight: Observation[]
 
-  estimatedGlomerularFiltrationRate?: Observation
-  potassium?: Observation
   creatinine?: Observation
   dryWeight?: Observation
+  estimatedGlomerularFiltrationRate?: Observation
+  potassium?: Observation
 }
 
 export interface Observation {
   date: Date
   value: number
+  unit: QuantityUnit
 }
 
 export interface QuantityObservation {

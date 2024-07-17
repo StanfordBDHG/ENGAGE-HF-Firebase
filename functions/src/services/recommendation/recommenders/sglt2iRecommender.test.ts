@@ -10,17 +10,15 @@ import { describe, it } from 'mocha'
 import { Sglt2iRecommender } from './sglt2iRecommender.js'
 import { MockContraindicationService } from '../../../tests/mocks/contraindicationService.js'
 import { mockHealthSummaryData } from '../../../tests/mocks/healthSummaryData.js'
+import { ContraindicationCategory } from '../../contraindication/contraindicationService.js'
 import { FhirService } from '../../fhir/fhirService.js'
 import { type RecommendationInput } from '../recommendationService.js'
 
 describe('Sglt2iRecommender', () => {
+  const contraindicationCategory = ContraindicationCategory.none
   const contraindicationService = new MockContraindicationService(
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
+    (_, __) => contraindicationCategory,
+    (_, __) => contraindicationCategory,
   )
   const fhirService = new FhirService()
   const recommender = new Sglt2iRecommender(

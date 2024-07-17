@@ -15,6 +15,12 @@ export class QuantityUnit {
   static readonly kg = new QuantityUnit('kg', 'kg')
   static readonly bpm = new QuantityUnit('/min', 'beats/minute')
   static readonly mmHg = new QuantityUnit('mm[Hg]', 'mmHg')
+  static readonly mg_dL = new QuantityUnit('mg/dL', 'mg/dL')
+  static readonly mEq_L = new QuantityUnit('meq/L', 'mEq/L')
+  static readonly mL_min_173m2 = new QuantityUnit(
+    'mL/min/{1.73_m2}',
+    'mL/min/1.73m2',
+  )
 
   static readonly allValues = [
     QuantityUnit.mg,
@@ -22,6 +28,9 @@ export class QuantityUnit {
     QuantityUnit.kg,
     QuantityUnit.bpm,
     QuantityUnit.mmHg,
+    QuantityUnit.mg_dL,
+    QuantityUnit.mEq_L,
+    QuantityUnit.mL_min_173m2,
   ]
 
   // Properties

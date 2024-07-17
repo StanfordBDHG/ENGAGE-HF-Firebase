@@ -32,7 +32,7 @@ describe('DefaultContraindicationService', () => {
     const contraindication = createFHIRAllergyIntolerance(
       FHIRAllergyIntoleranceType.allergy,
       FHIRAllergyIntoleranceCriticality.high,
-      '293472002',
+      '371627004',
       CodingSystem.snomedCt,
     )
     const result = contraindicationService.checkMedicationClass(
@@ -46,7 +46,7 @@ describe('DefaultContraindicationService', () => {
     const contraindication = createFHIRAllergyIntolerance(
       FHIRAllergyIntoleranceType.allergy,
       FHIRAllergyIntoleranceCriticality.high,
-      '293472002',
+      '471811000124106',
       CodingSystem.snomedCt,
     )
     const result = contraindicationService.checkMedication(

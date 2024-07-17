@@ -18,7 +18,11 @@ import {
   type HealthSummaryData,
 } from '../models/healthSummaryData.js'
 import { type SymptomScores } from '../models/symptomScores.js'
-import { type Vitals } from '../models/vitals.js'
+import {
+  type Observation,
+  type QuantityObservation,
+  type Vitals,
+} from '../models/vitals.js'
 
 export class HealthSummaryService {
   // Properties
@@ -66,12 +70,25 @@ export class HealthSummaryService {
       vitals: {
         ...vitals,
         dryWeight:
-          (() => {
-            const dryWeight = patient.content?.dryWeight
-            if (!dryWeight) return undefined
-            const value = QuantityUnit.lbs.valueOf(dryWeight.valueQuantity)
-            return value ? { date: dryWeight.date, value } : undefined
-          })() ?? vitals.dryWeight,
+          this.convertObservation(
+            patient.content?.dryWeight,
+            QuantityUnit.lbs,
+          ) ?? vitals.dryWeight,
+        potassium:
+          this.convertObservation(
+            patient.content?.potassium,
+            QuantityUnit.mEq_L,
+          ) ?? vitals.potassium,
+        creatinine:
+          this.convertObservation(
+            patient.content?.creatinine,
+            QuantityUnit.mg_dL,
+          ) ?? vitals.creatinine,
+        estimatedGlomerularFiltrationRate:
+          this.convertObservation(
+            patient.content?.estimatedGlomerularFiltrationRate,
+            QuantityUnit.mL_min_173m2,
+          ) ?? vitals.estimatedGlomerularFiltrationRate,
       },
       symptomScores: symptomScores,
     }
@@ -163,6 +180,17 @@ export class HealthSummaryService {
   }
 
   // Helpers
+
+  private convertObservation(
+    quantityObservation: QuantityObservation | undefined,
+    unit: QuantityUnit,
+  ): Observation | undefined {
+    if (!quantityObservation) return undefined
+    const value = unit.valueOf(quantityObservation.valueQuantity)
+    return value ?
+        { date: quantityObservation.date, value, unit: unit }
+      : undefined
+  }
 
   private async compactMapDocuments<T>(
     documents: Promise<Array<DatabaseDocument<T>>>,
