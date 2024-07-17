@@ -8,7 +8,7 @@
 
 import { expect } from 'chai'
 import { describe, it } from 'mocha'
-import { BetaBlockerRecommender } from './betaBlockersRecommender.js'
+import { BetaBlockerRecommender } from './betaBlockerRecommender.js'
 import { MedicationRecommendationCategory } from '../../../models/medicationRecommendation.js'
 import { type MedicationRequestContext } from '../../../models/medicationRequestContext.js'
 import { MockContraindicationService } from '../../../tests/mocks/contraindicationService.js'
@@ -25,7 +25,7 @@ import { FhirService } from '../../fhir/fhirService.js'
 import { QuantityUnit } from '../../fhir/quantityUnit.js'
 import { type RecommendationInput } from '../recommendationService.js'
 
-describe('BetaBlockersRecommender', () => {
+describe('BetaBlockerRecommender', () => {
   let medicationContraindication: (
     reference: MedicationReference,
   ) => ContraindicationCategory
