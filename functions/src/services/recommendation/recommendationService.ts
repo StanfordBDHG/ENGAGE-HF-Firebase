@@ -6,7 +6,8 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { BetaBlockerRecommender } from './recommenders/betaBlockersRecommender.js'
+import { BetaBlockerRecommender } from './recommenders/betaBlockerRecommender.js'
+import { DiureticRecommender } from './recommenders/diureticRecommender.js'
 import { MraRecommender } from './recommenders/mraRecommender.js'
 import { RasiRecommender } from './recommenders/rasiRecommender.js'
 import { type Recommender } from './recommenders/recommender.js'
@@ -42,6 +43,7 @@ export class RecommendationService {
       new RasiRecommender(contraindicationService, fhirService),
       new Sglt2iRecommender(contraindicationService, fhirService),
       new MraRecommender(contraindicationService, fhirService),
+      new DiureticRecommender(contraindicationService, fhirService),
     ]
   }
 
