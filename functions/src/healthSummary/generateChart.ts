@@ -91,8 +91,12 @@ export function generateChartSvg(
     svg
       .append('path')
       .datum([
-        { date: data[0].date, value: baseline },
-        { date: data[data.length - 1].date, value: baseline },
+        { date: data[0].date, value: baseline, unit: data[0].unit },
+        {
+          date: data[data.length - 1].date,
+          value: baseline,
+          unit: data[0].unit,
+        },
       ])
       .attr('fill', 'none')
       .attr('stroke-dasharray', '4,4')

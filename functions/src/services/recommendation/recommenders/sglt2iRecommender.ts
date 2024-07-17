@@ -7,7 +7,6 @@
 //
 
 import { Recommender } from './recommender.js'
-import { median } from '../../../extensions/array.js'
 import {
   MedicationRecommendationCategory,
   type MedicationRecommendation,
@@ -32,20 +31,18 @@ export class Sglt2iRecommender extends Recommender {
         MedicationRecommendationCategory.targetDoseReached,
       )
 
-    if (input.vitals.systolicBloodPressure.length < 3)
+    const medianSystolic = this.medianValue(
+      this.observationsInLastTwoWeeks(input.vitals.systolicBloodPressure),
+    )
+
+    if (!medianSystolic)
       return this.createRecommendation(
         currentMedication,
         undefined,
         MedicationRecommendationCategory.morePatientObservationsRequired,
       )
 
-    const medianSystolic = median(
-      input.vitals.systolicBloodPressure.map(
-        (observation) => observation.value,
-      ),
-    )
-
-    if (medianSystolic && medianSystolic < 100)
+    if (medianSystolic < 100)
       return this.createRecommendation(
         currentMedication,
         undefined,
@@ -85,20 +82,18 @@ export class Sglt2iRecommender extends Recommender {
         break
     }
 
-    if (input.vitals.systolicBloodPressure.length < 3)
+    const medianSystolic = this.medianValue(
+      this.observationsInLastTwoWeeks(input.vitals.systolicBloodPressure),
+    )
+
+    if (!medianSystolic)
       return this.createRecommendation(
         undefined,
         MedicationReference.empagliflozin,
         MedicationRecommendationCategory.morePatientObservationsRequired,
       )
 
-    const medianSystolic = median(
-      input.vitals.systolicBloodPressure.map(
-        (observation) => observation.value,
-      ),
-    )
-
-    if (medianSystolic && medianSystolic < 100)
+    if (medianSystolic < 100)
       return this.createRecommendation(
         undefined,
         MedicationReference.empagliflozin,

@@ -7,7 +7,6 @@
 //
 
 import { Recommender } from './recommender.js'
-import { median } from '../../../extensions/array.js'
 import {
   MedicationRecommendationCategory,
   type MedicationRecommendation,
@@ -32,10 +31,31 @@ export class BetaBlockerRecommender extends Recommender {
         MedicationRecommendationCategory.targetDoseReached,
       )
 
+    const medianSystolic = this.medianValue(
+      this.observationsInLastTwoWeeks(input.vitals.systolicBloodPressure),
+    )
+    const medianHeartRate = this.medianValue(
+      this.observationsInLastTwoWeeks(input.vitals.heartRate),
+    )
+
+    if (!medianSystolic || !medianHeartRate)
+      return this.createRecommendation(
+        currentMedication,
+        undefined,
+        MedicationRecommendationCategory.morePatientObservationsRequired,
+      )
+
+    if (medianSystolic < 100 || medianHeartRate < 60)
+      return this.createRecommendation(
+        currentMedication,
+        undefined,
+        MedicationRecommendationCategory.personalTargetDoseReached,
+      )
+
     return this.createRecommendation(
-      currentMedication,
       undefined,
-      MedicationRecommendationCategory.personalTargetDoseReached,
+      MedicationReference.carvedilol,
+      MedicationRecommendationCategory.notStarted,
     )
   }
 
@@ -62,20 +82,21 @@ export class BetaBlockerRecommender extends Recommender {
         break
     }
 
-    const medianSystolic = median(
-      input.vitals.systolicBloodPressure.map(
-        (observation) => observation.value,
-      ),
+    const medianSystolic = this.medianValue(
+      this.observationsInLastTwoWeeks(input.vitals.systolicBloodPressure),
     )
-    const medianHeartRate = median(
-      input.vitals.heartRate.map((observation) => observation.value),
+    const medianHeartRate = this.medianValue(
+      this.observationsInLastTwoWeeks(input.vitals.heartRate),
     )
-    if (
-      !medianSystolic ||
-      medianSystolic < 100 ||
-      !medianHeartRate ||
-      medianHeartRate < 60
-    )
+
+    if (!medianSystolic || !medianHeartRate)
+      return this.createRecommendation(
+        undefined,
+        MedicationReference.carvedilol,
+        MedicationRecommendationCategory.morePatientObservationsRequired,
+      )
+
+    if (medianSystolic < 100 || medianHeartRate < 60)
       return this.createRecommendation(
         undefined,
         MedicationReference.carvedilol,

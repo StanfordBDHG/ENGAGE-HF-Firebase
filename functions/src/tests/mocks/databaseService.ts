@@ -1197,6 +1197,27 @@ export class MockDatabaseService implements DatabaseService {
           value: 267.5,
         },
       },
+      creatinine: {
+        date: new Date('2024-04-02'),
+        valueQuantity: {
+          ...QuantityUnit.mg_dL,
+          value: 1.1,
+        },
+      },
+      potassium: {
+        date: new Date('2024-04-02'),
+        valueQuantity: {
+          ...QuantityUnit.mEq_L,
+          value: 4.2,
+        },
+      },
+      estimatedGlomerularFiltrationRate: {
+        date: new Date('2024-04-02'),
+        valueQuantity: {
+          ...QuantityUnit.mL_min_173m2,
+          value: 60,
+        },
+      },
     })
   }
 

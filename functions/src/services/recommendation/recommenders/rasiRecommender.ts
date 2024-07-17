@@ -7,7 +7,6 @@
 //
 
 import { Recommender } from './recommender.js'
-import { median } from '../../../extensions/array.js'
 import {
   MedicationRecommendationCategory,
   type MedicationRecommendation,
@@ -58,23 +57,22 @@ export class RasiRecommender extends Recommender {
             MedicationRecommendationCategory.targetDoseReached,
           )
 
-        if (input.vitals.systolicBloodPressure.length < 3)
+        const systolicValuesInLastTwoWeeks = this.observationsInLastTwoWeeks(
+          input.vitals.systolicBloodPressure,
+        )
+        const medianSystolic = this.medianValue(systolicValuesInLastTwoWeeks)
+        if (!medianSystolic)
           return this.createRecommendation(
             request,
             undefined,
             MedicationRecommendationCategory.morePatientObservationsRequired,
           )
 
-        const medianSystolic = median(
-          input.vitals.systolicBloodPressure.map(
-            (observation) => observation.value,
-          ),
-        )
-        const lowCount = input.vitals.systolicBloodPressure.filter(
-          (x) => x.value < 85,
+        const lowSystolicCount = systolicValuesInLastTwoWeeks.filter(
+          (observation) => observation.value < 85,
         ).length
 
-        if (medianSystolic && medianSystolic < 100 && lowCount >= 2)
+        if (medianSystolic < 100 || lowSystolicCount >= 2)
           return this.createRecommendation(
             request,
             undefined,
@@ -86,8 +84,8 @@ export class RasiRecommender extends Recommender {
         if (
           creatinineObservation &&
           potassiumObservation &&
-          creatinineObservation.value >= 2.5 &&
-          potassiumObservation.value >= 5
+          (creatinineObservation.value >= 2.5 ||
+            potassiumObservation.value >= 5)
         )
           return this.createRecommendation(
             request,
@@ -108,25 +106,26 @@ export class RasiRecommender extends Recommender {
           MedicationRecommendationCategory.improvementAvailable,
         )
       case ContraindicationCategory.none:
+        break
     }
 
-    if (input.vitals.systolicBloodPressure.length < 3)
+    const systolicValuesInLastTwoWeeks = this.observationsInLastTwoWeeks(
+      input.vitals.systolicBloodPressure,
+    )
+    const medianSystolic = this.medianValue(systolicValuesInLastTwoWeeks)
+
+    if (!medianSystolic)
       return this.createRecommendation(
         request,
         undefined,
         MedicationRecommendationCategory.morePatientObservationsRequired,
       )
 
-    const medianSystolic = median(
-      input.vitals.systolicBloodPressure.map(
-        (observation) => observation.value,
-      ),
-    )
-    const lowCount = input.vitals.systolicBloodPressure.filter(
-      (x) => x.value < 85,
+    const lowCount = systolicValuesInLastTwoWeeks.filter(
+      (observation) => observation.value < 85,
     ).length
 
-    if (medianSystolic && medianSystolic < 100 && lowCount >= 2)
+    if (medianSystolic < 100 || lowCount >= 2)
       return this.createRecommendation(
         request,
         undefined,
@@ -138,8 +137,7 @@ export class RasiRecommender extends Recommender {
     if (
       creatinineObservation &&
       potassiumObservation &&
-      creatinineObservation.value >= 2.5 &&
-      potassiumObservation.value >= 5
+      (creatinineObservation.value >= 2.5 || potassiumObservation.value >= 5)
     )
       return this.createRecommendation(
         request,
@@ -172,20 +170,18 @@ export class RasiRecommender extends Recommender {
         MedicationRecommendationCategory.targetDoseReached,
       )
 
-    if (input.vitals.systolicBloodPressure.length < 3)
+    const medianSystolic = this.medianValue(
+      this.observationsInLastTwoWeeks(input.vitals.systolicBloodPressure),
+    )
+
+    if (!medianSystolic)
       return this.createRecommendation(
         request,
         undefined,
         MedicationRecommendationCategory.morePatientObservationsRequired,
       )
 
-    const medianSystolic = median(
-      input.vitals.systolicBloodPressure.map(
-        (observation) => observation.value,
-      ),
-    )
-
-    if (medianSystolic && medianSystolic < 100)
+    if (medianSystolic < 100)
       return this.createRecommendation(
         request,
         undefined,
@@ -259,24 +255,23 @@ export class RasiRecommender extends Recommender {
         MedicationRecommendationCategory.noActionRequired,
       )
 
-    if (input.vitals.systolicBloodPressure.length < 3)
+    const systolicObservationsInLastTwoWeeks = this.observationsInLastTwoWeeks(
+      input.vitals.systolicBloodPressure,
+    )
+    const medianSystolic = this.medianValue(systolicObservationsInLastTwoWeeks)
+
+    if (!medianSystolic)
       return this.createRecommendation(
         undefined,
         MedicationReference.losartan,
         MedicationRecommendationCategory.morePatientObservationsRequired,
       )
 
-    const medianSystolic = median(
-      input.vitals.systolicBloodPressure.map(
-        (observation) => observation.value,
-      ),
-    )
-
-    const lowCount = input.vitals.systolicBloodPressure.filter(
-      (x) => x.value < 85,
+    const lowCount = systolicObservationsInLastTwoWeeks.filter(
+      (observation) => observation.value < 85,
     ).length
 
-    if (medianSystolic && medianSystolic < 100 && lowCount >= 2)
+    if (medianSystolic < 100 || lowCount >= 2)
       return this.createRecommendation(
         undefined,
         MedicationReference.losartan,

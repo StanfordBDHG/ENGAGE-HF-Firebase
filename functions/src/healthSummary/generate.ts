@@ -277,8 +277,10 @@ class HealthSummaryPDFGenerator {
         this.moveDown(this.textStyles.body.fontSize)
       },
       (columnWidth) => {
+        const currentWeight = this.data.vitals.bodyWeight.at(0)
+        const weightUnit = currentWeight?.unit.unit ?? ''
         this.addText(
-          `Current Weight: ${this.data.vitals.bodyWeight.at(0)?.value.toFixed(0) ?? '---'} lbs`,
+          `Current Weight: ${currentWeight?.value.toFixed(0) ?? '---'} ${weightUnit}`,
           this.textStyles.body,
           columnWidth,
         )
@@ -287,13 +289,13 @@ class HealthSummaryPDFGenerator {
           this.data.vitals.bodyWeight.map((observation) => observation.value),
         )
         this.addText(
-          `Last Week Average Weight: ${avgWeight?.toFixed(0) ?? '---'} lbs`,
+          `Last Week Average Weight: ${avgWeight?.toFixed(0) ?? '---'} ${weightUnit}`,
           this.textStyles.body,
           columnWidth,
         )
         this.moveDown(4)
         this.addText(
-          `Prior Dry Weight: ${this.data.vitals.dryWeight?.value.toFixed(0) ?? '---'} lbs`,
+          `Prior Dry Weight: ${this.data.vitals.dryWeight?.value.toFixed(0) ?? '---'} ${weightUnit}`,
           this.textStyles.body,
           columnWidth,
         )
