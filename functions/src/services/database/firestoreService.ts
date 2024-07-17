@@ -29,6 +29,7 @@ import { type KccqScore } from '../../models/kccqScore.js'
 import { type MedicationClass } from '../../models/medicationClass.js'
 import { type UserMessage } from '../../models/message.js'
 import { type Organization } from '../../models/organization.js'
+import { type Patient } from '../../models/patient.js'
 import { type User } from '../../models/user.js'
 
 export class FirestoreService implements DatabaseService {
@@ -60,12 +61,6 @@ export class FirestoreService implements DatabaseService {
     if (collection.docs.length === 0) return undefined
     const doc = collection.docs[0]
     return { id: doc.id, content: doc.data() as Appointment }
-  }
-
-  // Clinicians
-
-  async getClinician(userId: string) {
-    return this.getDocument<Clinician>(`clinicians/${userId}`)
   }
 
   // Invitations
@@ -165,8 +160,16 @@ export class FirestoreService implements DatabaseService {
 
   // Users
 
+  async getClinician(userId: string) {
+    return this.getDocument<Clinician>(`clinicians/${userId}`)
+  }
+
   async getUser(userId: string) {
     return this.getDocument<User>(`users/${userId}`)
+  }
+
+  async getPatient(userId: string) {
+    return this.getDocument<Patient>(`patients/${userId}`)
   }
 
   async getUserRecord(userId: string) {

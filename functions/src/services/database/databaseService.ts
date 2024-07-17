@@ -15,6 +15,7 @@ import { type FHIRObservation } from '../../models/fhir/observation.js'
 import { type Invitation } from '../../models/invitation.js'
 import { type KccqScore } from '../../models/kccqScore.js'
 import { type MedicationClass } from '../../models/medicationClass.js'
+import { type Patient } from '../../models/patient.js'
 import { type User, type UserRecord } from '../../models/user.js'
 
 export interface DatabaseDocument<Content> {
@@ -29,10 +30,6 @@ export interface DatabaseService {
   getNextAppointment(
     userId: string,
   ): Promise<DatabaseDocument<Appointment> | undefined>
-
-  // Clinicians
-
-  getClinician(userId: string): Promise<DatabaseDocument<Clinician>>
 
   // Invitations
 
@@ -62,8 +59,10 @@ export interface DatabaseService {
 
   // Users
 
-  getUser(userId: string): Promise<DatabaseDocument<User>>
   getUserRecord(userId: string): Promise<UserRecord>
+  getUser(userId: string): Promise<DatabaseDocument<User>>
+  getClinician(userId: string): Promise<DatabaseDocument<Clinician>>
+  getPatient(userId: string): Promise<DatabaseDocument<Patient>>
 
   // Users - Medication Requests
 

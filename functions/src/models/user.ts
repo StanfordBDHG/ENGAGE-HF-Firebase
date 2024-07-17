@@ -5,24 +5,19 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import { type FHIRSimpleQuantity } from './fhir/baseTypes.js'
 
 export interface UserMessagesSettings {
-  dailyRemindersAreActive: boolean
-  textNotificationsAreActive: boolean
-  medicationRemindersAreActive: boolean
+  dailyRemindersAreActive?: boolean
+  textNotificationsAreActive?: boolean
+  medicationRemindersAreActive?: boolean
 }
 
 export interface User {
-  dateOfBirth: Date
   dateOfEnrollment: Date
   invitationCode: string
-  messagesSettings: UserMessagesSettings
-  clinician?: string
-  organization?: string
+  messagesSettings?: UserMessagesSettings
   language?: string
   timeZone?: string
-  dryWeight?: FHIRSimpleQuantity
 }
 
 export interface UserRecord {
