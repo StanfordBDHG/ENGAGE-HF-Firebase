@@ -6,8 +6,9 @@ service cloud.firestore {
     }
 
     function isClinician(request, organizationId) {
-      return isAuthenticated(request) 
-        && get(/databases/$(databaseId)/documents/clinicians/$(request.auth.uid)).data.organization == organizationId
+      return isAuthenticated(request)
+        && exists(/databases/$(databaseId)/documents/clinicians/$(request.auth.uid))
+        && get(/databases/$(databaseId)/documents/users/$(request.auth.uid)).data.organization == organizationId
     }
 
     function isOwner(request, organizationId) {
