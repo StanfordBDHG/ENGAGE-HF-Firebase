@@ -49,7 +49,7 @@ export class MraRecommender extends Recommender {
         MedicationRecommendationCategory.moreLabObservationsRequired,
       )
 
-    if (creatinineObservation.value < 2.5 && potassiumObservation.value < 5)
+    if (creatinineObservation.value > 2.5 || potassiumObservation.value > 5)
       return this.createRecommendation(
         currentMedication,
         undefined,

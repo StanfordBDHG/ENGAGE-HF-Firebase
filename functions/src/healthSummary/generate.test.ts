@@ -9,6 +9,7 @@
 import fs from 'fs'
 import { assert, expect } from 'chai'
 import { generateHealthSummary } from './generate.js'
+import { type HealthSummaryData } from '../models/healthSummaryData.js'
 import { mockHealthSummaryData } from '../tests/mocks/healthSummaryData.js'
 import { TestFlags } from '../tests/testFlags.js'
 
@@ -29,8 +30,13 @@ describe('generateHealthSummary', () => {
     )
   }
 
+  let inputData: HealthSummaryData
+
+  beforeEach(() => {
+    inputData = mockHealthSummaryData()
+  })
+
   it('should still create as nice of a PDF as before', () => {
-    const inputData = mockHealthSummaryData()
     const actualData = generateHealthSummary(inputData)
     const expectedPath = 'src/tests/resources/mockHealthSummary.pdf'
     if (TestFlags.regenerateValues) {
@@ -42,7 +48,6 @@ describe('generateHealthSummary', () => {
   })
 
   it('should not fail on empty data', () => {
-    const inputData = mockHealthSummaryData()
     inputData.dateOfBirth = undefined
     inputData.nextAppointment = undefined
     inputData.medications = []

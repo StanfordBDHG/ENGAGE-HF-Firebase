@@ -52,10 +52,20 @@ export class BetaBlockerRecommender extends Recommender {
         MedicationRecommendationCategory.personalTargetDoseReached,
       )
 
+    if (
+      input.symptomScores?.dizzinessScore &&
+      input.symptomScores.dizzinessScore >= 3
+    )
+      return this.createRecommendation(
+        currentMedication,
+        undefined,
+        MedicationRecommendationCategory.personalTargetDoseReached,
+      )
+
     return this.createRecommendation(
+      currentMedication,
       undefined,
-      MedicationReference.carvedilol,
-      MedicationRecommendationCategory.notStarted,
+      MedicationRecommendationCategory.improvementAvailable,
     )
   }
 

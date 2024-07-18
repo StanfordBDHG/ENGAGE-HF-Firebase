@@ -48,11 +48,18 @@ export enum MedicationReference {
   dapagliflozin = 'medications/54281',
   empagliflozin = 'medications/54282',
   losartan = 'medications/203160',
-  sotagliflozin = 'medications/54283',
   sacubitrilValsartan = 'medications/1656339',
   bisoprolol = 'medications/19484',
+  furosemide = 'medications/4603',
+  sotagliflozin = 'medications/2638675',
+  perindopril = 'medications/54552',
 }
 
 export enum DrugReference {
   bisoprolol5 = 'medications/19484/drugs/854904',
+  eplerenone25 = 'medications/54280/drugs/353386',
+  furosemide20 = 'medications/4603/drugs/315970',
+  sotagliflozin200 = 'medications/2638675/drugs/2638683',
+  perindopril4 = 'medications/54552/drugs/854987',
+  sacubitrilValsartan49_51 = 'medications/1656339/drugs/1656349',
 }
