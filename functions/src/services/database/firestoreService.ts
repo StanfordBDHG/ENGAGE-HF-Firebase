@@ -107,6 +107,11 @@ export class FirestoreService implements DatabaseService {
         ...invitationData?.user,
       })
 
+      if (invitationData?.admin) {
+        const adminRef = this.firestore.doc(`admins/${userId}`)
+        transaction.update(adminRef, invitationData.admin)
+      }
+
       if (invitationData?.clinician) {
         const clinicianRef = this.firestore.doc(`clinicians/${userId}`)
         transaction.set(clinicianRef, invitationData.clinician)
@@ -117,12 +122,7 @@ export class FirestoreService implements DatabaseService {
         transaction.set(patientRef, invitationData.patient)
       }
 
-      if (invitationData?.admin) {
-        const adminRef = this.firestore.doc(`admins/${userId}`)
-        transaction.update(adminRef, invitationData.admin)
-      }
-
-      transaction.update(invitationRef, {
+      transaction.set(invitationRef, {
         used: true,
         usedBy: userId,
       })

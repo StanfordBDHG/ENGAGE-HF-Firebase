@@ -98,7 +98,7 @@ class MockFirestoreDocRef extends MockFirestoreRef {
     const pathComponents = this.path.split('/')
     const collectionPath = pathComponents.slice(0, -1).join('/')
     const result =
-      this.firestore.collections[collectionPath][
+      this.firestore.collections[collectionPath]?.[
         pathComponents[pathComponents.length - 1]
       ]
     return {

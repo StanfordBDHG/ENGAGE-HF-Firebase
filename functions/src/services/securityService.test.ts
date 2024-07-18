@@ -40,7 +40,7 @@ describe('SecurityService', () => {
         },
       },
       patients: {
-        mockPatient: {}
+        mockPatient: {},
       },
       users: {
         mockAdmin: {},
