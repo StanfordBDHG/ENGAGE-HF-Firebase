@@ -50,7 +50,7 @@ class MockFirestoreTransaction {
   update(reference: MockFirestoreRef, data: any) {
     ;(reference as any).update(data)
   }
-  
+
   delete(reference: MockFirestoreRef) {
     ;(reference as any).delete()
   }
@@ -127,7 +127,7 @@ class MockFirestoreDocRef extends MockFirestoreRef {
     const value = this.get().data()
     this.set({ ...value, ...data })
   }
-  
+
   delete() {
     const pathComponents = this.path.split('/')
     const collectionPath = pathComponents.slice(0, -1).join('/')

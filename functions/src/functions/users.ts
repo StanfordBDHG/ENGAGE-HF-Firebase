@@ -6,13 +6,18 @@
 // SPDX-License-Identifier: MIT
 //
 
-import admin, { firestore } from 'firebase-admin'
+import admin from 'firebase-admin'
+import { https } from 'firebase-functions'
 import { type CallableRequest, onCall } from 'firebase-functions/v2/https'
 import { type Result } from './types.js'
-import { SecurityService } from '../services/securityService.js'
-import { https } from 'firebase-functions'
+import {
+  type Admin,
+  type Clinician,
+  type Patient,
+  type User,
+} from '../models/user.js'
 import { FirestoreService } from '../services/database/firestoreService.js'
-import { Admin, Clinician, Patient, User } from '../models/user.js'
+import { SecurityService } from '../services/securityService.js'
 
 export interface GetUsersInformationInput {
   includeClinicianData?: boolean
@@ -104,23 +109,25 @@ export const updateUserInformationFunction = onCall(
     if (!request.data.userId)
       throw new https.HttpsError('invalid-argument', 'User ID is required')
 
-    if (request.auth.uid !== request.data.userId)
-      throw new https.HttpsError(
-        'permission-denied',
-        'User can only update their own information',
-      )
+    if (!request.data.data)
+      throw new https.HttpsError('invalid-argument', 'User data is required')
 
     const firestoreService = new FirestoreService()
-    const userRecord = await firestoreService.getUserRecord(request.data.userId)
-    if (!userRecord) throw new https.HttpsError('not-found', 'User not found')
+    const user = await firestoreService.getUser(request.data.userId)
+    const organization = user.content?.organization
+
+    const securityService = new SecurityService()
+    try {
+      await securityService.ensureClinician(request.auth, organization)
+    } catch {
+      securityService.ensureUser(request.auth, request.data.userId)
+    }
 
     const auth = admin.auth()
-    const user = request.data.data
-    if (!user) return
     await auth.updateUser(request.data.userId, {
-      displayName: user?.displayName,
-      email: user?.email,
-      photoURL: user?.photoURL,
+      displayName: request.data.data.displayName,
+      email: request.data.data.email,
+      photoURL: request.data.data.photoURL,
     })
   },
 )
@@ -190,7 +197,7 @@ export const createInvitationFunction = onCall(
     else
       await securityService.ensureOwner(
         request.auth,
-        request.data.user?.organization,
+        request.data.user.organization,
       )
 
     const firestore = admin.firestore()
@@ -214,9 +221,9 @@ export interface GrantOwnerInput {
 
 export const grantOwnerFunction = onCall(
   async (request: CallableRequest<GrantOwnerInput>) => {
-    if (!request.data?.userId)
+    if (!request.data.userId)
       throw new https.HttpsError('invalid-argument', 'User ID is required')
-    if (!request.data?.organizationId)
+    if (!request.data.organizationId)
       throw new https.HttpsError(
         'invalid-argument',
         'Organization ID is required',
@@ -238,9 +245,9 @@ export interface RevokeOwnerInput {
 
 export const revokeOwnerFunction = onCall(
   async (request: CallableRequest<RevokeOwnerInput>) => {
-    if (!request.data?.userId)
+    if (!request.data.userId)
       throw new https.HttpsError('invalid-argument', 'User ID is required')
-    if (!request.data?.organizationId)
+    if (!request.data.organizationId)
       throw new https.HttpsError(
         'invalid-argument',
         'Organization ID is required',
@@ -262,7 +269,7 @@ export interface GrantAdminInput {
 export const grantAdminFunction = onCall(
   async (request: CallableRequest<GrantAdminInput>) => {
     const securityService = new SecurityService()
-    if (!request.data?.userId)
+    if (!request.data.userId)
       throw new https.HttpsError('invalid-argument', 'User ID is required')
     await securityService.grantAdmin(request.auth, request.data.userId)
     return 'Success'
@@ -275,7 +282,7 @@ export interface RevokeAdminInput {
 
 export const revokeAdminFunction = onCall(
   async (request: CallableRequest<RevokeAdminInput>) => {
-    if (!request.data?.userId)
+    if (!request.data.userId)
       throw new https.HttpsError('invalid-argument', 'User ID is required')
     const securityService = new SecurityService()
     await securityService.revokeAdmin(request.auth, request.data.userId)

@@ -11,7 +11,7 @@ import { FieldValue, type Firestore } from 'firebase-admin/firestore'
 import { https } from 'firebase-functions/v2'
 import { type AuthData } from 'firebase-functions/v2/tasks'
 import { type Organization } from '../models/organization.js'
-import { Clinician, Patient, User } from '../models/user.js'
+import { type User } from '../models/user.js'
 
 export enum UserRoleType {
   admin = 'admin',

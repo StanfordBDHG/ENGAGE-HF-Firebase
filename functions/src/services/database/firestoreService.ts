@@ -28,7 +28,7 @@ import { type KccqScore } from '../../models/kccqScore.js'
 import { type MedicationClass } from '../../models/medicationClass.js'
 import { type UserMessage } from '../../models/message.js'
 import { type Organization } from '../../models/organization.js'
-import { Clinician, Patient, type User } from '../../models/user.js'
+import { type Clinician, type Patient, type User } from '../../models/user.js'
 
 export class FirestoreService implements DatabaseService {
   // Properties

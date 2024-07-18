@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { FHIRSimpleQuantity } from "./fhir/baseTypes.js"
+import { type FHIRSimpleQuantity } from './fhir/baseTypes.js'
 
 export interface Admin {}
 

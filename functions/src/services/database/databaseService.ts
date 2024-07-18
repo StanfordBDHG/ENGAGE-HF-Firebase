@@ -14,7 +14,12 @@ import { type FHIRObservation } from '../../models/fhir/observation.js'
 import { type Invitation } from '../../models/invitation.js'
 import { type KccqScore } from '../../models/kccqScore.js'
 import { type MedicationClass } from '../../models/medicationClass.js'
-import { Clinician, Patient, type User, type UserRecord } from '../../models/user.js'
+import {
+  type Clinician,
+  type Patient,
+  type User,
+  type UserRecord,
+} from '../../models/user.js'
 
 export interface DatabaseDocument<Content> {
   id: string

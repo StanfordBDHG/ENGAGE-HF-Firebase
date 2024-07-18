@@ -22,8 +22,8 @@ import { type Invitation } from '../../models/invitation.js'
 import { type KccqScore } from '../../models/kccqScore.js'
 import { type MedicationClass } from '../../models/medicationClass.js'
 import {
-  Clinician,
-  Patient,
+  type Clinician,
+  type Patient,
   type User,
   type UserRecord,
 } from '../../models/user.js'
