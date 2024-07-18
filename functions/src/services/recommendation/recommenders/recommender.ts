@@ -66,13 +66,19 @@ export abstract class Recommender {
     currentMedication: MedicationRequestContext,
   ): boolean {
     if (!currentMedication.medication) throw new Error('Medication is missing')
-    const ingredients = currentMedication.medication.ingredient ?? []
+    const ingredients = currentMedication.drug?.ingredient ?? []
+    if (ingredients.length <= 0) throw new Error('Ingredients are missing')
     const targetDailyDose = this.fhirService.extractTargetDailyDose(
       currentMedication.medication,
     )
     if (!targetDailyDose) throw new Error('Target daily dose is missing')
+    const targetIngredientDoses =
+      Array.isArray(targetDailyDose) ? targetDailyDose : [targetDailyDose]
+    if (targetIngredientDoses.length !== ingredients.length)
+      throw new Error('Target daily doses do not match ingredients')
 
-    ingredients.forEach((ingredient, index) => {
+    let index = 0
+    for (const ingredient of ingredients) {
       if (!ingredient.itemCodeableConcept)
         throw new Error('Ingredient coding is missing')
 
@@ -83,12 +89,9 @@ export abstract class Recommender {
       if (currentIngredientDose <= 0)
         throw new Error('Current daily dose is missing')
 
-      const targetIngredientDose =
-        Array.isArray(targetDailyDose) ?
-          targetDailyDose[index]
-        : targetDailyDose
-      if (currentIngredientDose < targetIngredientDose) return false
-    })
+      if (currentIngredientDose < targetIngredientDoses[index]) return false
+      index += 1
+    }
     return true
   }
 

@@ -9,12 +9,23 @@ import { type HealthSummaryData } from '../../models/healthSummaryData.js'
 import { MedicationRecommendationCategory } from '../../models/medicationRecommendation.js'
 import { QuantityUnit } from '../../services/fhir/quantityUnit.js'
 
-export function mockHealthSummaryData(): HealthSummaryData {
+export function mockHealthSummaryData(
+  startDate: Date = new Date('2024-02-02'),
+): HealthSummaryData {
+  function dateAdvancedByDays(days: number): Date {
+    const oneDayInMilliseconds = 24 * 60 * 60 * 1000
+    const newDate = new Date()
+    newDate.setTime(startDate.getTime() + oneDayInMilliseconds * days)
+    while (newDate.getSeconds() !== 0) {
+      newDate.setTime(Math.round(newDate.getTime() + 1))
+    }
+    return newDate
+  }
   return {
     name: 'John Doe',
     dateOfBirth: new Date('1970-01-02'),
     clinicianName: 'Dr. XXX',
-    nextAppointment: new Date('2024-02-03'),
+    nextAppointment: dateAdvancedByDays(1),
     medications: [
       {
         name: 'Losartan (Cozaar)',
@@ -41,66 +52,210 @@ export function mockHealthSummaryData(): HealthSummaryData {
     ],
     vitals: {
       systolicBloodPressure: [
-        { date: new Date('2024-02-01'), value: 110, unit: QuantityUnit.mmHg },
-        { date: new Date('2024-01-31'), value: 114, unit: QuantityUnit.mmHg },
-        { date: new Date('2024-01-30'), value: 123, unit: QuantityUnit.mmHg },
-        { date: new Date('2024-01-29'), value: 109, unit: QuantityUnit.mmHg },
-        { date: new Date('2024-01-28'), value: 105, unit: QuantityUnit.mmHg },
-        { date: new Date('2024-01-27'), value: 98, unit: QuantityUnit.mmHg },
-        { date: new Date('2024-01-26'), value: 94, unit: QuantityUnit.mmHg },
-        { date: new Date('2024-01-25'), value: 104, unit: QuantityUnit.mmHg },
-        { date: new Date('2024-01-24'), value: 102, unit: QuantityUnit.mmHg },
+        {
+          date: dateAdvancedByDays(-1),
+          value: 110,
+          unit: QuantityUnit.mmHg,
+        },
+        {
+          date: dateAdvancedByDays(-2),
+          value: 114,
+          unit: QuantityUnit.mmHg,
+        },
+        {
+          date: dateAdvancedByDays(-3),
+          value: 123,
+          unit: QuantityUnit.mmHg,
+        },
+        {
+          date: dateAdvancedByDays(-4),
+          value: 109,
+          unit: QuantityUnit.mmHg,
+        },
+        {
+          date: dateAdvancedByDays(-5),
+          value: 105,
+          unit: QuantityUnit.mmHg,
+        },
+        {
+          date: dateAdvancedByDays(-6),
+          value: 98,
+          unit: QuantityUnit.mmHg,
+        },
+        {
+          date: dateAdvancedByDays(-7),
+          value: 94,
+          unit: QuantityUnit.mmHg,
+        },
+        {
+          date: dateAdvancedByDays(-8),
+          value: 104,
+          unit: QuantityUnit.mmHg,
+        },
+        {
+          date: dateAdvancedByDays(-9),
+          value: 102,
+          unit: QuantityUnit.mmHg,
+        },
       ],
       diastolicBloodPressure: [
-        { date: new Date('2024-02-01'), value: 70, unit: QuantityUnit.mmHg },
-        { date: new Date('2024-01-31'), value: 82, unit: QuantityUnit.mmHg },
-        { date: new Date('2024-01-30'), value: 75, unit: QuantityUnit.mmHg },
-        { date: new Date('2024-01-29'), value: 77, unit: QuantityUnit.mmHg },
-        { date: new Date('2024-01-28'), value: 72, unit: QuantityUnit.mmHg },
-        { date: new Date('2024-01-27'), value: 68, unit: QuantityUnit.mmHg },
-        { date: new Date('2024-01-26'), value: 65, unit: QuantityUnit.mmHg },
-        { date: new Date('2024-01-25'), value: 72, unit: QuantityUnit.mmHg },
-        { date: new Date('2024-01-24'), value: 80, unit: QuantityUnit.mmHg },
+        {
+          date: dateAdvancedByDays(-1),
+          value: 70,
+          unit: QuantityUnit.mmHg,
+        },
+        {
+          date: dateAdvancedByDays(-2),
+          value: 82,
+          unit: QuantityUnit.mmHg,
+        },
+        {
+          date: dateAdvancedByDays(-3),
+          value: 75,
+          unit: QuantityUnit.mmHg,
+        },
+        {
+          date: dateAdvancedByDays(-4),
+          value: 77,
+          unit: QuantityUnit.mmHg,
+        },
+        {
+          date: dateAdvancedByDays(-5),
+          value: 72,
+          unit: QuantityUnit.mmHg,
+        },
+        {
+          date: dateAdvancedByDays(-6),
+          value: 68,
+          unit: QuantityUnit.mmHg,
+        },
+        {
+          date: dateAdvancedByDays(-7),
+          value: 65,
+          unit: QuantityUnit.mmHg,
+        },
+        {
+          date: dateAdvancedByDays(-8),
+          value: 72,
+          unit: QuantityUnit.mmHg,
+        },
+        {
+          date: dateAdvancedByDays(-9),
+          value: 80,
+          unit: QuantityUnit.mmHg,
+        },
       ],
       heartRate: [
-        { date: new Date('2024-02-01'), value: 79, unit: QuantityUnit.bpm },
-        { date: new Date('2024-01-31'), value: 62, unit: QuantityUnit.bpm },
-        { date: new Date('2024-01-30'), value: 77, unit: QuantityUnit.bpm },
-        { date: new Date('2024-01-29'), value: 63, unit: QuantityUnit.bpm },
-        { date: new Date('2024-01-28'), value: 61, unit: QuantityUnit.bpm },
-        { date: new Date('2024-01-27'), value: 70, unit: QuantityUnit.bpm },
-        { date: new Date('2024-01-26'), value: 67, unit: QuantityUnit.bpm },
-        { date: new Date('2024-01-25'), value: 80, unit: QuantityUnit.bpm },
-        { date: new Date('2024-01-24'), value: 65, unit: QuantityUnit.bpm },
+        {
+          date: dateAdvancedByDays(-1),
+          value: 79,
+          unit: QuantityUnit.bpm,
+        },
+        {
+          date: dateAdvancedByDays(-2),
+          value: 62,
+          unit: QuantityUnit.bpm,
+        },
+        {
+          date: dateAdvancedByDays(-3),
+          value: 77,
+          unit: QuantityUnit.bpm,
+        },
+        {
+          date: dateAdvancedByDays(-4),
+          value: 63,
+          unit: QuantityUnit.bpm,
+        },
+        {
+          date: dateAdvancedByDays(-5),
+          value: 61,
+          unit: QuantityUnit.bpm,
+        },
+        {
+          date: dateAdvancedByDays(-6),
+          value: 70,
+          unit: QuantityUnit.bpm,
+        },
+        {
+          date: dateAdvancedByDays(-7),
+          value: 67,
+          unit: QuantityUnit.bpm,
+        },
+        {
+          date: dateAdvancedByDays(-8),
+          value: 80,
+          unit: QuantityUnit.bpm,
+        },
+        {
+          date: dateAdvancedByDays(-9),
+          value: 65,
+          unit: QuantityUnit.bpm,
+        },
       ],
       bodyWeight: [
-        { date: new Date('2024-02-01'), value: 269, unit: QuantityUnit.lbs },
-        { date: new Date('2024-01-31'), value: 267, unit: QuantityUnit.lbs },
-        { date: new Date('2024-01-30'), value: 267, unit: QuantityUnit.lbs },
-        { date: new Date('2024-01-29'), value: 265, unit: QuantityUnit.lbs },
-        { date: new Date('2024-01-28'), value: 268, unit: QuantityUnit.lbs },
-        { date: new Date('2024-01-27'), value: 268, unit: QuantityUnit.lbs },
-        { date: new Date('2024-01-26'), value: 266, unit: QuantityUnit.lbs },
-        { date: new Date('2024-01-25'), value: 266, unit: QuantityUnit.lbs },
-        { date: new Date('2024-01-24'), value: 267, unit: QuantityUnit.lbs },
+        {
+          date: dateAdvancedByDays(-1),
+          value: 269,
+          unit: QuantityUnit.lbs,
+        },
+        {
+          date: dateAdvancedByDays(-2),
+          value: 267,
+          unit: QuantityUnit.lbs,
+        },
+        {
+          date: dateAdvancedByDays(-3),
+          value: 267,
+          unit: QuantityUnit.lbs,
+        },
+        {
+          date: dateAdvancedByDays(-4),
+          value: 265,
+          unit: QuantityUnit.lbs,
+        },
+        {
+          date: dateAdvancedByDays(-5),
+          value: 268,
+          unit: QuantityUnit.lbs,
+        },
+        {
+          date: dateAdvancedByDays(-6),
+          value: 268,
+          unit: QuantityUnit.lbs,
+        },
+        {
+          date: dateAdvancedByDays(-7),
+          value: 266,
+          unit: QuantityUnit.lbs,
+        },
+        {
+          date: dateAdvancedByDays(-8),
+          value: 266,
+          unit: QuantityUnit.lbs,
+        },
+        {
+          date: dateAdvancedByDays(-9),
+          value: 267,
+          unit: QuantityUnit.lbs,
+        },
       ],
       dryWeight: {
-        date: new Date('2024-04-02'),
+        date: dateAdvancedByDays(-4),
         value: 267.5,
         unit: QuantityUnit.lbs,
       },
       creatinine: {
-        date: new Date('2024-04-02'),
+        date: dateAdvancedByDays(-4),
         value: 1.1,
         unit: QuantityUnit.mg_dL,
       },
       potassium: {
-        date: new Date('2024-04-02'),
+        date: dateAdvancedByDays(-4),
         value: 4.2,
         unit: QuantityUnit.mEq_L,
       },
       estimatedGlomerularFiltrationRate: {
-        date: new Date('2024-04-02'),
+        date: dateAdvancedByDays(-4),
         value: 60,
         unit: QuantityUnit.mL_min_173m2,
       },
@@ -113,7 +268,7 @@ export function mockHealthSummaryData(): HealthSummaryData {
         qualityOfLifeScore: 20,
         specificSymptomsScore: 60,
         dizzinessScore: 50,
-        date: new Date('2024-01-24'),
+        date: dateAdvancedByDays(-9),
       },
       {
         overallScore: 60,
@@ -122,7 +277,7 @@ export function mockHealthSummaryData(): HealthSummaryData {
         qualityOfLifeScore: 37,
         specificSymptomsScore: 72,
         dizzinessScore: 70,
-        date: new Date('2024-01-15'),
+        date: dateAdvancedByDays(-18),
       },
       {
         overallScore: 44,
@@ -131,7 +286,7 @@ export function mockHealthSummaryData(): HealthSummaryData {
         qualityOfLifeScore: 25,
         specificSymptomsScore: 60,
         dizzinessScore: 50,
-        date: new Date('2023-12-30'),
+        date: dateAdvancedByDays(-34),
       },
       {
         overallScore: 75,
@@ -140,7 +295,7 @@ export function mockHealthSummaryData(): HealthSummaryData {
         qualityOfLifeScore: 60,
         specificSymptomsScore: 80,
         dizzinessScore: 100,
-        date: new Date('2023-12-15'),
+        date: dateAdvancedByDays(-49),
       },
     ],
   }

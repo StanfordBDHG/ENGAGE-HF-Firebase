@@ -90,7 +90,7 @@ export class RasiRecommender extends Recommender {
           return this.createRecommendation(
             request,
             undefined,
-            MedicationRecommendationCategory.moreLabObservationsRequired,
+            MedicationRecommendationCategory.personalTargetDoseReached,
           )
 
         if (input.symptomScores && input.symptomScores.dizzinessScore >= 3)
@@ -142,7 +142,7 @@ export class RasiRecommender extends Recommender {
       return this.createRecommendation(
         request,
         undefined,
-        MedicationRecommendationCategory.moreLabObservationsRequired,
+        MedicationRecommendationCategory.personalTargetDoseReached,
       )
 
     if (input.symptomScores && input.symptomScores.dizzinessScore >= 3)
@@ -190,14 +190,11 @@ export class RasiRecommender extends Recommender {
 
     const creatinineObservation = input.vitals.creatinine
     const potassiumObservation = input.vitals.potassium
-    if (!creatinineObservation || !potassiumObservation)
-      return this.createRecommendation(
-        request,
-        undefined,
-        MedicationRecommendationCategory.moreLabObservationsRequired,
-      )
-
-    if (creatinineObservation.value >= 2.5 || potassiumObservation.value >= 5)
+    if (
+      creatinineObservation &&
+      potassiumObservation &&
+      (creatinineObservation.value >= 2.5 || potassiumObservation.value >= 5)
+    )
       return this.createRecommendation(
         request,
         undefined,
@@ -288,7 +285,7 @@ export class RasiRecommender extends Recommender {
       return this.createRecommendation(
         undefined,
         MedicationReference.losartan,
-        MedicationRecommendationCategory.moreLabObservationsRequired,
+        MedicationRecommendationCategory.noActionRequired,
       )
 
     const contraindicationToArni =
