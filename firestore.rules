@@ -52,14 +52,14 @@ service cloud.firestore {
     match /organizations/{organizationId} {
       allow read: if isAuthenticated(request)
       allow read, write: if isAdmin(request)
-      allow read, write: if isOwner(request, organizationId)
+      allow read, update: if isOwner(request, organizationId)
     }
 
     match /patients/{patientId}/{documents=**} {
-      allow read, write: if isUser(request, userId)
-      allow read, write: if isAdmin(request)
-      allow read, write: if isOwner(request, organizationIdFromUserId(patientId))
-      allow read, write: if isClinician(request, organizationIdFromUserId(patientId))
+      allow read, update: if isUser(request, userId)
+      allow read, update: if isAdmin(request)
+      allow read, update: if isOwner(request, organizationIdFromUserId(patientId))
+      allow read, update: if isClinician(request, organizationIdFromUserId(patientId))
     }
 
     match /questionnaires/{questionnaireId} {
@@ -68,9 +68,10 @@ service cloud.firestore {
     }
 
     match /users/{userId}/{documents=**} {
-      allow read, write: if isUser(request, userId)
-      allow read, write: if isAdmin(request)
-      allow read, write: if isOwner(request, organizationIdFromUserId(userId))
+      allow read: if isUser(request, userId)
+      allow update: if isUser(request, userId) && !('organization' in request.resource.data)
+      allow read, update: if isAdmin(request)
+      allow read, update: if isOwner(request, organizationIdFromUserId(userId))
     }
 
     match /videoSections/{documents=**} {
