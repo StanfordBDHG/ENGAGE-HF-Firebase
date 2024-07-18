@@ -6,6 +6,18 @@
 // SPDX-License-Identifier: MIT
 //
 
+import { FHIRSimpleQuantity } from "./fhir/baseTypes.js"
+
+export interface Admin {}
+
+export interface Clinician {}
+
+export interface Patient {
+  dateOfBirth: Date
+  clinician?: string
+  dryWeight?: FHIRSimpleQuantity
+}
+
 export interface UserMessagesSettings {
   dailyRemindersAreActive?: boolean
   textNotificationsAreActive?: boolean
@@ -16,6 +28,7 @@ export interface User {
   dateOfEnrollment: Date
   invitationCode: string
   messagesSettings?: UserMessagesSettings
+  organization?: string
   language?: string
   timeZone?: string
 }

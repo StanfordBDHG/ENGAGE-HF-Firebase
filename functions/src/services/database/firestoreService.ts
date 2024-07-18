@@ -18,7 +18,6 @@ import {
   type DatabaseService,
 } from './databaseService.js'
 import { type Appointment } from '../../models/appointment.js'
-import { type Clinician } from '../../models/clinician.js'
 import {
   type FHIRMedication,
   type FHIRMedicationRequest,
@@ -29,8 +28,7 @@ import { type KccqScore } from '../../models/kccqScore.js'
 import { type MedicationClass } from '../../models/medicationClass.js'
 import { type UserMessage } from '../../models/message.js'
 import { type Organization } from '../../models/organization.js'
-import { type Patient } from '../../models/patient.js'
-import { type User } from '../../models/user.js'
+import { Clinician, Patient, type User } from '../../models/user.js'
 
 export class FirestoreService implements DatabaseService {
   // Properties

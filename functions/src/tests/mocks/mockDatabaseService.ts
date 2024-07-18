@@ -10,7 +10,6 @@ import {
   AppointmentStatus,
   type Appointment,
 } from '../../models/appointment.js'
-import { type Clinician } from '../../models/clinician.js'
 import {
   type FHIRMedication,
   type FHIRMedicationRequest,
@@ -22,8 +21,12 @@ import {
 import { type Invitation } from '../../models/invitation.js'
 import { type KccqScore } from '../../models/kccqScore.js'
 import { type MedicationClass } from '../../models/medicationClass.js'
-import { type Patient } from '../../models/patient.js'
-import { type User, type UserRecord } from '../../models/user.js'
+import {
+  Clinician,
+  Patient,
+  type User,
+  type UserRecord,
+} from '../../models/user.js'
 import {
   type DatabaseDocument,
   type DatabaseService,
@@ -1155,7 +1158,6 @@ export class MockDatabaseService implements DatabaseService {
     return {
       id: userId,
       content: {
-        id: userId,
         organization: 'stanford',
       },
     }

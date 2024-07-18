@@ -18,15 +18,14 @@ import {
 import { dismissMessageFunction } from './functions/message.js'
 import { rebuildStaticDataFunction } from './functions/staticData.js'
 import {
-  createClinicianInvitationFunction,
-  createPatientInvitationFunction,
+  createInvitationFunction,
   deleteUserFunction,
-  getAuthenticationsFunction,
-  makeAdminFunction,
-  makeOwnerFunction,
-  removeAdminFunction,
-  removeOwnerFunction,
-  updateAuthenticationFunction,
+  getUsersInformationFunction,
+  grantAdminFunction,
+  grantOwnerFunction,
+  revokeAdminFunction,
+  revokeOwnerFunction,
+  updateUserInformationFunction,
 } from './functions/users.js'
 
 admin.initializeApp()
@@ -37,12 +36,11 @@ export const dismissMessage = dismissMessageFunction
 export const exportHealthSummary = exportHealthSummaryFunction
 export const rebuildStaticData = rebuildStaticDataFunction
 
-export const getAuthentications = getAuthenticationsFunction
-export const updateAuthentication = updateAuthenticationFunction
+export const getUsersInformation = getUsersInformationFunction
+export const updateUserInformation = updateUserInformationFunction
 export const deleteUser = deleteUserFunction
-export const createClinicianInvitation = createClinicianInvitationFunction
-export const createPatientInvitation = createPatientInvitationFunction
-export const makeOwner = makeOwnerFunction
-export const removeOwner = removeOwnerFunction
-export const makeAdmin = makeAdminFunction
-export const removeAdmin = removeAdminFunction
+export const createInvitation = createInvitationFunction
+export const grantOwner = grantOwnerFunction
+export const revokeOwner = revokeOwnerFunction
+export const grantAdmin = grantAdminFunction
+export const revokeAdmin = revokeAdminFunction
