@@ -2,26 +2,26 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{databaseId}/documents {
     function isAuthenticated(request) {
-        return request.auth != null
+      return request.auth != null
     }
     
     function isClinician(request, organizationId) {
-        return isAuthenticated(request) 
-          && get(/databases/$(databaseId)/documents/clinicians/$(request.auth.uid)).data.organization == organizationId
+      return isAuthenticated(request) 
+        && get(/databases/$(databaseId)/documents/clinicians/$(request.auth.uid)).data.organization == organizationId
     }
     
     function isOwner(request, organizationId) {
-        return isAuthenticated(request) 
-          && request.auth.uid in get(/databases/$(databaseId)/documents/organizations/$(organizationId)).data.owners
+      return isAuthenticated(request) 
+        && request.auth.uid in get(/databases/$(databaseId)/documents/organizations/$(organizationId)).data.owners
     }
     
     function isAdmin(request) {
-        return isAuthenticated(request)
-          && exists(/databases/$(databaseId)/documents/admins/$(request.auth.uid))
+      return isAuthenticated(request)
+        && exists(/databases/$(databaseId)/documents/admins/$(request.auth.uid))
     }
     
     function isUser(request, userId) {
-        return isAuthenticated(request) && request.auth.uid == userId
+      return isAuthenticated(request) && request.auth.uid == userId
     }
     
     match /admins/{adminId} {
