@@ -32,9 +32,7 @@ describe('SecurityService', () => {
         mockAdmin: {},
       },
       clinicians: {
-        mockClinician: {
-          organization: 'mockOrganization',
-        },
+        mockClinician: {},
       },
       organizations: {
         mockOrganization: {
@@ -42,6 +40,13 @@ describe('SecurityService', () => {
         },
       },
       users: {
+        mockAdmin: {},
+        mockClinician: {
+          organization: 'mockOrganization',
+        },
+        mockOwner: {
+          organization: 'mockOrganization',
+        },
         mockUser: {
           organization: 'mockOrganization',
         },
