@@ -6,6 +6,9 @@
 // SPDX-License-Identifier: MIT
 //
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
 import { expect } from 'chai'
 import { describe, it } from 'mocha'
 import { RasiRecommender } from './rasiRecommender.js'
