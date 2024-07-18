@@ -6,19 +6,19 @@
 // SPDX-License-Identifier: MIT
 //
 
+import { expect } from 'chai'
 import admin from 'firebase-admin'
+import { FieldValue } from 'firebase-admin/firestore'
 import { describe } from 'mocha'
+import { type Invitation } from '../models/invitation.js'
+import { type Admin, type Patient, type User } from '../models/user.js'
+import { FirestoreService } from '../services/database/firestoreService.js'
+import { type MockFirestore } from '../tests/mocks/mockFirestore.js'
 import {
   cleanupMocks,
   setupMockAuth,
   setupMockFirestore,
 } from '../tests/setup.js'
-import { MockFirestore } from '../tests/mocks/mockFirestore.js'
-import { FirestoreService } from '../services/database/firestoreService.js'
-import { expect } from 'chai'
-import { Invitation } from '../models/invitation.js'
-import { Admin, Patient, User } from '../models/user.js'
-import { FieldValue } from 'firebase-admin/firestore'
 
 describe('Functions: Invitation', () => {
   describe('enrollUser', () => {

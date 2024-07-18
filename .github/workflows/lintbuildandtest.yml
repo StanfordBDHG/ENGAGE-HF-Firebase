@@ -28,7 +28,7 @@ jobs:
       - name: Install Dependencies
         run: npm install --prefix functions --save-dev
       - name: Lint
-        run: npm --prefix functions run lint
+        run: npm --prefix functions run lint:strict
       - name: Build
         run: npm --prefix functions run build:clean
       - name: Test
