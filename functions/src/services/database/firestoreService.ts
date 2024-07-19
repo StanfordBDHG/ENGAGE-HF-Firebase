@@ -78,6 +78,10 @@ export class FirestoreService implements DatabaseService {
     return { id: doc.id, content: doc.data() as Invitation }
   }
 
+  async setInvitationUsedBy(invitationId: string, userId: string) {
+    
+  }
+
   async enrollUser(invitationId: string, userId: string) {
     const invitationRef = this.firestore.doc(`invitations/${invitationId}`)
     const invitation = await invitationRef.get()
@@ -129,10 +133,7 @@ export class FirestoreService implements DatabaseService {
         transaction.create(patientRef, invitationData.patient)
       }
 
-      transaction.set(invitationRef, {
-        used: true,
-        usedBy: userId,
-      })
+      transaction.delete(invitationRef)
     })
   }
 
