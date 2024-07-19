@@ -42,7 +42,7 @@ export function presortedPercentile(
   percentile: number,
 ): number | undefined {
   if (values.length === 0) return undefined
-  const index = values.length * percentile
+  const index = (values.length - 1) * percentile
   const lowerIndex = Math.floor(index)
   const upperIndex = Math.ceil(index)
 
