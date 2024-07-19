@@ -15,7 +15,7 @@ import { Sglt2iRecommender } from './recommenders/sglt2iRecommender.js'
 import { type FHIRAllergyIntolerance } from '../../models/fhir/allergyIntolerance.js'
 import { type MedicationRecommendation } from '../../models/medicationRecommendation.js'
 import { type MedicationRequestContext } from '../../models/medicationRequestContext.js'
-import { type SymptomScores } from '../../models/symptomScores.js'
+import { type SymptomScore } from '../../models/symptomScore.js'
 import { type Vitals } from '../../models/vitals.js'
 import { type ContraindicationService } from '../contraindication/contraindicationService.js'
 import { type FhirService } from '../fhir/fhirService.js'
@@ -24,7 +24,7 @@ export interface RecommendationInput {
   requests: MedicationRequestContext[]
   contraindications: FHIRAllergyIntolerance[]
   vitals: Vitals
-  symptomScores?: SymptomScores
+  symptomScores?: SymptomScore
 }
 
 export class RecommendationService {

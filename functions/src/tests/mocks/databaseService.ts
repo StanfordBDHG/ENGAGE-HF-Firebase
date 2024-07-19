@@ -6,6 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
+import { mockQuestionnaireResponse } from './questionnaireResponse.js'
 import {
   AppointmentStatus,
   type Appointment,
@@ -18,9 +19,10 @@ import {
   FHIRObservationStatus,
   type FHIRObservation,
 } from '../../models/fhir/observation.js'
+import { type FHIRQuestionnaireResponse } from '../../models/fhir/questionnaireResponse.js'
 import { type Invitation } from '../../models/invitation.js'
 import { type MedicationClass } from '../../models/medicationClass.js'
-import { type SymptomScores } from '../../models/symptomScores.js'
+import { type SymptomScore } from '../../models/symptomScore.js'
 import {
   type Clinician,
   type Patient,
@@ -1484,16 +1486,24 @@ export class MockDatabaseService implements DatabaseService {
 
   // Methods - Users - Questionnaire Responses
 
+  async getQuestionnaireResponses(
+    userId: string,
+  ): Promise<Array<DatabaseDocument<FHIRQuestionnaireResponse>>> {
+    return [mockQuestionnaireResponse()].map((value, index) =>
+      this.makeDocument(index.toString(), value),
+    )
+  }
+
   async getSymptomScores(
     userId: string,
-  ): Promise<Array<DatabaseDocument<SymptomScores>>> {
-    const values = [
+  ): Promise<Array<DatabaseDocument<SymptomScore>>> {
+    const values: SymptomScore[] = [
       {
         overallScore: 40,
         physicalLimitsScore: 50,
         socialLimitsScore: 38,
         qualityOfLifeScore: 20,
-        specificSymptomsScore: 60,
+        symptomFrequencyScore: 60,
         dizzinessScore: 50,
         date: new Date('2024-01-24'),
       },
@@ -1502,7 +1512,7 @@ export class MockDatabaseService implements DatabaseService {
         physicalLimitsScore: 58,
         socialLimitsScore: 75,
         qualityOfLifeScore: 37,
-        specificSymptomsScore: 72,
+        symptomFrequencyScore: 72,
         dizzinessScore: 70,
         date: new Date('2024-01-15'),
       },
@@ -1511,7 +1521,7 @@ export class MockDatabaseService implements DatabaseService {
         physicalLimitsScore: 50,
         socialLimitsScore: 41,
         qualityOfLifeScore: 25,
-        specificSymptomsScore: 60,
+        symptomFrequencyScore: 60,
         dizzinessScore: 50,
         date: new Date('2023-12-30'),
       },
@@ -1520,7 +1530,7 @@ export class MockDatabaseService implements DatabaseService {
         physicalLimitsScore: 58,
         socialLimitsScore: 75,
         qualityOfLifeScore: 60,
-        specificSymptomsScore: 80,
+        symptomFrequencyScore: 80,
         dizzinessScore: 100,
         date: new Date('2023-12-15'),
       },

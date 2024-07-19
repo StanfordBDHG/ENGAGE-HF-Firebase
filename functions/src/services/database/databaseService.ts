@@ -11,9 +11,10 @@ import {
   type FHIRMedicationRequest,
 } from '../../models/fhir/medication.js'
 import { type FHIRObservation } from '../../models/fhir/observation.js'
+import { type FHIRQuestionnaireResponse } from '../../models/fhir/questionnaireResponse.js'
 import { type Invitation } from '../../models/invitation.js'
 import { type MedicationClass } from '../../models/medicationClass.js'
-import { type SymptomScores } from '../../models/symptomScores.js'
+import { type SymptomScore } from '../../models/symptomScore.js'
 import {
   type Clinician,
   type Patient,
@@ -99,7 +100,10 @@ export interface DatabaseService {
 
   // Users - Questionnaire Responses
 
+  getQuestionnaireResponses(
+    userId: string,
+  ): Promise<Array<DatabaseDocument<FHIRQuestionnaireResponse>>>
   getSymptomScores(
     userId: string,
-  ): Promise<Array<DatabaseDocument<SymptomScores>>>
+  ): Promise<Array<DatabaseDocument<SymptomScore>>>
 }

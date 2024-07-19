@@ -7,7 +7,7 @@
 //
 
 import { type MedicationRecommendationCategory } from './medicationRecommendation.js'
-import { type SymptomScores } from './symptomScores.js'
+import { type SymptomScore } from './symptomScore.js'
 import { type Vitals } from './vitals.js'
 
 export interface HealthSummaryData {
@@ -17,7 +17,7 @@ export interface HealthSummaryData {
   nextAppointment?: Date
   medications: MedicationOptimization[]
   vitals: Vitals
-  symptomScores: SymptomScores[]
+  symptomScores: SymptomScore[]
 }
 
 export interface MedicationOptimization {

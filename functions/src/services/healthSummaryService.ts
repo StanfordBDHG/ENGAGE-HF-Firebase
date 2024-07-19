@@ -70,7 +70,7 @@ export class HealthSummaryService {
 
   // Methods - Symptom Scores
 
-  private async getSymptomScores(userId: string): Promise<SymptomScores[]> {
+  private async getSymptomScores(userId: string): Promise<SymptomScore[]> {
     return this.compactMapDocuments(
       this.databaseService.getSymptomScores(userId),
     )
