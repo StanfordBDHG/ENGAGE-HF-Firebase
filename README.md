@@ -103,7 +103,7 @@ Based on the [Extension](https://hl7.org/fhir/R4B/extensibility.html#Extension) 
 |name|LocalizedText|-|A name for a given medicationClass to be displayed to a user.|
 |videoPath|string|e.g. "/videoSectionId/1/videos/2"|The path to retrieve the respective video from Firestore.|
 
-## /organizations/$organizationId$
+## organizations/$organizationId$
 
 |Property|Type|Values|Comments|
 |-|-|-|-|
