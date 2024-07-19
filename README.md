@@ -8,18 +8,6 @@ SPDX-License-Identifier: MIT
 
 Firebase cloud hosting infrastructure for the ENGAGE-HF project.
 
-# Security
-
-A user can have one or more of the following roles assigned:
-
-|Role|Scope|Rights|Source of Truth|
-|-|-|-|-|
-|Admin|Everything|R/W|`admins/$userId$` exists|
-|Owner|In organization|R/W of users & patients, R/W of organization|`organization/$organizationId$` contains `userId` in `owners` property|
-|Clinician|In organization|R/W of users & patients|`clinicians/$userId$` exists|
-|Patient|In organization|R/W of `patients/$userId$`|`patients/$userId$` exists|
-|User|Own data|R/W of `users/$userId$`|auth has same userId|
-
 # Data Scheme
 
 This document describes how data is stored in Firestore for the Engage-HF app.
@@ -154,7 +142,7 @@ Based on [FHIR Appointment](https://hl7.org/fhir/R4B/appointment.html), the foll
 
 ### patients/$userId$/medicationRequests/$medicationRequestId$
 
-Based on [FHIR MedicationRequest](https://hl7.org/fhir/R4B/medicationrequest.html), the following properties may be used, while additional properties are ignored by the Engage-HF system.
+Based on [FHIR MedicationRequest](https://hl7.org/fhir/R4B/medicationrequest.html), the following properties may be used, while additional properties are ignored by the Engage-HF system. Clients may ignore this list and simply query for patients/$userId$/medicationRecommendations and retrieve the relevant requests from the recommendations.
 
 |Property|Type|Values|Comments|
 |-|-|-|-|
@@ -180,6 +168,28 @@ The `dosageInstruction` property may contain values with the following propertie
 |maxDosePerLifetime|optional [SimpleQuantity](https://hl7.org/fhir/R4B/datatypes.html#SimpleQuantity)|-|Upper limit on medication per unit of time|
 
 There may be up to three intakes per day (morning, mid-day and evening) with either 0.5, 1 or 2 pills. The dosages should always be grouped by medication, i.e. there should not be multiple medication elements concerning the same medication but different dosage instructions. Instead, one medication element shall be used for that medication with multiple dosage instructions.
+
+### patients/$userId$/medicationRecommendations/$medicationRecommendationId$
+
+These are the output values of the recommendation algorithms. Depending on the type, the recommendations should be displayed with different icons and texts.
+
+|Property|Type|Values|Comments|
+|-|-|-|-|
+|currentMedication|optional Reference(FHIRMedicationRequest)|e.g. `{"reference":"patients/123/medicationRequest/2"}`|Reference to the existing medication request, if applicable.|
+|recommendedMedication|optional Reference(FHIRMedication)|e.g. `{"reference":"medications/2"}`|Reference to the recommended medication, if applicable. This should always direct to a medication, not a drug.|
+|type|MedicationRecommendationType|e.g. "notStarted"|This type describes the outcome of the recommendation algorithm and is described in more detail below.|
+
+#### Medication Recommendation Type
+
+|Type|Icon|Current Medication|Recommended Medication|Comments|
+|-|-|-|-|-|-|
+|targetDoseReached|Green Checkmark|exists|undefined|The target dose has been reached.|
+|personalTargetDoseReached|Green Checkmark|exists|undefined|The personal target dose has been reached, meaning that vitals signal that we should not increase the dose (yet).|
+|notStarted|Gray Up Arrow|undefined|exists|Medication has not been started, but is eligible for initiation.|
+|moreLabObservationsRequired|Yellow|maybe|maybe (mutually exclusive to current medication)|More lab observations are required to recommend anything. The patient should probably schedule an appointment with a clinician.|
+|morePatientObservationsRequired|Yellow|maybe|maybe (mutually exclusive to current medication)|There are not enough patient observations to recommend anything. They should probably do some blood pressure measuring.|
+|noActionRequired|Gray|undefined|exists|The recommended medication is not eligible, but should still be shown to the user as an option without recommending it to them.|
+|improvementAvailable|Yellow Up Arrow|exists|undefined|The patient should uptitrate.|
 
 ### Observations
 
@@ -407,3 +417,21 @@ In this section, we describe all data related to educational videos to be shown 
 Embed links for YouTube: `https://youtube.com/embed/${youtubeId}`.
 Short links for YouTube: `https://youtu.be/${youtubeId}`. 
 Watch links for YouTube: `https://youtube.com/watch?v=${youtubeId}`. 
+
+# Resources
+
+- See [resources/drugs.xlsx](resources/drugs.xlsx) for all the different drugs and contraindications. 
+- See [resources/algorithms] for diagrams describing the different algorithms for medication recommendations.
+- For definitions relevant for the setup of static data, including questionnaires, medication classes, medications and videoSections, have a look at [functions/data].
+
+# Security
+
+A user can have one or more of the following roles assigned:
+
+|Role|Scope|Rights|Source of Truth|
+|-|-|-|-|
+|Admin|Everything|R/W|`admins/$userId$` exists|
+|Owner|In organization|R/W of users & patients, R/W of organization|`organization/$organizationId$` contains `userId` in `owners` property|
+|Clinician|In organization|R/W of users & patients|`clinicians/$userId$` exists|
+|Patient|In organization|R/W of `patients/$userId$`|`patients/$userId$` exists|
+|User|Own data|R/W of `users/$userId$`|auth has same userId|
