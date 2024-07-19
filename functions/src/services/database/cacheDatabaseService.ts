@@ -19,6 +19,7 @@ enum CacheKeyPrefix {
   getMedication = 'getMedication',
   getDrugs = 'getDrugs',
   getDrug = 'getDrug',
+  getPatient = 'getPatient',
   getUser = 'getUser',
   getUserRecord = 'getUserRecord',
   getMedicationRecommendations = 'getMedicationRecommendations',
@@ -57,14 +58,6 @@ export class CacheDatabaseService implements DatabaseService {
   async getNextAppointment(userId: string) {
     return this.accessCache(CacheKeyPrefix.getNextAppointment, [userId], () =>
       this.databaseService.getNextAppointment(userId),
-    )
-  }
-
-  // Clinicians
-
-  async getClinician(userId: string) {
-    return this.accessCache(CacheKeyPrefix.getClinician, [userId], () =>
-      this.databaseService.getClinician(userId),
     )
   }
 
@@ -129,6 +122,18 @@ export class CacheDatabaseService implements DatabaseService {
   }
 
   // Users
+
+  async getClinician(userId: string) {
+    return this.accessCache(CacheKeyPrefix.getClinician, [userId], () =>
+      this.databaseService.getClinician(userId),
+    )
+  }
+
+  async getPatient(userId: string) {
+    return this.accessCache(CacheKeyPrefix.getPatient, [userId], () =>
+      this.databaseService.getPatient(userId),
+    )
+  }
 
   async getUser(userId: string) {
     return this.accessCache(CacheKeyPrefix.getUser, [userId], () =>

@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
+    "lint:fix": "npm run lint -- --fix",
+    "lint:strict": "npm run lint -- --max-warnings=0",
     "build": "tsc",
     "build:clean": "npm run clean && npm run build",
     "clean": "if [ -f 'tsconfig.tsbuildinfo' ]; then rm tsconfig.tsbuildinfo; fi && if [ -d lib ]; then rm -rf lib; fi",
