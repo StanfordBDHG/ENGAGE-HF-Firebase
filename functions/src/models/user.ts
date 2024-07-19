@@ -15,7 +15,6 @@ export interface Clinician {}
 export interface Patient {
   dateOfBirth: Date
   clinician?: string
-  dryWeight?: FHIRSimpleQuantity
 }
 
 export interface UserMessagesSettings {

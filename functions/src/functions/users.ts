@@ -69,6 +69,7 @@ export const getUsersInformationFunction = onCall(
           auth: {
             displayName: user.displayName,
             email: user.email,
+            phoneNumber: user.phoneNumber,
             photoURL: user.photoURL,
           },
         }
@@ -128,6 +129,7 @@ export const updateUserInformationFunction = onCall(
     await auth.updateUser(request.data.userId, {
       displayName: request.data.data.auth.displayName,
       email: request.data.data.auth.email,
+      phoneNumber: request.data.data.auth.phoneNumber,
       photoURL: request.data.data.auth.photoURL,
     })
   },

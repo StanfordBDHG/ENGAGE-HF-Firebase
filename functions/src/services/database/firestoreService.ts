@@ -102,6 +102,7 @@ export class FirestoreService implements DatabaseService {
     await this.auth.updateUser(userId, {
       displayName: invitationData?.auth?.displayName,
       email: invitationData?.auth?.email,
+      phoneNumber: invitationData?.auth?.phoneNumber,
       photoURL: invitationData?.auth?.photoURL,
     })
 

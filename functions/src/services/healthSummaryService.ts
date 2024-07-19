@@ -63,7 +63,6 @@ export class HealthSummaryService {
       medications: medications,
       vitals: {
         ...vitals,
-        dryWeight: patient.content?.dryWeight?.value ?? vitals.dryWeight,
       },
       symptomScores: kccqScores,
     }

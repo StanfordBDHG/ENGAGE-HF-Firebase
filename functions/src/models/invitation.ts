@@ -21,5 +21,6 @@ export interface Invitation {
 export interface UserAuthenticationInformation {
   displayName?: string
   email?: string
+  phoneNumber?: string
   photoURL?: string
 }
