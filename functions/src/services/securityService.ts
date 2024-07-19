@@ -10,8 +10,21 @@ import admin from 'firebase-admin'
 import { FieldValue, type Firestore } from 'firebase-admin/firestore'
 import { https } from 'firebase-functions/v2'
 import { type AuthData } from 'firebase-functions/v2/tasks'
-import { type Clinician } from '../models/clinician.js'
 import { type Organization } from '../models/organization.js'
+import { type User } from '../models/user.js'
+
+export enum UserRoleType {
+  admin = 'admin',
+  owner = 'owner',
+  clinician = 'clinician',
+  patient = 'patient',
+  user = 'user',
+}
+
+export interface UserRole {
+  type: UserRoleType
+  organization?: string
+}
 
 export class SecurityService {
   // Properties
@@ -22,6 +35,36 @@ export class SecurityService {
 
   constructor(firestore: Firestore = admin.firestore()) {
     this.firestore = firestore
+  }
+
+  // Methods - Get Role
+
+  async getUserRole(authData: AuthData | undefined): Promise<UserRole> {
+    if (!authData?.uid)
+      throw new https.HttpsError(
+        'unauthenticated',
+        'User is not properly authenticated.',
+      )
+    const admin = await this.firestore.doc(`admins/${authData.uid}`).get()
+    if (admin.exists) return { type: UserRoleType.admin }
+    const user = await this.firestore.doc(`users/${authData.uid}`).get()
+    const userContent = user.data() as User | undefined
+
+    const clinician = await this.firestore
+      .doc(`clinicians/${authData.uid}`)
+      .get()
+    if (clinician.exists)
+      return {
+        type: UserRoleType.clinician,
+        organization: userContent?.organization,
+      }
+    const patient = await this.firestore.doc(`patients/${authData.uid}`).get()
+    if (patient.exists)
+      return {
+        type: UserRoleType.patient,
+        organization: userContent?.organization,
+      }
+    return { type: UserRoleType.user }
   }
 
   // Methods - Change Roles
@@ -92,13 +135,16 @@ export class SecurityService {
       throw new https.HttpsError('permission-denied', 'User is not an admin.')
   }
 
-  async ensureOwner(authData: AuthData | undefined, organizationId: string) {
+  async ensureOwner(
+    authData: AuthData | undefined,
+    organizationId: string | undefined,
+  ) {
     if (!authData)
       throw new https.HttpsError(
         'unauthenticated',
         'User is not properly authenticated.',
       )
-    if (await this.isOwner(authData, organizationId)) return
+    if (organizationId && (await this.isOwner(authData, organizationId))) return
     if (await this.isAdmin(authData)) return
     throw new https.HttpsError(
       'permission-denied',
@@ -108,15 +154,16 @@ export class SecurityService {
 
   async ensureClinician(
     authData: AuthData | undefined,
-    organizationId: string,
+    organizationId: string | undefined,
   ) {
     if (!authData)
       throw new https.HttpsError(
         'unauthenticated',
         'User is not properly authenticated.',
       )
-    if (await this.isClinician(authData, organizationId)) return
-    if (await this.isOwner(authData, organizationId)) return
+    if (organizationId && (await this.isClinician(authData, organizationId)))
+      return
+    if (organizationId && (await this.isOwner(authData, organizationId))) return
     if (await this.isAdmin(authData)) return
     throw new https.HttpsError(
       'permission-denied',
@@ -163,11 +210,15 @@ export class SecurityService {
     organizationId: string,
   ): Promise<boolean> {
     if (!authData?.uid) return false
+
     const clinician = await this.firestore
       .doc(`clinicians/${authData.uid}`)
       .get()
-    const content = clinician.data() as Clinician | undefined
-    return content?.organization === organizationId
+    if (!clinician.exists) return false
+    const user = await this.firestore.doc(`users/${authData.uid}`).get()
+    if (!user.exists) return false
+    const userContent = user.data() as User | undefined
+    return userContent?.organization === organizationId
   }
 
   isUser(authData: AuthData | undefined, userId: string): boolean {

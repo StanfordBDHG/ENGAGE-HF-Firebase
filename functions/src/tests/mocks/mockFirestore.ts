@@ -43,6 +43,10 @@ class MockFirestoreTransaction {
     return (reference as any).get()
   }
 
+  create(reference: MockFirestoreRef, data: any) {
+    ;(reference as any).create(data)
+  }
+
   set(reference: MockFirestoreRef, data: any) {
     ;(reference as any).set(data)
   }
@@ -50,7 +54,7 @@ class MockFirestoreTransaction {
   update(reference: MockFirestoreRef, data: any) {
     ;(reference as any).update(data)
   }
-  
+
   delete(reference: MockFirestoreRef) {
     ;(reference as any).delete()
   }
@@ -98,7 +102,7 @@ class MockFirestoreDocRef extends MockFirestoreRef {
     const pathComponents = this.path.split('/')
     const collectionPath = pathComponents.slice(0, -1).join('/')
     const result =
-      this.firestore.collections[collectionPath][
+      this.firestore.collections[collectionPath]?.[
         pathComponents[pathComponents.length - 1]
       ]
     return {
@@ -107,6 +111,26 @@ class MockFirestoreDocRef extends MockFirestoreRef {
       ref: this as any,
       data: () => result as any,
     }
+  }
+
+  create(data: any) {
+    const pathComponents = this.path.split('/')
+    const collectionPath = pathComponents.slice(0, -1).join('/')
+    if (
+      !Object.keys(this.firestore.collections).some(
+        (key) => key === collectionPath,
+      )
+    )
+      this.firestore.collections[collectionPath] = {}
+    if (
+      this.firestore.collections[collectionPath][
+        pathComponents[pathComponents.length - 1]
+      ] !== undefined
+    )
+      throw new Error('Document already exists')
+    this.firestore.collections[collectionPath][
+      pathComponents[pathComponents.length - 1]
+    ] = data
   }
 
   set(data: any) {
@@ -127,7 +151,7 @@ class MockFirestoreDocRef extends MockFirestoreRef {
     const value = this.get().data()
     this.set({ ...value, ...data })
   }
-  
+
   delete() {
     const pathComponents = this.path.split('/')
     const collectionPath = pathComponents.slice(0, -1).join('/')

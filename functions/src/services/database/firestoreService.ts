@@ -18,7 +18,6 @@ import {
   type DatabaseService,
 } from './databaseService.js'
 import { type Appointment } from '../../models/appointment.js'
-import { type Clinician } from '../../models/clinician.js'
 import {
   type FHIRMedication,
   type FHIRMedicationRequest,
@@ -29,7 +28,7 @@ import { type KccqScore } from '../../models/kccqScore.js'
 import { type MedicationClass } from '../../models/medicationClass.js'
 import { type UserMessage } from '../../models/message.js'
 import { type Organization } from '../../models/organization.js'
-import { type User } from '../../models/user.js'
+import { type Clinician, type Patient, type User } from '../../models/user.js'
 
 export class FirestoreService implements DatabaseService {
   // Properties
@@ -62,12 +61,6 @@ export class FirestoreService implements DatabaseService {
     return { id: doc.id, content: doc.data() as Appointment }
   }
 
-  // Clinicians
-
-  async getClinician(userId: string) {
-    return this.getDocument<Clinician>(`clinicians/${userId}`)
-  }
-
   // Invitations
 
   async getInvitation(invitationId: string) {
@@ -88,7 +81,7 @@ export class FirestoreService implements DatabaseService {
   async enrollUser(invitationId: string, userId: string) {
     const invitationRef = this.firestore.doc(`invitations/${invitationId}`)
     const invitation = await invitationRef.get()
-    const invitationData = invitation.data()
+    const invitationData = invitation.data() as Invitation | undefined
 
     if (!invitation.exists || invitationData?.used) {
       throw new https.HttpsError(
@@ -106,15 +99,36 @@ export class FirestoreService implements DatabaseService {
       )
     }
 
+    await this.auth.updateUser(userId, {
+      displayName: invitationData?.auth?.displayName,
+      email: invitationData?.auth?.email,
+      photoURL: invitationData?.auth?.photoURL,
+    })
+
     // eslint-disable-next-line @typescript-eslint/require-await
     await this.firestore.runTransaction(async (transaction: Transaction) => {
-      transaction.set(userRef, {
+      transaction.create(userRef, {
         invitationCode: invitation.id,
         dateOfEnrollment: FieldValue.serverTimestamp(),
         ...invitationData?.user,
       })
 
-      transaction.update(invitationRef, {
+      if (invitationData?.admin) {
+        const adminRef = this.firestore.doc(`admins/${userId}`)
+        transaction.create(adminRef, invitationData.admin)
+      }
+
+      if (invitationData?.clinician) {
+        const clinicianRef = this.firestore.doc(`clinicians/${userId}`)
+        transaction.create(clinicianRef, invitationData.clinician)
+      }
+
+      if (invitationData?.patient) {
+        const patientRef = this.firestore.doc(`patients/${userId}`)
+        transaction.create(patientRef, invitationData.patient)
+      }
+
+      transaction.set(invitationRef, {
         used: true,
         usedBy: userId,
       })
@@ -165,8 +179,16 @@ export class FirestoreService implements DatabaseService {
 
   // Users
 
+  async getClinician(userId: string) {
+    return this.getDocument<Clinician>(`clinicians/${userId}`)
+  }
+
   async getUser(userId: string) {
     return this.getDocument<User>(`users/${userId}`)
+  }
+
+  async getPatient(userId: string) {
+    return this.getDocument<Patient>(`patients/${userId}`)
   }
 
   async getUserRecord(userId: string) {

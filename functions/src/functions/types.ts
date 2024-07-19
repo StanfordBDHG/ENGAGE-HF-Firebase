@@ -6,6 +6,10 @@
 // SPDX-License-Identifier: MIT
 //
 
-export interface Clinician {
-  organization?: string
+export interface Result<T> {
+  data?: T
+  error?: {
+    code: string
+    message: string
+  }
 }

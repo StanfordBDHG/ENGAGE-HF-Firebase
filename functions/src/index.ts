@@ -17,6 +17,16 @@ import {
 } from './functions/invitation.js'
 import { dismissMessageFunction } from './functions/message.js'
 import { rebuildStaticDataFunction } from './functions/staticData.js'
+import {
+  createInvitationFunction,
+  deleteUserFunction,
+  getUsersInformationFunction,
+  grantAdminFunction,
+  grantOwnerFunction,
+  revokeAdminFunction,
+  revokeOwnerFunction,
+  updateUserInformationFunction,
+} from './functions/users.js'
 
 admin.initializeApp()
 
@@ -25,3 +35,12 @@ export const checkInvitationCode = checkInvitationCodeFunction
 export const dismissMessage = dismissMessageFunction
 export const exportHealthSummary = exportHealthSummaryFunction
 export const rebuildStaticData = rebuildStaticDataFunction
+
+export const getUsersInformation = getUsersInformationFunction
+export const updateUserInformation = updateUserInformationFunction
+export const deleteUser = deleteUserFunction
+export const createInvitation = createInvitationFunction
+export const grantOwner = grantOwnerFunction
+export const revokeOwner = revokeOwnerFunction
+export const grantAdmin = grantAdminFunction
+export const revokeAdmin = revokeAdminFunction

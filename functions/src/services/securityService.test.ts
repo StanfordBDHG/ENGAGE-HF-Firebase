@@ -23,7 +23,7 @@ describe('SecurityService', () => {
   const adminAuth = createAuthData('mockAdmin')
   const ownerAuth = createAuthData('mockOwner')
   const clinicianAuth = createAuthData('mockClinician')
-  const userAuth = createAuthData('mockUser')
+  const patientAuth = createAuthData('mockPatient')
   const organizationId = 'mockOrganization'
 
   beforeEach(() => {
@@ -32,17 +32,25 @@ describe('SecurityService', () => {
         mockAdmin: {},
       },
       clinicians: {
-        mockClinician: {
-          organization: 'mockOrganization',
-        },
+        mockClinician: {},
       },
       organizations: {
         mockOrganization: {
           owners: ['mockOwner'],
         },
       },
+      patients: {
+        mockPatient: {},
+      },
       users: {
-        mockUser: {
+        mockAdmin: {},
+        mockClinician: {
+          organization: 'mockOrganization',
+        },
+        mockOwner: {
+          organization: 'mockOrganization',
+        },
+        mockPatient: {
           organization: 'mockOrganization',
         },
       },
@@ -59,8 +67,8 @@ describe('SecurityService', () => {
     const isClinician = await service.isAdmin(clinicianAuth)
     expect(isClinician).to.be.false
 
-    const isUser = await service.isAdmin(userAuth)
-    expect(isUser).to.be.false
+    const isPatient = await service.isAdmin(patientAuth)
+    expect(isPatient).to.be.false
   })
 
   it('correctly understands whether a user is an owner', async () => {
@@ -85,8 +93,8 @@ describe('SecurityService', () => {
     )
     expect(isClinicianOtherOrg).to.be.false
 
-    const isUser = await service.isOwner(userAuth, organizationId)
-    expect(isUser).to.be.false
+    const isPatient = await service.isOwner(patientAuth, organizationId)
+    expect(isPatient).to.be.false
   })
 
   it('correctly understands whether a user is a clinician', async () => {
@@ -111,21 +119,21 @@ describe('SecurityService', () => {
     )
     expect(isClinicianOtherOrg).to.be.false
 
-    const isUser = await service.isClinician(userAuth, organizationId)
-    expect(isUser).to.be.false
+    const isPatient = await service.isClinician(patientAuth, organizationId)
+    expect(isPatient).to.be.false
   })
 
   it('correctly understands whether a user is a clinician', () => {
-    const isAdmin = service.isUser(adminAuth, userAuth.uid)
+    const isAdmin = service.isUser(adminAuth, patientAuth.uid)
     expect(isAdmin).to.be.false
 
-    const isOwner = service.isUser(ownerAuth, userAuth.uid)
+    const isOwner = service.isUser(ownerAuth, patientAuth.uid)
     expect(isOwner).to.be.false
 
-    const isClinician = service.isUser(clinicianAuth, userAuth.uid)
+    const isClinician = service.isUser(clinicianAuth, patientAuth.uid)
     expect(isClinician).to.be.false
 
-    const isUser = service.isUser(userAuth, userAuth.uid)
-    expect(isUser).to.be.true
+    const isPatient = service.isUser(patientAuth, patientAuth.uid)
+    expect(isPatient).to.be.true
   })
 })
