@@ -81,7 +81,7 @@ export class FirestoreService implements DatabaseService {
   async enrollUser(invitationId: string, userId: string) {
     const invitationRef = this.firestore.doc(`invitations/${invitationId}`)
     const invitation = await invitationRef.get()
-    const invitationData = invitation.data()
+    const invitationData = invitation.data() as Invitation | undefined
 
     if (!invitation.exists || invitationData?.used) {
       throw new https.HttpsError(

@@ -11,8 +11,15 @@ export interface Invitation {
   used: boolean
   usedBy?: string
 
+  auth?: UserAuthenticationInformation
   admin?: Admin
   clinician?: Clinician
   patient?: Patient
   user?: User
+}
+
+export interface UserAuthenticationInformation {
+  displayName?: string
+  email?: string
+  photoURL?: string
 }

@@ -10,6 +10,7 @@ import admin from 'firebase-admin'
 import { https } from 'firebase-functions'
 import { type CallableRequest, onCall } from 'firebase-functions/v2/https'
 import { type Result } from './types.js'
+import { type UserAuthenticationInformation } from '../models/invitation.js'
 import {
   type Admin,
   type Clinician,
@@ -24,12 +25,6 @@ export interface GetUsersInformationInput {
   includePatientData?: boolean
   includeUserData?: boolean
   userIds?: string[]
-}
-
-export interface UserAuthenticationInformation {
-  displayName?: string
-  email?: string
-  photoURL?: string
 }
 
 export interface UserInformation {
@@ -131,9 +126,9 @@ export const updateUserInformationFunction = onCall(
 
     const auth = admin.auth()
     await auth.updateUser(request.data.userId, {
-      displayName: request.data.data.auth?.displayName,
-      email: request.data.data.auth?.email,
-      photoURL: request.data.data.auth?.photoURL,
+      displayName: request.data.data.auth.displayName,
+      email: request.data.data.auth.email,
+      photoURL: request.data.data.auth.photoURL,
     })
   },
 )
