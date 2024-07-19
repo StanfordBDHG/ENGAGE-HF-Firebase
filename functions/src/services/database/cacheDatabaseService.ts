@@ -12,7 +12,7 @@ enum CacheKeyPrefix {
   getNextAppointment = 'getNextAppointment',
   getClinician = 'getClinician',
   getInvitation = 'getInvitation',
-  getInvitationUsedBy = 'getInvitationUsedBy',
+  getInvitationByUserId = 'getInvitationByUserId',
   getMedicationClasses = 'getMedicationClasses',
   getMedicationClass = 'getMedicationClass',
   getMedications = 'getMedications',
@@ -69,10 +69,19 @@ export class CacheDatabaseService implements DatabaseService {
     )
   }
 
-  async getInvitationUsedBy(userId: string) {
-    return this.accessCache(CacheKeyPrefix.getInvitationUsedBy, [userId], () =>
-      this.databaseService.getInvitationUsedBy(userId),
+  async getInvitationByUserId(userId: string) {
+    return this.accessCache(
+      CacheKeyPrefix.getInvitationByUserId,
+      [userId],
+      () => this.databaseService.getInvitationByUserId(userId),
     )
+  }
+
+  async setInvitationUserId(
+    invitationId: string,
+    userId: string,
+  ): Promise<void> {
+    return this.databaseService.setInvitationUserId(invitationId, userId)
   }
 
   async enrollUser(invitationId: string, userId: string) {

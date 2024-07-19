@@ -37,7 +37,8 @@ export interface DatabaseService {
   // Invitations
 
   getInvitation(invitationId: string): Promise<DatabaseDocument<Invitation>>
-  getInvitationUsedBy(
+  setInvitationUserId(invitationId: string, userId: string): Promise<void>
+  getInvitationByUserId(
     userId: string,
   ): Promise<DatabaseDocument<Invitation> | undefined>
   enrollUser(invitationId: string, userId: string): Promise<void>

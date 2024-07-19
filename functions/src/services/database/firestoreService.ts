@@ -67,7 +67,7 @@ export class FirestoreService implements DatabaseService {
     return this.getDocument<Invitation>(`invitations/${invitationId}`)
   }
 
-  async getInvitationUsedBy(userId: string) {
+  async getInvitationByUserId(userId: string) {
     const collection = await this.firestore
       .collection('invitations')
       .where('usedBy', '==', userId)
@@ -78,8 +78,9 @@ export class FirestoreService implements DatabaseService {
     return { id: doc.id, content: doc.data() as Invitation }
   }
 
-  async setInvitationUsedBy(invitationId: string, userId: string) {
-    
+  async setInvitationUserId(invitationId: string, userId: string) {
+    const invitationRef = this.firestore.doc(`invitations/${invitationId}`)
+    await invitationRef.update({ userId: userId })
   }
 
   async enrollUser(invitationId: string, userId: string) {
@@ -87,21 +88,16 @@ export class FirestoreService implements DatabaseService {
     const invitation = await invitationRef.get()
     const invitationData = invitation.data() as Invitation | undefined
 
-    if (!invitation.exists || invitationData?.used) {
-      throw new https.HttpsError(
-        'not-found',
-        'Invitation code not found or already used.',
-      )
-    }
+    if (!invitation.exists)
+      throw new https.HttpsError('not-found', 'Invitation code not found.')
 
     const userRef = this.firestore.doc(`users/${userId}`)
     const user = await userRef.get()
-    if (user.exists) {
+    if (user.exists)
       throw new https.HttpsError(
         'already-exists',
         'User is already enrolled in the study.',
       )
-    }
 
     await this.auth.updateUser(userId, {
       displayName: invitationData?.auth?.displayName,
