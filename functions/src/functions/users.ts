@@ -26,10 +26,14 @@ export interface GetUsersInformationInput {
   userIds?: string[]
 }
 
-export interface UserInformation {
+export interface UserAuthenticationInformation {
   displayName?: string
   email?: string
   photoURL?: string
+}
+
+export interface UserInformation {
+  auth: UserAuthenticationInformation
   clinician?: Clinician
   patient?: Patient
   user?: User
@@ -67,9 +71,11 @@ export const getUsersInformationFunction = onCall(
           )
         const user = await firestoreService.getUserRecord(userId)
         const userInformation: UserInformation = {
-          displayName: user.displayName,
-          email: user.email,
-          photoURL: user.photoURL,
+          auth: {
+            displayName: user.displayName,
+            email: user.email,
+            photoURL: user.photoURL,
+          },
         }
         if (request.data.includeClinicianData ?? false) {
           const clinician = await firestoreService.getClinician(userId)
@@ -125,9 +131,9 @@ export const updateUserInformationFunction = onCall(
 
     const auth = admin.auth()
     await auth.updateUser(request.data.userId, {
-      displayName: request.data.data.displayName,
-      email: request.data.data.email,
-      photoURL: request.data.data.photoURL,
+      displayName: request.data.data.auth?.displayName,
+      email: request.data.data.auth?.email,
+      photoURL: request.data.data.auth?.photoURL,
     })
   },
 )
@@ -166,13 +172,14 @@ export const deleteUserFunction = onCall(
     await firestore.recursiveDelete(
       firestore.doc(`users/${request.data.userId}`),
     )
+    const auth = admin.auth()
+    await auth.deleteUser(request.data.userId)
     return 'Success'
   },
 )
 
 export interface CreateInvitationInput {
-  code?: string
-
+  auth?: UserAuthenticationInformation
   admin?: Admin
   clinician?: Clinician
   patient?: Patient
@@ -202,10 +209,7 @@ export const createInvitationFunction = onCall(
 
     const firestore = admin.firestore()
     const invitationCollection = firestore.collection('invitations')
-    const invitationDoc =
-      request.data.code ?
-        invitationCollection.doc(request.data.code)
-      : invitationCollection.doc()
+    const invitationDoc = invitationCollection.doc()
     await invitationDoc.create(request.data)
 
     return {

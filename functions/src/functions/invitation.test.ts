@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { expect } from 'chai'
+import { assert, expect } from 'chai'
 import admin from 'firebase-admin'
 import { FieldValue } from 'firebase-admin/firestore'
 import { describe } from 'mocha'
@@ -36,6 +36,10 @@ describe('Functions: Invitation', () => {
     })
 
     it('enrolls an admin', async () => {
+      const userId = 'mockAdminUserId'
+      const invitationId = 'mockAdmin'
+      const displayName = 'Mock Admin'
+
       mockFirestore.collections = {
         invitations: {
           mockAdmin: {
@@ -47,14 +51,24 @@ describe('Functions: Invitation', () => {
                 medicationRemindersAreActive: true,
               },
             },
+            auth: {
+              displayName: displayName,
+            },
             admin: {},
           },
         },
       }
 
-      const userId = 'mockAdminUserId'
-      const invitationId = 'mockAdmin'
+      const auth = admin.auth()
+      try {
+        await auth.getUser(userId)
+        assert.fail('Expected an error.')
+      } catch {}
+
       await firestoreService.enrollUser(invitationId, userId)
+
+      const userRecord = await auth.getUser(userId)
+      expect(userRecord.displayName).to.equal(displayName)
 
       const firestore = admin.firestore()
 
@@ -104,6 +118,10 @@ describe('Functions: Invitation', () => {
     })
 
     it('enrolls a clinician', async () => {
+      const userId = 'mockClinicianUserId'
+      const invitationId = 'mockClinician'
+      const displayName = 'Mock Clinician'
+
       mockFirestore.collections = {
         invitations: {
           mockClinician: {
@@ -116,14 +134,24 @@ describe('Functions: Invitation', () => {
               },
               organization: 'mockOrganization',
             },
+            auth: {
+              displayName: displayName,
+            },
             clinician: {},
           },
         },
       }
 
-      const userId = 'mockClinicianUserId'
-      const invitationId = 'mockClinician'
+      const auth = admin.auth()
+      try {
+        await auth.getUser(userId)
+        assert.fail('Expected an error.')
+      } catch {}
+
       await firestoreService.enrollUser(invitationId, userId)
+
+      const userRecord = await auth.getUser(userId)
+      expect(userRecord.displayName).to.equal(displayName)
 
       const firestore = admin.firestore()
 
@@ -173,6 +201,10 @@ describe('Functions: Invitation', () => {
     })
 
     it('enrolls a patient', async () => {
+      const userId = 'mockPatientUserId'
+      const invitationId = 'mockPatient'
+      const displayName = 'Mock Patient'
+
       mockFirestore.collections = {
         invitations: {
           mockPatient: {
@@ -185,6 +217,9 @@ describe('Functions: Invitation', () => {
               },
               organization: 'mockOrganization',
             },
+            auth: {
+              displayName: displayName,
+            },
             patient: {
               clinician: 'mockClinician',
               dateOfBirth: new Date(),
@@ -193,9 +228,16 @@ describe('Functions: Invitation', () => {
         },
       }
 
-      const userId = 'mockPatientUserId'
-      const invitationId = 'mockPatient'
+      const auth = admin.auth()
+      try {
+        await auth.getUser(userId)
+        assert.fail('Expected an error.')
+      } catch {}
+
       await firestoreService.enrollUser(invitationId, userId)
+
+      const userRecord = await auth.getUser(userId)
+      expect(userRecord.displayName).to.equal(displayName)
 
       const firestore = admin.firestore()
 
@@ -247,6 +289,10 @@ describe('Functions: Invitation', () => {
     })
 
     it('enrolls a user', async () => {
+      const userId = 'mockUserUserId'
+      const invitationId = 'mockUser'
+      const displayName = 'Mock User'
+
       mockFirestore.collections = {
         invitations: {
           mockUser: {
@@ -258,13 +304,23 @@ describe('Functions: Invitation', () => {
                 medicationRemindersAreActive: true,
               },
             },
+            auth: {
+              displayName: displayName,
+            },
           },
         },
       }
 
-      const userId = 'mockUserUserId'
-      const invitationId = 'mockUser'
+      const auth = admin.auth()
+      try {
+        await auth.getUser(userId)
+        assert.fail('Expected an error.')
+      } catch {}
+
       await firestoreService.enrollUser(invitationId, userId)
+
+      const userRecord = await auth.getUser(userId)
+      expect(userRecord.displayName).to.equal(displayName)
 
       const firestore = admin.firestore()
 

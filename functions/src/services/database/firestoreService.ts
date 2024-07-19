@@ -99,9 +99,15 @@ export class FirestoreService implements DatabaseService {
       )
     }
 
+    await this.auth.updateUser(userId, {
+      displayName: invitationData?.auth?.displayName,
+      email: invitationData?.auth?.email,
+      photoURL: invitationData?.auth?.photoURL,
+    })
+
     // eslint-disable-next-line @typescript-eslint/require-await
     await this.firestore.runTransaction(async (transaction: Transaction) => {
-      transaction.set(userRef, {
+      transaction.create(userRef, {
         invitationCode: invitation.id,
         dateOfEnrollment: FieldValue.serverTimestamp(),
         ...invitationData?.user,
@@ -109,17 +115,17 @@ export class FirestoreService implements DatabaseService {
 
       if (invitationData?.admin) {
         const adminRef = this.firestore.doc(`admins/${userId}`)
-        transaction.update(adminRef, invitationData.admin)
+        transaction.create(adminRef, invitationData.admin)
       }
 
       if (invitationData?.clinician) {
         const clinicianRef = this.firestore.doc(`clinicians/${userId}`)
-        transaction.set(clinicianRef, invitationData.clinician)
+        transaction.create(clinicianRef, invitationData.clinician)
       }
 
       if (invitationData?.patient) {
         const patientRef = this.firestore.doc(`patients/${userId}`)
-        transaction.set(patientRef, invitationData.patient)
+        transaction.create(patientRef, invitationData.patient)
       }
 
       transaction.set(invitationRef, {
