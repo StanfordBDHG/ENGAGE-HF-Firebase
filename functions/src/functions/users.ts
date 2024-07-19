@@ -212,7 +212,15 @@ export const createInvitationFunction = onCall(
 
     const firestore = admin.firestore()
     const invitationCollection = firestore.collection('invitations')
-    const invitationDoc = invitationCollection.doc()
+    const invitationCode =
+      request.data.clinician !== undefined || request.data.admin !== undefined ?
+        request.data.auth.email
+      : undefined
+    const invitationDoc =
+      invitationCode ?
+        invitationCollection.doc(invitationCode)
+      : invitationCollection.doc()
+    // TODO: Try a few times with random ID instead of generating unique ID here.
     await invitationDoc.create(request.data)
     return { code: invitationDoc.id }
   },

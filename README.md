@@ -99,6 +99,7 @@ Based on the [Extension](https://hl7.org/fhir/R4B/extensibility.html#Extension) 
 |contactName|string|e.g. "Alex Sandhu, MD"|-|
 |phoneNumber|string|e.g. "(650) 493-5000"|-|
 |emailAddress|string|e.g. "dothfteam@stanford.edu"|-|
+|ssoProviderId|string|-|The providerId as used for single sign-on.|
 |owners|list of string|-|All the userIds of the organization owners.|
 
 ## patients/$userId$
@@ -109,7 +110,6 @@ In this section, we describe all patient-related data to be stored.
 |-|-|-|-|
 |dateOfBirth|Date|-|To be used for verification purposes.|
 |clinician|optional string|-|userId of an associated clinician.|
-
 
 ### patients/$userId$/allergyIntolerances/$allergyIntoleranceId$
 
@@ -122,7 +122,45 @@ Based on [FHIR AllergyIntolerance](https://hl7.org/fhir/R4B/allergyintolerance.h
 |code|CodableContent|e.g. "{"coding":[{"system":"https://hl7.org/fhir/R4B/valueset-allergyintolerance-code.html","code":"293963004","display":"Cardioselective beta-blocker allergy"}],"text":"Cardioselective beta-blocker allergy"}"|Uses either [AllergyIntoleranceCode](https://hl7.org/fhir/R4B/valueset-allergyintolerance-code.html), `medicationId` as used in /medications/$medicationId$ and/or `medicationId` as used in /medicationClasses/$medicationClassId$.|
 |patient|string|-|`userId` as used in /users/$userId$ and related collections.|
 
-We use RxNorm codes to describe different allergy intolerance codes an
+We use RxNorm codes to identify contraindications using the following rules:
+
+|Class|Medication|Brand Name(s)|Dose1|Dose2|Dose3|Dose4|Dose5|Dose6|If allergy, not eligible for|If allergy with reaction type angioedema not eligible for|If intolerance not eligible for|If intolerance default to|If financial, not eligible for|
+|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
+|BB|Metoprolol succinate ER|Toprol XL and Kapspargo Sprinkle|25mg|50mg|100mg|200mg|||BB|BB|Metoprolol|Carvedilol|BB|
+|BB|Carvedilol|Coreg|3.125mg|6.25mg|12.5mg|25mg|||BB|BB|Carvedilol|Metoprolol succinate|BB|
+|BB|Carvedilol phosphate ER|Coreg CR|10mg|20mg|40mg|80mg|||BB|BB|Carvedilol|Metoprolol succinate|BB|
+|BB|Bisoprolol|Cardicor and Congescor|5mg|10mg|||||BB|BB|Bisoprolol|Carvedilol|BB|
+|SGLT|Dapagliflozin|Farxiga|10mg||||||SGLT|SGLT|Dapagliflozin|Empagliflozin|SGLT|
+|SGLT|Empagliflozin|Jardiance|10mg|25mg|||||SGLT|SGLT|Empagliflozin|Dapagliflozin|SGLT|
+|SGLT|Sotagliflozin|Inpefa|200mg|400mg|||||SGLT|SGLT|Sotagliflozin|Empagliflozin|SGLT|
+|SGLT|Bexagliflozin|Brenzavvy|20mg||||||SGLT|SGLT|Bexagliflozin|Empagliflozin|SGLT|
+|SGLT|Canagliflozin|Invokana|100mg|300mg|||||SGLT|SGLT|Canagliflozin|Empagliflozin|SGLT|
+|SGLT|Ertugliflozin|Steglatro|5mg|15mg|||||SGLT|SGLT|Ertugliflozin|Empagliflozin|SGLT|
+|MRA|Spironolactone|Aldactone|25mg|50mg|100mg||||MRA|MRA|Spironolactone|Eplerenone|MRA|
+|MRA|Eplerenone|Inspra|25mg|50mg|||||MRA|MRA|Eplerenone|Spironolactone|MRA|
+|ACE|Quinapril|Accupril|5mg|10mg|20mg|40mg|||ACEI|ACEI/ARB/ARNI|ACEI|Valsartan/ARNI|ACEI/ARB/ARNI|
+|ACE|Perindopril|Aceon|2mg|4mg|8mg||||ACEI|ACEI/ARB/ARNI|ACEI|Valsartan/ARNI|ACEI/ARB/ARNI|
+|ACE|Ramipril|Altace|1.25mg|2.5mg|5mg|10mg|||ACEI|ACEI/ARB/ARNI|ACEI|Valsartan/ARNI|ACEI/ARB/ARNI|
+|ACE|Benazepril|Lotensin|5mg|10mg|20mg|40mg|||ACEI|ACEI/ARB/ARNI|ACEI|Valsartan/ARNI|ACEI/ARB/ARNI|
+|ACE|Captopril|Capoten|12.5mg|25mg|50mg|100mg|||ACEI|ACEI/ARB/ARNI|ACEI|Valsartan/ARNI|ACEI/ARB/ARNI|
+|ACE|Enalapril|Vasotec|2.5mg|5mg|10mg|20mg|||ACEI|ACEI/ARB/ARNI|ACEI|Valsartan/ARNI|ACEI/ARB/ARNI|
+|ACE|Lisinopril|Prinivil and Zestril|2.5mg|5mg|10mg|20mg|30mg|40mg|ACEI|ACEI/ARB/ARNI|ACEI|Valsartan/ARNI|ACEI/ARB/ARNI|
+|ACE|Fosinopril|Monopril|10mg|20mg|40mg||||ACEI|ACEI/ARB/ARNI|ACEI|Valsartan/ARNI|ACEI/ARB/ARNI|
+|ACE|Trandolapril|Mavik|1mg|2mg|4mg||||ACEI|ACEI/ARB/ARNI|ACEI|Valsartan/ARNI|ACEI/ARB/ARNI|
+|ACE|Moexepril|Univasc|7.5mg|15mg|||||ACEI|ACEI/ARB/ARNI|ACEI|Valsartan/ARNI|ACEI/ARB/ARNI|
+|ARB|Losartan|Cozaar|25mg|50mg|100mg||||ARB/ARNI|ACEI/ARB/ARNI|ARB/ARNI|Lisinopril|ACEI/ARB/ARNI|
+|ARB|Valsartan|Diovan|40mg|80mg|160mg|320mg|||ARB/ARNI|ACEI/ARB/ARNI|ARB/ARNI|Lisinopril|ACEI/ARB/ARNI|
+|ARB|Candesartan|Atacand|4mg|8mg|16mg|32mg|||ARB/ARNI|ACEI/ARB/ARNI|ARB/ARNI|Lisinopril|ACEI/ARB/ARNI|
+|ARB|Irbesartan|Avapro|75mg|150mg|300mg||||ARB/ARNI|ACEI/ARB/ARNI|ARB/ARNI|Lisinopril|ACEI/ARB/ARNI|
+|ARB|Telmisartan|Micardis|20mg|40mg|80mg||||ARB/ARNI|ACEI/ARB/ARNI|ARB/ARNI|Lisinopril|ACEI/ARB/ARNI|
+|ARB|Olmesartan|Benicar|5mg|20mg|40mg||||ARB/ARNI|ACEI/ARB/ARNI|ARB/ARNI|Lisinopril|ACEI/ARB/ARNI|
+|ARB|Azilsartan|Edarbi|40mg|80mg|||||ARB/ARNI|ACEI/ARB/ARNI|ARB/ARNI|Lisinopril|ACEI/ARB/ARNI|
+|ARB|Eprosartan|Teveten|400mg|800mg|||||ARB/ARNI|ACEI/ARB/ARNI|ARB/ARNI|Lisinopril|ACEI/ARB/ARNI|
+|ARNI|Sacubitril- Valsartan|Entresto|24-26mg|49-51mg|97-103mg||||ARB/ARNI|ACEI/ARB/ARNI|ARNI|Valsartan|ARNI|
+|Diuretic|Furosemide|Lasix|20mg|40mg|80mg|||||||||
+|Diuretic|Bumetanide|Bumex|0.5mg|1mg|2mg|||||||||
+|Diuretic|Torsemide|Soaanz|5mg|10mg|20mg|40mg|60mg|100mg||||||
+|Diuretic|Ethacrynic Acid|Edecrin|25mg|50mg||||||||||
 
 ### patients/$userId$/appointments
 
@@ -185,11 +223,13 @@ These are the output values of the recommendation algorithms. Depending on the t
 |-|-|-|-|-|-|
 |targetDoseReached|Green Checkmark|exists|undefined|The target dose has been reached.|
 |personalTargetDoseReached|Green Checkmark|exists|undefined|The personal target dose has been reached, meaning that vitals signal that we should not increase the dose (yet).|
-|notStarted|Gray Up Arrow|undefined|exists|Medication has not been started, but is eligible for initiation.|
-|moreLabObservationsRequired|Yellow|maybe|maybe (mutually exclusive to current medication)|More lab observations are required to recommend anything. The patient should probably schedule an appointment with a clinician.|
-|morePatientObservationsRequired|Yellow|maybe|maybe (mutually exclusive to current medication)|There are not enough patient observations to recommend anything. They should probably do some blood pressure measuring.|
-|noActionRequired|Gray|undefined|exists|The recommended medication is not eligible, but should still be shown to the user as an option without recommending it to them.|
 |improvementAvailable|Yellow Up Arrow|exists|undefined|The patient should uptitrate.|
+|morePatientObservationsRequired|Yellow|maybe|maybe (mutually exclusive to current medication)|There are not enough patient observations to recommend anything. They should probably do some blood pressure measuring.|
+|moreLabObservationsRequired|Yellow|maybe|maybe (mutually exclusive to current medication)|More lab observations are required to recommend anything. The patient should probably schedule an appointment with a clinician.|
+|notStarted|Gray Up Arrow|undefined|exists|Medication has not been started, but is eligible for initiation.|
+|noActionRequired|Gray|undefined|exists|The recommended medication is not eligible, but should still be shown to the user as an option without recommending it to them.|
+
+Diuretics, if currently present as medication request, will be shown as a recommendation with `personalTargetDoseReached`, so that the logic on the client becomes easier.
 
 ### Observations
 
@@ -420,7 +460,6 @@ Watch links for YouTube: `https://youtube.com/watch?v=${youtubeId}`.
 
 # Resources
 
-- See [resources/drugs.xlsx](resources/drugs.xlsx) for all the different drugs and contraindications. 
 - See [resources/algorithms] for diagrams describing the different algorithms for medication recommendations.
 - For definitions relevant for the setup of static data, including questionnaires, medication classes, medications and videoSections, have a look at [functions/data].
 

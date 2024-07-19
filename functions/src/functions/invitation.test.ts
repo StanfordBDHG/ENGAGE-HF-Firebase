@@ -76,14 +76,9 @@ describe('Functions: Invitation', () => {
         .collection('invitations')
         .doc(invitationId)
         .get()
-      expect(invitationSnapshot.exists).to.be.true
+      expect(invitationSnapshot.exists).to.be.false
       const invitationData = invitationSnapshot.data() as Invitation | undefined
-      expect(invitationData).to.exist
-      expect(invitationData?.used).to.be.true
-      expect(invitationData?.usedBy).to.equal(userId)
-      expect(invitationData?.admin).to.be.undefined
-      expect(invitationData?.clinician).to.be.undefined
-      expect(invitationData?.user).to.be.undefined
+      expect(invitationData).to.be.undefined
 
       const adminSnapshot = await firestore
         .collection('admins')
@@ -159,14 +154,9 @@ describe('Functions: Invitation', () => {
         .collection('invitations')
         .doc(invitationId)
         .get()
-      expect(invitationSnapshot.exists).to.be.true
+      expect(invitationSnapshot.exists).to.be.false
       const invitationData = invitationSnapshot.data() as Invitation | undefined
-      expect(invitationData).to.exist
-      expect(invitationData?.used).to.be.true
-      expect(invitationData?.usedBy).to.equal(userId)
-      expect(invitationData?.admin).to.be.undefined
-      expect(invitationData?.clinician).to.be.undefined
-      expect(invitationData?.user).to.be.undefined
+      expect(invitationData).to.be.undefined
 
       const adminSnapshot = await firestore
         .collection('admins')
@@ -245,14 +235,9 @@ describe('Functions: Invitation', () => {
         .collection('invitations')
         .doc(invitationId)
         .get()
-      expect(invitationSnapshot.exists).to.be.true
+      expect(invitationSnapshot.exists).to.be.false
       const invitationData = invitationSnapshot.data() as Invitation | undefined
-      expect(invitationData).to.exist
-      expect(invitationData?.used).to.be.true
-      expect(invitationData?.usedBy).to.equal(userId)
-      expect(invitationData?.admin).to.be.undefined
-      expect(invitationData?.clinician).to.be.undefined
-      expect(invitationData?.user).to.be.undefined
+      expect(invitationData).to.be.undefined
 
       const adminSnapshot = await firestore
         .collection('admins')
@@ -328,14 +313,9 @@ describe('Functions: Invitation', () => {
         .collection('invitations')
         .doc(invitationId)
         .get()
-      expect(invitationSnapshot.exists).to.be.true
+      expect(invitationSnapshot.exists).to.be.false
       const invitationData = invitationSnapshot.data() as Invitation | undefined
-      expect(invitationData).to.exist
-      expect(invitationData?.used).to.be.true
-      expect(invitationData?.usedBy).to.equal(userId)
-      expect(invitationData?.admin).to.be.undefined
-      expect(invitationData?.clinician).to.be.undefined
-      expect(invitationData?.user).to.be.undefined
+      expect(invitationData).to.be.undefined
 
       const adminSnapshot = await firestore
         .collection('admins')
