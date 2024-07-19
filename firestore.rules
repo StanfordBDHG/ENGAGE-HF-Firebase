@@ -42,6 +42,7 @@ service cloud.firestore {
 
     match /invitations/{invitationId} {
       allow read, write: if isAdmin(request)
+      allow read, update: if isOwner(request, resource.data.user.organization)
     }
 
     match /medications/{documents=**} {
@@ -56,7 +57,7 @@ service cloud.firestore {
     }
 
     match /patients/{patientId}/{documents=**} {
-      allow read, update: if isUser(request, userId)
+      allow read, update: if isUser(request, patientId)
       allow read, write: if isAdmin(request)
       allow read, update: if isOwner(request, organizationIdFromUserId(patientId))
       allow read, update: if isClinician(request, organizationIdFromUserId(patientId))
