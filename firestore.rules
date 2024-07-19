@@ -42,7 +42,7 @@ service cloud.firestore {
 
     match /invitations/{invitationId} {
       allow read, write: if isAdmin(request)
-      allow read, update: if isOwner(request, resource.data.user.organization)
+      allow read, update: if isOwner(request, resource.data.user.organization) && !('organization' in request.resource.data.user.organization)
     }
 
     match /medications/{documents=**} {
