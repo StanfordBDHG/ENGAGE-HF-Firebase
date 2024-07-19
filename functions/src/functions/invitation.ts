@@ -14,8 +14,8 @@ import {
   type AuthBlockingEvent,
   beforeUserCreated,
 } from 'firebase-functions/v2/identity'
+import { type DatabaseService } from '../services/database/databaseService.js'
 import { FirestoreService } from '../services/database/firestoreService.js'
-import { Organization } from '../models/organization.js'
 
 export interface CheckInvitationCodeInput {
   invitationCode: string
@@ -33,13 +33,13 @@ export const checkInvitationCodeFunction = onCall(
     const userId = request.auth.uid
     const { invitationCode } = request.data
 
-    const service = new FirestoreService()
+    const service: DatabaseService = new FirestoreService()
     logger.debug(
       `User (${userId}) -> ENGAGE-HF, InvitationCode ${invitationCode}`,
     )
 
     try {
-      await service.setInvitationUsedBy(invitationCode, userId)
+      await service.setInvitationUserId(invitationCode, userId)
 
       logger.debug(
         `User (${userId}) successfully enrolled in study (ENGAGE-HF) with invitation code: ${invitationCode}`,
@@ -81,14 +81,14 @@ export const beforeUserCreatedFunction: BlockingFunction = beforeUserCreated(
           .get()
       ).docs.at(0)
 
-      if (!organization || !organization.exists)
+      if (!organization?.exists)
         throw new https.HttpsError(
           'failed-precondition',
           'Organization not found.',
         )
 
       const invitation = await service.getInvitation(event.data.email)
-      if (!invitation) {
+      if (!invitation.content) {
         throw new https.HttpsError(
           'not-found',
           'No valid invitation code found for user.',
@@ -96,8 +96,8 @@ export const beforeUserCreatedFunction: BlockingFunction = beforeUserCreated(
       }
 
       if (
-        invitation.content?.admin === undefined &&
-        invitation.content?.user?.organization !== organization.id
+        invitation.content.admin === undefined &&
+        invitation.content.user?.organization !== organization.id
       )
         throw new https.HttpsError(
           'failed-precondition',
@@ -108,7 +108,7 @@ export const beforeUserCreatedFunction: BlockingFunction = beforeUserCreated(
     } else {
       try {
         // Check Firestore to confirm whether an invitation code has been associated with a user.
-        const invitation = await service.getInvitationUsedBy(userId)
+        const invitation = await service.getInvitationByUserId(userId)
 
         if (!invitation) {
           throw new https.HttpsError(

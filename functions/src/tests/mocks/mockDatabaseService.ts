@@ -66,22 +66,27 @@ export class MockDatabaseService implements DatabaseService {
     return {
       id: invitationId,
       content: {
-        used: true,
-        usedBy: 'test',
+        userId: 'test',
       },
     }
   }
 
-  async getInvitationUsedBy(
+  async getInvitationByUserId(
     userId: string,
   ): Promise<DatabaseDocument<Invitation> | undefined> {
     return {
       id: '123',
       content: {
-        used: true,
-        usedBy: userId,
+        userId: userId,
       },
     }
+  }
+
+  async setInvitationUserId(
+    invitationId: string,
+    userId: string,
+  ): Promise<void> {
+    return
   }
 
   async enrollUser(invitationId: string, userId: string): Promise<void> {
