@@ -195,6 +195,12 @@ export const createInvitationFunction = onCall(
     if (!request.auth?.uid)
       throw new https.HttpsError('unauthenticated', 'User is not authenticated')
 
+    if (!request.data.auth)
+      throw new https.HttpsError(
+        'invalid-argument',
+        'User authentication data is required',
+      )
+
     if (!request.data.user)
       throw new https.HttpsError('invalid-argument', 'User data is required')
 
@@ -211,10 +217,7 @@ export const createInvitationFunction = onCall(
     const invitationCollection = firestore.collection('invitations')
     const invitationDoc = invitationCollection.doc()
     await invitationDoc.create(request.data)
-
-    return {
-      code: invitationDoc.id,
-    }
+    return { code: invitationDoc.id }
   },
 )
 
