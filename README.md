@@ -36,12 +36,11 @@ A LocalizedText object cannot be used in FHIR-conforming types due to its incomp
 
 ## invitations/$invitationId$
 
-When a patient joins Engage-HF, we first create an invitation code on demand of an operator of the web dashboard. Upon activation, we create a user associated with the invitationCode and remove the entry in this collection.
+When a patient joins Engage-HF, we first create an invitation code on demand of an operator of the web dashboard. Upon entering the invitation code using an anonymous login, the userId is set. After successful registration, the user object will be fully created and the invitation is removed from this collection.
 
 |Property|Type|Values|Comments|
 |-|-|-|-|
-|used|boolean|true, false|Whether the invitation code has already been used or not. If this property is true, the invitation code can no longer be used.|
-|usedBy|optional string|-|The user created from this invitation code.|
+|userId|optional string|-|The userId associated with the invitation. This is set when an anonymous user has entered an invitation code, but has not used a proper account to log in yet.|
 |auth|optional Auth|Authentication information to be set when redeeming invitation.Will be undefined once invitation has been redeemed.|
 |auth>displayName|optional string|Display name for the user.|
 |auth>email|optional string|E-Mail address of the user.|
@@ -124,43 +123,43 @@ Based on [FHIR AllergyIntolerance](https://hl7.org/fhir/R4B/allergyintolerance.h
 
 We use RxNorm codes to identify contraindications using the following rules:
 
-|Class|Medication|Brand Name(s)|Dose1|Dose2|Dose3|Dose4|Dose5|Dose6|If allergy, not eligible for|If allergy with reaction type angioedema not eligible for|If intolerance not eligible for|If intolerance default to|If financial, not eligible for|
+|Class|Medication|If allergy, not eligible for|If allergy with reaction type angioedema not eligible for|If intolerance not eligible for|If intolerance default to|If financial, not eligible for|
 |-|-|-|-|-|-|-|-|-|-|-|-|-|-|
-|BB|Metoprolol succinate ER|Toprol XL and Kapspargo Sprinkle|25mg|50mg|100mg|200mg|||BB|BB|Metoprolol|Carvedilol|BB|
-|BB|Carvedilol|Coreg|3.125mg|6.25mg|12.5mg|25mg|||BB|BB|Carvedilol|Metoprolol succinate|BB|
-|BB|Carvedilol phosphate ER|Coreg CR|10mg|20mg|40mg|80mg|||BB|BB|Carvedilol|Metoprolol succinate|BB|
-|BB|Bisoprolol|Cardicor and Congescor|5mg|10mg|||||BB|BB|Bisoprolol|Carvedilol|BB|
-|SGLT|Dapagliflozin|Farxiga|10mg||||||SGLT|SGLT|Dapagliflozin|Empagliflozin|SGLT|
-|SGLT|Empagliflozin|Jardiance|10mg|25mg|||||SGLT|SGLT|Empagliflozin|Dapagliflozin|SGLT|
-|SGLT|Sotagliflozin|Inpefa|200mg|400mg|||||SGLT|SGLT|Sotagliflozin|Empagliflozin|SGLT|
-|SGLT|Bexagliflozin|Brenzavvy|20mg||||||SGLT|SGLT|Bexagliflozin|Empagliflozin|SGLT|
-|SGLT|Canagliflozin|Invokana|100mg|300mg|||||SGLT|SGLT|Canagliflozin|Empagliflozin|SGLT|
-|SGLT|Ertugliflozin|Steglatro|5mg|15mg|||||SGLT|SGLT|Ertugliflozin|Empagliflozin|SGLT|
-|MRA|Spironolactone|Aldactone|25mg|50mg|100mg||||MRA|MRA|Spironolactone|Eplerenone|MRA|
-|MRA|Eplerenone|Inspra|25mg|50mg|||||MRA|MRA|Eplerenone|Spironolactone|MRA|
-|ACE|Quinapril|Accupril|5mg|10mg|20mg|40mg|||ACEI|ACEI/ARB/ARNI|ACEI|Valsartan/ARNI|ACEI/ARB/ARNI|
-|ACE|Perindopril|Aceon|2mg|4mg|8mg||||ACEI|ACEI/ARB/ARNI|ACEI|Valsartan/ARNI|ACEI/ARB/ARNI|
-|ACE|Ramipril|Altace|1.25mg|2.5mg|5mg|10mg|||ACEI|ACEI/ARB/ARNI|ACEI|Valsartan/ARNI|ACEI/ARB/ARNI|
-|ACE|Benazepril|Lotensin|5mg|10mg|20mg|40mg|||ACEI|ACEI/ARB/ARNI|ACEI|Valsartan/ARNI|ACEI/ARB/ARNI|
-|ACE|Captopril|Capoten|12.5mg|25mg|50mg|100mg|||ACEI|ACEI/ARB/ARNI|ACEI|Valsartan/ARNI|ACEI/ARB/ARNI|
-|ACE|Enalapril|Vasotec|2.5mg|5mg|10mg|20mg|||ACEI|ACEI/ARB/ARNI|ACEI|Valsartan/ARNI|ACEI/ARB/ARNI|
-|ACE|Lisinopril|Prinivil and Zestril|2.5mg|5mg|10mg|20mg|30mg|40mg|ACEI|ACEI/ARB/ARNI|ACEI|Valsartan/ARNI|ACEI/ARB/ARNI|
-|ACE|Fosinopril|Monopril|10mg|20mg|40mg||||ACEI|ACEI/ARB/ARNI|ACEI|Valsartan/ARNI|ACEI/ARB/ARNI|
-|ACE|Trandolapril|Mavik|1mg|2mg|4mg||||ACEI|ACEI/ARB/ARNI|ACEI|Valsartan/ARNI|ACEI/ARB/ARNI|
-|ACE|Moexepril|Univasc|7.5mg|15mg|||||ACEI|ACEI/ARB/ARNI|ACEI|Valsartan/ARNI|ACEI/ARB/ARNI|
-|ARB|Losartan|Cozaar|25mg|50mg|100mg||||ARB/ARNI|ACEI/ARB/ARNI|ARB/ARNI|Lisinopril|ACEI/ARB/ARNI|
-|ARB|Valsartan|Diovan|40mg|80mg|160mg|320mg|||ARB/ARNI|ACEI/ARB/ARNI|ARB/ARNI|Lisinopril|ACEI/ARB/ARNI|
-|ARB|Candesartan|Atacand|4mg|8mg|16mg|32mg|||ARB/ARNI|ACEI/ARB/ARNI|ARB/ARNI|Lisinopril|ACEI/ARB/ARNI|
-|ARB|Irbesartan|Avapro|75mg|150mg|300mg||||ARB/ARNI|ACEI/ARB/ARNI|ARB/ARNI|Lisinopril|ACEI/ARB/ARNI|
-|ARB|Telmisartan|Micardis|20mg|40mg|80mg||||ARB/ARNI|ACEI/ARB/ARNI|ARB/ARNI|Lisinopril|ACEI/ARB/ARNI|
-|ARB|Olmesartan|Benicar|5mg|20mg|40mg||||ARB/ARNI|ACEI/ARB/ARNI|ARB/ARNI|Lisinopril|ACEI/ARB/ARNI|
-|ARB|Azilsartan|Edarbi|40mg|80mg|||||ARB/ARNI|ACEI/ARB/ARNI|ARB/ARNI|Lisinopril|ACEI/ARB/ARNI|
-|ARB|Eprosartan|Teveten|400mg|800mg|||||ARB/ARNI|ACEI/ARB/ARNI|ARB/ARNI|Lisinopril|ACEI/ARB/ARNI|
-|ARNI|Sacubitril- Valsartan|Entresto|24-26mg|49-51mg|97-103mg||||ARB/ARNI|ACEI/ARB/ARNI|ARNI|Valsartan|ARNI|
-|Diuretic|Furosemide|Lasix|20mg|40mg|80mg|||||||||
-|Diuretic|Bumetanide|Bumex|0.5mg|1mg|2mg|||||||||
-|Diuretic|Torsemide|Soaanz|5mg|10mg|20mg|40mg|60mg|100mg||||||
-|Diuretic|Ethacrynic Acid|Edecrin|25mg|50mg||||||||||
+|BB|Metoprolol succinate ER|BB|BB|Metoprolol|Carvedilol|BB|
+|BB|Carvedilol|BB|BB|Carvedilol|Metoprolol succinate|BB|
+|BB|Carvedilol phosphate ER|BB|BB|Carvedilol|Metoprolol succinate|BB|
+|BB|Bisoprolol|BB|BB|Bisoprolol|Carvedilol|BB|
+|SGLT|Dapagliflozin|SGLT|SGLT|Dapagliflozin|Empagliflozin|SGLT|
+|SGLT|Empagliflozin|SGLT|SGLT|Empagliflozin|Dapagliflozin|SGLT|
+|SGLT|Sotagliflozin|SGLT|SGLT|Sotagliflozin|Empagliflozin|SGLT|
+|SGLT|Bexagliflozin|SGLT|SGLT|Bexagliflozin|Empagliflozin|SGLT|
+|SGLT|Canagliflozin|SGLT|SGLT|Canagliflozin|Empagliflozin|SGLT|
+|SGLT|Ertugliflozin|SGLT|SGLT|Ertugliflozin|Empagliflozin|SGLT|
+|MRA|Spironolactone|MRA|MRA|Spironolactone|Eplerenone|MRA|
+|MRA|Eplerenone|MRA|MRA|Eplerenone|Spironolactone|MRA|
+|ACE|Quinapril|ACEI|ACEI/ARB/ARNI|ACEI|Valsartan/ARNI|ACEI/ARB/ARNI|
+|ACE|Perindopril|ACEI|ACEI/ARB/ARNI|ACEI|Valsartan/ARNI|ACEI/ARB/ARNI|
+|ACE|Ramipril|ACEI|ACEI/ARB/ARNI|ACEI|Valsartan/ARNI|ACEI/ARB/ARNI|
+|ACE|Benazepril|ACEI|ACEI/ARB/ARNI|ACEI|Valsartan/ARNI|ACEI/ARB/ARNI|
+|ACE|Captopril|ACEI|ACEI/ARB/ARNI|ACEI|Valsartan/ARNI|ACEI/ARB/ARNI|
+|ACE|Enalapril|ACEI|ACEI/ARB/ARNI|ACEI|Valsartan/ARNI|ACEI/ARB/ARNI|
+|ACE|Lisinopril|ACEI|ACEI/ARB/ARNI|ACEI|Valsartan/ARNI|ACEI/ARB/ARNI|
+|ACE|Fosinopril|ACEI|ACEI/ARB/ARNI|ACEI|Valsartan/ARNI|ACEI/ARB/ARNI|
+|ACE|Trandolapril|ACEI|ACEI/ARB/ARNI|ACEI|Valsartan/ARNI|ACEI/ARB/ARNI|
+|ACE|Moexepril|ACEI|ACEI/ARB/ARNI|ACEI|Valsartan/ARNI|ACEI/ARB/ARNI|
+|ARB|Losartan|ARB/ARNI|ACEI/ARB/ARNI|ARB/ARNI|Lisinopril|ACEI/ARB/ARNI|
+|ARB|Valsartan|ARB/ARNI|ACEI/ARB/ARNI|ARB/ARNI|Lisinopril|ACEI/ARB/ARNI|
+|ARB|Candesartan|ARB/ARNI|ACEI/ARB/ARNI|ARB/ARNI|Lisinopril|ACEI/ARB/ARNI|
+|ARB|Irbesartan|ARB/ARNI|ACEI/ARB/ARNI|ARB/ARNI|Lisinopril|ACEI/ARB/ARNI|
+|ARB|Telmisartan|ARB/ARNI|ACEI/ARB/ARNI|ARB/ARNI|Lisinopril|ACEI/ARB/ARNI|
+|ARB|Olmesartan|ARB/ARNI|ACEI/ARB/ARNI|ARB/ARNI|Lisinopril|ACEI/ARB/ARNI|
+|ARB|Azilsartan|ARB/ARNI|ACEI/ARB/ARNI|ARB/ARNI|Lisinopril|ACEI/ARB/ARNI|
+|ARB|Eprosartan|ARB/ARNI|ACEI/ARB/ARNI|ARB/ARNI|Lisinopril|ACEI/ARB/ARNI|
+|ARNI|Sacubitril- Valsartan|ARB/ARNI|ACEI/ARB/ARNI|ARNI|Valsartan|ARNI|
+|Diuretic|Furosemide||||||
+|Diuretic|Bumetanide||||||
+|Diuretic|Torsemide||||||
+|Diuretic|Ethacrynic Acid||||||
 
 ### patients/$userId$/appointments
 
@@ -200,7 +199,7 @@ The `dosageInstruction` property may contain values with the following propertie
 |timing|optional [Timing](https://hl7.org/fhir/R4B/datatypes.html#timing)|-|When medication should be administered|
 |doseAndRate|list of Element|-|Amount of medication administered|
 |doseAndRate>type|optional [DoseRateType](https://hl7.org/fhir/R4B/codesystem-dose-rate-type.html)|e.g. "calculated", "ordered"||
-|doseAndRate>dose|optional [SimpleQuantity](https://hl7.org/fhir/R4B/datatypes.html#SimpleQuantity)|-|Unit is always "tablet". Value may be 0.5, 1 or 2.|
+|doseAndRate>dose|optional [SimpleQuantity](https://hl7.org/fhir/R4B/datatypes.html#SimpleQuantity)|-|Unit is always "tablet". Value is usually 0.5, 1 or 2.|
 |maxDosePerPeriod|optional [Ratio](https://hl7.org/fhir/R4B/datatypes.html#ratio)|-|Upper limit on medication per unit of time|
 |maxDosePerAdministration|optional [SimpleQuantity](https://hl7.org/fhir/R4B/datatypes.html#SimpleQuantity)|-|Upper limit on medication per administration|
 |maxDosePerLifetime|optional [SimpleQuantity](https://hl7.org/fhir/R4B/datatypes.html#SimpleQuantity)|-|Upper limit on medication per unit of time|
@@ -474,3 +473,5 @@ A user can have one or more of the following roles assigned:
 |Clinician|In organization|R/W of users & patients|`clinicians/$userId$` exists|
 |Patient|In organization|R/W of `patients/$userId$`|`patients/$userId$` exists|
 |User|Own data|R/W of `users/$userId$`|auth has same userId|
+
+For more detail, please consult the Firestore rules defined in [firestore.rules](firestore.rules).
