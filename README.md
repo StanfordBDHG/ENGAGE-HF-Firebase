@@ -41,14 +41,14 @@ When a patient joins Engage-HF, we first create an invitation code on demand of 
 |Property|Type|Values|Comments|
 |-|-|-|-|
 |userId|optional string|-|The userId associated with the invitation. This is set when an anonymous user has entered an invitation code, but has not used a proper account to log in yet.|
-|auth|optional Auth|Authentication information to be set when redeeming invitation.Will be undefined once invitation has been redeemed.|
+|auth|optional Auth|Authentication information to be set when redeeming invitation. Will no longer be set once invitation has been redeemed.|
 |auth>displayName|optional string|Display name for the user.|
 |auth>email|optional string|E-Mail address of the user.|
 |auth>phoneNumber|optional string|Phone number of the user.|
 |auth>photoURL|optional string|URL for a photo of the user.|
-|user|optional User|See users/$userId$ for full specification. Will be undefined once invitation has been redeemed.|
-|clinician|optional Clinician|See clinicians/$userId$ for full specification. Will be undefined once invitation has been redeemed.|
-|patient|optional Patient|See patientts/$userId$ for full specification. Will be undefined once invitation has been redeemed.|
+|user|optional User|See users/$userId$ for full specification. Will no longer be set once invitation has been redeemed.|
+|clinician|optional Clinician|See clinicians/$userId$ for full specification. Will no longer be set once invitation has been redeemed.|
+|patient|optional Patient|See patientts/$userId$ for full specification. Will no longer be set once invitation has been redeemed.|
 
 ## medications
 
