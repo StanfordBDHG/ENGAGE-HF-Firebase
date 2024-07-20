@@ -45,6 +45,9 @@ service cloud.firestore {
       allow read, update: if isOwner(request, resource.data.user.organization) 
         && !('organization' in request.resource.data.user.organization) 
         && !('admin' in request.resource.data)
+      allow read, update: if isClinician(request, resource.data.user.organization) 
+        && !('organization' in request.resource.data.user.organization) 
+        && !('admin' in request.resource.data)
     }
 
     match /medications/{documents=**} {
@@ -71,8 +74,7 @@ service cloud.firestore {
     }
 
     match /users/{userId}/{documents=**} {
-      allow read: if isUser(request, userId)
-      allow update: if isUser(request, userId) && !('organization' in request.resource.data)
+      allow read, update: if isUser(request, userId) && !('organization' in request.resource.data)
       allow read, write: if isAdmin(request)
       allow read, update: if isOwner(request, organizationIdFromUserId(userId))
     }
