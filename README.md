@@ -52,7 +52,7 @@ When a patient joins Engage-HF, we first create an invitation code on demand of 
 
 ## medications
 
-In this section, we describe information regarding all the medications to be specified in the Engage-HF context. These medications may be used by a clinician for medication requests to a patient (patients/$userId$/medicationRequests) or contra-indications (patients/$userId$/allergyIntolerances).
+In this section, we describe information regarding all the medications to be specified in the Engage-HF context. These medications may be used by a clinician for medication requests to a patient (patients/$userId$/medicationRequests) or contra-indications (patients/$userId$/allergyIntolerances). The medications are generated from [functions/data/medicationCodes.json](functions/data/medicationCodes.json) file containing medications (incl. respective RxNorm SCD type codes) grouped by medication classes.
 
 ### medications/$medicationId$
 
