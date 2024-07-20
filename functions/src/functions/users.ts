@@ -86,12 +86,27 @@ export const getUsersInformationFunction = onCall(
         }
         result[userId] = { data: userInformation }
       } catch (error) {
-        result[userId] = {
-          error: {
-            code: '500',
-            message: 'Internal server error',
-            ...(error as object), // TODO: Is this safe?
-          },
+        if (error instanceof https.HttpsError) {
+          result[userId] = {
+            error: {
+              code: error.code,
+              message: error.message,
+            },
+          }
+        } else if (error instanceof Error) {
+          result[userId] = {
+            error: {
+              code: '500',
+              message: error.message,
+            },
+          }
+        } else {
+          result[userId] = {
+            error: {
+              code: '500',
+              message: 'Internal server error',
+            },
+          }
         }
       }
     }
@@ -216,15 +231,36 @@ export const createInvitationFunction = onCall(
       request.data.clinician !== undefined || request.data.admin !== undefined ?
         request.data.auth.email
       : undefined
-    const invitationDoc =
-      invitationCode ?
-        invitationCollection.doc(invitationCode)
-      : invitationCollection.doc()
-    // TODO: Try a few times with random ID instead of generating unique ID here.
-    await invitationDoc.create(request.data)
-    return { code: invitationDoc.id }
+
+    if (invitationCode) {
+      const invitationDoc = invitationCollection.doc(invitationCode)
+      await invitationDoc.create(request.data)
+      return { code: invitationDoc.id }
+    } else {
+      for (let counter = 0; ; counter++) {
+        const invitationCode = generateInvitationCode(8)
+        const invitationDoc = invitationCollection.doc(invitationCode)
+        try {
+          await invitationDoc.create(request.data)
+          return { code: invitationDoc.id }
+        } catch (error) {
+          if (counter < 4) continue
+          throw error
+        }
+      }
+    }
   },
 )
+
+function generateInvitationCode(length: number): string {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+  const charactersLength = characters.length
+  let result = ''
+  for (let counter = 0; counter < length; counter++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength))
+  }
+  return result
+}
 
 export interface GrantOwnerInput {
   userId?: string

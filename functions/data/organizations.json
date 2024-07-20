@@ -5,7 +5,7 @@
     "contactName": "Alex Sandhu, MD",
     "phoneNumber": "+1 (650) 493-5000",
     "emailAddress": "dothfteam@stanford.edu",
-    "ssoProviderId": "",
+    "ssoProviderId": "oidc.stanford",
     "owners": ["alex"]
   },
   "jhu": {
