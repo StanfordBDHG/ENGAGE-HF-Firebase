@@ -61,11 +61,29 @@ service cloud.firestore {
       allow read, update: if isOwner(request, organizationId)
     }
 
-    match /patients/{patientId}/{documents=**} {
+    match /patients/{patientId} {
       allow read, update: if isUser(request, patientId)
       allow read, write: if isAdmin(request)
       allow read, update: if isOwner(request, organizationIdFromUserId(patientId))
       allow read, update: if isClinician(request, organizationIdFromUserId(patientId))
+
+      match /{collectionName}/{documentId} {
+        function isPatientEditable() {
+          return collectionName.matches('/^[A-Za-z]+Observations$/')
+            || collectionName == 'questionnaireResponses'
+        }
+        function isClinicianEditable() {
+          return collectionName == 'allergyIntolerances' 
+            || collectionName == 'appointments' 
+            || collectionName == 'medicationRequests' 
+            || collectionName == 'medicationRecommendations'
+            || collectionName == 'symptomScores'
+        }
+        allow read, write: if isUser(request, patientId) && isPatientEditable()
+        allow read, write: if isAdmin(request)
+        allow read, update: if isOwner(request, organizationIdFromUserId(patientId))
+        allow read, update: if isClinician(request, organizationIdFromUserId(patientId)) && isClinicianEditable()
+      }
     }
 
     match /questionnaires/{questionnaireId} {
@@ -73,12 +91,28 @@ service cloud.firestore {
       allow read, write: if isAdmin(request)
     }
 
-    match /users/{userId}/{documents=**} {
+    match /users/{userId} {
       allow read, update: if isUser(request, userId)
         && !('organization' in request.resource.data)
       allow read, write: if isAdmin(request)
       allow read, update: if isOwner(request, organizationIdFromUserId(userId))
         && !('organization' in request.resource.data)
+      allow read, update: if isClinician(request, organizationIdFromUserId(userId))
+        && !('organization' in request.resource.data)
+
+      match /devices/{deviceId} {
+        allow read: if isUser(request, userId)
+        allow read, write: if isAdmin(request)
+        allow read: if isOwner(request, organizationIdFromUserId(userId))
+        allow read: if isClinician(request, organizationIdFromUserId(userId))
+      }
+
+      match /messages/{messageId} {
+        allow read: if isUser(request, userId)
+        allow read, write: if isAdmin(request)
+        allow read, write: if isOwner(request, organizationIdFromUserId(userId))
+        allow read, write: if isClinician(request, organizationIdFromUserId(userId))
+      }
     }
 
     match /videoSections/{documents=**} {

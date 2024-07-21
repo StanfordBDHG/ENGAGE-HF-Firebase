@@ -124,7 +124,7 @@ Based on [FHIR AllergyIntolerance](https://hl7.org/fhir/R4B/allergyintolerance.h
 We use RxNorm codes to identify contraindications using the following rules:
 
 |Class|Medication|If allergy, not eligible for|If allergy with reaction type angioedema not eligible for|If intolerance not eligible for|If intolerance default to|If financial, not eligible for|
-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
+|-|-|-|-|-|-|-|
 |BB|Metoprolol succinate ER|BB|BB|Metoprolol|Carvedilol|BB|
 |BB|Carvedilol|BB|BB|Carvedilol|Metoprolol succinate|BB|
 |BB|Carvedilol phosphate ER|BB|BB|Carvedilol|Metoprolol succinate|BB|
@@ -155,11 +155,11 @@ We use RxNorm codes to identify contraindications using the following rules:
 |ARB|Olmesartan|ARB/ARNI|ACEI/ARB/ARNI|ARB/ARNI|Lisinopril|ACEI/ARB/ARNI|
 |ARB|Azilsartan|ARB/ARNI|ACEI/ARB/ARNI|ARB/ARNI|Lisinopril|ACEI/ARB/ARNI|
 |ARB|Eprosartan|ARB/ARNI|ACEI/ARB/ARNI|ARB/ARNI|Lisinopril|ACEI/ARB/ARNI|
-|ARNI|Sacubitril- Valsartan|ARB/ARNI|ACEI/ARB/ARNI|ARNI|Valsartan|ARNI|
-|Diuretic|Furosemide||||||
-|Diuretic|Bumetanide||||||
-|Diuretic|Torsemide||||||
-|Diuretic|Ethacrynic Acid||||||
+|ARNI|Sacubitril-Valsartan|ARB/ARNI|ACEI/ARB/ARNI|ARNI|Valsartan|ARNI|
+|Diuretic|Furosemide|-|-|-|-|-|
+|Diuretic|Bumetanide|-|-|-|-|-|
+|Diuretic|Torsemide|-|-|-|-|-|
+|Diuretic|Ethacrynic Acid|-|-|-|-|-|
 
 ### patients/$userId$/appointments
 
@@ -219,7 +219,7 @@ These are the output values of the recommendation algorithms. Depending on the t
 #### Medication Recommendation Type
 
 |Type|Icon|Current Medication|Recommended Medication|Comments|
-|-|-|-|-|-|-|
+|-|-|-|-|-|
 |targetDoseReached|Green Checkmark|exists|undefined|The target dose has been reached.|
 |personalTargetDoseReached|Green Checkmark|exists|undefined|The personal target dose has been reached, meaning that vitals signal that we should not increase the dose (yet).|
 |improvementAvailable|Yellow Up Arrow|exists|undefined|The patient should uptitrate.|
