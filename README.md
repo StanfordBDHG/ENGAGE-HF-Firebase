@@ -459,8 +459,8 @@ Watch links for YouTube: `https://youtube.com/watch?v=${youtubeId}`.
 
 # Resources
 
-- See [resources/algorithms] for diagrams describing the different algorithms for medication recommendations.
-- For definitions relevant for the setup of static data, including questionnaires, medication classes, medications and videoSections, have a look at [functions/data].
+- See [resources/algorithms](resources/algorithms) for diagrams describing the different algorithms for medication recommendations.
+- For definitions relevant for the setup of static data, including questionnaires, medication classes, medications and videoSections, have a look at [functions/data](functions/data).
 
 # Security
 
