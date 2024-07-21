@@ -16,6 +16,7 @@ import {
   checkInvitationCodeFunction,
 } from './functions/invitation.js'
 import { dismissMessageFunction } from './functions/message.js'
+import { seedEmulatorFunction } from './functions/seedEmulator.js'
 import { rebuildStaticDataFunction } from './functions/staticData.js'
 import {
   createInvitationFunction,
@@ -44,3 +45,5 @@ export const grantOwner = grantOwnerFunction
 export const revokeOwner = revokeOwnerFunction
 export const grantAdmin = grantAdminFunction
 export const revokeAdmin = revokeAdminFunction
+
+export const seedEmulator = seedEmulatorFunction
