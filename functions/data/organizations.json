@@ -6,7 +6,7 @@
     "phoneNumber": "+1 (650) 493-5000",
     "emailAddress": "dothfteam@stanford.edu",
     "ssoProviderId": "oidc.stanford",
-    "owners": ["alex"]
+    "owners": []
   },
   "jhu": {
     "id": "jhu",
