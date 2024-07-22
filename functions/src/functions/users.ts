@@ -21,6 +21,7 @@ import { FirestoreService } from '../services/database/firestoreService.js'
 import { SecurityService } from '../services/securityService.js'
 import { DatabaseUserService } from '../services/user/databaseUserService.js'
 import { type UserService } from '../services/user/userService.js'
+import { CacheDatabaseService } from '../services/database/cacheDatabaseService.js'
 
 export interface GetUsersInformationInput {
   includeClinicianData?: boolean
@@ -49,7 +50,9 @@ export const getUsersInformationFunction = onCall(
     if (request.data.userIds.length > 100)
       throw new https.HttpsError('invalid-argument', 'Too many user IDs')
 
-    const userService = new DatabaseUserService(new FirestoreService())
+    const userService = new DatabaseUserService(
+      new CacheDatabaseService(new FirestoreService()),
+    )
     const authenticatedUser = await userService.getUser(request.auth.uid)
     if (!authenticatedUser)
       throw new https.HttpsError('not-found', 'User not found')
@@ -135,7 +138,7 @@ export const updateUserInformationFunction = onCall(
       throw new https.HttpsError('invalid-argument', 'User data is required')
 
     const userService: UserService = new DatabaseUserService(
-      new FirestoreService(),
+      new CacheDatabaseService(new FirestoreService()),
     )
     const user = await userService.getUser(request.data.userId)
     if (!user) throw new https.HttpsError('not-found', 'User not found')
@@ -165,7 +168,7 @@ export const deleteUserFunction = onCall(
       throw new https.HttpsError('invalid-argument', 'User ID is required')
 
     const userService: UserService = new DatabaseUserService(
-      new FirestoreService(),
+      new CacheDatabaseService(new FirestoreService()),
     )
     const user = await userService.getUser(request.auth.uid)
 

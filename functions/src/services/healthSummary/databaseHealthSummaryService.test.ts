@@ -11,8 +11,8 @@ import { DefaultHealthSummaryService } from './databaseHealthSummaryService.js'
 import { type HealthSummaryService } from './healthSummaryService.js'
 import { mockHealthSummaryData } from '../../tests/mocks/healthSummaryData.js'
 import { FhirService } from '../fhir/fhirService.js'
-import { MockPatientService } from '../patient/mockPatientService.js'
-import { MockUserService } from '../user/mockUserService.js'
+import { MockPatientService } from '../patient/patientService.mock.js'
+import { MockUserService } from '../user/userService.mock.js'
 
 describe('HealthSummaryService', () => {
   const healthSummaryService: HealthSummaryService =

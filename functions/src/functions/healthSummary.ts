@@ -16,6 +16,7 @@ import { DefaultHealthSummaryService } from '../services/healthSummary/databaseH
 import { DatabasePatientService } from '../services/patient/databasePatientService.js'
 import { SecurityService } from '../services/securityService.js'
 import { DatabaseUserService } from '../services/user/databaseUserService.js'
+import { DatabaseService } from '../services/database/databaseService.js'
 
 export interface ExportHealthSummaryInput {
   userId?: string
@@ -26,7 +27,7 @@ export const exportHealthSummaryFunction = onCall(
     if (!request.data.userId)
       throw new https.HttpsError('invalid-argument', 'User ID is required')
 
-    const databaseService = new CacheDatabaseService(new FirestoreService())
+    const databaseService: DatabaseService = new CacheDatabaseService(new FirestoreService())
     const securityService = new SecurityService()
     try {
       securityService.ensureUser(request.auth, request.data.userId)

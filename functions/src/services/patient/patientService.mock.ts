@@ -10,7 +10,7 @@ import {
   FHIRObservationStatus,
 } from '../../models/fhir/observation.js'
 import { type FHIRQuestionnaireResponse } from '../../models/fhir/questionnaireResponse.js'
-import { type MedicationRecommendation } from '../../models/medicationRecommendation'
+import { type MedicationRecommendation } from '../../models/medicationRecommendation.js'
 import { type SymptomScore } from '../../models/symptomScore.js'
 import { mockQuestionnaireResponse } from '../../tests/mocks/questionnaireResponse.js'
 import { CodingSystem, LoincCode } from '../codes.js'

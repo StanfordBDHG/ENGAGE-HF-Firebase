@@ -17,6 +17,7 @@ import {
 import { FirestoreService } from '../services/database/firestoreService.js'
 import { DatabaseUserService } from '../services/user/databaseUserService.js'
 import { type UserService } from '../services/user/userService.js'
+import { CacheDatabaseService } from '../services/database/cacheDatabaseService.js'
 
 export interface CheckInvitationCodeInput {
   invitationCode: string
@@ -34,7 +35,9 @@ export const checkInvitationCodeFunction = onCall(
     const userId = request.auth.uid
     const { invitationCode } = request.data
 
-    const service: UserService = new DatabaseUserService(new FirestoreService())
+    const service: UserService = new DatabaseUserService(
+      new CacheDatabaseService(new FirestoreService()),
+    )
     logger.debug(
       `User (${userId}) -> ENGAGE-HF, InvitationCode ${invitationCode}`,
     )
@@ -63,7 +66,9 @@ export const checkInvitationCodeFunction = onCall(
 
 export const beforeUserCreatedFunction: BlockingFunction = beforeUserCreated(
   async (event: AuthBlockingEvent) => {
-    const service: UserService = new DatabaseUserService(new FirestoreService())
+    const service: UserService = new DatabaseUserService(
+      new CacheDatabaseService(new FirestoreService()),
+    )
     const userId = event.data.uid
 
     if (event.credential) {
