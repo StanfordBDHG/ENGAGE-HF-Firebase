@@ -17,7 +17,7 @@ import {
   type MedicationOptimization,
   type HealthSummaryData,
 } from '../models/healthSummaryData.js'
-import { type SymptomScores } from '../models/symptomScores.js'
+import { type SymptomScore } from '../models/symptomScore.js'
 import { type Vitals } from '../models/vitals.js'
 
 export class HealthSummaryService {
