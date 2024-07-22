@@ -6,6 +6,13 @@
 // SPDX-License-Identifier: MIT
 //
 
+import {
+  type FHIRCodeableConcept,
+  type FHIRElement,
+  type FHIRReference,
+} from './baseTypes'
+import { type User } from '../user'
+
 export enum AppointmentStatus {
   proposed = 'proposed',
   pending = 'pending',
@@ -19,12 +26,17 @@ export enum AppointmentStatus {
   waitlist = 'waitlist',
 }
 
-export interface Appointment {
+export interface FHIRAppointment extends FHIRElement {
   status: AppointmentStatus
   created: Date
   start: Date
   end: Date
   comment?: string
   patientInstruction?: string
-  participant: string[]
+  participant?: FHIRAppointmentParticipant[]
+}
+
+export interface FHIRAppointmentParticipant {
+  actor?: FHIRReference<User>
+  type?: FHIRCodeableConcept
 }

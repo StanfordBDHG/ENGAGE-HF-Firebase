@@ -14,8 +14,10 @@ import {
   type AuthBlockingEvent,
   beforeUserCreated,
 } from 'firebase-functions/v2/identity'
-import { type DatabaseService } from '../services/database/databaseService.js'
+import { FirebaseAuthService } from '../services/auth/firebaseAuthService.js'
 import { FirestoreService } from '../services/database/firestoreService.js'
+import { DatabaseUserService } from '../services/user/databaseUserService.js'
+import { type UserService } from '../services/user/userService.js'
 
 export interface CheckInvitationCodeInput {
   invitationCode: string
@@ -33,7 +35,7 @@ export const checkInvitationCodeFunction = onCall(
     const userId = request.auth.uid
     const { invitationCode } = request.data
 
-    const service: DatabaseService = new FirestoreService()
+    const service: UserService = new DatabaseUserService(new FirestoreService())
     logger.debug(
       `User (${userId}) -> ENGAGE-HF, InvitationCode ${invitationCode}`,
     )
@@ -62,7 +64,8 @@ export const checkInvitationCodeFunction = onCall(
 
 export const beforeUserCreatedFunction: BlockingFunction = beforeUserCreated(
   async (event: AuthBlockingEvent) => {
-    const service = new FirestoreService()
+    const authService = new FirebaseAuthService()
+    const service: UserService = new DatabaseUserService(new FirestoreService())
     const userId = event.data.uid
 
     if (event.credential) {
@@ -104,6 +107,13 @@ export const beforeUserCreatedFunction: BlockingFunction = beforeUserCreated(
           'Organization does not match invitation code.',
         )
 
+      await authService.updateUser(userId, {
+        displayName: invitation.content.auth?.displayName,
+        email: invitation.content.auth?.email,
+        phoneNumber: invitation.content.auth?.phoneNumber,
+        photoURL: invitation.content.auth?.photoURL,
+      })
+
       await service.enrollUser(invitation.id, userId)
     } else {
       try {
@@ -116,6 +126,13 @@ export const beforeUserCreatedFunction: BlockingFunction = beforeUserCreated(
             `No valid invitation code found for user ${userId}.`,
           )
         }
+
+        await authService.updateUser(userId, {
+          displayName: invitation.content.auth?.displayName,
+          email: invitation.content.auth?.email,
+          phoneNumber: invitation.content.auth?.phoneNumber,
+          photoURL: invitation.content.auth?.photoURL,
+        })
 
         await service.enrollUser(invitation.id, userId)
       } catch (error) {

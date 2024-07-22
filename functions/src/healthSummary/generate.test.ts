@@ -32,8 +32,8 @@ describe('generateHealthSummary', () => {
 
   let inputData: HealthSummaryData
 
-  beforeEach(() => {
-    inputData = mockHealthSummaryData()
+  beforeEach(async () => {
+    inputData = await mockHealthSummaryData()
   })
 
   it('should still create as nice of a PDF as before', () => {

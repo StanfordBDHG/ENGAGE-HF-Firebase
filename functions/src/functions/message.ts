@@ -9,6 +9,7 @@
 import { https } from 'firebase-functions'
 import { type CallableRequest, onCall } from 'firebase-functions/v2/https'
 import { FirestoreService } from '../services/database/firestoreService.js'
+import { DatabaseUserService } from '../services/user/databaseUserService.js'
 
 export interface DismissMessageInput {
   messageId?: string
@@ -29,7 +30,7 @@ export const dismissMessageFunction = onCall(
       throw new https.HttpsError('invalid-argument', 'Message ID is required')
 
     try {
-      const service = new FirestoreService()
+      const service = new DatabaseUserService(new FirestoreService())
       await service.dismissMessage(userId, messageId, didPerformAction ?? false)
     } catch (error) {
       console.error(error)

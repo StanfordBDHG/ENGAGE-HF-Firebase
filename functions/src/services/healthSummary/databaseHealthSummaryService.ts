@@ -5,63 +5,68 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import { CodingSystem, LoincCode } from './codes.js'
-import {
-  type DatabaseDocument,
-  type DatabaseService,
-} from './database/databaseService.js'
-import { type FhirService } from './fhir/fhirService.js'
-import { QuantityUnit } from './fhir/quantityUnit.js'
-import { type FHIRObservation } from '../models/fhir/observation.js'
+
+import { type HealthSummaryService } from './healthSummaryService.js'
+import { type FHIRObservation } from '../../models/fhir/observation.js'
 import {
   type MedicationOptimization,
   type HealthSummaryData,
-} from '../models/healthSummaryData.js'
-import { type SymptomScore } from '../models/symptomScore.js'
-import { type Vitals } from '../models/vitals.js'
+} from '../../models/healthSummaryData.js'
+import { type SymptomScore } from '../../models/symptomScore.js'
+import { type Vitals } from '../../models/vitals.js'
+import { type AuthService } from '../auth/authService.js'
+import { CodingSystem, LoincCode } from '../codes.js'
+import { type DatabaseDocument } from '../database/databaseService.js'
+import { type FhirService } from '../fhir/fhirService.js'
+import { QuantityUnit } from '../fhir/quantityUnit.js'
+import { type PatientService } from '../patient/patientService.js'
+import { type UserService } from '../user/userService.js'
 
-export class HealthSummaryService {
+export class DefaultHealthSummaryService implements HealthSummaryService {
   // Properties
 
-  private databaseService: DatabaseService
-  private fhirService: FhirService
+  private readonly authService: AuthService
+  private readonly fhirService: FhirService
+  private readonly patientService: PatientService
+  private readonly userService: UserService
 
   // Constructor
 
-  constructor(databaseService: DatabaseService, fhirService: FhirService) {
-    this.databaseService = databaseService
+  constructor(
+    authService: AuthService,
+    fhirService: FhirService,
+    patientService: PatientService,
+    userService: UserService,
+  ) {
+    this.authService = authService
     this.fhirService = fhirService
+    this.patientService = patientService
+    this.userService = userService
   }
 
   // Methods
 
-  async fetchHealthSummaryData(userId: string): Promise<HealthSummaryData> {
-    const [
-      userRecord,
-      patient,
-      nextAppointment,
-      medications,
-      symptomScores,
-      vitals,
-    ] = await Promise.all([
-      this.databaseService.getUserRecord(userId),
-      this.databaseService.getPatient(userId),
-      this.databaseService.getNextAppointment(userId),
-      this.getMedications(userId),
-      this.getSymptomScores(userId),
-      this.getVitals(userId),
-    ])
+  async getHealthSummaryData(userId: string): Promise<HealthSummaryData> {
+    const [user, patient, nextAppointment, medications, symptomScores, vitals] =
+      await Promise.all([
+        this.authService.getUser(userId),
+        this.userService.getPatient(userId),
+        this.patientService.getNextAppointment(userId),
+        this.getMedications(userId),
+        this.getSymptomScores(userId),
+        this.getVitals(userId),
+      ])
 
     const clinician =
       patient.content?.clinician ?
-        await this.databaseService.getUserRecord(patient.content.clinician)
+        await this.authService.getUser(patient.content.clinician)
       : undefined
 
     return {
-      name: userRecord.displayName ?? '---',
+      name: user.displayName ?? '---',
       dateOfBirth: patient.content?.dateOfBirth,
       clinicianName: clinician?.displayName ?? '---',
-      nextAppointment: nextAppointment?.content?.start,
+      nextAppointment: nextAppointment?.content.start,
       medications: medications,
       vitals: vitals,
       symptomScores: symptomScores,
@@ -72,7 +77,7 @@ export class HealthSummaryService {
 
   private async getSymptomScores(userId: string): Promise<SymptomScore[]> {
     return this.compactMapDocuments(
-      this.databaseService.getSymptomScores(userId),
+      this.patientService.getSymptomScores(userId),
     )
   }
 
@@ -112,7 +117,7 @@ export class HealthSummaryService {
 
   private async getBloodPressureObservations(userId: string) {
     const observations = await this.compactMapDocuments<FHIRObservation>(
-      this.databaseService.getBloodPressureObservations(userId),
+      this.patientService.getBloodPressureObservations(userId),
     )
     return [
       this.fhirService.extractObservationValues(observations, {
@@ -138,7 +143,7 @@ export class HealthSummaryService {
 
   private async getHeartRateObservations(userId: string) {
     const observations = await this.compactMapDocuments<FHIRObservation>(
-      this.databaseService.getHeartRateObservations(userId),
+      this.patientService.getHeartRateObservations(userId),
     )
     return this.fhirService.extractObservationValues(observations, {
       code: LoincCode.heartRate,
@@ -149,7 +154,7 @@ export class HealthSummaryService {
 
   private async getBodyWeightObservations(userId: string) {
     const observations = await this.compactMapDocuments<FHIRObservation>(
-      this.databaseService.getBodyWeightObservations(userId),
+      this.patientService.getBodyWeightObservations(userId),
     )
     return this.fhirService.extractObservationValues(observations, {
       code: LoincCode.bodyWeight,

@@ -10,15 +10,18 @@ import admin from 'firebase-admin'
 import { https } from 'firebase-functions'
 import { type CallableRequest, onCall } from 'firebase-functions/v2/https'
 import { type Result } from './types.js'
-import { type UserAuthenticationInformation } from '../models/invitation.js'
 import {
   type Admin,
   type Clinician,
   type Patient,
   type User,
 } from '../models/user.js'
+import { type UserAuthenticationInformation } from '../services/auth/authService.js'
+import { FirebaseAuthService } from '../services/auth/firebaseAuthService.js'
 import { FirestoreService } from '../services/database/firestoreService.js'
 import { SecurityService } from '../services/securityService.js'
+import { DatabaseUserService } from '../services/user/databaseUserService.js'
+import { type UserService } from '../services/user/userService.js'
 
 export interface GetUsersInformationInput {
   includeClinicianData?: boolean
@@ -47,8 +50,8 @@ export const getUsersInformationFunction = onCall(
     if (request.data.userIds.length > 100)
       throw new https.HttpsError('invalid-argument', 'Too many user IDs')
 
-    const firestoreService = new FirestoreService()
-    const authenticatedUser = await firestoreService.getUser(request.auth.uid)
+    const userService = new DatabaseUserService(new FirestoreService())
+    const authenticatedUser = await userService.getUser(request.auth.uid)
     const organization = authenticatedUser.content?.organization
 
     const securityService = new SecurityService()
@@ -57,14 +60,15 @@ export const getUsersInformationFunction = onCall(
     const result: GetUsersInformationOutput = {}
     for (const userId of request.data.userIds) {
       try {
-        const userData = await firestoreService.getUser(userId)
+        const userData = await userService.getUser(userId)
         // organization is undefined for admins
         if (organization && userData.content?.organization !== organization)
           throw new https.HttpsError(
             'permission-denied',
             'User does not belong to the same organization',
           )
-        const user = await firestoreService.getUserRecord(userId)
+        const authService = new FirebaseAuthService()
+        const user = await authService.getUser(userId)
         const userInformation: UserInformation = {
           auth: {
             displayName: user.displayName,
@@ -74,11 +78,11 @@ export const getUsersInformationFunction = onCall(
           },
         }
         if (request.data.includeClinicianData ?? false) {
-          const clinician = await firestoreService.getClinician(userId)
+          const clinician = await userService.getClinician(userId)
           userInformation.clinician = clinician.content
         }
         if (request.data.includePatientData ?? false) {
-          const patient = await firestoreService.getPatient(userId)
+          const patient = await userService.getPatient(userId)
           userInformation.patient = patient.content
         }
         if (request.data.includeUserData ?? false) {
@@ -130,8 +134,10 @@ export const updateUserInformationFunction = onCall(
     if (!request.data.data)
       throw new https.HttpsError('invalid-argument', 'User data is required')
 
-    const firestoreService = new FirestoreService()
-    const user = await firestoreService.getUser(request.data.userId)
+    const userService: UserService = new DatabaseUserService(
+      new FirestoreService(),
+    )
+    const user = await userService.getUser(request.data.userId)
     const organization = user.content?.organization
 
     const securityService = new SecurityService()
@@ -163,8 +169,10 @@ export const deleteUserFunction = onCall(
     if (!request.data.userId)
       throw new https.HttpsError('invalid-argument', 'User ID is required')
 
-    const firestoreService = new FirestoreService()
-    const user = await firestoreService.getUser(request.auth.uid)
+    const userService: UserService = new DatabaseUserService(
+      new FirestoreService(),
+    )
+    const user = await userService.getUser(request.auth.uid)
 
     const securityService = new SecurityService()
     await securityService.ensureClinician(

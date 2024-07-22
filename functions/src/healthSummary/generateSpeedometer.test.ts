@@ -14,8 +14,8 @@ import { mockHealthSummaryData } from '../tests/mocks/healthSummaryData.js'
 import { TestFlags } from '../tests/testFlags.js'
 
 describe('generateSpeedometer', () => {
-  it('should generate the same chart on mock data', () => {
-    const inputData = mockHealthSummaryData()
+  it('should generate the same chart on mock data', async () => {
+    const inputData = await mockHealthSummaryData()
     const actualData = generateSpeedometerSvg(inputData.symptomScores, 258)
     const expectedPath = 'src/tests/resources/mockSpeedometer.svg'
     if (TestFlags.regenerateValues) {

@@ -1,0 +1,166 @@
+import { FieldValue } from 'firebase-admin/firestore'
+import { https } from 'firebase-functions/v2'
+import { type UserService } from './userService.js'
+import { type Invitation } from '../../models/invitation.js'
+import { type UserMessage } from '../../models/message.js'
+import { type Organization } from '../../models/organization.js'
+import { type Clinician, type Patient, type User } from '../../models/user.js'
+import {
+  type DatabaseDocument,
+  type DatabaseService,
+} from '../database/databaseService.js'
+
+export class DatabaseUserService implements UserService {
+  // Properties
+
+  private readonly databaseService: DatabaseService
+
+  // Constructor
+
+  constructor(databaseService: DatabaseService) {
+    this.databaseService = databaseService
+  }
+
+  // Invitations
+
+  async getInvitation(
+    invitationId: string,
+  ): Promise<DatabaseDocument<Invitation | undefined>> {
+    return this.databaseService.getDocument<Invitation>(
+      `invitations/${invitationId}`,
+    )
+  }
+
+  async setInvitationUserId(
+    invitationId: string,
+    userId: string,
+  ): Promise<void> {
+    await this.databaseService.runTransaction(
+      async (firestore, transaction) => {
+        const invitationRef = firestore.doc(`invitations/${invitationId}`)
+        const invitationDoc = await transaction.get(invitationRef)
+        if (!invitationDoc.exists) {
+          throw new Error('Invitation not found')
+        }
+        transaction.update(invitationRef, { userId: userId })
+      },
+    )
+  }
+
+  async getInvitationByUserId(
+    userId: string,
+  ): Promise<DatabaseDocument<Invitation> | undefined> {
+    const result = await this.databaseService.getQuery<Invitation>(
+      (firestore) =>
+        firestore
+          .collection('invitations')
+          .where('usedBy', '==', userId)
+          .limit(1),
+    )
+    return result.at(0)
+  }
+
+  async enrollUser(invitationId: string, userId: string): Promise<void> {
+    const invitation = await this.getInvitation(invitationId)
+
+    if (!invitation.content)
+      throw new https.HttpsError('not-found', 'Invitation code not found.')
+
+    const user = await this.databaseService.getDocument(`users/${userId}`)
+    if (user.content)
+      throw new https.HttpsError(
+        'already-exists',
+        'User is already enrolled in the study.',
+      )
+
+    await this.databaseService.runTransaction((firestore, transaction) => {
+      transaction.create(firestore.doc(`users/${userId}`), {
+        invitationCode: invitation.id,
+        dateOfEnrollment: FieldValue.serverTimestamp(),
+        ...invitation.content?.user,
+      })
+
+      if (invitation.content?.admin) {
+        const adminRef = firestore.doc(`admins/${userId}`)
+        transaction.create(adminRef, invitation.content.admin)
+      }
+
+      if (invitation.content?.clinician) {
+        const clinicianRef = firestore.doc(`clinicians/${userId}`)
+        transaction.create(clinicianRef, invitation.content.clinician)
+      }
+
+      if (invitation.content?.patient) {
+        const patientRef = firestore.doc(`patients/${userId}`)
+        transaction.create(patientRef, invitation.content.patient)
+      }
+
+      transaction.delete(firestore.doc(`invitations/${invitation.id}`))
+    })
+  }
+
+  // Organizations
+
+  async getOrganizations(): Promise<Array<DatabaseDocument<Organization>>> {
+    return this.databaseService.getCollection<Organization>('organizations')
+  }
+
+  async getOrganization(
+    organizationId: string,
+  ): Promise<DatabaseDocument<Organization | undefined>> {
+    return this.databaseService.getDocument<Organization>(
+      `organizations/${organizationId}`,
+    )
+  }
+
+  // Users
+
+  async getClinician(
+    userId: string,
+  ): Promise<DatabaseDocument<Clinician | undefined>> {
+    return this.databaseService.getDocument<Clinician>(`clinicians/${userId}`)
+  }
+
+  async getPatient(
+    userId: string,
+  ): Promise<DatabaseDocument<Patient | undefined>> {
+    return this.databaseService.getDocument<Patient>(`patients/${userId}`)
+  }
+
+  async getUser(userId: string): Promise<DatabaseDocument<User | undefined>> {
+    return this.databaseService.getDocument<User>(`users/${userId}`)
+  }
+
+  // Users - Messages
+
+  async dismissMessage(
+    userId: string,
+    messageId: string,
+    didPerformAction: boolean,
+  ): Promise<void> {
+    console.log(
+      `dismissMessage for user/${userId}/message/${messageId} with didPerformAction ${didPerformAction}`,
+    )
+    await this.databaseService.runTransaction(
+      async (firestore, transaction) => {
+        const messageRef = firestore.doc(
+          `users/${userId}/messages/${messageId}`,
+        )
+        const message = await transaction.get(messageRef)
+        if (!message.exists)
+          throw new https.HttpsError('not-found', 'Message not found.')
+
+        const messageContent = message.data() as UserMessage
+        if (!messageContent.isDismissible)
+          throw new https.HttpsError(
+            'invalid-argument',
+            'Message is not dismissible.',
+          )
+
+        transaction.update(messageRef, {
+          completionDate: FieldValue.serverTimestamp(),
+        })
+      },
+    )
+  }
+}

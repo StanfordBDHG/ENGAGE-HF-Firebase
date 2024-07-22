@@ -11,13 +11,15 @@ import admin from 'firebase-admin'
 import { https } from 'firebase-functions/v2'
 import { type UserMessage, UserMessageType } from '../models/message.js'
 import { FirestoreService } from '../services/database/firestoreService.js'
+import { DatabaseUserService } from '../services/user/databaseUserService.js'
+import { type UserService } from '../services/user/userService.js'
 import { setupMockAuth, setupMockFirestore } from '../tests/setup.js'
 
 describe('message', () => {
   setupMockAuth()
   setupMockFirestore()
   const firestore = admin.firestore()
-  const service = new FirestoreService()
+  const service: UserService = new DatabaseUserService(new FirestoreService())
 
   it('should update the completionDate of messages', async () => {
     const message: UserMessage = {

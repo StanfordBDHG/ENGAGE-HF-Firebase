@@ -5,12 +5,9 @@
 //
 // SPDX-License-Identifier: MIT
 //
-export interface Organization {
-  id: string
-  name: string
-  contactName: string
-  phoneNumber: string
-  emailAddress: string
-  ssoProviderId: string
-  owners: string[]
+
+import { type HealthSummaryData } from '../../models/healthSummaryData.js'
+
+export interface HealthSummaryService {
+  getHealthSummaryData(userId: string): Promise<HealthSummaryData>
 }
