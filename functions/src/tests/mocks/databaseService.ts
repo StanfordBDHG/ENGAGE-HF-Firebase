@@ -1190,34 +1190,6 @@ export class MockDatabaseService implements DatabaseService {
     return this.makeDocument(userId, {
       dateOfBirth: new Date('1970-01-02'),
       clinician: 'mockClinician',
-      dryWeight: {
-        date: new Date('2024-01-29'),
-        valueQuantity: {
-          ...QuantityUnit.lbs,
-          value: 267.5,
-        },
-      },
-      creatinine: {
-        date: new Date('2024-01-29'),
-        valueQuantity: {
-          ...QuantityUnit.mg_dL,
-          value: 1.1,
-        },
-      },
-      potassium: {
-        date: new Date('2024-01-29'),
-        valueQuantity: {
-          ...QuantityUnit.mEq_L,
-          value: 4.2,
-        },
-      },
-      estimatedGlomerularFiltrationRate: {
-        date: new Date('2024-01-29'),
-        valueQuantity: {
-          ...QuantityUnit.mL_min_173m2,
-          value: 60,
-        },
-      },
     })
   }
 
