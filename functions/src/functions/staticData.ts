@@ -12,30 +12,69 @@ import {
   onCall,
   onRequest,
 } from 'firebase-functions/v2/https'
+import { type AuthData } from 'firebase-functions/v2/tasks'
 import { Flags } from '../flags.js'
 import { RxNormService } from '../services/rxNormService.js'
+import { SecurityService } from '../services/securityService.js'
 import { StaticDataService } from '../services/staticDataService.js'
 
-async function rebuildStaticData(userId: string | undefined) {
-  if (!Flags.isEmulator) {
-    if (!userId) throw new Error('User is not properly authenticated')
+export enum StaticDataComponent {
+  admins = 'admins',
+  medicationClasses = 'medicationClasses',
+  medications = 'medications',
+  organizations = 'organizations',
+  questionnaires = 'questionnaires',
+  videoSections = 'videoSections',
+}
 
-    const user = await admin.auth().getUser(userId)
-    if (!user.customClaims?.admin) throw new Error('User is not an admin')
+export interface RebuildStaticDataInput {
+  only?: StaticDataComponent[]
+}
+
+async function rebuildStaticData(
+  authData: AuthData | undefined,
+  input: RebuildStaticDataInput,
+) {
+  if (!Flags.isEmulator) {
+    await new SecurityService().ensureAdmin(authData)
   }
   const service = new StaticDataService(admin.firestore(), new RxNormService())
-  await service.updateAll()
+  if (input.only) {
+    if (input.only.includes(StaticDataComponent.admins)) {
+      await service.updateAdmins()
+    }
+    if (input.only.includes(StaticDataComponent.medicationClasses)) {
+      await service.updateMedicationClasses()
+    }
+    if (input.only.includes(StaticDataComponent.medications)) {
+      await service.updateMedications()
+    }
+    if (input.only.includes(StaticDataComponent.organizations)) {
+      await service.updateOrganizations()
+    }
+    if (input.only.includes(StaticDataComponent.questionnaires)) {
+      await service.updateQuestionnaires()
+    }
+    if (input.only.includes(StaticDataComponent.videoSections)) {
+      await service.updateVideoSections()
+    }
+  } else {
+    await service.updateAll()
+  }
 }
 
 const rebuildStaticDataFunctionProduction = onCall(
-  async (request: CallableRequest<void>) => {
-    await rebuildStaticData(request.auth?.uid)
+  async (request: CallableRequest<RebuildStaticDataInput>) => {
+    await rebuildStaticData(request.auth, request.data)
     return 'Success'
   },
 )
 
-const rebuildStaticDataFunctionDebug = onRequest(async (_, response) => {
-  await rebuildStaticData(undefined)
+const rebuildStaticDataFunctionDebug = onRequest(async (request, response) => {
+  await rebuildStaticData(
+    undefined,
+    (request.body ?? {}) as RebuildStaticDataInput,
+  )
   response.write('Success', 'utf8')
   response.end()
 })

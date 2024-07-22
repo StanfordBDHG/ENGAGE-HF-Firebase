@@ -6,7 +6,6 @@
 // SPDX-License-Identifier: MIT
 //
 import { type Appointment } from '../../models/appointment.js'
-import { type Clinician } from '../../models/clinician.js'
 import {
   type FHIRMedication,
   type FHIRMedicationRequest,
@@ -15,7 +14,12 @@ import { type FHIRObservation } from '../../models/fhir/observation.js'
 import { type Invitation } from '../../models/invitation.js'
 import { type KccqScore } from '../../models/kccqScore.js'
 import { type MedicationClass } from '../../models/medicationClass.js'
-import { type User, type UserRecord } from '../../models/user.js'
+import {
+  type Clinician,
+  type Patient,
+  type User,
+  type UserRecord,
+} from '../../models/user.js'
 
 export interface DatabaseDocument<Content> {
   id: string
@@ -30,14 +34,11 @@ export interface DatabaseService {
     userId: string,
   ): Promise<DatabaseDocument<Appointment> | undefined>
 
-  // Clinicians
-
-  getClinician(userId: string): Promise<DatabaseDocument<Clinician>>
-
   // Invitations
 
   getInvitation(invitationId: string): Promise<DatabaseDocument<Invitation>>
-  getInvitationUsedBy(
+  setInvitationUserId(invitationId: string, userId: string): Promise<void>
+  getInvitationByUserId(
     userId: string,
   ): Promise<DatabaseDocument<Invitation> | undefined>
   enrollUser(invitationId: string, userId: string): Promise<void>
@@ -62,8 +63,10 @@ export interface DatabaseService {
 
   // Users
 
-  getUser(userId: string): Promise<DatabaseDocument<User>>
   getUserRecord(userId: string): Promise<UserRecord>
+  getUser(userId: string): Promise<DatabaseDocument<User>>
+  getClinician(userId: string): Promise<DatabaseDocument<Clinician>>
+  getPatient(userId: string): Promise<DatabaseDocument<Patient>>
 
   // Users - Medication Requests
 

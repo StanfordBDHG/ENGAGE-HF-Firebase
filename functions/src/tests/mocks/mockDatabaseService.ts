@@ -5,11 +5,11 @@
 //
 // SPDX-License-Identifier: MIT
 //
+
 import {
   AppointmentStatus,
   type Appointment,
 } from '../../models/appointment.js'
-import { type Clinician } from '../../models/clinician.js'
 import {
   type FHIRMedication,
   type FHIRMedicationRequest,
@@ -21,7 +21,12 @@ import {
 import { type Invitation } from '../../models/invitation.js'
 import { type KccqScore } from '../../models/kccqScore.js'
 import { type MedicationClass } from '../../models/medicationClass.js'
-import { type User, type UserRecord } from '../../models/user.js'
+import {
+  type Clinician,
+  type Patient,
+  type User,
+  type UserRecord,
+} from '../../models/user.js'
 import {
   type DatabaseDocument,
   type DatabaseService,
@@ -53,18 +58,6 @@ export class MockDatabaseService implements DatabaseService {
     })
   }
 
-  // Methods - Clinicians
-
-  async getClinician(userId: string): Promise<DatabaseDocument<Clinician>> {
-    return {
-      id: userId,
-      content: {
-        id: userId,
-        organization: 'stanford',
-      },
-    }
-  }
-
   // Methods - Invitations
 
   async getInvitation(
@@ -73,22 +66,27 @@ export class MockDatabaseService implements DatabaseService {
     return {
       id: invitationId,
       content: {
-        used: true,
-        usedBy: 'test',
+        userId: 'test',
       },
     }
   }
 
-  async getInvitationUsedBy(
+  async getInvitationByUserId(
     userId: string,
   ): Promise<DatabaseDocument<Invitation> | undefined> {
     return {
       id: '123',
       content: {
-        used: true,
-        usedBy: userId,
+        userId: userId,
       },
     }
+  }
+
+  async setInvitationUserId(
+    invitationId: string,
+    userId: string,
+  ): Promise<void> {
+    return
   }
 
   async enrollUser(invitationId: string, userId: string): Promise<void> {
@@ -1161,20 +1159,34 @@ export class MockDatabaseService implements DatabaseService {
 
   // Methods - Users
 
-  async getUser(userId: string): Promise<DatabaseDocument<User>> {
+  async getClinician(userId: string): Promise<DatabaseDocument<Clinician>> {
+    return {
+      id: userId,
+      content: {
+        organization: 'stanford',
+      },
+    }
+  }
+
+  async getPatient(userId: string): Promise<DatabaseDocument<Patient>> {
     return this.makeDocument(userId, {
       dateOfBirth: new Date('1970-01-02'),
-      dateOfEnrollment: new Date('2024-04-02'),
       clinician: 'mockClinician',
+      dryWeight: {
+        ...QuantityUnit.lbs,
+        value: 267.5,
+      },
+    })
+  }
+
+  async getUser(userId: string): Promise<DatabaseDocument<User>> {
+    return this.makeDocument(userId, {
+      dateOfEnrollment: new Date('2024-04-02'),
       invitationCode: '123',
       messagesSettings: {
         dailyRemindersAreActive: true,
         textNotificationsAreActive: true,
         medicationRemindersAreActive: true,
-      },
-      dryWeight: {
-        ...QuantityUnit.lbs,
-        value: 267.5,
       },
     })
   }

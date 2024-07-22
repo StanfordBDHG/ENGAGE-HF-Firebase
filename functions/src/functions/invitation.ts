@@ -6,6 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
+import admin from 'firebase-admin'
 import { type BlockingFunction } from 'firebase-functions'
 import { https, logger } from 'firebase-functions/v2'
 import { type CallableRequest, onCall } from 'firebase-functions/v2/https'
@@ -13,14 +14,15 @@ import {
   type AuthBlockingEvent,
   beforeUserCreated,
 } from 'firebase-functions/v2/identity'
+import { type DatabaseService } from '../services/database/databaseService.js'
 import { FirestoreService } from '../services/database/firestoreService.js'
 
-export interface InvitationCodeInput {
+export interface CheckInvitationCodeInput {
   invitationCode: string
 }
 
 export const checkInvitationCodeFunction = onCall(
-  async (request: CallableRequest<InvitationCodeInput>) => {
+  async (request: CallableRequest<CheckInvitationCodeInput>) => {
     if (!request.auth?.uid) {
       throw new https.HttpsError(
         'unauthenticated',
@@ -31,13 +33,13 @@ export const checkInvitationCodeFunction = onCall(
     const userId = request.auth.uid
     const { invitationCode } = request.data
 
-    const service = new FirestoreService()
+    const service: DatabaseService = new FirestoreService()
     logger.debug(
       `User (${userId}) -> ENGAGE-HF, InvitationCode ${invitationCode}`,
     )
 
     try {
-      await service.enrollUser(invitationCode, userId)
+      await service.setInvitationUserId(invitationCode, userId)
 
       logger.debug(
         `User (${userId}) successfully enrolled in study (ENGAGE-HF) with invitation code: ${invitationCode}`,
@@ -63,36 +65,70 @@ export const beforeUserCreatedFunction: BlockingFunction = beforeUserCreated(
     const service = new FirestoreService()
     const userId = event.data.uid
 
-    try {
-      // Check Firestore to confirm whether an invitation code has been associated with a user.
-      const invitation = await service.getInvitationUsedBy(userId)
-
-      if (!invitation) {
+    if (event.credential) {
+      if (!event.data.email)
         throw new https.HttpsError(
-          'not-found',
-          `No valid invitation code found for user ${userId}.`,
+          'invalid-argument',
+          'Email address is required for user.',
         )
-      }
 
-      const user = await service.getUser(userId)
+      const organization = (
+        await admin
+          .firestore()
+          .collection('organizations')
+          .where('ssoProviderId', '==', event.credential.providerId)
+          .limit(1)
+          .get()
+      ).docs.at(0)
 
-      // Check if the user document contains the correct invitation code.
-      if (user.content?.invitationCode !== invitation.id) {
+      if (!organization?.exists)
         throw new https.HttpsError(
           'failed-precondition',
-          'User document does not exist or contains incorrect invitation code.',
+          'Organization not found.',
+        )
+
+      const invitation = await service.getInvitation(event.data.email)
+      if (!invitation.content) {
+        throw new https.HttpsError(
+          'not-found',
+          'No valid invitation code found for user.',
         )
       }
-    } catch (error) {
-      if (error instanceof Error) {
-        logger.error(`Error processing request: ${error.message}`)
-        if ('code' in error) {
-          throw new https.HttpsError('internal', 'Internal server error.')
+
+      if (
+        invitation.content.admin === undefined &&
+        invitation.content.user?.organization !== organization.id
+      )
+        throw new https.HttpsError(
+          'failed-precondition',
+          'Organization does not match invitation code.',
+        )
+
+      await service.enrollUser(invitation.id, userId)
+    } else {
+      try {
+        // Check Firestore to confirm whether an invitation code has been associated with a user.
+        const invitation = await service.getInvitationByUserId(userId)
+
+        if (!invitation) {
+          throw new https.HttpsError(
+            'not-found',
+            `No valid invitation code found for user ${userId}.`,
+          )
         }
-      } else {
-        logger.error(`Unknown error: ${String(error)}`)
+
+        await service.enrollUser(invitation.id, userId)
+      } catch (error) {
+        if (error instanceof Error) {
+          logger.error(`Error processing request: ${error.message}`)
+          if ('code' in error) {
+            throw new https.HttpsError('internal', 'Internal server error.')
+          }
+        } else {
+          logger.error(`Unknown error: ${String(error)}`)
+        }
+        throw error
       }
-      throw error
     }
   },
 )

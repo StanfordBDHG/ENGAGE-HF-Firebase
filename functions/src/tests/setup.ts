@@ -5,8 +5,9 @@
 //
 // SPDX-License-Identifier: MIT
 //
+
 import admin from 'firebase-admin'
-import { stub } from 'sinon'
+import { stub, restore } from 'sinon'
 import { MockAuth } from './mocks/mockAuth.js'
 import { MockFirestore } from './mocks/mockFirestore.js'
 
@@ -15,7 +16,12 @@ export function setupMockAuth() {
   stub(admin, 'auth').get(() => () => auth)
 }
 
-export function setupMockFirestore() {
+export function setupMockFirestore(): MockFirestore {
   const firestore = new MockFirestore()
   stub(admin, 'firestore').get(() => () => firestore)
+  return firestore
+}
+
+export function cleanupMocks() {
+  restore()
 }

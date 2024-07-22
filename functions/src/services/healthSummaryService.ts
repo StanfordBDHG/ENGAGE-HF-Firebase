@@ -34,30 +34,35 @@ export class HealthSummaryService {
   // Methods
 
   async fetchHealthSummaryData(userId: string): Promise<HealthSummaryData> {
-    const [userRecord, user, nextAppointment, medications, kccqScores, vitals] =
-      await Promise.all([
-        this.databaseService.getUserRecord(userId),
-        this.databaseService.getUser(userId),
-        this.databaseService.getNextAppointment(userId),
-        this.getMedications(userId),
-        this.getKccqScores(userId),
-        this.getVitals(userId),
-      ])
+    const [
+      userRecord,
+      patient,
+      nextAppointment,
+      medications,
+      kccqScores,
+      vitals,
+    ] = await Promise.all([
+      this.databaseService.getUserRecord(userId),
+      this.databaseService.getPatient(userId),
+      this.databaseService.getNextAppointment(userId),
+      this.getMedications(userId),
+      this.getKccqScores(userId),
+      this.getVitals(userId),
+    ])
 
     const clinician =
-      user.content?.clinician ?
-        await this.databaseService.getUserRecord(user.content.clinician)
+      patient.content?.clinician ?
+        await this.databaseService.getUserRecord(patient.content.clinician)
       : undefined
 
     return {
       name: userRecord.displayName ?? '---',
-      dateOfBirth: user.content?.dateOfBirth,
+      dateOfBirth: patient.content?.dateOfBirth,
       clinicianName: clinician?.displayName ?? '---',
       nextAppointment: nextAppointment?.content?.start,
       medications: medications,
       vitals: {
         ...vitals,
-        dryWeight: user.content?.dryWeight?.value ?? vitals.dryWeight,
       },
       symptomScores: kccqScores,
     }

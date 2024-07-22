@@ -4,9 +4,11 @@
   "type": "module",
   "scripts": {
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
+    "lint:fix": "npm run lint -- --fix",
+    "lint:strict": "npm run lint -- --max-warnings=0",
     "build": "tsc",
-    "test": "npm run build && npm run test:nobuild",
+    "clean": "if [ -f 'tsconfig.tsbuildinfo' ]; then rm tsconfig.tsbuildinfo; fi",
+    "test": "npm run clean && npm run build && npm run test:nobuild",
     "test:coverage": "c8 npm run test",
     "test:nobuild": "env TZ=UTC mocha --reporter-option maxDiffSize=0",
     "test:regenerate": "env REGENERATE_VALUES=true npm run test",

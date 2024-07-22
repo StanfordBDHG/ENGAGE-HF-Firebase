@@ -11,20 +11,17 @@ import { type UserRecord } from 'firebase-admin/auth'
 /* eslint-disable @typescript-eslint/require-await */
 
 export class MockAuth {
+  collections: Record<string, UserRecord | undefined> = {}
+
   async getUser(userId: string): Promise<UserRecord> {
-    const creationTime = new Date().toISOString()
-    const lastSignInTime = new Date().toISOString()
-    return {
-      uid: userId,
-      emailVerified: true,
-      disabled: false,
-      metadata: {
-        creationTime: creationTime,
-        lastSignInTime: lastSignInTime,
-        toJSON: () => ({}),
-      },
-      providerData: [],
-      toJSON: () => ({}),
+    const result = this.collections[userId]
+    if (result === undefined) {
+      throw new Error('User not found')
     }
+    return result
+  }
+
+  async updateUser(userId: string, record: UserRecord): Promise<void> {
+    this.collections[userId] = record
   }
 }
