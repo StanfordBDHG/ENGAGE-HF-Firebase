@@ -18,7 +18,7 @@ import {
   type HealthSummaryData,
 } from '../models/healthSummaryData.js'
 import { type SymptomScores } from '../models/symptomScores.js'
-import { type Observation, type Vitals } from '../models/vitals.js'
+import { type Vitals } from '../models/vitals.js'
 
 export class HealthSummaryService {
   // Properties
