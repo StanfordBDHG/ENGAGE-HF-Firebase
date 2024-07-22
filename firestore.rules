@@ -86,7 +86,7 @@ service cloud.firestore {
         allow read, write: if isOwner(request, organizationIdFromUserId(patientId))
         allow read: if isClinician(request, organizationIdFromUserId(patientId))
         allow write: if isClinician(request, organizationIdFromUserId(patientId)) 
-          && isClinicianWritable()
+          && (isPatientWritable() || isClinicianWritable())
       }
     }
 
