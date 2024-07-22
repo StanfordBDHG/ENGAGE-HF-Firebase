@@ -33,8 +33,9 @@ interface SymptomQuestionnaireLinkIds {
 export class DefaultSymptomScoreCalculator implements SymptomScoreCalculator {
   // Properties
 
-  private readonly linkIdMap: { [key: string]: SymptomQuestionnaireLinkIds } = {
-    'http://spezi.health/fhir/questionnaire/9528ccc2-d1be-4c4c-9c3c-19f78e51ec19':
+  private readonly linkIdMap = new Map<string, SymptomQuestionnaireLinkIds>([
+    [
+      'http://spezi.health/fhir/questionnaire/9528ccc2-d1be-4c4c-9c3c-19f78e51ec19',
       {
         question1a: 'a459b804-35bf-4792-f1eb-0b52c4e176e1',
         question1b: 'cf9c5031-1ed5-438a-fc7d-dc69234015a0',
@@ -50,12 +51,13 @@ export class DefaultSymptomScoreCalculator implements SymptomScoreCalculator {
         question8c: '883a22a8-2f6e-4b41-84b7-0028ed543192',
         question9: '24108967-2ff3-40d0-c54f-a7b97bb84d05',
       },
-  }
+    ],
+  ])
 
   // Methods
 
   calculate(response: FHIRQuestionnaireResponse): SymptomScore {
-    const linkIds = this.linkIdMap[response.questionnaire]
+    const linkIds = this.linkIdMap.get(response.questionnaire)
     if (!linkIds)
       throw new Error(`Unknown questionnaire ${response.questionnaire}`)
 

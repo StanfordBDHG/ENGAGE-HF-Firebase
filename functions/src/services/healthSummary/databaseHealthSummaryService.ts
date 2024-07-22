@@ -7,7 +7,6 @@
 //
 
 import { type HealthSummaryService } from './healthSummaryService.js'
-import { type FHIRObservation } from '../../models/fhir/observation.js'
 import {
   type MedicationOptimization,
   type HealthSummaryData,
@@ -15,7 +14,6 @@ import {
 import { type SymptomScore } from '../../models/symptomScore.js'
 import { type Vitals } from '../../models/vitals.js'
 import { CodingSystem, LoincCode } from '../codes.js'
-import { type DatabaseDocument } from '../database/databaseService.js'
 import { type FhirService } from '../fhir/fhirService.js'
 import { QuantityUnit } from '../fhir/quantityUnit.js'
 import { type PatientService } from '../patient/patientService.js'

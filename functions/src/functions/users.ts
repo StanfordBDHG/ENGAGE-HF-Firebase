@@ -17,11 +17,11 @@ import {
   type Patient,
   type User,
 } from '../models/user.js'
+import { CacheDatabaseService } from '../services/database/cacheDatabaseService.js'
 import { FirestoreService } from '../services/database/firestoreService.js'
 import { SecurityService } from '../services/securityService.js'
 import { DatabaseUserService } from '../services/user/databaseUserService.js'
 import { type UserService } from '../services/user/userService.js'
-import { CacheDatabaseService } from '../services/database/cacheDatabaseService.js'
 
 export interface GetUsersInformationInput {
   includeClinicianData?: boolean

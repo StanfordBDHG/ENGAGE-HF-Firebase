@@ -1,7 +1,7 @@
+import { type HealthSummaryService } from './healthSummaryService.js'
 import { type HealthSummaryData } from '../../models/healthSummaryData.js'
 import { MedicationRecommendationCategory } from '../../models/medicationRecommendation.js'
 import { QuantityUnit } from '../fhir/quantityUnit.js'
-import { type HealthSummaryService } from './healthSummaryService.js'
 
 /* eslint-disable @typescript-eslint/require-await */
 /* eslint-disable @typescript-eslint/no-unused-vars */

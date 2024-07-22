@@ -8,22 +8,22 @@
 
 import { assert, expect } from 'chai'
 import admin from 'firebase-admin'
-import { FieldValue, Firestore } from 'firebase-admin/firestore'
+import { FieldValue, type Firestore } from 'firebase-admin/firestore'
+import { https } from 'firebase-functions'
 import { describe } from 'mocha'
-import { type Invitation } from '../../models/invitation.js'
-import { type Admin, type Patient, type User } from '../../models/user.js'
-import { FirestoreService } from '../database/firestoreService.js'
 import { DatabaseUserService } from './databaseUserService.js'
 import { type UserService } from './userService.js'
+import { type Invitation } from '../../models/invitation.js'
+import { type UserMessage, UserMessageType } from '../../models/message.js'
+import { type Admin, type Patient, type User } from '../../models/user.js'
 import { type MockFirestore } from '../../tests/mocks/firestore.js'
 import {
   cleanupMocks,
   setupMockAuth,
   setupMockFirestore,
 } from '../../tests/setup.js'
-import { UserMessage, UserMessageType } from '../../models/message.js'
-import { https } from 'firebase-functions'
 import { CacheDatabaseService } from '../database/cacheDatabaseService.js'
+import { FirestoreService } from '../database/firestoreService.js'
 
 describe('UserService', () => {
   let mockFirestore: MockFirestore

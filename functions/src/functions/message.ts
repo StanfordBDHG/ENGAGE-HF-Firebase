@@ -8,9 +8,9 @@
 
 import { https } from 'firebase-functions'
 import { type CallableRequest, onCall } from 'firebase-functions/v2/https'
+import { CacheDatabaseService } from '../services/database/cacheDatabaseService.js'
 import { FirestoreService } from '../services/database/firestoreService.js'
 import { DatabaseUserService } from '../services/user/databaseUserService.js'
-import { CacheDatabaseService } from '../services/database/cacheDatabaseService.js'
 
 export interface DismissMessageInput {
   messageId?: string

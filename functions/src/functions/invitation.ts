@@ -14,10 +14,10 @@ import {
   type AuthBlockingEvent,
   beforeUserCreated,
 } from 'firebase-functions/v2/identity'
+import { CacheDatabaseService } from '../services/database/cacheDatabaseService.js'
 import { FirestoreService } from '../services/database/firestoreService.js'
 import { DatabaseUserService } from '../services/user/databaseUserService.js'
 import { type UserService } from '../services/user/userService.js'
-import { CacheDatabaseService } from '../services/database/cacheDatabaseService.js'
 
 export interface CheckInvitationCodeInput {
   invitationCode: string
