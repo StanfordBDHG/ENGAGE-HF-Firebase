@@ -31,8 +31,8 @@ export class MraRecommender extends Recommender {
         MedicationRecommendationCategory.targetDoseReached,
       )
 
-    const durationOfOneWeekInMilliseconds = 1000 * 60 * 60 * 24 * 7
-    const lastMonth = new Date().getTime() - durationOfOneWeekInMilliseconds * 4
+    const durationOfOneDayInMilliseconds = 1000 * 60 * 60 * 24 * 7
+    const lastMonth = new Date().getTime() - durationOfOneDayInMilliseconds * 30
 
     const creatinineObservation = input.vitals.creatinine
     const potassiumObservation = input.vitals.potassium
