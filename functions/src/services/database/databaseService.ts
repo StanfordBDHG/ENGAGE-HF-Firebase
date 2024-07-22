@@ -5,7 +5,12 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import { type Transaction, type Firestore } from 'firebase-admin/firestore'
+import {
+  type Transaction,
+  type Firestore,
+  type BulkWriter,
+  type BulkWriterOptions,
+} from 'firebase-admin/firestore'
 
 export interface DatabaseDocument<Content> {
   id: string
@@ -19,7 +24,12 @@ export interface DatabaseService {
 
   getCollection<T>(path: string): Promise<Array<DatabaseDocument<T>>>
 
-  getDocument<T>(path: string): Promise<DatabaseDocument<T | undefined>>
+  getDocument<T>(path: string): Promise<DatabaseDocument<T> | undefined>
+
+  bulkWrite(
+    write: (firestore: Firestore, writer: BulkWriter) => Promise<void>,
+    options?: BulkWriterOptions,
+  ): Promise<void>
 
   runTransaction(
     run: (

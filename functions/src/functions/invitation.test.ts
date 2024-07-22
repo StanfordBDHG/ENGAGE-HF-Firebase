@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { expect } from 'chai'
+import { assert, expect } from 'chai'
 import admin from 'firebase-admin'
 import { FieldValue } from 'firebase-admin/firestore'
 import { describe } from 'mocha'
@@ -61,7 +61,9 @@ describe('Functions: Invitation', () => {
         },
       }
 
-      await userService.enrollUser(invitationId, userId)
+      const invitation = await userService.getInvitation(invitationId)
+      if (!invitation) assert.fail('Invitation not found')
+      await userService.enrollUser(invitation, userId)
 
       const firestore = admin.firestore()
 
@@ -130,7 +132,9 @@ describe('Functions: Invitation', () => {
         },
       }
 
-      await userService.enrollUser(invitationId, userId)
+      const invitation = await userService.getInvitation(invitationId)
+      if (!invitation) assert.fail('Invitation not found')
+      await userService.enrollUser(invitation, userId)
 
       const firestore = admin.firestore()
 
@@ -202,7 +206,9 @@ describe('Functions: Invitation', () => {
         },
       }
 
-      await userService.enrollUser(invitationId, userId)
+      const invitation = await userService.getInvitation(invitationId)
+      if (!invitation) assert.fail('Invitation not found')
+      await userService.enrollUser(invitation, userId)
 
       const firestore = admin.firestore()
 
@@ -271,7 +277,9 @@ describe('Functions: Invitation', () => {
         },
       }
 
-      await userService.enrollUser(invitationId, userId)
+      const invitation = await userService.getInvitation(invitationId)
+      if (!invitation) assert.fail('Invitation not found')
+      await userService.enrollUser(invitation, userId)
 
       const firestore = admin.firestore()
 

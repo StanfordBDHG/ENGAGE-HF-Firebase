@@ -14,7 +14,6 @@ import {
 } from '../../models/healthSummaryData.js'
 import { type SymptomScore } from '../../models/symptomScore.js'
 import { type Vitals } from '../../models/vitals.js'
-import { type AuthService } from '../auth/authService.js'
 import { CodingSystem, LoincCode } from '../codes.js'
 import { type DatabaseDocument } from '../database/databaseService.js'
 import { type FhirService } from '../fhir/fhirService.js'
@@ -25,7 +24,6 @@ import { type UserService } from '../user/userService.js'
 export class DefaultHealthSummaryService implements HealthSummaryService {
   // Properties
 
-  private readonly authService: AuthService
   private readonly fhirService: FhirService
   private readonly patientService: PatientService
   private readonly userService: UserService
@@ -33,12 +31,10 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
   // Constructor
 
   constructor(
-    authService: AuthService,
     fhirService: FhirService,
     patientService: PatientService,
     userService: UserService,
   ) {
-    this.authService = authService
     this.fhirService = fhirService
     this.patientService = patientService
     this.userService = userService
@@ -49,7 +45,7 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
   async getHealthSummaryData(userId: string): Promise<HealthSummaryData> {
     const [user, patient, nextAppointment, medications, symptomScores, vitals] =
       await Promise.all([
-        this.authService.getUser(userId),
+        this.userService.getAuth(userId),
         this.userService.getPatient(userId),
         this.patientService.getNextAppointment(userId),
         this.getMedications(userId),
@@ -58,13 +54,13 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
       ])
 
     const clinician =
-      patient.content?.clinician ?
-        await this.authService.getUser(patient.content.clinician)
+      patient?.content.clinician ?
+        await this.userService.getAuth(patient.content.clinician)
       : undefined
 
     return {
       name: user.displayName ?? '---',
-      dateOfBirth: patient.content?.dateOfBirth,
+      dateOfBirth: patient?.content.dateOfBirth,
       clinicianName: clinician?.displayName ?? '---',
       nextAppointment: nextAppointment?.content.start,
       medications: medications,

@@ -1,13 +1,41 @@
 import { type UserService } from './userService.js'
 import { type Invitation } from '../../models/invitation.js'
 import { type Organization } from '../../models/organization.js'
-import { type Clinician, type Patient, type User } from '../../models/user.js'
+import {
+  type UserAuth,
+  type Clinician,
+  type Patient,
+  type User,
+} from '../../models/user.js'
 import { type DatabaseDocument } from '../database/databaseService.js'
 
 /* eslint-disable @typescript-eslint/require-await */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 export class MockUserService implements UserService {
+  // Methods - Auth
+
+  async getAuth(userId: string): Promise<UserAuth> {
+    switch (userId) {
+      case 'mockClinician':
+        return {
+          displayName: 'Dr. XXX',
+        }
+      case 'mockUser':
+        return {
+          displayName: 'John Doe',
+        }
+      default:
+        return {
+          displayName: 'Unknown',
+        }
+    }
+  }
+
+  async updateAuth(userId: string, user: UserAuth): Promise<void> {
+    return
+  }
+
   // Methods - Invitations
 
   async getInvitation(
@@ -39,7 +67,10 @@ export class MockUserService implements UserService {
     return
   }
 
-  async enrollUser(invitationId: string, userId: string): Promise<void> {
+  async enrollUser(
+    invitation: DatabaseDocument<Invitation>,
+    userId: string,
+  ): Promise<void> {
     return
   }
 
@@ -51,7 +82,7 @@ export class MockUserService implements UserService {
 
   async getOrganization(
     organizationId: string,
-  ): Promise<DatabaseDocument<Organization | undefined>> {
+  ): Promise<DatabaseDocument<Organization> | undefined> {
     return {
       id: organizationId,
       content: {
@@ -98,6 +129,10 @@ export class MockUserService implements UserService {
         },
       },
     }
+  }
+
+  async deleteUser(userId: string): Promise<void> {
+    return
   }
 
   // Methods - Messages

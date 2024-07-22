@@ -13,9 +13,9 @@ import { type FHIRQuestionnaireResponse } from '../../models/fhir/questionnaireR
 import { type MedicationRecommendation } from '../../models/medicationRecommendation'
 import { type SymptomScore } from '../../models/symptomScore.js'
 import { mockQuestionnaireResponse } from '../../tests/mocks/questionnaireResponse.js'
+import { CodingSystem, LoincCode } from '../codes.js'
 import { type DatabaseDocument } from '../database/databaseService.js'
 import { QuantityUnit } from '../fhir/quantityUnit.js'
-import { CodingSystem, LoincCode } from '../codes.js'
 
 /* eslint-disable @typescript-eslint/require-await */
 /* eslint-disable @typescript-eslint/no-unused-vars */

@@ -6,7 +6,12 @@
 // SPDX-License-Identifier: MIT
 //
 import admin from 'firebase-admin'
-import { type Firestore } from 'firebase-admin/firestore'
+import {
+  type BulkWriter,
+  type BulkWriterOptions,
+  type Transaction,
+  type Firestore,
+} from 'firebase-admin/firestore'
 import {
   type DatabaseDocument,
   type DatabaseService,
@@ -43,15 +48,24 @@ export class FirestoreService implements DatabaseService {
     }))
   }
 
-  async getDocument<T>(path: string): Promise<DatabaseDocument<T | undefined>> {
+  async getDocument<T>(path: string): Promise<DatabaseDocument<T> | undefined> {
     const doc = await this.firestore.doc(path).get()
-    return { id: doc.id, content: doc.data() as T | undefined }
+    return doc.exists ? { id: doc.id, content: doc.data() as T } : undefined
+  }
+
+  async bulkWrite(
+    write: (firestore: Firestore, writer: BulkWriter) => Promise<void>,
+    options?: BulkWriterOptions,
+  ): Promise<void> {
+    const writer = this.firestore.bulkWriter(options)
+    await write(this.firestore, writer)
+    await writer.close()
   }
 
   async runTransaction(
     run: (
-      firestore: admin.firestore.Firestore,
-      transaction: admin.firestore.Transaction,
+      firestore: Firestore,
+      transaction: Transaction,
     ) => Promise<void> | void,
   ): Promise<void> {
     return this.firestore.runTransaction(async (transaction) =>

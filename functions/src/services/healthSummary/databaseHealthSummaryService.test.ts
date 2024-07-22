@@ -10,7 +10,6 @@ import { expect } from 'chai'
 import { DefaultHealthSummaryService } from './databaseHealthSummaryService.js'
 import { type HealthSummaryService } from './healthSummaryService.js'
 import { mockHealthSummaryData } from '../../tests/mocks/healthSummaryData.js'
-import { MockAuthService } from '../auth/mockAuthService.js'
 import { FhirService } from '../fhir/fhirService.js'
 import { MockPatientService } from '../patient/mockPatientService.js'
 import { MockUserService } from '../user/mockUserService.js'
@@ -18,7 +17,6 @@ import { MockUserService } from '../user/mockUserService.js'
 describe('HealthSummaryService', () => {
   const healthSummaryService: HealthSummaryService =
     new DefaultHealthSummaryService(
-      new MockAuthService(),
       new FhirService(),
       new MockPatientService(),
       new MockUserService(),

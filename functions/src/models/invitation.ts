@@ -5,13 +5,18 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import { type Admin, type Clinician, type Patient, type User } from './user.js'
-import { type UserAuthenticationInformation } from '../services/auth/authService.js'
+import {
+  type UserAuth,
+  type Admin,
+  type Clinician,
+  type Patient,
+  type User,
+} from './user.js'
 
 export interface Invitation {
   userId?: string
 
-  auth?: UserAuthenticationInformation
+  auth?: UserAuth
   admin?: Admin
   clinician?: Clinician
   patient?: Patient

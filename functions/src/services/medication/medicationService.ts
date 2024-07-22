@@ -8,7 +8,7 @@ export interface MedicationService {
   getMedicationClasses(): Promise<Array<DatabaseDocument<MedicationClass>>>
   getMedicationClass(
     medicationClassId: string,
-  ): Promise<DatabaseDocument<MedicationClass | undefined>>
+  ): Promise<DatabaseDocument<MedicationClass> | undefined>
 
   // Medications
 
@@ -16,7 +16,7 @@ export interface MedicationService {
 
   getMedication(
     medicationId: string,
-  ): Promise<DatabaseDocument<FHIRMedication | undefined>>
+  ): Promise<DatabaseDocument<FHIRMedication> | undefined>
 
   // Drugs
 
@@ -27,5 +27,5 @@ export interface MedicationService {
   getDrug(
     medicationId: string,
     drugId: string,
-  ): Promise<DatabaseDocument<FHIRMedication | undefined>>
+  ): Promise<DatabaseDocument<FHIRMedication> | undefined>
 }

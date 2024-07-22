@@ -30,6 +30,9 @@ export interface User {
   timeZone?: string
 }
 
-export interface UserRecord {
+export interface UserAuth {
   displayName?: string
+  email?: string
+  phoneNumber?: string
+  photoURL?: string
 }

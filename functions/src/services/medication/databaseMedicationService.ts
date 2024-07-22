@@ -27,7 +27,7 @@ export class DatabaseMedicationService implements MedicationService {
 
   async getMedicationClass(
     medicationClassId: string,
-  ): Promise<DatabaseDocument<MedicationClass | undefined>> {
+  ): Promise<DatabaseDocument<MedicationClass> | undefined> {
     return this.databaseService.getDocument(
       `medicationClasses/${medicationClassId}`,
     )
@@ -41,7 +41,7 @@ export class DatabaseMedicationService implements MedicationService {
 
   async getMedication(
     medicationId: string,
-  ): Promise<DatabaseDocument<FHIRMedication | undefined>> {
+  ): Promise<DatabaseDocument<FHIRMedication> | undefined> {
     return this.databaseService.getDocument(`medications/${medicationId}`)
   }
 
@@ -58,7 +58,7 @@ export class DatabaseMedicationService implements MedicationService {
   async getDrug(
     medicationId: string,
     drugId: string,
-  ): Promise<DatabaseDocument<FHIRMedication | undefined>> {
+  ): Promise<DatabaseDocument<FHIRMedication> | undefined> {
     return this.databaseService.getDocument(
       `medications/${medicationId}/drugs/${drugId}`,
     )

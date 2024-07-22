@@ -9,7 +9,6 @@
 import { https } from 'firebase-functions/v2'
 import { type CallableRequest, onCall } from 'firebase-functions/v2/https'
 import { generateHealthSummary } from '../healthSummary/generate.js'
-import { FirebaseAuthService } from '../services/auth/firebaseAuthService.js'
 import { CacheDatabaseService } from '../services/database/cacheDatabaseService.js'
 import { FirestoreService } from '../services/database/firestoreService.js'
 import { FhirService } from '../services/fhir/fhirService.js'
@@ -34,14 +33,13 @@ export const exportHealthSummaryFunction = onCall(
     } catch {
       const userService = new DatabaseUserService(databaseService)
       const organization = (await userService.getUser(request.data.userId))
-        .content?.organization
+        ?.content.organization
       if (!organization)
         throw new https.HttpsError('not-found', 'Organization not found')
       await securityService.ensureClinician(request.auth, organization)
     }
 
     const healthSummaryService = new DefaultHealthSummaryService(
-      new FirebaseAuthService(),
       new FhirService(),
       new DatabasePatientService(databaseService),
       new DatabaseUserService(databaseService),

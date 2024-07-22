@@ -11,13 +11,12 @@ import { https } from 'firebase-functions'
 import { type CallableRequest, onCall } from 'firebase-functions/v2/https'
 import { type Result } from './types.js'
 import {
+  type UserAuth,
   type Admin,
   type Clinician,
   type Patient,
   type User,
 } from '../models/user.js'
-import { type UserAuthenticationInformation } from '../services/auth/authService.js'
-import { FirebaseAuthService } from '../services/auth/firebaseAuthService.js'
 import { FirestoreService } from '../services/database/firestoreService.js'
 import { SecurityService } from '../services/securityService.js'
 import { DatabaseUserService } from '../services/user/databaseUserService.js'
@@ -31,7 +30,7 @@ export interface GetUsersInformationInput {
 }
 
 export interface UserInformation {
-  auth: UserAuthenticationInformation
+  auth: UserAuth
   clinician?: Clinician
   patient?: Patient
   user?: User
@@ -52,7 +51,9 @@ export const getUsersInformationFunction = onCall(
 
     const userService = new DatabaseUserService(new FirestoreService())
     const authenticatedUser = await userService.getUser(request.auth.uid)
-    const organization = authenticatedUser.content?.organization
+    if (!authenticatedUser)
+      throw new https.HttpsError('not-found', 'User not found')
+    const organization = authenticatedUser.content.organization
 
     const securityService = new SecurityService()
     await securityService.ensureClinician(request.auth, organization)
@@ -62,13 +63,12 @@ export const getUsersInformationFunction = onCall(
       try {
         const userData = await userService.getUser(userId)
         // organization is undefined for admins
-        if (organization && userData.content?.organization !== organization)
+        if (organization && userData?.content.organization !== organization)
           throw new https.HttpsError(
             'permission-denied',
             'User does not belong to the same organization',
           )
-        const authService = new FirebaseAuthService()
-        const user = await authService.getUser(userId)
+        const user = await userService.getAuth(userId)
         const userInformation: UserInformation = {
           auth: {
             displayName: user.displayName,
@@ -79,14 +79,14 @@ export const getUsersInformationFunction = onCall(
         }
         if (request.data.includeClinicianData ?? false) {
           const clinician = await userService.getClinician(userId)
-          userInformation.clinician = clinician.content
+          userInformation.clinician = clinician?.content
         }
         if (request.data.includePatientData ?? false) {
           const patient = await userService.getPatient(userId)
-          userInformation.patient = patient.content
+          userInformation.patient = patient?.content
         }
         if (request.data.includeUserData ?? false) {
-          userInformation.user = userData.content
+          userInformation.user = userData?.content
         }
         result[userId] = { data: userInformation }
       } catch (error) {
@@ -138,7 +138,8 @@ export const updateUserInformationFunction = onCall(
       new FirestoreService(),
     )
     const user = await userService.getUser(request.data.userId)
-    const organization = user.content?.organization
+    if (!user) throw new https.HttpsError('not-found', 'User not found')
+    const organization = user.content.organization
 
     const securityService = new SecurityService()
     try {
@@ -147,13 +148,7 @@ export const updateUserInformationFunction = onCall(
       securityService.ensureUser(request.auth, request.data.userId)
     }
 
-    const auth = admin.auth()
-    await auth.updateUser(request.data.userId, {
-      displayName: request.data.data.auth.displayName,
-      email: request.data.data.auth.email,
-      phoneNumber: request.data.data.auth.phoneNumber,
-      photoURL: request.data.data.auth.photoURL,
-    })
+    await userService.updateAuth(request.data.userId, request.data.data.auth)
   },
 )
 
@@ -177,30 +172,16 @@ export const deleteUserFunction = onCall(
     const securityService = new SecurityService()
     await securityService.ensureClinician(
       request.auth,
-      user.content?.organization,
+      user?.content.organization,
     )
 
-    const firestore = admin.firestore()
-    await firestore.recursiveDelete(
-      firestore.doc(`admins/${request.data.userId}`),
-    )
-    await firestore.recursiveDelete(
-      firestore.doc(`clinicians/${request.data.userId}`),
-    )
-    await firestore.recursiveDelete(
-      firestore.doc(`patients/${request.data.userId}`),
-    )
-    await firestore.recursiveDelete(
-      firestore.doc(`users/${request.data.userId}`),
-    )
-    const auth = admin.auth()
-    await auth.deleteUser(request.data.userId)
+    await userService.deleteUser(request.data.userId)
     return 'Success'
   },
 )
 
 export interface CreateInvitationInput {
-  auth?: UserAuthenticationInformation
+  auth?: UserAuth
   admin?: Admin
   clinician?: Clinician
   patient?: Patient

@@ -6,7 +6,10 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { type Firestore } from 'firebase-admin/firestore'
+import {
+  type BulkWriterOptions,
+  type Firestore,
+} from 'firebase-admin/firestore'
 import {
   type DatabaseDocument,
   type DatabaseService,
@@ -43,8 +46,18 @@ export class CacheDatabaseService implements DatabaseService {
     )
   }
 
-  async getDocument<T>(path: string): Promise<DatabaseDocument<T | undefined>> {
+  async getDocument<T>(path: string): Promise<DatabaseDocument<T> | undefined> {
     return this.accessCache(path, () => this.databaseService.getDocument(path))
+  }
+
+  bulkWrite(
+    write: (
+      firestore: Firestore,
+      writer: FirebaseFirestore.BulkWriter,
+    ) => Promise<void>,
+    options?: BulkWriterOptions,
+  ): Promise<void> {
+    return this.databaseService.bulkWrite(write, options)
   }
 
   async runTransaction(
