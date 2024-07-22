@@ -6,7 +6,6 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { type FHIRSimpleQuantity } from './fhir/baseTypes'
 import { type QuantityUnit } from '../services/fhir/quantityUnit'
 
 export interface Vitals {
@@ -25,9 +24,4 @@ export interface Observation {
   date: Date
   value: number
   unit: QuantityUnit
-}
-
-export interface QuantityObservation {
-  date: Date
-  valueQuantity: FHIRSimpleQuantity
 }
