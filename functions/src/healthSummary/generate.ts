@@ -10,12 +10,22 @@ import fs from 'fs'
 import { Resvg, type ResvgRenderOptions } from '@resvg/resvg-js'
 import { jsPDF } from 'jspdf'
 import 'jspdf-autotable' /* eslint-disable-line */
-import { type CellDef, type RowInput, type UserOptions } from 'jspdf-autotable' /* eslint-disable-line */
+import {
+  type CellDef,
+  type RowInput,
+  type UserOptions,
+} from 'jspdf-autotable' /* eslint-disable-line */
 import { generateChartSvg } from './generateChart.js'
 import { generateSpeedometerSvg } from './generateSpeedometer.js'
-import { type HealthSummaryData } from './healthSummaryData.js'
-import { MedicationOptimizationCategory } from './medication.js'
-import { type Observation } from './vitals.js'
+import {
+  average,
+  percentage,
+  presortedMedian,
+  presortedPercentile,
+} from '../extensions/array.js'
+import { type HealthSummaryData } from '../models/healthSummaryData.js'
+import { MedicationRecommendationCategory } from '../models/medicationRecommendation.js'
+import { type Observation } from '../models/vitals.js'
 
 export function generateHealthSummary(data: HealthSummaryData): Buffer {
   const generator = new HealthSummaryPDFGenerator(data)
@@ -166,14 +176,14 @@ class HealthSummaryPDFGenerator {
     )
 
     function colorForCategory(
-      category: MedicationOptimizationCategory,
+      category: MedicationRecommendationCategory,
     ): string | undefined {
       switch (category) {
-        case MedicationOptimizationCategory.targetDoseReached:
+        case MedicationRecommendationCategory.targetDoseReached:
           return 'rgb(0,255,0)'
-        case MedicationOptimizationCategory.improvementAvailable:
+        case MedicationRecommendationCategory.improvementAvailable:
           return 'rgb(255,255,0)'
-        case MedicationOptimizationCategory.notStarted:
+        case MedicationRecommendationCategory.notStarted:
           return 'rgb(211,211,211)'
       }
     }
@@ -238,55 +248,58 @@ class HealthSummaryPDFGenerator {
     this.moveDown(4)
     this.splitTwoColumns(
       (columnWidth) => {
-        const avgSystolic =
-          this.data.vitals.systolicBloodPressure.reduce(
-            (acc, observation) => acc + observation.value,
-            0,
-          ) / this.data.vitals.systolicBloodPressure.length
+        const avgSystolic = average(
+          this.data.vitals.systolicBloodPressure.map(
+            (observation) => observation.value,
+          ),
+        )
         this.addText(
-          `Average Systolic Blood Pressure: ${avgSystolic.toFixed(0)}`,
+          `Average Systolic Blood Pressure: ${avgSystolic?.toFixed(0) ?? '---'}`,
           this.textStyles.body,
           columnWidth,
         )
         this.moveDown(4)
-        const avgDiastolic =
-          this.data.vitals.diastolicBloodPressure.reduce(
-            (acc, observation) => acc + observation.value,
-            0,
-          ) / this.data.vitals.diastolicBloodPressure.length
+        const avgDiastolic = average(
+          this.data.vitals.diastolicBloodPressure.map(
+            (observation) => observation.value,
+          ),
+        )
         this.addText(
-          `Average Diastolic Blood Pressure: ${avgDiastolic.toFixed(0)}`,
+          `Average Diastolic Blood Pressure: ${avgDiastolic?.toFixed(0) ?? '---'}`,
           this.textStyles.body,
           columnWidth,
         )
         this.moveDown(4)
-        const avgHeartRate =
-          this.data.vitals.heartRate.reduce(
-            (acc, observation) => acc + observation.value,
-            0,
-          ) / this.data.vitals.heartRate.length
+        const avgHeartRate = average(
+          this.data.vitals.heartRate.map((observation) => observation.value),
+        )
         this.addText(
-          `Average Heart Rate: ${avgHeartRate.toFixed(0)}`,
+          `Average Heart Rate: ${avgHeartRate?.toFixed(0) ?? '---'}`,
           this.textStyles.body,
           columnWidth,
         )
         this.moveDown(this.textStyles.body.fontSize)
       },
       (columnWidth) => {
+        const currentWeight = this.data.vitals.bodyWeight.at(0)
+        const weightUnit = currentWeight?.unit.unit ?? ''
         this.addText(
-          `Current Weight: ${this.data.vitals.bodyWeight.at(0)?.value.toFixed(0) ?? '---'} lbs`,
+          `Current Weight: ${currentWeight?.value.toFixed(0) ?? '---'} ${weightUnit}`,
+          this.textStyles.body,
+          columnWidth,
+        )
+        this.moveDown(4)
+        const avgWeight = average(
+          this.data.vitals.bodyWeight.map((observation) => observation.value),
+        )
+        this.addText(
+          `Last Week Average Weight: ${avgWeight?.toFixed(0) ?? '---'} ${weightUnit}`,
           this.textStyles.body,
           columnWidth,
         )
         this.moveDown(4)
         this.addText(
-          `Last Week Average Weight: ${this.data.vitals.bodyWeight.reduce((acc, val) => acc + val.value, 0) / this.data.vitals.bodyWeight.length} lbs`,
-          this.textStyles.body,
-          columnWidth,
-        )
-        this.moveDown(4)
-        this.addText(
-          `Prior Dry Weight: ${this.data.vitals.dryWeight.toFixed(0)} lbs`,
+          `Prior Dry Weight: ${this.data.vitals.dryWeight?.value.toFixed(0) ?? '---'} ${weightUnit}`,
           this.textStyles.body,
           columnWidth,
         )
@@ -356,31 +369,39 @@ class HealthSummaryPDFGenerator {
           title: 'Dizziness',
         },
       ],
-      ...this.data.symptomScores.map((survey, index) => [
+      ...this.data.symptomScores.map((score, index) => [
         {
-          title: this.formatDate(survey.date),
+          title: this.formatDate(score.date),
           styles: {
             fontStyle:
               index == this.data.symptomScores.length - 1 ? 'bold' : 'normal',
           },
         } as CellDef,
         {
-          title: String(survey.overallScore),
+          title: String(score.overallScore),
         },
         {
-          title: String(survey.physicalLimitsScore),
+          title:
+            score.physicalLimitsScore ?
+              String(score.physicalLimitsScore)
+            : '---',
         },
         {
-          title: String(survey.socialLimitsScore),
+          title:
+            score.socialLimitsScore ? String(score.socialLimitsScore) : '---',
         },
         {
-          title: String(survey.qualityOfLifeScore),
+          title:
+            score.qualityOfLifeScore ? String(score.qualityOfLifeScore) : '---',
         },
         {
-          title: String(survey.specificSymptomsScore),
+          title:
+            score.symptomFrequencyScore ?
+              String(score.symptomFrequencyScore)
+            : '---',
         },
         {
-          title: String(survey.dizzinessScore),
+          title: String(score.dizzinessScore),
         },
       ]),
     ]
@@ -397,30 +418,26 @@ class HealthSummaryPDFGenerator {
         this.addChart(
           this.data.vitals.bodyWeight,
           columnWidth,
-          this.data.vitals.dryWeight,
+          this.data.vitals.dryWeight?.value,
         )
-        const avgWeight =
-          this.data.vitals.bodyWeight.reduce(
-            (acc, observation) => acc + observation.value,
-            0,
-          ) / this.data.vitals.bodyWeight.length
-        const maxWeight = this.data.vitals.bodyWeight.reduce(
-          (acc, observation) => Math.max(acc, observation.value),
-          0,
+        const bodyWeightValues = this.data.vitals.bodyWeight.map(
+          (observation) => observation.value,
         )
-        const minWeight = this.data.vitals.bodyWeight.reduce(
-          (acc, observation) => Math.min(acc, observation.value),
-          Infinity,
-        )
+        const avgWeight = average(bodyWeightValues)
+        const maxWeight = Math.max(...bodyWeightValues)
+        const minWeight = Math.min(...bodyWeightValues)
+
         this.addTable(
           [
             [' ', 'Current', '7-Day Average', 'Last Visit', 'Range'],
             [
               'Weight',
               this.data.vitals.bodyWeight.at(0)?.value.toFixed(0) ?? '---',
-              avgWeight.toFixed(0),
+              avgWeight?.toFixed(0) ?? '---',
               '-',
-              (maxWeight - minWeight).toFixed(0),
+              isFinite(maxWeight) && isFinite(minWeight) ?
+                (maxWeight - minWeight).toFixed(0)
+              : '---',
             ],
           ],
           columnWidth,
@@ -430,36 +447,22 @@ class HealthSummaryPDFGenerator {
       (columnWidth) => {
         this.addText('Heart Rate', this.textStyles.bodyBold, columnWidth)
         this.addChart(this.data.vitals.heartRate, columnWidth)
-        const values = [...this.data.vitals.heartRate].sort(
-          (a, b) => a.value - b.value,
-        )
-        const median = values.at(Math.floor(values.length / 2))
-        const upperMedian = values.at(Math.floor(values.length * 0.75))
-        const lowerMedian = values.at(Math.floor(values.length * 0.25))
-
-        const percentageBelow =
-          (this.data.vitals.heartRate.filter(
-            (observation) => observation.value < 50,
-          ).length /
-            values.length) *
-          100
-        const percentageAbove =
-          (this.data.vitals.heartRate.filter(
-            (observation) => observation.value > 120,
-          ).length /
-            values.length) *
-          100
+        const values = [
+          ...this.data.vitals.heartRate.map((observation) => observation.value),
+        ].sort((a, b) => a - b)
+        const upperMedian = presortedPercentile(values, 0.75)
+        const lowerMedian = presortedPercentile(values, 0.25)
         this.addTable(
           [
             [' ', 'Median', 'IQR', '% Under 50', '% Over 120'],
             [
               'Heart Rate',
-              median?.value.toFixed(0) ?? '---',
+              presortedMedian(values)?.toFixed(0) ?? '---',
               upperMedian && lowerMedian ?
-                (upperMedian.value - lowerMedian.value).toFixed(0)
+                (upperMedian - lowerMedian).toFixed(0)
               : '---',
-              percentageBelow.toFixed(0),
-              percentageAbove.toFixed(0),
+              percentage(values, (value) => value < 50)?.toFixed(0) ?? '---',
+              percentage(values, (value) => value > 120)?.toFixed(0) ?? '---',
             ],
           ],
           columnWidth,
@@ -487,60 +490,38 @@ class HealthSummaryPDFGenerator {
       },
     )
 
-    const systolicValues = [...this.data.vitals.systolicBloodPressure].sort(
-      (a, b) => a.value - b.value,
-    )
-    const systolicMedian = systolicValues.at(
-      Math.floor(systolicValues.length / 2),
-    )
-    const systolicUpperMedian = systolicValues.at(
-      Math.floor(systolicValues.length * 0.75),
-    )
-    const systolicLowerMedian = systolicValues.at(
-      Math.floor(systolicValues.length * 0.25),
-    )
+    const systolicValues = [
+      ...this.data.vitals.systolicBloodPressure.map(
+        (observation) => observation.value,
+      ),
+    ].sort((a, b) => a - b)
+    const systolicUpperMedian = presortedPercentile(systolicValues, 0.75)
+    const systolicLowerMedian = presortedPercentile(systolicValues, 0.25)
 
-    const diastolicValues = [...this.data.vitals.diastolicBloodPressure].sort(
-      (a, b) => a.value - b.value,
-    )
-    const diastolicMedian = diastolicValues.at(
-      Math.floor(diastolicValues.length / 2),
-    )
-    const diastolicUpperMedian = diastolicValues.at(
-      Math.floor(diastolicValues.length * 0.75),
-    )
-    const diastolicLowerMedian = diastolicValues.at(
-      Math.floor(diastolicValues.length * 0.25),
-    )
+    const diastolicValues = [
+      ...this.data.vitals.diastolicBloodPressure.map(
+        (observation) => observation.value,
+      ),
+    ].sort((a, b) => a - b)
+    const diastolicUpperMedian = presortedPercentile(diastolicValues, 0.75)
+    const diastolicLowerMedian = presortedPercentile(diastolicValues, 0.25)
 
-    const percentageBelow =
-      (this.data.vitals.systolicBloodPressure.filter(
-        (observation) => observation.value < 90,
-      ).length /
-        systolicValues.length) *
-      100
-    const percentageAbove =
-      (this.data.vitals.systolicBloodPressure.filter(
-        (observation) => observation.value > 180,
-      ).length /
-        systolicValues.length) *
-      100
     this.addTable([
       [' ', 'Median', 'IQR', '% Under 90 mmHg', '% Over 180 mmHg'],
       [
         'Systolic',
-        systolicMedian?.value.toFixed(0) ?? '---',
+        presortedMedian(systolicValues)?.toFixed(0) ?? '---',
         systolicUpperMedian && systolicLowerMedian ?
-          (systolicUpperMedian.value - systolicLowerMedian.value).toFixed(0)
+          (systolicUpperMedian - systolicLowerMedian).toFixed(0)
         : '---',
-        percentageBelow.toFixed(0),
-        percentageAbove.toFixed(0),
+        percentage(systolicValues, (value) => value < 90)?.toFixed(0) ?? '---',
+        percentage(systolicValues, (value) => value > 180)?.toFixed(0) ?? '---',
       ],
       [
         'Diastolic',
-        diastolicMedian?.value.toFixed(0) ?? '---',
+        presortedMedian(diastolicValues)?.toFixed(0) ?? '---',
         diastolicUpperMedian && diastolicLowerMedian ?
-          (diastolicUpperMedian.value - diastolicLowerMedian.value).toFixed(0)
+          (diastolicUpperMedian - diastolicLowerMedian).toFixed(0)
         : '---',
         '-',
         '-',
@@ -660,7 +641,7 @@ class HealthSummaryPDFGenerator {
         fontSize: textStyle.fontSize,
       },
     }
-      ; (this.doc as any).autoTable(options) // eslint-disable-line
+    ;(this.doc as any).autoTable(options) // eslint-disable-line
     this.cursor.y = (this.doc as any).lastAutoTable.finalY // eslint-disable-line
   }
 

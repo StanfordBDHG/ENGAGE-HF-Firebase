@@ -5,7 +5,11 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import { type DatabaseService } from './databaseService.js'
+import {
+  type DatabaseDocument,
+  type DatabaseService,
+} from './databaseService.js'
+import { type FHIRQuestionnaireResponse } from '../../models/fhir/questionnaireResponse.js'
 
 enum CacheKeyPrefix {
   getAppointments = 'getAppointments',
@@ -27,7 +31,8 @@ enum CacheKeyPrefix {
   getBloodPressureObservations = 'getBloodPressureObservations',
   getBodyWeightObservations = 'getBodyWeightObservations',
   getHeartRateObservations = 'getHeartRateObservations',
-  getKccqScores = 'getKccqScores',
+  getSymptomScores = 'getSymptomScores',
+  getQuestionnaireResponses = 'getQuestionnaireResponses',
 }
 
 export class CacheDatabaseService implements DatabaseService {
@@ -216,9 +221,19 @@ export class CacheDatabaseService implements DatabaseService {
 
   // Users - Questionnaire Responses
 
-  async getKccqScores(userId: string) {
-    return this.accessCache(CacheKeyPrefix.getKccqScores, [userId], () =>
-      this.databaseService.getKccqScores(userId),
+  async getQuestionnaireResponses(
+    userId: string,
+  ): Promise<Array<DatabaseDocument<FHIRQuestionnaireResponse>>> {
+    return this.accessCache(
+      CacheKeyPrefix.getQuestionnaireResponses,
+      [userId],
+      () => this.databaseService.getQuestionnaireResponses(userId),
+    )
+  }
+
+  async getSymptomScores(userId: string) {
+    return this.accessCache(CacheKeyPrefix.getSymptomScores, [userId], () =>
+      this.databaseService.getSymptomScores(userId),
     )
   }
 

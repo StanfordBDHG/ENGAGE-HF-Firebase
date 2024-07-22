@@ -5,13 +5,14 @@
 //
 // SPDX-License-Identifier: MIT
 //
-export interface KccqScore {
+
+export interface SymptomScore {
   questionnaireResponseId?: string
   date: Date
   overallScore: number
-  physicalLimitsScore: number
-  socialLimitsScore: number
-  qualityOfLifeScore: number
-  specificSymptomsScore: number
+  physicalLimitsScore?: number
+  symptomFrequencyScore?: number
+  socialLimitsScore?: number
+  qualityOfLifeScore?: number
   dizzinessScore: number
 }

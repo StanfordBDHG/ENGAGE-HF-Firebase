@@ -6,15 +6,22 @@
 // SPDX-License-Identifier: MIT
 //
 
+import { type QuantityUnit } from '../services/fhir/quantityUnit'
+
 export interface Vitals {
   systolicBloodPressure: Observation[]
   diastolicBloodPressure: Observation[]
   heartRate: Observation[]
   bodyWeight: Observation[]
-  dryWeight: number
+
+  creatinine?: Observation
+  dryWeight?: Observation
+  estimatedGlomerularFiltrationRate?: Observation
+  potassium?: Observation
 }
 
 export interface Observation {
   date: Date
   value: number
+  unit: QuantityUnit
 }

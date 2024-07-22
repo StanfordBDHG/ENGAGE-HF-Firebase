@@ -11,9 +11,10 @@ import {
   type FHIRMedicationRequest,
 } from '../../models/fhir/medication.js'
 import { type FHIRObservation } from '../../models/fhir/observation.js'
+import { type FHIRQuestionnaireResponse } from '../../models/fhir/questionnaireResponse.js'
 import { type Invitation } from '../../models/invitation.js'
-import { type KccqScore } from '../../models/kccqScore.js'
 import { type MedicationClass } from '../../models/medicationClass.js'
+import { type SymptomScore } from '../../models/symptomScore.js'
 import {
   type Clinician,
   type Patient,
@@ -99,5 +100,10 @@ export interface DatabaseService {
 
   // Users - Questionnaire Responses
 
-  getKccqScores(userId: string): Promise<Array<DatabaseDocument<KccqScore>>>
+  getQuestionnaireResponses(
+    userId: string,
+  ): Promise<Array<DatabaseDocument<FHIRQuestionnaireResponse>>>
+  getSymptomScores(
+    userId: string,
+  ): Promise<Array<DatabaseDocument<SymptomScore>>>
 }

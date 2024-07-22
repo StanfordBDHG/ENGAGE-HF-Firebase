@@ -6,9 +6,9 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { type MedicationOptimization } from './medication.js'
+import { type MedicationRecommendationCategory } from './medicationRecommendation.js'
+import { type SymptomScore } from './symptomScore.js'
 import { type Vitals } from './vitals.js'
-import { type KccqScore } from '../models/kccqScore.js'
 
 export interface HealthSummaryData {
   name: string
@@ -17,5 +17,13 @@ export interface HealthSummaryData {
   nextAppointment?: Date
   medications: MedicationOptimization[]
   vitals: Vitals
-  symptomScores: KccqScore[]
+  symptomScores: SymptomScore[]
+}
+
+export interface MedicationOptimization {
+  name: string
+  dose: string
+  targetDose: string
+  potentialPositiveChange: string
+  category: MedicationRecommendationCategory
 }

@@ -20,7 +20,7 @@ describe('generateChart', () => {
       inputData.vitals.bodyWeight,
       { width: 258, height: 193.5 },
       { top: 20, right: 40, bottom: 40, left: 40 },
-      inputData.vitals.dryWeight,
+      inputData.vitals.dryWeight?.value,
     )
     const expectedPath = 'src/tests/resources/mockChart.svg'
     if (TestFlags.regenerateValues) {

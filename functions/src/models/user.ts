@@ -6,6 +6,12 @@
 // SPDX-License-Identifier: MIT
 //
 
+export interface UserMessagesSettings {
+  dailyRemindersAreActive?: boolean
+  textNotificationsAreActive?: boolean
+  medicationRemindersAreActive?: boolean
+}
+
 export interface Admin {}
 
 export interface Clinician {}
@@ -13,12 +19,6 @@ export interface Clinician {}
 export interface Patient {
   dateOfBirth: Date
   clinician?: string
-}
-
-export interface UserMessagesSettings {
-  dailyRemindersAreActive?: boolean
-  textNotificationsAreActive?: boolean
-  medicationRemindersAreActive?: boolean
 }
 
 export interface User {

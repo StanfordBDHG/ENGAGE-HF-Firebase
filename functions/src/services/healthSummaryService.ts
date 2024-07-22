@@ -12,11 +12,13 @@ import {
 } from './database/databaseService.js'
 import { type FhirService } from './fhir/fhirService.js'
 import { QuantityUnit } from './fhir/quantityUnit.js'
-import { type HealthSummaryData } from '../healthSummary/healthSummaryData.js'
-import { type MedicationOptimization } from '../healthSummary/medication.js'
-import { type Vitals } from '../healthSummary/vitals.js'
 import { type FHIRObservation } from '../models/fhir/observation.js'
-import { type KccqScore } from '../models/kccqScore.js'
+import {
+  type MedicationOptimization,
+  type HealthSummaryData,
+} from '../models/healthSummaryData.js'
+import { type SymptomScore } from '../models/symptomScore.js'
+import { type Vitals } from '../models/vitals.js'
 
 export class HealthSummaryService {
   // Properties
@@ -39,14 +41,14 @@ export class HealthSummaryService {
       patient,
       nextAppointment,
       medications,
-      kccqScores,
+      symptomScores,
       vitals,
     ] = await Promise.all([
       this.databaseService.getUserRecord(userId),
       this.databaseService.getPatient(userId),
       this.databaseService.getNextAppointment(userId),
       this.getMedications(userId),
-      this.getKccqScores(userId),
+      this.getSymptomScores(userId),
       this.getVitals(userId),
     ])
 
@@ -61,17 +63,17 @@ export class HealthSummaryService {
       clinicianName: clinician?.displayName ?? '---',
       nextAppointment: nextAppointment?.content?.start,
       medications: medications,
-      vitals: {
-        ...vitals,
-      },
-      symptomScores: kccqScores,
+      vitals: vitals,
+      symptomScores: symptomScores,
     }
   }
 
-  // Methods - KCCQ Scores
+  // Methods - Symptom Scores
 
-  private async getKccqScores(userId: string): Promise<KccqScore[]> {
-    return this.compactMapDocuments(this.databaseService.getKccqScores(userId))
+  private async getSymptomScores(userId: string): Promise<SymptomScore[]> {
+    return this.compactMapDocuments(
+      this.databaseService.getSymptomScores(userId),
+    )
   }
 
   // Methods - Medication Requests
@@ -100,7 +102,11 @@ export class HealthSummaryService {
       diastolicBloodPressure: diastolicBloodPressure,
       heartRate: heartRate,
       bodyWeight: bodyWeight,
-      dryWeight: bodyWeight.at(-1)?.value ?? 0,
+      // TODO: Implement the following properties
+      creatinine: undefined,
+      dryWeight: undefined,
+      estimatedGlomerularFiltrationRate: undefined,
+      potassium: undefined,
     }
   }
 

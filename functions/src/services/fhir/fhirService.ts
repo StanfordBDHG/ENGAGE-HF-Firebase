@@ -5,8 +5,8 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import { type QuantityUnit } from './quantityUnit.js'
-import { type Observation } from '../../healthSummary/vitals.js'
+
+import { QuantityUnit } from './quantityUnit.js'
 import {
   type FHIRCoding,
   type FHIRCodeableConcept,
@@ -19,6 +19,8 @@ import {
   type FHIRMedicationRequest,
 } from '../../models/fhir/medication.js'
 import { type FHIRObservation } from '../../models/fhir/observation.js'
+import { type MedicationRequestContext } from '../../models/medicationRequestContext.js'
+import { type Observation } from '../../models/vitals.js'
 import { CodingSystem, FHIRExtensionUrl } from '../codes.js'
 
 export class FhirService {
@@ -40,6 +42,50 @@ export class FhirService {
     return string ? { reference: string } : undefined
   }
 
+  extractMedicationClassReference(
+    medication: FHIRMedication,
+  ): FHIRReference<FHIRMedication> | undefined {
+    const string = this.findExtensions(
+      medication,
+      FHIRExtensionUrl.medicationClass,
+    ).at(0)?.valueString
+    return string ? { reference: string } : undefined
+  }
+
+  extractCurrentDailyDose(
+    context: MedicationRequestContext,
+    ingredientFilter: FHIRCoding[],
+  ): number {
+    let totalDailyDose = 0
+
+    const ingredientStrength = context.drug?.ingredient?.find((ingredient) =>
+      this.containsCoding(ingredient.itemCodeableConcept, ingredientFilter),
+    )?.strength
+    const dosePerPill = QuantityUnit.mg.valueOf(ingredientStrength?.numerator)
+    if (!dosePerPill)
+      throw new Error('Invalid ingredient strength encountered.')
+
+    for (const instruction of context.request.dosageInstruction ?? []) {
+      const intakesPerDay = instruction.timing?.repeat?.timeOfDay?.length ?? 0
+      for (const dose of instruction.doseAndRate ?? []) {
+        const numberOfPills = dose.doseQuantity?.value
+        if (!numberOfPills)
+          throw new Error('Invalid dose quantity encountered.')
+        totalDailyDose += numberOfPills * intakesPerDay * dosePerPill
+      }
+    }
+    return totalDailyDose
+  }
+
+  extractMinimumDailyDose(
+    medication: FHIRMedication,
+  ): number | number[] | undefined {
+    return this.findExtensions(
+      medication,
+      FHIRExtensionUrl.minimumDailyDose,
+    ).at(0)?.valueQuantity?.value
+  }
+
   extractTargetDailyDose(
     medication: FHIRMedication,
   ): number | number[] | undefined {
@@ -59,7 +105,7 @@ export class FhirService {
   ): Observation[] {
     const result: Observation[] = []
     for (const observation of observations) {
-      if (!this.containsCoding(observation.code, options)) continue
+      if (!this.containsCoding(observation.code, [options])) continue
       const date =
         observation.effectiveDateTime ??
         observation.effectiveInstant ??
@@ -69,15 +115,16 @@ export class FhirService {
 
       if (options.component) {
         for (const component of observation.component ?? []) {
-          if (!this.containsCoding(component.code, options.component)) continue
+          if (!this.containsCoding(component.code, [options.component]))
+            continue
           const value = options.unit.valueOf(component.valueQuantity)
           if (!value) continue
-          result.push({ date: date, value: value })
+          result.push({ date: date, value: value, unit: options.unit })
         }
       } else {
         const value = options.unit.valueOf(observation.valueQuantity)
         if (!value) continue
-        result.push({ date: date, value: value })
+        result.push({ date: date, value: value, unit: options.unit })
       }
     }
     return result
@@ -85,14 +132,34 @@ export class FhirService {
 
   // CodeableConcept
 
-  containsCoding(concept: FHIRCodeableConcept, filter: FHIRCoding): boolean {
+  extractCodes(
+    concept: FHIRCodeableConcept | undefined,
+    filter: FHIRCoding,
+  ): string[] {
     return (
-      concept.coding?.some((coding) => {
-        if (filter.code && coding.code !== filter.code) return false
-        if (filter.system && coding.system !== filter.system) return false
-        if (filter.version && coding.version !== filter.version) return false
-        return true
-      }) ?? false
+      concept?.coding?.flatMap((coding) => {
+        if (filter.system && coding.system !== filter.system) return []
+        if (filter.version && coding.version !== filter.version) return []
+        return coding.code ? [coding.code] : []
+      }) ?? []
+    )
+  }
+
+  containsCoding(
+    concept: FHIRCodeableConcept | undefined,
+    filter: FHIRCoding[],
+  ): boolean {
+    return filter.some(
+      (filterCoding) =>
+        concept?.coding?.some((coding) => {
+          if (filterCoding.code && coding.code !== filterCoding.code)
+            return false
+          if (filterCoding.system && coding.system !== filterCoding.system)
+            return false
+          if (filterCoding.version && coding.version !== filterCoding.version)
+            return false
+          return true
+        }) ?? false,
     )
   }
 

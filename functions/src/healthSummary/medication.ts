@@ -6,16 +6,12 @@
 // SPDX-License-Identifier: MIT
 //
 
-export enum MedicationOptimizationCategory {
-  targetDoseReached = 'targetDoseReached',
-  improvementAvailable = 'improvementAvailable',
-  notStarted = 'notStarted',
-}
+import { type MedicationRecommendationCategory } from '../models/medicationRecommendation'
 
 export interface MedicationOptimization {
   name: string
   dose: string
   targetDose: string
   potentialPositiveChange: string
-  category: MedicationOptimizationCategory
+  category: MedicationRecommendationCategory
 }
