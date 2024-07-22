@@ -72,8 +72,8 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
   // Methods - Symptom Scores
 
   private async getSymptomScores(userId: string): Promise<SymptomScore[]> {
-    return this.compactMapDocuments(
-      this.patientService.getSymptomScores(userId),
+    return (await this.patientService.getSymptomScores(userId)).map(
+      (doc) => doc.content,
     )
   }
 
@@ -119,9 +119,9 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
   }
 
   private async getBloodPressureObservations(userId: string) {
-    const observations = await this.compactMapDocuments<FHIRObservation>(
-      this.patientService.getBloodPressureObservations(userId),
-    )
+    const observationDocs =
+      await this.patientService.getBloodPressureObservations(userId)
+    const observations = observationDocs.map((doc) => doc.content)
     return [
       this.fhirService.extractObservationValues(observations, {
         code: LoincCode.bloodPressure,
@@ -145,25 +145,29 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
   }
 
   private async getBodyWeightObservations(userId: string) {
-    const observations = await this.compactMapDocuments<FHIRObservation>(
-      this.patientService.getBodyWeightObservations(userId),
+    const observationDocs =
+      await this.patientService.getBodyWeightObservations(userId)
+    return this.fhirService.extractObservationValues(
+      observationDocs.map((doc) => doc.content),
+      {
+        code: LoincCode.bodyWeight,
+        system: CodingSystem.loinc,
+        unit: QuantityUnit.lbs,
+      },
     )
-    return this.fhirService.extractObservationValues(observations, {
-      code: LoincCode.bodyWeight,
-      system: CodingSystem.loinc,
-      unit: QuantityUnit.lbs,
-    })
   }
 
   private async getHeartRateObservations(userId: string) {
-    const observations = await this.compactMapDocuments<FHIRObservation>(
-      this.patientService.getHeartRateObservations(userId),
+    const observationDocs =
+      await this.patientService.getHeartRateObservations(userId)
+    return this.fhirService.extractObservationValues(
+      observationDocs.map((doc) => doc.content),
+      {
+        code: LoincCode.heartRate,
+        system: CodingSystem.loinc,
+        unit: QuantityUnit.bpm,
+      },
     )
-    return this.fhirService.extractObservationValues(observations, {
-      code: LoincCode.heartRate,
-      system: CodingSystem.loinc,
-      unit: QuantityUnit.bpm,
-    })
   }
 
   private async getMostRecentCreatinineObservation(userId: string) {
@@ -224,17 +228,5 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
           })
           .at(0)
       : undefined
-  }
-
-  // Helpers
-
-  private async compactMapDocuments<T>(
-    documents: Promise<Array<DatabaseDocument<T>>>,
-  ): Promise<T[]> {
-    return documents.then((documents) =>
-      documents.flatMap((document) =>
-        document.content ? [document.content] : [],
-      ),
-    )
   }
 }
