@@ -70,6 +70,7 @@ export const beforeUserCreatedFunction: BlockingFunction = beforeUserCreated(
       new CacheDatabaseService(new FirestoreService()),
     )
     const userId = event.data.uid
+    console.log(`beforeUserCreated for userId: ${userId}`)
 
     if (event.credential) {
       if (!event.data.email)
