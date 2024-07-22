@@ -1,3 +1,11 @@
+//
+// This source file is part of the ENGAGE-HF project based on the Stanford Spezi Template Application project
+//
+// SPDX-FileCopyrightText: 2023 Stanford University
+//
+// SPDX-License-Identifier: MIT
+//
+
 import { type UserService } from './userService.js'
 import { type Invitation } from '../../models/invitation.js'
 import { type Organization } from '../../models/organization.js'

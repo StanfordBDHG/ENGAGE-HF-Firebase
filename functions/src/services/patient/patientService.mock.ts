@@ -1,3 +1,11 @@
+//
+// This source file is part of the ENGAGE-HF project based on the Stanford Spezi Template Application project
+//
+// SPDX-FileCopyrightText: 2023 Stanford University
+//
+// SPDX-License-Identifier: MIT
+//
+
 import { type PatientService } from './patientService.js'
 import { type FHIRAllergyIntolerance } from '../../models/fhir/allergyIntolerance.js'
 import {
