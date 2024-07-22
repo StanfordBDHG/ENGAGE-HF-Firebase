@@ -13,64 +13,60 @@ import { type FHIRObservation } from '../../models/fhir/observation.js'
 import { type FHIRQuestionnaireResponse } from '../../models/fhir/questionnaireResponse.js'
 import { type MedicationRecommendation } from '../../models/medicationRecommendation.js'
 import { type SymptomScore } from '../../models/symptomScore.js'
-import { type DatabaseDocument } from '../database/databaseService.js'
+import { type Document } from '../database/databaseService.js'
 
 export interface PatientService {
   // Appointments
 
-  getAppointments(
-    userId: string,
-  ): Promise<Array<DatabaseDocument<FHIRAppointment>>>
+  getAppointments(userId: string): Promise<Array<Document<FHIRAppointment>>>
   getNextAppointment(
     userId: string,
-  ): Promise<DatabaseDocument<FHIRAppointment> | undefined>
+  ): Promise<Document<FHIRAppointment> | undefined>
 
   // AllergyIntolerances
 
   getAllergyIntolerances(
     userId: string,
-  ): Promise<Array<DatabaseDocument<FHIRAllergyIntolerance>>>
+  ): Promise<Array<Document<FHIRAllergyIntolerance>>>
 
   // Medication Requests
 
   getMedicationRecommendations(
     userId: string,
-  ): Promise<Array<DatabaseDocument<MedicationRecommendation>>>
+  ): Promise<Array<Document<MedicationRecommendation>>>
   getMedicationRequests(
     userId: string,
-  ): Promise<Array<DatabaseDocument<FHIRMedicationRequest>>>
+  ): Promise<Array<Document<FHIRMedicationRequest>>>
 
   // Observations
 
   getBloodPressureObservations(
     userId: string,
-  ): Promise<Array<DatabaseDocument<FHIRObservation>>>
+  ): Promise<Array<Document<FHIRObservation>>>
   getBodyWeightObservations(
     userId: string,
-  ): Promise<Array<DatabaseDocument<FHIRObservation>>>
+  ): Promise<Array<Document<FHIRObservation>>>
   getHeartRateObservations(
     userId: string,
-  ): Promise<Array<DatabaseDocument<FHIRObservation>>>
+  ): Promise<Array<Document<FHIRObservation>>>
 
   getMostRecentCreatinineObservation(
     userId: string,
-  ): Promise<DatabaseDocument<FHIRObservation> | undefined>
+  ): Promise<Document<FHIRObservation> | undefined>
   getMostRecentDryWeightObservation(
     userId: string,
-  ): Promise<DatabaseDocument<FHIRObservation> | undefined>
+  ): Promise<Document<FHIRObservation> | undefined>
   getMostRecentEstimatedGlomerularFiltrationRateObservation(
     userId: string,
-  ): Promise<DatabaseDocument<FHIRObservation> | undefined>
+  ): Promise<Document<FHIRObservation> | undefined>
   getMostRecentPotassiumObservation(
     userId: string,
-  ): Promise<DatabaseDocument<FHIRObservation> | undefined>
+  ): Promise<Document<FHIRObservation> | undefined>
 
   // Questionnaire Responses
 
   getQuestionnaireResponses(
     userId: string,
-  ): Promise<Array<DatabaseDocument<FHIRQuestionnaireResponse>>>
-  getSymptomScores(
-    userId: string,
-  ): Promise<Array<DatabaseDocument<SymptomScore>>>
+  ): Promise<Array<Document<FHIRQuestionnaireResponse>>>
+  getSymptomScores(userId: string): Promise<Array<Document<SymptomScore>>>
 }

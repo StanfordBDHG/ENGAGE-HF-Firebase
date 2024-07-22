@@ -15,7 +15,7 @@ import {
   type Patient,
   type User,
 } from '../../models/user.js'
-import { type DatabaseDocument } from '../database/databaseService.js'
+import { type Document } from '../database/databaseService.js'
 
 /* eslint-disable @typescript-eslint/require-await */
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -46,9 +46,7 @@ export class MockUserService implements UserService {
 
   // Methods - Invitations
 
-  async getInvitation(
-    invitationId: string,
-  ): Promise<DatabaseDocument<Invitation>> {
+  async getInvitation(invitationId: string): Promise<Document<Invitation>> {
     return {
       id: invitationId,
       content: {
@@ -59,7 +57,7 @@ export class MockUserService implements UserService {
 
   async getInvitationByUserId(
     userId: string,
-  ): Promise<DatabaseDocument<Invitation> | undefined> {
+  ): Promise<Document<Invitation> | undefined> {
     return {
       id: '123',
       content: {
@@ -76,7 +74,7 @@ export class MockUserService implements UserService {
   }
 
   async enrollUser(
-    invitation: DatabaseDocument<Invitation>,
+    invitation: Document<Invitation>,
     userId: string,
   ): Promise<void> {
     return
@@ -84,13 +82,13 @@ export class MockUserService implements UserService {
 
   // Methods - Organizations
 
-  async getOrganizations(): Promise<Array<DatabaseDocument<Organization>>> {
+  async getOrganizations(): Promise<Array<Document<Organization>>> {
     return []
   }
 
   async getOrganization(
     organizationId: string,
-  ): Promise<DatabaseDocument<Organization> | undefined> {
+  ): Promise<Document<Organization> | undefined> {
     return {
       id: organizationId,
       content: {
@@ -107,14 +105,14 @@ export class MockUserService implements UserService {
 
   // Methods - User
 
-  async getClinician(userId: string): Promise<DatabaseDocument<Clinician>> {
+  async getClinician(userId: string): Promise<Document<Clinician>> {
     return {
       id: userId,
       content: {},
     }
   }
 
-  async getPatient(userId: string): Promise<DatabaseDocument<Patient>> {
+  async getPatient(userId: string): Promise<Document<Patient>> {
     return {
       id: userId,
       content: {
@@ -124,7 +122,7 @@ export class MockUserService implements UserService {
     }
   }
 
-  async getUser(userId: string): Promise<DatabaseDocument<User>> {
+  async getUser(userId: string): Promise<Document<User>> {
     return {
       id: userId,
       content: {

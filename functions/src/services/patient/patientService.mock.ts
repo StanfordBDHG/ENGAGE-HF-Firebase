@@ -22,7 +22,7 @@ import { type MedicationRecommendation } from '../../models/medicationRecommenda
 import { type SymptomScore } from '../../models/symptomScore.js'
 import { mockQuestionnaireResponse } from '../../tests/mocks/questionnaireResponse.js'
 import { CodingSystem, LoincCode } from '../codes.js'
-import { type DatabaseDocument } from '../database/databaseService.js'
+import { type Document } from '../database/databaseService.js'
 import { QuantityUnit } from '../fhir/quantityUnit.js'
 
 /* eslint-disable @typescript-eslint/require-await */
@@ -33,12 +33,12 @@ export class MockPatientService implements PatientService {
 
   async getAppointments(
     userId: string,
-  ): Promise<Array<DatabaseDocument<FHIRAppointment>>> {
+  ): Promise<Array<Document<FHIRAppointment>>> {
     return []
   }
   async getNextAppointment(
     userId: string,
-  ): Promise<DatabaseDocument<FHIRAppointment> | undefined> {
+  ): Promise<Document<FHIRAppointment> | undefined> {
     return {
       id: '123',
       content: {
@@ -61,7 +61,7 @@ export class MockPatientService implements PatientService {
 
   async getAllergyIntolerances(
     userId: string,
-  ): Promise<Array<DatabaseDocument<FHIRAllergyIntolerance>>> {
+  ): Promise<Array<Document<FHIRAllergyIntolerance>>> {
     return []
   }
 
@@ -69,7 +69,7 @@ export class MockPatientService implements PatientService {
 
   async getMedicationRecommendations(
     userId: string,
-  ): Promise<Array<DatabaseDocument<MedicationRecommendation>>> {
+  ): Promise<Array<Document<MedicationRecommendation>>> {
     const values: MedicationRecommendation[] = []
     return values.map((value, index) => ({
       id: index.toString(),
@@ -79,7 +79,7 @@ export class MockPatientService implements PatientService {
 
   async getMedicationRequests(
     userId: string,
-  ): Promise<Array<DatabaseDocument<FHIRMedicationRequest>>> {
+  ): Promise<Array<Document<FHIRMedicationRequest>>> {
     const values: FHIRMedicationRequest[] = [
       {
         medicationReference: {
@@ -109,7 +109,7 @@ export class MockPatientService implements PatientService {
 
   async getBloodPressureObservations(
     userId: string,
-  ): Promise<Array<DatabaseDocument<FHIRObservation>>> {
+  ): Promise<Array<Document<FHIRObservation>>> {
     const values = [
       this.bloodPressureObservation(110, 70, new Date('2024-02-01')),
       this.bloodPressureObservation(114, 82, new Date('2024-01-31')),
@@ -192,7 +192,7 @@ export class MockPatientService implements PatientService {
 
   async getBodyWeightObservations(
     userId: string,
-  ): Promise<Array<DatabaseDocument<FHIRObservation>>> {
+  ): Promise<Array<Document<FHIRObservation>>> {
     const values = [
       this.bodyWeightObservation(
         269,
@@ -276,7 +276,7 @@ export class MockPatientService implements PatientService {
 
   async getHeartRateObservations(
     userId: string,
-  ): Promise<Array<DatabaseDocument<FHIRObservation>>> {
+  ): Promise<Array<Document<FHIRObservation>>> {
     const values = [
       this.heartRateObservation(79, new Date('2024-02-01')),
       this.heartRateObservation(62, new Date('2024-01-31')),
@@ -322,7 +322,7 @@ export class MockPatientService implements PatientService {
 
   async getMostRecentCreatinineObservation(
     userId: string,
-  ): Promise<DatabaseDocument<FHIRObservation> | undefined> {
+  ): Promise<Document<FHIRObservation> | undefined> {
     return {
       id: '0',
       content: {
@@ -347,7 +347,7 @@ export class MockPatientService implements PatientService {
 
   async getMostRecentDryWeightObservation(
     userId: string,
-  ): Promise<DatabaseDocument<FHIRObservation> | undefined> {
+  ): Promise<Document<FHIRObservation> | undefined> {
     return {
       id: '0',
       content: {
@@ -372,7 +372,7 @@ export class MockPatientService implements PatientService {
 
   async getMostRecentEstimatedGlomerularFiltrationRateObservation(
     userId: string,
-  ): Promise<DatabaseDocument<FHIRObservation> | undefined> {
+  ): Promise<Document<FHIRObservation> | undefined> {
     return {
       id: '0',
       content: {
@@ -398,7 +398,7 @@ export class MockPatientService implements PatientService {
 
   async getMostRecentPotassiumObservation(
     userId: string,
-  ): Promise<DatabaseDocument<FHIRObservation> | undefined> {
+  ): Promise<Document<FHIRObservation> | undefined> {
     return {
       id: '0',
       content: {
@@ -425,7 +425,7 @@ export class MockPatientService implements PatientService {
 
   async getQuestionnaireResponses(
     userId: string,
-  ): Promise<Array<DatabaseDocument<FHIRQuestionnaireResponse>>> {
+  ): Promise<Array<Document<FHIRQuestionnaireResponse>>> {
     return [mockQuestionnaireResponse()].map((value, index) => ({
       id: index.toString(),
       content: value,
@@ -434,7 +434,7 @@ export class MockPatientService implements PatientService {
 
   async getSymptomScores(
     userId: string,
-  ): Promise<Array<DatabaseDocument<SymptomScore>>> {
+  ): Promise<Array<Document<SymptomScore>>> {
     const values: SymptomScore[] = [
       {
         overallScore: 40,

@@ -9,7 +9,7 @@
 import { type MedicationService } from './medicationService.js'
 import { type FHIRMedication } from '../../models/fhir/medication.js'
 import { type MedicationClass } from '../../models/medicationClass.js'
-import { type DatabaseDocument } from '../database/databaseService.js'
+import { type Document } from '../database/databaseService.js'
 
 /* eslint-disable @typescript-eslint/require-await */
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -17,9 +17,7 @@ import { type DatabaseDocument } from '../database/databaseService.js'
 export class MockMedicationService implements MedicationService {
   // Methods - Medications
 
-  async getMedicationClasses(): Promise<
-    Array<DatabaseDocument<MedicationClass>>
-  > {
+  async getMedicationClasses(): Promise<Array<Document<MedicationClass>>> {
     const values = [
       {
         name: 'Beta blockers',
@@ -56,14 +54,14 @@ export class MockMedicationService implements MedicationService {
 
   async getMedicationClass(
     medicationClassId: string,
-  ): Promise<DatabaseDocument<MedicationClass>> {
+  ): Promise<Document<MedicationClass>> {
     const allValues = await this.getMedicationClasses()
     const value = allValues.find((v) => v.id === medicationClassId)
     if (!value) throw new Error('Medication class does not exist')
     return value
   }
 
-  async getMedications(): Promise<Array<DatabaseDocument<FHIRMedication>>> {
+  async getMedications(): Promise<Array<Document<FHIRMedication>>> {
     const values: FHIRMedication[] = [
       {
         id: '1808',
@@ -949,9 +947,7 @@ export class MockMedicationService implements MedicationService {
     )
   }
 
-  async getMedication(
-    medicationId: string,
-  ): Promise<DatabaseDocument<FHIRMedication>> {
+  async getMedication(medicationId: string): Promise<Document<FHIRMedication>> {
     const values = await this.getMedications()
     const value = values.find((value) => value.id === medicationId)
     if (value) return value
@@ -960,7 +956,7 @@ export class MockMedicationService implements MedicationService {
 
   async getDrugs(
     medicationId: string,
-  ): Promise<Array<DatabaseDocument<FHIRMedication>>> {
+  ): Promise<Array<Document<FHIRMedication>>> {
     switch (medicationId) {
       case '203160':
         const values: FHIRMedication[] = [
@@ -1091,7 +1087,7 @@ export class MockMedicationService implements MedicationService {
   async getDrug(
     medicationId: string,
     drugId: string,
-  ): Promise<DatabaseDocument<FHIRMedication>> {
+  ): Promise<Document<FHIRMedication>> {
     return this.makeDocument(drugId, {
       id: drugId,
     })
@@ -1099,7 +1095,7 @@ export class MockMedicationService implements MedicationService {
 
   // Helpers
 
-  private makeDocument<T>(id: string, content: T): DatabaseDocument<T> {
+  private makeDocument<T>(id: string, content: T): Document<T> {
     return {
       id: id,
       content: content,

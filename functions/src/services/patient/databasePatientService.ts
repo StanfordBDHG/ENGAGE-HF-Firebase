@@ -15,7 +15,7 @@ import { type FHIRQuestionnaireResponse } from '../../models/fhir/questionnaireR
 import { type MedicationRecommendation } from '../../models/medicationRecommendation.js'
 import { type SymptomScore } from '../../models/symptomScore.js'
 import {
-  type DatabaseDocument,
+  type Document,
   type DatabaseService,
 } from '../database/databaseService.js'
 
@@ -34,7 +34,7 @@ export class DatabasePatientService implements PatientService {
 
   async getAppointments(
     userId: string,
-  ): Promise<Array<DatabaseDocument<FHIRAppointment>>> {
+  ): Promise<Array<Document<FHIRAppointment>>> {
     return this.databaseService.getCollection<FHIRAppointment>(
       `patients/${userId}/appointments`,
     )
@@ -42,7 +42,7 @@ export class DatabasePatientService implements PatientService {
 
   async getNextAppointment(
     userId: string,
-  ): Promise<DatabaseDocument<FHIRAppointment> | undefined> {
+  ): Promise<Document<FHIRAppointment> | undefined> {
     const result = await this.databaseService.getQuery<FHIRAppointment>(
       (firestore) =>
         firestore
@@ -58,7 +58,7 @@ export class DatabasePatientService implements PatientService {
 
   async getAllergyIntolerances(
     userId: string,
-  ): Promise<Array<DatabaseDocument<FHIRAllergyIntolerance>>> {
+  ): Promise<Array<Document<FHIRAllergyIntolerance>>> {
     return this.databaseService.getCollection<FHIRAllergyIntolerance>(
       `patients/${userId}/allergyIntolerances`,
     )
@@ -68,7 +68,7 @@ export class DatabasePatientService implements PatientService {
 
   async getMedicationRecommendations(
     userId: string,
-  ): Promise<Array<DatabaseDocument<MedicationRecommendation>>> {
+  ): Promise<Array<Document<MedicationRecommendation>>> {
     return this.databaseService.getCollection<MedicationRecommendation>(
       `patients/${userId}/medicationRecommendations`,
     )
@@ -76,7 +76,7 @@ export class DatabasePatientService implements PatientService {
 
   async getMedicationRequests(
     userId: string,
-  ): Promise<Array<DatabaseDocument<FHIRMedicationRequest>>> {
+  ): Promise<Array<Document<FHIRMedicationRequest>>> {
     return this.databaseService.getCollection<FHIRMedicationRequest>(
       `patients/${userId}/medicationRequests`,
     )
@@ -86,7 +86,7 @@ export class DatabasePatientService implements PatientService {
 
   async getBloodPressureObservations(
     userId: string,
-  ): Promise<Array<DatabaseDocument<FHIRObservation>>> {
+  ): Promise<Array<Document<FHIRObservation>>> {
     return this.databaseService.getCollection<FHIRObservation>(
       `patients/${userId}/bloodPressureObservations`,
     )
@@ -94,7 +94,7 @@ export class DatabasePatientService implements PatientService {
 
   async getBodyWeightObservations(
     userId: string,
-  ): Promise<Array<DatabaseDocument<FHIRObservation>>> {
+  ): Promise<Array<Document<FHIRObservation>>> {
     return this.databaseService.getCollection<FHIRObservation>(
       `patients/${userId}/bodyWeightObservations`,
     )
@@ -102,7 +102,7 @@ export class DatabasePatientService implements PatientService {
 
   async getHeartRateObservations(
     userId: string,
-  ): Promise<Array<DatabaseDocument<FHIRObservation>>> {
+  ): Promise<Array<Document<FHIRObservation>>> {
     return this.databaseService.getCollection<FHIRObservation>(
       `patients/${userId}/heartRateObservations`,
     )
@@ -110,7 +110,7 @@ export class DatabasePatientService implements PatientService {
 
   async getMostRecentCreatinineObservation(
     userId: string,
-  ): Promise<DatabaseDocument<FHIRObservation> | undefined> {
+  ): Promise<Document<FHIRObservation> | undefined> {
     const result = await this.databaseService.getQuery<FHIRObservation>(
       (firestore) =>
         firestore
@@ -123,7 +123,7 @@ export class DatabasePatientService implements PatientService {
 
   async getMostRecentDryWeightObservation(
     userId: string,
-  ): Promise<DatabaseDocument<FHIRObservation> | undefined> {
+  ): Promise<Document<FHIRObservation> | undefined> {
     const result = await this.databaseService.getQuery<FHIRObservation>(
       (firestore) =>
         firestore
@@ -136,7 +136,7 @@ export class DatabasePatientService implements PatientService {
 
   async getMostRecentEstimatedGlomerularFiltrationRateObservation(
     userId: string,
-  ): Promise<DatabaseDocument<FHIRObservation> | undefined> {
+  ): Promise<Document<FHIRObservation> | undefined> {
     const result = await this.databaseService.getQuery<FHIRObservation>(
       (firestore) =>
         firestore
@@ -149,7 +149,7 @@ export class DatabasePatientService implements PatientService {
 
   async getMostRecentPotassiumObservation(
     userId: string,
-  ): Promise<DatabaseDocument<FHIRObservation> | undefined> {
+  ): Promise<Document<FHIRObservation> | undefined> {
     const result = await this.databaseService.getQuery<FHIRObservation>(
       (firestore) =>
         firestore
@@ -164,7 +164,7 @@ export class DatabasePatientService implements PatientService {
 
   async getQuestionnaireResponses(
     userId: string,
-  ): Promise<Array<DatabaseDocument<FHIRQuestionnaireResponse>>> {
+  ): Promise<Array<Document<FHIRQuestionnaireResponse>>> {
     return this.databaseService.getCollection<FHIRQuestionnaireResponse>(
       `patients/${userId}/questionnaireResponses`,
     )
@@ -172,7 +172,7 @@ export class DatabasePatientService implements PatientService {
 
   async getSymptomScores(
     userId: string,
-  ): Promise<Array<DatabaseDocument<SymptomScore>>> {
+  ): Promise<Array<Document<SymptomScore>>> {
     return this.databaseService.getCollection<SymptomScore>(
       `patients/${userId}/symptomScores`,
     )

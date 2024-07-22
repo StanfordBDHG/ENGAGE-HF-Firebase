@@ -10,10 +10,7 @@ import {
   type BulkWriterOptions,
   type Firestore,
 } from 'firebase-admin/firestore'
-import {
-  type DatabaseDocument,
-  type DatabaseService,
-} from './databaseService.js'
+import { type Document, type DatabaseService } from './databaseService.js'
 
 export class CacheDatabaseService implements DatabaseService {
   // Properties
@@ -36,17 +33,17 @@ export class CacheDatabaseService implements DatabaseService {
 
   async getQuery<T>(
     query: (firestore: Firestore) => FirebaseFirestore.Query,
-  ): Promise<Array<DatabaseDocument<T>>> {
+  ): Promise<Array<Document<T>>> {
     return this.databaseService.getQuery(query)
   }
 
-  async getCollection<T>(path: string): Promise<Array<DatabaseDocument<T>>> {
+  async getCollection<T>(path: string): Promise<Array<Document<T>>> {
     return this.accessCache(path, () =>
       this.databaseService.getCollection(path),
     )
   }
 
-  async getDocument<T>(path: string): Promise<DatabaseDocument<T> | undefined> {
+  async getDocument<T>(path: string): Promise<Document<T> | undefined> {
     return this.accessCache(path, () => this.databaseService.getDocument(path))
   }
 

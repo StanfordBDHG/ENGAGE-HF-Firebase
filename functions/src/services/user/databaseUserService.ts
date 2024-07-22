@@ -21,7 +21,7 @@ import {
   type User,
 } from '../../models/user.js'
 import {
-  type DatabaseDocument,
+  type Document,
   type DatabaseService,
 } from '../database/databaseService.js'
 
@@ -63,7 +63,7 @@ export class DatabaseUserService implements UserService {
 
   async getInvitation(
     invitationId: string,
-  ): Promise<DatabaseDocument<Invitation> | undefined> {
+  ): Promise<Document<Invitation> | undefined> {
     return this.databaseService.getDocument<Invitation>(
       `invitations/${invitationId}`,
     )
@@ -87,7 +87,7 @@ export class DatabaseUserService implements UserService {
 
   async getInvitationByUserId(
     userId: string,
-  ): Promise<DatabaseDocument<Invitation> | undefined> {
+  ): Promise<Document<Invitation> | undefined> {
     const result = await this.databaseService.getQuery<Invitation>(
       (firestore) =>
         firestore
@@ -99,7 +99,7 @@ export class DatabaseUserService implements UserService {
   }
 
   async enrollUser(
-    invitation: DatabaseDocument<Invitation>,
+    invitation: Document<Invitation>,
     userId: string,
   ): Promise<void> {
     const user = await this.databaseService.getDocument(`users/${userId}`)
@@ -144,13 +144,13 @@ export class DatabaseUserService implements UserService {
 
   // Organizations
 
-  async getOrganizations(): Promise<Array<DatabaseDocument<Organization>>> {
+  async getOrganizations(): Promise<Array<Document<Organization>>> {
     return this.databaseService.getCollection<Organization>('organizations')
   }
 
   async getOrganization(
     organizationId: string,
-  ): Promise<DatabaseDocument<Organization> | undefined> {
+  ): Promise<Document<Organization> | undefined> {
     return this.databaseService.getDocument<Organization>(
       `organizations/${organizationId}`,
     )
@@ -158,19 +158,15 @@ export class DatabaseUserService implements UserService {
 
   // Users
 
-  async getClinician(
-    userId: string,
-  ): Promise<DatabaseDocument<Clinician> | undefined> {
+  async getClinician(userId: string): Promise<Document<Clinician> | undefined> {
     return this.databaseService.getDocument<Clinician>(`clinicians/${userId}`)
   }
 
-  async getPatient(
-    userId: string,
-  ): Promise<DatabaseDocument<Patient> | undefined> {
+  async getPatient(userId: string): Promise<Document<Patient> | undefined> {
     return this.databaseService.getDocument<Patient>(`patients/${userId}`)
   }
 
-  async getUser(userId: string): Promise<DatabaseDocument<User> | undefined> {
+  async getUser(userId: string): Promise<Document<User> | undefined> {
     return this.databaseService.getDocument<User>(`users/${userId}`)
   }
 

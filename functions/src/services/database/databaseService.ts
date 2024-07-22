@@ -12,7 +12,7 @@ import {
   type BulkWriterOptions,
 } from 'firebase-admin/firestore'
 
-export interface DatabaseDocument<Content> {
+export interface Document<Content> {
   id: string
   content: Content
 }
@@ -20,11 +20,11 @@ export interface DatabaseDocument<Content> {
 export interface DatabaseService {
   getQuery<T>(
     query: (firestore: Firestore) => FirebaseFirestore.Query,
-  ): Promise<Array<DatabaseDocument<T>>>
+  ): Promise<Array<Document<T>>>
 
-  getCollection<T>(path: string): Promise<Array<DatabaseDocument<T>>>
+  getCollection<T>(path: string): Promise<Array<Document<T>>>
 
-  getDocument<T>(path: string): Promise<DatabaseDocument<T> | undefined>
+  getDocument<T>(path: string): Promise<Document<T> | undefined>
 
   bulkWrite(
     write: (firestore: Firestore, writer: BulkWriter) => Promise<void>,

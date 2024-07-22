@@ -12,10 +12,7 @@ import {
   type Transaction,
   type Firestore,
 } from 'firebase-admin/firestore'
-import {
-  type DatabaseDocument,
-  type DatabaseService,
-} from './databaseService.js'
+import { type Document, type DatabaseService } from './databaseService.js'
 
 export class FirestoreService implements DatabaseService {
   // Properties
@@ -32,7 +29,7 @@ export class FirestoreService implements DatabaseService {
 
   async getQuery<T>(
     query: (firestore: Firestore) => FirebaseFirestore.Query,
-  ): Promise<Array<DatabaseDocument<T>>> {
+  ): Promise<Array<Document<T>>> {
     const collection = await query(this.firestore).get()
     return collection.docs.map((doc) => ({
       id: doc.id,
@@ -40,7 +37,7 @@ export class FirestoreService implements DatabaseService {
     }))
   }
 
-  async getCollection<T>(path: string): Promise<Array<DatabaseDocument<T>>> {
+  async getCollection<T>(path: string): Promise<Array<Document<T>>> {
     const collection = await this.firestore.collection(path).get()
     return collection.docs.map((doc) => ({
       id: doc.id,
@@ -48,7 +45,7 @@ export class FirestoreService implements DatabaseService {
     }))
   }
 
-  async getDocument<T>(path: string): Promise<DatabaseDocument<T> | undefined> {
+  async getDocument<T>(path: string): Promise<Document<T> | undefined> {
     const doc = await this.firestore.doc(path).get()
     return doc.exists ? { id: doc.id, content: doc.data() as T } : undefined
   }

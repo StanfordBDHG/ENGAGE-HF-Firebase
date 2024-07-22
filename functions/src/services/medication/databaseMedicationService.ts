@@ -10,7 +10,7 @@ import { type MedicationService } from './medicationService.js'
 import { type FHIRMedication } from '../../models/fhir/medication.js'
 import { type MedicationClass } from '../../models/medicationClass.js'
 import {
-  type DatabaseDocument,
+  type Document,
   type DatabaseService,
 } from '../database/databaseService.js'
 
@@ -27,15 +27,13 @@ export class DatabaseMedicationService implements MedicationService {
 
   // Methods - Medication Classes
 
-  async getMedicationClasses(): Promise<
-    Array<DatabaseDocument<MedicationClass>>
-  > {
+  async getMedicationClasses(): Promise<Array<Document<MedicationClass>>> {
     return this.databaseService.getCollection('medicationClasses')
   }
 
   async getMedicationClass(
     medicationClassId: string,
-  ): Promise<DatabaseDocument<MedicationClass> | undefined> {
+  ): Promise<Document<MedicationClass> | undefined> {
     return this.databaseService.getDocument(
       `medicationClasses/${medicationClassId}`,
     )
@@ -43,13 +41,13 @@ export class DatabaseMedicationService implements MedicationService {
 
   // Methods - Medications
 
-  async getMedications(): Promise<Array<DatabaseDocument<FHIRMedication>>> {
+  async getMedications(): Promise<Array<Document<FHIRMedication>>> {
     return this.databaseService.getCollection('medications')
   }
 
   async getMedication(
     medicationId: string,
-  ): Promise<DatabaseDocument<FHIRMedication> | undefined> {
+  ): Promise<Document<FHIRMedication> | undefined> {
     return this.databaseService.getDocument(`medications/${medicationId}`)
   }
 
@@ -57,7 +55,7 @@ export class DatabaseMedicationService implements MedicationService {
 
   async getDrugs(
     medicationId: string,
-  ): Promise<Array<DatabaseDocument<FHIRMedication>>> {
+  ): Promise<Array<Document<FHIRMedication>>> {
     return this.databaseService.getCollection(
       `medications/${medicationId}/drugs`,
     )
@@ -66,7 +64,7 @@ export class DatabaseMedicationService implements MedicationService {
   async getDrug(
     medicationId: string,
     drugId: string,
-  ): Promise<DatabaseDocument<FHIRMedication> | undefined> {
+  ): Promise<Document<FHIRMedication> | undefined> {
     return this.databaseService.getDocument(
       `medications/${medicationId}/drugs/${drugId}`,
     )

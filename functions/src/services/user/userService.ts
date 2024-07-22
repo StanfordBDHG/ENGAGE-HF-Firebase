@@ -14,7 +14,7 @@ import {
   type Patient,
   type User,
 } from '../../models/user.js'
-import { type DatabaseDocument } from '../database/databaseService.js'
+import { type Document } from '../database/databaseService.js'
 
 export interface UserService {
   // Auth
@@ -24,30 +24,25 @@ export interface UserService {
 
   // Invitations
 
-  getInvitation(
-    invitationId: string,
-  ): Promise<DatabaseDocument<Invitation> | undefined>
+  getInvitation(invitationId: string): Promise<Document<Invitation> | undefined>
   setInvitationUserId(invitationId: string, userId: string): Promise<void>
   getInvitationByUserId(
     userId: string,
-  ): Promise<DatabaseDocument<Invitation> | undefined>
-  enrollUser(
-    invitation: DatabaseDocument<Invitation>,
-    userId: string,
-  ): Promise<void>
+  ): Promise<Document<Invitation> | undefined>
+  enrollUser(invitation: Document<Invitation>, userId: string): Promise<void>
 
   // Organizations
 
-  getOrganizations(): Promise<Array<DatabaseDocument<Organization>>>
+  getOrganizations(): Promise<Array<Document<Organization>>>
   getOrganization(
     organizationId: string,
-  ): Promise<DatabaseDocument<Organization> | undefined>
+  ): Promise<Document<Organization> | undefined>
 
   // Users
 
-  getClinician(userId: string): Promise<DatabaseDocument<Clinician> | undefined>
-  getPatient(userId: string): Promise<DatabaseDocument<Patient> | undefined>
-  getUser(userId: string): Promise<DatabaseDocument<User> | undefined>
+  getClinician(userId: string): Promise<Document<Clinician> | undefined>
+  getPatient(userId: string): Promise<Document<Patient> | undefined>
+  getUser(userId: string): Promise<Document<User> | undefined>
 
   deleteUser(userId: string): Promise<void>
 
