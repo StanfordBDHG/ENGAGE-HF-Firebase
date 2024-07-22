@@ -25,7 +25,7 @@ export class DiureticRecommender extends Recommender {
     return this.createRecommendation(
       currentMedication,
       undefined,
-      MedicationRecommendationCategory.noActionRequired,
+      MedicationRecommendationCategory.personalTargetDoseReached,
     )
   }
 }
