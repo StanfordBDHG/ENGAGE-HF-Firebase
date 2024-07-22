@@ -7,7 +7,7 @@
     "lint:fix": "npm run lint -- --fix",
     "lint:strict": "npm run lint -- --max-warnings=0",
     "build": "tsc",
-    "clean": "if [ -f 'tsconfig.tsbuildinfo' ]; then rm tsconfig.tsbuildinfo; fi",
+    "clean": "if [ -f 'tsconfig.tsbuildinfo' ]; then rm tsconfig.tsbuildinfo; fi && if [ -d 'lib' ]; then rm -r lib; fi",
     "test": "npm run clean && npm run build && npm run test:nobuild",
     "test:coverage": "c8 npm run test",
     "test:nobuild": "env TZ=UTC mocha --reporter-option maxDiffSize=0",
