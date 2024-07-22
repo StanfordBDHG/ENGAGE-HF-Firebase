@@ -23,11 +23,12 @@ import {
   type FHIRMedicationRequest,
 } from '../../models/fhir/medication.js'
 import { type FHIRObservation } from '../../models/fhir/observation.js'
+import { type FHIRQuestionnaireResponse } from '../../models/fhir/questionnaireResponse.js'
 import { type Invitation } from '../../models/invitation.js'
 import { type MedicationClass } from '../../models/medicationClass.js'
 import { type UserMessage } from '../../models/message.js'
 import { type Organization } from '../../models/organization.js'
-import { type SymptomScores } from '../../models/symptomScores.js'
+import { type SymptomScore } from '../../models/symptomScore.js'
 import { type Clinician, type Patient, type User } from '../../models/user.js'
 
 export class FirestoreService implements DatabaseService {
@@ -260,8 +261,16 @@ export class FirestoreService implements DatabaseService {
 
   // Users - Questionnaire Responses
 
+  async getQuestionnaireResponses(
+    userId: string,
+  ): Promise<Array<DatabaseDocument<FHIRQuestionnaireResponse>>> {
+    return this.getCollection<FHIRQuestionnaireResponse>(
+      `patients/${userId}/questionnaireResponses`,
+    )
+  }
+
   async getSymptomScores(userId: string) {
-    return this.getCollection<SymptomScores>(`users/${userId}/kccqScores`)
+    return this.getCollection<SymptomScore>(`patients/${userId}/symptomScores`)
   }
 
   // Helpers

@@ -10,7 +10,11 @@ import fs from 'fs'
 import { Resvg, type ResvgRenderOptions } from '@resvg/resvg-js'
 import { jsPDF } from 'jspdf'
 import 'jspdf-autotable' /* eslint-disable-line */
-import { type CellDef, type RowInput, type UserOptions } from 'jspdf-autotable' /* eslint-disable-line */
+import {
+  type CellDef,
+  type RowInput,
+  type UserOptions,
+} from 'jspdf-autotable' /* eslint-disable-line */
 import { generateChartSvg } from './generateChart.js'
 import { generateSpeedometerSvg } from './generateSpeedometer.js'
 import {
@@ -365,31 +369,39 @@ class HealthSummaryPDFGenerator {
           title: 'Dizziness',
         },
       ],
-      ...this.data.symptomScores.map((survey, index) => [
+      ...this.data.symptomScores.map((score, index) => [
         {
-          title: this.formatDate(survey.date),
+          title: this.formatDate(score.date),
           styles: {
             fontStyle:
               index == this.data.symptomScores.length - 1 ? 'bold' : 'normal',
           },
         } as CellDef,
         {
-          title: String(survey.overallScore),
+          title: String(score.overallScore),
         },
         {
-          title: String(survey.physicalLimitsScore),
+          title:
+            score.physicalLimitsScore ?
+              String(score.physicalLimitsScore)
+            : '---',
         },
         {
-          title: String(survey.socialLimitsScore),
+          title:
+            score.socialLimitsScore ? String(score.socialLimitsScore) : '---',
         },
         {
-          title: String(survey.qualityOfLifeScore),
+          title:
+            score.qualityOfLifeScore ? String(score.qualityOfLifeScore) : '---',
         },
         {
-          title: String(survey.specificSymptomsScore),
+          title:
+            score.symptomFrequencyScore ?
+              String(score.symptomFrequencyScore)
+            : '---',
         },
         {
-          title: String(survey.dizzinessScore),
+          title: String(score.dizzinessScore),
         },
       ]),
     ]
@@ -629,7 +641,7 @@ class HealthSummaryPDFGenerator {
         fontSize: textStyle.fontSize,
       },
     }
-      ; (this.doc as any).autoTable(options) // eslint-disable-line
+    ;(this.doc as any).autoTable(options) // eslint-disable-line
     this.cursor.y = (this.doc as any).lastAutoTable.finalY // eslint-disable-line
   }
 
