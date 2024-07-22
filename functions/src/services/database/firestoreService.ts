@@ -70,7 +70,7 @@ export class FirestoreService implements DatabaseService {
   async getInvitationByUserId(userId: string) {
     const collection = await this.firestore
       .collection('invitations')
-      .where('usedBy', '==', userId)
+      .where('userId', '==', userId)
       .limit(1)
       .get()
     if (collection.empty) return undefined
