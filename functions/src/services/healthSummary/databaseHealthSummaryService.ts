@@ -97,21 +97,28 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
       [systolicBloodPressure, diastolicBloodPressure],
       heartRate,
       bodyWeight,
+      creatinine,
+      dryWeight,
+      estimatedGlomerularFiltrationRate,
+      potassium,
     ] = await Promise.all([
       this.getBloodPressureObservations(userId),
       this.getHeartRateObservations(userId),
       this.getBodyWeightObservations(userId),
+      this.getMostRecentCreatinineObservation(userId),
+      this.getMostRecentDryWeightObservation(userId),
+      this.getMostRecentEstimatedGlomerularFiltrationRateObservation(userId),
+      this.getMostRecentPotassiumObservation(userId),
     ])
     return {
       systolicBloodPressure: systolicBloodPressure,
       diastolicBloodPressure: diastolicBloodPressure,
       heartRate: heartRate,
       bodyWeight: bodyWeight,
-      // TODO: Implement the following properties
-      creatinine: undefined,
-      dryWeight: undefined,
-      estimatedGlomerularFiltrationRate: undefined,
-      potassium: undefined,
+      creatinine: creatinine,
+      dryWeight: dryWeight,
+      estimatedGlomerularFiltrationRate: estimatedGlomerularFiltrationRate,
+      potassium: potassium,
     }
   }
 
@@ -141,6 +148,17 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
     ]
   }
 
+  private async getBodyWeightObservations(userId: string) {
+    const observations = await this.compactMapDocuments<FHIRObservation>(
+      this.patientService.getBodyWeightObservations(userId),
+    )
+    return this.fhirService.extractObservationValues(observations, {
+      code: LoincCode.bodyWeight,
+      system: CodingSystem.loinc,
+      unit: QuantityUnit.lbs,
+    })
+  }
+
   private async getHeartRateObservations(userId: string) {
     const observations = await this.compactMapDocuments<FHIRObservation>(
       this.patientService.getHeartRateObservations(userId),
@@ -152,15 +170,64 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
     })
   }
 
-  private async getBodyWeightObservations(userId: string) {
-    const observations = await this.compactMapDocuments<FHIRObservation>(
-      this.patientService.getBodyWeightObservations(userId),
-    )
-    return this.fhirService.extractObservationValues(observations, {
-      code: LoincCode.bodyWeight,
-      system: CodingSystem.loinc,
-      unit: QuantityUnit.lbs,
-    })
+  private async getMostRecentCreatinineObservation(userId: string) {
+    const observation =
+      await this.patientService.getMostRecentCreatinineObservation(userId)
+    return observation ?
+        this.fhirService
+          .extractObservationValues([observation.content], {
+            code: LoincCode.creatinine,
+            system: CodingSystem.loinc,
+            unit: QuantityUnit.mg_dL,
+          })
+          .at(0)
+      : undefined
+  }
+
+  private async getMostRecentDryWeightObservation(userId: string) {
+    const observation =
+      await this.patientService.getMostRecentDryWeightObservation(userId)
+    return observation ?
+        this.fhirService
+          .extractObservationValues([observation.content], {
+            code: LoincCode.bodyWeight,
+            system: CodingSystem.loinc,
+            unit: QuantityUnit.lbs,
+          })
+          .at(0)
+      : undefined
+  }
+
+  private async getMostRecentEstimatedGlomerularFiltrationRateObservation(
+    userId: string,
+  ) {
+    const observation =
+      await this.patientService.getMostRecentEstimatedGlomerularFiltrationRateObservation(
+        userId,
+      )
+    return observation ?
+        this.fhirService
+          .extractObservationValues([observation.content], {
+            code: LoincCode.estimatedGlomerularFiltrationRate,
+            system: CodingSystem.loinc,
+            unit: QuantityUnit.mL_min_173m2,
+          })
+          .at(0)
+      : undefined
+  }
+
+  private async getMostRecentPotassiumObservation(userId: string) {
+    const observation =
+      await this.patientService.getMostRecentPotassiumObservation(userId)
+    return observation ?
+        this.fhirService
+          .extractObservationValues([observation.content], {
+            code: LoincCode.potassium,
+            system: CodingSystem.loinc,
+            unit: QuantityUnit.mEq_L,
+          })
+          .at(0)
+      : undefined
   }
 
   // Helpers

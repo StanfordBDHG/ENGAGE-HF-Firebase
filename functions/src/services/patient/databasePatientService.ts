@@ -100,6 +100,58 @@ export class DatabasePatientService implements PatientService {
     )
   }
 
+  async getMostRecentCreatinineObservation(
+    userId: string,
+  ): Promise<DatabaseDocument<FHIRObservation> | undefined> {
+    const result = await this.databaseService.getQuery<FHIRObservation>(
+      (firestore) =>
+        firestore
+          .collection(`patients/${userId}/creatinineObservations`)
+          .orderBy('effectiveDateTime', 'desc')
+          .limit(1),
+    )
+    return result.at(0)
+  }
+
+  async getMostRecentDryWeightObservation(
+    userId: string,
+  ): Promise<DatabaseDocument<FHIRObservation> | undefined> {
+    const result = await this.databaseService.getQuery<FHIRObservation>(
+      (firestore) =>
+        firestore
+          .collection(`patients/${userId}/dryWeightObservations`)
+          .orderBy('effectiveDateTime', 'desc')
+          .limit(1),
+    )
+    return result.at(0)
+  }
+
+  async getMostRecentEstimatedGlomerularFiltrationRateObservation(
+    userId: string,
+  ): Promise<DatabaseDocument<FHIRObservation> | undefined> {
+    const result = await this.databaseService.getQuery<FHIRObservation>(
+      (firestore) =>
+        firestore
+          .collection(`patients/${userId}/eGfrObservations`)
+          .orderBy('effectiveDateTime', 'desc')
+          .limit(1),
+    )
+    return result.at(0)
+  }
+
+  async getMostRecentPotassiumObservation(
+    userId: string,
+  ): Promise<DatabaseDocument<FHIRObservation> | undefined> {
+    const result = await this.databaseService.getQuery<FHIRObservation>(
+      (firestore) =>
+        firestore
+          .collection(`patients/${userId}/potassiumObservations`)
+          .orderBy('effectiveDateTime', 'desc')
+          .limit(1),
+    )
+    return result.at(0)
+  }
+
   // Methods - Questionnaire Responses
 
   async getQuestionnaireResponses(

@@ -44,6 +44,19 @@ export interface PatientService {
     userId: string,
   ): Promise<Array<DatabaseDocument<FHIRObservation>>>
 
+  getMostRecentCreatinineObservation(
+    userId: string,
+  ): Promise<DatabaseDocument<FHIRObservation> | undefined>
+  getMostRecentDryWeightObservation(
+    userId: string,
+  ): Promise<DatabaseDocument<FHIRObservation> | undefined>
+  getMostRecentEstimatedGlomerularFiltrationRateObservation(
+    userId: string,
+  ): Promise<DatabaseDocument<FHIRObservation> | undefined>
+  getMostRecentPotassiumObservation(
+    userId: string,
+  ): Promise<DatabaseDocument<FHIRObservation> | undefined>
+
   // Questionnaire Responses
 
   getQuestionnaireResponses(

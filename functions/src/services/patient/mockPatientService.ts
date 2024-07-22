@@ -15,6 +15,7 @@ import { type SymptomScore } from '../../models/symptomScore.js'
 import { mockQuestionnaireResponse } from '../../tests/mocks/questionnaireResponse.js'
 import { type DatabaseDocument } from '../database/databaseService.js'
 import { QuantityUnit } from '../fhir/quantityUnit.js'
+import { CodingSystem, LoincCode } from '../codes.js'
 
 /* eslint-disable @typescript-eslint/require-await */
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -307,6 +308,107 @@ export class MockPatientService implements PatientService {
       valueQuantity: {
         ...QuantityUnit.bpm,
         value: value,
+      },
+    }
+  }
+
+  async getMostRecentCreatinineObservation(
+    userId: string,
+  ): Promise<DatabaseDocument<FHIRObservation> | undefined> {
+    return {
+      id: '0',
+      content: {
+        code: {
+          coding: [
+            {
+              code: LoincCode.creatinine,
+              display: 'Creatinine [Mass/volume] in Serum or Plasma',
+              system: CodingSystem.loinc,
+            },
+          ],
+        },
+        effectiveDateTime: new Date('2024-01-29'),
+        status: FHIRObservationStatus.final,
+        valueQuantity: {
+          ...QuantityUnit.mg_dL,
+          value: 1.1,
+        },
+      },
+    }
+  }
+
+  async getMostRecentDryWeightObservation(
+    userId: string,
+  ): Promise<DatabaseDocument<FHIRObservation> | undefined> {
+    return {
+      id: '0',
+      content: {
+        code: {
+          coding: [
+            {
+              code: LoincCode.bodyWeight,
+              display: 'Body weight',
+              system: CodingSystem.loinc,
+            },
+          ],
+        },
+        effectiveDateTime: new Date('2024-01-29'),
+        status: FHIRObservationStatus.final,
+        valueQuantity: {
+          ...QuantityUnit.lbs,
+          value: 267.5,
+        },
+      },
+    }
+  }
+
+  async getMostRecentEstimatedGlomerularFiltrationRateObservation(
+    userId: string,
+  ): Promise<DatabaseDocument<FHIRObservation> | undefined> {
+    return {
+      id: '0',
+      content: {
+        code: {
+          coding: [
+            {
+              code: LoincCode.estimatedGlomerularFiltrationRate,
+              display:
+                'Glomerular filtration rate/1.73 sq M.predicted [Volume Rate/Area] in Serum, Plasma or Blood by Creatinine-based formula (CKD-EPI 2021)',
+              system: CodingSystem.loinc,
+            },
+          ],
+        },
+        effectiveDateTime: new Date('2024-01-29'),
+        status: FHIRObservationStatus.final,
+        valueQuantity: {
+          ...QuantityUnit.mL_min_173m2,
+          value: 60,
+        },
+      },
+    }
+  }
+
+  async getMostRecentPotassiumObservation(
+    userId: string,
+  ): Promise<DatabaseDocument<FHIRObservation> | undefined> {
+    return {
+      id: '0',
+      content: {
+        code: {
+          coding: [
+            {
+              code: LoincCode.potassium,
+              display: 'Potassium [Moles/volume] in Blood',
+              system: CodingSystem.loinc,
+            },
+          ],
+        },
+        effectiveDateTime: new Date('2024-01-29'),
+        status: FHIRObservationStatus.final,
+        valueQuantity: {
+          ...QuantityUnit.mEq_L,
+          value: 4.2,
+        },
       },
     }
   }
