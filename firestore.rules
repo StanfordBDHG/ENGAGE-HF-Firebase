@@ -68,21 +68,25 @@ service cloud.firestore {
       allow read, update: if isClinician(request, organizationIdFromUserId(patientId))
 
       match /{collectionName}/{documentId} {
-        function isPatientEditable() {
+        function isPatientWritable() {
           return collectionName.matches('/^[A-Za-z]+Observations$/')
             || collectionName == 'questionnaireResponses'
         }
-        function isClinicianEditable() {
+        function isClinicianWritable() {
           return collectionName == 'allergyIntolerances' 
             || collectionName == 'appointments' 
             || collectionName == 'medicationRequests' 
             || collectionName == 'medicationRecommendations'
             || collectionName == 'symptomScores'
         }
-        allow read, write: if isUser(request, patientId) && isPatientEditable()
+        allow read: if isUser(request, patientId)
+        allow write: if isUser(request, patientId) 
+          && isPatientWritable()
         allow read, write: if isAdmin(request)
-        allow read, update: if isOwner(request, organizationIdFromUserId(patientId))
-        allow read, update: if isClinician(request, organizationIdFromUserId(patientId)) && isClinicianEditable()
+        allow read, write: if isOwner(request, organizationIdFromUserId(patientId))
+        allow read: if isClinician(request, organizationIdFromUserId(patientId))
+        allow write: if isClinician(request, organizationIdFromUserId(patientId)) 
+          && isClinicianWritable()
       }
     }
 
