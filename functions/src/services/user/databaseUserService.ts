@@ -75,12 +75,9 @@ export class DatabaseUserService implements UserService {
   ): Promise<void> {
     await this.databaseService.runTransaction(
       async (firestore, transaction) => {
-        const invitationRef = firestore.doc(`invitations/${invitationId}`)
-        const invitationDoc = await transaction.get(invitationRef)
-        if (!invitationDoc.exists) {
-          throw new Error('Invitation not found')
-        }
-        transaction.update(invitationRef, { userId: userId })
+        transaction.update(firestore.doc(`invitations/${invitationId}`), {
+          userId: userId,
+        })
       },
     )
   }

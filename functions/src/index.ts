@@ -30,7 +30,8 @@ import {
 
 admin.initializeApp()
 
-export const beforeUserCreated = beforeUserCreatedFunction
+export const beforecreated = beforeUserCreatedFunction
+
 export const checkInvitationCode = checkInvitationCodeFunction
 export const dismissMessage = dismissMessageFunction
 export const exportHealthSummary = exportHealthSummaryFunction

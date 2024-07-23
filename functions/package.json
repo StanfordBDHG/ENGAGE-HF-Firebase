@@ -12,7 +12,7 @@
     "test:coverage": "c8 npm run test",
     "test:nobuild": "env TZ=UTC mocha --reporter-option maxDiffSize=0",
     "test:regenerate": "env REGENERATE_VALUES=true npm run test",
-    "serve": "npm run build -- --watch | firebase emulators:start --only firestore,functions",
+    "serve": "npm run build -- --watch | firebase emulators:start --only auth,firestore,functions",
     "shell": "firebase functions:shell",
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions",

@@ -40,11 +40,6 @@ export interface FHIRRatio {
   denominator?: FHIRSimpleQuantity
 }
 
-// the next line disables the eslint rule just because of the
-// unused generic constraint that is deliberately not used
-// but left as a guidance for the developer
-//
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export interface FHIRReference<T> {
   reference?: string
   type?: string
