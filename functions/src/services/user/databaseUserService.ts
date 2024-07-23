@@ -73,13 +73,11 @@ export class DatabaseUserService implements UserService {
     invitationId: string,
     userId: string,
   ): Promise<void> {
-    await this.databaseService.runTransaction(
-      async (firestore, transaction) => {
-        transaction.update(firestore.doc(`invitations/${invitationId}`), {
-          userId: userId,
-        })
-      },
-    )
+    await this.databaseService.runTransaction((firestore, transaction) => {
+      transaction.update(firestore.doc(`invitations/${invitationId}`), {
+        userId: userId,
+      })
+    })
   }
 
   async getInvitationByUserId(
