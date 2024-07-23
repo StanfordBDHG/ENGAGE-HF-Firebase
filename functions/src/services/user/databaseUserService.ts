@@ -92,7 +92,7 @@ export class DatabaseUserService implements UserService {
       (firestore) =>
         firestore
           .collection('invitations')
-          .where('usedBy', '==', userId)
+          .where('userId', '==', userId)
           .limit(1),
     )
     return result.at(0)
