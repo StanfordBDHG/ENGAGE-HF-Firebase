@@ -70,9 +70,11 @@ export const beforeUserCreatedFunction: BlockingFunction = beforeUserCreated(
       new CacheDatabaseService(new FirestoreService()),
     )
     const userId = event.data.uid
-    console.log(`beforeUserCreated for userId: ${userId}`)
+    logger.info(`beforeUserCreated for userId: ${userId}`)
 
     if (event.credential) {
+      logger.info(`beforeUserCreated for userId: ${userId} with credential`)
+
       if (!event.data.email)
         throw new https.HttpsError(
           'invalid-argument',
@@ -87,6 +89,8 @@ export const beforeUserCreatedFunction: BlockingFunction = beforeUserCreated(
           .limit(1)
           .get()
       ).docs.at(0)
+
+      logger.info(`beforeUserCreated found organization: ${organization?.id}`)
 
       if (!organization?.exists)
         throw new https.HttpsError(
