@@ -69,7 +69,7 @@ service cloud.firestore {
 
       match /{collectionName}/{documentId} {
         function isPatientWritable() {
-          return collectionName.matches('/^[A-Za-z]+Observations$/')
+          return collectionName.matches('^[A-Za-z]+Observations$')
             || collectionName == 'questionnaireResponses'
         }
         function isClinicianWritable() {
