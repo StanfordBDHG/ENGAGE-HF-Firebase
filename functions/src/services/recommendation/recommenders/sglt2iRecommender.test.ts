@@ -43,8 +43,8 @@ describe('Sglt2iRecommender', () => {
   )
   let healthSummaryData: HealthSummaryData
 
-  beforeEach(() => {
-    healthSummaryData = mockHealthSummaryData(new Date())
+  beforeEach(async () => {
+    healthSummaryData = await mockHealthSummaryData(new Date())
     healthSummaryData.vitals.estimatedGlomerularFiltrationRate = {
       date: new Date(),
       unit: QuantityUnit.mL_min_173m2,

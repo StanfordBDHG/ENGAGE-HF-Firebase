@@ -43,8 +43,8 @@ describe('MraRecommender', () => {
   )
   let healthSummaryData: HealthSummaryData
 
-  beforeEach(() => {
-    healthSummaryData = mockHealthSummaryData(new Date())
+  beforeEach(async () => {
+    healthSummaryData = await mockHealthSummaryData(new Date())
     medicationContraindication = (_) => ContraindicationCategory.none
     medicationClassContraindication = (_) => ContraindicationCategory.none
   })

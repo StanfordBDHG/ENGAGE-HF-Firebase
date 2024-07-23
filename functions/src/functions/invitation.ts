@@ -14,8 +14,10 @@ import {
   type AuthBlockingEvent,
   beforeUserCreated,
 } from 'firebase-functions/v2/identity'
-import { type DatabaseService } from '../services/database/databaseService.js'
+import { CacheDatabaseService } from '../services/database/cacheDatabaseService.js'
 import { FirestoreService } from '../services/database/firestoreService.js'
+import { DatabaseUserService } from '../services/user/databaseUserService.js'
+import { type UserService } from '../services/user/userService.js'
 
 export interface CheckInvitationCodeInput {
   invitationCode: string
@@ -33,7 +35,9 @@ export const checkInvitationCodeFunction = onCall(
     const userId = request.auth.uid
     const { invitationCode } = request.data
 
-    const service: DatabaseService = new FirestoreService()
+    const service: UserService = new DatabaseUserService(
+      new CacheDatabaseService(new FirestoreService()),
+    )
     logger.debug(
       `User (${userId}) -> ENGAGE-HF, InvitationCode ${invitationCode}`,
     )
@@ -62,8 +66,11 @@ export const checkInvitationCodeFunction = onCall(
 
 export const beforeUserCreatedFunction: BlockingFunction = beforeUserCreated(
   async (event: AuthBlockingEvent) => {
-    const service = new FirestoreService()
+    const service: UserService = new DatabaseUserService(
+      new CacheDatabaseService(new FirestoreService()),
+    )
     const userId = event.data.uid
+    console.log(`beforeUserCreated for userId: ${userId}`)
 
     if (event.credential) {
       if (!event.data.email)
@@ -88,7 +95,7 @@ export const beforeUserCreatedFunction: BlockingFunction = beforeUserCreated(
         )
 
       const invitation = await service.getInvitation(event.data.email)
-      if (!invitation.content) {
+      if (!invitation?.content) {
         throw new https.HttpsError(
           'not-found',
           'No valid invitation code found for user.',
@@ -104,7 +111,7 @@ export const beforeUserCreatedFunction: BlockingFunction = beforeUserCreated(
           'Organization does not match invitation code.',
         )
 
-      await service.enrollUser(invitation.id, userId)
+      await service.enrollUser(invitation, userId)
     } else {
       try {
         // Check Firestore to confirm whether an invitation code has been associated with a user.
@@ -117,7 +124,7 @@ export const beforeUserCreatedFunction: BlockingFunction = beforeUserCreated(
           )
         }
 
-        await service.enrollUser(invitation.id, userId)
+        await service.enrollUser(invitation, userId)
       } catch (error) {
         if (error instanceof Error) {
           logger.error(`Error processing request: ${error.message}`)

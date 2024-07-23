@@ -6,100 +6,18 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { mockQuestionnaireResponse } from './questionnaireResponse.js'
-import {
-  AppointmentStatus,
-  type Appointment,
-} from '../../models/appointment.js'
-import {
-  type FHIRMedication,
-  type FHIRMedicationRequest,
-} from '../../models/fhir/medication.js'
-import {
-  FHIRObservationStatus,
-  type FHIRObservation,
-} from '../../models/fhir/observation.js'
-import { type FHIRQuestionnaireResponse } from '../../models/fhir/questionnaireResponse.js'
-import { type Invitation } from '../../models/invitation.js'
+import { type MedicationService } from './medicationService.js'
+import { type FHIRMedication } from '../../models/fhir/medication.js'
 import { type MedicationClass } from '../../models/medicationClass.js'
-import { type SymptomScore } from '../../models/symptomScore.js'
-import {
-  type Clinician,
-  type Patient,
-  type User,
-  type UserRecord,
-} from '../../models/user.js'
-import {
-  type DatabaseDocument,
-  type DatabaseService,
-} from '../../services/database/databaseService.js'
-import { QuantityUnit } from '../../services/fhir/quantityUnit.js'
+import { type Document } from '../database/databaseService.js'
 
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/require-await */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
-export class MockDatabaseService implements DatabaseService {
-  // Properties
-
-  // Methods - Appointments
-
-  async getAppointments(
-    userId: string,
-  ): Promise<Array<DatabaseDocument<Appointment>>> {
-    return []
-  }
-  async getNextAppointment(
-    userId: string,
-  ): Promise<DatabaseDocument<Appointment> | undefined> {
-    return this.makeDocument('123', {
-      status: AppointmentStatus.pending,
-      created: new Date('2024-01-01'),
-      start: new Date('2024-02-03'),
-      end: new Date('2024-02-03'),
-      participant: [userId],
-    })
-  }
-
-  // Methods - Invitations
-
-  async getInvitation(
-    invitationId: string,
-  ): Promise<DatabaseDocument<Invitation>> {
-    return {
-      id: invitationId,
-      content: {
-        userId: 'test',
-      },
-    }
-  }
-
-  async getInvitationByUserId(
-    userId: string,
-  ): Promise<DatabaseDocument<Invitation> | undefined> {
-    return {
-      id: '123',
-      content: {
-        userId: userId,
-      },
-    }
-  }
-
-  async setInvitationUserId(
-    invitationId: string,
-    userId: string,
-  ): Promise<void> {
-    return
-  }
-
-  async enrollUser(invitationId: string, userId: string): Promise<void> {
-    return
-  }
-
+export class MockMedicationService implements MedicationService {
   // Methods - Medications
 
-  async getMedicationClasses(): Promise<
-    Array<DatabaseDocument<MedicationClass>>
-  > {
+  async getMedicationClasses(): Promise<Array<Document<MedicationClass>>> {
     const values = [
       {
         name: 'Beta blockers',
@@ -136,14 +54,14 @@ export class MockDatabaseService implements DatabaseService {
 
   async getMedicationClass(
     medicationClassId: string,
-  ): Promise<DatabaseDocument<MedicationClass>> {
+  ): Promise<Document<MedicationClass>> {
     const allValues = await this.getMedicationClasses()
     const value = allValues.find((v) => v.id === medicationClassId)
     if (!value) throw new Error('Medication class does not exist')
     return value
   }
 
-  async getMedications(): Promise<Array<DatabaseDocument<FHIRMedication>>> {
+  async getMedications(): Promise<Array<Document<FHIRMedication>>> {
     const values: FHIRMedication[] = [
       {
         id: '1808',
@@ -1029,9 +947,7 @@ export class MockDatabaseService implements DatabaseService {
     )
   }
 
-  async getMedication(
-    medicationId: string,
-  ): Promise<DatabaseDocument<FHIRMedication>> {
+  async getMedication(medicationId: string): Promise<Document<FHIRMedication>> {
     const values = await this.getMedications()
     const value = values.find((value) => value.id === medicationId)
     if (value) return value
@@ -1040,7 +956,7 @@ export class MockDatabaseService implements DatabaseService {
 
   async getDrugs(
     medicationId: string,
-  ): Promise<Array<DatabaseDocument<FHIRMedication>>> {
+  ): Promise<Array<Document<FHIRMedication>>> {
     switch (medicationId) {
       case '203160':
         const values: FHIRMedication[] = [
@@ -1171,381 +1087,15 @@ export class MockDatabaseService implements DatabaseService {
   async getDrug(
     medicationId: string,
     drugId: string,
-  ): Promise<DatabaseDocument<FHIRMedication>> {
+  ): Promise<Document<FHIRMedication>> {
     return this.makeDocument(drugId, {
       id: drugId,
     })
   }
 
-  // Methods - Users
-
-  async getClinician(userId: string): Promise<DatabaseDocument<Clinician>> {
-    return {
-      id: userId,
-      content: {
-        organization: 'stanford',
-      },
-    }
-  }
-
-  async getPatient(userId: string): Promise<DatabaseDocument<Patient>> {
-    return this.makeDocument(userId, {
-      dateOfBirth: new Date('1970-01-02'),
-      clinician: 'mockClinician',
-    })
-  }
-
-  async getUser(userId: string): Promise<DatabaseDocument<User>> {
-    return this.makeDocument(userId, {
-      dateOfEnrollment: new Date('2024-04-02'),
-      invitationCode: '123',
-      messagesSettings: {
-        dailyRemindersAreActive: true,
-        textNotificationsAreActive: true,
-        medicationRemindersAreActive: true,
-      },
-    })
-  }
-
-  async getUserRecord(userId: string): Promise<UserRecord> {
-    switch (userId) {
-      case 'mockClinician':
-        return {
-          displayName: 'Dr. XXX',
-        }
-      case 'mockUser':
-        return {
-          displayName: 'John Doe',
-        }
-      default:
-        return {
-          displayName: 'Unknown',
-        }
-    }
-  }
-
-  // Methods - Users - Medication Requests
-
-  async getMedicationRecommendations(
-    userId: string,
-  ): Promise<Array<DatabaseDocument<FHIRMedicationRequest>>> {
-    const values: FHIRMedicationRequest[] = []
-    return values.map((value, index) =>
-      this.makeDocument(index.toString(), value),
-    )
-  }
-
-  async getMedicationRequests(
-    userId: string,
-  ): Promise<Array<DatabaseDocument<FHIRMedicationRequest>>> {
-    const values: FHIRMedicationRequest[] = [
-      {
-        medicationReference: {
-          reference: 'medications/203160/drugs/20352',
-        },
-        dosageInstruction: [
-          {
-            doseAndRate: [
-              {
-                doseQuantity: {
-                  ...QuantityUnit.mg,
-                  value: 6.25,
-                },
-              },
-            ],
-          },
-        ],
-      },
-    ]
-    return values.map((value, index) =>
-      this.makeDocument(index.toString(), value),
-    )
-  }
-
-  // Methods - Users - Messages
-
-  async dismissMessage(
-    userId: string,
-    messageId: string,
-    didPerformAction: boolean,
-  ): Promise<void> {
-    // TODO
-  }
-
-  // Methods - Users - Observations
-
-  async getBloodPressureObservations(
-    userId: string,
-  ): Promise<Array<DatabaseDocument<FHIRObservation>>> {
-    const values = [
-      this.bloodPressureObservation(110, 70, new Date('2024-02-01')),
-      this.bloodPressureObservation(114, 82, new Date('2024-01-31')),
-      this.bloodPressureObservation(123, 75, new Date('2024-01-30')),
-      this.bloodPressureObservation(109, 77, new Date('2024-01-29')),
-      this.bloodPressureObservation(105, 72, new Date('2024-01-28')),
-      this.bloodPressureObservation(98, 68, new Date('2024-01-27')),
-      this.bloodPressureObservation(94, 65, new Date('2024-01-26')),
-      this.bloodPressureObservation(104, 72, new Date('2024-01-25')),
-      this.bloodPressureObservation(102, 80, new Date('2024-01-24')),
-    ]
-    return values.map((value, index) =>
-      this.makeDocument(index.toString(), value),
-    )
-  }
-
-  private bloodPressureObservation(
-    systolicBloodPressure: number,
-    diastolicBloodPressure: number,
-    date: Date,
-  ): FHIRObservation {
-    return {
-      code: {
-        coding: [
-          {
-            code: '85354-9',
-            display: 'Blood pressure panel',
-            system: 'http://loinc.org',
-          },
-        ],
-      },
-      component: [
-        {
-          code: {
-            coding: [
-              {
-                code: '8480-6',
-                display: 'Systolic blood pressure',
-                system: 'http://loinc.org',
-              },
-              {
-                code: 'HKQuantityTypeIdentifierBloodPressureSystolic',
-                display: 'Blood Pressure Systolic',
-                system: 'http://developer.apple.com/documentation/healthkit',
-              },
-            ],
-          },
-          valueQuantity: {
-            ...QuantityUnit.mmHg,
-            value: systolicBloodPressure,
-          },
-        },
-        {
-          code: {
-            coding: [
-              {
-                code: '8462-4',
-                display: 'Diastolic blood pressure',
-                system: 'http://loinc.org',
-              },
-              {
-                code: 'HKQuantityTypeIdentifierBloodPressureDiastolic',
-                display: 'Blood Pressure Diastolic',
-                system: 'http://developer.apple.com/documentation/healthkit',
-              },
-            ],
-          },
-          valueQuantity: {
-            ...QuantityUnit.mmHg,
-            value: diastolicBloodPressure,
-          },
-        },
-      ],
-      effectiveDateTime: date,
-      id: 'DDA0F363-2BA3-426F-9F68-1C938FFDF943',
-      status: FHIRObservationStatus.final,
-    }
-  }
-
-  async getBodyWeightObservations(
-    userId: string,
-  ): Promise<Array<DatabaseDocument<FHIRObservation>>> {
-    const values = [
-      this.bodyWeightObservation(
-        269,
-        QuantityUnit.lbs,
-
-        new Date('2024-02-01'),
-      ),
-      this.bodyWeightObservation(
-        267,
-        QuantityUnit.lbs,
-
-        new Date('2024-01-31'),
-      ),
-      this.bodyWeightObservation(
-        267,
-        QuantityUnit.lbs,
-
-        new Date('2024-01-30'),
-      ),
-      this.bodyWeightObservation(
-        265,
-        QuantityUnit.lbs,
-
-        new Date('2024-01-29'),
-      ),
-      this.bodyWeightObservation(
-        268,
-        QuantityUnit.lbs,
-
-        new Date('2024-01-28'),
-      ),
-      this.bodyWeightObservation(
-        268,
-        QuantityUnit.lbs,
-
-        new Date('2024-01-27'),
-      ),
-      this.bodyWeightObservation(
-        266,
-        QuantityUnit.lbs,
-
-        new Date('2024-01-26'),
-      ),
-      this.bodyWeightObservation(266, QuantityUnit.lbs, new Date('2024-01-25')),
-      this.bodyWeightObservation(267, QuantityUnit.lbs, new Date('2024-01-24')),
-    ]
-    return values.map((value, index) =>
-      this.makeDocument(index.toString(), value),
-    )
-  }
-
-  private bodyWeightObservation(
-    value: number,
-    unit: QuantityUnit,
-    date: Date,
-  ): FHIRObservation {
-    return {
-      code: {
-        coding: [
-          {
-            code: '29463-7',
-            display: 'Body weight',
-            system: 'http://loinc.org',
-          },
-          {
-            code: 'HKQuantityTypeIdentifierBodyMass',
-            display: 'Body Mass',
-            system: 'http://developer.apple.com/documentation/healthkit',
-          },
-        ],
-      },
-      effectiveDateTime: date,
-      status: FHIRObservationStatus.final,
-      valueQuantity: {
-        ...unit,
-        value,
-      },
-    }
-  }
-
-  async getHeartRateObservations(
-    userId: string,
-  ): Promise<Array<DatabaseDocument<FHIRObservation>>> {
-    const values = [
-      this.heartRateObservation(79, new Date('2024-02-01')),
-      this.heartRateObservation(62, new Date('2024-01-31')),
-      this.heartRateObservation(77, new Date('2024-01-30')),
-      this.heartRateObservation(63, new Date('2024-01-29')),
-      this.heartRateObservation(61, new Date('2024-01-28')),
-      this.heartRateObservation(70, new Date('2024-01-27')),
-      this.heartRateObservation(67, new Date('2024-01-26')),
-      this.heartRateObservation(80, new Date('2024-01-25')),
-      this.heartRateObservation(65, new Date('2024-01-24')),
-    ]
-    return values.map((value, index) =>
-      this.makeDocument(index.toString(), value),
-    )
-  }
-
-  private heartRateObservation(value: number, date: Date): FHIRObservation {
-    return {
-      code: {
-        coding: [
-          {
-            code: '8867-4',
-            display: 'Heart rate',
-            system: 'http://loinc.org',
-          },
-          {
-            code: 'HKQuantityTypeIdentifierHeartRate',
-            display: 'Heart Rate',
-            system: 'http://developer.apple.com/documentation/healthkit',
-          },
-        ],
-      },
-      effectiveDateTime: date,
-      id: 'C38FFD7E-7B86-4C79-9C8A-0B90E2F3DF14',
-      status: FHIRObservationStatus.final,
-      valueQuantity: {
-        ...QuantityUnit.bpm,
-        value: value,
-      },
-    }
-  }
-
-  // Methods - Users - Questionnaire Responses
-
-  async getQuestionnaireResponses(
-    userId: string,
-  ): Promise<Array<DatabaseDocument<FHIRQuestionnaireResponse>>> {
-    return [mockQuestionnaireResponse()].map((value, index) =>
-      this.makeDocument(index.toString(), value),
-    )
-  }
-
-  async getSymptomScores(
-    userId: string,
-  ): Promise<Array<DatabaseDocument<SymptomScore>>> {
-    const values: SymptomScore[] = [
-      {
-        overallScore: 40,
-        physicalLimitsScore: 50,
-        socialLimitsScore: 38,
-        qualityOfLifeScore: 20,
-        symptomFrequencyScore: 60,
-        dizzinessScore: 50,
-        date: new Date('2024-01-24'),
-      },
-      {
-        overallScore: 60,
-        physicalLimitsScore: 58,
-        socialLimitsScore: 75,
-        qualityOfLifeScore: 37,
-        symptomFrequencyScore: 72,
-        dizzinessScore: 70,
-        date: new Date('2024-01-15'),
-      },
-      {
-        overallScore: 44,
-        physicalLimitsScore: 50,
-        socialLimitsScore: 41,
-        qualityOfLifeScore: 25,
-        symptomFrequencyScore: 60,
-        dizzinessScore: 50,
-        date: new Date('2023-12-30'),
-      },
-      {
-        overallScore: 75,
-        physicalLimitsScore: 58,
-        socialLimitsScore: 75,
-        qualityOfLifeScore: 60,
-        symptomFrequencyScore: 80,
-        dizzinessScore: 100,
-        date: new Date('2023-12-15'),
-      },
-    ]
-    return values.map((value, index) =>
-      this.makeDocument(index.toString(), value),
-    )
-  }
-
   // Helpers
 
-  private makeDocument<T>(
-    id: string,
-    content: T | undefined,
-  ): DatabaseDocument<T> {
+  private makeDocument<T>(id: string, content: T): Document<T> {
     return {
       id: id,
       content: content,

@@ -12,7 +12,7 @@ export interface FHIRQuestionnaireResponse {
   authored: Date
   id?: string
   item?: FHIRQuestionnaireResponseItem[]
-  questionnaire?: string
+  questionnaire: string
 }
 
 export interface FHIRQuestionnaireResponseItem {

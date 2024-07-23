@@ -45,8 +45,8 @@ describe('RasiRecommender', () => {
   )
   let healthSummaryData: HealthSummaryData
 
-  beforeEach(() => {
-    healthSummaryData = mockHealthSummaryData(new Date())
+  beforeEach(async () => {
+    healthSummaryData = await mockHealthSummaryData(new Date())
     healthSummaryData.symptomScores.forEach((score) => {
       score.dizzinessScore = 0
     })

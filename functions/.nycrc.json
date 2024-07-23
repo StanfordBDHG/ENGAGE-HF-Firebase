@@ -3,9 +3,14 @@
   "check-coverage": true,
   "extension": [".js", ".cjs", ".mjs"],
   "include": ["lib"],
-  "exclude": ["lib/tests", "**/*.test.js", "**/*.no-coverage.js"],
-  "branches": 40,
-  "lines": 40,
-  "functions": 40,
-  "statements": 40
+  "exclude": [
+    "lib/tests",
+    "**/*.test.js",
+    "**/*.no-coverage.js",
+    "**/*.mock.js"
+  ],
+  "branches": 50,
+  "lines": 50,
+  "functions": 50,
+  "statements": 50
 }
