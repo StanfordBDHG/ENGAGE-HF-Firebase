@@ -72,52 +72,52 @@ export const beforeUserCreatedFunction: BlockingFunction = beforeUserCreated(
     const userId = event.data.uid
     logger.info(`beforeUserCreated for userId: ${userId}`)
 
-    if (event.credential) {
-      logger.info(`beforeUserCreated for userId: ${userId} with credential`)
+    try {
+      if (event.credential) {
+        logger.info(`beforeUserCreated for userId: ${userId} with credential`)
 
-      if (!event.data.email)
-        throw new https.HttpsError(
-          'invalid-argument',
-          'Email address is required for user.',
+        if (!event.data.email)
+          throw new https.HttpsError(
+            'invalid-argument',
+            'Email address is required for user.',
+          )
+
+        const organization = (
+          await admin
+            .firestore()
+            .collection('organizations')
+            .where('ssoProviderId', '==', event.credential.providerId)
+            .limit(1)
+            .get()
+        ).docs.at(0)
+
+        logger.info(`beforeUserCreated found organization: ${organization?.id}`)
+
+        if (!organization?.exists)
+          throw new https.HttpsError(
+            'failed-precondition',
+            'Organization not found.',
+          )
+
+        const invitation = await service.getInvitation(event.data.email)
+        if (!invitation?.content) {
+          throw new https.HttpsError(
+            'not-found',
+            'No valid invitation code found for user.',
+          )
+        }
+
+        if (
+          invitation.content.admin === undefined &&
+          invitation.content.user?.organization !== organization.id
         )
+          throw new https.HttpsError(
+            'failed-precondition',
+            'Organization does not match invitation code.',
+          )
 
-      const organization = (
-        await admin
-          .firestore()
-          .collection('organizations')
-          .where('ssoProviderId', '==', event.credential.providerId)
-          .limit(1)
-          .get()
-      ).docs.at(0)
-
-      logger.info(`beforeUserCreated found organization: ${organization?.id}`)
-
-      if (!organization?.exists)
-        throw new https.HttpsError(
-          'failed-precondition',
-          'Organization not found.',
-        )
-
-      const invitation = await service.getInvitation(event.data.email)
-      if (!invitation?.content) {
-        throw new https.HttpsError(
-          'not-found',
-          'No valid invitation code found for user.',
-        )
-      }
-
-      if (
-        invitation.content.admin === undefined &&
-        invitation.content.user?.organization !== organization.id
-      )
-        throw new https.HttpsError(
-          'failed-precondition',
-          'Organization does not match invitation code.',
-        )
-
-      await service.enrollUser(invitation, userId)
-    } else {
-      try {
+        await service.enrollUser(invitation, userId)
+      } else {
         // Check Firestore to confirm whether an invitation code has been associated with a user.
         const invitation = await service.getInvitationByUserId(userId)
 
@@ -129,17 +129,17 @@ export const beforeUserCreatedFunction: BlockingFunction = beforeUserCreated(
         }
 
         await service.enrollUser(invitation, userId)
-      } catch (error) {
-        if (error instanceof Error) {
-          logger.error(`Error processing request: ${error.message}`)
-          if ('code' in error) {
-            throw new https.HttpsError('internal', 'Internal server error.')
-          }
-        } else {
-          logger.error(`Unknown error: ${String(error)}`)
-        }
-        throw error
       }
+    } catch (error) {
+      if (error instanceof Error) {
+        logger.error(`Error processing request: ${error.message}`)
+        if ('code' in error) {
+          throw new https.HttpsError('internal', 'Internal server error.')
+        }
+      } else {
+        logger.error(`Unknown error: ${String(error)}`)
+      }
+      throw error
     }
   },
 )
