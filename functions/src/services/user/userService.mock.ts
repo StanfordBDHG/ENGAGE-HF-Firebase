@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { type UserClaims, type UserService } from './userService.js'
+import { type UserService } from './userService.js'
 import { type Invitation } from '../../models/invitation.js'
 import { type Organization } from '../../models/organization.js'
 import { type UserAuth, type User } from '../../models/user.js'
@@ -39,11 +39,18 @@ export class MockUserService implements UserService {
     return
   }
 
-  async setClaims(userId: string, claims: UserClaims): Promise<void> {
+  async updateClaims(userId: string): Promise<void> {
     return
   }
 
   // Methods - Invitations
+
+  async createInvitation(
+    invitationId: string,
+    content: Invitation,
+  ): Promise<void> {
+    return
+  }
 
   async getInvitation(invitationId: string): Promise<Document<Invitation>> {
     return {

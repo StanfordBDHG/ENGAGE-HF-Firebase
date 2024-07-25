@@ -6,7 +6,6 @@
 // SPDX-License-Identifier: MIT
 //
 
-import admin from 'firebase-admin'
 import {
   type CallableRequest,
   onCall,
@@ -15,6 +14,7 @@ import {
 import { type AuthData } from 'firebase-functions/v2/tasks'
 import { Flags } from '../flags.js'
 import { Credential, UserRole } from '../services/credential.js'
+import { type DatabaseService } from '../services/database/databaseService.js'
 import { FirestoreService } from '../services/database/firestoreService.js'
 import { RxNormService } from '../services/rxNormService.js'
 import { StaticDataService } from '../services/staticDataService.js'
@@ -36,12 +36,14 @@ async function rebuildStaticData(
   authData: AuthData | undefined,
   input: RebuildStaticDataInput,
 ) {
+  const databaseService: DatabaseService = new FirestoreService()
+
   if (!Flags.isEmulator) {
-    const userService = new DatabaseUserService(new FirestoreService())
+    const userService = new DatabaseUserService(databaseService)
     await new Credential(authData, userService).checkAny(UserRole.admin)
   }
 
-  const service = new StaticDataService(admin.firestore(), new RxNormService())
+  const service = new StaticDataService(databaseService, new RxNormService())
   if (input.only) {
     if (input.only.includes(StaticDataComponent.medicationClasses)) {
       await service.updateMedicationClasses()

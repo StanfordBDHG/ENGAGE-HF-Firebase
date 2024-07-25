@@ -6,11 +6,10 @@
 // SPDX-License-Identifier: MIT
 //
 
-import admin from 'firebase-admin'
 import { https } from 'firebase-functions'
 import { type CallableRequest, onCall } from 'firebase-functions/v2/https'
 import { type Result } from './types.js'
-import { type UserAuth, type User, UserType } from '../models/user.js'
+import { type UserAuth, type User } from '../models/user.js'
 import { Credential, UserRole } from '../services/credential.js'
 import { CacheDatabaseService } from '../services/database/cacheDatabaseService.js'
 import { FirestoreService } from '../services/database/firestoreService.js'
@@ -164,78 +163,3 @@ export const deleteUserFunction = onCall(
     return 'Success'
   },
 )
-
-export interface CreateInvitationInput {
-  auth?: UserAuth
-  user?: User
-}
-
-export interface CreateInvitationOutput {
-  code: string
-}
-
-export const createInvitationFunction = onCall(
-  async (request: CallableRequest<CreateInvitationInput>) => {
-    if (!request.auth?.uid)
-      throw new https.HttpsError('unauthenticated', 'User is not authenticated')
-
-    if (!request.data.auth)
-      throw new https.HttpsError(
-        'invalid-argument',
-        'User authentication data is required',
-      )
-
-    if (!request.data.user)
-      throw new https.HttpsError('invalid-argument', 'User data is required')
-
-    const userService: UserService = new DatabaseUserService(
-      new CacheDatabaseService(new FirestoreService()),
-    )
-    const credential = new Credential(request.auth, userService)
-    if (request.data.user.type === UserType.admin) {
-      await credential.checkAny(UserRole.admin)
-    } else if (request.data.user.organization) {
-      await credential.checkAny(UserRole.owner(request.data.user.organization))
-    } else {
-      throw credential.permissionDeniedError()
-    }
-
-    const firestore = admin.firestore()
-    const invitationCollection = firestore.collection('invitations')
-    const invitationCode =
-      (
-        request.data.user.type === UserType.admin ||
-        request.data.user.type === UserType.clinician
-      ) ?
-        request.data.auth.email
-      : undefined
-
-    if (invitationCode) {
-      const invitationDoc = invitationCollection.doc(invitationCode)
-      await invitationDoc.create(request.data)
-      return { code: invitationDoc.id }
-    } else {
-      for (let counter = 0; ; counter++) {
-        const invitationCode = generateInvitationCode(8)
-        const invitationDoc = invitationCollection.doc(invitationCode)
-        try {
-          await invitationDoc.create(request.data)
-          return { code: invitationDoc.id }
-        } catch (error) {
-          if (counter < 4) continue
-          throw error
-        }
-      }
-    }
-  },
-)
-
-function generateInvitationCode(length: number): string {
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
-  const charactersLength = characters.length
-  let result = ''
-  for (let counter = 0; counter < length; counter++) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength))
-  }
-  return result
-}

@@ -10,15 +10,21 @@ import admin from 'firebase-admin'
 import { type Auth } from 'firebase-admin/auth'
 import { FieldValue } from 'firebase-admin/firestore'
 import { https } from 'firebase-functions/v2'
-import { type UserClaims, type UserService } from './userService.js'
+import { type UserService } from './userService.js'
 import { type Invitation } from '../../models/invitation.js'
 import { type UserMessage } from '../../models/message.js'
 import { type Organization } from '../../models/organization.js'
-import { type UserAuth, type User } from '../../models/user.js'
+import { type UserAuth, type User, type UserType } from '../../models/user.js'
 import {
   type Document,
   type DatabaseService,
 } from '../database/databaseService.js'
+
+export interface UserClaims {
+  type?: UserType
+  isOwner: boolean
+  organization?: string
+}
 
 export class DatabaseUserService implements UserService {
   // Properties
@@ -54,11 +60,36 @@ export class DatabaseUserService implements UserService {
     })
   }
 
-  async setClaims(userId: string, claims: UserClaims): Promise<void> {
+  async updateClaims(userId: string): Promise<void> {
+    const user = await this.getUser(userId)
+    if (!user) throw new https.HttpsError('not-found', 'User not found.')
+
+    const claims: UserClaims = {
+      type: user.content.type,
+      organization: user.content.organization,
+      isOwner: false,
+    }
+
+    if (user.content.organization) {
+      const organization = await this.getOrganization(user.content.organization)
+      if (organization)
+        claims.isOwner = organization.content.owners.includes(userId)
+      else console.error(`Organization ${user.content.organization} not found`)
+    }
+
     await this.auth.setCustomUserClaims(userId, claims)
   }
 
   // Invitations
+
+  async createInvitation(
+    invitationId: string,
+    content: Invitation,
+  ): Promise<void> {
+    await this.databaseService.runTransaction((firestore, transaction) => {
+      transaction.create(firestore.doc(`invitations/${invitationId}`), content)
+    })
+  }
 
   async getInvitation(
     invitationId: string,

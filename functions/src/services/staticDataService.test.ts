@@ -8,6 +8,7 @@
 import { expect } from 'chai'
 import admin from 'firebase-admin'
 import { type Firestore } from 'firebase-admin/firestore'
+import { FirestoreService } from './database/firestoreService.js'
 import { RxNormService } from './rxNormService.js'
 import { StaticDataService } from './staticDataService.js'
 import { cleanupMocks, setupMockFirestore } from '../tests/setup.js'
@@ -20,7 +21,10 @@ describe('StaticDataService', () => {
   before(() => {
     setupMockFirestore()
     firestore = admin.firestore()
-    staticDataService = new StaticDataService(firestore, new RxNormService())
+    staticDataService = new StaticDataService(
+      new FirestoreService(),
+      new RxNormService(),
+    )
   })
 
   after(() => {

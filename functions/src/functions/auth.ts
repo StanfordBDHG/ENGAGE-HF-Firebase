@@ -8,44 +8,17 @@
 
 import admin from 'firebase-admin'
 import { https, logger } from 'firebase-functions/v2'
+import { onDocumentWritten } from 'firebase-functions/v2/firestore'
 import {
   type AuthBlockingEvent,
   beforeUserCreated,
   beforeUserSignedIn,
 } from 'firebase-functions/v2/identity'
+import { UserType } from '../models/user.js'
 import { CacheDatabaseService } from '../services/database/cacheDatabaseService.js'
 import { FirestoreService } from '../services/database/firestoreService.js'
 import { DatabaseUserService } from '../services/user/databaseUserService.js'
-import {
-  type UserClaims,
-  type UserService,
-} from '../services/user/userService.js'
-import { UserType } from '../models/user.js'
-
-export const beforeSignInFunction = beforeUserSignedIn(async (event) => {
-  const userService = new DatabaseUserService(
-    new CacheDatabaseService(new FirestoreService()),
-  )
-  const user = await userService.getUser(event.data.uid)
-  if (!user) throw new https.HttpsError('not-found', 'User not found.')
-
-  const claims: UserClaims = {
-    type: user.content.type,
-    organization: user.content.organization,
-    isOwner: false,
-  }
-
-  if (user.content.organization) {
-    const organization = await userService.getOrganization(
-      user.content.organization,
-    )
-    if (organization)
-      claims.isOwner = organization.content.owners.includes(event.data.uid)
-    else console.error(`Organization ${user.content.organization} not found`)
-  }
-
-  await userService.setClaims(event.data.uid, claims)
-})
+import { type UserService } from '../services/user/userService.js'
 
 export const beforeUserCreatedFunction = beforeUserCreated(
   async (event: AuthBlockingEvent) => {
@@ -87,7 +60,7 @@ export const beforeUserCreatedFunction = beforeUserCreated(
 
       if (
         invitation.content.user?.type === UserType.admin &&
-        invitation.content.user?.organization !== organization.id
+        invitation.content.user.organization !== organization.id
       )
         throw new https.HttpsError(
           'failed-precondition',
@@ -119,6 +92,56 @@ export const beforeUserCreatedFunction = beforeUserCreated(
         }
         throw error
       }
+    }
+  },
+)
+
+export const beforeUserSignedInFunction = beforeUserSignedIn(async (event) => {
+  const userService = new DatabaseUserService(
+    new CacheDatabaseService(new FirestoreService()),
+  )
+  await userService.updateClaims(event.data.uid)
+})
+
+export const onOrganizationWrittenFunction = onDocumentWritten(
+  'organizations/{organizationId}',
+  async (event) => {
+    const userService = new DatabaseUserService(
+      new CacheDatabaseService(new FirestoreService()),
+    )
+
+    const ownersBefore = (event.data?.before.get('owners') ?? []) as string[]
+    const ownersAfter = (event.data?.after.get('owners') ?? []) as string[]
+
+    const ownersChanged = [
+      ...ownersBefore.filter((owner) => !ownersAfter.includes(owner)),
+      ...ownersAfter.filter((owner) => !ownersBefore.includes(owner)),
+    ]
+
+    for (const ownerId of ownersChanged) {
+      try {
+        await userService.updateClaims(ownerId)
+      } catch (error) {
+        logger.error(
+          `Error processing claims update for userId '${ownerId}' on change of organization: ${String(error)}`,
+        )
+      }
+    }
+  },
+)
+
+export const onUserWrittenFunction = onDocumentWritten(
+  'users/{userId}',
+  async (event) => {
+    const userService = new DatabaseUserService(
+      new CacheDatabaseService(new FirestoreService()),
+    )
+    try {
+      await userService.updateClaims(event.params.userId)
+    } catch (error) {
+      logger.error(
+        `Error processing claims update for userId '${event.params.userId}' on change of user: ${String(error)}`,
+      )
     }
   },
 )
