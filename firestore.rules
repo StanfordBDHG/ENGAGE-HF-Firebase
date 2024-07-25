@@ -56,25 +56,17 @@ service cloud.firestore {
     }
 
     match /users/{userId} {
-      function isAllowedUserRead(request) {
-        return isAdmin(request)
-          || isOwner(request, resource.data.organization)
-          || isClinician(request, resource.data.organization)
-          || isUser(request, userId)
-      }
-
-      function isAllowedUserUpdate(request) {
-        return isAdmin(request) || (
+      allow read: if isAdmin(request)
+        || isOwner(request, resource.data.organization)
+        || isClinician(request, resource.data.organization)
+        || isUser(request, userId)
+      allow update: if isAdmin(request) || (
           !('organization' in request.resource.data) && (
             isOwner(request, resource.data.organization)
             || isClinician(request, resource.data.organization)
             || isUser(request, userId)
           )
         )
-      }
-
-      allow read: if isAuthenticated(request) && isAllowedUserRead(request)
-      allow update: if isAuthenticated(request) && isAllowedUserUpdate(request)
       allow create, delete: if isAdmin(request)
 
       match /{collectionName}/{documentId} {
@@ -96,7 +88,7 @@ service cloud.firestore {
           let user = getUser(userId);
           return isAdmin(request)
             || isOwner(request, user.organization)
-            || isOwner(request, user.organization)
+            || isClinician(request, user.organization)
         }
 
         function isClinicianWritable(request) {
@@ -110,7 +102,7 @@ service cloud.firestore {
         }
 
         allow read: if isAuthenticated(request) && (
-          isUser(request, userId) 
+          isUser(request, userId)
           || isClinicianReadable(request)
         )
         allow write: if isAuthenticated(request) && (
