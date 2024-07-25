@@ -154,6 +154,8 @@ export class DatabaseUserService implements UserService {
       })
       transaction.delete(firestore.doc(`invitations/${invitation.id}`))
     })
+
+    await this.updateClaims(userId)
   }
 
   // Organizations
