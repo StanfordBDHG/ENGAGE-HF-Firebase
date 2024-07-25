@@ -20,23 +20,21 @@ service cloud.firestore {
       return isAuthenticated(request)
         && request.auth.token.type == 'clincian'
         && request.auth.token.organization == organizationId
-    } 
-
-    function isPatient(request, organizationId) {
-      return isAuthenticated(request)
-        && request.auth.token.type == 'patient'
-        && request.auth.token.organization == organizationId
     }
     
     function isUser(request, userId) {
       return isAuthenticated(request) && request.auth.uid == userId
     }
 
+    function getUser(userId) {
+      return get(/databases/$(databaseId)/documents/users/$(userId))
+    }
+
     match /invitations/{invitationId} {
       allow read, write: if isAdmin(request) || (
         !('organization' in request.resource.data) && (
           isOwner(request, resource.data.user.organization)
-          || isClincian(request, resource.data.user.organization)
+          || isClinician(request, resource.data.user.organization)
         )
       )
     }
@@ -79,7 +77,7 @@ service cloud.firestore {
       allow update: if isAuthenticated(request) && isAllowedUserUpdate(request)
       allow create, delete: if isAdmin(request)
 
-      match /{collection}/{documentId} {
+      match /{collectionName}/{documentId} {
         function isPatientWritableCollectionName() {
           return collectionName.matches('/^[A-Za-z]+Observations$/')
             || collectionName == 'questionnaireResponses'
@@ -95,17 +93,16 @@ service cloud.firestore {
         }
 
         function isClinicianReadable(request) {
-          let authUser = getUser(request.auth.uid)
-          let user = getUser(userId)
+          let user = getUser(userId);
           return isAdmin(request)
             || isOwner(request, user.organization)
             || isOwner(request, user.organization)
         }
 
         function isClinicianWritable(request) {
-          let user = getUser(userId)
-          return authUser.type == 'admin' || (
-            isClinicianWritable() && (
+          let user = getUser(userId);
+          return isAdmin(request) || (
+            isClinicianWritableCollectionName() && (
               isOwner(request, user.organization)
               || isClinician(request, user.organization)
            )
