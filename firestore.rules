@@ -68,48 +68,48 @@ service cloud.firestore {
           )
         )
       allow create, delete: if isAdmin(request)
+    }
 
-      match /{collectionName}/{documentId} {
-        function isPatientWritableCollectionName() {
-          return collectionName.matches('/^[A-Za-z]+Observations$/')
-            || collectionName == 'questionnaireResponses'
-        }
+    match /users/{userId}/{collectionName}/{documentId} {
+      function isPatientWritableCollectionName() {
+        return collectionName.matches('/^[A-Za-z]+Observations$/')
+          || collectionName == 'questionnaireResponses'
+      }
 
-        function isClinicianWritableCollectionName() {
-          return collectionName == 'allergyIntolerances'
-            || collectionName == 'appointments'
-            || collectionName == 'medicationRequests'
-            || collectionName == 'medicationRecommendations'
-            || collectionName == 'symptomScores'
-            || collectionName == 'messages'
-        }
+      function isClinicianWritableCollectionName() {
+        return collectionName == 'allergyIntolerances'
+          || collectionName == 'appointments'
+          || collectionName == 'medicationRequests'
+          || collectionName == 'medicationRecommendations'
+          || collectionName == 'symptomScores'
+          || collectionName == 'messages'
+      }
 
-        function isClinicianReadable(request) {
-          let user = getUser(userId);
-          return isAdmin(request)
-            || isOwner(request, user.organization)
+      function isClinicianReadable(request) {
+        let user = getUser(userId);
+        return isAdmin(request)
+          || isOwner(request, user.organization)
+          || isClinician(request, user.organization)
+      }
+
+      function isClinicianWritable(request) {
+        let user = getUser(userId);
+        return isAdmin(request) || (
+          isClinicianWritableCollectionName() && (
+            isOwner(request, user.organization)
             || isClinician(request, user.organization)
-        }
-
-        function isClinicianWritable(request) {
-          let user = getUser(userId);
-          return isAdmin(request) || (
-            isClinicianWritableCollectionName() && (
-              isOwner(request, user.organization)
-              || isClinician(request, user.organization)
-           )
           )
-        }
-
-        allow read: if isAuthenticated(request) && (
-          isUser(request, userId)
-          || isClinicianReadable(request)
-        )
-        allow write: if isAuthenticated(request) && (
-          (isUser(request, userId) && isPatientWritableCollectionName())
-          || isClinicianWritable(request)
         )
       }
+
+      allow read: if isAuthenticated(request) && (
+        isUser(request, userId)
+        || isClinicianReadable(request)
+      )
+      allow write: if isAuthenticated(request) && (
+        (isUser(request, userId) && isPatientWritableCollectionName())
+        || isClinicianWritable(request)
+      )
     }
 
     match /videoSections/{documents=**} {
