@@ -13,10 +13,9 @@ import {
   initializeTestEnvironment,
   type RulesTestEnvironment,
 } from '@firebase/rules-unit-testing'
-import firebase from 'firebase/compat/app'
+import type firebase from 'firebase/compat/app'
 import { describe, it } from 'mocha'
 import { UserType } from '../../models/user.js'
-import { randomUUID } from 'crypto'
 
 describe('firestore.rules: organizations/{organizationId}', () => {
   const organizationId = 'stanford'

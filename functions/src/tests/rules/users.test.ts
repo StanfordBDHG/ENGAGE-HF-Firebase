@@ -6,6 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
+import { randomUUID } from 'crypto'
 import fs from 'fs'
 import {
   assertFails,
@@ -13,15 +14,13 @@ import {
   initializeTestEnvironment,
   type RulesTestEnvironment,
 } from '@firebase/rules-unit-testing'
-import firebase from 'firebase/compat/app'
+import type firebase from 'firebase/compat/app'
 import { describe, it } from 'mocha'
 import { UserType } from '../../models/user.js'
-import { randomUUID } from 'crypto'
 
 describe('firestore.rules: users/{userId}', () => {
   const organizationId = 'stanford'
   const otherOrganizationId = 'jhu'
-  const nonExistingOrganizationId = 'ucb'
 
   const adminId = 'mockAdmin'
   const ownerId = 'mockOwner'
