@@ -7,23 +7,29 @@ service cloud.firestore {
 
     function isAdmin(request) {
       return isAuthenticated(request)
+        && ('type' in request.auth.token)
         && request.auth.token.type == 'admin'
     }
 
     function isOwner(request, organizationId) {
       return isAuthenticated(request)
+        && ('organization' in request.auth.token)
         && request.auth.token.organization == organizationId
-        && request.auth.isOwner == true
+        && ('isOwner' in request.auth.token)
+        && request.auth.token.isOwner == true
     }
 
     function isClinician(request, organizationId) {
       return isAuthenticated(request)
-        && request.auth.token.type == 'clincian'
+        && ('type' in request.auth.token)
+        && request.auth.token.type == 'clinician'
+        && ('organization' in request.auth.token)
         && request.auth.token.organization == organizationId
     }
     
     function isUser(request, userId) {
-      return isAuthenticated(request) && request.auth.uid == userId
+      return isAuthenticated(request) 
+        && request.auth.uid == userId
     }
 
     function getUser(userId) {
@@ -32,7 +38,7 @@ service cloud.firestore {
 
     match /invitations/{invitationId} {
       allow read, write: if isAdmin(request) || (
-        !('organization' in request.resource.data) && (
+        (request.resource.data.organization == resource.data.organization) && (
           isOwner(request, resource.data.user.organization)
           || isClinician(request, resource.data.user.organization)
         )
@@ -56,18 +62,47 @@ service cloud.firestore {
     }
 
     match /users/{userId} {
-      allow read: if isAdmin(request)
-        || isOwner(request, resource.data.organization)
-        || isClinician(request, resource.data.organization)
-        || isUser(request, userId)
+      function organizationDidNotChange(request, resource) {
+        return ('organization' in request.resource.data)
+          ? (('organization' in resource.data) && request.resource.data.organization == resource.data.organization)
+          : !('organization' in resource.data)
+      }
+
+      function typeDidNotChange(request, resource) {
+        return ('type' in request.resource.data)
+          ? (('type' in resource.data) && request.resource.data.type == resource.data.type)
+          : !('type' in resource.data)
+      }
+
+      function securityRelatedFieldsDidNotChange(request, resource) {
+        return typeDidNotChange(request, resource) && organizationDidNotChange(request, resource)
+      }
+
+      allow read: if isAdmin(request) || isUser(request, userId) || (
+        ('organization' in resource.data) && (
+          isOwner(request, resource.data.organization)
+          || isClinician(request, resource.data.organization)
+        )
+      )
+
+      allow create: if isAdmin(request) || (
+        isUser(request, userId)
+        && !('organization' in request.resource.data)
+        && !('type' in request.resource.data)
+      )
+
       allow update: if isAdmin(request) || (
-          !('organization' in request.resource.data) && (
-            isOwner(request, resource.data.organization)
-            || isClinician(request, resource.data.organization)
-            || isUser(request, userId)
+        resource != null && securityRelatedFieldsDidNotChange(request, resource) && (
+          isUser(request, userId) || (
+            ('organization' in resource.data) && (
+              isOwner(request, resource.data.organization)
+              || isClinician(request, resource.data.organization)
+            )
           )
         )
-      allow create, delete: if isAdmin(request)
+      )
+
+      allow delete: if isAdmin(request)
     }
 
     match /users/{userId}/{collectionName}/{documentId} {

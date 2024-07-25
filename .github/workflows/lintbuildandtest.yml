@@ -33,7 +33,7 @@ jobs:
         run: npm --prefix functions run build
       - name: Test
         id: test
-        run: npm --prefix functions run test:coverage
+        run: firebase emulators:exec --only auth,firestore 'npm --prefix functions run test:coverage'
       - name: Regenerate Test Results
         id: test-regenerate
         run: npm --prefix functions run test:regenerate
