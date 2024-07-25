@@ -10,21 +10,15 @@
 // https://github.com/StanfordBDHG/PediatricAppleWatchStudy/pull/54/files
 
 import admin from 'firebase-admin'
+import { beforeUserCreatedFunction } from './functions/auth.js'
 import { exportHealthSummaryFunction } from './functions/healthSummary.js'
-import {
-  beforeUserCreatedFunction,
-  checkInvitationCodeFunction,
-} from './functions/invitation.js'
+import { checkInvitationCodeFunction } from './functions/invitation.js'
 import { dismissMessageFunction } from './functions/message.js'
 import { rebuildStaticDataFunction } from './functions/staticData.js'
 import {
   createInvitationFunction,
   deleteUserFunction,
   getUsersInformationFunction,
-  grantAdminFunction,
-  grantOwnerFunction,
-  revokeAdminFunction,
-  revokeOwnerFunction,
   updateUserInformationFunction,
 } from './functions/users.js'
 
@@ -40,7 +34,3 @@ export const getUsersInformation = getUsersInformationFunction
 export const updateUserInformation = updateUserInformationFunction
 export const deleteUser = deleteUserFunction
 export const createInvitation = createInvitationFunction
-export const grantOwner = grantOwnerFunction
-export const revokeOwner = revokeOwnerFunction
-export const grantAdmin = grantAdminFunction
-export const revokeAdmin = revokeAdminFunction

@@ -27,16 +27,6 @@ describe('StaticDataService', () => {
     cleanupMocks()
   })
 
-  it('actually creates admins', async () => {
-    const admins = await firestore.collection('admins').get()
-    expect(admins.size).to.equal(0)
-
-    await staticDataService.updateAdmins()
-
-    const updatedAdmins = await firestore.collection('admins').get()
-    expect(updatedAdmins.size).to.be.greaterThan(0)
-  })
-
   it('actually creates medication classes', async () => {
     const medicationClasses = await firestore
       .collection('medicationClasses')

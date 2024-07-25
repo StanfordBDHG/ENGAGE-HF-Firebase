@@ -35,21 +35,17 @@ export class FhirService {
   extractCurrentMedicationRequestReferenceForRecommendation(
     request: FHIRMedicationRequest,
   ): FHIRReference<FHIRMedicationRequest> | undefined {
-    const string = this.findExtensions(
-      request,
-      FHIRExtensionUrl.currentMedication,
-    ).at(0)?.valueString
-    return string ? { reference: string } : undefined
+    return this.findExtensions(request, FHIRExtensionUrl.currentMedication).at(
+      0,
+    )?.valueReference
   }
 
   extractMedicationClassReference(
     medication: FHIRMedication,
   ): FHIRReference<FHIRMedication> | undefined {
-    const string = this.findExtensions(
-      medication,
-      FHIRExtensionUrl.medicationClass,
-    ).at(0)?.valueString
-    return string ? { reference: string } : undefined
+    return this.findExtensions(medication, FHIRExtensionUrl.medicationClass).at(
+      0,
+    )?.valueReference
   }
 
   extractCurrentDailyDose(

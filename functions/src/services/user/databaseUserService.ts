@@ -10,16 +10,11 @@ import admin from 'firebase-admin'
 import { type Auth } from 'firebase-admin/auth'
 import { FieldValue } from 'firebase-admin/firestore'
 import { https } from 'firebase-functions/v2'
-import { type UserService } from './userService.js'
+import { type UserClaims, type UserService } from './userService.js'
 import { type Invitation } from '../../models/invitation.js'
 import { type UserMessage } from '../../models/message.js'
 import { type Organization } from '../../models/organization.js'
-import {
-  type UserAuth,
-  type Clinician,
-  type Patient,
-  type User,
-} from '../../models/user.js'
+import { type UserAuth, type User } from '../../models/user.js'
 import {
   type Document,
   type DatabaseService,
@@ -59,6 +54,10 @@ export class DatabaseUserService implements UserService {
     })
   }
 
+  async setClaims(userId: string, claims: UserClaims): Promise<void> {
+    await this.auth.setCustomUserClaims(userId, claims)
+  }
+
   // Invitations
 
   async getInvitation(
@@ -92,7 +91,7 @@ export class DatabaseUserService implements UserService {
       (firestore) =>
         firestore
           .collection('invitations')
-          .where('usedBy', '==', userId)
+          .where('userId', '==', userId)
           .limit(1),
     )
     return result.at(0)
@@ -122,22 +121,6 @@ export class DatabaseUserService implements UserService {
         dateOfEnrollment: FieldValue.serverTimestamp(),
         ...invitation.content.user,
       })
-
-      if (invitation.content.admin) {
-        const adminRef = firestore.doc(`admins/${userId}`)
-        transaction.create(adminRef, invitation.content.admin)
-      }
-
-      if (invitation.content.clinician) {
-        const clinicianRef = firestore.doc(`clinicians/${userId}`)
-        transaction.create(clinicianRef, invitation.content.clinician)
-      }
-
-      if (invitation.content.patient) {
-        const patientRef = firestore.doc(`patients/${userId}`)
-        transaction.create(patientRef, invitation.content.patient)
-      }
-
       transaction.delete(firestore.doc(`invitations/${invitation.id}`))
     })
   }
@@ -158,29 +141,13 @@ export class DatabaseUserService implements UserService {
 
   // Users
 
-  async getClinician(userId: string): Promise<Document<Clinician> | undefined> {
-    return this.databaseService.getDocument<Clinician>(`clinicians/${userId}`)
-  }
-
-  async getPatient(userId: string): Promise<Document<Patient> | undefined> {
-    return this.databaseService.getDocument<Patient>(`patients/${userId}`)
-  }
-
   async getUser(userId: string): Promise<Document<User> | undefined> {
     return this.databaseService.getDocument<User>(`users/${userId}`)
   }
 
   async deleteUser(userId: string): Promise<void> {
     await this.databaseService.bulkWrite(async (firestore, writer) => {
-      await Promise.all([
-        firestore.recursiveDelete(firestore.doc(`admins/${userId}`), writer),
-        firestore.recursiveDelete(
-          firestore.doc(`clinicians/${userId}`),
-          writer,
-        ),
-        firestore.recursiveDelete(firestore.doc(`patients/${userId}`), writer),
-        firestore.recursiveDelete(firestore.doc(`users/${userId}`), writer),
-      ])
+      await firestore.recursiveDelete(firestore.doc(`users/${userId}`), writer)
       await this.auth.deleteUser(userId)
     })
   }

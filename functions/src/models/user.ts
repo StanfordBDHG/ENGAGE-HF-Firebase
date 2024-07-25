@@ -12,16 +12,16 @@ export interface UserMessagesSettings {
   medicationRemindersAreActive?: boolean
 }
 
-export interface Admin {}
-
-export interface Clinician {}
-
-export interface Patient {
-  dateOfBirth: Date
-  clinician?: string
+export enum UserType {
+  admin = 'admin',
+  clinician = 'clinician',
+  patient = 'patient',
 }
 
 export interface User {
+  type?: UserType
+  dateOfBirth?: Date
+  clinician?: string
   dateOfEnrollment: Date
   invitationCode: string
   messagesSettings?: UserMessagesSettings

@@ -6,15 +6,10 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { type UserService } from './userService.js'
+import { type UserClaims, type UserService } from './userService.js'
 import { type Invitation } from '../../models/invitation.js'
 import { type Organization } from '../../models/organization.js'
-import {
-  type UserAuth,
-  type Clinician,
-  type Patient,
-  type User,
-} from '../../models/user.js'
+import { type UserAuth, type User } from '../../models/user.js'
 import { type Document } from '../database/databaseService.js'
 
 /* eslint-disable @typescript-eslint/require-await */
@@ -41,6 +36,10 @@ export class MockUserService implements UserService {
   }
 
   async updateAuth(userId: string, user: UserAuth): Promise<void> {
+    return
+  }
+
+  async setClaims(userId: string, claims: UserClaims): Promise<void> {
     return
   }
 
@@ -105,27 +104,12 @@ export class MockUserService implements UserService {
 
   // Methods - User
 
-  async getClinician(userId: string): Promise<Document<Clinician>> {
-    return {
-      id: userId,
-      content: {},
-    }
-  }
-
-  async getPatient(userId: string): Promise<Document<Patient>> {
+  async getUser(userId: string): Promise<Document<User>> {
     return {
       id: userId,
       content: {
         dateOfBirth: new Date('1970-01-02'),
         clinician: 'mockClinician',
-      },
-    }
-  }
-
-  async getUser(userId: string): Promise<Document<User>> {
-    return {
-      id: userId,
-      content: {
         dateOfEnrollment: new Date('2024-04-02'),
         invitationCode: '123',
         messagesSettings: {

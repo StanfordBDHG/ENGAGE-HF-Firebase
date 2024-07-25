@@ -14,12 +14,13 @@ import {
 } from 'firebase-functions/v2/https'
 import { type AuthData } from 'firebase-functions/v2/tasks'
 import { Flags } from '../flags.js'
+import { Credential, UserRole } from '../services/credential.js'
+import { FirestoreService } from '../services/database/firestoreService.js'
 import { RxNormService } from '../services/rxNormService.js'
-import { SecurityService } from '../services/securityService.js'
 import { StaticDataService } from '../services/staticDataService.js'
+import { DatabaseUserService } from '../services/user/databaseUserService.js'
 
 export enum StaticDataComponent {
-  admins = 'admins',
   medicationClasses = 'medicationClasses',
   medications = 'medications',
   organizations = 'organizations',
@@ -36,13 +37,12 @@ async function rebuildStaticData(
   input: RebuildStaticDataInput,
 ) {
   if (!Flags.isEmulator) {
-    await new SecurityService().ensureAdmin(authData)
+    const userService = new DatabaseUserService(new FirestoreService())
+    await new Credential(authData, userService).checkAny(UserRole.admin)
   }
+
   const service = new StaticDataService(admin.firestore(), new RxNormService())
   if (input.only) {
-    if (input.only.includes(StaticDataComponent.admins)) {
-      await service.updateAdmins()
-    }
     if (input.only.includes(StaticDataComponent.medicationClasses)) {
       await service.updateMedicationClasses()
     }

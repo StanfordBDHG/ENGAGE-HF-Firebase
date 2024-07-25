@@ -41,10 +41,10 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
   // Methods
 
   async getHealthSummaryData(userId: string): Promise<HealthSummaryData> {
-    const [user, patient, nextAppointment, medications, symptomScores, vitals] =
+    const [auth, patient, nextAppointment, medications, symptomScores, vitals] =
       await Promise.all([
         this.userService.getAuth(userId),
-        this.userService.getPatient(userId),
+        this.userService.getUser(userId),
         this.patientService.getNextAppointment(userId),
         this.getMedications(userId),
         this.getSymptomScores(userId),
@@ -57,7 +57,7 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
       : undefined
 
     return {
-      name: user.displayName ?? '---',
+      name: auth.displayName ?? '---',
       dateOfBirth: patient?.content.dateOfBirth,
       clinicianName: clinician?.displayName ?? '---',
       nextAppointment: nextAppointment?.content.start,

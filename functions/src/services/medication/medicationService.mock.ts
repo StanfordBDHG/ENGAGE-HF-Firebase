@@ -77,7 +77,7 @@ export class MockMedicationService implements MedicationService {
         extension: [
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass',
-            valueString: '6',
+            valueReference: { reference: 'medicationClasses/0' },
           },
         ],
       },
@@ -95,7 +95,7 @@ export class MockMedicationService implements MedicationService {
         extension: [
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass',
-            valueString: '3',
+            valueReference: { reference: 'medicationClasses/3' },
           },
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose',
@@ -121,7 +121,7 @@ export class MockMedicationService implements MedicationService {
         extension: [
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass',
-            valueString: '3',
+            valueReference: { reference: 'medicationClasses/3' },
           },
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose',
@@ -147,7 +147,7 @@ export class MockMedicationService implements MedicationService {
         extension: [
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass',
-            valueString: '6',
+            valueReference: { reference: 'medicationClasses/6' },
           },
         ],
       },
@@ -165,7 +165,7 @@ export class MockMedicationService implements MedicationService {
         extension: [
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass',
-            valueString: '6',
+            valueReference: { reference: 'medicationClasses/6' },
           },
         ],
       },
@@ -183,7 +183,7 @@ export class MockMedicationService implements MedicationService {
         extension: [
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass',
-            valueString: '2',
+            valueReference: { reference: 'medicationClasses/2' },
           },
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose',
@@ -209,7 +209,7 @@ export class MockMedicationService implements MedicationService {
         extension: [
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass',
-            valueString: '3',
+            valueReference: { reference: 'medicationClasses/3' },
           },
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose',
@@ -235,7 +235,7 @@ export class MockMedicationService implements MedicationService {
         extension: [
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass',
-            valueString: '0',
+            valueReference: { reference: 'medicationClasses/0' },
           },
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose',
@@ -261,7 +261,7 @@ export class MockMedicationService implements MedicationService {
         extension: [
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass',
-            valueString: '0',
+            valueReference: { reference: 'medicationClasses/0' },
           },
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose',
@@ -287,7 +287,7 @@ export class MockMedicationService implements MedicationService {
         extension: [
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass',
-            valueString: '3',
+            valueReference: { reference: 'medicationClasses/3' },
           },
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose',
@@ -313,7 +313,7 @@ export class MockMedicationService implements MedicationService {
         extension: [
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass',
-            valueString: '3',
+            valueReference: { reference: 'medicationClasses/3' },
           },
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose',
@@ -339,7 +339,7 @@ export class MockMedicationService implements MedicationService {
         extension: [
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass',
-            valueString: '3',
+            valueReference: { reference: 'medicationClasses/3' },
           },
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose',
@@ -365,7 +365,7 @@ export class MockMedicationService implements MedicationService {
         extension: [
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass',
-            valueString: '3',
+            valueReference: { reference: 'medicationClasses/3' },
           },
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose',
@@ -391,7 +391,7 @@ export class MockMedicationService implements MedicationService {
         extension: [
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass',
-            valueString: '6',
+            valueReference: { reference: 'medicationClasses/6' },
           },
         ],
       },
@@ -409,7 +409,7 @@ export class MockMedicationService implements MedicationService {
         extension: [
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass',
-            valueString: '3',
+            valueReference: { reference: 'medicationClasses/3' },
           },
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose',
@@ -435,7 +435,7 @@ export class MockMedicationService implements MedicationService {
         extension: [
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass',
-            valueString: '3',
+            valueReference: { reference: 'medicationClasses/3' },
           },
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose',
@@ -461,7 +461,7 @@ export class MockMedicationService implements MedicationService {
         extension: [
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass',
-            valueString: '4',
+            valueReference: { reference: 'medicationClasses/4' },
           },
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose',
@@ -487,7 +487,7 @@ export class MockMedicationService implements MedicationService {
         extension: [
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass',
-            valueString: '4',
+            valueReference: { reference: 'medicationClasses/4' },
           },
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose',
@@ -513,7 +513,7 @@ export class MockMedicationService implements MedicationService {
         extension: [
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass',
-            valueString: '4',
+            valueReference: { reference: 'medicationClasses/4' },
           },
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose',
@@ -539,7 +539,7 @@ export class MockMedicationService implements MedicationService {
         extension: [
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass',
-            valueString: '4',
+            valueReference: { reference: 'medicationClasses/4' },
           },
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose',
@@ -565,7 +565,7 @@ export class MockMedicationService implements MedicationService {
         extension: [
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass',
-            valueString: '4',
+            valueReference: { reference: 'medicationClasses/4' },
           },
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose',
@@ -591,7 +591,7 @@ export class MockMedicationService implements MedicationService {
         extension: [
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass',
-            valueString: '4',
+            valueReference: { reference: 'medicationClasses/4' },
           },
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose',
@@ -617,7 +617,7 @@ export class MockMedicationService implements MedicationService {
         extension: [
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass',
-            valueString: '4',
+            valueReference: { reference: 'medicationClasses/4' },
           },
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose',
@@ -643,7 +643,7 @@ export class MockMedicationService implements MedicationService {
         extension: [
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass',
-            valueString: '0',
+            valueReference: { reference: 'medicationClasses/0' },
           },
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose',
@@ -669,7 +669,7 @@ export class MockMedicationService implements MedicationService {
         extension: [
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass',
-            valueString: '3',
+            valueReference: { reference: 'medicationClasses/3' },
           },
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose',
@@ -695,7 +695,7 @@ export class MockMedicationService implements MedicationService {
         extension: [
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass',
-            valueString: '2',
+            valueReference: { reference: 'medicationClasses/2' },
           },
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose',
@@ -721,7 +721,7 @@ export class MockMedicationService implements MedicationService {
         extension: [
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass',
-            valueString: '0',
+            valueReference: { reference: 'medicationClasses/0' },
           },
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose',
@@ -747,7 +747,7 @@ export class MockMedicationService implements MedicationService {
         extension: [
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass',
-            valueString: '4',
+            valueReference: { reference: 'medicationClasses/4' },
           },
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose',
@@ -773,7 +773,7 @@ export class MockMedicationService implements MedicationService {
         extension: [
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass',
-            valueString: '1',
+            valueReference: { reference: 'medicationClasses/1' },
           },
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose',
@@ -799,7 +799,7 @@ export class MockMedicationService implements MedicationService {
         extension: [
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass',
-            valueString: '1',
+            valueReference: { reference: 'medicationClasses/1' },
           },
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose',
@@ -825,7 +825,7 @@ export class MockMedicationService implements MedicationService {
         extension: [
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass',
-            valueString: '1',
+            valueReference: { reference: 'medicationClasses/1' },
           },
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose',
@@ -851,15 +851,15 @@ export class MockMedicationService implements MedicationService {
         extension: [
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass',
-            valueString: '5',
+            valueReference: { reference: 'medicationClasses/5' },
           },
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose',
-            valueQuantity: { value: 48, unit: 'mg/day' },
+            valueQuantity: { value: 100, unit: 'mg/day' },
           },
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose',
-            valueQuantity: { value: 194, unit: 'mg/day' },
+            valueQuantity: { value: 400, unit: 'mg/day' },
           },
         ],
       },
@@ -877,7 +877,7 @@ export class MockMedicationService implements MedicationService {
         extension: [
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass',
-            valueString: '1',
+            valueReference: { reference: 'medicationClasses/1' },
           },
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose',
@@ -903,7 +903,7 @@ export class MockMedicationService implements MedicationService {
         extension: [
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass',
-            valueString: '1',
+            valueReference: { reference: 'medicationClasses/1' },
           },
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose',
@@ -929,7 +929,7 @@ export class MockMedicationService implements MedicationService {
         extension: [
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass',
-            valueString: '1',
+            valueReference: { reference: 'medicationClasses/1' },
           },
           {
             url: 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose',

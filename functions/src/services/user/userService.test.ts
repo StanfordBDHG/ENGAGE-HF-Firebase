@@ -15,7 +15,7 @@ import { DatabaseUserService } from './databaseUserService.js'
 import { type UserService } from './userService.js'
 import { type Invitation } from '../../models/invitation.js'
 import { type UserMessage, UserMessageType } from '../../models/message.js'
-import { type Admin, type Patient, type User } from '../../models/user.js'
+import { type User } from '../../models/user.js'
 import { type MockFirestore } from '../../tests/mocks/firestore.js'
 import {
   cleanupMocks,
@@ -80,30 +80,6 @@ describe('UserService', () => {
       const invitationData = invitationSnapshot.data() as Invitation | undefined
       expect(invitationData).to.be.undefined
 
-      const adminSnapshot = await firestore
-        .collection('admins')
-        .doc(userId)
-        .get()
-      expect(adminSnapshot.exists).to.be.true
-      const adminData = adminSnapshot.data() as Admin | undefined
-      expect(adminData).to.exist
-
-      const clinicianSnapshot = await firestore
-        .collection('clinicians')
-        .doc(userId)
-        .get()
-      expect(clinicianSnapshot.exists).to.be.false
-      const clinicianData = clinicianSnapshot.data() as Admin | undefined
-      expect(clinicianData).to.be.undefined
-
-      const patientSnapshot = await firestore
-        .collection('patients')
-        .doc(userId)
-        .get()
-      expect(patientSnapshot.exists).to.be.false
-      const patientData = patientSnapshot.data() as Patient | undefined
-      expect(patientData).to.be.undefined
-
       const userSnapshot = await firestore.collection('users').doc(userId).get()
       expect(userSnapshot.exists).to.be.true
       const userData = userSnapshot.data() as User | undefined
@@ -148,30 +124,6 @@ describe('UserService', () => {
       expect(invitationSnapshot.exists).to.be.false
       const invitationData = invitationSnapshot.data() as Invitation | undefined
       expect(invitationData).to.be.undefined
-
-      const adminSnapshot = await firestore
-        .collection('admins')
-        .doc(userId)
-        .get()
-      expect(adminSnapshot.exists).to.be.false
-      const adminData = adminSnapshot.data() as Admin | undefined
-      expect(adminData).to.be.undefined
-
-      const clinicianSnapshot = await firestore
-        .collection('clinicians')
-        .doc(userId)
-        .get()
-      expect(clinicianSnapshot.exists).to.be.true
-      const clinicianData = clinicianSnapshot.data() as Admin | undefined
-      expect(clinicianData).to.exist
-
-      const patientSnapshot = await firestore
-        .collection('patients')
-        .doc(userId)
-        .get()
-      expect(patientSnapshot.exists).to.be.false
-      const patientData = patientSnapshot.data() as Patient | undefined
-      expect(patientData).to.be.undefined
 
       const userSnapshot = await firestore.collection('users').doc(userId).get()
       expect(userSnapshot.exists).to.be.true
@@ -221,32 +173,6 @@ describe('UserService', () => {
       const invitationData = invitationSnapshot.data() as Invitation | undefined
       expect(invitationData).to.be.undefined
 
-      const adminSnapshot = await firestore
-        .collection('admins')
-        .doc(userId)
-        .get()
-      expect(adminSnapshot.exists).to.be.false
-      const adminData = adminSnapshot.data() as Admin | undefined
-      expect(adminData).to.be.undefined
-
-      const clinicianSnapshot = await firestore
-        .collection('clinicians')
-        .doc(userId)
-        .get()
-      expect(clinicianSnapshot.exists).to.be.false
-      const clinicianData = clinicianSnapshot.data() as Admin | undefined
-      expect(clinicianData).to.be.undefined
-
-      const patientSnapshot = await firestore
-        .collection('patients')
-        .doc(userId)
-        .get()
-      expect(patientSnapshot.exists).to.be.true
-      const patientData = patientSnapshot.data() as Patient | undefined
-      expect(patientData).to.exist
-      expect(patientData?.clinician).to.equal('mockClinician')
-      expect(patientData?.dateOfBirth).to.be.instanceOf(Date)
-
       const userSnapshot = await firestore.collection('users').doc(userId).get()
       expect(userSnapshot.exists).to.be.true
       const userData = userSnapshot.data() as User | undefined
@@ -289,30 +215,6 @@ describe('UserService', () => {
       expect(invitationSnapshot.exists).to.be.false
       const invitationData = invitationSnapshot.data() as Invitation | undefined
       expect(invitationData).to.be.undefined
-
-      const adminSnapshot = await firestore
-        .collection('admins')
-        .doc(userId)
-        .get()
-      expect(adminSnapshot.exists).to.be.false
-      const adminData = adminSnapshot.data() as Admin | undefined
-      expect(adminData).to.be.undefined
-
-      const clinicianSnapshot = await firestore
-        .collection('clinicians')
-        .doc(userId)
-        .get()
-      expect(clinicianSnapshot.exists).to.be.false
-      const clinicianData = clinicianSnapshot.data() as Admin | undefined
-      expect(clinicianData).to.be.undefined
-
-      const patientSnapshot = await firestore
-        .collection('patients')
-        .doc(userId)
-        .get()
-      expect(patientSnapshot.exists).to.be.false
-      const patientData = patientSnapshot.data() as Patient | undefined
-      expect(patientData).to.be.undefined
 
       const userSnapshot = await firestore.collection('users').doc(userId).get()
       expect(userSnapshot.exists).to.be.true

@@ -5,123 +5,117 @@ service cloud.firestore {
       return request.auth != null
     }
 
-    function isClinician(request, organizationId) {
-      return isAuthenticated(request)
-        && exists(/databases/$(databaseId)/documents/clinicians/$(request.auth.uid))
-        && get(/databases/$(databaseId)/documents/users/$(request.auth.uid)).data.organization == organizationId
-    }
-
     function isOwner(request, organizationId) {
       return isAuthenticated(request) 
         && request.auth.uid in get(/databases/$(databaseId)/documents/organizations/$(organizationId)).data.owners
-    }
-
-    function isAdmin(request) {
-      return isAuthenticated(request)
-        && exists(/databases/$(databaseId)/documents/admins/$(request.auth.uid))
     }
 
     function isUser(request, userId) {
       return isAuthenticated(request) && request.auth.uid == userId
     }
 
-    function organizationIdFromUserId(userId) {
-      return get(/databases/$(databaseId)/documents/users/$(userId)).data.organization
-    }
-
-    match /admins/{adminId} {
-      allow read, write: if isAdmin(request)
-    }
-
-    match /clinicians/{clinicianId} {
-      allow read, write: if isAdmin(request)
-      allow read, update: if isOwner(request, organizationIdFromUserId(clinicianId))
-      allow read: if isClinician(request, organizationIdFromUserId(clinicianId))
-      allow read, update: if isUser(request, clinicianId)
+    function getUser(userId) {
+      return get(/databases/$(databaseId)/documents/users/$(userId)).data
     }
 
     match /invitations/{invitationId} {
-      allow read, write: if isAdmin(request)
-      allow read, update: if isOwner(request, resource.data.user.organization) 
-        && !('organization' in request.resource.data.user.organization) 
-        && !('admin' in request.resource.data)
-      allow read, update: if isClinician(request, resource.data.user.organization) 
-        && !('organization' in request.resource.data.user.organization) 
-        && !('admin' in request.resource.data)
+      allow read, write: if isAuthenticated(request) && (
+        (getUser(request.auth.uid).type in ['admin', 'clinician']) 
+        || isOwner(request, request.resource.data.user.organization)
+      )
     }
 
     match /medications/{documents=**} {
       allow read: if isAuthenticated(request)
-      allow read, write: if isAdmin(request)
+      allow read, write: if isAuthenticated(request) && getUser(request).type == 'admin'
     }
 
     match /organizations/{organizationId} {
       allow read: if isAuthenticated(request)
-      allow read, write: if isAdmin(request)
-      allow read, update: if isOwner(request, organizationId)
+      allow update: if isAuthenticated(request) && (isOwner(request, organizationId) || getUser(request.auth.uid).type == 'admin')
+      allow create, delete: if isAuthenticated(request) && getUser(request.auth.uid).type == 'admin'
     }
 
-    match /patients/{patientId} {
-      allow read, update: if isUser(request, patientId)
-      allow read, write: if isAdmin(request)
-      allow read, update: if isOwner(request, organizationIdFromUserId(patientId))
-      allow read, update: if isClinician(request, organizationIdFromUserId(patientId))
+    match /questionnaires/{questionnaireId} {
+      allow read: if isAuthenticated(request)
+      allow read, write: if isAuthenticated(request) && getUser(request.auth.uid).type == 'admin'
+    }
 
-      match /{collectionName}/{documentId} {
+    match /users/{userId} {
+      function isAllowedUserRead(request) {
+        let authUser = getUser(request.auth.uid)
+        return authUser.type == 'admin'
+          || (authUser.type == 'clinician' && authUser.organization == resource.data.organization)
+          || (authUser.type == 'patient' && authUser.organization == resource.data.organization)
+          || isOwner(request, resource.data.organization)
+      }
+
+      function isAllowedUserUpdate(request) {
+        let authUser = getUser(request.auth.uid)
+        return authUser.type == 'admin' || (
+          !('organization' in request.resource.data) && (
+            (authUser.type == 'clinician' && authUser.organization == resource.data.organization)
+            || (authUser.type == 'patient' && authUser.organization == resource.data.organization)
+            || isOwner(request, resource.data.organization)
+            || isUser(request, userId)
+          )
+        )
+      }
+
+      allow read: if isAuthenticated(request) && isAllowedUserRead(request)
+      allow update: if isAuthenticated(request) && isAllowedUserUpdate(request)
+      allow create, delete: if isAuthenticated(request) && getUser(request.auth.uid).type == 'admin'
+
+      match /{collection}/{documentId} {
         function isPatientWritable() {
           return collectionName.matches('/^[A-Za-z]+Observations$/')
             || collectionName == 'questionnaireResponses'
         }
-        function isClinicianWritable() {
+
+        function isExternalWritable() {
           return collectionName == 'allergyIntolerances' 
             || collectionName == 'appointments' 
             || collectionName == 'medicationRequests' 
             || collectionName == 'medicationRecommendations'
             || collectionName == 'symptomScores'
+            || collectionName == 'messages'
         }
-        allow read: if isUser(request, patientId)
-        allow write: if isUser(request, patientId) 
-          && isPatientWritable()
-        allow read, write: if isAdmin(request)
-        allow read, write: if isOwner(request, organizationIdFromUserId(patientId))
-        allow read: if isClinician(request, organizationIdFromUserId(patientId))
-        allow write: if isClinician(request, organizationIdFromUserId(patientId)) 
-          && (isPatientWritable() || isClinicianWritable())
-      }
-    }
 
-    match /questionnaires/{questionnaireId} {
-      allow read: if isAuthenticated(request)
-      allow read, write: if isAdmin(request)
-    }
+        function isAllowedUserCollectionRead(request) {
+          let authUser = getUser(request.auth.uid)
+          let user = getUser(userId)
+          return authUser.type == 'admin'
+            || (authUser.type == 'clinician' && authUser.organization == user.organization)
+            || (authUser.type == 'patient' && authUser.organization == user.organization)
+            || isOwner(request, user.organization)
+        }
 
-    match /users/{userId} {
-      allow read, update: if isUser(request, userId)
-        && !('organization' in request.resource.data)
-      allow read, write: if isAdmin(request)
-      allow read, update: if isOwner(request, organizationIdFromUserId(userId))
-        && !('organization' in request.resource.data)
-      allow read, update: if isClinician(request, organizationIdFromUserId(userId))
-        && !('organization' in request.resource.data)
+        function isAllowedUserCollectionWrite(request) {
+          let authUser = getUser(request.auth.uid)
+          let user = getUser(userId)
+          return authUser.type == 'admin' || (
+            isExternalWritable() && (
+              (authUser.type == 'clinician' && authUser.organization == user.organization)
+              || (authUser.type == 'patient' && authUser.organization == user.organization)
+              || isOwner(request, user.organization)
+            )
+          )
+        }
 
-      match /devices/{deviceId} {
-        allow read: if isUser(request, userId)
-        allow read, write: if isAdmin(request)
-        allow read: if isOwner(request, organizationIdFromUserId(userId))
-        allow read: if isClinician(request, organizationIdFromUserId(userId))
-      }
-
-      match /messages/{messageId} {
-        allow read: if isUser(request, userId)
-        allow read, write: if isAdmin(request)
-        allow read, write: if isOwner(request, organizationIdFromUserId(userId))
-        allow read, write: if isClinician(request, organizationIdFromUserId(userId))
+        allow read: if isAuthenticated(request) && (
+          isUser(request, userId) 
+          || isAllowedUserCollectionRead(request)
+        )
+        allow write: if isAuthenticated(request) && (
+          (isUser(request, userId) && isPatientWritable())
+          || isAllowedUserCollectionWrite(request)
+        )
       }
     }
 
     match /videoSections/{documents=**} {
       allow read: if isAuthenticated(request)
-      allow read, write: if isAdmin(request)
+      allow write: if isAuthenticated(request) && getUser(request.auth.uid).type == 'admin'
     }
   }
 }

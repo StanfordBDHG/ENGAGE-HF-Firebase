@@ -170,7 +170,7 @@ export class RxNormService {
     if (medicationClass) {
       result.extension?.push({
         url: FHIRExtensionUrl.medicationClass,
-        valueString: medicationClass,
+        valueReference: { reference: 'medicationClasses/' + medicationClass },
       })
     }
     if (minimumDailyDose) {

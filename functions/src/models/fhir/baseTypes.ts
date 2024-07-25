@@ -26,7 +26,7 @@ export interface FHIRElement {
 
 export interface FHIRExtension {
   url: string
-  valueString?: string
+  valueReference?: FHIRReference<unknown>
   valueQuantity?: FHIRSimpleQuantity
 }
 

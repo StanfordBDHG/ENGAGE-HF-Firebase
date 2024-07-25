@@ -40,24 +40,12 @@ export class StaticDataService {
 
   async updateAll() {
     await Promise.all([
-      this.updateAdmins(),
       this.updateMedicationClasses(),
       this.updateMedications(),
       this.updateOrganizations(),
       this.updateQuestionnaires(),
       this.updateVideoSections(),
     ])
-  }
-
-  async updateAdmins() {
-    await this.db.runTransaction(async (transaction) => {
-      await this.deleteCollection('admins', transaction)
-      this.setUnstructuredCollection(
-        this.db.collection('admins'),
-        this.readJSON('admins.json'),
-        transaction,
-      )
-    })
   }
 
   async updateMedications() {
