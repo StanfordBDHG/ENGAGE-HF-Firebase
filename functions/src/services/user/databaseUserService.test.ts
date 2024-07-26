@@ -22,18 +22,15 @@ import {
   setupMockAuth,
   setupMockFirestore,
 } from '../../tests/setup.js'
-import { CacheDatabaseService } from '../database/cacheDatabaseService.js'
 import { FirestoreService } from '../database/firestoreService.js'
-import { MockAuth } from '../../tests/mocks/auth.js'
 
 describe('DatabaseUserService', () => {
-  let mockAuth: MockAuth
   let mockFirestore: MockFirestore
   let userService: UserService
   let firestore: Firestore
 
   beforeEach(() => {
-    mockAuth = setupMockAuth()
+    setupMockAuth()
     mockFirestore = setupMockFirestore()
     firestore = admin.firestore()
     userService = new DatabaseUserService(new FirestoreService())
@@ -72,8 +69,8 @@ describe('DatabaseUserService', () => {
       await userService.enrollUser(invitation, userId)
 
       const auth = await admin.auth().getUser(userId)
-      expect(auth?.displayName).to.equal(displayName)
-      expect(auth?.customClaims).to.deep.equal({
+      expect(auth.displayName).to.equal(displayName)
+      expect(auth.customClaims).to.deep.equal({
         type: UserType.admin,
         organization: undefined,
         isOwner: false,
@@ -129,8 +126,8 @@ describe('DatabaseUserService', () => {
       await userService.enrollUser(invitation, userId)
 
       const auth = await admin.auth().getUser(userId)
-      expect(auth?.displayName).to.equal(displayName)
-      expect(auth?.customClaims).to.deep.equal({
+      expect(auth.displayName).to.equal(displayName)
+      expect(auth.customClaims).to.deep.equal({
         type: UserType.clinician,
         organization: 'mockOrganization',
         isOwner: false,
@@ -188,8 +185,8 @@ describe('DatabaseUserService', () => {
       await userService.enrollUser(invitation, userId)
 
       const auth = await admin.auth().getUser(userId)
-      expect(auth?.displayName).to.equal(displayName)
-      expect(auth?.customClaims).to.deep.equal({
+      expect(auth.displayName).to.equal(displayName)
+      expect(auth.customClaims).to.deep.equal({
         type: UserType.patient,
         organization: 'mockOrganization',
         isOwner: false,
@@ -238,8 +235,8 @@ describe('DatabaseUserService', () => {
       await userService.enrollUser(invitation, userId)
 
       const auth = await admin.auth().getUser(userId)
-      expect(auth?.displayName).to.equal(displayName)
-      expect(auth?.customClaims).to.deep.equal({
+      expect(auth.displayName).to.equal(displayName)
+      expect(auth.customClaims).to.deep.equal({
         type: undefined,
         organization: undefined,
         isOwner: false,
