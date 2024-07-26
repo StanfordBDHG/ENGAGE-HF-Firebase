@@ -8,22 +8,24 @@
 
 import { type Invitation } from '../../models/invitation.js'
 import { type Organization } from '../../models/organization.js'
-import {
-  type UserAuth,
-  type Clinician,
-  type Patient,
-  type User,
-} from '../../models/user.js'
+import { type UserAuth, type User } from '../../models/user.js'
 import { type Document } from '../database/databaseService.js'
+
+export interface CreateInvitationData {
+  auth?: UserAuth
+  user?: User
+}
 
 export interface UserService {
   // Auth
 
   getAuth(userId: string): Promise<UserAuth>
   updateAuth(userId: string, auth: UserAuth): Promise<void>
+  updateClaims(userId: string): Promise<void>
 
   // Invitations
 
+  createInvitation(invitationId: string, content: Invitation): Promise<void>
   getInvitation(invitationId: string): Promise<Document<Invitation> | undefined>
   setInvitationUserId(invitationId: string, userId: string): Promise<void>
   getInvitationByUserId(
@@ -40,10 +42,7 @@ export interface UserService {
 
   // Users
 
-  getClinician(userId: string): Promise<Document<Clinician> | undefined>
-  getPatient(userId: string): Promise<Document<Patient> | undefined>
   getUser(userId: string): Promise<Document<User> | undefined>
-
   deleteUser(userId: string): Promise<void>
 
   // Messages

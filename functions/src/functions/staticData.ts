@@ -6,20 +6,18 @@
 // SPDX-License-Identifier: MIT
 //
 
-import admin from 'firebase-admin'
-import {
-  type CallableRequest,
-  onCall,
-  onRequest,
-} from 'firebase-functions/v2/https'
 import { type AuthData } from 'firebase-functions/v2/tasks'
+import { type TypeOf, z } from 'zod'
+import { validatedOnCall, validatedOnRequest } from './helpers.js'
 import { Flags } from '../flags.js'
+import { Credential, UserRole } from '../services/credential.js'
+import { type DatabaseService } from '../services/database/databaseService.js'
+import { FirestoreService } from '../services/database/firestoreService.js'
 import { RxNormService } from '../services/rxNormService.js'
-import { SecurityService } from '../services/securityService.js'
 import { StaticDataService } from '../services/staticDataService.js'
+import { DatabaseUserService } from '../services/user/databaseUserService.js'
 
 export enum StaticDataComponent {
-  admins = 'admins',
   medicationClasses = 'medicationClasses',
   medications = 'medications',
   organizations = 'organizations',
@@ -27,22 +25,23 @@ export enum StaticDataComponent {
   videoSections = 'videoSections',
 }
 
-export interface RebuildStaticDataInput {
-  only?: StaticDataComponent[]
-}
+const rebuildStaticDataInputSchema = z.object({
+  only: z.array(z.nativeEnum(StaticDataComponent)).optional(),
+})
 
 async function rebuildStaticData(
   authData: AuthData | undefined,
-  input: RebuildStaticDataInput,
+  input: TypeOf<typeof rebuildStaticDataInputSchema>,
 ) {
+  const databaseService: DatabaseService = new FirestoreService()
+
   if (!Flags.isEmulator) {
-    await new SecurityService().ensureAdmin(authData)
+    const userService = new DatabaseUserService(databaseService)
+    await new Credential(authData, userService).checkAny(UserRole.admin)
   }
-  const service = new StaticDataService(admin.firestore(), new RxNormService())
+
+  const service = new StaticDataService(databaseService, new RxNormService())
   if (input.only) {
-    if (input.only.includes(StaticDataComponent.admins)) {
-      await service.updateAdmins()
-    }
     if (input.only.includes(StaticDataComponent.medicationClasses)) {
       await service.updateMedicationClasses()
     }
@@ -63,21 +62,21 @@ async function rebuildStaticData(
   }
 }
 
-const rebuildStaticDataFunctionProduction = onCall(
-  async (request: CallableRequest<RebuildStaticDataInput>) => {
+const rebuildStaticDataFunctionProduction = validatedOnCall(
+  rebuildStaticDataInputSchema,
+  async (request): Promise<void> => {
     await rebuildStaticData(request.auth, request.data)
-    return 'Success'
   },
 )
 
-const rebuildStaticDataFunctionDebug = onRequest(async (request, response) => {
-  await rebuildStaticData(
-    undefined,
-    (request.body ?? {}) as RebuildStaticDataInput,
-  )
-  response.write('Success', 'utf8')
-  response.end()
-})
+const rebuildStaticDataFunctionDebug = validatedOnRequest(
+  rebuildStaticDataInputSchema,
+  async (_, data, response) => {
+    await rebuildStaticData(undefined, data)
+    response.write('Success', 'utf8')
+    response.end()
+  },
+)
 
 export const rebuildStaticDataFunction =
   Flags.isEmulator ?

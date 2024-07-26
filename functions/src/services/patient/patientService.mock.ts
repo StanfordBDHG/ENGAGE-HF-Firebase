@@ -49,7 +49,7 @@ export class MockPatientService implements PatientService {
         participant: [
           {
             actor: {
-              reference: `patients/${userId}`,
+              reference: `users/${userId}`,
             },
           },
         ],

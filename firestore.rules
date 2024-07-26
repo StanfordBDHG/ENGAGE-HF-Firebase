@@ -1,127 +1,154 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{databaseId}/documents {
-    function isAuthenticated(request) {
-      return request.auth != null
+    function isAuthenticated() {
+      return request.auth != null;
     }
 
-    function isClinician(request, organizationId) {
-      return isAuthenticated(request)
-        && exists(/databases/$(databaseId)/documents/clinicians/$(request.auth.uid))
-        && get(/databases/$(databaseId)/documents/users/$(request.auth.uid)).data.organization == organizationId
+    function isAdmin() {
+      return isAuthenticated()
+        && orNull(request.auth.token, 'type') == 'admin'
     }
 
-    function isOwner(request, organizationId) {
-      return isAuthenticated(request) 
-        && request.auth.uid in get(/databases/$(databaseId)/documents/organizations/$(organizationId)).data.owners
+    function isOwner(organizationId) {
+      return isAuthenticated()
+        && orNull(request.auth.token, 'organization') == organizationId
+        && orNull(request.auth.token, 'isOwner') == true;
     }
 
-    function isAdmin(request) {
-      return isAuthenticated(request)
-        && exists(/databases/$(databaseId)/documents/admins/$(request.auth.uid))
+    function isClinician(organizationId) {
+      return isAuthenticated()
+        && orNull(request.auth.token, 'type') == 'clinician'
+        && orNull(request.auth.token, 'organization') == organizationId;
+    }
+    
+    function isUser(userId) {
+      return isAuthenticated()
+        && request.auth.uid == userId;
     }
 
-    function isUser(request, userId) {
-      return isAuthenticated(request) && request.auth.uid == userId
+    function getUser(userId) {
+      return get(/databases/$(databaseId)/documents/users/$(userId));
     }
 
-    function organizationIdFromUserId(userId) {
-      return get(/databases/$(databaseId)/documents/users/$(userId)).data.organization
-    }
-
-    match /admins/{adminId} {
-      allow read, write: if isAdmin(request)
-    }
-
-    match /clinicians/{clinicianId} {
-      allow read, write: if isAdmin(request)
-      allow read, update: if isOwner(request, organizationIdFromUserId(clinicianId))
-      allow read: if isClinician(request, organizationIdFromUserId(clinicianId))
-      allow read, update: if isUser(request, clinicianId)
+    function orNull(object, propertyName) {
+      return (propertyName in object) ? object[propertyName] : null;
     }
 
     match /invitations/{invitationId} {
-      allow read, write: if isAdmin(request)
-      allow read, update: if isOwner(request, resource.data.user.organization) 
-        && !('organization' in request.resource.data.user.organization) 
-        && !('admin' in request.resource.data)
-      allow read, update: if isClinician(request, resource.data.user.organization) 
-        && !('organization' in request.resource.data.user.organization) 
-        && !('admin' in request.resource.data)
+      function organizationDidNotChange() {
+        return orNull(request.resource.data.user, 'organization') == orNull(resource.data.user, 'organization')
+      }
+
+      allow read: if isAdmin() || (
+        (resource != null) && ('data' in resource) && ('user' in resource.data) && (
+          isOwner(orNull(resource.data.user, 'organization'))
+            || isClinician(orNull(resource.data.user, 'organization'))
+        )
+      );
+      allow create: if isAdmin();
+      allow update: if isAdmin() || (
+        organizationDidNotChange() && (
+          isOwner(orNull(resource.data.user, 'organization'))
+            || isClinician(orNull(resource.data.user, 'organization'))
+        )
+      );
+      allow delete: if isAdmin() || (
+        ('user' in resource.data) && (
+          isOwner(orNull(resource.data.user, 'organization'))
+            || isClinician(orNull(resource.data.user, 'organization'))
+        )
+      );
     }
 
     match /medications/{documents=**} {
-      allow read: if isAuthenticated(request)
-      allow read, write: if isAdmin(request)
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
     }
 
     match /organizations/{organizationId} {
-      allow read: if isAuthenticated(request)
-      allow read, write: if isAdmin(request)
-      allow read, update: if isOwner(request, organizationId)
-    }
-
-    match /patients/{patientId} {
-      allow read, update: if isUser(request, patientId)
-      allow read, write: if isAdmin(request)
-      allow read, update: if isOwner(request, organizationIdFromUserId(patientId))
-      allow read, update: if isClinician(request, organizationIdFromUserId(patientId))
-
-      match /{collectionName}/{documentId} {
-        function isPatientWritable() {
-          return collectionName.matches('/^[A-Za-z]+Observations$/')
-            || collectionName == 'questionnaireResponses'
-        }
-        function isClinicianWritable() {
-          return collectionName == 'allergyIntolerances' 
-            || collectionName == 'appointments' 
-            || collectionName == 'medicationRequests' 
-            || collectionName == 'medicationRecommendations'
-            || collectionName == 'symptomScores'
-        }
-        allow read: if isUser(request, patientId)
-        allow write: if isUser(request, patientId) 
-          && isPatientWritable()
-        allow read, write: if isAdmin(request)
-        allow read, write: if isOwner(request, organizationIdFromUserId(patientId))
-        allow read: if isClinician(request, organizationIdFromUserId(patientId))
-        allow write: if isClinician(request, organizationIdFromUserId(patientId)) 
-          && (isPatientWritable() || isClinicianWritable())
-      }
+      allow read: if isAuthenticated()
+      allow update: if isAdmin() || isOwner(organizationId);
+      allow create, delete: if isAdmin();
     }
 
     match /questionnaires/{questionnaireId} {
-      allow read: if isAuthenticated(request)
-      allow read, write: if isAdmin(request)
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
     }
 
     match /users/{userId} {
-      allow read, update: if isUser(request, userId)
-        && !('organization' in request.resource.data)
-      allow read, write: if isAdmin(request)
-      allow read, update: if isOwner(request, organizationIdFromUserId(userId))
-        && !('organization' in request.resource.data)
-      allow read, update: if isClinician(request, organizationIdFromUserId(userId))
-        && !('organization' in request.resource.data)
-
-      match /devices/{deviceId} {
-        allow read: if isUser(request, userId)
-        allow read, write: if isAdmin(request)
-        allow read: if isOwner(request, organizationIdFromUserId(userId))
-        allow read: if isClinician(request, organizationIdFromUserId(userId))
+      function securityRelatedFieldsDidNotChange() {
+        return (request.resource.data == null) || (resource.data == null) || (
+          orNull(request.resource.data, 'type') == orNull(resource.data, 'type')
+            && orNull(request.resource.data, 'organization') == orNull(resource.data, 'organization')
+        );
       }
 
-      match /messages/{messageId} {
-        allow read: if isUser(request, userId)
-        allow read, write: if isAdmin(request)
-        allow read, write: if isOwner(request, organizationIdFromUserId(userId))
-        allow read, write: if isClinician(request, organizationIdFromUserId(userId))
+      allow read: if isAdmin() 
+        || isUser(userId) 
+        || isOwner(orNull(resource.data, 'organization'))
+        || isClinician(orNull(resource.data, 'organization'));
+
+      allow create: if isAdmin() || (
+        isUser(userId)
+          && !('organization' in request.resource.data)
+          && !('type' in request.resource.data)
+      );
+
+      allow update: if isAdmin() || (
+        securityRelatedFieldsDidNotChange() && (
+          isUser(userId)
+            || isOwner(orNull(resource.data, 'organization'))
+            || isClinician(orNull(resource.data, 'organization'))
+        )
+      );
+
+      allow delete: if isAdmin();
+    }
+
+    match /users/{userId}/{collectionName}/{documentId} {
+      function isPatientWritableCollectionName() {
+        return collectionName.matches('/^[A-Za-z]+Observations$/')
+          || collectionName == 'questionnaireResponses';
       }
+
+      function isClinicianWritableCollectionName() {
+        return collectionName == 'allergyIntolerances'
+          || collectionName == 'appointments'
+          || collectionName == 'medicationRequests'
+          || collectionName == 'medicationRecommendations'
+          || collectionName == 'symptomScores'
+          || collectionName == 'messages';
+      }
+
+      function isClinicianReadable() {
+        let user = getUser(userId);
+        return isAdmin() 
+          || isOwner(orNull(user, 'organization'))
+          || isClinician(orNull(user, 'organization'));
+      }
+
+      function isClinicianWritable() {
+        let user = getUser(userId);
+        return isAdmin() || (
+          isClinicianWritableCollectionName() && (
+            isOwner(orNull(user, 'organization'))
+              || isClinician(orNull(user, 'organization'))
+          )
+        );
+      }
+
+      allow read: if isAuthenticated() && (isUser(userId) || isClinicianReadable());
+      allow write: if isAuthenticated() && (
+        (isUser(userId) && isPatientWritableCollectionName())
+          || isClinicianWritable()
+      );
     }
 
     match /videoSections/{documents=**} {
-      allow read: if isAuthenticated(request)
-      allow read, write: if isAdmin(request)
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
     }
   }
 }

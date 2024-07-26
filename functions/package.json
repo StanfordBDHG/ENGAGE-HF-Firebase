@@ -10,9 +10,10 @@
     "clean": "if [ -f 'tsconfig.tsbuildinfo' ]; then rm tsconfig.tsbuildinfo; fi && if [ -d 'lib' ]; then rm -r lib; fi",
     "test": "npm run clean && npm run build && npm run test:nobuild",
     "test:coverage": "c8 npm run test",
+    "test:emulators": "firebase emulators:exec --only auth,firestore 'npm run test'",
     "test:nobuild": "env TZ=UTC mocha --reporter-option maxDiffSize=0",
     "test:regenerate": "env REGENERATE_VALUES=true npm run test",
-    "serve": "npm run build -- --watch | firebase emulators:start --only firestore,functions",
+    "serve": "npm run build -- --watch | firebase emulators:start --only auth,firestore,functions",
     "shell": "firebase functions:shell",
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions",
@@ -29,7 +30,8 @@
     "firebase-functions": "^5.0.1",
     "jsdom": "^24.1.0",
     "jspdf": "^2.5.1",
-    "jspdf-autotable": "^3.8.2"
+    "jspdf-autotable": "^3.8.2",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@firebase/rules-unit-testing": "^3.0.3",

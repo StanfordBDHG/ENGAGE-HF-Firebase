@@ -36,7 +36,7 @@ export class DatabasePatientService implements PatientService {
     userId: string,
   ): Promise<Array<Document<FHIRAppointment>>> {
     return this.databaseService.getCollection<FHIRAppointment>(
-      `patients/${userId}/appointments`,
+      `users/${userId}/appointments`,
     )
   }
 
@@ -46,7 +46,7 @@ export class DatabasePatientService implements PatientService {
     const result = await this.databaseService.getQuery<FHIRAppointment>(
       (firestore) =>
         firestore
-          .collection(`patients/${userId}/appointments`)
+          .collection(`users/${userId}/appointments`)
           .where('start', '>', new Date())
           .orderBy('start', 'asc')
           .limit(1),
@@ -60,7 +60,7 @@ export class DatabasePatientService implements PatientService {
     userId: string,
   ): Promise<Array<Document<FHIRAllergyIntolerance>>> {
     return this.databaseService.getCollection<FHIRAllergyIntolerance>(
-      `patients/${userId}/allergyIntolerances`,
+      `users/${userId}/allergyIntolerances`,
     )
   }
 
@@ -70,7 +70,7 @@ export class DatabasePatientService implements PatientService {
     userId: string,
   ): Promise<Array<Document<MedicationRecommendation>>> {
     return this.databaseService.getCollection<MedicationRecommendation>(
-      `patients/${userId}/medicationRecommendations`,
+      `users/${userId}/medicationRecommendations`,
     )
   }
 
@@ -78,7 +78,7 @@ export class DatabasePatientService implements PatientService {
     userId: string,
   ): Promise<Array<Document<FHIRMedicationRequest>>> {
     return this.databaseService.getCollection<FHIRMedicationRequest>(
-      `patients/${userId}/medicationRequests`,
+      `users/${userId}/medicationRequests`,
     )
   }
 
@@ -88,7 +88,7 @@ export class DatabasePatientService implements PatientService {
     userId: string,
   ): Promise<Array<Document<FHIRObservation>>> {
     return this.databaseService.getCollection<FHIRObservation>(
-      `patients/${userId}/bloodPressureObservations`,
+      `users/${userId}/bloodPressureObservations`,
     )
   }
 
@@ -96,7 +96,7 @@ export class DatabasePatientService implements PatientService {
     userId: string,
   ): Promise<Array<Document<FHIRObservation>>> {
     return this.databaseService.getCollection<FHIRObservation>(
-      `patients/${userId}/bodyWeightObservations`,
+      `users/${userId}/bodyWeightObservations`,
     )
   }
 
@@ -104,7 +104,7 @@ export class DatabasePatientService implements PatientService {
     userId: string,
   ): Promise<Array<Document<FHIRObservation>>> {
     return this.databaseService.getCollection<FHIRObservation>(
-      `patients/${userId}/heartRateObservations`,
+      `users/${userId}/heartRateObservations`,
     )
   }
 
@@ -114,7 +114,7 @@ export class DatabasePatientService implements PatientService {
     const result = await this.databaseService.getQuery<FHIRObservation>(
       (firestore) =>
         firestore
-          .collection(`patients/${userId}/creatinineObservations`)
+          .collection(`users/${userId}/creatinineObservations`)
           .orderBy('effectiveDateTime', 'desc')
           .limit(1),
     )
@@ -127,7 +127,7 @@ export class DatabasePatientService implements PatientService {
     const result = await this.databaseService.getQuery<FHIRObservation>(
       (firestore) =>
         firestore
-          .collection(`patients/${userId}/dryWeightObservations`)
+          .collection(`users/${userId}/dryWeightObservations`)
           .orderBy('effectiveDateTime', 'desc')
           .limit(1),
     )
@@ -140,7 +140,7 @@ export class DatabasePatientService implements PatientService {
     const result = await this.databaseService.getQuery<FHIRObservation>(
       (firestore) =>
         firestore
-          .collection(`patients/${userId}/eGfrObservations`)
+          .collection(`users/${userId}/eGfrObservations`)
           .orderBy('effectiveDateTime', 'desc')
           .limit(1),
     )
@@ -153,7 +153,7 @@ export class DatabasePatientService implements PatientService {
     const result = await this.databaseService.getQuery<FHIRObservation>(
       (firestore) =>
         firestore
-          .collection(`patients/${userId}/potassiumObservations`)
+          .collection(`users/${userId}/potassiumObservations`)
           .orderBy('effectiveDateTime', 'desc')
           .limit(1),
     )
@@ -166,7 +166,7 @@ export class DatabasePatientService implements PatientService {
     userId: string,
   ): Promise<Array<Document<FHIRQuestionnaireResponse>>> {
     return this.databaseService.getCollection<FHIRQuestionnaireResponse>(
-      `patients/${userId}/questionnaireResponses`,
+      `users/${userId}/questionnaireResponses`,
     )
   }
 
@@ -174,7 +174,7 @@ export class DatabasePatientService implements PatientService {
     userId: string,
   ): Promise<Array<Document<SymptomScore>>> {
     return this.databaseService.getCollection<SymptomScore>(
-      `patients/${userId}/symptomScores`,
+      `users/${userId}/symptomScores`,
     )
   }
 }

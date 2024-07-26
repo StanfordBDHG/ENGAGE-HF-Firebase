@@ -14,6 +14,7 @@ import { MockFirestore } from './mocks/firestore.js'
 export function setupMockAuth() {
   const auth = new MockAuth()
   stub(admin, 'auth').get(() => () => auth)
+  return auth
 }
 
 export function setupMockFirestore(): MockFirestore {

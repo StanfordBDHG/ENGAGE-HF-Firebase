@@ -7,39 +7,42 @@
 //
 
 import { https } from 'firebase-functions/v2'
-import { type CallableRequest, onCall } from 'firebase-functions/v2/https'
+import { z } from 'zod'
+import { validatedOnCall } from './helpers.js'
 import { generateHealthSummary } from '../healthSummary/generate.js'
+import { Credential, UserRole } from '../services/credential.js'
 import { CacheDatabaseService } from '../services/database/cacheDatabaseService.js'
 import { type DatabaseService } from '../services/database/databaseService.js'
 import { FirestoreService } from '../services/database/firestoreService.js'
 import { FhirService } from '../services/fhir/fhirService.js'
 import { DefaultHealthSummaryService } from '../services/healthSummary/databaseHealthSummaryService.js'
 import { DatabasePatientService } from '../services/patient/databasePatientService.js'
-import { SecurityService } from '../services/securityService.js'
 import { DatabaseUserService } from '../services/user/databaseUserService.js'
 
-export interface ExportHealthSummaryInput {
-  userId?: string
-}
+const exportHealthSummaryInputSchema = z.object({
+  userId: z.string(),
+})
 
-export const exportHealthSummaryFunction = onCall(
-  async (request: CallableRequest<ExportHealthSummaryInput>) => {
+export const exportHealthSummaryFunction = validatedOnCall(
+  exportHealthSummaryInputSchema,
+  async (request): Promise<Buffer> => {
     if (!request.data.userId)
       throw new https.HttpsError('invalid-argument', 'User ID is required')
 
     const databaseService: DatabaseService = new CacheDatabaseService(
       new FirestoreService(),
     )
-    const securityService = new SecurityService()
+    const userService = new DatabaseUserService(databaseService)
+    const credential = new Credential(request.auth, userService)
     try {
-      securityService.ensureUser(request.auth, request.data.userId)
+      await credential.checkAny(UserRole.user(request.data.userId))
     } catch {
       const userService = new DatabaseUserService(databaseService)
       const organization = (await userService.getUser(request.data.userId))
         ?.content.organization
       if (!organization)
         throw new https.HttpsError('not-found', 'Organization not found')
-      await securityService.ensureClinician(request.auth, organization)
+      await credential.checkAny(UserRole.clinician(organization))
     }
 
     const healthSummaryService = new DefaultHealthSummaryService(

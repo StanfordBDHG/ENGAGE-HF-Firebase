@@ -10,37 +10,53 @@
 // https://github.com/StanfordBDHG/PediatricAppleWatchStudy/pull/54/files
 
 import admin from 'firebase-admin'
-import { exportHealthSummaryFunction } from './functions/healthSummary.js'
 import {
   beforeUserCreatedFunction,
+  beforeUserSignedInFunction,
+  onOrganizationWrittenFunction,
+  onUserWrittenFunction,
+} from './functions/auth.js'
+import { exportHealthSummaryFunction } from './functions/healthSummary.js'
+import {
   checkInvitationCodeFunction,
+  createInvitationFunction,
 } from './functions/invitation.js'
 import { dismissMessageFunction } from './functions/message.js'
 import { rebuildStaticDataFunction } from './functions/staticData.js'
 import {
-  createInvitationFunction,
   deleteUserFunction,
   getUsersInformationFunction,
-  grantAdminFunction,
-  grantOwnerFunction,
-  revokeAdminFunction,
-  revokeOwnerFunction,
   updateUserInformationFunction,
 } from './functions/users.js'
 
 admin.initializeApp()
 
+// auth
+
 export const beforeUserCreated = beforeUserCreatedFunction
-export const checkInvitationCode = checkInvitationCodeFunction
-export const dismissMessage = dismissMessageFunction
+export const beforeUserSignedIn = beforeUserSignedInFunction
+export const onOrganizationWritten = onOrganizationWrittenFunction
+export const onUserWritten = onUserWrittenFunction
+
+// healthSummary
+
 export const exportHealthSummary = exportHealthSummaryFunction
+
+// invitation
+
+export const createInvitation = createInvitationFunction
+export const checkInvitationCode = checkInvitationCodeFunction
+
+// message
+
+export const dismissMessage = dismissMessageFunction
+
+// staticData
+
 export const rebuildStaticData = rebuildStaticDataFunction
 
+// users
+
 export const getUsersInformation = getUsersInformationFunction
-export const updateUserInformation = updateUserInformationFunction
 export const deleteUser = deleteUserFunction
-export const createInvitation = createInvitationFunction
-export const grantOwner = grantOwnerFunction
-export const revokeOwner = revokeOwnerFunction
-export const grantAdmin = grantAdminFunction
-export const revokeAdmin = revokeAdminFunction
+export const updateUserInformation = updateUserInformationFunction

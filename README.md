@@ -36,7 +36,11 @@ A LocalizedText object cannot be used in FHIR-conforming types due to its incomp
 
 ## invitations/$invitationId$
 
-When a patient joins Engage-HF, we first create an invitation code on demand of an operator of the web dashboard. Upon entering the invitation code using an anonymous login, the userId is set. After successful registration, the user object will be fully created and the invitation is removed from this collection.
+When a user joins Engage-HF, we first create an invitation code on demand of an operator of the web dashboard. 
+
+For patients, upon entering the invitation code using an anonymous login, the userId is set. After successful registration, the user object will be fully created and the invitation is removed from this collection.
+
+For SSO users (e.g. clinicians,owners), upon the first login using SSO, the related invitation is fetched, the user object will be fully created and the invitation is removed from this collection.
 
 |Property|Type|Values|Comments|
 |-|-|-|-|
@@ -47,12 +51,10 @@ When a patient joins Engage-HF, we first create an invitation code on demand of 
 |auth>phoneNumber|optional string|Phone number of the user.|
 |auth>photoURL|optional string|URL for a photo of the user.|
 |user|optional User|See users/$userId$ for full specification. Will no longer be set once invitation has been redeemed.|
-|clinician|optional Clinician|See clinicians/$userId$ for full specification. Will no longer be set once invitation has been redeemed.|
-|patient|optional Patient|See patientts/$userId$ for full specification. Will no longer be set once invitation has been redeemed.|
 
 ## medications
 
-In this section, we describe information regarding all the medications to be specified in the Engage-HF context. These medications may be used by a clinician for medication requests to a patient (patients/$userId$/medicationRequests) or contra-indications (patients/$userId$/allergyIntolerances). The medications are generated from [functions/data/medicationCodes.json](functions/data/medicationCodes.json) file containing medications (incl. respective RxNorm SCD type codes) grouped by medication classes.
+In this section, we describe information regarding all the medications to be specified in the Engage-HF context. These medications may be used by a clinician for medication requests to a patient (users/$userId$/medicationRequests) or contra-indications (users/$userId$/allergyIntolerances). The medications are generated from [functions/data/medicationCodes.json](functions/data/medicationCodes.json) file containing medications (incl. respective RxNorm SCD type codes) grouped by medication classes.
 
 ### medications/$medicationId$
 
@@ -101,16 +103,76 @@ Based on the [Extension](https://hl7.org/fhir/R4B/extensibility.html#Extension) 
 |ssoProviderId|string|-|The providerId as used for single sign-on.|
 |owners|list of string|-|All the userIds of the organization owners.|
 
-## patients/$userId$
+## questionnaires
 
-In this section, we describe all patient-related data to be stored.
+In this section, we describe all the information stored for questionnaires.
+
+### questionnaires/$questionnaireId$
+
+Based on [FHIR Questionnaire](https://hl7.org/fhir/R4B/questionnaire.html), the following properties may be used, while additional properties are ignored by the Engage-HF system.
 
 |Property|Type|Values|Comments|
 |-|-|-|-|
-|dateOfBirth|Date|-|To be used for verification purposes.|
-|clinician|optional string|-|userId of an associated clinician.|
+|id|string|-|[Resource](https://hl7.org/fhir/R4B/resource.html): Logical id of this artifact|
+|meta|Meta|-|[Resource](https://hl7.org/fhir/R4B/resource.html#Meta): Metadata about the resource|
+|identifier|list of Identifier|-|Business identifier for this questionnaire. There may be multiple questionnaire objects in this list, with differing `id` and `language` properties, but a common business identifier.|
+|title|string|-|Human-friendly title of the questionnaire.|
+|date|Date|-|last modified date|
+|version|string|-|Business version of the questionnaire.|
+|language|optional string|e.g. "en"|Following IETF BCP-47 / [FHIR ValueSet languages](https://hl7.org/fhir/R4B/valueset-languages.html)|
+|item|list of BackboneElement|-|items as defined in [FHIR Questionnaire](https://hl7.org/fhir/R4B/questionnaire.html)|
+|item[x]>linkId|string|-|Unique id for item in questionnaire|
+|item[x]>definition|optional uri|-|Details for the item|
+|item[x]>prefix|optional string|e.g. "1(a)", "2.5.3"|Prefix of the item that isn't actually part of the name but may still be displayed.|
+|item[x]>text|string|-|Primary text for the item|
+|item[x]>type|code|e.g. "group", "display", "boolean", "decimal", "integer", "date", etc|See [QuestionnaireItemType](https://hl7.org/fhir/R4B/valueset-item-type.html) for available values.|
 
-### patients/$userId$/allergyIntolerances/$allergyIntoleranceId$
+You can find an example KCCQ-12 questionnaire in [functions/data/questionnaires.json](functions/data/questionnaires.json).
+
+## users/$userId$
+
+In this section, we describe all user-related data to be stored. The security rules shall be set up in a way to only allow for a patient to access its own information and a clinician to access all patients' information (or even more restrictive, if needed).
+
+|Property|Type|Values|Comments|
+|-|-|-|-|
+|type|optional string|e.g. "admin", "clinician", "patient"|The type of the user. It may be set to null for owners or users not requiring any further permissions.|
+|dateOfEnrollment|Date|-|The date when the invitation code was used to create this user.|
+|dateOfBirth|optional Date|-|The date when the user was born.|
+|genderIdentity|optional string|-|The gender identity chosen when a patient redeemed the invitation. TBD: Available values.|
+|organization|optional string|-|The id of the organization a clinician, patient or owner is associated with.|
+|invitationCode|string|-|The invitationCode to be used when logging in to the app for the first time.|
+|language|optional string|e.g. "en"|Following IETF BCP-47 / [FHIR ValueSet languages](https://hl7.org/fhir/R4B/valueset-languages.html).|
+|messagesSettings|optional|-|See properties below. If null, then no messages are sent.|
+|messagesSettings>dailyRemindersAreActive|boolean|true, false|Decides whether to send out daily reminder messages for this user.|
+|messagesSettings>textNotificationsAreActive|boolean|true, false|Decides whether to send text notifications for this user.|
+|messagesSettings>medicationRemindersAreActive|boolean|true, false|Decides whether to send medication reminder messages for this user.|
+|timeZone|string|e.g. "America/Los_Angeles"|The value needs to correspond to an identifier from [TZDB](https://nodatime.org/TimeZones). It must not be an offset to UTC/GMT, since that wouldn't work well with daylight-savings (even if there is no daylight-savings time at that location). Also, don't use common abbreviations like PST, PDT, CEST, etc (they may be ambiguous, e.g. CST). If the timeZone is unknown, then "America/Los_Angeles" should be used.|
+
+### users/$userId$/devices/$deviceId$
+
+This data is required to send push notifications over the [Firebase Cloud Messaging](https://firebase.google.com/docs/cloud-messaging) System.
+
+|Property|Type|Values|Comments|
+|-|-|-|-|
+|modifiedDate|Date|-|This date is updated whenever the token is sent to the server, even if it is not replaced by a different token. It simply reflects the last date we can definitely confirm the token was active. Idea: We may ignore some devices, if the token has not been updated for a long time, since the app has not been opened for a long time.|
+|notificationToken|string|-|The FCM token as received from Firebase in the app.|
+|platform|optional string|e.g. "iOS", "Android"|This information is important as context for the `osVersion`, `appVersion` and `appBuild` properties.|
+|osVersion|optional string|e.g. "17.5.1"|The version of the OS. Depending on the OS, they may have different formats to be specified separately.|
+|appVersion|optional string|e.g. "1.0.1"|The version of the app as it is specified on the App/Play Store.|
+|appBuild|optional string|e.g. "56"|The build version of the app as defined by the CI pipeline releasing the app.|
+|language|optional string|e.g. "en"|Following IETF BCP-47 / [FHIR ValueSet languages](https://hl7.org/fhir/R4B/valueset-languages.html)|
+
+Push notifications over APNS / FCM only contain text in a single language. For this, the device's `language` property shall be prioritized, falling back on the user's `language` property and using US-English if both are not present.
+
+#### Adding a new device or modifying information of an existing one
+
+A device can only be identified by its notification token. When updating a device's information, we therefore check if the notification token already exists in Firestore. If it already exists, we update all other existing fields' values - otherwise, we create a new device.
+
+A device may receive a different notification token at any time though. Therefore, we might create a new device, even though that device already exists in the table with a different (now inactive) notification token. Therefore, every time we send out a new notification and receive the information that a token is no longer active, we need to remove the device from this table.
+
+### users/$userId$/allergyIntolerances/$allergyIntoleranceId$
+
+Only users with a `patient` role assigned have values in this collection.
 
 Based on [FHIR AllergyIntolerance](https://hl7.org/fhir/R4B/allergyintolerance.html), the following properties may be used, while additional properties are ignored by the Engage-HF system.
 
@@ -161,7 +223,9 @@ We use RxNorm codes to identify contraindications using the following rules:
 |Diuretic|Torsemide|-|-|-|-|-|
 |Diuretic|Ethacrynic Acid|-|-|-|-|-|
 
-### patients/$userId$/appointments
+### users/$userId$/appointments
+
+Only users with a `patient` role assigned have values in this collection. There is currently no easy way to check for appointments relevant to one clinician - if it happens to be a requirement in the future, we may need to restructure this.
 
 Based on [FHIR Appointment](https://hl7.org/fhir/R4B/appointment.html), the following properties may be used, while additional properties are ignored by the Engage-HF system.
 
@@ -174,12 +238,14 @@ Based on [FHIR Appointment](https://hl7.org/fhir/R4B/appointment.html), the foll
 |comment|optional string|-|May not be shown to the patient.|
 |patientInstruction|optional string|-|May be shown to the patient.|
 |participant|list of CodeableConcept|-|Must contain at least one element.|
-|participant[x]>actor|Reference(Patient)|e.g. `patients/123`|The Firestore path to the patient.|
+|participant[x]>actor|Reference(User)|e.g. `users/123`|The Firestore path to the patient.|
 |participant[x]>status|[ParticipationStatus](https://hl7.org/fhir/R4B/valueset-participationstatus.html)|e.g. accepted, declined, tentative, needs-action|-|
 
-### patients/$userId$/medicationRequests/$medicationRequestId$
+### users/$userId$/medicationRequests/$medicationRequestId$
 
-Based on [FHIR MedicationRequest](https://hl7.org/fhir/R4B/medicationrequest.html), the following properties may be used, while additional properties are ignored by the Engage-HF system. Clients may ignore this list and simply query for patients/$userId$/medicationRecommendations and retrieve the relevant requests from the recommendations.
+Only users with a `patient` role assigned have values in this collection.
+
+Based on [FHIR MedicationRequest](https://hl7.org/fhir/R4B/medicationrequest.html), the following properties may be used, while additional properties are ignored by the Engage-HF system. Clients may ignore this list and simply query for users/$userId$/medicationRecommendations and retrieve the relevant requests from the recommendations.
 
 |Property|Type|Values|Comments|
 |-|-|-|-|
@@ -206,13 +272,15 @@ The `dosageInstruction` property may contain values with the following propertie
 
 There may be up to three intakes per day (morning, mid-day and evening) with either 0.5, 1 or 2 pills. The dosages should always be grouped by medication, i.e. there should not be multiple medication elements concerning the same medication but different dosage instructions. Instead, one medication element shall be used for that medication with multiple dosage instructions.
 
-### patients/$userId$/medicationRecommendations/$medicationRecommendationId$
+### users/$userId$/medicationRecommendations/$medicationRecommendationId$
+
+Only users with a `patient` role assigned have values in this collection.
 
 These are the output values of the recommendation algorithms. Depending on the type, the recommendations should be displayed with different icons and texts.
 
 |Property|Type|Values|Comments|
 |-|-|-|-|
-|currentMedication|optional Reference(FHIRMedicationRequest)|e.g. `{"reference":"patients/123/medicationRequest/2"}`|Reference to the existing medication request, if applicable.|
+|currentMedication|optional Reference(FHIRMedicationRequest)|e.g. `{"reference":"users/123/medicationRequest/2"}`|Reference to the existing medication request, if applicable.|
 |recommendedMedication|optional Reference(FHIRMedication)|e.g. `{"reference":"medications/2"}`|Reference to the recommended medication, if applicable. This should always direct to a medication, not a drug.|
 |type|MedicationRecommendationType|e.g. "notStarted"|This type describes the outcome of the recommendation algorithm and is described in more detail below.|
 
@@ -232,6 +300,8 @@ Diuretics, if currently present as medication request, will be shown as a recomm
 
 ### Observations
 
+Only users with a `patient` role assigned have values in these collections.
+
 We are storing different observations grouped by their type, e.g. we use /users/$userId$/bodyWeightObservations/$observationId$ for body weight observations and /users/$userId$/bloodPressureObservations/$observationId$ for blood pressure observations. The different collections are all listed below and they follow the specification of a FHIR observation as defined here with more strict specification following in the respective subsections.
 
 Based on [FHIR Observation](https://hl7.org/fhir/R4B/observation.html), the following properties may be used, while additional properties are ignored by the Engage-HF system.
@@ -247,7 +317,7 @@ Based on [FHIR Observation](https://hl7.org/fhir/R4B/observation.html), the foll
 |component[x]>value|optional [Quantity](https://hl7.org/fhir/R4B/datatypes.html#Quantity)|e.g. `{"code":"mm[Hg]","system":"http://unitsofmeasure.org","unit":"mmHg","value":120}`|Use one of the units listed below.|
 |effective|[Period](https://hl7.org/fhir/R4B/datatypes.html#period) with Date objects or Date|-|Use Date for instant observation and periods for longer observations (e.g. more than 1 minute).|
 
-#### patients/$userId$/bloodPressureObservations/$observationId$
+#### users/$userId$/bloodPressureObservations/$observationId$
 
 Blood pressure observations contain the following code and no value.
 
@@ -262,7 +332,7 @@ Further, blood pressure observations have two components.
 |"http://loinc.org"|"8462-4"|"Diastolic blood pressure"|"http://unitsofmeasure.org"|double|"mm[Hg]"|"mmHg"|
 |"http://loinc.org"|"8480-6"|"Systolic blood pressure"|"http://unitsofmeasure.org"|double|"mm[Hg]"|"mmHg"|
 
-#### patients/$userId$/bodyWeightObservations/$observationId$
+#### users/$userId$/bodyWeightObservations/$observationId$
 
 Body weight observations contain the following code and value.
 
@@ -270,7 +340,7 @@ Body weight observations contain the following code and value.
 |-|-|-|-|-|-|-|
 |"http://loinc.org"|"29463-7"|"Body weight"|double|"http://unitsofmeasure.org"|"kg" or "[lb_av]"|"kg" or "lbs"|
 
-#### patients/$userId$/creatinineObservations/$observationId$
+#### users/$userId$/creatinineObservations/$observationId$
 
 Creatinine observations contain the following code and value.
 
@@ -278,7 +348,7 @@ Creatinine observations contain the following code and value.
 |-|-|-|-|-|-|-|
 |"http://loinc.org"|"2160-0"|"Creatinine [Mass/volume] in Serum or Plasma"|double|"http://unitsofmeasure.org"|"mg/dL"|"mg/dL"|
 
-#### patients/$userId$/dryBodyWeightObservations/$observationId$
+#### users/$userId$/dryBodyWeightObservations/$observationId$
 
 Dry body weight observations contain the following code and value.
 
@@ -286,7 +356,7 @@ Dry body weight observations contain the following code and value.
 |-|-|-|-|-|-|-|
 |"http://loinc.org"|"29463-7"|"Body weight"|double|"http://unitsofmeasure.org"|"kg"|"kg"|
 
-#### patients/$userId$/eGfrObservations/$observationId$
+#### users/$userId$/eGfrObservations/$observationId$
 
 Dry body weight observations contain the following code and value.
 
@@ -294,7 +364,7 @@ Dry body weight observations contain the following code and value.
 |-|-|-|-|-|-|-|
 |"http://loinc.org"|"98979-8"|"Glomerular filtration rate/1.73 sq M.predicted [Volume Rate/Area] in Serum, Plasma or Blood by Creatinine-based formula (CKD-EPI 2021)"|double|"http://unitsofmeasure.org"|"mL/min/{1.73_m2}"|"mL/min/1.73_m2"|
 
-#### patients/$userId$/heartRateObservations/$observationId$
+#### users/$userId$/heartRateObservations/$observationId$
 
 Heart rate observations contain the following code and value.
 
@@ -302,7 +372,7 @@ Heart rate observations contain the following code and value.
 |-|-|-|-|-|-|-|
 |"http://loinc.org"|"8867-4"|"Heart rate"|double|"http://unitsofmeasure.org"|"/min"|"beats/minute"|
 
-#### patients/$userId$/potassiumObservations/$observationId$
+#### users/$userId$/potassiumObservations/$observationId$
 
 Potassium observations contain the following code and value.
 
@@ -310,104 +380,9 @@ Potassium observations contain the following code and value.
 |-|-|-|-|-|-|-|
 |"http://loinc.org"|"6298-4"|"Potassium [Moles/volume] in Blood"|double|"http://unitsofmeasure.org"|"meq/L"|"mEq/L"|
 
-### patients/$userId$/questionnaireResponses/$questionnaireResponseId$
-
-Based on [FHIR QuestionnaireResponse](https://hl7.org/fhir/R4B/questionnaireresponse.html), the following properties may be used, while additional properties are ignored by the Engage-HF system.
-
-|Property|Type|Values|Comments|
-|-|-|-|-|
-|id|string|-|[Resource](https://hl7.org/fhir/R4B/resource.html): Logical id of this artifact|
-|questionnaire|string|-|canonical representation of the questionnaire, i.e. t|
-|author|string|-|The patient's `userId`|
-|authored|Date|-|The date the answers were gathered.|
-|status|[QuestionnaireResponseStatus](https://hl7.org/fhir/R4B/valueset-questionnaire-answers-status.html)|-|Will most likely always be `completed`.|
-|item|list of Item|-|-|
-|item[x]>linkId|string|-|Pointer to specific item from questionnaire|
-|item[x]>definition|optional uri|-|details for item|
-|item[x]>text|optional string|-|Name for group or question text|
-|item[x]>answer|list of Answer|-|response(s) to the question|
-|item[x]>answer[y]>value|any|-|Value depending on the type of question in the survey, e.g. boolean, integer, date, string, etc|
-
-### patients/$userId$/symptomScores/$symptomScoreId$
-
-Whenever a new questionnaire response is uploaded to Firestore, we calculate the score and keep the results here for easy retrieval later on. We also do not compute the score anywhere but simply refer to the scores listed in this collection.
-
- |Property|Type|Values|Comments|
- |-|-|-|-|
- |questionnaireResponseId|optional string|-|questionnaireResponseId as used in patients/$userId$/questionnaireResponses/$questionnaireResponseId$ to be able to verify score calculations afterwards. It should be ignored by all clients.|
- |date|Date|-|must be equivalent to the date specified in the linked questionnaire response.|
- |overallScore|number|must be between 0 and 100|-|
- |physicalLimitsScore|number|must be between 0 and 100|-|
- |socialLimitsScore|number|must be between 0 and 100|-|
- |qualityOfLifeScore|number|must be between 0 and 100|-|
- |specificSymptomsScore|number|must be between 0 and 100|-|
- |dizzinessScore|number|must be between 0 and 100|-|
-
-## questionnaires
-
-In this section, we describe all the information stored for questionnaires.
-
-### questionnaires/$questionnaireId$
-
-Based on [FHIR Questionnaire](https://hl7.org/fhir/R4B/questionnaire.html), the following properties may be used, while additional properties are ignored by the Engage-HF system.
-
-|Property|Type|Values|Comments|
-|-|-|-|-|
-|id|string|-|[Resource](https://hl7.org/fhir/R4B/resource.html): Logical id of this artifact|
-|meta|Meta|-|[Resource](https://hl7.org/fhir/R4B/resource.html#Meta): Metadata about the resource|
-|identifier|list of Identifier|-|Business identifier for this questionnaire. There may be multiple questionnaire objects in this list, with differing `id` and `language` properties, but a common business identifier.|
-|title|string|-|Human-friendly title of the questionnaire.|
-|date|Date|-|last modified date|
-|version|string|-|Business version of the questionnaire.|
-|language|optional string|e.g. "en"|Following IETF BCP-47 / [FHIR ValueSet languages](https://hl7.org/fhir/R4B/valueset-languages.html)|
-|item|list of BackboneElement|-|items as defined in [FHIR Questionnaire](https://hl7.org/fhir/R4B/questionnaire.html)|
-|item[x]>linkId|string|-|Unique id for item in questionnaire|
-|item[x]>definition|optional uri|-|Details for the item|
-|item[x]>prefix|optional string|e.g. "1(a)", "2.5.3"|Prefix of the item that isn't actually part of the name but may still be displayed.|
-|item[x]>text|string|-|Primary text for the item|
-|item[x]>type|code|e.g. "group", "display", "boolean", "decimal", "integer", "date", etc|See [QuestionnaireItemType](https://hl7.org/fhir/R4B/valueset-item-type.html) for available values.|
-
-You can find an example KCCQ-12 questionnaire in [functions/data/questionnaires.json](functions/data/questionnaires.json).
-
-## users/$userId$
-
-In this section, we describe all user-related data to be stored. The security rules shall be set up in a way to only allow for a patient to access its own information and a clinician to access all patients' information (or even more restrictive, if needed).
-
-|Property|Type|Values|Comments|
-|-|-|-|-|
-|dateOfEnrollment|Date|-|The date when the invitation code was used to create this user.|
-|organization|string|-|The id of the organization a clinician, patient or owner is associated with.|
-|invitationCode|string|-|The invitationCode to be used when logging in to the app for the first time.|
-|language|optional string|e.g. "en"|Following IETF BCP-47 / [FHIR ValueSet languages](https://hl7.org/fhir/R4B/valueset-languages.html).|
-|messagesSettings|-|-|See properties below.|
-|messagesSettings>dailyRemindersAreActive|boolean|true, false|Decides whether to send out daily reminder messages for this user.|
-|messagesSettings>textNotificationsAreActive|boolean|true, false|Decides whether to send text notifications for this user.|
-|messagesSettings>medicationRemindersAreActive|boolean|true, false|Decides whether to send medication reminder messages for this user.|
-|timeZone|string|e.g. "America/Los_Angeles"|The value needs to correspond to an identifier from [TZDB](https://nodatime.org/TimeZones). It must not be an offset to UTC/GMT, since that wouldn't work well with daylight-savings (even if there is no daylight-savings time at that location). Also, don't use common abbreviations like PST, PDT, CEST, etc (they may be ambiguous, e.g. CST). If the timeZone is unknown, then "America/Los_Angeles" should be used.|
-
-### users/$userId$/devices/$deviceId$
-
-This data is required to send push notifications over the [Firebase Cloud Messaging](https://firebase.google.com/docs/cloud-messaging) System.
-
-|Property|Type|Values|Comments|
-|-|-|-|-|
-|modifiedDate|Date|-|This date is updated whenever the token is sent to the server, even if it is not replaced by a different token. It simply reflects the last date we can definitely confirm the token was active. Idea: We may ignore some devices, if the token has not been updated for a long time, since the app has not been opened for a long time.|
-|notificationToken|string|-|The FCM token as received from Firebase in the app.|
-|platform|optional string|e.g. "iOS", "Android"|This information is important as context for the `osVersion`, `appVersion` and `appBuild` properties.|
-|osVersion|optional string|e.g. "17.5.1"|The version of the OS. Depending on the OS, they may have different formats to be specified separately.|
-|appVersion|optional string|e.g. "1.0.1"|The version of the app as it is specified on the App/Play Store.|
-|appBuild|optional string|e.g. "56"|The build version of the app as defined by the CI pipeline releasing the app.|
-|language|optional string|e.g. "en"|Following IETF BCP-47 / [FHIR ValueSet languages](https://hl7.org/fhir/R4B/valueset-languages.html)|
-
-Push notifications over APNS / FCM only contain text in a single language. For this, the device's `language` property shall be prioritized, falling back on the user's `language` property and using US-English if both are not present.
-
-#### Adding a new device or modifying information of an existing one
-
-A device can only be identified by its notification token. When updating a device's information, we therefore check if the notification token already exists in Firestore. If it already exists, we update all other existing fields' values - otherwise, we create a new device.
-
-A device may receive a different notification token at any time though. Therefore, we might create a new device, even though that device already exists in the table with a different (now inactive) notification token. Therefore, every time we send out a new notification and receive the information that a token is no longer active, we need to remove the device from this table.
-
 ### users/$userId$/messages/$messageId$
+
+All users are technically allowed to have values in this collection, although the requirements only contain patient-directed messages for now.
 
 This data is used to display messages to a user (patient or clinician). For patients messages are describing recent changes in their respective data from clinicians (e.g. updated medication requests) or calls-to-action to the patient. Currently, there are no messages planned for the clinician, but they may be added in the future.
 
@@ -434,6 +409,43 @@ The following list describes all different types a message could have. Expiratio
 |Vitals|Server: Daily at certain time (respect timezone!)|When receiving blood pressure and weight observations on the server from current day.|observations|
 |SymptomQuestionnaire|Server: Every 14 days.|After questionnaire responses received on server.|questionnaires/$questionnaireId$|
 |PreAppointment|Server: Day (24h) before appointment.|After appointment time or when it is cancelled.|healthSummary|
+
+### users/$userId$/questionnaireResponses/$questionnaireResponseId$
+
+Only users with a `patient` role assigned have values in this collection.
+
+Based on [FHIR QuestionnaireResponse](https://hl7.org/fhir/R4B/questionnaireresponse.html), the following properties may be used, while additional properties are ignored by the Engage-HF system.
+
+|Property|Type|Values|Comments|
+|-|-|-|-|
+|id|string|-|[Resource](https://hl7.org/fhir/R4B/resource.html): Logical id of this artifact|
+|questionnaire|string|-|canonical representation of the questionnaire, i.e. t|
+|author|string|-|The patient's `userId`|
+|authored|Date|-|The date the answers were gathered.|
+|status|[QuestionnaireResponseStatus](https://hl7.org/fhir/R4B/valueset-questionnaire-answers-status.html)|-|Will most likely always be `completed`.|
+|item|list of Item|-|-|
+|item[x]>linkId|string|-|Pointer to specific item from questionnaire|
+|item[x]>definition|optional uri|-|details for item|
+|item[x]>text|optional string|-|Name for group or question text|
+|item[x]>answer|list of Answer|-|response(s) to the question|
+|item[x]>answer[y]>value|any|-|Value depending on the type of question in the survey, e.g. boolean, integer, date, string, etc|
+
+### users/$userId$/symptomScores/$symptomScoreId$
+
+Only users with a `patient` role assigned have values in this collection.
+
+Whenever a new questionnaire response is uploaded to Firestore, we calculate the score and keep the results here for easy retrieval later on. We also do not compute the score anywhere but simply refer to the scores listed in this collection.
+
+|Property|Type|Values|Comments|
+|-|-|-|-|
+|questionnaireResponseId|optional string|-|questionnaireResponseId as used in users/$userId$/questionnaireResponses/$questionnaireResponseId$ to be able to verify score calculations afterwards. It should be ignored by all clients.|
+|date|Date|-|must be equivalent to the date specified in the linked questionnaire response.|
+|overallScore|number|must be between 0 and 100|-|
+|physicalLimitsScore|number|must be between 0 and 100|-|
+|specificSymptomsScore|number|must be between 0 and 100|-|
+|socialLimitsScore|number|must be between 0 and 100|-|
+|qualityOfLifeScore|number|must be between 0 and 100|-|
+|dizzinessScore|number|must be between 0 and 100|-|
 
 ## videoSections/$videoSectionId$
 
@@ -464,14 +476,14 @@ Watch links for YouTube: `https://youtube.com/watch?v=${youtubeId}`.
 
 # Security
 
-A user can have one or more of the following roles assigned:
+A user usually has one of these roles assigned (some combinations are technically allowed, but may be ignored, e.g. owner+clinician).
 
 |Role|Scope|Rights|Source of Truth|
 |-|-|-|-|
-|Admin|Everything|R/W|`admins/$userId$` exists|
-|Owner|In organization|R/W of users & patients, R/W of organization|`organization/$organizationId$` contains `userId` in `owners` property|
-|Clinician|In organization|R/W of users & patients|`clinicians/$userId$` exists|
-|Patient|In organization|R/W of `patients/$userId$`|`patients/$userId$` exists|
+|Admin|Everything|R/W|User type is `admin`.|
+|Owner|In organization|R/W of users, R/W of organization|`organization/$organizationId$` contains `userId` in `owners` property|
+|Clinician|In organization|R/W of users|User type is `clinician`.|
+|Patient|Own data|R/W of `users/$userId$` incl patient-specific collections|User type is `patient`.|
 |User|Own data|R/W of `users/$userId$`|auth has same userId|
 
 For more detail, please consult the Firestore rules defined in [firestore.rules](firestore.rules).

@@ -50,7 +50,7 @@ describe('DiureticRecommender', () => {
       const existingMedication: MedicationRequestContext = {
         requestReference: {
           reference:
-            'patients/mockPatient/medicationRequests/mockMedicationRequest',
+            'users/mockPatient/medicationRequests/mockMedicationRequest',
         },
         request: {
           medicationReference: {
@@ -90,7 +90,9 @@ describe('DiureticRecommender', () => {
           extension: [
             {
               url: FHIRExtensionUrl.medicationClass,
-              valueString: MedicationClassReference.diuretics,
+              valueReference: {
+                reference: MedicationClassReference.diuretics,
+              },
             },
           ],
         },

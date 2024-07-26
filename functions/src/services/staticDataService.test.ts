@@ -8,6 +8,7 @@
 import { expect } from 'chai'
 import admin from 'firebase-admin'
 import { type Firestore } from 'firebase-admin/firestore'
+import { FirestoreService } from './database/firestoreService.js'
 import { RxNormService } from './rxNormService.js'
 import { StaticDataService } from './staticDataService.js'
 import { cleanupMocks, setupMockFirestore } from '../tests/setup.js'
@@ -20,21 +21,14 @@ describe('StaticDataService', () => {
   before(() => {
     setupMockFirestore()
     firestore = admin.firestore()
-    staticDataService = new StaticDataService(firestore, new RxNormService())
+    staticDataService = new StaticDataService(
+      new FirestoreService(),
+      new RxNormService(),
+    )
   })
 
   after(() => {
     cleanupMocks()
-  })
-
-  it('actually creates admins', async () => {
-    const admins = await firestore.collection('admins').get()
-    expect(admins.size).to.equal(0)
-
-    await staticDataService.updateAdmins()
-
-    const updatedAdmins = await firestore.collection('admins').get()
-    expect(updatedAdmins.size).to.be.greaterThan(0)
   })
 
   it('actually creates medication classes', async () => {
