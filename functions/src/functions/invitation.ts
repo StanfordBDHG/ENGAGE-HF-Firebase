@@ -7,38 +7,40 @@
 //
 
 import { https, logger } from 'firebase-functions/v2'
-import { type CallableRequest, onCall } from 'firebase-functions/v2/https'
-import { type User, type UserAuth, UserType } from '../models/user.js'
+import { z } from 'zod'
+import { validatedOnCall } from './helpers.js'
+import { UserType } from '../models/user.js'
 import { Credential, UserRole } from '../services/credential.js'
 import { CacheDatabaseService } from '../services/database/cacheDatabaseService.js'
 import { FirestoreService } from '../services/database/firestoreService.js'
 import { DatabaseUserService } from '../services/user/databaseUserService.js'
 import { type UserService } from '../services/user/userService.js'
 
-export interface CreateInvitationInput {
-  auth?: UserAuth
-  user?: User
-}
+const createInvitationInputSchema = z.object({
+  auth: z.object({
+    displayName: z.string().optional(),
+    email: z.string().email().optional(),
+    phoneNumber: z.string().optional(),
+    photoURL: z.string().optional(),
+  }),
+  user: z.object({
+    type: z.nativeEnum(UserType).optional(),
+    organization: z.string().optional(),
+    clinician: z.string().optional(),
+    language: z.string().optional(),
+    timeZone: z.string().optional(),
+  }),
+})
 
 export interface CreateInvitationOutput {
   code: string
 }
 
-export const createInvitationFunction = onCall(
-  async (
-    request: CallableRequest<CreateInvitationInput>,
-  ): Promise<CreateInvitationOutput> => {
+export const createInvitationFunction = validatedOnCall(
+  createInvitationInputSchema,
+  async (request): Promise<CreateInvitationOutput> => {
     if (!request.auth?.uid)
       throw new https.HttpsError('unauthenticated', 'User is not authenticated')
-
-    if (!request.data.auth)
-      throw new https.HttpsError(
-        'invalid-argument',
-        'User authentication data is required',
-      )
-
-    if (!request.data.user)
-      throw new https.HttpsError('invalid-argument', 'User data is required')
 
     const userService: UserService = new DatabaseUserService(
       new CacheDatabaseService(new FirestoreService()),
@@ -47,7 +49,11 @@ export const createInvitationFunction = onCall(
     if (request.data.user.type === UserType.admin) {
       await credential.checkAny(UserRole.admin)
     } else if (request.data.user.organization) {
-      await credential.checkAny(UserRole.owner(request.data.user.organization))
+      await credential.checkAny(
+        UserRole.admin,
+        UserRole.owner(request.data.user.organization),
+        UserRole.clinician(request.data.user.organization),
+      )
     } else {
       throw credential.permissionDeniedError()
     }
@@ -81,12 +87,13 @@ function generateInvitationCode(length: number): string {
   return result
 }
 
-export interface CheckInvitationCodeInput {
-  invitationCode: string
-}
+const checkInvitationCodeInputSchema = z.object({
+  invitationCode: z.string(),
+})
 
-export const checkInvitationCodeFunction = onCall(
-  async (request: CallableRequest<CheckInvitationCodeInput>) => {
+export const checkInvitationCodeFunction = validatedOnCall(
+  checkInvitationCodeInputSchema,
+  async (request): Promise<void> => {
     if (!request.auth?.uid) {
       throw new https.HttpsError(
         'unauthenticated',
@@ -111,7 +118,7 @@ export const checkInvitationCodeFunction = onCall(
         `User (${userId}) successfully enrolled in study (ENGAGE-HF) with invitation code: ${invitationCode}`,
       )
 
-      return {}
+      return
     } catch (error) {
       if (error instanceof Error) {
         logger.error(`Error processing request: ${error.message}`)

@@ -7,7 +7,8 @@
 //
 
 import { https } from 'firebase-functions'
-import { type CallableRequest, onCall } from 'firebase-functions/v2/https'
+import { z } from 'zod'
+import { validatedOnCall } from './helpers.js'
 import { type Result } from './types.js'
 import { type UserAuth, type User } from '../models/user.js'
 import { Credential, UserRole } from '../services/credential.js'
@@ -16,10 +17,10 @@ import { FirestoreService } from '../services/database/firestoreService.js'
 import { DatabaseUserService } from '../services/user/databaseUserService.js'
 import { type UserService } from '../services/user/userService.js'
 
-export interface GetUsersInformationInput {
-  includeUserData?: boolean
-  userIds?: string[]
-}
+const getUsersInformationInputSchema = z.object({
+  includeUserData: z.boolean().optional(),
+  userIds: z.array(z.string()).max(100),
+})
 
 export interface UserInformation {
   auth: UserAuth
@@ -28,16 +29,11 @@ export interface UserInformation {
 
 export type GetUsersInformationOutput = Record<string, Result<UserInformation>>
 
-export const getUsersInformationFunction = onCall(
-  async (request: CallableRequest<GetUsersInformationInput>) => {
+export const getUsersInformationFunction = validatedOnCall(
+  getUsersInformationInputSchema,
+  async (request): Promise<GetUsersInformationOutput> => {
     if (!request.auth?.uid)
       throw new https.HttpsError('unauthenticated', 'User is not authenticated')
-
-    if (!request.data.userIds)
-      throw new https.HttpsError('invalid-argument', 'User IDs are required')
-
-    if (request.data.userIds.length > 100)
-      throw new https.HttpsError('invalid-argument', 'Too many user IDs')
 
     const userService = new DatabaseUserService(
       new CacheDatabaseService(new FirestoreService()),
@@ -102,21 +98,23 @@ export const getUsersInformationFunction = onCall(
   },
 )
 
-export interface UpdateUserInformationInput {
-  userId?: string
-  data?: UserInformation
-}
+const updateUserInformationInputSchema = z.object({
+  userId: z.string(),
+  data: z.object({
+    auth: z.object({
+      displayName: z.string().optional(),
+      email: z.string().email().optional(),
+      phoneNumber: z.string().optional(),
+      photoURL: z.string().optional(),
+    }),
+  }),
+})
 
-export const updateUserInformationFunction = onCall(
-  async (request: CallableRequest<UpdateUserInformationInput>) => {
+export const updateUserInformationFunction = validatedOnCall(
+  updateUserInformationInputSchema,
+  async (request): Promise<void> => {
     if (!request.auth?.uid)
       throw new https.HttpsError('unauthenticated', 'User is not authenticated')
-
-    if (!request.data.userId)
-      throw new https.HttpsError('invalid-argument', 'User ID is required')
-
-    if (!request.data.data)
-      throw new https.HttpsError('invalid-argument', 'User data is required')
 
     const userService: UserService = new DatabaseUserService(
       new CacheDatabaseService(new FirestoreService()),
@@ -135,17 +133,15 @@ export const updateUserInformationFunction = onCall(
   },
 )
 
-export interface DeleteUserInput {
-  userId?: string
-}
+const deleteUserInputSchema = z.object({
+  userId: z.string(),
+})
 
-export const deleteUserFunction = onCall(
-  async (request: CallableRequest<DeleteUserInput>) => {
+export const deleteUserFunction = validatedOnCall(
+  deleteUserInputSchema,
+  async (request): Promise<void> => {
     if (!request.auth?.uid)
       throw new https.HttpsError('unauthenticated', 'User is not authenticated')
-
-    if (!request.data.userId)
-      throw new https.HttpsError('invalid-argument', 'User ID is required')
 
     const userService: UserService = new DatabaseUserService(
       new CacheDatabaseService(new FirestoreService()),
@@ -160,6 +156,5 @@ export const deleteUserFunction = onCall(
       : []),
     )
     await userService.deleteUser(request.data.userId)
-    return 'Success'
   },
 )

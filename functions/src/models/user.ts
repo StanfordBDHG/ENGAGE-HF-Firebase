@@ -22,8 +22,8 @@ export interface User {
   type?: UserType
   dateOfBirth?: Date
   clinician?: string
-  dateOfEnrollment: Date
-  invitationCode: string
+  dateOfEnrollment?: Date
+  invitationCode?: string
   messagesSettings?: UserMessagesSettings
   organization?: string
   language?: string

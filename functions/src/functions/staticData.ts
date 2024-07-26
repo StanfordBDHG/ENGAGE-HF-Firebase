@@ -6,12 +6,9 @@
 // SPDX-License-Identifier: MIT
 //
 
-import {
-  type CallableRequest,
-  onCall,
-  onRequest,
-} from 'firebase-functions/v2/https'
 import { type AuthData } from 'firebase-functions/v2/tasks'
+import { type TypeOf, z } from 'zod'
+import { validatedOnCall, validatedOnRequest } from './helpers.js'
 import { Flags } from '../flags.js'
 import { Credential, UserRole } from '../services/credential.js'
 import { type DatabaseService } from '../services/database/databaseService.js'
@@ -28,13 +25,13 @@ export enum StaticDataComponent {
   videoSections = 'videoSections',
 }
 
-export interface RebuildStaticDataInput {
-  only?: StaticDataComponent[]
-}
+const rebuildStaticDataInputSchema = z.object({
+  only: z.array(z.nativeEnum(StaticDataComponent)).optional(),
+})
 
 async function rebuildStaticData(
   authData: AuthData | undefined,
-  input: RebuildStaticDataInput,
+  input: TypeOf<typeof rebuildStaticDataInputSchema>,
 ) {
   const databaseService: DatabaseService = new FirestoreService()
 
@@ -65,21 +62,21 @@ async function rebuildStaticData(
   }
 }
 
-const rebuildStaticDataFunctionProduction = onCall(
-  async (request: CallableRequest<RebuildStaticDataInput>) => {
+const rebuildStaticDataFunctionProduction = validatedOnCall(
+  rebuildStaticDataInputSchema,
+  async (request): Promise<void> => {
     await rebuildStaticData(request.auth, request.data)
-    return 'Success'
   },
 )
 
-const rebuildStaticDataFunctionDebug = onRequest(async (request, response) => {
-  await rebuildStaticData(
-    undefined,
-    (request.body ?? {}) as RebuildStaticDataInput,
-  )
-  response.write('Success', 'utf8')
-  response.end()
-})
+const rebuildStaticDataFunctionDebug = validatedOnRequest(
+  rebuildStaticDataInputSchema,
+  async (_, data, response) => {
+    await rebuildStaticData(undefined, data)
+    response.write('Success', 'utf8')
+    response.end()
+  },
+)
 
 export const rebuildStaticDataFunction =
   Flags.isEmulator ?

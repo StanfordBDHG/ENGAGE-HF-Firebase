@@ -7,18 +7,20 @@
 //
 
 import { https } from 'firebase-functions'
-import { type CallableRequest, onCall } from 'firebase-functions/v2/https'
+import { z } from 'zod'
+import { validatedOnCall } from './helpers.js'
 import { CacheDatabaseService } from '../services/database/cacheDatabaseService.js'
 import { FirestoreService } from '../services/database/firestoreService.js'
 import { DatabaseUserService } from '../services/user/databaseUserService.js'
 
-export interface DismissMessageInput {
-  messageId?: string
-  didPerformAction?: boolean
-}
+const dismissMessageInputSchema = z.object({
+  messageId: z.string(),
+  didPerformAction: z.boolean().optional(),
+})
 
-export const dismissMessageFunction = onCall(
-  async (request: CallableRequest<DismissMessageInput>) => {
+export const dismissMessageFunction = validatedOnCall(
+  dismissMessageInputSchema,
+  async (request): Promise<void> => {
     if (!request.auth?.uid)
       throw new https.HttpsError(
         'unauthenticated',

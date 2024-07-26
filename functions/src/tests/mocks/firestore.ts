@@ -28,35 +28,29 @@ export class MockFirestore {
   runTransaction(
     callback: (transaction: MockFirestoreTransaction) => Promise<void>,
   ) {
-    return callback(new MockFirestoreTransaction(this))
+    return callback(new MockFirestoreTransaction())
   }
 }
 
 class MockFirestoreTransaction {
-  private firestore: MockFirestore
-
-  constructor(firestore: MockFirestore) {
-    this.firestore = firestore
-  }
-
   get(reference: MockFirestoreRef) {
     return (reference as any).get()
   }
 
-  create(reference: MockFirestoreRef, data: any) {
-    ;(reference as any).create(data)
+  create(reference: MockFirestoreDocRef, data: any) {
+    reference.create(data)
   }
 
-  set(reference: MockFirestoreRef, data: any) {
-    ;(reference as any).set(data)
+  set(reference: MockFirestoreDocRef, data: any) {
+    reference.set(data)
   }
 
-  update(reference: MockFirestoreRef, data: any) {
-    ;(reference as any).update(data)
+  update(reference: MockFirestoreDocRef, data: any) {
+    reference.update(data)
   }
 
-  delete(reference: MockFirestoreRef) {
-    ;(reference as any).delete()
+  delete(reference: MockFirestoreDocRef) {
+    reference.delete()
   }
 }
 

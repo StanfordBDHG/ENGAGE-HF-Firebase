@@ -7,7 +7,8 @@
 //
 
 import { https } from 'firebase-functions/v2'
-import { type CallableRequest, onCall } from 'firebase-functions/v2/https'
+import { z } from 'zod'
+import { validatedOnCall } from './helpers.js'
 import { generateHealthSummary } from '../healthSummary/generate.js'
 import { Credential, UserRole } from '../services/credential.js'
 import { CacheDatabaseService } from '../services/database/cacheDatabaseService.js'
@@ -18,12 +19,13 @@ import { DefaultHealthSummaryService } from '../services/healthSummary/databaseH
 import { DatabasePatientService } from '../services/patient/databasePatientService.js'
 import { DatabaseUserService } from '../services/user/databaseUserService.js'
 
-export interface ExportHealthSummaryInput {
-  userId?: string
-}
+const exportHealthSummaryInputSchema = z.object({
+  userId: z.string(),
+})
 
-export const exportHealthSummaryFunction = onCall(
-  async (request: CallableRequest<ExportHealthSummaryInput>) => {
+export const exportHealthSummaryFunction = validatedOnCall(
+  exportHealthSummaryInputSchema,
+  async (request): Promise<Buffer> => {
     if (!request.data.userId)
       throw new https.HttpsError('invalid-argument', 'User ID is required')
 

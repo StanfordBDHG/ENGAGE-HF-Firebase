@@ -15,7 +15,7 @@ import { DatabaseUserService } from './databaseUserService.js'
 import { type UserService } from './userService.js'
 import { type Invitation } from '../../models/invitation.js'
 import { type UserMessage, UserMessageType } from '../../models/message.js'
-import { type User } from '../../models/user.js'
+import { UserType, type User } from '../../models/user.js'
 import { type MockFirestore } from '../../tests/mocks/firestore.js'
 import {
   cleanupMocks,
@@ -24,19 +24,19 @@ import {
 } from '../../tests/setup.js'
 import { CacheDatabaseService } from '../database/cacheDatabaseService.js'
 import { FirestoreService } from '../database/firestoreService.js'
+import { MockAuth } from '../../tests/mocks/auth.js'
 
-describe('UserService', () => {
+describe('DatabaseUserService', () => {
+  let mockAuth: MockAuth
   let mockFirestore: MockFirestore
   let userService: UserService
   let firestore: Firestore
 
   beforeEach(() => {
-    setupMockAuth()
+    mockAuth = setupMockAuth()
     mockFirestore = setupMockFirestore()
     firestore = admin.firestore()
-    userService = new DatabaseUserService(
-      new CacheDatabaseService(new FirestoreService()),
-    )
+    userService = new DatabaseUserService(new FirestoreService())
   })
 
   afterEach(() => {
@@ -52,8 +52,8 @@ describe('UserService', () => {
       mockFirestore.collections = {
         invitations: {
           mockAdmin: {
-            used: false,
             user: {
+              type: UserType.admin,
               messagesSettings: {
                 dailyRemindersAreActive: true,
                 textNotificationsAreActive: true,
@@ -63,7 +63,6 @@ describe('UserService', () => {
             auth: {
               displayName: displayName,
             },
-            admin: {},
           },
         },
       }
@@ -71,6 +70,14 @@ describe('UserService', () => {
       const invitation = await userService.getInvitation(invitationId)
       if (!invitation) assert.fail('Invitation not found')
       await userService.enrollUser(invitation, userId)
+
+      const auth = await admin.auth().getUser(userId)
+      expect(auth?.displayName).to.equal(displayName)
+      expect(auth?.customClaims).to.deep.equal({
+        type: UserType.admin,
+        organization: undefined,
+        isOwner: false,
+      })
 
       const invitationSnapshot = await firestore
         .collection('invitations')
@@ -96,8 +103,8 @@ describe('UserService', () => {
       mockFirestore.collections = {
         invitations: {
           mockClinician: {
-            used: false,
             user: {
+              type: UserType.clinician,
               messagesSettings: {
                 dailyRemindersAreActive: true,
                 textNotificationsAreActive: true,
@@ -108,7 +115,11 @@ describe('UserService', () => {
             auth: {
               displayName: displayName,
             },
-            clinician: {},
+          },
+        },
+        organizations: {
+          mockOrganization: {
+            owners: [],
           },
         },
       }
@@ -116,6 +127,14 @@ describe('UserService', () => {
       const invitation = await userService.getInvitation(invitationId)
       if (!invitation) assert.fail('Invitation not found')
       await userService.enrollUser(invitation, userId)
+
+      const auth = await admin.auth().getUser(userId)
+      expect(auth?.displayName).to.equal(displayName)
+      expect(auth?.customClaims).to.deep.equal({
+        type: UserType.clinician,
+        organization: 'mockOrganization',
+        isOwner: false,
+      })
 
       const invitationSnapshot = await firestore
         .collection('invitations')
@@ -141,8 +160,10 @@ describe('UserService', () => {
       mockFirestore.collections = {
         invitations: {
           mockPatient: {
-            used: false,
             user: {
+              type: UserType.patient,
+              clinician: 'mockClinician',
+              dateOfBirth: new Date(),
               messagesSettings: {
                 dailyRemindersAreActive: true,
                 textNotificationsAreActive: true,
@@ -153,10 +174,11 @@ describe('UserService', () => {
             auth: {
               displayName: displayName,
             },
-            patient: {
-              clinician: 'mockClinician',
-              dateOfBirth: new Date(),
-            },
+          },
+        },
+        organizations: {
+          mockOrganization: {
+            owners: [],
           },
         },
       }
@@ -164,6 +186,14 @@ describe('UserService', () => {
       const invitation = await userService.getInvitation(invitationId)
       if (!invitation) assert.fail('Invitation not found')
       await userService.enrollUser(invitation, userId)
+
+      const auth = await admin.auth().getUser(userId)
+      expect(auth?.displayName).to.equal(displayName)
+      expect(auth?.customClaims).to.deep.equal({
+        type: UserType.patient,
+        organization: 'mockOrganization',
+        isOwner: false,
+      })
 
       const invitationSnapshot = await firestore
         .collection('invitations')
@@ -189,7 +219,6 @@ describe('UserService', () => {
       mockFirestore.collections = {
         invitations: {
           mockUser: {
-            used: false,
             user: {
               messagesSettings: {
                 dailyRemindersAreActive: true,
@@ -207,6 +236,14 @@ describe('UserService', () => {
       const invitation = await userService.getInvitation(invitationId)
       if (!invitation) assert.fail('Invitation not found')
       await userService.enrollUser(invitation, userId)
+
+      const auth = await admin.auth().getUser(userId)
+      expect(auth?.displayName).to.equal(displayName)
+      expect(auth?.customClaims).to.deep.equal({
+        type: undefined,
+        organization: undefined,
+        isOwner: false,
+      })
 
       const invitationSnapshot = await firestore
         .collection('invitations')
