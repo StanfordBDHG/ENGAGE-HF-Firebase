@@ -21,9 +21,9 @@ import {
 } from '../database/databaseService.js'
 
 export interface UserClaims {
-  type?: UserType
+  type: UserType | null
   isOwner: boolean
-  organization?: string
+  organization: string | null
 }
 
 export class DatabaseUserService implements UserService {
@@ -65,8 +65,8 @@ export class DatabaseUserService implements UserService {
     if (!user) throw new https.HttpsError('not-found', 'User not found.')
 
     const claims: UserClaims = {
-      type: user.content.type,
-      organization: user.content.organization,
+      type: user.content.type ?? null,
+      organization: user.content.organization ?? null,
       isOwner: false,
     }
 

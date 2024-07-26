@@ -101,6 +101,12 @@ export const checkInvitationCodeFunction = validatedOnCall(
       )
     }
 
+    if (!request.data.invitationCode.match(/^[A-Z0-9]{6,12}$/))
+      throw new https.HttpsError(
+        'invalid-argument',
+        'Invalid invitation code format.',
+      )
+
     const userId = request.auth.uid
     const { invitationCode } = request.data
 

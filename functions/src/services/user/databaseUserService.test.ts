@@ -72,7 +72,7 @@ describe('DatabaseUserService', () => {
       expect(auth.displayName).to.equal(displayName)
       expect(auth.customClaims).to.deep.equal({
         type: UserType.admin,
-        organization: undefined,
+        organization: null,
         isOwner: false,
       })
 
@@ -237,8 +237,8 @@ describe('DatabaseUserService', () => {
       const auth = await admin.auth().getUser(userId)
       expect(auth.displayName).to.equal(displayName)
       expect(auth.customClaims).to.deep.equal({
-        type: undefined,
-        organization: undefined,
+        type: null,
+        organization: null,
         isOwner: false,
       })
 
