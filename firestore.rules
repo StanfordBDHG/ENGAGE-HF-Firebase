@@ -37,8 +37,21 @@ service cloud.firestore {
     }
 
     match /invitations/{invitationId} {
-      allow read, write: if isAdmin(request) || (
-        (request.resource.data.organization == resource.data.organization) && (
+      function organizationDidNotChange(request, resource) {
+        return ('organization' in request.resource.data.user)
+          ? (('organization' in resource.data) && request.resource.data.user.organization == resource.data.user.organization)
+          : !('organization' in resource.data)
+      }
+
+      allow read, delete: if isAdmin(request) || (
+        ('organization' in resource.data.user) && (
+          isOwner(request, resource.data.user.organization)
+          || isClinician(request, resource.data.user.organization)
+        )
+      )
+      allow create: if isAdmin(request)
+      allow update: if isAdmin(request) || (
+        organizationDidNotChange(request, resource) && (
           isOwner(request, resource.data.user.organization)
           || isClinician(request, resource.data.user.organization)
         )
