@@ -12,5 +12,4 @@ export interface Organization {
   phoneNumber: string
   emailAddress: string
   ssoProviderId: string
-  owners: string[]
 }

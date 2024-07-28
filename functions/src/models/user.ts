@@ -14,12 +14,13 @@ export interface UserMessagesSettings {
 
 export enum UserType {
   admin = 'admin',
+  owner = 'owner',
   clinician = 'clinician',
   patient = 'patient',
 }
 
 export interface User {
-  type?: UserType
+  type: UserType
   dateOfBirth?: Date
   clinician?: string
   dateOfEnrollment?: Date

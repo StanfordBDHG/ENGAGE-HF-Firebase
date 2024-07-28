@@ -7,21 +7,26 @@ service cloud.firestore {
 
     function isAdmin() {
       return isAuthenticated()
-        && orNull(request.auth.token, 'type') == 'admin'
+        && request.auth.token.type == 'admin';
     }
 
-    function isOwner(organizationId) {
-      return isAuthenticated()
-        && orNull(request.auth.token, 'organization') == organizationId
-        && orNull(request.auth.token, 'isOwner') == true;
+    function isPartOf(organizationId) {
+      return ('organization' in request.auth.token)
+        && request.auth.token.organization == organizationId;
     }
 
-    function isClinician(organizationId) {
+    function isOwnerOf(organizationId) {
       return isAuthenticated()
-        && orNull(request.auth.token, 'type') == 'clinician'
-        && orNull(request.auth.token, 'organization') == organizationId;
+        && request.auth.token.type == 'owner'
+        && isPartOf(organizationId);
     }
-    
+
+    function isOwnerOrClinicianOf(organizationId) {
+      return isAuthenticated()
+        && request.auth.token.type in ['owner', 'clinician']
+        && isPartOf(organizationId);
+    }
+
     function isUser(userId) {
       return isAuthenticated()
         && request.auth.uid == userId;
@@ -31,34 +36,21 @@ service cloud.firestore {
       return get(/databases/$(databaseId)/documents/users/$(userId));
     }
 
-    function orNull(object, propertyName) {
-      return (propertyName in object) ? object[propertyName] : null;
+    function isEqualOptional(object0, property0, object1, property1) {
+      return (property0 in object0) 
+        ? ((property1 in object1) && object0[property0] == object1[property1])
+        : !(property1 in object1);
     }
 
     match /invitations/{invitationId} {
-      function organizationDidNotChange() {
-        return orNull(request.resource.data.user, 'organization') == orNull(resource.data.user, 'organization')
+      function securityRelatedFieldsDidNotChange() {
+        return isEqualOptional(request.resource.data.user, 'type', resource.data.user, 'type')
+          && isEqualOptional(request.resource.data.user, 'organization', resource.data.user, 'organization')
       }
 
-      allow read: if isAdmin() || (
-        (resource != null) && ('data' in resource) && ('user' in resource.data) && (
-          isOwner(orNull(resource.data.user, 'organization'))
-            || isClinician(orNull(resource.data.user, 'organization'))
-        )
-      );
+      allow read, delete: if isAdmin() || isOwnerOrClinicianOf(resource.data.user.organization);
       allow create: if isAdmin();
-      allow update: if isAdmin() || (
-        organizationDidNotChange() && (
-          isOwner(orNull(resource.data.user, 'organization'))
-            || isClinician(orNull(resource.data.user, 'organization'))
-        )
-      );
-      allow delete: if isAdmin() || (
-        ('user' in resource.data) && (
-          isOwner(orNull(resource.data.user, 'organization'))
-            || isClinician(orNull(resource.data.user, 'organization'))
-        )
-      );
+      allow update: if isAdmin() || (securityRelatedFieldsDidNotChange() && isOwnerOrClinicianOf(resource.data.user.organization));
     }
 
     match /medications/{documents=**} {
@@ -67,8 +59,8 @@ service cloud.firestore {
     }
 
     match /organizations/{organizationId} {
-      allow read: if isAuthenticated()
-      allow update: if isAdmin() || isOwner(organizationId);
+      allow read: if isAdmin() || isPartOf(organizationId);
+      allow update: if isAdmin() || isOwnerOf(organizationId);
       allow create, delete: if isAdmin();
     }
 
@@ -79,71 +71,46 @@ service cloud.firestore {
 
     match /users/{userId} {
       function securityRelatedFieldsDidNotChange() {
-        return (request.resource.data == null) || (resource.data == null) || (
-          orNull(request.resource.data, 'type') == orNull(resource.data, 'type')
-            && orNull(request.resource.data, 'organization') == orNull(resource.data, 'organization')
-        );
+        return isEqualOptional(request.resource.data, 'type', resource.data, 'type')
+          && isEqualOptional(request.resource.data, 'organization', resource.data, 'organization');
       }
 
-      allow read: if isAdmin() 
-        || isUser(userId) 
-        || isOwner(orNull(resource.data, 'organization'))
-        || isClinician(orNull(resource.data, 'organization'));
+      allow read: if isAdmin()
+        || isUser(userId)
+        || isOwnerOrClinicianOf(resource.data.organization);
 
-      allow create: if isAdmin() || (
-        isUser(userId)
-          && !('organization' in request.resource.data)
-          && !('type' in request.resource.data)
-      );
+      allow create: if isAdmin()
+        || (isUser(userId) && !('organization' in request.resource.data) && !('type' in request.resource.data));
 
-      allow update: if isAdmin() || (
-        securityRelatedFieldsDidNotChange() && (
-          isUser(userId)
-            || isOwner(orNull(resource.data, 'organization'))
-            || isClinician(orNull(resource.data, 'organization'))
-        )
-      );
+      allow update: if isAdmin()
+        || (securityRelatedFieldsDidNotChange() && (isUser(userId) || (isOwnerOrClinicianOf(resource.data.organization) && resource.data.type == 'patient')));
 
       allow delete: if isAdmin();
     }
 
     match /users/{userId}/{collectionName}/{documentId} {
+      function isOwnerOrClinicianOfSameOrganization() {
+        let user = getUser(userId);
+        return isOwnerOrClinicianOf(user.organization);
+      }
+
       function isPatientWritableCollectionName() {
-        return collectionName.matches('/^[A-Za-z]+Observations$/')
-          || collectionName == 'questionnaireResponses';
+        return collectionName.matches('^[A-Za-z]+Observations$')
+          || collectionName in ['questionnaireResponses']
       }
 
       function isClinicianWritableCollectionName() {
-        return collectionName == 'allergyIntolerances'
-          || collectionName == 'appointments'
-          || collectionName == 'medicationRequests'
-          || collectionName == 'medicationRecommendations'
-          || collectionName == 'symptomScores'
-          || collectionName == 'messages';
+        return isPatientWritableCollectionName()
+          || collectionName in ['allergyIntolerances', 'appointments', 'medicationRequests'];
       }
 
-      function isClinicianReadable() {
-        let user = getUser(userId);
-        return isAdmin() 
-          || isOwner(orNull(user, 'organization'))
-          || isClinician(orNull(user, 'organization'));
-      }
+      allow read: if isAdmin() 
+        || isUser(userId) 
+        || isOwnerOrClinicianOfSameOrganization();
 
-      function isClinicianWritable() {
-        let user = getUser(userId);
-        return isAdmin() || (
-          isClinicianWritableCollectionName() && (
-            isOwner(orNull(user, 'organization'))
-              || isClinician(orNull(user, 'organization'))
-          )
-        );
-      }
-
-      allow read: if isAuthenticated() && (isUser(userId) || isClinicianReadable());
-      allow write: if isAuthenticated() && (
-        (isUser(userId) && isPatientWritableCollectionName())
-          || isClinicianWritable()
-      );
+      allow write: if isAdmin() 
+        || (isUser(userId) && isPatientWritableCollectionName())
+        || (isOwnerOrClinicianOfSameOrganization() && isClinicianWritableCollectionName());
     }
 
     match /videoSections/{documents=**} {

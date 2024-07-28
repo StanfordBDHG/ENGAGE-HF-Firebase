@@ -13,7 +13,6 @@ import admin from 'firebase-admin'
 import {
   beforeUserCreatedFunction,
   beforeUserSignedInFunction,
-  onOrganizationWrittenFunction,
   onUserWrittenFunction,
 } from './functions/auth.js'
 import { exportHealthSummaryFunction } from './functions/healthSummary.js'
@@ -35,7 +34,6 @@ admin.initializeApp()
 
 export const beforeUserCreated = beforeUserCreatedFunction
 export const beforeUserSignedIn = beforeUserSignedInFunction
-export const onOrganizationWritten = onOrganizationWrittenFunction
 export const onUserWritten = onUserWrittenFunction
 
 // healthSummary

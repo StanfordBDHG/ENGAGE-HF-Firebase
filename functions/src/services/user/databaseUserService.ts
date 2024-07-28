@@ -21,8 +21,7 @@ import {
 } from '../database/databaseService.js'
 
 export interface UserClaims {
-  type: UserType | null
-  isOwner: boolean
+  type: UserType
   organization: string | null
 }
 
@@ -64,20 +63,10 @@ export class DatabaseUserService implements UserService {
     const user = await this.getUser(userId)
     if (!user) throw new https.HttpsError('not-found', 'User not found.')
 
-    const claims: UserClaims = {
-      type: user.content.type ?? null,
+    await this.auth.setCustomUserClaims(userId, {
+      type: user.content.type,
       organization: user.content.organization ?? null,
-      isOwner: false,
-    }
-
-    if (user.content.organization) {
-      const organization = await this.getOrganization(user.content.organization)
-      if (organization)
-        claims.isOwner = organization.content.owners.includes(userId)
-      else console.error(`Organization ${user.content.organization} not found`)
-    }
-
-    await this.auth.setCustomUserClaims(userId, claims)
+    })
   }
 
   // Invitations
