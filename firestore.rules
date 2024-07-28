@@ -75,6 +75,12 @@ service cloud.firestore {
           && isEqualOptional(request.resource.data, 'organization', resource.data, 'organization');
       }
 
+      function isAllowedUpdateWithinOrganization() {
+        return resource.data.type in ['patient']
+          ? isOwnerOf(resource.data.organization)
+          : isOwnerOrClinicianOf(resource.data.organization) && resource.data.type in ['clinician'];
+      }
+
       allow read: if isAdmin()
         || isUser(userId)
         || isOwnerOrClinicianOf(resource.data.organization);
@@ -83,7 +89,7 @@ service cloud.firestore {
         || (isUser(userId) && !('organization' in request.resource.data) && !('type' in request.resource.data));
 
       allow update: if isAdmin()
-        || (securityRelatedFieldsDidNotChange() && (isUser(userId) || (isOwnerOrClinicianOf(resource.data.organization) && resource.data.type == 'patient')));
+        || (securityRelatedFieldsDidNotChange() && (isUser(userId) || isAllowedUpdateWithinOrganization()));
 
       allow delete: if isAdmin();
     }

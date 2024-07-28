@@ -144,18 +144,11 @@ export class Credential {
         return (await this.user).type === UserType.admin
       }
       case UserRoleType.owner: {
-        if (!role.organization) {
-          console.log('Encountered owner without organization.')
-          throw new Error('Organization is required for owner role.')
-        }
-        const organization = await this.userService.getOrganization(
-          role.organization,
+        const user = await this.user
+        return (
+          user.type === UserType.owner &&
+          user.organization === role.organization
         )
-        if (!organization) {
-          console.log(`Organization ${role.organization} not found.`)
-          return false
-        }
-        return organization.content.owners.includes(this.authData.uid)
       }
       case UserRoleType.clinician: {
         const user = await this.user
