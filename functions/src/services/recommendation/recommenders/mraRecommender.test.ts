@@ -79,7 +79,7 @@ describe('MraRecommender', () => {
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: undefined,
+        currentMedication: [],
         recommendedMedication: {
           reference: MedicationReference.spironolactone,
         },
@@ -101,7 +101,7 @@ describe('MraRecommender', () => {
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: undefined,
+        currentMedication: [],
         recommendedMedication: {
           reference: MedicationReference.spironolactone,
         },
@@ -123,7 +123,7 @@ describe('MraRecommender', () => {
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: undefined,
+        currentMedication: [],
         recommendedMedication: {
           reference: MedicationReference.spironolactone,
         },
@@ -140,7 +140,7 @@ describe('MraRecommender', () => {
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: undefined,
+        currentMedication: [],
         recommendedMedication: {
           reference: MedicationReference.spironolactone,
         },
@@ -222,17 +222,47 @@ describe('MraRecommender', () => {
         extension: [
           {
             url: FHIRExtensionUrl.minimumDailyDose,
-            valueQuantity: {
-              ...QuantityUnit.mg,
-              value: 12.5,
-            },
+            valueIngredient: [
+              {
+                itemCodeableConcept: {
+                  coding: [
+                    {
+                      system: CodingSystem.rxNorm,
+                      code: MedicationReference.eplerenone.split('/').at(-1),
+                      display: 'Eplerenone',
+                    },
+                  ],
+                },
+                strength: {
+                  numerator: {
+                    ...QuantityUnit.mg,
+                    value: 12.5,
+                  },
+                },
+              },
+            ],
           },
           {
             url: FHIRExtensionUrl.targetDailyDose,
-            valueQuantity: {
-              ...QuantityUnit.mg,
-              value: 50,
-            },
+            valueIngredient: [
+              {
+                itemCodeableConcept: {
+                  coding: [
+                    {
+                      system: CodingSystem.rxNorm,
+                      code: MedicationReference.eplerenone.split('/').at(-1),
+                      display: 'Eplerenone',
+                    },
+                  ],
+                },
+                strength: {
+                  numerator: {
+                    ...QuantityUnit.mg,
+                    value: 50,
+                  },
+                },
+              },
+            ],
           },
         ],
       },
@@ -263,7 +293,7 @@ describe('MraRecommender', () => {
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: contextAtTarget.requestReference,
+        currentMedication: [contextAtTarget.requestReference],
         recommendedMedication: undefined,
         category: MedicationRecommendationCategory.targetDoseReached,
       })
@@ -283,7 +313,7 @@ describe('MraRecommender', () => {
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: contextAtTarget.requestReference,
+        currentMedication: [contextBelowTarget.requestReference],
         recommendedMedication: undefined,
         category: MedicationRecommendationCategory.moreLabObservationsRequired,
       })
@@ -303,7 +333,7 @@ describe('MraRecommender', () => {
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: contextAtTarget.requestReference,
+        currentMedication: [contextBelowTarget.requestReference],
         recommendedMedication: undefined,
         category: MedicationRecommendationCategory.moreLabObservationsRequired,
       })
@@ -323,7 +353,7 @@ describe('MraRecommender', () => {
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: contextAtTarget.requestReference,
+        currentMedication: [contextBelowTarget.requestReference],
         recommendedMedication: undefined,
         category: MedicationRecommendationCategory.personalTargetDoseReached,
       })
@@ -343,7 +373,7 @@ describe('MraRecommender', () => {
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: contextAtTarget.requestReference,
+        currentMedication: [contextBelowTarget.requestReference],
         recommendedMedication: undefined,
         category: MedicationRecommendationCategory.personalTargetDoseReached,
       })
@@ -358,7 +388,7 @@ describe('MraRecommender', () => {
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: contextAtTarget.requestReference,
+        currentMedication: [contextBelowTarget.requestReference],
         recommendedMedication: undefined,
         category: MedicationRecommendationCategory.improvementAvailable,
       })

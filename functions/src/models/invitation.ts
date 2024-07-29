@@ -11,5 +11,5 @@ export interface Invitation {
   userId?: string
 
   auth?: UserAuth
-  user?: User
+  user: User
 }

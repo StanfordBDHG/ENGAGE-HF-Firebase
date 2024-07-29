@@ -168,7 +168,7 @@ export class DefaultContraindicationService implements ContraindicationService {
     check: (system: CodingSystem, code: string) => boolean,
   ): boolean {
     for (const system of systems) {
-      const codes = this.fhirService.extractCodes(contraindication.code, {
+      const codes = this.fhirService.codes(contraindication.code, {
         system: system,
       })
       for (const code of codes) {

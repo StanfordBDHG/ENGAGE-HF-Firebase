@@ -10,11 +10,12 @@ import { expect } from 'chai'
 import { describe } from 'mocha'
 import { DefaultSymptomScoreCalculator } from './defaultSymptomScoreCalculator.js'
 import { mockQuestionnaireResponse } from '../../tests/mocks/questionnaireResponse.js'
+import { FhirService } from '../fhir/fhirService.js'
 
 describe('DefaultSymptomScoreCalculator', () => {
   it('should calculate symptom score', () => {
     const response = mockQuestionnaireResponse()
-    const calculator = new DefaultSymptomScoreCalculator()
+    const calculator = new DefaultSymptomScoreCalculator(new FhirService())
     const score = calculator.calculate(response)
     expect(score).to.deep.equal({
       questionnaireResponseId: response.id,

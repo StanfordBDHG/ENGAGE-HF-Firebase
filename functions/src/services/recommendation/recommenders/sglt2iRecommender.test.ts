@@ -101,7 +101,7 @@ describe('Sglt2iRecommender', () => {
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: undefined,
+        currentMedication: [],
         recommendedMedication: {
           reference: MedicationReference.empagliflozin,
         },
@@ -121,7 +121,7 @@ describe('Sglt2iRecommender', () => {
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: undefined,
+        currentMedication: [],
         recommendedMedication: {
           reference: MedicationReference.empagliflozin,
         },
@@ -143,7 +143,7 @@ describe('Sglt2iRecommender', () => {
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: undefined,
+        currentMedication: [],
         recommendedMedication: {
           reference: MedicationReference.empagliflozin,
         },
@@ -161,7 +161,7 @@ describe('Sglt2iRecommender', () => {
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: undefined,
+        currentMedication: [],
         recommendedMedication: {
           reference: MedicationReference.empagliflozin,
         },
@@ -243,17 +243,47 @@ describe('Sglt2iRecommender', () => {
         extension: [
           {
             url: FHIRExtensionUrl.minimumDailyDose,
-            valueQuantity: {
-              ...QuantityUnit.mg,
-              value: 200,
-            },
+            valueIngredient: [
+              {
+                itemCodeableConcept: {
+                  coding: [
+                    {
+                      system: CodingSystem.rxNorm,
+                      code: MedicationReference.sotagliflozin.split('/').at(-1),
+                      display: 'Sotagliflozin',
+                    },
+                  ],
+                },
+                strength: {
+                  numerator: {
+                    ...QuantityUnit.mg,
+                    value: 200,
+                  },
+                },
+              },
+            ],
           },
           {
             url: FHIRExtensionUrl.targetDailyDose,
-            valueQuantity: {
-              ...QuantityUnit.mg,
-              value: 400,
-            },
+            valueIngredient: [
+              {
+                itemCodeableConcept: {
+                  coding: [
+                    {
+                      system: CodingSystem.rxNorm,
+                      code: MedicationReference.sotagliflozin.split('/').at(-1),
+                      display: 'Sotagliflozin',
+                    },
+                  ],
+                },
+                strength: {
+                  numerator: {
+                    ...QuantityUnit.mg,
+                    value: 400,
+                  },
+                },
+              },
+            ],
           },
         ],
       },
@@ -284,7 +314,7 @@ describe('Sglt2iRecommender', () => {
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: contextAtTarget.requestReference,
+        currentMedication: [contextAtTarget.requestReference],
         recommendedMedication: undefined,
         category: MedicationRecommendationCategory.targetDoseReached,
       })
@@ -302,7 +332,7 @@ describe('Sglt2iRecommender', () => {
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: contextBelowTarget.requestReference,
+        currentMedication: [contextBelowTarget.requestReference],
         recommendedMedication: undefined,
         category:
           MedicationRecommendationCategory.morePatientObservationsRequired,
@@ -322,7 +352,7 @@ describe('Sglt2iRecommender', () => {
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: contextBelowTarget.requestReference,
+        currentMedication: [contextBelowTarget.requestReference],
         recommendedMedication: undefined,
         category: MedicationRecommendationCategory.personalTargetDoseReached,
       })
@@ -338,7 +368,7 @@ describe('Sglt2iRecommender', () => {
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: contextBelowTarget.requestReference,
+        currentMedication: [contextBelowTarget.requestReference],
         recommendedMedication: undefined,
         category: MedicationRecommendationCategory.improvementAvailable,
       })

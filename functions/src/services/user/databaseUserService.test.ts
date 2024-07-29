@@ -11,7 +11,6 @@ import admin from 'firebase-admin'
 import { FieldValue, type Firestore } from 'firebase-admin/firestore'
 import { https } from 'firebase-functions'
 import { describe } from 'mocha'
-import { DatabaseUserService } from './databaseUserService.js'
 import { type UserService } from './userService.js'
 import { type Invitation } from '../../models/invitation.js'
 import { type UserMessage, UserMessageType } from '../../models/message.js'
@@ -22,7 +21,7 @@ import {
   setupMockAuth,
   setupMockFirestore,
 } from '../../tests/setup.js'
-import { FirestoreService } from '../database/firestoreService.js'
+import { getServiceFactory } from '../factory/getServiceFactory.js'
 
 describe('DatabaseUserService', () => {
   let mockFirestore: MockFirestore
@@ -33,7 +32,7 @@ describe('DatabaseUserService', () => {
     setupMockAuth()
     mockFirestore = setupMockFirestore()
     firestore = admin.firestore()
-    userService = new DatabaseUserService(new FirestoreService())
+    userService = getServiceFactory().user()
   })
 
   afterEach(() => {

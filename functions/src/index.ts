@@ -21,7 +21,7 @@ import {
   createInvitationFunction,
 } from './functions/invitation.js'
 import { dismissMessageFunction } from './functions/message.js'
-import { rebuildStaticDataFunction } from './functions/staticData.js'
+import { updateStaticDataFunction } from './functions/seeding.js'
 import {
   deleteUserFunction,
   getUsersInformationFunction,
@@ -51,7 +51,7 @@ export const dismissMessage = dismissMessageFunction
 
 // staticData
 
-export const rebuildStaticData = rebuildStaticDataFunction
+export const updateStaticData = updateStaticDataFunction
 
 // users
 

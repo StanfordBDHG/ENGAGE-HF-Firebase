@@ -9,9 +9,8 @@
 import { https } from 'firebase-functions'
 import { z } from 'zod'
 import { validatedOnCall } from './helpers.js'
-import { CacheDatabaseService } from '../services/database/cacheDatabaseService.js'
-import { FirestoreService } from '../services/database/firestoreService.js'
-import { DatabaseUserService } from '../services/user/databaseUserService.js'
+import { UserRole } from '../services/credential/credential.js'
+import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
 const dismissMessageInputSchema = z.object({
   messageId: z.string(),
@@ -33,10 +32,15 @@ export const dismissMessageFunction = validatedOnCall(
       throw new https.HttpsError('invalid-argument', 'Message ID is required')
 
     try {
-      const service = new DatabaseUserService(
-        new CacheDatabaseService(new FirestoreService()),
-      )
-      await service.dismissMessage(userId, messageId, didPerformAction ?? false)
+      const factory = getServiceFactory()
+
+      factory
+        .credential(request.auth)
+        .check(UserRole.admin, UserRole.user(userId))
+
+      await factory
+        .user()
+        .dismissMessage(userId, messageId, didPerformAction ?? false)
     } catch (error) {
       console.error(error)
       throw new https.HttpsError('internal', 'Internal server error.')

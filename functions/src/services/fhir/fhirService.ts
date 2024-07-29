@@ -7,6 +7,7 @@
 //
 
 import { QuantityUnit } from './quantityUnit.js'
+import { symptomQuestionnaireLinkIds } from './symptomQuestionnaireLinkIds.js'
 import {
   type FHIRCoding,
   type FHIRCodeableConcept,
@@ -14,85 +15,130 @@ import {
   type FHIRExtension,
   type FHIRElement,
 } from '../../models/fhir/baseTypes.js'
-import {
-  type FHIRMedication,
-  type FHIRMedicationRequest,
-} from '../../models/fhir/medication.js'
+import { type FHIRMedication } from '../../models/fhir/medication.js'
 import { type FHIRObservation } from '../../models/fhir/observation.js'
+import { type FHIRQuestionnaireResponse } from '../../models/fhir/questionnaireResponse.js'
 import { type MedicationRequestContext } from '../../models/medicationRequestContext.js'
+import { type SymptomQuestionnaireResponse } from '../../models/symptomQuestionnaireResponse.js'
 import { type Observation } from '../../models/vitals.js'
 import { CodingSystem, FHIRExtensionUrl } from '../codes.js'
 
 export class FhirService {
+  // CodeableConcept
+
+  codes(
+    concept: FHIRCodeableConcept | undefined,
+    filter: FHIRCoding,
+  ): string[] {
+    return (
+      concept?.coding?.flatMap((coding) => {
+        if (filter.system && coding.system !== filter.system) return []
+        if (filter.version && coding.version !== filter.version) return []
+        return coding.code ? [coding.code] : []
+      }) ?? []
+    )
+  }
+
+  containsCoding(
+    concept: FHIRCodeableConcept | undefined,
+    filter: FHIRCoding[],
+  ): boolean {
+    return filter.some(
+      (filterCoding) =>
+        concept?.coding?.some((coding) => {
+          if (filterCoding.code && coding.code !== filterCoding.code)
+            return false
+          if (filterCoding.system && coding.system !== filterCoding.system)
+            return false
+          if (filterCoding.version && coding.version !== filterCoding.version)
+            return false
+          return true
+        }) ?? false,
+    )
+  }
+
   // Medications
 
-  extractMedicationDisplayName(medication: FHIRMedication): string | undefined {
+  displayName(medication: FHIRMedication): string | undefined {
     return medication.code?.coding?.find(
       (coding) => coding.system === CodingSystem.rxNorm,
     )?.display
   }
 
-  extractCurrentMedicationRequestReferenceForRecommendation(
-    request: FHIRMedicationRequest,
-  ): FHIRReference<FHIRMedicationRequest> | undefined {
-    return this.findExtensions(request, FHIRExtensionUrl.currentMedication).at(
-      0,
-    )?.valueReference
-  }
-
-  extractMedicationClassReference(
+  medicationClassReference(
     medication: FHIRMedication,
   ): FHIRReference<FHIRMedication> | undefined {
-    return this.findExtensions(medication, FHIRExtensionUrl.medicationClass).at(
-      0,
-    )?.valueReference
-  }
-
-  extractCurrentDailyDose(
-    context: MedicationRequestContext,
-    ingredientFilter: FHIRCoding[],
-  ): number {
-    let totalDailyDose = 0
-
-    const ingredientStrength = context.drug?.ingredient?.find((ingredient) =>
-      this.containsCoding(ingredient.itemCodeableConcept, ingredientFilter),
-    )?.strength
-    const dosePerPill = QuantityUnit.mg.valueOf(ingredientStrength?.numerator)
-    if (!dosePerPill)
-      throw new Error('Invalid ingredient strength encountered.')
-
-    for (const instruction of context.request.dosageInstruction ?? []) {
-      const intakesPerDay = instruction.timing?.repeat?.timeOfDay?.length ?? 0
-      for (const dose of instruction.doseAndRate ?? []) {
-        const numberOfPills = dose.doseQuantity?.value
-        if (!numberOfPills)
-          throw new Error('Invalid dose quantity encountered.')
-        totalDailyDose += numberOfPills * intakesPerDay * dosePerPill
-      }
-    }
-    return totalDailyDose
-  }
-
-  extractMinimumDailyDose(
-    medication: FHIRMedication,
-  ): number | number[] | undefined {
-    return this.findExtensions(
+    return this.extensionsWithUrl(
       medication,
-      FHIRExtensionUrl.minimumDailyDose,
-    ).at(0)?.valueQuantity?.value
+      FHIRExtensionUrl.medicationClass,
+    ).at(0)?.valueReference
   }
 
-  extractTargetDailyDose(
-    medication: FHIRMedication,
-  ): number | number[] | undefined {
-    return this.findExtensions(medication, FHIRExtensionUrl.targetDailyDose).at(
-      0,
-    )?.valueQuantity?.value
+  minimumDailyDose(medication: FHIRMedication): number[] | undefined {
+    return this.extensionsWithUrl(medication, FHIRExtensionUrl.minimumDailyDose)
+      .at(0)
+      ?.valueIngredient?.flatMap((ingredient) =>
+        ingredient.strength?.numerator?.value ?
+          [ingredient.strength.numerator.value]
+        : [],
+      )
+  }
+
+  currentDailyDose(contexts: MedicationRequestContext[]): number[] {
+    const dailyDoses: number[] = []
+    for (const context of contexts) {
+      let numberOfTabletsPerDay = 0
+      for (const instruction of context.request.dosageInstruction ?? []) {
+        const intakesPerDay = instruction.timing?.repeat?.timeOfDay?.length ?? 0
+        for (const dose of instruction.doseAndRate ?? []) {
+          const numberOfPills = dose.doseQuantity?.value
+          if (!numberOfPills)
+            throw new Error('Invalid dose quantity encountered.')
+          numberOfTabletsPerDay += numberOfPills * intakesPerDay
+        }
+      }
+
+      const ingredients = context.drug?.ingredient ?? []
+
+      while (dailyDoses.length < ingredients.length) {
+        dailyDoses.push(0)
+      }
+
+      ingredients.forEach((ingredient, index) => {
+        const strength =
+          QuantityUnit.mg.valueOf(ingredient.strength?.numerator) ?? 0
+        dailyDoses[index] += numberOfTabletsPerDay * strength
+      })
+    }
+    return dailyDoses
+  }
+
+  targetDailyDose(medication: FHIRMedication): number[] | undefined {
+    return this.extensionsWithUrl(medication, FHIRExtensionUrl.targetDailyDose)
+      .at(0)
+      ?.valueIngredient?.flatMap((ingredient) =>
+        ingredient.strength?.numerator?.value ?
+          [ingredient.strength.numerator.value]
+        : [],
+      )
+  }
+
+  // Extension
+
+  extensionsWithUrl(
+    element: FHIRElement,
+    url: FHIRExtensionUrl,
+  ): FHIRExtension[] {
+    return (
+      element.extension?.filter(
+        (extension) => extension.url === url.toString(),
+      ) ?? []
+    )
   }
 
   // Observations
 
-  extractObservationValues(
+  observationValues(
     observations: FHIRObservation[],
     options: {
       unit: QuantityUnit
@@ -126,46 +172,42 @@ export class FhirService {
     return result
   }
 
-  // CodeableConcept
+  // QuestionnaireResponses
 
-  extractCodes(
-    concept: FHIRCodeableConcept | undefined,
-    filter: FHIRCoding,
-  ): string[] {
-    return (
-      concept?.coding?.flatMap((coding) => {
-        if (filter.system && coding.system !== filter.system) return []
-        if (filter.version && coding.version !== filter.version) return []
-        return coding.code ? [coding.code] : []
-      }) ?? []
-    )
+  symptomQuestionnaireResponse(
+    response: FHIRQuestionnaireResponse,
+  ): SymptomQuestionnaireResponse {
+    const linkIds = symptomQuestionnaireLinkIds(response.questionnaire)
+    return {
+      questionnaire: response.questionnaire,
+      questionnaireResponse: response.id,
+      date: response.authored,
+      answer1a: this.numericSingleAnswer(response, linkIds.question1a),
+      answer1b: this.numericSingleAnswer(response, linkIds.question1b),
+      answer1c: this.numericSingleAnswer(response, linkIds.question1c),
+      answer2: this.numericSingleAnswer(response, linkIds.question2),
+      answer3: this.numericSingleAnswer(response, linkIds.question3),
+      answer4: this.numericSingleAnswer(response, linkIds.question4),
+      answer5: this.numericSingleAnswer(response, linkIds.question5),
+      answer6: this.numericSingleAnswer(response, linkIds.question6),
+      answer7: this.numericSingleAnswer(response, linkIds.question7),
+      answer8a: this.numericSingleAnswer(response, linkIds.question8a),
+      answer8b: this.numericSingleAnswer(response, linkIds.question8b),
+      answer8c: this.numericSingleAnswer(response, linkIds.question8c),
+      answer9: this.numericSingleAnswer(response, linkIds.question9),
+    }
   }
 
-  containsCoding(
-    concept: FHIRCodeableConcept | undefined,
-    filter: FHIRCoding[],
-  ): boolean {
-    return filter.some(
-      (filterCoding) =>
-        concept?.coding?.some((coding) => {
-          if (filterCoding.code && coding.code !== filterCoding.code)
-            return false
-          if (filterCoding.system && coding.system !== filterCoding.system)
-            return false
-          if (filterCoding.version && coding.version !== filterCoding.version)
-            return false
-          return true
-        }) ?? false,
-    )
-  }
-
-  // Extension
-
-  findExtensions(element: FHIRElement, url: FHIRExtensionUrl): FHIRExtension[] {
-    return (
-      element.extension?.filter(
-        (extension) => extension.url === url.toString(),
-      ) ?? []
-    )
+  numericSingleAnswer(
+    response: FHIRQuestionnaireResponse,
+    linkId: string,
+  ): number {
+    const answers =
+      response.item?.find((item) => item.linkId === linkId)?.answer ?? []
+    if (answers.length !== 1)
+      throw new Error(`Zero or multiple answers found for linkId ${linkId}.`)
+    const code = answers[0].valueCoding?.code
+    if (!code) throw new Error(`No answer code found for linkId ${linkId}.`)
+    return parseInt(code)
   }
 }

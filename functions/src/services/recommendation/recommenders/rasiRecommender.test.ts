@@ -107,7 +107,7 @@ describe('RasiRecommender', () => {
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: undefined,
+        currentMedication: [],
         recommendedMedication: {
           reference: MedicationReference.losartan,
         },
@@ -126,7 +126,7 @@ describe('RasiRecommender', () => {
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: undefined,
+        currentMedication: [],
         recommendedMedication: {
           reference: MedicationReference.losartan,
         },
@@ -147,7 +147,7 @@ describe('RasiRecommender', () => {
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: undefined,
+        currentMedication: [],
         recommendedMedication: {
           reference: MedicationReference.losartan,
         },
@@ -169,7 +169,7 @@ describe('RasiRecommender', () => {
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: undefined,
+        currentMedication: [],
         recommendedMedication: {
           reference: MedicationReference.losartan,
         },
@@ -191,7 +191,7 @@ describe('RasiRecommender', () => {
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: undefined,
+        currentMedication: [],
         recommendedMedication: {
           reference: MedicationReference.losartan,
         },
@@ -215,7 +215,7 @@ describe('RasiRecommender', () => {
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: undefined,
+        currentMedication: [],
         recommendedMedication: {
           reference: MedicationReference.losartan,
         },
@@ -232,7 +232,7 @@ describe('RasiRecommender', () => {
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: undefined,
+        currentMedication: [],
         recommendedMedication: {
           reference: MedicationReference.sacubitrilValsartan,
         },
@@ -314,17 +314,47 @@ describe('RasiRecommender', () => {
         extension: [
           {
             url: FHIRExtensionUrl.minimumDailyDose,
-            valueQuantity: {
-              ...QuantityUnit.mg,
-              value: 2,
-            },
+            valueIngredient: [
+              {
+                itemCodeableConcept: {
+                  coding: [
+                    {
+                      system: CodingSystem.rxNorm,
+                      code: MedicationReference.perindopril.split('/').at(-1),
+                      display: 'Perindopril',
+                    },
+                  ],
+                },
+                strength: {
+                  numerator: {
+                    ...QuantityUnit.mg,
+                    value: 2,
+                  },
+                },
+              },
+            ],
           },
           {
             url: FHIRExtensionUrl.targetDailyDose,
-            valueQuantity: {
-              ...QuantityUnit.mg,
-              value: 16,
-            },
+            valueIngredient: [
+              {
+                itemCodeableConcept: {
+                  coding: [
+                    {
+                      system: CodingSystem.rxNorm,
+                      code: MedicationReference.perindopril.split('/').at(-1),
+                      display: 'Perindopril',
+                    },
+                  ],
+                },
+                strength: {
+                  numerator: {
+                    ...QuantityUnit.mg,
+                    value: 16,
+                  },
+                },
+              },
+            ],
           },
         ],
       },
@@ -364,7 +394,7 @@ describe('RasiRecommender', () => {
         })
         expect(result).to.have.length(1)
         expect(result.at(0)).to.deep.equal({
-          currentMedication: contextBelowTarget.requestReference,
+          currentMedication: [contextBelowTarget.requestReference],
           recommendedMedication: undefined,
           category: MedicationRecommendationCategory.targetDoseReached,
         })
@@ -381,7 +411,7 @@ describe('RasiRecommender', () => {
         })
         expect(result).to.have.length(1)
         expect(result.at(0)).to.deep.equal({
-          currentMedication: contextBelowTarget.requestReference,
+          currentMedication: [contextBelowTarget.requestReference],
           recommendedMedication: undefined,
           category:
             MedicationRecommendationCategory.morePatientObservationsRequired,
@@ -402,7 +432,7 @@ describe('RasiRecommender', () => {
         })
         expect(result).to.have.length(1)
         expect(result.at(0)).to.deep.equal({
-          currentMedication: contextBelowTarget.requestReference,
+          currentMedication: [contextBelowTarget.requestReference],
           recommendedMedication: undefined,
           category: MedicationRecommendationCategory.personalTargetDoseReached,
         })
@@ -422,7 +452,7 @@ describe('RasiRecommender', () => {
         })
         expect(result).to.have.length(1)
         expect(result.at(0)).to.deep.equal({
-          currentMedication: contextBelowTarget.requestReference,
+          currentMedication: [contextBelowTarget.requestReference],
           recommendedMedication: undefined,
           category: MedicationRecommendationCategory.personalTargetDoseReached,
         })
@@ -442,7 +472,7 @@ describe('RasiRecommender', () => {
         })
         expect(result).to.have.length(1)
         expect(result.at(0)).to.deep.equal({
-          currentMedication: contextBelowTarget.requestReference,
+          currentMedication: [contextBelowTarget.requestReference],
           recommendedMedication: undefined,
           category: MedicationRecommendationCategory.personalTargetDoseReached,
         })
@@ -460,7 +490,7 @@ describe('RasiRecommender', () => {
         })
         expect(result).to.have.length(1)
         expect(result.at(0)).to.deep.equal({
-          currentMedication: contextBelowTarget.requestReference,
+          currentMedication: [contextBelowTarget.requestReference],
           recommendedMedication: undefined,
           category: MedicationRecommendationCategory.personalTargetDoseReached,
         })
@@ -475,7 +505,7 @@ describe('RasiRecommender', () => {
         })
         expect(result).to.have.length(1)
         expect(result.at(0)).to.deep.equal({
-          currentMedication: contextBelowTarget.requestReference,
+          currentMedication: [contextBelowTarget.requestReference],
           recommendedMedication: undefined,
           category: MedicationRecommendationCategory.improvementAvailable,
         })
@@ -494,7 +524,7 @@ describe('RasiRecommender', () => {
         })
         expect(result).to.have.length(1)
         expect(result.at(0)).to.deep.equal({
-          currentMedication: contextBelowTarget.requestReference,
+          currentMedication: [contextBelowTarget.requestReference],
           recommendedMedication: undefined,
           category:
             MedicationRecommendationCategory.morePatientObservationsRequired,
@@ -515,7 +545,7 @@ describe('RasiRecommender', () => {
         })
         expect(result).to.have.length(1)
         expect(result.at(0)).to.deep.equal({
-          currentMedication: contextBelowTarget.requestReference,
+          currentMedication: [contextBelowTarget.requestReference],
           recommendedMedication: undefined,
           category: MedicationRecommendationCategory.personalTargetDoseReached,
         })
@@ -535,7 +565,7 @@ describe('RasiRecommender', () => {
         })
         expect(result).to.have.length(1)
         expect(result.at(0)).to.deep.equal({
-          currentMedication: contextBelowTarget.requestReference,
+          currentMedication: [contextBelowTarget.requestReference],
           recommendedMedication: undefined,
           category: MedicationRecommendationCategory.personalTargetDoseReached,
         })
@@ -555,7 +585,7 @@ describe('RasiRecommender', () => {
         })
         expect(result).to.have.length(1)
         expect(result.at(0)).to.deep.equal({
-          currentMedication: contextBelowTarget.requestReference,
+          currentMedication: [contextBelowTarget.requestReference],
           recommendedMedication: undefined,
           category: MedicationRecommendationCategory.personalTargetDoseReached,
         })
@@ -573,7 +603,7 @@ describe('RasiRecommender', () => {
         })
         expect(result).to.have.length(1)
         expect(result.at(0)).to.deep.equal({
-          currentMedication: contextBelowTarget.requestReference,
+          currentMedication: [contextBelowTarget.requestReference],
           recommendedMedication: undefined,
           category: MedicationRecommendationCategory.personalTargetDoseReached,
         })
@@ -588,7 +618,7 @@ describe('RasiRecommender', () => {
         })
         expect(result).to.have.length(1)
         expect(result.at(0)).to.deep.equal({
-          currentMedication: contextBelowTarget.requestReference,
+          currentMedication: [contextBelowTarget.requestReference],
           recommendedMedication: {
             reference: MedicationReference.sacubitrilValsartan,
           },
@@ -688,17 +718,82 @@ describe('RasiRecommender', () => {
         extension: [
           {
             url: FHIRExtensionUrl.minimumDailyDose,
-            valueQuantity: {
-              ...QuantityUnit.mg,
-              value: [48, 52] as any,
-            },
+
+            valueIngredient: [
+              {
+                itemCodeableConcept: {
+                  coding: [
+                    {
+                      system: CodingSystem.rxNorm,
+                      code: '1656328',
+                      display: 'sacubitril',
+                    },
+                  ],
+                },
+                strength: {
+                  numerator: {
+                    ...QuantityUnit.mg,
+                    value: 48,
+                  },
+                },
+              },
+              {
+                itemCodeableConcept: {
+                  coding: [
+                    {
+                      system: CodingSystem.rxNorm,
+                      code: '69749',
+                      display: 'valsartan',
+                    },
+                  ],
+                },
+                strength: {
+                  numerator: {
+                    ...QuantityUnit.mg,
+                    value: 52,
+                  },
+                },
+              },
+            ],
           },
           {
             url: FHIRExtensionUrl.targetDailyDose,
-            valueQuantity: {
-              ...QuantityUnit.mg,
-              value: [194, 206] as any,
-            },
+            valueIngredient: [
+              {
+                itemCodeableConcept: {
+                  coding: [
+                    {
+                      system: CodingSystem.rxNorm,
+                      code: '1656328',
+                      display: 'sacubitril',
+                    },
+                  ],
+                },
+                strength: {
+                  numerator: {
+                    ...QuantityUnit.mg,
+                    value: 194,
+                  },
+                },
+              },
+              {
+                itemCodeableConcept: {
+                  coding: [
+                    {
+                      system: CodingSystem.rxNorm,
+                      code: '69749',
+                      display: 'valsartan',
+                    },
+                  ],
+                },
+                strength: {
+                  numerator: {
+                    ...QuantityUnit.mg,
+                    value: 206,
+                  },
+                },
+              },
+            ],
           },
         ],
       },
@@ -729,7 +824,7 @@ describe('RasiRecommender', () => {
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: contextBelowTarget.requestReference,
+        currentMedication: [contextBelowTarget.requestReference],
         recommendedMedication: undefined,
         category: MedicationRecommendationCategory.targetDoseReached,
       })
@@ -746,7 +841,7 @@ describe('RasiRecommender', () => {
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: contextBelowTarget.requestReference,
+        currentMedication: [contextBelowTarget.requestReference],
         recommendedMedication: undefined,
         category:
           MedicationRecommendationCategory.morePatientObservationsRequired,
@@ -765,7 +860,7 @@ describe('RasiRecommender', () => {
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: contextBelowTarget.requestReference,
+        currentMedication: [contextBelowTarget.requestReference],
         recommendedMedication: undefined,
         category: MedicationRecommendationCategory.personalTargetDoseReached,
       })
@@ -785,7 +880,7 @@ describe('RasiRecommender', () => {
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: contextBelowTarget.requestReference,
+        currentMedication: [contextBelowTarget.requestReference],
         recommendedMedication: undefined,
         category: MedicationRecommendationCategory.personalTargetDoseReached,
       })
@@ -805,7 +900,7 @@ describe('RasiRecommender', () => {
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: contextBelowTarget.requestReference,
+        currentMedication: [contextBelowTarget.requestReference],
         recommendedMedication: undefined,
         category: MedicationRecommendationCategory.personalTargetDoseReached,
       })
@@ -823,7 +918,7 @@ describe('RasiRecommender', () => {
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: contextBelowTarget.requestReference,
+        currentMedication: [contextBelowTarget.requestReference],
         recommendedMedication: undefined,
         category: MedicationRecommendationCategory.personalTargetDoseReached,
       })
@@ -838,7 +933,7 @@ describe('RasiRecommender', () => {
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: contextBelowTarget.requestReference,
+        currentMedication: [contextBelowTarget.requestReference],
         recommendedMedication: undefined,
         category: MedicationRecommendationCategory.improvementAvailable,
       })

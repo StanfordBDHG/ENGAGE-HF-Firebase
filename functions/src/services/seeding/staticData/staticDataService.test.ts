@@ -8,23 +8,25 @@
 import { expect } from 'chai'
 import admin from 'firebase-admin'
 import { type Firestore } from 'firebase-admin/firestore'
-import { FirestoreService } from './database/firestoreService.js'
-import { RxNormService } from './rxNormService.js'
-import { StaticDataService } from './staticDataService.js'
-import { cleanupMocks, setupMockFirestore } from '../tests/setup.js'
-import { TestFlags } from '../tests/testFlags.js'
+import { type StaticDataService } from './staticDataService.js'
+import {
+  cleanupMocks,
+  setupMockAuth,
+  setupMockFirestore,
+} from '../../../tests/setup.js'
+import { TestFlags } from '../../../tests/testFlags.js'
+import { getServiceFactory } from '../../factory/getServiceFactory.js'
+import { CachingStrategy } from '../seedingService.js'
 
 describe('StaticDataService', () => {
   let firestore: Firestore
   let staticDataService: StaticDataService
 
   before(() => {
+    setupMockAuth()
     setupMockFirestore()
     firestore = admin.firestore()
-    staticDataService = new StaticDataService(
-      new FirestoreService(),
-      new RxNormService(),
-    )
+    staticDataService = getServiceFactory().staticData()
   })
 
   after(() => {
@@ -37,7 +39,7 @@ describe('StaticDataService', () => {
       .get()
     expect(medicationClasses.size).to.equal(0)
 
-    await staticDataService.updateMedicationClasses()
+    await staticDataService.updateMedicationClasses(CachingStrategy.expectCache)
 
     const updatedMedicationClasses = await firestore
       .collection('medicationClasses')
@@ -45,28 +47,30 @@ describe('StaticDataService', () => {
     expect(updatedMedicationClasses.size).to.be.greaterThan(0)
   })
 
-  if (TestFlags.forceRunExpensiveTests) {
-    it('actually creates medications and drugs', async () => {
-      const medications = await firestore.collection('medications').get()
-      expect(medications.size).to.equal(0)
+  it('actually creates medications and drugs', async () => {
+    const medications = await firestore.collection('medications').get()
+    expect(medications.size).to.equal(0)
 
-      await staticDataService.updateMedications()
+    await staticDataService.updateMedications(
+      TestFlags.forceRunExpensiveTests ?
+        CachingStrategy.updateCache
+      : CachingStrategy.expectCache,
+    )
 
-      const updatedMedications = await firestore.collection('medications').get()
-      expect(updatedMedications.size).to.be.greaterThan(0)
+    const updatedMedications = await firestore.collection('medications').get()
+    expect(updatedMedications.size).to.be.greaterThan(0)
 
-      for (const medication of updatedMedications.docs) {
-        const drugs = await medication.ref.collection('drugs').get()
-        expect(drugs.size).to.be.greaterThan(0)
-      }
-    })
-  }
+    for (const medication of updatedMedications.docs) {
+      const drugs = await medication.ref.collection('drugs').get()
+      expect(drugs.size).to.be.greaterThan(0)
+    }
+  })
 
   it('actually creates organizations', async () => {
     const organizations = await firestore.collection('organizations').get()
     expect(organizations.size).to.equal(0)
 
-    await staticDataService.updateOrganizations()
+    await staticDataService.updateOrganizations(CachingStrategy.expectCache)
 
     const updatedOrganizations = await firestore
       .collection('organizations')
@@ -78,7 +82,7 @@ describe('StaticDataService', () => {
     const questionnaires = await firestore.collection('questionnaires').get()
     expect(questionnaires.size).to.equal(0)
 
-    await staticDataService.updateQuestionnaires()
+    await staticDataService.updateQuestionnaires(CachingStrategy.expectCache)
 
     const updatedQuestionnaires = await firestore
       .collection('questionnaires')
@@ -90,7 +94,7 @@ describe('StaticDataService', () => {
     const videoSections = await firestore.collection('videoSections').get()
     expect(videoSections.size).to.equal(0)
 
-    await staticDataService.updateVideoSections()
+    await staticDataService.updateVideoSections(CachingStrategy.expectCache)
 
     const updatedVideoSections = await firestore
       .collection('videoSections')

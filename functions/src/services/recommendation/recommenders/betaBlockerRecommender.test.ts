@@ -81,7 +81,7 @@ describe('BetaBlockerRecommender', () => {
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: undefined,
+        currentMedication: [],
         recommendedMedication: {
           reference: MedicationReference.carvedilol,
         },
@@ -101,7 +101,7 @@ describe('BetaBlockerRecommender', () => {
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: undefined,
+        currentMedication: [],
         recommendedMedication: {
           reference: MedicationReference.carvedilol,
         },
@@ -122,7 +122,7 @@ describe('BetaBlockerRecommender', () => {
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: undefined,
+        currentMedication: [],
         recommendedMedication: {
           reference: MedicationReference.carvedilol,
         },
@@ -146,7 +146,7 @@ describe('BetaBlockerRecommender', () => {
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: undefined,
+        currentMedication: [],
         recommendedMedication: {
           reference: MedicationReference.carvedilol,
         },
@@ -169,7 +169,7 @@ describe('BetaBlockerRecommender', () => {
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: undefined,
+        currentMedication: [],
         recommendedMedication: {
           reference: MedicationReference.carvedilol,
         },
@@ -187,7 +187,7 @@ describe('BetaBlockerRecommender', () => {
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: undefined,
+        currentMedication: [],
         recommendedMedication: {
           reference: MedicationReference.carvedilol,
         },
@@ -269,17 +269,47 @@ describe('BetaBlockerRecommender', () => {
         extension: [
           {
             url: FHIRExtensionUrl.minimumDailyDose,
-            valueQuantity: {
-              ...QuantityUnit.mg,
-              value: 5,
-            },
+            valueIngredient: [
+              {
+                itemCodeableConcept: {
+                  coding: [
+                    {
+                      system: CodingSystem.rxNorm,
+                      code: MedicationReference.bisoprolol.split('/').at(-1),
+                      display: 'Bisoprolol',
+                    },
+                  ],
+                },
+                strength: {
+                  numerator: {
+                    ...QuantityUnit.mg,
+                    value: 5,
+                  },
+                },
+              },
+            ],
           },
           {
             url: FHIRExtensionUrl.targetDailyDose,
-            valueQuantity: {
-              ...QuantityUnit.mg,
-              value: 10,
-            },
+            valueIngredient: [
+              {
+                itemCodeableConcept: {
+                  coding: [
+                    {
+                      system: CodingSystem.rxNorm,
+                      code: MedicationReference.bisoprolol.split('/').at(-1),
+                      display: 'Bisoprolol',
+                    },
+                  ],
+                },
+                strength: {
+                  numerator: {
+                    ...QuantityUnit.mg,
+                    value: 10,
+                  },
+                },
+              },
+            ],
           },
         ],
       },
@@ -310,7 +340,7 @@ describe('BetaBlockerRecommender', () => {
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: contextAtTarget.requestReference,
+        currentMedication: [contextAtTarget.requestReference],
         recommendedMedication: undefined,
         category: MedicationRecommendationCategory.targetDoseReached,
       })
@@ -328,7 +358,7 @@ describe('BetaBlockerRecommender', () => {
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: contextAtTarget.requestReference,
+        currentMedication: [contextAtTarget.requestReference],
         recommendedMedication: undefined,
         category:
           MedicationRecommendationCategory.morePatientObservationsRequired,
@@ -347,7 +377,7 @@ describe('BetaBlockerRecommender', () => {
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: contextAtTarget.requestReference,
+        currentMedication: [contextAtTarget.requestReference],
         recommendedMedication: undefined,
         category:
           MedicationRecommendationCategory.morePatientObservationsRequired,
@@ -366,7 +396,7 @@ describe('BetaBlockerRecommender', () => {
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: contextAtTarget.requestReference,
+        currentMedication: [contextAtTarget.requestReference],
         recommendedMedication: undefined,
         category:
           MedicationRecommendationCategory.morePatientObservationsRequired,
@@ -385,7 +415,7 @@ describe('BetaBlockerRecommender', () => {
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: contextAtTarget.requestReference,
+        currentMedication: [contextAtTarget.requestReference],
         recommendedMedication: undefined,
         category:
           MedicationRecommendationCategory.morePatientObservationsRequired,
@@ -405,7 +435,7 @@ describe('BetaBlockerRecommender', () => {
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: contextBelowTarget.requestReference,
+        currentMedication: [contextBelowTarget.requestReference],
         recommendedMedication: undefined,
         category: MedicationRecommendationCategory.personalTargetDoseReached,
       })
@@ -424,7 +454,7 @@ describe('BetaBlockerRecommender', () => {
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: contextBelowTarget.requestReference,
+        currentMedication: [contextBelowTarget.requestReference],
         recommendedMedication: undefined,
         category: MedicationRecommendationCategory.improvementAvailable,
       })

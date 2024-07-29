@@ -8,8 +8,7 @@
 
 import { https } from 'firebase-functions/v2'
 import { type AuthData } from 'firebase-functions/v2/tasks'
-import { type UserService } from './user/userService.js'
-import { UserType, type User } from '../models/user.js'
+import { UserType } from '../../models/user.js'
 
 enum UserRoleType {
   admin = 'admin',
@@ -69,64 +68,24 @@ export class Credential {
   // Properties
 
   private readonly authData: AuthData
-  private readonly user: Promise<User>
-  private readonly userService: UserService
-
-  private grantedRoles: UserRole[] = []
-  private deniedRoles: UserRole[] = []
 
   // Constructor
 
-  constructor(authData: AuthData | undefined, userService: UserService) {
+  constructor(authData: AuthData | undefined) {
     if (!authData)
       throw new https.HttpsError(
         'unauthenticated',
         'User is not authenticated.',
       )
     this.authData = authData
-    this.userService = userService
-    this.user = userService.getUser(authData.uid).then((document) => {
-      if (!document) throw new https.HttpsError('not-found', 'User not found.')
-      return document.content
-    })
   }
 
   // Methods
 
-  async checkAny(...roles: UserRole[]): Promise<void> {
-    for (const role of roles) {
-      if (this.grantedRoles.some((grantedRole) => grantedRole.equals(role)))
-        return
-    }
-
-    for (const role of roles) {
-      if (this.deniedRoles.some((deniedRole) => role.equals(deniedRole)))
-        throw this.permissionDeniedError()
-      if (await this.check(role)) {
-        this.grantedRoles.push(role)
-        return
-      } else {
-        this.deniedRoles.push(role)
-      }
-    }
-
-    throw this.permissionDeniedError()
-  }
-
-  async checkFirst(...roles: UserRole[]): Promise<UserRole> {
-    for (const role of roles) {
-      if (this.grantedRoles.some((grantedRole) => grantedRole.equals(role)))
-        return role
-      if (this.deniedRoles.some((deniedRole) => role.equals(deniedRole)))
-        throw this.permissionDeniedError()
-      if (await this.check(role)) {
-        this.grantedRoles.push(role)
-        return role
-      } else {
-        this.deniedRoles.push(role)
-      }
-    }
-    throw this.permissionDeniedError()
+  check(...roles: UserRole[]): UserRole {
+    const role = roles.find((role) => this.checkSingle(role))
+    if (!role) throw this.permissionDeniedError()
+    return role
   }
 
   permissionDeniedError(): https.HttpsError {
@@ -138,38 +97,31 @@ export class Credential {
 
   // Helpers
 
-  private async check(role: UserRole): Promise<boolean> {
+  private checkSingle(role: UserRole): boolean {
     switch (role.type) {
       case UserRoleType.admin: {
-        return (await this.user).type === UserType.admin
+        return this.authData.token.type === UserType.admin
       }
       case UserRoleType.owner: {
-        const user = await this.user
         return (
-          user.type === UserType.owner &&
-          user.organization === role.organization
+          this.authData.token.type === UserType.owner &&
+          this.authData.token.organization === role.organization
         )
       }
       case UserRoleType.clinician: {
-        const user = await this.user
         return (
-          user.type === UserType.clinician &&
-          user.organization === role.organization
+          this.authData.token.type === UserType.clinician &&
+          this.authData.token.organization === role.organization
         )
       }
-
       case UserRoleType.patient: {
-        const user = await this.user
         return (
-          user.type === UserType.patient &&
-          user.organization === role.organization
+          this.authData.token.type === UserType.patient &&
+          this.authData.token.organization === role.organization
         )
       }
       case UserRoleType.user: {
-        if (this.authData.uid !== role.userId) return false
-        if (role.organization)
-          return (await this.user).organization === role.organization
-        else return true
+        return this.authData.uid === role.userId
       }
     }
   }

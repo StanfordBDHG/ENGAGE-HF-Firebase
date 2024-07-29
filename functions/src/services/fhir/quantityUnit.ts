@@ -21,6 +21,7 @@ export class QuantityUnit {
     'mL/min/{1.73_m2}',
     'mL/min/1.73m2',
   )
+  static readonly tablet = new QuantityUnit('{tbl}', 'tbl.')
 
   static readonly allValues = [
     QuantityUnit.mg,
@@ -31,6 +32,7 @@ export class QuantityUnit {
     QuantityUnit.mg_dL,
     QuantityUnit.mEq_L,
     QuantityUnit.mL_min_173m2,
+    QuantityUnit.tablet,
   ]
 
   // Properties

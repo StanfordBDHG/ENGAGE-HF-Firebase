@@ -10,14 +10,8 @@ import { https } from 'firebase-functions/v2'
 import { z } from 'zod'
 import { validatedOnCall } from './helpers.js'
 import { generateHealthSummary } from '../healthSummary/generate.js'
-import { Credential, UserRole } from '../services/credential.js'
-import { CacheDatabaseService } from '../services/database/cacheDatabaseService.js'
-import { type DatabaseService } from '../services/database/databaseService.js'
-import { FirestoreService } from '../services/database/firestoreService.js'
-import { FhirService } from '../services/fhir/fhirService.js'
-import { DefaultHealthSummaryService } from '../services/healthSummary/databaseHealthSummaryService.js'
-import { DatabasePatientService } from '../services/patient/databasePatientService.js'
-import { DatabaseUserService } from '../services/user/databaseUserService.js'
+import { UserRole } from '../services/credential/credential.js'
+import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
 const exportHealthSummaryInputSchema = z.object({
   userId: z.string(),
@@ -29,27 +23,23 @@ export const exportHealthSummaryFunction = validatedOnCall(
     if (!request.data.userId)
       throw new https.HttpsError('invalid-argument', 'User ID is required')
 
-    const databaseService: DatabaseService = new CacheDatabaseService(
-      new FirestoreService(),
-    )
-    const userService = new DatabaseUserService(databaseService)
-    const credential = new Credential(request.auth, userService)
+    const factory = getServiceFactory()
+    const userService = factory.user()
+    const credential = factory.credential(request.auth)
     try {
-      await credential.checkAny(UserRole.user(request.data.userId))
+      credential.check(UserRole.admin, UserRole.user(request.data.userId))
     } catch {
-      const userService = new DatabaseUserService(databaseService)
       const organization = (await userService.getUser(request.data.userId))
         ?.content.organization
       if (!organization)
         throw new https.HttpsError('not-found', 'Organization not found')
-      await credential.checkAny(UserRole.clinician(organization))
+      credential.check(
+        UserRole.owner(organization),
+        UserRole.clinician(organization),
+      )
     }
 
-    const healthSummaryService = new DefaultHealthSummaryService(
-      new FhirService(),
-      new DatabasePatientService(databaseService),
-      new DatabaseUserService(databaseService),
-    )
+    const healthSummaryService = factory.healthSummary()
     const data = await healthSummaryService.getHealthSummaryData(
       request.data.userId,
     )

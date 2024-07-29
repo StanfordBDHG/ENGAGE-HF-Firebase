@@ -1,0 +1,2316 @@
+{
+  "1808": {
+    "id": "1808",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "1808",
+          "display": "bumetanide"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/6"
+        }
+      }
+    ]
+  },
+  "1998": {
+    "id": "1998",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "1998",
+          "display": "captopril"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/3"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "1998",
+                  "display": "captopril"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 18.75,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "1998",
+                  "display": "captopril"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 150,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "3827": {
+    "id": "3827",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "3827",
+          "display": "enalapril"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/3"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "3827",
+                  "display": "enalapril"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 5,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "3827",
+                  "display": "enalapril"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 40,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "4109": {
+    "id": "4109",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "4109",
+          "display": "ethacrynic acid"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/6"
+        }
+      }
+    ]
+  },
+  "4603": {
+    "id": "4603",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "4603",
+          "display": "furosemide"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/6"
+        }
+      }
+    ]
+  },
+  "9997": {
+    "id": "9997",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "9997",
+          "display": "spironolactone"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/2"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "9997",
+                  "display": "spironolactone"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 12.5,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "9997",
+                  "display": "spironolactone"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 25,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "18867": {
+    "id": "18867",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "18867",
+          "display": "benazepril"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/3"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "18867",
+                  "display": "benazepril"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 5,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "18867",
+                  "display": "benazepril"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 40,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "19484": {
+    "id": "19484",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "19484",
+          "display": "bisoprolol"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/0"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "19484",
+                  "display": "bisoprolol"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 1.25,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "19484",
+                  "display": "bisoprolol"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 10,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "20352": {
+    "id": "20352",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "20352",
+          "display": "carvedilol"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/0"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "20352",
+                  "display": "carvedilol"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 6.25,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "20352",
+                  "display": "carvedilol"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 50,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "29046": {
+    "id": "29046",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "29046",
+          "display": "lisinopril"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/3"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "29046",
+                  "display": "lisinopril"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 2.5,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "29046",
+                  "display": "lisinopril"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 40,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "30131": {
+    "id": "30131",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "30131",
+          "display": "moexipril"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/3"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "30131",
+                  "display": "moexipril"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 7.5,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "30131",
+                  "display": "moexipril"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 15,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "35208": {
+    "id": "35208",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "35208",
+          "display": "quinapril"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/3"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "35208",
+                  "display": "quinapril"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 10,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "35208",
+                  "display": "quinapril"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 40,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "35296": {
+    "id": "35296",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "35296",
+          "display": "ramipril"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/3"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "35296",
+                  "display": "ramipril"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 1.25,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "35296",
+                  "display": "ramipril"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 10,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "38413": {
+    "id": "38413",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "38413",
+          "display": "torsemide"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/6"
+        }
+      }
+    ]
+  },
+  "38454": {
+    "id": "38454",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "38454",
+          "display": "trandolapril"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/3"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "38454",
+                  "display": "trandolapril"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 1,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "38454",
+                  "display": "trandolapril"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 4,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "54552": {
+    "id": "54552",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "54552",
+          "display": "perindopril"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/3"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "54552",
+                  "display": "perindopril"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 2,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "54552",
+                  "display": "perindopril"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 16,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "69749": {
+    "id": "69749",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "69749",
+          "display": "valsartan"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/4"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "69749",
+                  "display": "valsartan"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 20,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "69749",
+                  "display": "valsartan"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 320,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "73494": {
+    "id": "73494",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "73494",
+          "display": "telmisartan"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/4"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "73494",
+                  "display": "telmisartan"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 40,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "73494",
+                  "display": "telmisartan"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 80,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "83515": {
+    "id": "83515",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "83515",
+          "display": "eprosartan"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/4"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "83515",
+                  "display": "eprosartan"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 400,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "83515",
+                  "display": "eprosartan"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 800,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "83818": {
+    "id": "83818",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "83818",
+          "display": "irbesartan"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/4"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "83818",
+                  "display": "irbesartan"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 75,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "83818",
+                  "display": "irbesartan"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 300,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "118463": {
+    "id": "118463",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "118463",
+          "display": "olmesartan medoxomil"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/4"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "118463",
+                  "display": "olmesartan medoxomil"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 10,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "118463",
+                  "display": "olmesartan medoxomil"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 40,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "203160": {
+    "id": "203160",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "203160",
+          "display": "losartan potassium"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/4"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "203160",
+                  "display": "losartan potassium"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 25,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "203160",
+                  "display": "losartan potassium"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 150,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "214354": {
+    "id": "214354",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "214354",
+          "display": "candesartan"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/4"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "214354",
+                  "display": "candesartan"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 4,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "214354",
+                  "display": "candesartan"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 32,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "221124": {
+    "id": "221124",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "221124",
+          "display": "metoprolol succinate"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/0"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "221124",
+                  "display": "metoprolol succinate"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 12.5,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "221124",
+                  "display": "metoprolol succinate"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 200,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "227278": {
+    "id": "227278",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "227278",
+          "display": "fosinopril sodium"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/3"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "227278",
+                  "display": "fosinopril sodium"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 5,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "227278",
+                  "display": "fosinopril sodium"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 40,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "298869": {
+    "id": "298869",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "298869",
+          "display": "eplerenone"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/2"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "298869",
+                  "display": "eplerenone"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 12.5,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "298869",
+                  "display": "eplerenone"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 50,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "668310": {
+    "id": "668310",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "668310",
+          "display": "carvedilol phosphate"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/0"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "668310",
+                  "display": "carvedilol phosphate"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 10,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "668310",
+                  "display": "carvedilol phosphate"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 80,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "1091642": {
+    "id": "1091642",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "1091642",
+          "display": "azilsartan medoxomil"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/4"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "1091642",
+                  "display": "azilsartan medoxomil"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 40,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "1091642",
+                  "display": "azilsartan medoxomil"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 80,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "1373458": {
+    "id": "1373458",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "1373458",
+          "display": "canagliflozin"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/1"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "1373458",
+                  "display": "canagliflozin"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 100,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "1373458",
+                  "display": "canagliflozin"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 100,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "1488564": {
+    "id": "1488564",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "1488564",
+          "display": "dapagliflozin"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/1"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "1488564",
+                  "display": "dapagliflozin"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 5,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "1488564",
+                  "display": "dapagliflozin"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 10,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "1545653": {
+    "id": "1545653",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "1545653",
+          "display": "empagliflozin"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/1"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "1545653",
+                  "display": "empagliflozin"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 5,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "1545653",
+                  "display": "empagliflozin"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 10,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "1656339": {
+    "id": "1656339",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "1656339",
+          "display": "sacubitril / valsartan"
+        }
+      ]
+    },
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": 1656328,
+              "display": "sacubitril"
+            }
+          ]
+        }
+      },
+      {
+        "itemCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": 69749,
+              "display": "valsartan"
+            }
+          ]
+        }
+      }
+    ],
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/5"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": 1656328,
+                  "display": "sacubitril"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 48,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          },
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": 69749,
+                  "display": "valsartan"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 52,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": 1656328,
+                  "display": "sacubitril"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 194,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          },
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": 69749,
+                  "display": "valsartan"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 206,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "1992672": {
+    "id": "1992672",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "1992672",
+          "display": "ertugliflozin"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/1"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "1992672",
+                  "display": "ertugliflozin"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 5,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "1992672",
+                  "display": "ertugliflozin"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 15,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "2627044": {
+    "id": "2627044",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "2627044",
+          "display": "bexagliflozin"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/1"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "2627044",
+                  "display": "bexagliflozin"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 20,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "2627044",
+                  "display": "bexagliflozin"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 20,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "2638675": {
+    "id": "2638675",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "2638675",
+          "display": "sotagliflozin"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/1"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "2638675",
+                  "display": "sotagliflozin"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 200,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueIngredient": [
+          {
+            "itemCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "2638675",
+                  "display": "sotagliflozin"
+                }
+              ]
+            },
+            "strength": {
+              "numerator": {
+                "value": 400,
+                "unit": "mg"
+              },
+              "denominator": {
+                "value": 1
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

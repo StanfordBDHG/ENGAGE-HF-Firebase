@@ -1,412 +1,260 @@
 [
-    {
-        "key": "0",
-        "medications": [
-            {
-                "code": "221124",
-                "minimumDailyDose": 12.5,
-                "targetDailyDose": 200,
-                "drugs": [
-                    1999031,
-                    1999033,
-                    1999035,
-                    1999037,
-                    866412,
-                    866419,
-                    866427,
-                    866436
-                ]
-            },
-            {
-                "code": "20352",
-                "minimumDailyDose": 6.25,
-                "targetDailyDose": 50,
-                "drugs": [
-                    200031,
-                    200032,
-                    200033,
-                    686924
-                ]
-            },
-            {
-                "code": "668310",
-                "minimumDailyDose": 10,
-                "targetDailyDose": 80,
-                "drugs": [
-                    860510,
-                    860516,
-                    860522,
-                    860532
-                ]
-            },
-            {
-                "code": "19484",
-                "minimumDailyDose": 1.25,
-                "targetDailyDose": 10,
-                "drugs": [
-                    854901,
-                    854905
-                ]
-            }
+  {
+    "key": "0",
+    "medications": [
+      {
+        "code": "221124",
+        "minimumDailyDose": 12.5,
+        "targetDailyDose": 200,
+        "drugs": [
+          1999031, 1999033, 1999035, 1999037, 866412, 866419, 866427, 866436
         ]
-    },
-    {
-        "key": "1",
-        "medications": [
-            {
-                "code": "1488564",
-                "minimumDailyDose": 5,
-                "targetDailyDose": 10,
-                "drugs": [
-                    1488569,
-                    1488574
-                ]
-            },
-            {
-                "code": "1545653",
-                "minimumDailyDose": 5,
-                "targetDailyDose": 10,
-                "drugs": [
-                    1545658,
-                    1545666
-                ]
-            },
-            {
-                "code": "2638675",
-                "minimumDailyDose": 200,
-                "targetDailyDose": 400,
-                "drugs": [
-                    2638683,
-                    2638691
-                ]
-            },
-            {
-                "code": "2627044",
-                "minimumDailyDose": 20,
-                "targetDailyDose": 20,
-                "drugs": [
-                    2637859
-                ]
-            },
-            {
-                "code": "1373458",
-                "minimumDailyDose": 100,
-                "targetDailyDose": 100,
-                "drugs": [
-                    1373463,
-                    1373471
-                ]
-            },
-            {
-                "code": "1992672",
-                "minimumDailyDose": 5,
-                "targetDailyDose": 15,
-                "drugs": [
-                    1992810,
-                    1992819
-                ]
-            }
+      },
+      {
+        "code": "20352",
+        "minimumDailyDose": 6.25,
+        "targetDailyDose": 50,
+        "drugs": [200031, 200032, 200033, 686924]
+      },
+      {
+        "code": "668310",
+        "minimumDailyDose": 10,
+        "targetDailyDose": 80,
+        "drugs": [860510, 860516, 860522, 860532]
+      },
+      {
+        "code": "19484",
+        "minimumDailyDose": 1.25,
+        "targetDailyDose": 10,
+        "drugs": [854901, 854905]
+      }
+    ]
+  },
+  {
+    "key": "1",
+    "medications": [
+      {
+        "code": "1488564",
+        "minimumDailyDose": 5,
+        "targetDailyDose": 10,
+        "drugs": [1488569, 1488574]
+      },
+      {
+        "code": "1545653",
+        "minimumDailyDose": 5,
+        "targetDailyDose": 10,
+        "drugs": [1545658, 1545666]
+      },
+      {
+        "code": "2638675",
+        "minimumDailyDose": 200,
+        "targetDailyDose": 400,
+        "drugs": [2638683, 2638691]
+      },
+      {
+        "code": "2627044",
+        "minimumDailyDose": 20,
+        "targetDailyDose": 20,
+        "drugs": [2637859]
+      },
+      {
+        "code": "1373458",
+        "minimumDailyDose": 100,
+        "targetDailyDose": 100,
+        "drugs": [1373463, 1373471]
+      },
+      {
+        "code": "1992672",
+        "minimumDailyDose": 5,
+        "targetDailyDose": 15,
+        "drugs": [1992810, 1992819]
+      }
+    ]
+  },
+  {
+    "key": "2",
+    "medications": [
+      {
+        "code": "9997",
+        "minimumDailyDose": 12.5,
+        "targetDailyDose": 25,
+        "drugs": [198222, 198223, 313096]
+      },
+      {
+        "code": "298869",
+        "minimumDailyDose": 12.5,
+        "targetDailyDose": 50,
+        "drugs": [351256, 351257]
+      }
+    ]
+  },
+  {
+    "key": "3",
+    "medications": [
+      {
+        "code": "35208",
+        "minimumDailyDose": 10,
+        "targetDailyDose": 40,
+        "drugs": [312748, 312749, 312750, 314203]
+      },
+      {
+        "code": "54552",
+        "minimumDailyDose": 2,
+        "targetDailyDose": 16,
+        "drugs": [854925, 854984, 854988]
+      },
+      {
+        "code": "35296",
+        "minimumDailyDose": 1.25,
+        "targetDailyDose": 10,
+        "drugs": [
+          401965, 251856, 251857, 401968, 845488, 251856, 198188, 198189, 261962
         ]
-    },
-    {
-        "key": "2",
-        "medications": [
-            {
-                "code": "9997",
-                "minimumDailyDose": 12.5,
-                "targetDailyDose": 25,
-                "drugs": [
-                    198222,
-                    198223,
-                    313096
-                ]
-            },
-            {
-                "code": "298869",
-                "minimumDailyDose": 12.5,
-                "targetDailyDose": 50,
-                "drugs": [
-                    351256,
-                    351257
-                ]
-            }
-        ]
-    },
-    {
-        "key": "3",
-        "medications": [
-            {
-                "code": "35208",
-                "minimumDailyDose": 10,
-                "targetDailyDose": 40,
-                "drugs": [
-                    312748,
-                    312749,
-                    312750,
-                    314203
-                ]
-            },
-            {
-                "code": "54552",
-                "minimumDailyDose": 2,
-                "targetDailyDose": 16,
-                "drugs": [
-                    854925,
-                    854984,
-                    854988
-                ]
-            },
-            {
-                "code": "35296",
-                "minimumDailyDose": 1.25,
-                "targetDailyDose": 10,
-                "drugs": [
-                    401965,
-                    251856,
-                    251857,
-                    401968,
-                    845488,
-                    251856,
-                    198188,
-                    198189,
-                    261962
-                ]
-            },
-            {
-                "code": "18867",
-                "minimumDailyDose": 5,
-                "targetDailyDose": 40,
-                "drugs": [
-                    898723,
-                    898687,
-                    898690,
-                    898719
-                ]
-            },
-            {
-                "code": "1998",
-                "minimumDailyDose": 18.75,
-                "targetDailyDose": 150,
-                "drugs": [
-                    308963,
-                    317173,
-                    308964,
-                    308962
-                ]
-            },
-            {
-                "code": "3827",
-                "minimumDailyDose": 5,
-                "targetDailyDose": 40,
-                "drugs": [
-                    858804,
-                    858813,
-                    858817,
-                    858810
-                ]
-            },
-            {
-                "code": "29046",
-                "minimumDailyDose": 2.5,
-                "targetDailyDose": 40,
-                "drugs": [
-                    311353,
-                    311354,
-                    314076,
-                    314077,
-                    205326
-                ]
-            },
-            {
-                "code": "227278",
-                "minimumDailyDose": 5,
-                "targetDailyDose": 40,
-                "drugs": [
-                    857169,
-                    857183,
-                    857187
-                ]
-            },
-            {
-                "code": "38454",
-                "minimumDailyDose": 1,
-                "targetDailyDose": 4,
-                "drugs": [
-                    199353,
-                    199351,
-                    199352
-                ]
-            },
-            {
-                "code": "30131",
-                "minimumDailyDose": 7.5,
-                "targetDailyDose": 15,
-                "drugs": [
-                    1299897,
-                    1299896
-                ]
-            }
-        ]
-    },
-    {
-        "key": "4",
-        "medications": [
-            {
-                "code": "203160",
-                "minimumDailyDose": 25,
-                "targetDailyDose": 150,
-                "drugs": [
-                    979480,
-                    979485,
-                    979492
-                ]
-            },
-            {
-                "code": "69749",
-                "minimumDailyDose": 20,
-                "targetDailyDose": 320,
-                "drugs": [
-                    349483,
-                    349199,
-                    349201,
-                    349200
-                ]
-            },
-            {
-                "code": "214354",
-                "minimumDailyDose": 4,
-                "targetDailyDose": 32,
-                "drugs": [
-                    153822,
-                    153823,
-                    577776,
-                    639537
-                ]
-            },
-            {
-                "code": "83818",
-                "minimumDailyDose": 75,
-                "targetDailyDose": 300,
-                "drugs": [
-                    200094,
-                    200095,
-                    200096
-                ]
-            },
-            {
-                "code": "73494",
-                "minimumDailyDose": 40,
-                "targetDailyDose": 80,
-                "drugs": [
-                    282755,
-                    205304,
-                    205305
-                ]
-            },
-            {
-                "code": "118463",
-                "minimumDailyDose": 10,
-                "targetDailyDose": 40,
-                "drugs": [
-                    349373,
-                    349401,
-                    349405
-                ]
-            },
-            {
-                "code": "1091642",
-                "minimumDailyDose": 40,
-                "targetDailyDose": 80,
-                "drugs": [
-                    1091646,
-                    1091652
-                ]
-            },
-            {
-                "code": "83515",
-                "minimumDailyDose": 400,
-                "targetDailyDose": 800,
-                "drugs": [
-                    310139,
-                    310140
-                ],
-                "fallbackTerms": {
-                    "310139": {
-                        "strength": "400 MG",
-                        "rxnormDoseForm": "Oral Tablet",
-                        "fullName": "eprosartan 400 MG Oral Tablet",
-                        "displayName": "Eprosartan (Oral Pill)"
-                    }
-                }
-            }
-        ]
-    },
-    {
-        "key": "5",
-        "medications": [
-            {
-                "code": "1656339",
-                "minimumDailyDose": [48,52],
-                "targetDailyDose": [194,206],
-                "ingredients": [
-                    1656328,
-                    69749
-                ],
-                "drugs": [
-                    2679800,
-                    2679793,
-                    1656340,
-                    1656349,
-                    1656354
-                ]
-            }
-        ]
-    },
-    {
-        "key": "6",
-        "medications": [
-            {
-                "code": "4603",
-                "drugs": [
-                    310429,
-                    313988,
-                    197732
-                ]
-            },
-            {
-                "code": "1808",
-                "drugs": [
-                    197417,
-                    197418,
-                    197419
-                ]
-            },
-            {
-                "code": "38413",
-                "drugs": [
-                    198372,
-                    198369,
-                    198371,
-                    2589881,
-                    2589885,
-                    198370
-                ]
-            },
-            {
-                "code": "4109",
-                "drugs": [
-                    1251903,
-                    1251907
-                ],
-                "fallbackTerms": {
-                    "1251907": {
-                        "strength": "50 MG",
-                        "rxnormDoseForm": "Oral Tablet",
-                        "fullName": "ethacrynic acid 50 MG Oral Tablet",
-                        "displayName": "Ethacrynate (Oral Tablet)"
-                    }
-                }
-            }
-        ]
-    }
+      },
+      {
+        "code": "18867",
+        "minimumDailyDose": 5,
+        "targetDailyDose": 40,
+        "drugs": [898723, 898687, 898690, 898719]
+      },
+      {
+        "code": "1998",
+        "minimumDailyDose": 18.75,
+        "targetDailyDose": 150,
+        "drugs": [308963, 317173, 308964, 308962]
+      },
+      {
+        "code": "3827",
+        "minimumDailyDose": 5,
+        "targetDailyDose": 40,
+        "drugs": [858804, 858813, 858817, 858810]
+      },
+      {
+        "code": "29046",
+        "minimumDailyDose": 2.5,
+        "targetDailyDose": 40,
+        "drugs": [311353, 311354, 314076, 314077, 205326]
+      },
+      {
+        "code": "227278",
+        "minimumDailyDose": 5,
+        "targetDailyDose": 40,
+        "drugs": [857169, 857183, 857187]
+      },
+      {
+        "code": "38454",
+        "minimumDailyDose": 1,
+        "targetDailyDose": 4,
+        "drugs": [199353, 199351, 199352]
+      },
+      {
+        "code": "30131",
+        "minimumDailyDose": 7.5,
+        "targetDailyDose": 15,
+        "drugs": [1299897, 1299896]
+      }
+    ]
+  },
+  {
+    "key": "4",
+    "medications": [
+      {
+        "code": "203160",
+        "minimumDailyDose": 25,
+        "targetDailyDose": 150,
+        "drugs": [979480, 979485, 979492]
+      },
+      {
+        "code": "69749",
+        "minimumDailyDose": 20,
+        "targetDailyDose": 320,
+        "drugs": [349483, 349199, 349201, 349200]
+      },
+      {
+        "code": "214354",
+        "minimumDailyDose": 4,
+        "targetDailyDose": 32,
+        "drugs": [153822, 153823, 577776, 639537]
+      },
+      {
+        "code": "83818",
+        "minimumDailyDose": 75,
+        "targetDailyDose": 300,
+        "drugs": [200094, 200095, 200096]
+      },
+      {
+        "code": "73494",
+        "minimumDailyDose": 40,
+        "targetDailyDose": 80,
+        "drugs": [282755, 205304, 205305]
+      },
+      {
+        "code": "118463",
+        "minimumDailyDose": 10,
+        "targetDailyDose": 40,
+        "drugs": [349373, 349401, 349405]
+      },
+      {
+        "code": "1091642",
+        "minimumDailyDose": 40,
+        "targetDailyDose": 80,
+        "drugs": [1091646, 1091652]
+      },
+      {
+        "code": "83515",
+        "minimumDailyDose": 400,
+        "targetDailyDose": 800,
+        "drugs": [310139, 310140],
+        "fallbackTerms": {
+          "310139": {
+            "strength": "400 MG",
+            "rxnormDoseForm": "Oral Tablet",
+            "fullName": "eprosartan 400 MG Oral Tablet",
+            "displayName": "Eprosartan (Oral Pill)"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "key": "5",
+    "medications": [
+      {
+        "code": "1656339",
+        "minimumDailyDose": [48, 52],
+        "targetDailyDose": [194, 206],
+        "ingredients": [1656328, 69749],
+        "drugs": [2679800, 2679793, 1656340, 1656349, 1656354]
+      }
+    ]
+  },
+  {
+    "key": "6",
+    "medications": [
+      {
+        "code": "4603",
+        "drugs": [310429, 313988, 197732]
+      },
+      {
+        "code": "1808",
+        "drugs": [197417, 197418, 197419]
+      },
+      {
+        "code": "38413",
+        "drugs": [198372, 198369, 198371, 2589881, 2589885, 198370]
+      },
+      {
+        "code": "4109",
+        "drugs": [1251903, 1251907],
+        "fallbackTerms": {
+          "1251907": {
+            "strength": "50 MG",
+            "rxnormDoseForm": "Oral Tablet",
+            "fullName": "ethacrynic acid 50 MG Oral Tablet",
+            "displayName": "Ethacrynate (Oral Tablet)"
+          }
+        }
+      }
+    ]
+  }
 ]

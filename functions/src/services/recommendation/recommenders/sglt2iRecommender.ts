@@ -19,14 +19,14 @@ export class Sglt2iRecommender extends Recommender {
   // Methods
 
   compute(input: RecommendationInput): MedicationRecommendation[] {
-    const currentMedication = this.findCurrentMedication(input.requests, [
+    const currentRequests = this.findCurrentRequests(input.requests, [
       MedicationClassReference.sglt2inhibitors,
     ])
-    if (!currentMedication) return this.computeNew(input)
+    if (currentRequests.length == 0) return this.computeNew(input)
 
-    if (this.isTargetDoseReached(currentMedication))
+    if (this.isTargetDailyDoseReached(currentRequests))
       return this.createRecommendation(
-        currentMedication,
+        currentRequests,
         undefined,
         MedicationRecommendationCategory.targetDoseReached,
       )
@@ -37,20 +37,20 @@ export class Sglt2iRecommender extends Recommender {
 
     if (!medianSystolic)
       return this.createRecommendation(
-        currentMedication,
+        currentRequests,
         undefined,
         MedicationRecommendationCategory.morePatientObservationsRequired,
       )
 
     if (medianSystolic < 100)
       return this.createRecommendation(
-        currentMedication,
+        currentRequests,
         undefined,
         MedicationRecommendationCategory.personalTargetDoseReached,
       )
 
     return this.createRecommendation(
-      currentMedication,
+      currentRequests,
       undefined,
       MedicationRecommendationCategory.improvementAvailable,
     )
@@ -74,7 +74,7 @@ export class Sglt2iRecommender extends Recommender {
         return []
       case ContraindicationCategory.clinicianListed:
         return this.createRecommendation(
-          undefined,
+          [],
           MedicationReference.empagliflozin,
           MedicationRecommendationCategory.noActionRequired,
         )
@@ -88,20 +88,20 @@ export class Sglt2iRecommender extends Recommender {
 
     if (!medianSystolic)
       return this.createRecommendation(
-        undefined,
+        [],
         MedicationReference.empagliflozin,
         MedicationRecommendationCategory.morePatientObservationsRequired,
       )
 
     if (medianSystolic < 100)
       return this.createRecommendation(
-        undefined,
+        [],
         MedicationReference.empagliflozin,
         MedicationRecommendationCategory.noActionRequired,
       )
 
     return this.createRecommendation(
-      undefined,
+      [],
       MedicationReference.empagliflozin,
       MedicationRecommendationCategory.notStarted,
     )

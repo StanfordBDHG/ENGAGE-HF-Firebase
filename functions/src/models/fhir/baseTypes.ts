@@ -6,6 +6,8 @@
 // SPDX-License-Identifier: MIT
 //
 
+import { type FHIRMedicationIngredient } from './medication'
+
 export interface FHIRCodeableConcept extends FHIRElement {
   coding?: FHIRCoding[]
   text?: string
@@ -27,7 +29,7 @@ export interface FHIRElement {
 export interface FHIRExtension {
   url: string
   valueReference?: FHIRReference<unknown>
-  valueQuantity?: FHIRSimpleQuantity
+  valueIngredient?: FHIRMedicationIngredient[]
 }
 
 export interface FHIRPeriod {

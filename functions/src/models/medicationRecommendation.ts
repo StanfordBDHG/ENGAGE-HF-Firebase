@@ -24,13 +24,13 @@ export enum MedicationRecommendationCategory {
 }
 
 export interface MedicationRecommendation {
-  currentMedication?: FHIRReference<FHIRMedicationRequest>
+  currentMedication: Array<FHIRReference<FHIRMedicationRequest>>
   recommendedMedication?: FHIRReference<FHIRMedication>
   category: MedicationRecommendationCategory
 }
 
 export interface MedicationRecommendationContext {
-  currentMedication?: MedicationRequestContext
+  currentMedication: MedicationRequestContext[]
   recommendedMedication?: FHIRMedication
   category: MedicationRecommendationCategory
 }
