@@ -283,6 +283,7 @@ These are the output values of the recommendation algorithms. Depending on the t
 |currentMedication|optional Reference(FHIRMedicationRequest)|e.g. `{"reference":"users/123/medicationRequest/2"}`|Reference to the existing medication request, if applicable.|
 |recommendedMedication|optional Reference(FHIRMedication)|e.g. `{"reference":"medications/2"}`|Reference to the recommended medication, if applicable. This should always direct to a medication, not a drug.|
 |type|MedicationRecommendationType|e.g. "notStarted"|This type describes the outcome of the recommendation algorithm and is described in more detail below.|
+|displayInformation | MedicationDetails | Includes a title, subtitle, description, and optional dosage information. | The information necessary for the client to display the medication recommendation.
 
 #### Medication Recommendation Type
 
@@ -297,6 +298,32 @@ These are the output values of the recommendation algorithms. Depending on the t
 |noActionRequired|Gray|undefined|exists|The recommended medication is not eligible, but should still be shown to the user as an option without recommending it to them.|
 
 Diuretics, if currently present as medication request, will be shown as a recommendation with `personalTargetDoseReached`, so that the logic on the client becomes easier.
+
+#### Medication Details
+
+|Property|Type|Values|Comments|
+|-|-|-|-|
+| title | String | e.g. "Carvedilol" | The name of the medication (not the tablet), e.g. coming from `medications/1998`. |
+| subtitle | String | e.g. "Beta Blockers" | The class of the drug, e.g. coming from `medications/1998`. |
+| description | String | e.g. "Personal target dose reached. No action required." | The explanation of the recommendation, displayed along with a summary of the medication. |
+| type | MedicationRecommendationType | e.g. personalTargetDoseReached | See [Medication Recommendation Type](#Medication-Recommendation-Type) |
+| dosageInformation | Optional(DosageInformation) | See [Dosage Information](#Dosage-Information) | A description of the current, minimum, and target doses for a given medication. Only present when the patient has an active medication request for the medication. | 
+
+The `DosageInformation` property contains the following information:
+
+|Property|Type|Values|Comments|
+|-|-|-|-|
+| currentSchedule | Array(DoseSchedule) | e.g. \[25mg twice daily, 10mg daily\] | An array tracking how many times per day the patient currently takes each tablet for a given prescription. |
+| minimumSchedule | Array(DoseSchedule) | e.g. \[6.25mg daily\] | An array tracking how many times per day the patient would take each tablet on a minimal dose. Minimum dosages can be found the EngageHF Development Guide. |
+| targetSchedule | Array(DoseSchedule) | e.g. \[6.25mg daily\] | An array tracking how many times per day the patient would take each tablet on a maximal dose. Target dosages can be found in the EngageHF Development Guide. |
+| unit | String | e.g. "mg" | The unit by which the ingredients in the medications are measured, as found in `medications/$medicationId$/drugs/$drugId$`. |
+
+The `DoseSchedule` object describes the number of tablets taken per day for a single medication as described in `medications/$medicationId$/drugs/$drugId$`. For example, taking two 5mg tablets in the morning and one 15mg tablet in the afternoon would result in two schedules: 5mg twice daily, and 15mg daily. Compound (multi-ingredient) tablets have multiple quantities per pill, and will be displayed as e.g. 24/26mg twice daily. `DoseSchedule` has the following properties:
+
+|Property|Type|Values|Comments|
+|-|-|-|-|
+| frequency | Double | e.g. 1, 2, or 1.5 | The number of tablets per day (as described by `medicationRequests/$medicationRequestId$/dosageInstruction`). |
+| quantity | Array(Double) | e.g. \[24, 26\] or \[25\] | The amount of each active ingredient per tablet. |
 
 ### Observations
 
