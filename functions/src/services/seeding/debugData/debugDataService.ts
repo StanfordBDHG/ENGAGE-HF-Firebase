@@ -144,13 +144,13 @@ export class DebugDataService extends SeedingService {
       94, 19, 27, 70, 20,
     ].map((n) => n / 100)
 
-    const values = randomNumbers.map((number, index) => {
+    const values = randomNumbers.map((number, index) =>
       this.userDataFactory.bloodPressureObservation({
         date: this.advanceDateByDays(date, -index - 2),
         systolic: 80 + number * 70,
         diastolic: 50 + number * 40,
-      })
-    })
+      }),
+    )
 
     await this.replaceCollection(
       `users/${userId}/bloodPressureObservations`,
