@@ -125,6 +125,7 @@ export const updateUserInformationFunction = validatedOnCall(
 
     const credential = new Credential(request.auth, userService)
     await credential.checkAny(
+      UserRole.admin,
       ...(organization ? [UserRole.clinician(organization)] : []),
       UserRole.user(request.data.userId),
     )
@@ -151,6 +152,7 @@ export const deleteUserFunction = validatedOnCall(
 
     const credential = new Credential(request.auth, userService)
     await credential.checkAny(
+      UserRole.admin,
       ...(user.content.organization ?
         [UserRole.clinician(user.content.organization)]
       : []),
