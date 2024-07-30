@@ -13,6 +13,7 @@ import { UserRole } from '../services/credential/credential.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 import { type ServiceFactory } from '../services/factory/serviceFactory.js'
 import { CachingStrategy } from '../services/seeding/seedingService.js'
+import { UserType } from '../models/user.js'
 
 enum StaticDataComponent {
   medicationClasses = 'medicationClasses',
@@ -91,6 +92,10 @@ const defaultSeedInputSchema = z.object({
     .nativeEnum(DebugDataComponent)
     .array()
     .default(Object.values(DebugDataComponent)),
+  onlyUserCollections: z
+    .nativeEnum(UserDebugDataComponent)
+    .array()
+    .default(Object.values(UserDebugDataComponent)),
   staticData: updateStaticDataInputSchema.optional(),
   userData: z
     .object({
@@ -106,7 +111,7 @@ const defaultSeedInputSchema = z.object({
 
 export const defaultSeedFunction = validatedOnRequest(
   defaultSeedInputSchema,
-  async (request, data, response) => {
+  async (_, data, response) => {
     const factory = getServiceFactory()
 
     if (data.staticData) await updateStaticData(factory, data.staticData)
@@ -116,8 +121,27 @@ export const defaultSeedFunction = validatedOnRequest(
     if (data.only.includes(DebugDataComponent.invitations))
       await debugDataService.seedInvitations()
 
-    if (data.only.includes(DebugDataComponent.users))
-      await debugDataService.seedUsers()
+    if (data.only.includes(DebugDataComponent.users)) {
+      const userIds = await debugDataService.seedUsers()
+      const userService = factory.user()
+
+      for (const userId of userIds) {
+        const user = await userService.getUser(userId)
+        if (user?.content.type !== UserType.patient) continue
+        await debugDataService.seedUserAppointments(userId, data.date)
+        await debugDataService.seedUserBloodPressureObservations(
+          userId,
+          data.date,
+        )
+        await debugDataService.seedUserBodyWeightObservations(userId, data.date)
+        await debugDataService.seedUserCreatinineObservations(userId, data.date)
+        await debugDataService.seedUserEgfrObservations(userId, data.date)
+        await debugDataService.seedUserHeartRateObservations(userId, data.date)
+        await debugDataService.seedUserPotassiumObservations(userId, data.date)
+        await debugDataService.seedUserMedicationRequests(userId)
+        await debugDataService.seedUserMessages(userId)
+      }
+    }
 
     for (const userData of data.userData ?? []) {
       if (userData.only.includes(UserDebugDataComponent.appointments))
