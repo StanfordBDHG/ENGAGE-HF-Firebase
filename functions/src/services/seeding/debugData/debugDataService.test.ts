@@ -54,7 +54,7 @@ describe('DebugDataService', () => {
   }
 
   it('recreates the same appointments', async () => {
-    await generatesSameCollectionAsBefore('users/0/appointments', async () =>
+    await generatesSameCollectionAsBefore('users/0/appointments', () =>
       service.seedUserAppointments('0', date),
     )
   })
@@ -62,61 +62,56 @@ describe('DebugDataService', () => {
   it('recreates the same blood pressure observations', async () => {
     await generatesSameCollectionAsBefore(
       'users/0/bloodPressureObservations',
-      async () => service.seedUserBloodPressureObservations('0', date),
+      () => service.seedUserBloodPressureObservations('0', date),
     )
   })
 
   it('recreates the same body weight observations', async () => {
     await generatesSameCollectionAsBefore(
       'users/0/bodyWeightObservations',
-      async () => service.seedUserBodyWeightObservations('0', date),
+      () => service.seedUserBodyWeightObservations('0', date),
     )
   })
 
   it('recreates the same creatinine observations', async () => {
     await generatesSameCollectionAsBefore(
       'users/0/creatinineObservations',
-      async () => service.seedUserCreatinineObservations('0', date),
+      () => service.seedUserCreatinineObservations('0', date),
     )
   })
 
   it('recreates the same dry weight observations', async () => {
-    await generatesSameCollectionAsBefore(
-      'users/0/dryWeightObservations',
-      async () => service.seedUserDryWeightObservations('0', date),
+    await generatesSameCollectionAsBefore('users/0/dryWeightObservations', () =>
+      service.seedUserDryWeightObservations('0', date),
     )
   })
 
   it('recreates the same eGfr observations', async () => {
-    await generatesSameCollectionAsBefore(
-      'users/0/eGfrObservations',
-      async () => service.seedUserEgfrObservations('0', date),
+    await generatesSameCollectionAsBefore('users/0/eGfrObservations', () =>
+      service.seedUserEgfrObservations('0', date),
     )
   })
 
   it('recreates the same heart rate observations', async () => {
-    await generatesSameCollectionAsBefore(
-      'users/0/heartRateObservations',
-      async () => service.seedUserHeartRateObservations('0', date),
+    await generatesSameCollectionAsBefore('users/0/heartRateObservations', () =>
+      service.seedUserHeartRateObservations('0', date),
     )
   })
 
   it('recreates the same messages', async () => {
-    await generatesSameCollectionAsBefore(
-      'users/0/potassiumObservations',
-      async () => service.seedUserPotassiumObservations('0', date),
+    await generatesSameCollectionAsBefore('users/0/potassiumObservations', () =>
+      service.seedUserPotassiumObservations('0', date),
     )
   })
 
   it('recreates the same medication requests', async () => {
-    await generatesSameCollectionAsBefore(
-      'users/0/medicationRequests',
-      async () => service.seedUserMedicationRequests('0'),
+    await generatesSameCollectionAsBefore('users/0/medicationRequests', () =>
+      service.seedUserMedicationRequests('0'),
     )
   })
 
   it('recreates the same messages', async () => {
-    await generatesSameCollectionAsBefore('users/0/messages', async () =>
+    await generatesSameCollectionAsBefore('users/0/messages', () =>
       service.seedUserMessages('0'),
     )
   })

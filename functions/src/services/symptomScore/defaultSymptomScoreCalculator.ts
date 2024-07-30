@@ -45,7 +45,7 @@ export class DefaultSymptomScoreCalculator implements SymptomScoreCalculator {
       response.answer1a,
       response.answer1b,
       response.answer1c,
-    ].filter((x) => x !== 0)
+    ].filter((x) => x !== 6)
     const q1Average = average(q1NonMissing)
     if (q1Average && q1NonMissing.length >= 2) {
       result.physicalLimitsScore = (100 * (q1Average - 1)) / 4
@@ -68,7 +68,7 @@ export class DefaultSymptomScoreCalculator implements SymptomScoreCalculator {
       response.answer8a,
       response.answer8b,
       response.answer8c,
-    ].filter((x) => x !== 0)
+    ].filter((x) => x !== 6)
     const q8Average = average(q8NonMissing)
     if (q8Average && q8NonMissing.length >= 1)
       result.socialLimitsScore = (100 * (q8Average - 1)) / 4
