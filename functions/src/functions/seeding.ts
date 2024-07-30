@@ -101,7 +101,7 @@ const defaultSeedInputSchema = z.object({
         .default(Object.values(UserDebugDataComponent)),
     })
     .array()
-    .optional(),
+    .default([]),
 })
 
 export const defaultSeedFunction = validatedOnRequest(
@@ -183,9 +183,11 @@ const customSeedInputSchema = z.object({
 
 export const customSeedFunction = validatedOnRequest(
   customSeedInputSchema,
-  async (request, data, response) => {
+  async (_, data, response) => {
     const factory = getServiceFactory()
 
     await factory.debugData().seedCustom(data)
+    response.write('Success', 'utf8')
+    response.end()
   },
 )
