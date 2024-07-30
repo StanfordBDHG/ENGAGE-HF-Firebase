@@ -14,16 +14,19 @@ import { MedicationRecommendationCategory } from '../../../models/medicationReco
 import { type MedicationRequestContext } from '../../../models/medicationRequestContext.js'
 import { MockContraindicationService } from '../../../tests/mocks/contraindicationService.js'
 import { mockHealthSummaryData } from '../../../tests/mocks/healthSummaryData.js'
+import { setupMockAuth, setupMockFirestore } from '../../../tests/setup.js'
 import {
-  CodingSystem,
   DrugReference,
-  FHIRExtensionUrl,
-  MedicationClassReference,
+  type MedicationClassReference,
   MedicationReference,
 } from '../../codes.js'
 import { ContraindicationCategory } from '../../contraindication/contraindicationService.js'
+import { getServiceFactory } from '../../factory/getServiceFactory.js'
 import { FhirService } from '../../fhir/fhirService.js'
 import { QuantityUnit } from '../../fhir/quantityUnit.js'
+import { type MedicationService } from '../../medication/medicationService.js'
+import { UserDebugDataFactory } from '../../seeding/debugData/userDebugDataFactory.js'
+import { CachingStrategy } from '../../seeding/seedingService.js'
 import { type RecommendationInput } from '../recommendationService.js'
 
 describe('MraRecommender', () => {
@@ -42,6 +45,17 @@ describe('MraRecommender', () => {
     new FhirService(),
   )
   let healthSummaryData: HealthSummaryData
+  let medicationService: MedicationService
+
+  before(async () => {
+    setupMockAuth()
+    setupMockFirestore()
+    const factory = getServiceFactory()
+    const staticDataService = factory.staticData()
+    await staticDataService.updateMedicationClasses(CachingStrategy.expectCache)
+    await staticDataService.updateMedications(CachingStrategy.expectCache)
+    medicationService = factory.medication()
+  })
 
   beforeEach(async () => {
     healthSummaryData = await mockHealthSummaryData(new Date())
@@ -150,141 +164,27 @@ describe('MraRecommender', () => {
   })
 
   describe('Existing treatment: Eplerenone', () => {
-    const contextBelowTarget: MedicationRequestContext = {
-      request: {
-        medicationReference: {
-          reference: DrugReference.eplerenone25,
-        },
-        dosageInstruction: [
-          {
-            timing: {
-              repeat: {
-                timeOfDay: ['08:00'],
-              },
-            },
-            doseAndRate: [
-              {
-                doseQuantity: {
-                  value: 1,
-                  unit: 'tablet',
-                },
-              },
-            ],
-          },
-        ],
-      },
-      requestReference: {
-        reference: '/users/mockUser/medicationRequests/mockMedicationRequest',
-      },
-      drug: {
-        code: {
-          coding: [
-            {
-              system: CodingSystem.rxNorm,
-              code: DrugReference.eplerenone25.split('/').at(-1),
-              display: 'Eplerenone 25 MG Oral Tablet',
-            },
-          ],
-        },
-        ingredient: [
-          {
-            itemCodeableConcept: {
-              coding: [
-                {
-                  system: CodingSystem.rxNorm,
-                  code: MedicationReference.eplerenone.split('/').at(-1),
-                  display: 'Eplerenone',
-                },
-              ],
-            },
-            strength: {
-              numerator: {
-                ...QuantityUnit.mg,
-                value: 25,
-              },
-            },
-          },
-        ],
-      },
-      drugReference: {
-        reference: DrugReference.eplerenone25,
-      },
-      medication: {
-        code: {
-          coding: [
-            {
-              system: CodingSystem.rxNorm,
-              code: MedicationReference.eplerenone.split('/').at(-1),
-              display: 'Eplerenone',
-            },
-          ],
-        },
-        extension: [
-          {
-            url: FHIRExtensionUrl.minimumDailyDose,
-            valueIngredient: [
-              {
-                itemCodeableConcept: {
-                  coding: [
-                    {
-                      system: CodingSystem.rxNorm,
-                      code: MedicationReference.eplerenone.split('/').at(-1),
-                      display: 'Eplerenone',
-                    },
-                  ],
-                },
-                strength: {
-                  numerator: {
-                    ...QuantityUnit.mg,
-                    value: 12.5,
-                  },
-                },
-              },
-            ],
-          },
-          {
-            url: FHIRExtensionUrl.targetDailyDose,
-            valueIngredient: [
-              {
-                itemCodeableConcept: {
-                  coding: [
-                    {
-                      system: CodingSystem.rxNorm,
-                      code: MedicationReference.eplerenone.split('/').at(-1),
-                      display: 'Eplerenone',
-                    },
-                  ],
-                },
-                strength: {
-                  numerator: {
-                    ...QuantityUnit.mg,
-                    value: 50,
-                  },
-                },
-              },
-            ],
-          },
-        ],
-      },
-      medicationReference: {
-        reference: MedicationReference.eplerenone,
-      },
-      medicationClass: {
-        name: 'MRA',
-        videoPath: 'videoSections/1/videos/3',
-      },
-      medicationClassReference: {
-        reference:
-          MedicationClassReference.mineralocorticoidReceptorAntagonists,
-      },
-    }
+    let contextBelowTarget: MedicationRequestContext
+    before(async () => {
+      const request = new UserDebugDataFactory().medicationRequest({
+        drugReference: DrugReference.eplerenone25,
+        frequencyPerDay: 1,
+        quantity: 1,
+      })
+      contextBelowTarget = await medicationService.getContext(request, {
+        reference: 'users/mockUser/medicationRequests/someMedicationRequest',
+      })
+    })
 
-    const contextAtTarget = structuredClone(contextBelowTarget)
-    contextAtTarget.request.dosageInstruction
-      ?.at(0)
-      ?.timing?.repeat?.timeOfDay?.push('20:00')
-
-    it('states that target dose is reached', () => {
+    it('states that target dose is reached', async () => {
+      const request = new UserDebugDataFactory().medicationRequest({
+        drugReference: DrugReference.eplerenone25,
+        frequencyPerDay: 2,
+        quantity: 1,
+      })
+      const contextAtTarget = await medicationService.getContext(request, {
+        reference: 'users/mockUser/medicationRequests/someMedicationRequest',
+      })
       const input: RecommendationInput = {
         requests: [contextAtTarget],
         contraindications: [],

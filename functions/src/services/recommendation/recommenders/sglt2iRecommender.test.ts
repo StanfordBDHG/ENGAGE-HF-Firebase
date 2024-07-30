@@ -14,16 +14,19 @@ import { MedicationRecommendationCategory } from '../../../models/medicationReco
 import { type MedicationRequestContext } from '../../../models/medicationRequestContext.js'
 import { MockContraindicationService } from '../../../tests/mocks/contraindicationService.js'
 import { mockHealthSummaryData } from '../../../tests/mocks/healthSummaryData.js'
+import { setupMockAuth, setupMockFirestore } from '../../../tests/setup.js'
 import {
-  CodingSystem,
   DrugReference,
-  FHIRExtensionUrl,
-  MedicationClassReference,
+  type MedicationClassReference,
   MedicationReference,
 } from '../../codes.js'
 import { ContraindicationCategory } from '../../contraindication/contraindicationService.js'
+import { getServiceFactory } from '../../factory/getServiceFactory.js'
 import { FhirService } from '../../fhir/fhirService.js'
 import { QuantityUnit } from '../../fhir/quantityUnit.js'
+import { type MedicationService } from '../../medication/medicationService.js'
+import { UserDebugDataFactory } from '../../seeding/debugData/userDebugDataFactory.js'
+import { CachingStrategy } from '../../seeding/seedingService.js'
 import { type RecommendationInput } from '../recommendationService.js'
 
 describe('Sglt2iRecommender', () => {
@@ -42,6 +45,17 @@ describe('Sglt2iRecommender', () => {
     new FhirService(),
   )
   let healthSummaryData: HealthSummaryData
+  let medicationService: MedicationService
+
+  before(async () => {
+    setupMockAuth()
+    setupMockFirestore()
+    const factory = getServiceFactory()
+    const staticDataService = factory.staticData()
+    await staticDataService.updateMedicationClasses(CachingStrategy.expectCache)
+    await staticDataService.updateMedications(CachingStrategy.expectCache)
+    medicationService = factory.medication()
+  })
 
   beforeEach(async () => {
     healthSummaryData = await mockHealthSummaryData(new Date())
@@ -171,140 +185,27 @@ describe('Sglt2iRecommender', () => {
   })
 
   describe('On Sotagliflozin', () => {
-    const contextBelowTarget: MedicationRequestContext = {
-      request: {
-        medicationReference: {
-          reference: DrugReference.sotagliflozin200,
-        },
-        dosageInstruction: [
-          {
-            timing: {
-              repeat: {
-                timeOfDay: ['08:00'],
-              },
-            },
-            doseAndRate: [
-              {
-                doseQuantity: {
-                  value: 1,
-                  unit: 'tablet',
-                },
-              },
-            ],
-          },
-        ],
-      },
-      requestReference: {
-        reference: '/users/mockUser/medicationRequests/mockMedicationRequest',
-      },
-      drug: {
-        code: {
-          coding: [
-            {
-              system: CodingSystem.rxNorm,
-              code: DrugReference.sotagliflozin200.split('/').at(-1),
-              display: 'Sotagliflozin 200 MG Oral Tablet',
-            },
-          ],
-        },
-        ingredient: [
-          {
-            itemCodeableConcept: {
-              coding: [
-                {
-                  system: CodingSystem.rxNorm,
-                  code: MedicationReference.sotagliflozin.split('/').at(-1),
-                  display: 'Sotagliflozin',
-                },
-              ],
-            },
-            strength: {
-              numerator: {
-                ...QuantityUnit.mg,
-                value: 200,
-              },
-            },
-          },
-        ],
-      },
-      drugReference: {
-        reference: DrugReference.sotagliflozin200,
-      },
-      medication: {
-        code: {
-          coding: [
-            {
-              system: CodingSystem.rxNorm,
-              code: MedicationReference.sotagliflozin.split('/').at(-1),
-              display: 'Sotagliflozin',
-            },
-          ],
-        },
-        extension: [
-          {
-            url: FHIRExtensionUrl.minimumDailyDose,
-            valueIngredient: [
-              {
-                itemCodeableConcept: {
-                  coding: [
-                    {
-                      system: CodingSystem.rxNorm,
-                      code: MedicationReference.sotagliflozin.split('/').at(-1),
-                      display: 'Sotagliflozin',
-                    },
-                  ],
-                },
-                strength: {
-                  numerator: {
-                    ...QuantityUnit.mg,
-                    value: 200,
-                  },
-                },
-              },
-            ],
-          },
-          {
-            url: FHIRExtensionUrl.targetDailyDose,
-            valueIngredient: [
-              {
-                itemCodeableConcept: {
-                  coding: [
-                    {
-                      system: CodingSystem.rxNorm,
-                      code: MedicationReference.sotagliflozin.split('/').at(-1),
-                      display: 'Sotagliflozin',
-                    },
-                  ],
-                },
-                strength: {
-                  numerator: {
-                    ...QuantityUnit.mg,
-                    value: 400,
-                  },
-                },
-              },
-            ],
-          },
-        ],
-      },
-      medicationReference: {
-        reference: MedicationReference.eplerenone,
-      },
-      medicationClass: {
-        name: 'SGLT2 Inhibitors',
-        videoPath: 'videoSections/1/videos/4',
-      },
-      medicationClassReference: {
-        reference: MedicationClassReference.sglt2inhibitors,
-      },
-    }
+    let contextBelowTarget: MedicationRequestContext
+    before(async () => {
+      const request = new UserDebugDataFactory().medicationRequest({
+        drugReference: DrugReference.sotagliflozin200,
+        frequencyPerDay: 1,
+        quantity: 1,
+      })
+      contextBelowTarget = await medicationService.getContext(request, {
+        reference: 'users/mockUser/medicationRequests/someMedicationRequest',
+      })
+    })
 
-    it('detects target dose', () => {
-      const contextAtTarget = structuredClone(contextBelowTarget)
-      contextAtTarget.request.dosageInstruction
-        ?.at(0)
-        ?.timing?.repeat?.timeOfDay?.push('20:00')
-
+    it('detects target dose', async () => {
+      const request = new UserDebugDataFactory().medicationRequest({
+        drugReference: DrugReference.sotagliflozin200,
+        frequencyPerDay: 2,
+        quantity: 1,
+      })
+      const contextAtTarget = await medicationService.getContext(request, {
+        reference: 'users/mockUser/medicationRequests/someMedicationRequest',
+      })
       const input: RecommendationInput = {
         requests: [contextAtTarget],
         contraindications: [],

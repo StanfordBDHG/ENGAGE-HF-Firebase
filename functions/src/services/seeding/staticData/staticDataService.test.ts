@@ -52,7 +52,7 @@ describe('StaticDataService', () => {
     expect(medications.size).to.equal(0)
 
     await staticDataService.updateMedications(
-      TestFlags.forceRunExpensiveTests ?
+      TestFlags.regenerateValues ?
         CachingStrategy.updateCache
       : CachingStrategy.expectCache,
     )

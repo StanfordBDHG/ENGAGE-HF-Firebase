@@ -245,7 +245,6 @@ describe('firestore.rules: users/{userId}', () => {
         .doc(`users/${clinicianId}`)
         .set({ dateOfBirth: new Date('2011-01-01') }, { merge: true }),
     )
-    console.log('patient')
     await assertSucceeds(
       ownerFirestore
         .doc(`users/${patientId}`)

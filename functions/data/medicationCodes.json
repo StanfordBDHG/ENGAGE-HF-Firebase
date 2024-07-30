@@ -4,29 +4,68 @@
     "medications": [
       {
         "code": "221124",
-        "minimumDailyDose": 12.5,
-        "targetDailyDose": 200,
+        "minimumDailyDose": {
+          "drug": "1999035",
+          "frequency": 1,
+          "quantity": 0.5
+        },
+        "targetDailyDose": {
+          "drug": "866419",
+          "frequency": 1,
+          "quantity": 1
+        },
         "drugs": [
-          1999031, 1999033, 1999035, 1999037, 866412, 866419, 866427, 866436
+          "1999031",
+          "1999033",
+          "1999035",
+          "1999037",
+          "866412",
+          "866419",
+          "866427",
+          "866436"
         ]
       },
       {
         "code": "20352",
-        "minimumDailyDose": 6.25,
-        "targetDailyDose": 50,
-        "drugs": [200031, 200032, 200033, 686924]
+        "minimumDailyDose": {
+          "drug": "200031",
+          "frequency": 1,
+          "quantity": 1
+        },
+        "targetDailyDose": {
+          "drug": "200033",
+          "frequency": 1,
+          "quantity": 1
+        },
+        "drugs": ["200031", "200032", "200033", "686924"]
       },
       {
         "code": "668310",
-        "minimumDailyDose": 10,
-        "targetDailyDose": 80,
-        "drugs": [860510, 860516, 860522, 860532]
+        "minimumDailyDose": {
+          "drug": "860510",
+          "frequency": 1,
+          "quantity": 1
+        },
+        "targetDailyDose": {
+          "drug": "860532",
+          "frequency": 1,
+          "quantity": 1
+        },
+        "drugs": ["860510", "860516", "860522", "860532"]
       },
       {
         "code": "19484",
-        "minimumDailyDose": 1.25,
-        "targetDailyDose": 10,
-        "drugs": [854901, 854905]
+        "minimumDailyDose": {
+          "drug": "854905",
+          "frequency": 1,
+          "quantity": 0.25
+        },
+        "targetDailyDose": {
+          "drug": "854901",
+          "frequency": 1,
+          "quantity": 1
+        },
+        "drugs": ["854901", "854905"]
       }
     ]
   },
@@ -35,39 +74,87 @@
     "medications": [
       {
         "code": "1488564",
-        "minimumDailyDose": 5,
-        "targetDailyDose": 10,
-        "drugs": [1488569, 1488574]
+        "minimumDailyDose": {
+          "drug": "1488574",
+          "frequency": 1,
+          "quantity": 1
+        },
+        "targetDailyDose": {
+          "drug": "1488569",
+          "frequency": 1,
+          "quantity": 1
+        },
+        "drugs": ["1488569", "1488574"]
       },
       {
         "code": "1545653",
-        "minimumDailyDose": 5,
-        "targetDailyDose": 10,
-        "drugs": [1545658, 1545666]
+        "minimumDailyDose": {
+          "drug": "1545658",
+          "frequency": 1,
+          "quantity": 0.5
+        },
+        "targetDailyDose": {
+          "drug": "1545666",
+          "frequency": 1,
+          "quantity": 1
+        },
+        "drugs": ["1545658", "1545666"]
       },
       {
         "code": "2638675",
-        "minimumDailyDose": 200,
-        "targetDailyDose": 400,
-        "drugs": [2638683, 2638691]
+        "minimumDailyDose": {
+          "drug": "2638683",
+          "frequency": 1,
+          "quantity": 1
+        },
+        "targetDailyDose": {
+          "drug": "2638691",
+          "frequency": 1,
+          "quantity": 1
+        },
+        "drugs": ["2638683", "2638691"]
       },
       {
         "code": "2627044",
-        "minimumDailyDose": 20,
-        "targetDailyDose": 20,
-        "drugs": [2637859]
+        "minimumDailyDose": {
+          "drug": "2637859",
+          "frequency": 1,
+          "quantity": 1
+        },
+        "targetDailyDose": {
+          "drug": "2637859",
+          "frequency": 1,
+          "quantity": 1
+        },
+        "drugs": ["2637859"]
       },
       {
         "code": "1373458",
-        "minimumDailyDose": 100,
-        "targetDailyDose": 100,
-        "drugs": [1373463, 1373471]
+        "minimumDailyDose": {
+          "drug": "1373463",
+          "frequency": 1,
+          "quantity": 1
+        },
+        "targetDailyDose": {
+          "drug": "1373463",
+          "frequency": 1,
+          "quantity": 1
+        },
+        "drugs": ["1373463", "1373471"]
       },
       {
         "code": "1992672",
-        "minimumDailyDose": 5,
-        "targetDailyDose": 15,
-        "drugs": [1992810, 1992819]
+        "minimumDailyDose": {
+          "drug": "1992810",
+          "frequency": 1,
+          "quantity": 1
+        },
+        "targetDailyDose": {
+          "drug": "1992819",
+          "frequency": 1,
+          "quantity": 1
+        },
+        "drugs": ["1992810", "1992819"]
       }
     ]
   },
@@ -76,15 +163,31 @@
     "medications": [
       {
         "code": "9997",
-        "minimumDailyDose": 12.5,
-        "targetDailyDose": 25,
-        "drugs": [198222, 198223, 313096]
+        "minimumDailyDose": {
+          "drug": "313096",
+          "frequency": 1,
+          "quantity": 0.5
+        },
+        "targetDailyDose": {
+          "drug": "313096",
+          "frequency": 1,
+          "quantity": 1
+        },
+        "drugs": ["198222", "198223", "313096"]
       },
       {
         "code": "298869",
-        "minimumDailyDose": 12.5,
-        "targetDailyDose": 50,
-        "drugs": [351256, 351257]
+        "minimumDailyDose": {
+          "drug": "351256",
+          "frequency": 1,
+          "quantity": 0.5
+        },
+        "targetDailyDose": {
+          "drug": "351257",
+          "frequency": 1,
+          "quantity": 1
+        },
+        "drugs": ["351256", "351257"]
       }
     ]
   },
@@ -93,65 +196,153 @@
     "medications": [
       {
         "code": "35208",
-        "minimumDailyDose": 10,
-        "targetDailyDose": 40,
-        "drugs": [312748, 312749, 312750, 314203]
+        "minimumDailyDose": {
+          "drug": "312748",
+          "frequency": 1,
+          "quantity": 1
+        },
+        "targetDailyDose": {
+          "drug": "314203",
+          "frequency": 1,
+          "quantity": 1
+        },
+        "drugs": ["312748", "312749", "312750", "314203"]
       },
       {
         "code": "54552",
-        "minimumDailyDose": 2,
-        "targetDailyDose": 16,
-        "drugs": [854925, 854984, 854988]
+        "minimumDailyDose": {
+          "drug": "854984",
+          "frequency": 1,
+          "quantity": 1
+        },
+        "targetDailyDose": {
+          "drug": "854925",
+          "frequency": 1,
+          "quantity": 2
+        },
+        "drugs": ["854925", "854984", "854988"]
       },
       {
         "code": "35296",
-        "minimumDailyDose": 1.25,
-        "targetDailyDose": 10,
+        "minimumDailyDose": {
+          "drug": "401965",
+          "frequency": 1,
+          "quantity": 1
+        },
+        "targetDailyDose": {
+          "drug": "401968",
+          "frequency": 1,
+          "quantity": 1
+        },
         "drugs": [
-          401965, 251856, 251857, 401968, 845488, 251856, 198188, 198189, 261962
+          "401965",
+          "251856",
+          "251857",
+          "401968",
+          "845488",
+          "251856",
+          "198188",
+          "198189",
+          "261962"
         ]
       },
       {
         "code": "18867",
-        "minimumDailyDose": 5,
-        "targetDailyDose": 40,
-        "drugs": [898723, 898687, 898690, 898719]
+        "minimumDailyDose": {
+          "drug": "898723",
+          "frequency": 1,
+          "quantity": 1
+        },
+        "targetDailyDose": {
+          "drug": "898719",
+          "frequency": 1,
+          "quantity": 1
+        },
+        "drugs": ["898723", "898687", "898690", "898719"]
       },
       {
         "code": "1998",
-        "minimumDailyDose": 18.75,
-        "targetDailyDose": 150,
-        "drugs": [308963, 317173, 308964, 308962]
+        "minimumDailyDose": {
+          "drug": "308963",
+          "frequency": 1,
+          "quantity": 1.5
+        },
+        "targetDailyDose": {
+          "drug": "308962",
+          "frequency": 3,
+          "quantity": 1
+        },
+        "drugs": ["308963", "317173", "308964", "308962"]
       },
       {
         "code": "3827",
-        "minimumDailyDose": 5,
-        "targetDailyDose": 40,
-        "drugs": [858804, 858813, 858817, 858810]
+        "minimumDailyDose": {
+          "drug": "858813",
+          "frequency": 1,
+          "quantity": 1
+        },
+        "targetDailyDose": {
+          "drug": "858810",
+          "frequency": 2,
+          "quantity": 1
+        },
+        "drugs": ["858804", "858813", "858817", "858810"]
       },
       {
         "code": "29046",
-        "minimumDailyDose": 2.5,
-        "targetDailyDose": 40,
-        "drugs": [311353, 311354, 314076, 314077, 205326]
+        "minimumDailyDose": {
+          "drug": "311353",
+          "frequency": 1,
+          "quantity": 1
+        },
+        "targetDailyDose": {
+          "drug": "197884",
+          "frequency": 1,
+          "quantity": 1
+        },
+        "drugs": ["311353", "311354", "314076", "314077", "205326", "197884"]
       },
       {
         "code": "227278",
-        "minimumDailyDose": 5,
-        "targetDailyDose": 40,
-        "drugs": [857169, 857183, 857187]
+        "minimumDailyDose": {
+          "drug": "857169",
+          "frequency": 1,
+          "quantity": 0.5
+        },
+        "targetDailyDose": {
+          "drug": "857187",
+          "frequency": 1,
+          "quantity": 1
+        },
+        "drugs": ["857169", "857183", "857187"]
       },
       {
         "code": "38454",
-        "minimumDailyDose": 1,
-        "targetDailyDose": 4,
-        "drugs": [199353, 199351, 199352]
+        "minimumDailyDose": {
+          "drug": "199353",
+          "frequency": 1,
+          "quantity": 1
+        },
+        "targetDailyDose": {
+          "drug": "199352",
+          "frequency": 1,
+          "quantity": 1
+        },
+        "drugs": ["199353", "199351", "199352"]
       },
       {
         "code": "30131",
-        "minimumDailyDose": 7.5,
-        "targetDailyDose": 15,
-        "drugs": [1299897, 1299896]
+        "minimumDailyDose": {
+          "drug": "1299897",
+          "frequency": 1,
+          "quantity": 1
+        },
+        "targetDailyDose": {
+          "drug": "1299896",
+          "frequency": 1,
+          "quantity": 1
+        },
+        "drugs": ["1299897", "1299896"]
       }
     ]
   },
@@ -160,51 +351,115 @@
     "medications": [
       {
         "code": "203160",
-        "minimumDailyDose": 25,
-        "targetDailyDose": 150,
-        "drugs": [979480, 979485, 979492]
+        "minimumDailyDose": {
+          "drug": "979485",
+          "frequency": 1,
+          "quantity": 1
+        },
+        "targetDailyDose": {
+          "drug": "979480",
+          "frequency": 1,
+          "quantity": 1.5
+        },
+        "drugs": ["979480", "979485", "979492"]
       },
       {
         "code": "69749",
-        "minimumDailyDose": 20,
-        "targetDailyDose": 320,
-        "drugs": [349483, 349199, 349201, 349200]
+        "minimumDailyDose": {
+          "drug": "349483",
+          "frequency": 1,
+          "quantity": 0.5
+        },
+        "targetDailyDose": {
+          "drug": "349201",
+          "frequency": 2,
+          "quantity": 1
+        },
+        "drugs": ["349483", "349199", "349201", "349200"]
       },
       {
         "code": "214354",
-        "minimumDailyDose": 4,
-        "targetDailyDose": 32,
-        "drugs": [153822, 153823, 577776, 639537]
+        "minimumDailyDose": {
+          "drug": "153822",
+          "frequency": 1,
+          "quantity": 1
+        },
+        "targetDailyDose": {
+          "drug": "639537",
+          "frequency": 1,
+          "quantity": 1
+        },
+        "drugs": ["153822", "153823", "577776", "639537"]
       },
       {
         "code": "83818",
-        "minimumDailyDose": 75,
-        "targetDailyDose": 300,
-        "drugs": [200094, 200095, 200096]
+        "minimumDailyDose": {
+          "drug": "200094",
+          "frequency": 1,
+          "quantity": 1
+        },
+        "targetDailyDose": {
+          "drug": "200096",
+          "frequency": 1,
+          "quantity": 1
+        },
+        "drugs": ["200094", "200095", "200096"]
       },
       {
         "code": "73494",
-        "minimumDailyDose": 40,
-        "targetDailyDose": 80,
-        "drugs": [282755, 205304, 205305]
+        "minimumDailyDose": {
+          "drug": "205304",
+          "frequency": 1,
+          "quantity": 1
+        },
+        "targetDailyDose": {
+          "drug": "205305",
+          "frequency": 1,
+          "quantity": 1
+        },
+        "drugs": ["282755", "205304", "205305"]
       },
       {
         "code": "118463",
-        "minimumDailyDose": 10,
-        "targetDailyDose": 40,
-        "drugs": [349373, 349401, 349405]
+        "minimumDailyDose": {
+          "drug": "349373",
+          "frequency": 1,
+          "quantity": 2
+        },
+        "targetDailyDose": {
+          "drug": "349405",
+          "frequency": 1,
+          "quantity": 1
+        },
+        "drugs": ["349373", "349401", "349405"]
       },
       {
         "code": "1091642",
-        "minimumDailyDose": 40,
-        "targetDailyDose": 80,
-        "drugs": [1091646, 1091652]
+        "minimumDailyDose": {
+          "drug": "1091646",
+          "frequency": 1,
+          "quantity": 1
+        },
+        "targetDailyDose": {
+          "drug": "1091652",
+          "frequency": 1,
+          "quantity": 1
+        },
+        "drugs": ["1091646", "1091652"]
       },
       {
         "code": "83515",
-        "minimumDailyDose": 400,
-        "targetDailyDose": 800,
-        "drugs": [310139, 310140],
+        "minimumDailyDose": {
+          "drug": "310139",
+          "frequency": 1,
+          "quantity": 1
+        },
+        "targetDailyDose": {
+          "drug": "310140",
+          "frequency": 1,
+          "quantity": 1
+        },
+        "drugs": ["310139", "310140"],
         "fallbackTerms": {
           "310139": {
             "strength": "400 MG",
@@ -221,10 +476,18 @@
     "medications": [
       {
         "code": "1656339",
-        "minimumDailyDose": [48, 52],
-        "targetDailyDose": [194, 206],
-        "ingredients": [1656328, 69749],
-        "drugs": [2679800, 2679793, 1656340, 1656349, 1656354]
+        "minimumDailyDose": {
+          "drug": "1656340",
+          "frequency": 2,
+          "quantity": 1
+        },
+        "targetDailyDose": {
+          "drug": "1656354",
+          "frequency": 2,
+          "quantity": 1
+        },
+        "ingredients": ["1656328", "69749"],
+        "drugs": ["2679800", "2679793", "1656340", "1656349", "1656354"]
       }
     ]
   },
@@ -233,19 +496,19 @@
     "medications": [
       {
         "code": "4603",
-        "drugs": [310429, 313988, 197732]
+        "drugs": ["310429", "313988", "197732"]
       },
       {
         "code": "1808",
-        "drugs": [197417, 197418, 197419]
+        "drugs": ["197417", "197418", "197419"]
       },
       {
         "code": "38413",
-        "drugs": [198372, 198369, 198371, 2589881, 2589885, 198370]
+        "drugs": ["198372", "198369", "198371", "2589881", "2589885", "198370"]
       },
       {
         "code": "4109",
-        "drugs": [1251903, 1251907],
+        "drugs": ["1251903", "1251907"],
         "fallbackTerms": {
           "1251907": {
             "strength": "50 MG",

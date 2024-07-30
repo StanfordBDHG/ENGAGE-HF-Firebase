@@ -75,13 +75,17 @@ export class FhirService {
   }
 
   minimumDailyDose(medication: FHIRMedication): number[] | undefined {
-    return this.extensionsWithUrl(medication, FHIRExtensionUrl.minimumDailyDose)
+    const request = this.extensionsWithUrl(
+      medication,
+      FHIRExtensionUrl.minimumDailyDose,
+    ).at(0)?.valueMedicationRequest
+    if (!request) return undefined
+    return this.extensionsWithUrl(request, FHIRExtensionUrl.totalDailyDose)
       .at(0)
-      ?.valueIngredient?.flatMap((ingredient) =>
-        ingredient.strength?.numerator?.value ?
-          [ingredient.strength.numerator.value]
-        : [],
-      )
+      ?.valueQuantities?.flatMap((quantity) => {
+        const value = QuantityUnit.mg.valueOf(quantity)
+        return value ? [value] : []
+      })
   }
 
   currentDailyDose(contexts: MedicationRequestContext[]): number[] {
@@ -89,7 +93,7 @@ export class FhirService {
     for (const context of contexts) {
       let numberOfTabletsPerDay = 0
       for (const instruction of context.request.dosageInstruction ?? []) {
-        const intakesPerDay = instruction.timing?.repeat?.timeOfDay?.length ?? 0
+        const intakesPerDay = instruction.timing?.repeat?.frequency ?? 0
         for (const dose of instruction.doseAndRate ?? []) {
           const numberOfPills = dose.doseQuantity?.value
           if (!numberOfPills)
@@ -114,13 +118,21 @@ export class FhirService {
   }
 
   targetDailyDose(medication: FHIRMedication): number[] | undefined {
-    return this.extensionsWithUrl(medication, FHIRExtensionUrl.targetDailyDose)
+    const request = this.extensionsWithUrl(
+      medication,
+      FHIRExtensionUrl.targetDailyDose,
+    ).at(0)?.valueMedicationRequest
+    if (!request) return undefined
+    const result = this.extensionsWithUrl(
+      request,
+      FHIRExtensionUrl.totalDailyDose,
+    )
       .at(0)
-      ?.valueIngredient?.flatMap((ingredient) =>
-        ingredient.strength?.numerator?.value ?
-          [ingredient.strength.numerator.value]
-        : [],
-      )
+      ?.valueQuantities?.flatMap((quantity) => {
+        const value = QuantityUnit.mg.valueOf(quantity)
+        return value ? [value] : []
+      })
+    return result
   }
 
   // Extension

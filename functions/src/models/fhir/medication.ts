@@ -51,5 +51,8 @@ export interface FHIRTiming extends FHIRElement {
 }
 
 export interface FHIRTimingRepeat {
+  frequency?: number
+  period?: number
+  periodUnit?: string
   timeOfDay?: string[]
 }

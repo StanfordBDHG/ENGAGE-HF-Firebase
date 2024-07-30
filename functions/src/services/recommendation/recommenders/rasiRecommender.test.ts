@@ -17,16 +17,19 @@ import { MedicationRecommendationCategory } from '../../../models/medicationReco
 import { type MedicationRequestContext } from '../../../models/medicationRequestContext.js'
 import { MockContraindicationService } from '../../../tests/mocks/contraindicationService.js'
 import { mockHealthSummaryData } from '../../../tests/mocks/healthSummaryData.js'
+import { setupMockAuth, setupMockFirestore } from '../../../tests/setup.js'
 import {
-  CodingSystem,
   DrugReference,
-  FHIRExtensionUrl,
   MedicationClassReference,
   MedicationReference,
 } from '../../codes.js'
 import { ContraindicationCategory } from '../../contraindication/contraindicationService.js'
+import { getServiceFactory } from '../../factory/getServiceFactory.js'
 import { FhirService } from '../../fhir/fhirService.js'
 import { QuantityUnit } from '../../fhir/quantityUnit.js'
+import { type MedicationService } from '../../medication/medicationService.js'
+import { UserDebugDataFactory } from '../../seeding/debugData/userDebugDataFactory.js'
+import { CachingStrategy } from '../../seeding/seedingService.js'
 
 describe('RasiRecommender', () => {
   let medicationContraindication: (
@@ -44,6 +47,17 @@ describe('RasiRecommender', () => {
     new FhirService(),
   )
   let healthSummaryData: HealthSummaryData
+  let medicationService: MedicationService
+
+  before(async () => {
+    setupMockAuth()
+    setupMockFirestore()
+    const factory = getServiceFactory()
+    const staticDataService = factory.staticData()
+    await staticDataService.updateMedicationClasses(CachingStrategy.expectCache)
+    await staticDataService.updateMedications(CachingStrategy.expectCache)
+    medicationService = factory.medication()
+  })
 
   beforeEach(async () => {
     healthSummaryData = await mockHealthSummaryData(new Date())
@@ -242,133 +256,17 @@ describe('RasiRecommender', () => {
   })
 
   describe('On perindopril (ACEI/ARB)', () => {
-    const contextBelowTarget: MedicationRequestContext = {
-      request: {
-        medicationReference: {
-          reference: DrugReference.perindopril4,
-        },
-        dosageInstruction: [
-          {
-            timing: {
-              repeat: {
-                timeOfDay: ['08:00'],
-              },
-            },
-            doseAndRate: [
-              {
-                doseQuantity: {
-                  value: 2,
-                  unit: 'tablet',
-                },
-              },
-            ],
-          },
-        ],
-      },
-      requestReference: {
-        reference: '/users/mockUser/medicationRequests/mockMedicationRequest',
-      },
-      drug: {
-        code: {
-          coding: [
-            {
-              system: CodingSystem.rxNorm,
-              code: DrugReference.perindopril4.split('/').at(-1),
-              display: 'Perindopril 25 MG Oral Tablet',
-            },
-          ],
-        },
-        ingredient: [
-          {
-            itemCodeableConcept: {
-              coding: [
-                {
-                  system: CodingSystem.rxNorm,
-                  code: MedicationReference.perindopril.split('/').at(-1),
-                  display: 'Perindopril',
-                },
-              ],
-            },
-            strength: {
-              numerator: {
-                ...QuantityUnit.mg,
-                value: 4,
-              },
-            },
-          },
-        ],
-      },
-      drugReference: {
-        reference: DrugReference.perindopril4,
-      },
-      medication: {
-        code: {
-          coding: [
-            {
-              system: CodingSystem.rxNorm,
-              code: MedicationReference.perindopril.split('/').at(-1),
-              display: 'Perindopril',
-            },
-          ],
-        },
-        extension: [
-          {
-            url: FHIRExtensionUrl.minimumDailyDose,
-            valueIngredient: [
-              {
-                itemCodeableConcept: {
-                  coding: [
-                    {
-                      system: CodingSystem.rxNorm,
-                      code: MedicationReference.perindopril.split('/').at(-1),
-                      display: 'Perindopril',
-                    },
-                  ],
-                },
-                strength: {
-                  numerator: {
-                    ...QuantityUnit.mg,
-                    value: 2,
-                  },
-                },
-              },
-            ],
-          },
-          {
-            url: FHIRExtensionUrl.targetDailyDose,
-            valueIngredient: [
-              {
-                itemCodeableConcept: {
-                  coding: [
-                    {
-                      system: CodingSystem.rxNorm,
-                      code: MedicationReference.perindopril.split('/').at(-1),
-                      display: 'Perindopril',
-                    },
-                  ],
-                },
-                strength: {
-                  numerator: {
-                    ...QuantityUnit.mg,
-                    value: 16,
-                  },
-                },
-              },
-            ],
-          },
-        ],
-      },
-      medicationReference: {
-        reference: MedicationReference.perindopril,
-      },
-      medicationClass: {
-        name: 'ARBs',
-        videoPath: 'videoSections/1/videos/2',
-      },
-      medicationClassReference: {
-        reference: MedicationClassReference.angiotensinReceptorBlockers,
-      },
-    }
+    let contextBelowTarget: MedicationRequestContext
+    before(async () => {
+      const request = new UserDebugDataFactory().medicationRequest({
+        drugReference: DrugReference.perindopril4,
+        frequencyPerDay: 1,
+        quantity: 1,
+      })
+      contextBelowTarget = await medicationService.getContext(request, {
+        reference: 'users/mockUser/medicationRequests/someMedicationRequest',
+      })
+    })
 
     describe('Contraindication to ARNI', () => {
       beforeEach(() => {
@@ -381,11 +279,15 @@ describe('RasiRecommender', () => {
           : ContraindicationCategory.none
       })
 
-      it('detects target dose reached', () => {
-        const contextAtTarget = structuredClone(contextBelowTarget)
-        contextAtTarget.request.dosageInstruction
-          ?.at(0)
-          ?.timing?.repeat?.timeOfDay?.push('20:00')
+      it('detects target dose reached', async () => {
+        const request = new UserDebugDataFactory().medicationRequest({
+          drugReference: DrugReference.perindopril4,
+          frequencyPerDay: 2,
+          quantity: 2,
+        })
+        const contextAtTarget = await medicationService.getContext(request, {
+          reference: 'users/mockUser/medicationRequests/someMedicationRequest',
+        })
         const result = recommender.compute({
           requests: [contextAtTarget],
           contraindications: [],
@@ -629,193 +531,28 @@ describe('RasiRecommender', () => {
   })
 
   describe('On sacubitril/valsartan', () => {
-    const contextBelowTarget: MedicationRequestContext = {
-      request: {
-        medicationReference: {
-          reference: DrugReference.sacubitrilValsartan49_51,
-        },
-        dosageInstruction: [
-          {
-            timing: {
-              repeat: {
-                timeOfDay: ['08:00'],
-              },
-            },
-            doseAndRate: [
-              {
-                doseQuantity: {
-                  value: 2.5,
-                  unit: 'tablet',
-                },
-              },
-            ],
-          },
-        ],
-      },
-      requestReference: {
-        reference: '/users/mockUser/medicationRequests/mockMedicationRequest',
-      },
-      drug: {
-        code: {
-          coding: [
-            {
-              system: CodingSystem.rxNorm,
-              code: DrugReference.sacubitrilValsartan49_51.split('/').at(-1),
-              display: 'sacubitril 49 MG / valsartan 51 MG Oral Tablet',
-            },
-          ],
-        },
-        ingredient: [
-          {
-            itemCodeableConcept: {
-              coding: [
-                {
-                  system: CodingSystem.rxNorm,
-                  code: '1656328',
-                  display: 'sacubitril',
-                },
-              ],
-            },
-            strength: {
-              numerator: {
-                ...QuantityUnit.mg,
-                value: 49,
-              },
-            },
-          },
-          {
-            itemCodeableConcept: {
-              coding: [
-                {
-                  system: CodingSystem.rxNorm,
-                  code: '69749',
-                  display: 'valsartan',
-                },
-              ],
-            },
-            strength: {
-              numerator: {
-                ...QuantityUnit.mg,
-                value: 51,
-              },
-            },
-          },
-        ],
-      },
-      drugReference: {
-        reference: DrugReference.sacubitrilValsartan49_51,
-      },
-      medication: {
-        code: {
-          coding: [
-            {
-              system: CodingSystem.rxNorm,
-              code: MedicationReference.sacubitrilValsartan.split('/').at(-1),
-              display: 'Sacubitril/Valsartan',
-            },
-          ],
-        },
-        extension: [
-          {
-            url: FHIRExtensionUrl.minimumDailyDose,
+    let contextBelowTarget: MedicationRequestContext
+    before(async () => {
+      const request = new UserDebugDataFactory().medicationRequest({
+        drugReference: DrugReference.sacubitrilValsartan49_51,
+        frequencyPerDay: 1,
+        quantity: 1,
+      })
+      contextBelowTarget = await medicationService.getContext(request, {
+        reference: 'users/mockUser/medicationRequests/someMedicationRequest',
+      })
+    })
 
-            valueIngredient: [
-              {
-                itemCodeableConcept: {
-                  coding: [
-                    {
-                      system: CodingSystem.rxNorm,
-                      code: '1656328',
-                      display: 'sacubitril',
-                    },
-                  ],
-                },
-                strength: {
-                  numerator: {
-                    ...QuantityUnit.mg,
-                    value: 48,
-                  },
-                },
-              },
-              {
-                itemCodeableConcept: {
-                  coding: [
-                    {
-                      system: CodingSystem.rxNorm,
-                      code: '69749',
-                      display: 'valsartan',
-                    },
-                  ],
-                },
-                strength: {
-                  numerator: {
-                    ...QuantityUnit.mg,
-                    value: 52,
-                  },
-                },
-              },
-            ],
-          },
-          {
-            url: FHIRExtensionUrl.targetDailyDose,
-            valueIngredient: [
-              {
-                itemCodeableConcept: {
-                  coding: [
-                    {
-                      system: CodingSystem.rxNorm,
-                      code: '1656328',
-                      display: 'sacubitril',
-                    },
-                  ],
-                },
-                strength: {
-                  numerator: {
-                    ...QuantityUnit.mg,
-                    value: 194,
-                  },
-                },
-              },
-              {
-                itemCodeableConcept: {
-                  coding: [
-                    {
-                      system: CodingSystem.rxNorm,
-                      code: '69749',
-                      display: 'valsartan',
-                    },
-                  ],
-                },
-                strength: {
-                  numerator: {
-                    ...QuantityUnit.mg,
-                    value: 206,
-                  },
-                },
-              },
-            ],
-          },
-        ],
-      },
-      medicationReference: {
-        reference: MedicationReference.perindopril,
-      },
-      medicationClass: {
-        name: 'ARNI',
-        videoPath: 'videoSections/1/videos/4',
-      },
-      medicationClassReference: {
-        reference:
-          MedicationClassReference.angiotensinReceptorNeprilysinInhibitors,
-      },
-    }
-
-    it('detects target dose reached', () => {
+    it('detects target dose reached', async () => {
       // TODO: What should happen if target dose for one ingredient is reached but not another?
-      const contextAtTarget = structuredClone(contextBelowTarget)
-      contextAtTarget.request.dosageInstruction
-        ?.at(0)
-        ?.timing?.repeat?.timeOfDay?.push('20:00')
+      const request = new UserDebugDataFactory().medicationRequest({
+        drugReference: DrugReference.sacubitrilValsartan49_51,
+        frequencyPerDay: 2,
+        quantity: 2,
+      })
+      const contextAtTarget = await medicationService.getContext(request, {
+        reference: 'users/mockUser/medicationRequests/someMedicationRequest',
+      })
       const result = recommender.compute({
         requests: [contextAtTarget],
         contraindications: [],

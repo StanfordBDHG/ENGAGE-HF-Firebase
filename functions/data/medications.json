@@ -39,53 +39,87 @@
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/1998/drugs/308963"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "1998",
-                  "display": "captopril"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 18.75
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 18.75,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1.5
+                  }
+                }
+              ]
+            }
+          ]
+        }
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/1998/drugs/308962"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "1998",
-                  "display": "captopril"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 300
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 150,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 3,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
       }
     ]
   },
@@ -109,53 +143,87 @@
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/3827/drugs/858813"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "3827",
-                  "display": "enalapril"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 5
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 5,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/3827/drugs/858810"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "3827",
-                  "display": "enalapril"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 40
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 40,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 2,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
       }
     ]
   },
@@ -219,53 +287,87 @@
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/9997/drugs/313096"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "9997",
-                  "display": "spironolactone"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 12.5
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 12.5,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 0.5
+                  }
+                }
+              ]
+            }
+          ]
+        }
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/9997/drugs/313096"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "9997",
-                  "display": "spironolactone"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 25
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 25,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
       }
     ]
   },
@@ -289,53 +391,87 @@
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/18867/drugs/898723"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "18867",
-                  "display": "benazepril"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 5
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 5,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/18867/drugs/898719"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "18867",
-                  "display": "benazepril"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 40
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 40,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
       }
     ]
   },
@@ -359,53 +495,87 @@
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/19484/drugs/854905"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "19484",
-                  "display": "bisoprolol"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 1.25
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 1.25,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 0.25
+                  }
+                }
+              ]
+            }
+          ]
+        }
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/19484/drugs/854901"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "19484",
-                  "display": "bisoprolol"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 10
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 10,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
       }
     ]
   },
@@ -429,53 +599,87 @@
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/20352/drugs/200031"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "20352",
-                  "display": "carvedilol"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 6.25
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 6.25,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/20352/drugs/200033"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "20352",
-                  "display": "carvedilol"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 25
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 50,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
       }
     ]
   },
@@ -499,53 +703,87 @@
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/29046/drugs/311353"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "29046",
-                  "display": "lisinopril"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 2.5
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 2.5,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/29046/drugs/197884"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "29046",
-                  "display": "lisinopril"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 40
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 40,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
       }
     ]
   },
@@ -569,53 +807,87 @@
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/30131/drugs/1299897"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "30131",
-                  "display": "moexipril"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 7.5
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 7.5,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/30131/drugs/1299896"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "30131",
-                  "display": "moexipril"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 15
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 15,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
       }
     ]
   },
@@ -639,53 +911,87 @@
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/35208/drugs/312748"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "35208",
-                  "display": "quinapril"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 10
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 10,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/35208/drugs/314203"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "35208",
-                  "display": "quinapril"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 40
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 40,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
       }
     ]
   },
@@ -709,53 +1015,87 @@
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/35296/drugs/401965"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "35296",
-                  "display": "ramipril"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 1.25
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 1.25,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/35296/drugs/401968"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "35296",
-                  "display": "ramipril"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 10
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 10,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
       }
     ]
   },
@@ -799,53 +1139,87 @@
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/38454/drugs/199353"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "38454",
-                  "display": "trandolapril"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 1
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 1,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/38454/drugs/199352"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "38454",
-                  "display": "trandolapril"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 4
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 4,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
       }
     ]
   },
@@ -869,53 +1243,87 @@
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/54552/drugs/854984"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "54552",
-                  "display": "perindopril"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 2
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 2,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/54552/drugs/854925"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "54552",
-                  "display": "perindopril"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 16
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 16,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 2
+                  }
+                }
+              ]
+            }
+          ]
+        }
       }
     ]
   },
@@ -939,53 +1347,87 @@
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/69749/drugs/349483"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "69749",
-                  "display": "valsartan"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 20
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 20,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 0.5
+                  }
+                }
+              ]
+            }
+          ]
+        }
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/69749/drugs/349201"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "69749",
-                  "display": "valsartan"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 320
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 320,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 2,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
       }
     ]
   },
@@ -1009,53 +1451,87 @@
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/73494/drugs/205304"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "73494",
-                  "display": "telmisartan"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 40
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 40,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/73494/drugs/205305"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "73494",
-                  "display": "telmisartan"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 80
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 80,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
       }
     ]
   },
@@ -1079,53 +1555,87 @@
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/83515/drugs/310139"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "83515",
-                  "display": "eprosartan"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 400
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 400,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/83515/drugs/310140"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "83515",
-                  "display": "eprosartan"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 600
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 800,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
       }
     ]
   },
@@ -1149,53 +1659,87 @@
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/83818/drugs/200094"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "83818",
-                  "display": "irbesartan"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 75
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 75,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/83818/drugs/200096"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "83818",
-                  "display": "irbesartan"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 300
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 300,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
       }
     ]
   },
@@ -1219,53 +1763,87 @@
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/118463/drugs/349373"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "118463",
-                  "display": "olmesartan medoxomil"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 10
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 10,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 2
+                  }
+                }
+              ]
+            }
+          ]
+        }
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/118463/drugs/349405"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "118463",
-                  "display": "olmesartan medoxomil"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 40
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 40,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
       }
     ]
   },
@@ -1289,53 +1867,87 @@
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/203160/drugs/979485"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "203160",
-                  "display": "losartan potassium"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 25
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 25,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/203160/drugs/979480"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "203160",
-                  "display": "losartan potassium"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 150
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 150,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1.5
+                  }
+                }
+              ]
+            }
+          ]
+        }
       }
     ]
   },
@@ -1359,53 +1971,87 @@
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/214354/drugs/153822"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "214354",
-                  "display": "candesartan"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 4
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 4,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/214354/drugs/639537"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "214354",
-                  "display": "candesartan"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 32
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 32,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
       }
     ]
   },
@@ -1429,53 +2075,87 @@
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/221124/drugs/1999035"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "221124",
-                  "display": "metoprolol succinate"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 12.5
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 12.5,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 0.5
+                  }
+                }
+              ]
+            }
+          ]
+        }
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/221124/drugs/866419"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "221124",
-                  "display": "metoprolol succinate"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 200
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 200,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
       }
     ]
   },
@@ -1499,53 +2179,87 @@
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/227278/drugs/857169"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "227278",
-                  "display": "fosinopril sodium"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 5
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 5,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 0.5
+                  }
+                }
+              ]
+            }
+          ]
+        }
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/227278/drugs/857187"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "227278",
-                  "display": "fosinopril sodium"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 40
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 40,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
       }
     ]
   },
@@ -1569,53 +2283,87 @@
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/298869/drugs/351256"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "298869",
-                  "display": "eplerenone"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 12.5
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 12.5,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 0.5
+                  }
+                }
+              ]
+            }
+          ]
+        }
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/298869/drugs/351257"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "298869",
-                  "display": "eplerenone"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 50
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 50,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
       }
     ]
   },
@@ -1639,53 +2387,87 @@
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/668310/drugs/860510"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "668310",
-                  "display": "carvedilol phosphate"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 10
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 10,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/668310/drugs/860532"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "668310",
-                  "display": "carvedilol phosphate"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 80
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 80,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
       }
     ]
   },
@@ -1709,53 +2491,87 @@
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/1091642/drugs/1091646"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "1091642",
-                  "display": "azilsartan medoxomil"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 40
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 40,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/1091642/drugs/1091652"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "1091642",
-                  "display": "azilsartan medoxomil"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 80
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 80,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
       }
     ]
   },
@@ -1779,53 +2595,87 @@
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/1373458/drugs/1373463"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "1373458",
-                  "display": "canagliflozin"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 100
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 100,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/1373458/drugs/1373463"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "1373458",
-                  "display": "canagliflozin"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 100
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 100,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
       }
     ]
   },
@@ -1849,53 +2699,87 @@
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/1488564/drugs/1488574"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "1488564",
-                  "display": "dapagliflozin"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 5
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 5,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/1488564/drugs/1488569"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "1488564",
-                  "display": "dapagliflozin"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 10
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 10,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
       }
     ]
   },
@@ -1919,53 +2803,87 @@
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/1545653/drugs/1545658"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "1545653",
-                  "display": "empagliflozin"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 5
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 5,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 0.5
+                  }
+                }
+              ]
+            }
+          ]
+        }
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/1545653/drugs/1545666"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "1545653",
-                  "display": "empagliflozin"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 25
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 10,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
       }
     ]
   },
@@ -1986,7 +2904,7 @@
           "coding": [
             {
               "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-              "code": 1656328,
+              "code": "1656328",
               "display": "sacubitril"
             }
           ]
@@ -1997,7 +2915,7 @@
           "coding": [
             {
               "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-              "code": 69749,
+              "code": "69749",
               "display": "valsartan"
             }
           ]
@@ -2013,93 +2931,99 @@
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
-                {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": 1656328,
-                  "display": "sacubitril"
-                }
-              ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 48,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
-            }
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/1656339/drugs/1656340"
           },
-          {
-            "itemCodeableConcept": {
-              "coding": [
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": 69749,
-                  "display": "valsartan"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 48
+                },
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 52
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 52,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 2,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
-                {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": 1656328,
-                  "display": "sacubitril"
-                }
-              ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 194,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
-            }
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/1656339/drugs/1656354"
           },
-          {
-            "itemCodeableConcept": {
-              "coding": [
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": 69749,
-                  "display": "valsartan"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 194
+                },
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 206
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 206,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 2,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
       }
     ]
   },
@@ -2123,53 +3047,87 @@
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/1992672/drugs/1992810"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "1992672",
-                  "display": "ertugliflozin"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 5
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 5,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/1992672/drugs/1992819"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "1992672",
-                  "display": "ertugliflozin"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 15
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 15,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
       }
     ]
   },
@@ -2193,53 +3151,87 @@
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/2627044/drugs/2637859"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "2627044",
-                  "display": "bexagliflozin"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 20
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 20,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/2627044/drugs/2637859"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "2627044",
-                  "display": "bexagliflozin"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 20
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 20,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
       }
     ]
   },
@@ -2263,53 +3255,87 @@
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/2638675/drugs/2638683"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "2638675",
-                  "display": "sotagliflozin"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 200
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 200,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
-        "valueIngredient": [
-          {
-            "itemCodeableConcept": {
-              "coding": [
+        "valueMedicationRequest": {
+          "medicationReference": {
+            "reference": "medications/2638675/drugs/2638691"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
                 {
-                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                  "code": "2638675",
-                  "display": "sotagliflozin"
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 400
                 }
               ]
-            },
-            "strength": {
-              "numerator": {
-                "value": 400,
-                "unit": "mg"
-              },
-              "denominator": {
-                "value": 1
-              }
             }
-          }
-        ]
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
       }
     ]
   }

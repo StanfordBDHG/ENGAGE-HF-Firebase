@@ -15,7 +15,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
 export class MockFirestore {
-  collections: Record<string, Record<string, unknown>> = {}
+  collections = new Map<string, Map<string, unknown>>()
 
   collection(path: string) {
     return new MockFirestoreCollectionRef(this, path)
@@ -23,6 +23,18 @@ export class MockFirestore {
 
   doc(path: string) {
     return new MockFirestoreDocRef(this, path)
+  }
+
+  replaceAll(record: Record<string, Record<string, unknown>>) {
+    this.collections = new Map<string, Map<string, unknown>>()
+    for (const collectionName in record) {
+      const collection = record[collectionName]
+      const collectionMap = new Map<string, unknown>()
+      this.collections.set(collectionName, collectionMap)
+      for (const docName in collection) {
+        collectionMap.set(docName, collection[docName])
+      }
+    }
   }
 
   runTransaction(
@@ -77,16 +89,22 @@ class MockFirestoreRef {
 
 class MockFirestoreCollectionRef extends MockFirestoreRef {
   get() {
-    const result = this.firestore.collections[this.path]
-    return {
-      docs: Object.keys(result || {}).map((key) => ({
+    const result = this.firestore.collections.get(this.path) ?? new Map()
+    const docs: any[] = []
+    let size = 0
+    result.forEach((value, key) => {
+      size += 1
+      docs.push({
         id: key,
         exists: true,
-        ref: this.doc(key) as any,
-        data: () => result[key] as any,
-      })),
+        ref: this.doc(key as string) as any,
+        data: () => value,
+      })
+    })
+    return {
+      docs: docs,
       ref: this as any,
-      size: Object.keys(result || {}).length,
+      size: size,
     }
   }
 }
@@ -95,10 +113,9 @@ class MockFirestoreDocRef extends MockFirestoreRef {
   get() {
     const pathComponents = this.path.split('/')
     const collectionPath = pathComponents.slice(0, -1).join('/')
-    const result =
-      this.firestore.collections[collectionPath]?.[
-        pathComponents[pathComponents.length - 1]
-      ]
+    const result = this.firestore.collections
+      .get(collectionPath)
+      ?.get(pathComponents[pathComponents.length - 1])
     return {
       exists: result !== undefined,
       id: pathComponents[pathComponents.length - 1],
@@ -110,35 +127,27 @@ class MockFirestoreDocRef extends MockFirestoreRef {
   create(data: any) {
     const pathComponents = this.path.split('/')
     const collectionPath = pathComponents.slice(0, -1).join('/')
+    if (this.firestore.collections.get(collectionPath) === undefined)
+      this.firestore.collections.set(collectionPath, new Map())
     if (
-      !Object.keys(this.firestore.collections).some(
-        (key) => key === collectionPath,
-      )
-    )
-      this.firestore.collections[collectionPath] = {}
-    if (
-      this.firestore.collections[collectionPath][
-        pathComponents[pathComponents.length - 1]
-      ] !== undefined
+      this.firestore.collections
+        .get(collectionPath)
+        ?.get(pathComponents[pathComponents.length - 1]) !== undefined
     )
       throw new Error('Document already exists')
-    this.firestore.collections[collectionPath][
-      pathComponents[pathComponents.length - 1]
-    ] = data
+    this.firestore.collections
+      .get(collectionPath)
+      ?.set(pathComponents[pathComponents.length - 1], data)
   }
 
   set(data: any) {
     const pathComponents = this.path.split('/')
     const collectionPath = pathComponents.slice(0, -1).join('/')
-    if (
-      !Object.keys(this.firestore.collections).some(
-        (key) => key === collectionPath,
-      )
-    )
-      this.firestore.collections[collectionPath] = {}
-    this.firestore.collections[collectionPath][
-      pathComponents[pathComponents.length - 1]
-    ] = data
+    if (this.firestore.collections.get(collectionPath) === undefined)
+      this.firestore.collections.set(collectionPath, new Map())
+    this.firestore.collections
+      .get(collectionPath)
+      ?.set(pathComponents[pathComponents.length - 1], data)
   }
 
   update(data: any) {
@@ -149,8 +158,8 @@ class MockFirestoreDocRef extends MockFirestoreRef {
   delete() {
     const pathComponents = this.path.split('/')
     const collectionPath = pathComponents.slice(0, -1).join('/')
-    delete this.firestore.collections[collectionPath][
-      pathComponents[pathComponents.length - 1]
-    ]
+    this.firestore.collections
+      .get(collectionPath)
+      ?.delete(pathComponents[pathComponents.length - 1])
   }
 }

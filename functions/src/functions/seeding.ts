@@ -86,6 +86,7 @@ enum UserDebugDataComponent {
 }
 
 const defaultSeedInputSchema = z.object({
+  date: z.date().default(new Date()),
   only: z
     .nativeEnum(DebugDataComponent)
     .array()
@@ -124,7 +125,10 @@ export const defaultSeedFunction = validatedOnCall(
 
     for (const userData of request.data.userData ?? []) {
       if (userData.only.includes(UserDebugDataComponent.appointments))
-        await debugDataService.seedUserAppointments(userData.userId)
+        await debugDataService.seedUserAppointments(
+          userData.userId,
+          request.data.date,
+        )
       if (userData.only.includes(UserDebugDataComponent.medicationRequests))
         await debugDataService.seedUserMedicationRequests(userData.userId)
       if (userData.only.includes(UserDebugDataComponent.messages))
@@ -134,17 +138,33 @@ export const defaultSeedFunction = validatedOnCall(
       )
         await debugDataService.seedUserBloodPressureObservations(
           userData.userId,
+          request.data.date,
         )
       if (userData.only.includes(UserDebugDataComponent.bodyWeightObservations))
-        await debugDataService.seedUserBodyWeightObservations(userData.userId)
+        await debugDataService.seedUserBodyWeightObservations(
+          userData.userId,
+          request.data.date,
+        )
       if (userData.only.includes(UserDebugDataComponent.creatinineObservations))
-        await debugDataService.seedUserCreatinineObservations(userData.userId)
+        await debugDataService.seedUserCreatinineObservations(
+          userData.userId,
+          request.data.date,
+        )
       if (userData.only.includes(UserDebugDataComponent.eGfrObservations))
-        await debugDataService.seedUserEgfrObservations(userData.userId)
+        await debugDataService.seedUserEgfrObservations(
+          userData.userId,
+          request.data.date,
+        )
       if (userData.only.includes(UserDebugDataComponent.heartRateObservations))
-        await debugDataService.seedUserHeartRateObservations(userData.userId)
+        await debugDataService.seedUserHeartRateObservations(
+          userData.userId,
+          request.data.date,
+        )
       if (userData.only.includes(UserDebugDataComponent.potassiumObservations))
-        await debugDataService.seedUserPotassiumObservations(userData.userId)
+        await debugDataService.seedUserPotassiumObservations(
+          userData.userId,
+          request.data.date,
+        )
     }
 
     return 'Success'

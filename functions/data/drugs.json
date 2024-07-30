@@ -1,12 +1,12 @@
 {
   "1808": {
     "197417": {
-      "id": 197417,
+      "id": "197417",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 197417,
+            "code": "197417",
             "display": "Bumetanide (Oral Pill)"
           }
         ]
@@ -33,8 +33,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 0.5,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 0.5
             },
             "denominator": {
               "value": 1
@@ -44,12 +46,12 @@
       ]
     },
     "197418": {
-      "id": 197418,
+      "id": "197418",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 197418,
+            "code": "197418",
             "display": "Bumetanide (Oral Pill)"
           }
         ]
@@ -76,8 +78,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 1,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 1
             },
             "denominator": {
               "value": 1
@@ -87,12 +91,12 @@
       ]
     },
     "197419": {
-      "id": 197419,
+      "id": "197419",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 197419,
+            "code": "197419",
             "display": "Bumetanide (Oral Pill)"
           }
         ]
@@ -119,8 +123,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 2,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 2
             },
             "denominator": {
               "value": 1
@@ -132,12 +138,12 @@
   },
   "1998": {
     "308962": {
-      "id": 308962,
+      "id": "308962",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 308962,
+            "code": "308962",
             "display": "Captopril (Oral Pill)"
           }
         ]
@@ -164,8 +170,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 100,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 100
             },
             "denominator": {
               "value": 1
@@ -175,12 +183,12 @@
       ]
     },
     "308963": {
-      "id": 308963,
+      "id": "308963",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 308963,
+            "code": "308963",
             "display": "Captopril (Oral Pill)"
           }
         ]
@@ -207,8 +215,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 12.5,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 12.5
             },
             "denominator": {
               "value": 1
@@ -218,12 +228,12 @@
       ]
     },
     "308964": {
-      "id": 308964,
+      "id": "308964",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 308964,
+            "code": "308964",
             "display": "Captopril (Oral Pill)"
           }
         ]
@@ -250,8 +260,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 50,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 50
             },
             "denominator": {
               "value": 1
@@ -261,12 +273,12 @@
       ]
     },
     "317173": {
-      "id": 317173,
+      "id": "317173",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 317173,
+            "code": "317173",
             "display": "Captopril (Oral Pill)"
           }
         ]
@@ -293,8 +305,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 25,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 25
             },
             "denominator": {
               "value": 1
@@ -306,12 +320,12 @@
   },
   "3827": {
     "858804": {
-      "id": 858804,
+      "id": "858804",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 858804,
+            "code": "858804",
             "display": "Enalapril (Oral Pill)"
           }
         ]
@@ -338,8 +352,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 2.5,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 2.5
             },
             "denominator": {
               "value": 1
@@ -349,12 +365,12 @@
       ]
     },
     "858810": {
-      "id": 858810,
+      "id": "858810",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 858810,
+            "code": "858810",
             "display": "Enalapril (Oral Pill)"
           }
         ]
@@ -381,8 +397,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 20,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 20
             },
             "denominator": {
               "value": 1
@@ -392,12 +410,12 @@
       ]
     },
     "858813": {
-      "id": 858813,
+      "id": "858813",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 858813,
+            "code": "858813",
             "display": "Enalapril (Oral Pill)"
           }
         ]
@@ -424,8 +442,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 5,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 5
             },
             "denominator": {
               "value": 1
@@ -435,12 +455,12 @@
       ]
     },
     "858817": {
-      "id": 858817,
+      "id": "858817",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 858817,
+            "code": "858817",
             "display": "Enalapril (Oral Pill)"
           }
         ]
@@ -467,8 +487,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 10,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 10
             },
             "denominator": {
               "value": 1
@@ -480,12 +502,12 @@
   },
   "4109": {
     "1251903": {
-      "id": 1251903,
+      "id": "1251903",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 1251903,
+            "code": "1251903",
             "display": "Ethacrynate (Oral Pill)"
           }
         ]
@@ -512,8 +534,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 25,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 25
             },
             "denominator": {
               "value": 1
@@ -523,12 +547,12 @@
       ]
     },
     "1251907": {
-      "id": 1251907,
+      "id": "1251907",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 1251907,
+            "code": "1251907",
             "display": "Ethacrynate (Oral Tablet)"
           }
         ]
@@ -555,8 +579,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 50,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 50
             },
             "denominator": {
               "value": 1
@@ -568,12 +594,12 @@
   },
   "4603": {
     "197732": {
-      "id": 197732,
+      "id": "197732",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 197732,
+            "code": "197732",
             "display": "Furosemide (Oral Pill)"
           }
         ]
@@ -600,8 +626,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 80,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 80
             },
             "denominator": {
               "value": 1
@@ -611,12 +639,12 @@
       ]
     },
     "310429": {
-      "id": 310429,
+      "id": "310429",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 310429,
+            "code": "310429",
             "display": "Furosemide (Oral Pill)"
           }
         ]
@@ -643,8 +671,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 20,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 20
             },
             "denominator": {
               "value": 1
@@ -654,12 +684,12 @@
       ]
     },
     "313988": {
-      "id": 313988,
+      "id": "313988",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 313988,
+            "code": "313988",
             "display": "Furosemide (Oral Pill)"
           }
         ]
@@ -686,8 +716,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 40,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 40
             },
             "denominator": {
               "value": 1
@@ -699,12 +731,12 @@
   },
   "9997": {
     "198222": {
-      "id": 198222,
+      "id": "198222",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 198222,
+            "code": "198222",
             "display": "Spironolactone (Oral Pill)"
           }
         ]
@@ -731,8 +763,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 100,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 100
             },
             "denominator": {
               "value": 1
@@ -742,12 +776,12 @@
       ]
     },
     "198223": {
-      "id": 198223,
+      "id": "198223",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 198223,
+            "code": "198223",
             "display": "Spironolactone (Oral Pill)"
           }
         ]
@@ -774,8 +808,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 50,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 50
             },
             "denominator": {
               "value": 1
@@ -785,12 +821,12 @@
       ]
     },
     "313096": {
-      "id": 313096,
+      "id": "313096",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 313096,
+            "code": "313096",
             "display": "Spironolactone (Oral Pill)"
           }
         ]
@@ -817,8 +853,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 25,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 25
             },
             "denominator": {
               "value": 1
@@ -830,12 +868,12 @@
   },
   "18867": {
     "898687": {
-      "id": 898687,
+      "id": "898687",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 898687,
+            "code": "898687",
             "display": "Benazepril (Oral Pill)"
           }
         ]
@@ -862,8 +900,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 10,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 10
             },
             "denominator": {
               "value": 1
@@ -873,12 +913,12 @@
       ]
     },
     "898690": {
-      "id": 898690,
+      "id": "898690",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 898690,
+            "code": "898690",
             "display": "Benazepril (Oral Pill)"
           }
         ]
@@ -905,8 +945,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 20,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 20
             },
             "denominator": {
               "value": 1
@@ -916,12 +958,12 @@
       ]
     },
     "898719": {
-      "id": 898719,
+      "id": "898719",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 898719,
+            "code": "898719",
             "display": "Benazepril (Oral Pill)"
           }
         ]
@@ -948,8 +990,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 40,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 40
             },
             "denominator": {
               "value": 1
@@ -959,12 +1003,12 @@
       ]
     },
     "898723": {
-      "id": 898723,
+      "id": "898723",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 898723,
+            "code": "898723",
             "display": "Benazepril (Oral Pill)"
           }
         ]
@@ -991,8 +1035,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 5,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 5
             },
             "denominator": {
               "value": 1
@@ -1004,12 +1050,12 @@
   },
   "19484": {
     "854901": {
-      "id": 854901,
+      "id": "854901",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 854901,
+            "code": "854901",
             "display": "Bisoprolol (Oral Pill)"
           }
         ]
@@ -1036,8 +1082,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 10,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 10
             },
             "denominator": {
               "value": 1
@@ -1047,12 +1095,12 @@
       ]
     },
     "854905": {
-      "id": 854905,
+      "id": "854905",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 854905,
+            "code": "854905",
             "display": "Bisoprolol (Oral Pill)"
           }
         ]
@@ -1079,8 +1127,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 5,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 5
             },
             "denominator": {
               "value": 1
@@ -1092,12 +1142,12 @@
   },
   "20352": {
     "200031": {
-      "id": 200031,
+      "id": "200031",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 200031,
+            "code": "200031",
             "display": "Carvedilol (Oral Pill)"
           }
         ]
@@ -1124,8 +1174,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 6.25,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 6.25
             },
             "denominator": {
               "value": 1
@@ -1135,12 +1187,12 @@
       ]
     },
     "200032": {
-      "id": 200032,
+      "id": "200032",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 200032,
+            "code": "200032",
             "display": "Carvedilol (Oral Pill)"
           }
         ]
@@ -1167,8 +1219,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 12.5,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 12.5
             },
             "denominator": {
               "value": 1
@@ -1178,12 +1232,12 @@
       ]
     },
     "200033": {
-      "id": 200033,
+      "id": "200033",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 200033,
+            "code": "200033",
             "display": "Carvedilol (Oral Pill)"
           }
         ]
@@ -1210,8 +1264,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 25,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 25
             },
             "denominator": {
               "value": 1
@@ -1221,12 +1277,12 @@
       ]
     },
     "686924": {
-      "id": 686924,
+      "id": "686924",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 686924,
+            "code": "686924",
             "display": "Carvedilol (Oral Pill)"
           }
         ]
@@ -1253,8 +1309,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 3.125,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 3.125
             },
             "denominator": {
               "value": 1
@@ -1265,13 +1323,13 @@
     }
   },
   "29046": {
-    "205326": {
-      "id": 205326,
+    "197884": {
+      "id": "197884",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 205326,
+            "code": "197884",
             "display": "Lisinopril (Oral Pill)"
           }
         ]
@@ -1298,8 +1356,55 @@
           },
           "strength": {
             "numerator": {
-              "value": 30,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 40
+            },
+            "denominator": {
+              "value": 1
+            }
+          }
+        }
+      ]
+    },
+    "205326": {
+      "id": "205326",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "205326",
+            "display": "Lisinopril (Oral Pill)"
+          }
+        ]
+      },
+      "form": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "Oral Tablet",
+            "display": "Oral Tablet"
+          }
+        ]
+      },
+      "ingredient": [
+        {
+          "itemCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                "code": "29046",
+                "display": "lisinopril"
+              }
+            ]
+          },
+          "strength": {
+            "numerator": {
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 30
             },
             "denominator": {
               "value": 1
@@ -1309,12 +1414,12 @@
       ]
     },
     "311353": {
-      "id": 311353,
+      "id": "311353",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 311353,
+            "code": "311353",
             "display": "Lisinopril (Oral Pill)"
           }
         ]
@@ -1341,8 +1446,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 2.5,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 2.5
             },
             "denominator": {
               "value": 1
@@ -1352,12 +1459,12 @@
       ]
     },
     "311354": {
-      "id": 311354,
+      "id": "311354",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 311354,
+            "code": "311354",
             "display": "Lisinopril (Oral Pill)"
           }
         ]
@@ -1384,8 +1491,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 5,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 5
             },
             "denominator": {
               "value": 1
@@ -1395,12 +1504,12 @@
       ]
     },
     "314076": {
-      "id": 314076,
+      "id": "314076",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 314076,
+            "code": "314076",
             "display": "Lisinopril (Oral Pill)"
           }
         ]
@@ -1427,8 +1536,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 10,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 10
             },
             "denominator": {
               "value": 1
@@ -1438,12 +1549,12 @@
       ]
     },
     "314077": {
-      "id": 314077,
+      "id": "314077",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 314077,
+            "code": "314077",
             "display": "Lisinopril (Oral Pill)"
           }
         ]
@@ -1470,8 +1581,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 20,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 20
             },
             "denominator": {
               "value": 1
@@ -1483,12 +1596,12 @@
   },
   "30131": {
     "1299896": {
-      "id": 1299896,
+      "id": "1299896",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 1299896,
+            "code": "1299896",
             "display": "Moexipril (Oral Pill)"
           }
         ]
@@ -1515,8 +1628,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 15,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 15
             },
             "denominator": {
               "value": 1
@@ -1526,12 +1641,12 @@
       ]
     },
     "1299897": {
-      "id": 1299897,
+      "id": "1299897",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 1299897,
+            "code": "1299897",
             "display": "Moexipril (Oral Pill)"
           }
         ]
@@ -1558,8 +1673,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 7.5,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 7.5
             },
             "denominator": {
               "value": 1
@@ -1571,12 +1688,12 @@
   },
   "35208": {
     "312748": {
-      "id": 312748,
+      "id": "312748",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 312748,
+            "code": "312748",
             "display": "Quinapril (Oral Pill)"
           }
         ]
@@ -1603,8 +1720,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 10,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 10
             },
             "denominator": {
               "value": 1
@@ -1614,12 +1733,12 @@
       ]
     },
     "312749": {
-      "id": 312749,
+      "id": "312749",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 312749,
+            "code": "312749",
             "display": "Quinapril (Oral Pill)"
           }
         ]
@@ -1646,8 +1765,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 20,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 20
             },
             "denominator": {
               "value": 1
@@ -1657,12 +1778,12 @@
       ]
     },
     "312750": {
-      "id": 312750,
+      "id": "312750",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 312750,
+            "code": "312750",
             "display": "Quinapril (Oral Pill)"
           }
         ]
@@ -1689,8 +1810,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 5,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 5
             },
             "denominator": {
               "value": 1
@@ -1700,12 +1823,12 @@
       ]
     },
     "314203": {
-      "id": 314203,
+      "id": "314203",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 314203,
+            "code": "314203",
             "display": "Quinapril (Oral Pill)"
           }
         ]
@@ -1732,8 +1855,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 40,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 40
             },
             "denominator": {
               "value": 1
@@ -1745,12 +1870,12 @@
   },
   "35296": {
     "198188": {
-      "id": 198188,
+      "id": "198188",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 198188,
+            "code": "198188",
             "display": "Ramipril (Oral Pill)"
           }
         ]
@@ -1777,8 +1902,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 2.5,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 2.5
             },
             "denominator": {
               "value": 1
@@ -1788,12 +1915,12 @@
       ]
     },
     "198189": {
-      "id": 198189,
+      "id": "198189",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 198189,
+            "code": "198189",
             "display": "Ramipril (Oral Pill)"
           }
         ]
@@ -1820,8 +1947,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 5,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 5
             },
             "denominator": {
               "value": 1
@@ -1831,12 +1960,12 @@
       ]
     },
     "251856": {
-      "id": 251856,
+      "id": "251856",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 251856,
+            "code": "251856",
             "display": "Ramipril (Oral Pill)"
           }
         ]
@@ -1863,8 +1992,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 2.5,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 2.5
             },
             "denominator": {
               "value": 1
@@ -1874,12 +2005,12 @@
       ]
     },
     "251857": {
-      "id": 251857,
+      "id": "251857",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 251857,
+            "code": "251857",
             "display": "Ramipril (Oral Pill)"
           }
         ]
@@ -1906,8 +2037,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 5,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 5
             },
             "denominator": {
               "value": 1
@@ -1917,12 +2050,12 @@
       ]
     },
     "261962": {
-      "id": 261962,
+      "id": "261962",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 261962,
+            "code": "261962",
             "display": "Ramipril (Oral Pill)"
           }
         ]
@@ -1949,8 +2082,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 10,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 10
             },
             "denominator": {
               "value": 1
@@ -1960,12 +2095,12 @@
       ]
     },
     "401965": {
-      "id": 401965,
+      "id": "401965",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 401965,
+            "code": "401965",
             "display": "Ramipril (Oral Pill)"
           }
         ]
@@ -1992,8 +2127,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 1.25,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 1.25
             },
             "denominator": {
               "value": 1
@@ -2003,12 +2140,12 @@
       ]
     },
     "401968": {
-      "id": 401968,
+      "id": "401968",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 401968,
+            "code": "401968",
             "display": "Ramipril (Oral Pill)"
           }
         ]
@@ -2035,8 +2172,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 10,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 10
             },
             "denominator": {
               "value": 1
@@ -2046,12 +2185,12 @@
       ]
     },
     "845488": {
-      "id": 845488,
+      "id": "845488",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 845488,
+            "code": "845488",
             "display": "Ramipril (Oral Pill)"
           }
         ]
@@ -2078,8 +2217,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 1.25,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 1.25
             },
             "denominator": {
               "value": 1
@@ -2091,12 +2232,12 @@
   },
   "38413": {
     "198369": {
-      "id": 198369,
+      "id": "198369",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 198369,
+            "code": "198369",
             "display": "Torsemide (Oral Pill)"
           }
         ]
@@ -2123,8 +2264,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 10,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 10
             },
             "denominator": {
               "value": 1
@@ -2134,12 +2277,12 @@
       ]
     },
     "198370": {
-      "id": 198370,
+      "id": "198370",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 198370,
+            "code": "198370",
             "display": "Torsemide (Oral Pill)"
           }
         ]
@@ -2166,8 +2309,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 100,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 100
             },
             "denominator": {
               "value": 1
@@ -2177,12 +2322,12 @@
       ]
     },
     "198371": {
-      "id": 198371,
+      "id": "198371",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 198371,
+            "code": "198371",
             "display": "Torsemide (Oral Pill)"
           }
         ]
@@ -2209,8 +2354,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 20,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 20
             },
             "denominator": {
               "value": 1
@@ -2220,12 +2367,12 @@
       ]
     },
     "198372": {
-      "id": 198372,
+      "id": "198372",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 198372,
+            "code": "198372",
             "display": "Torsemide (Oral Pill)"
           }
         ]
@@ -2252,8 +2399,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 5,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 5
             },
             "denominator": {
               "value": 1
@@ -2263,12 +2412,12 @@
       ]
     },
     "2589881": {
-      "id": 2589881,
+      "id": "2589881",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 2589881,
+            "code": "2589881",
             "display": "Torsemide (Oral Pill)"
           }
         ]
@@ -2295,8 +2444,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 40,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 40
             },
             "denominator": {
               "value": 1
@@ -2306,12 +2457,12 @@
       ]
     },
     "2589885": {
-      "id": 2589885,
+      "id": "2589885",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 2589885,
+            "code": "2589885",
             "display": "Torsemide (Oral Pill)"
           }
         ]
@@ -2338,8 +2489,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 60,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 60
             },
             "denominator": {
               "value": 1
@@ -2351,12 +2504,12 @@
   },
   "38454": {
     "199351": {
-      "id": 199351,
+      "id": "199351",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 199351,
+            "code": "199351",
             "display": "Trandolapril (Oral Pill)"
           }
         ]
@@ -2383,8 +2536,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 2,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 2
             },
             "denominator": {
               "value": 1
@@ -2394,12 +2549,12 @@
       ]
     },
     "199352": {
-      "id": 199352,
+      "id": "199352",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 199352,
+            "code": "199352",
             "display": "Trandolapril (Oral Pill)"
           }
         ]
@@ -2426,8 +2581,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 4,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 4
             },
             "denominator": {
               "value": 1
@@ -2437,12 +2594,12 @@
       ]
     },
     "199353": {
-      "id": 199353,
+      "id": "199353",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 199353,
+            "code": "199353",
             "display": "Trandolapril (Oral Pill)"
           }
         ]
@@ -2469,8 +2626,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 1,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 1
             },
             "denominator": {
               "value": 1
@@ -2482,12 +2641,12 @@
   },
   "54552": {
     "854925": {
-      "id": 854925,
+      "id": "854925",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 854925,
+            "code": "854925",
             "display": "Perindopril (Oral Pill)"
           }
         ]
@@ -2514,8 +2673,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 8,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 8
             },
             "denominator": {
               "value": 1
@@ -2525,12 +2686,12 @@
       ]
     },
     "854984": {
-      "id": 854984,
+      "id": "854984",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 854984,
+            "code": "854984",
             "display": "Perindopril (Oral Pill)"
           }
         ]
@@ -2557,8 +2718,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 2,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 2
             },
             "denominator": {
               "value": 1
@@ -2568,12 +2731,12 @@
       ]
     },
     "854988": {
-      "id": 854988,
+      "id": "854988",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 854988,
+            "code": "854988",
             "display": "Perindopril (Oral Pill)"
           }
         ]
@@ -2600,8 +2763,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 4,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 4
             },
             "denominator": {
               "value": 1
@@ -2613,12 +2778,12 @@
   },
   "69749": {
     "349199": {
-      "id": 349199,
+      "id": "349199",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 349199,
+            "code": "349199",
             "display": "Valsartan (Oral Pill)"
           }
         ]
@@ -2645,8 +2810,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 80,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 80
             },
             "denominator": {
               "value": 1
@@ -2656,12 +2823,12 @@
       ]
     },
     "349200": {
-      "id": 349200,
+      "id": "349200",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 349200,
+            "code": "349200",
             "display": "Valsartan (Oral Pill)"
           }
         ]
@@ -2688,8 +2855,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 320,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 320
             },
             "denominator": {
               "value": 1
@@ -2699,12 +2868,12 @@
       ]
     },
     "349201": {
-      "id": 349201,
+      "id": "349201",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 349201,
+            "code": "349201",
             "display": "Valsartan (Oral Pill)"
           }
         ]
@@ -2731,8 +2900,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 160,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 160
             },
             "denominator": {
               "value": 1
@@ -2742,12 +2913,12 @@
       ]
     },
     "349483": {
-      "id": 349483,
+      "id": "349483",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 349483,
+            "code": "349483",
             "display": "Valsartan (Oral Pill)"
           }
         ]
@@ -2774,8 +2945,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 40,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 40
             },
             "denominator": {
               "value": 1
@@ -2787,12 +2960,12 @@
   },
   "73494": {
     "205304": {
-      "id": 205304,
+      "id": "205304",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 205304,
+            "code": "205304",
             "display": "Telmisartan (Oral Pill)"
           }
         ]
@@ -2819,8 +2992,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 40,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 40
             },
             "denominator": {
               "value": 1
@@ -2830,12 +3005,12 @@
       ]
     },
     "205305": {
-      "id": 205305,
+      "id": "205305",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 205305,
+            "code": "205305",
             "display": "Telmisartan (Oral Pill)"
           }
         ]
@@ -2862,8 +3037,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 80,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 80
             },
             "denominator": {
               "value": 1
@@ -2873,12 +3050,12 @@
       ]
     },
     "282755": {
-      "id": 282755,
+      "id": "282755",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 282755,
+            "code": "282755",
             "display": "Telmisartan (Oral Pill)"
           }
         ]
@@ -2905,8 +3082,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 20,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 20
             },
             "denominator": {
               "value": 1
@@ -2918,12 +3097,12 @@
   },
   "83515": {
     "310139": {
-      "id": 310139,
+      "id": "310139",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 310139,
+            "code": "310139",
             "display": "Eprosartan (Oral Pill)"
           }
         ]
@@ -2950,8 +3129,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 400,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 400
             },
             "denominator": {
               "value": 1
@@ -2961,12 +3142,12 @@
       ]
     },
     "310140": {
-      "id": 310140,
+      "id": "310140",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 310140,
+            "code": "310140",
             "display": "Eprosartan (Oral Pill)"
           }
         ]
@@ -2993,8 +3174,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 600,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 600
             },
             "denominator": {
               "value": 1
@@ -3006,12 +3189,12 @@
   },
   "83818": {
     "200094": {
-      "id": 200094,
+      "id": "200094",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 200094,
+            "code": "200094",
             "display": "Irbesartan (Oral Pill)"
           }
         ]
@@ -3038,8 +3221,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 75,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 75
             },
             "denominator": {
               "value": 1
@@ -3049,12 +3234,12 @@
       ]
     },
     "200095": {
-      "id": 200095,
+      "id": "200095",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 200095,
+            "code": "200095",
             "display": "Irbesartan (Oral Pill)"
           }
         ]
@@ -3081,8 +3266,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 150,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 150
             },
             "denominator": {
               "value": 1
@@ -3092,12 +3279,12 @@
       ]
     },
     "200096": {
-      "id": 200096,
+      "id": "200096",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 200096,
+            "code": "200096",
             "display": "Irbesartan (Oral Pill)"
           }
         ]
@@ -3124,8 +3311,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 300,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 300
             },
             "denominator": {
               "value": 1
@@ -3137,12 +3326,12 @@
   },
   "118463": {
     "349373": {
-      "id": 349373,
+      "id": "349373",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 349373,
+            "code": "349373",
             "display": "Olmesartan (Oral Pill)"
           }
         ]
@@ -3169,8 +3358,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 5,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 5
             },
             "denominator": {
               "value": 1
@@ -3180,12 +3371,12 @@
       ]
     },
     "349401": {
-      "id": 349401,
+      "id": "349401",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 349401,
+            "code": "349401",
             "display": "Olmesartan (Oral Pill)"
           }
         ]
@@ -3212,8 +3403,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 20,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 20
             },
             "denominator": {
               "value": 1
@@ -3223,12 +3416,12 @@
       ]
     },
     "349405": {
-      "id": 349405,
+      "id": "349405",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 349405,
+            "code": "349405",
             "display": "Olmesartan (Oral Pill)"
           }
         ]
@@ -3255,8 +3448,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 40,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 40
             },
             "denominator": {
               "value": 1
@@ -3268,12 +3463,12 @@
   },
   "203160": {
     "979480": {
-      "id": 979480,
+      "id": "979480",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 979480,
+            "code": "979480",
             "display": "Losartan (Oral Pill)"
           }
         ]
@@ -3300,8 +3495,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 100,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 100
             },
             "denominator": {
               "value": 1
@@ -3311,12 +3508,12 @@
       ]
     },
     "979485": {
-      "id": 979485,
+      "id": "979485",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 979485,
+            "code": "979485",
             "display": "Losartan (Oral Pill)"
           }
         ]
@@ -3343,8 +3540,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 25,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 25
             },
             "denominator": {
               "value": 1
@@ -3354,12 +3553,12 @@
       ]
     },
     "979492": {
-      "id": 979492,
+      "id": "979492",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 979492,
+            "code": "979492",
             "display": "Losartan (Oral Pill)"
           }
         ]
@@ -3386,8 +3585,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 50,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 50
             },
             "denominator": {
               "value": 1
@@ -3399,12 +3600,12 @@
   },
   "214354": {
     "153822": {
-      "id": 153822,
+      "id": "153822",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 153822,
+            "code": "153822",
             "display": "Candesartan (Oral Pill)"
           }
         ]
@@ -3431,8 +3632,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 4,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 4
             },
             "denominator": {
               "value": 1
@@ -3442,12 +3645,12 @@
       ]
     },
     "153823": {
-      "id": 153823,
+      "id": "153823",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 153823,
+            "code": "153823",
             "display": "Candesartan (Oral Pill)"
           }
         ]
@@ -3474,8 +3677,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 8,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 8
             },
             "denominator": {
               "value": 1
@@ -3485,12 +3690,12 @@
       ]
     },
     "577776": {
-      "id": 577776,
+      "id": "577776",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 577776,
+            "code": "577776",
             "display": "Candesartan (Oral Pill)"
           }
         ]
@@ -3517,8 +3722,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 16,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 16
             },
             "denominator": {
               "value": 1
@@ -3528,12 +3735,12 @@
       ]
     },
     "639537": {
-      "id": 639537,
+      "id": "639537",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 639537,
+            "code": "639537",
             "display": "Candesartan (Oral Pill)"
           }
         ]
@@ -3560,8 +3767,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 32,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 32
             },
             "denominator": {
               "value": 1
@@ -3573,12 +3782,12 @@
   },
   "221124": {
     "866412": {
-      "id": 866412,
+      "id": "866412",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 866412,
+            "code": "866412",
             "display": "Metoprolol XR (Oral Pill)"
           }
         ]
@@ -3605,8 +3814,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 100,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 100
             },
             "denominator": {
               "value": 1
@@ -3616,12 +3827,12 @@
       ]
     },
     "866419": {
-      "id": 866419,
+      "id": "866419",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 866419,
+            "code": "866419",
             "display": "Metoprolol XR (Oral Pill)"
           }
         ]
@@ -3648,8 +3859,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 200,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 200
             },
             "denominator": {
               "value": 1
@@ -3659,12 +3872,12 @@
       ]
     },
     "866427": {
-      "id": 866427,
+      "id": "866427",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 866427,
+            "code": "866427",
             "display": "Metoprolol XR (Oral Pill)"
           }
         ]
@@ -3691,8 +3904,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 25,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 25
             },
             "denominator": {
               "value": 1
@@ -3702,12 +3917,12 @@
       ]
     },
     "866436": {
-      "id": 866436,
+      "id": "866436",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 866436,
+            "code": "866436",
             "display": "Metoprolol XR (Oral Pill)"
           }
         ]
@@ -3734,8 +3949,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 50,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 50
             },
             "denominator": {
               "value": 1
@@ -3745,12 +3962,12 @@
       ]
     },
     "1999031": {
-      "id": 1999031,
+      "id": "1999031",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 1999031,
+            "code": "1999031",
             "display": "Metoprolol XR (Oral Pill)"
           }
         ]
@@ -3777,8 +3994,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 100,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 100
             },
             "denominator": {
               "value": 1
@@ -3788,12 +4007,12 @@
       ]
     },
     "1999033": {
-      "id": 1999033,
+      "id": "1999033",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 1999033,
+            "code": "1999033",
             "display": "Metoprolol XR (Oral Pill)"
           }
         ]
@@ -3820,8 +4039,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 200,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 200
             },
             "denominator": {
               "value": 1
@@ -3831,12 +4052,12 @@
       ]
     },
     "1999035": {
-      "id": 1999035,
+      "id": "1999035",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 1999035,
+            "code": "1999035",
             "display": "Metoprolol XR (Oral Pill)"
           }
         ]
@@ -3863,8 +4084,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 25,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 25
             },
             "denominator": {
               "value": 1
@@ -3874,12 +4097,12 @@
       ]
     },
     "1999037": {
-      "id": 1999037,
+      "id": "1999037",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 1999037,
+            "code": "1999037",
             "display": "Metoprolol XR (Oral Pill)"
           }
         ]
@@ -3906,8 +4129,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 50,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 50
             },
             "denominator": {
               "value": 1
@@ -3919,12 +4144,12 @@
   },
   "227278": {
     "857169": {
-      "id": 857169,
+      "id": "857169",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 857169,
+            "code": "857169",
             "display": "Fosinopril (Oral Pill)"
           }
         ]
@@ -3951,8 +4176,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 10,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 10
             },
             "denominator": {
               "value": 1
@@ -3962,12 +4189,12 @@
       ]
     },
     "857183": {
-      "id": 857183,
+      "id": "857183",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 857183,
+            "code": "857183",
             "display": "Fosinopril (Oral Pill)"
           }
         ]
@@ -3994,8 +4221,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 20,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 20
             },
             "denominator": {
               "value": 1
@@ -4005,12 +4234,12 @@
       ]
     },
     "857187": {
-      "id": 857187,
+      "id": "857187",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 857187,
+            "code": "857187",
             "display": "Fosinopril (Oral Pill)"
           }
         ]
@@ -4037,8 +4266,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 40,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 40
             },
             "denominator": {
               "value": 1
@@ -4050,12 +4281,12 @@
   },
   "298869": {
     "351256": {
-      "id": 351256,
+      "id": "351256",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 351256,
+            "code": "351256",
             "display": "Eplerenone (Oral Pill)"
           }
         ]
@@ -4082,8 +4313,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 25,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 25
             },
             "denominator": {
               "value": 1
@@ -4093,12 +4326,12 @@
       ]
     },
     "351257": {
-      "id": 351257,
+      "id": "351257",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 351257,
+            "code": "351257",
             "display": "Eplerenone (Oral Pill)"
           }
         ]
@@ -4125,8 +4358,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 50,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 50
             },
             "denominator": {
               "value": 1
@@ -4138,12 +4373,12 @@
   },
   "668310": {
     "860510": {
-      "id": 860510,
+      "id": "860510",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 860510,
+            "code": "860510",
             "display": "Carvedilol XR (Oral Pill)"
           }
         ]
@@ -4170,8 +4405,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 10,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 10
             },
             "denominator": {
               "value": 1
@@ -4181,12 +4418,12 @@
       ]
     },
     "860516": {
-      "id": 860516,
+      "id": "860516",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 860516,
+            "code": "860516",
             "display": "Carvedilol XR (Oral Pill)"
           }
         ]
@@ -4213,8 +4450,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 20,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 20
             },
             "denominator": {
               "value": 1
@@ -4224,12 +4463,12 @@
       ]
     },
     "860522": {
-      "id": 860522,
+      "id": "860522",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 860522,
+            "code": "860522",
             "display": "Carvedilol XR (Oral Pill)"
           }
         ]
@@ -4256,8 +4495,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 40,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 40
             },
             "denominator": {
               "value": 1
@@ -4267,12 +4508,12 @@
       ]
     },
     "860532": {
-      "id": 860532,
+      "id": "860532",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 860532,
+            "code": "860532",
             "display": "Carvedilol XR (Oral Pill)"
           }
         ]
@@ -4299,8 +4540,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 80,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 80
             },
             "denominator": {
               "value": 1
@@ -4312,12 +4555,12 @@
   },
   "1091642": {
     "1091646": {
-      "id": 1091646,
+      "id": "1091646",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 1091646,
+            "code": "1091646",
             "display": "Azilsartan (Oral Pill)"
           }
         ]
@@ -4344,8 +4587,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 40,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 40
             },
             "denominator": {
               "value": 1
@@ -4355,12 +4600,12 @@
       ]
     },
     "1091652": {
-      "id": 1091652,
+      "id": "1091652",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 1091652,
+            "code": "1091652",
             "display": "Azilsartan (Oral Pill)"
           }
         ]
@@ -4387,8 +4632,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 80,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 80
             },
             "denominator": {
               "value": 1
@@ -4400,12 +4647,12 @@
   },
   "1373458": {
     "1373463": {
-      "id": 1373463,
+      "id": "1373463",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 1373463,
+            "code": "1373463",
             "display": "Canagliflozin (Oral Pill)"
           }
         ]
@@ -4432,8 +4679,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 100,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 100
             },
             "denominator": {
               "value": 1
@@ -4443,12 +4692,12 @@
       ]
     },
     "1373471": {
-      "id": 1373471,
+      "id": "1373471",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 1373471,
+            "code": "1373471",
             "display": "Canagliflozin (Oral Pill)"
           }
         ]
@@ -4475,8 +4724,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 300,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 300
             },
             "denominator": {
               "value": 1
@@ -4488,12 +4739,12 @@
   },
   "1488564": {
     "1488569": {
-      "id": 1488569,
+      "id": "1488569",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 1488569,
+            "code": "1488569",
             "display": "Dapagliflozin (Oral Pill)"
           }
         ]
@@ -4520,8 +4771,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 10,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 10
             },
             "denominator": {
               "value": 1
@@ -4531,12 +4784,12 @@
       ]
     },
     "1488574": {
-      "id": 1488574,
+      "id": "1488574",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 1488574,
+            "code": "1488574",
             "display": "Dapagliflozin (Oral Pill)"
           }
         ]
@@ -4563,8 +4816,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 5,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 5
             },
             "denominator": {
               "value": 1
@@ -4576,12 +4831,12 @@
   },
   "1545653": {
     "1545658": {
-      "id": 1545658,
+      "id": "1545658",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 1545658,
+            "code": "1545658",
             "display": "Empagliflozin (Oral Pill)"
           }
         ]
@@ -4608,8 +4863,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 10,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 10
             },
             "denominator": {
               "value": 1
@@ -4619,12 +4876,12 @@
       ]
     },
     "1545666": {
-      "id": 1545666,
+      "id": "1545666",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 1545666,
+            "code": "1545666",
             "display": "Empagliflozin (Oral Pill)"
           }
         ]
@@ -4651,8 +4908,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 25,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 25
             },
             "denominator": {
               "value": 1
@@ -4664,12 +4923,12 @@
   },
   "1656339": {
     "1656340": {
-      "id": 1656340,
+      "id": "1656340",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 1656340,
+            "code": "1656340",
             "display": "Sacubitril/Valsartan (Oral Pill)"
           }
         ]
@@ -4689,15 +4948,17 @@
             "coding": [
               {
                 "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                "code": 1656328,
+                "code": "1656328",
                 "display": "sacubitril"
               }
             ]
           },
           "strength": {
             "numerator": {
-              "value": 24,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 24
             },
             "denominator": {
               "value": 1
@@ -4709,15 +4970,17 @@
             "coding": [
               {
                 "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                "code": 69749,
+                "code": "69749",
                 "display": "valsartan"
               }
             ]
           },
           "strength": {
             "numerator": {
-              "value": 26,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 26
             },
             "denominator": {
               "value": 1
@@ -4727,12 +4990,12 @@
       ]
     },
     "1656349": {
-      "id": 1656349,
+      "id": "1656349",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 1656349,
+            "code": "1656349",
             "display": "Sacubitril/Valsartan (Oral Pill)"
           }
         ]
@@ -4752,15 +5015,17 @@
             "coding": [
               {
                 "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                "code": 1656328,
+                "code": "1656328",
                 "display": "sacubitril"
               }
             ]
           },
           "strength": {
             "numerator": {
-              "value": 49,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 49
             },
             "denominator": {
               "value": 1
@@ -4772,15 +5037,17 @@
             "coding": [
               {
                 "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                "code": 69749,
+                "code": "69749",
                 "display": "valsartan"
               }
             ]
           },
           "strength": {
             "numerator": {
-              "value": 51,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 51
             },
             "denominator": {
               "value": 1
@@ -4790,12 +5057,12 @@
       ]
     },
     "1656354": {
-      "id": 1656354,
+      "id": "1656354",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 1656354,
+            "code": "1656354",
             "display": "Sacubitril/Valsartan (Oral Pill)"
           }
         ]
@@ -4815,15 +5082,17 @@
             "coding": [
               {
                 "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                "code": 1656328,
+                "code": "1656328",
                 "display": "sacubitril"
               }
             ]
           },
           "strength": {
             "numerator": {
-              "value": 97,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 97
             },
             "denominator": {
               "value": 1
@@ -4835,15 +5104,17 @@
             "coding": [
               {
                 "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                "code": 69749,
+                "code": "69749",
                 "display": "valsartan"
               }
             ]
           },
           "strength": {
             "numerator": {
-              "value": 103,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 103
             },
             "denominator": {
               "value": 1
@@ -4853,12 +5124,12 @@
       ]
     },
     "2679793": {
-      "id": 2679793,
+      "id": "2679793",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 2679793,
+            "code": "2679793",
             "display": "Sacubitril/Valsartan (Oral Pellet)"
           }
         ]
@@ -4878,15 +5149,17 @@
             "coding": [
               {
                 "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                "code": 1656328,
+                "code": "1656328",
                 "display": "sacubitril"
               }
             ]
           },
           "strength": {
             "numerator": {
-              "value": 15,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 15
             },
             "denominator": {
               "value": 1
@@ -4898,15 +5171,17 @@
             "coding": [
               {
                 "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                "code": 69749,
+                "code": "69749",
                 "display": "valsartan"
               }
             ]
           },
           "strength": {
             "numerator": {
-              "value": 16,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 16
             },
             "denominator": {
               "value": 1
@@ -4916,12 +5191,12 @@
       ]
     },
     "2679800": {
-      "id": 2679800,
+      "id": "2679800",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 2679800,
+            "code": "2679800",
             "display": "Sacubitril/Valsartan (Oral Pellet)"
           }
         ]
@@ -4941,15 +5216,17 @@
             "coding": [
               {
                 "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                "code": 1656328,
+                "code": "1656328",
                 "display": "sacubitril"
               }
             ]
           },
           "strength": {
             "numerator": {
-              "value": 6,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 6
             },
             "denominator": {
               "value": 1
@@ -4961,15 +5238,17 @@
             "coding": [
               {
                 "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                "code": 69749,
+                "code": "69749",
                 "display": "valsartan"
               }
             ]
           },
           "strength": {
             "numerator": {
-              "value": 6,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 6
             },
             "denominator": {
               "value": 1
@@ -4981,12 +5260,12 @@
   },
   "1992672": {
     "1992810": {
-      "id": 1992810,
+      "id": "1992810",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 1992810,
+            "code": "1992810",
             "display": "Ertugliflozin (Oral Pill)"
           }
         ]
@@ -5013,8 +5292,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 5,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 5
             },
             "denominator": {
               "value": 1
@@ -5024,12 +5305,12 @@
       ]
     },
     "1992819": {
-      "id": 1992819,
+      "id": "1992819",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 1992819,
+            "code": "1992819",
             "display": "Ertugliflozin (Oral Pill)"
           }
         ]
@@ -5056,8 +5337,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 15,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 15
             },
             "denominator": {
               "value": 1
@@ -5069,12 +5352,12 @@
   },
   "2627044": {
     "2637859": {
-      "id": 2637859,
+      "id": "2637859",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 2637859,
+            "code": "2637859",
             "display": "Bexagliflozin (Oral Pill)"
           }
         ]
@@ -5101,8 +5384,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 20,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 20
             },
             "denominator": {
               "value": 1
@@ -5114,12 +5399,12 @@
   },
   "2638675": {
     "2638683": {
-      "id": 2638683,
+      "id": "2638683",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 2638683,
+            "code": "2638683",
             "display": "Sotagliflozin (Oral Pill)"
           }
         ]
@@ -5146,8 +5431,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 200,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 200
             },
             "denominator": {
               "value": 1
@@ -5157,12 +5444,12 @@
       ]
     },
     "2638691": {
-      "id": 2638691,
+      "id": "2638691",
       "code": {
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": 2638691,
+            "code": "2638691",
             "display": "Sotagliflozin (Oral Pill)"
           }
         ]
@@ -5189,8 +5476,10 @@
           },
           "strength": {
             "numerator": {
-              "value": 400,
-              "unit": "mg"
+              "unit": "mg",
+              "code": "mg",
+              "system": "http://unitsofmeasure.org",
+              "value": 400
             },
             "denominator": {
               "value": 1

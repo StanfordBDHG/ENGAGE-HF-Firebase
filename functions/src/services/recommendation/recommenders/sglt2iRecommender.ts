@@ -22,7 +22,7 @@ export class Sglt2iRecommender extends Recommender {
     const currentRequests = this.findCurrentRequests(input.requests, [
       MedicationClassReference.sglt2inhibitors,
     ])
-    if (currentRequests.length == 0) return this.computeNew(input)
+    if (currentRequests.length === 0) return this.computeNew(input)
 
     if (this.isTargetDailyDoseReached(currentRequests))
       return this.createRecommendation(

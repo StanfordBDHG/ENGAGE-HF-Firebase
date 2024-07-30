@@ -53,7 +53,7 @@ export class UserDebugDataFactory {
   }): FHIRAppointment {
     return {
       status: AppointmentStatus.booked,
-      created: new Date(),
+      created: input.created,
       start: input.start,
       end: new Date(
         input.start.getTime() + input.durationInMinutes * 60 * 1000,
@@ -71,8 +71,8 @@ export class UserDebugDataFactory {
   // Methods - MedicationRequests
 
   medicationRequest(input: {
-    repeatTimeOfDay: string[]
     drugReference: DrugReference
+    frequencyPerDay: number
     quantity: number
   }): FHIRMedicationRequest {
     return {
@@ -83,7 +83,9 @@ export class UserDebugDataFactory {
         {
           timing: {
             repeat: {
-              timeOfDay: input.repeatTimeOfDay,
+              frequency: input.frequencyPerDay,
+              period: 1,
+              periodUnit: 'd',
             },
           },
           doseAndRate: [

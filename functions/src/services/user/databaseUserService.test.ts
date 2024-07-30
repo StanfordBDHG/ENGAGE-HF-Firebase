@@ -45,7 +45,7 @@ describe('DatabaseUserService', () => {
       const invitationId = 'mockAdmin'
       const displayName = 'Mock Admin'
 
-      mockFirestore.collections = {
+      mockFirestore.replaceAll({
         invitations: {
           mockAdmin: {
             user: {
@@ -61,7 +61,7 @@ describe('DatabaseUserService', () => {
             },
           },
         },
-      }
+      })
 
       const invitation = await userService.getInvitation(invitationId)
       if (!invitation) assert.fail('Invitation not found')
@@ -95,7 +95,7 @@ describe('DatabaseUserService', () => {
       const invitationId = 'mockClinician'
       const displayName = 'Mock Clinician'
 
-      mockFirestore.collections = {
+      mockFirestore.replaceAll({
         invitations: {
           mockClinician: {
             user: {
@@ -115,7 +115,7 @@ describe('DatabaseUserService', () => {
         organizations: {
           mockOrganization: {},
         },
-      }
+      })
 
       const invitation = await userService.getInvitation(invitationId)
       if (!invitation) assert.fail('Invitation not found')
@@ -149,7 +149,7 @@ describe('DatabaseUserService', () => {
       const invitationId = 'mockPatient'
       const displayName = 'Mock Patient'
 
-      mockFirestore.collections = {
+      mockFirestore.replaceAll({
         invitations: {
           mockPatient: {
             user: {
@@ -171,7 +171,7 @@ describe('DatabaseUserService', () => {
         organizations: {
           mockOrganization: {},
         },
-      }
+      })
 
       const invitation = await userService.getInvitation(invitationId)
       if (!invitation) assert.fail('Invitation not found')

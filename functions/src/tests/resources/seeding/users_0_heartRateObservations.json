@@ -1,0 +1,21 @@
+{
+  "0": {
+    "status": "final",
+    "code": {
+      "coding": [
+        {
+          "system": "http://loinc.org",
+          "code": "8867-4",
+          "display": "Heart rate"
+        }
+      ]
+    },
+    "valueQuantity": {
+      "value": 70,
+      "unit": "beats/minute",
+      "system": "http://unitsofmeasure.org",
+      "code": "/min"
+    },
+    "effectiveDateTime": "2024-06-03T00:00:00.000Z"
+  }
+}

@@ -84,12 +84,12 @@ export abstract class Recommender {
 
   protected findCurrentRequests(
     requests: MedicationRequestContext[],
-    medicationReferences: MedicationClassReference[],
+    references: MedicationClassReference[],
   ): MedicationRequestContext[] {
     return requests.filter((request) =>
-      medicationReferences.some(
-        (medicationReference) =>
-          request.medicationClassReference?.reference === medicationReference,
+      references.some(
+        (reference) =>
+          request.medicationClassReference?.reference === reference.toString(),
       ),
     )
   }

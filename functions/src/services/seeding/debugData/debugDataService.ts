@@ -10,10 +10,11 @@ import { type Auth } from 'firebase-admin/auth'
 import { UserDebugDataFactory } from './userDebugDataFactory.js'
 import { AppointmentStatus } from '../../../models/fhir/appointment.js'
 import { type FHIRQuestionnaire } from '../../../models/fhir/questionnaire.js'
+import { type Invitation } from '../../../models/invitation.js'
 import { DrugReference, LoincCode } from '../../codes.js'
 import { type DatabaseService } from '../../database/databaseService.js'
 import { QuantityUnit } from '../../fhir/quantityUnit.js'
-import { CachingStrategy, SeedingService } from '../seedingService.js'
+import { SeedingService } from '../seedingService.js'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -24,12 +25,12 @@ export interface UserSeedingOptions {
     password: string
   }
   user?: any
-  collections?: Record<string, any[]>
+  collections?: Record<string, Record<string, any>>
 }
 
 export interface CustomSeedingOptions {
   users: UserSeedingOptions[]
-  firestore: Record<string, any[]>
+  firestore: Record<string, Record<string, any>>
 }
 
 export class DebugDataService extends SeedingService {
@@ -57,10 +58,11 @@ export class DebugDataService extends SeedingService {
 
     await this.databaseService.runTransaction((firestore, transaction) => {
       for (const collectionName in input.firestore) {
-        const collection = firestore.collection(collectionName)
-        for (const data of input.firestore[collectionName]) {
-          this.setUnstructuredCollection(collection, data, transaction)
-        }
+        this.setUnstructuredCollection(
+          firestore.collection(collectionName),
+          input.firestore[collectionName],
+          transaction,
+        )
       }
     })
 
@@ -68,7 +70,9 @@ export class DebugDataService extends SeedingService {
   }
 
   async seedInvitations() {
-    await this.cachingCollection('invitations', 'invitations.json', () => [])
+    const invitations =
+      this.readJSON<Record<string, Invitation>>('invitations.json')
+    await this.replaceCollection('invitations', invitations)
   }
 
   async seedUsers() {
@@ -79,222 +83,206 @@ export class DebugDataService extends SeedingService {
     return userIds
   }
 
-  async seedUserAppointments(userId: string) {
-    await this.cachingCollection(
-      `users/${userId}/appointments`,
-      'patients/appointments.json',
-      () => [
-        this.userDataFactory.appointment({
-          userId,
-          created: new Date(),
-          status: AppointmentStatus.booked,
-          start: new Date('2024-09-09'),
-          durationInMinutes: 30,
-        }),
-      ],
-    )
+  async seedUserAppointments(userId: string, date: Date) {
+    const values = [
+      this.userDataFactory.appointment({
+        userId,
+        created: this.advanceDateByDays(date, -2),
+        status: AppointmentStatus.booked,
+        start: this.advanceDateByDays(date, 2),
+        durationInMinutes: 30,
+      }),
+    ]
+
+    await this.replaceCollection(`users/${userId}/appointments`, values)
   }
 
   async seedUserMedicationRequests(userId: string) {
-    await this.cachingCollection(
-      `users/${userId}/medicationRequests`,
-      'patients/medicationRequests.json',
-      () => [
-        this.userDataFactory.medicationRequest({
-          repeatTimeOfDay: ['08:00', '20:00'],
-          drugReference: DrugReference.eplerenone25,
-          quantity: 2,
-        }),
-      ],
-    )
+    const values = [
+      this.userDataFactory.medicationRequest({
+        frequencyPerDay: 2,
+        drugReference: DrugReference.eplerenone25,
+        quantity: 2,
+      }),
+    ]
+    await this.replaceCollection(`users/${userId}/medicationRequests`, values)
   }
 
   async seedUserMessages(userId: string) {
-    await this.cachingCollection(
-      `users/${userId}/messages`,
-      'patients/messages.json',
-      () => [
-        this.userDataFactory.medicationChangeMessage({
-          videoReference: 'videoSections/1/videos/2',
-        }),
-        this.userDataFactory.medicationUptitrationMessage(),
-        this.userDataFactory.preAppointmentMessage(),
-        this.userDataFactory.symptomQuestionnaireMessage({
-          questionnaireReference: 'questionnaires/0',
-        }),
-        this.userDataFactory.vitalsMessage(),
-        this.userDataFactory.weightGainMessage(),
-        this.userDataFactory.welcomeMessage({
-          videoReference: 'videoSections/0/videos/0',
-        }),
-      ],
-    )
+    const values = [
+      this.userDataFactory.medicationChangeMessage({
+        videoReference: 'videoSections/1/videos/2',
+      }),
+      this.userDataFactory.medicationUptitrationMessage(),
+      this.userDataFactory.preAppointmentMessage(),
+      this.userDataFactory.symptomQuestionnaireMessage({
+        questionnaireReference: 'questionnaires/0',
+      }),
+      this.userDataFactory.vitalsMessage(),
+      this.userDataFactory.weightGainMessage(),
+      this.userDataFactory.welcomeMessage({
+        videoReference: 'videoSections/0/videos/0',
+      }),
+    ]
+    await this.replaceCollection(`users/${userId}/messages`, values)
   }
 
-  async seedUserBloodPressureObservations(userId: string) {
-    await this.cachingCollection(
+  async seedUserBloodPressureObservations(userId: string, date: Date) {
+    const values = [
+      this.userDataFactory.bloodPressureObservation({
+        date: this.advanceDateByDays(date, -2),
+        systolic: 120,
+        diastolic: 80,
+      }),
+    ]
+
+    await this.replaceCollection(
       `users/${userId}/bloodPressureObservations`,
-      'patients/bloodPressureObservations.json',
-      () => [
-        this.userDataFactory.bloodPressureObservation({
-          date: new Date(),
-          systolic: 120,
-          diastolic: 80,
-        }),
-      ],
+      values,
     )
   }
 
-  async seedUserBodyWeightObservations(userId: string) {
-    await this.cachingCollection(
-      `users/${userId}/weightObservations`,
-      'patients/weightObservations.json',
-      () => [
-        this.userDataFactory.observation({
-          date: new Date(),
-          value: 70,
-          unit: QuantityUnit.kg,
-          code: LoincCode.bodyWeight,
-        }),
-      ],
+  async seedUserBodyWeightObservations(userId: string, date: Date) {
+    const values = [
+      this.userDataFactory.observation({
+        date: this.advanceDateByDays(date, -2),
+        value: 70,
+        unit: QuantityUnit.kg,
+        code: LoincCode.bodyWeight,
+      }),
+    ]
+    await this.replaceCollection(
+      `users/${userId}/bodyWeightObservations`,
+      values,
     )
   }
 
-  async seedUserCreatinineObservations(userId: string) {
-    await this.cachingCollection(
+  async seedUserCreatinineObservations(userId: string, date: Date) {
+    const values = [
+      this.userDataFactory.observation({
+        date: this.advanceDateByDays(date, -2),
+        value: 1.2,
+        unit: QuantityUnit.mg_dL,
+        code: LoincCode.creatinine,
+      }),
+    ]
+
+    await this.replaceCollection(
       `users/${userId}/creatinineObservations`,
-      'patients/creatinineObservations.json',
-      () => [
-        this.userDataFactory.observation({
-          date: new Date(),
-          value: 1.2,
-          unit: QuantityUnit.mg_dL,
-          code: LoincCode.creatinine,
-        }),
-      ],
+      values,
     )
   }
 
-  async seedUserDryWeightObservations(userId: string) {
-    await this.cachingCollection(
+  async seedUserDryWeightObservations(userId: string, date: Date) {
+    const values = [
+      this.userDataFactory.observation({
+        date: this.advanceDateByDays(date, -2),
+        value: 70,
+        unit: QuantityUnit.kg,
+        code: LoincCode.bodyWeight,
+      }),
+    ]
+
+    await this.replaceCollection(
       `users/${userId}/dryWeightObservations`,
-      'patients/dryWeightObservations.json',
-      () => [
-        this.userDataFactory.observation({
-          date: new Date(),
-          value: 70,
-          unit: QuantityUnit.kg,
-          code: LoincCode.bodyWeight,
-        }),
-      ],
+      values,
     )
   }
 
-  async seedUserEgfrObservations(userId: string) {
-    await this.cachingCollection(
-      `users/${userId}/eGfrObservations`,
-      'patients/eGfrObservations.json',
-      () => [
-        this.userDataFactory.observation({
-          date: new Date(),
-          value: 60,
-          unit: QuantityUnit.mL_min_173m2,
-          code: LoincCode.estimatedGlomerularFiltrationRate,
-        }),
-      ],
-    )
+  async seedUserEgfrObservations(userId: string, date: Date) {
+    const values = [
+      this.userDataFactory.observation({
+        date: this.advanceDateByDays(date, -2),
+        value: 60,
+        unit: QuantityUnit.mL_min_173m2,
+        code: LoincCode.estimatedGlomerularFiltrationRate,
+      }),
+    ]
+
+    await this.replaceCollection(`users/${userId}/eGfrObservations`, values)
   }
 
-  async seedUserHeartRateObservations(userId: string) {
-    await this.cachingCollection(
+  async seedUserHeartRateObservations(userId: string, date: Date) {
+    const values = [
+      this.userDataFactory.observation({
+        date: this.advanceDateByDays(date, -2),
+        value: 70,
+        unit: QuantityUnit.bpm,
+        code: LoincCode.heartRate,
+      }),
+    ]
+
+    await this.replaceCollection(
       `users/${userId}/heartRateObservations`,
-      'patients/heartRateObservations.json',
-      () => [
-        this.userDataFactory.observation({
-          date: new Date(),
-          value: 70,
-          unit: QuantityUnit.bpm,
-          code: LoincCode.heartRate,
-        }),
-      ],
+      values,
     )
   }
 
-  async seedUserPotassiumObservations(userId: string) {
-    await this.cachingCollection(
+  async seedUserPotassiumObservations(userId: string, date: Date) {
+    const values = [
+      this.userDataFactory.observation({
+        date: this.advanceDateByDays(date, -2),
+        value: 4.2,
+        unit: QuantityUnit.mEq_L,
+        code: LoincCode.potassium,
+      }),
+    ]
+
+    await this.replaceCollection(
       `users/${userId}/potassiumObservations`,
-      'patients/potassiumObservations.json',
-      () => [
-        this.userDataFactory.observation({
-          date: new Date(),
-          value: 4.2,
-          unit: QuantityUnit.mEq_L,
-          code: LoincCode.potassium,
-        }),
-      ],
+      values,
     )
   }
 
-  async seedUserQuestionnaireResponses(userId: string) {
-    await this.cachingCollection(
+  async seedUserQuestionnaireResponses(userId: string, date: Date) {
+    const questionnaire = this.readJSON<FHIRQuestionnaire[]>(
+      'questionnaires.json',
+    ).at(0)
+    const values = {
+      '123': this.userDataFactory.questionnaireResponse({
+        questionnaire: questionnaire?.id ?? '',
+        questionnaireResponse: '123',
+        date: this.advanceDateByDays(date, -2),
+        answer1a: 1,
+        answer1b: 4,
+        answer1c: 3,
+        answer2: 2,
+        answer3: 3,
+        answer4: 4,
+        answer5: 5,
+        answer6: 3,
+        answer7: 4,
+        answer8a: 2,
+        answer8b: 4,
+        answer8c: 4,
+        answer9: 3,
+      }),
+    }
+    await this.replaceCollection(
       `users/${userId}/questionnaireResponses`,
-      'patients/questionnaireResponses.json',
-      () => {
-        const questionnaire = this.readJSON<FHIRQuestionnaire[]>(
-          'questionnaires.json',
-        ).at(0)
-        return {
-          '123': this.userDataFactory.questionnaireResponse({
-            questionnaire: questionnaire?.id ?? '',
-            questionnaireResponse: '123',
-            date: new Date(),
-            answer1a: 1,
-            answer1b: 4,
-            answer1c: 3,
-            answer2: 2,
-            answer3: 3,
-            answer4: 4,
-            answer5: 5,
-            answer6: 3,
-            answer7: 4,
-            answer8a: 2,
-            answer8b: 4,
-            answer8c: 4,
-            answer9: 3,
-          }),
-        }
-      },
+      values,
     )
   }
 
   // Helpers
+
+  private advanceDateByDays(date: Date, days: number): Date {
+    return new Date(date.getTime() + days * 24 * 60 * 60 * 1000)
+  }
 
   private async createUser(user: UserSeedingOptions): Promise<string> {
     const authUser = await this.auth.createUser(user.auth)
     await this.databaseService.runTransaction((firestore, transaction) => {
       transaction.set(firestore.doc(`users/${authUser.uid}`), user.user)
       for (const collectionName in user.collections ?? {}) {
-        const collection = firestore.collection(collectionName)
-        for (const data of user.collections?.[collectionName] ?? []) {
-          this.setUnstructuredCollection(collection, data, transaction)
-        }
+        this.setUnstructuredCollection(
+          firestore.collection(collectionName),
+          user.collections?.[collectionName] ?? [],
+          transaction,
+        )
       }
     })
     return authUser.uid
-  }
-
-  private async cachingCollection<T>(
-    collectionName: string,
-    fileName: string,
-    create: () => Promise<T[] | Record<string, T>> | T[] | Record<string, T>,
-  ) {
-    const values = await this.cache(
-      CachingStrategy.updateCacheIfNeeded,
-      create,
-      () => this.readJSON(fileName),
-      (values) => this.writeJSON(fileName, values),
-    )
-    await this.replaceCollection(collectionName, values)
   }
 
   private async replaceCollection<T>(

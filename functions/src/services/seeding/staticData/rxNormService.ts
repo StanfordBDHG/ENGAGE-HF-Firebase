@@ -9,6 +9,7 @@ import * as https from 'https'
 import { type FHIRExtension } from '../../../models/fhir/baseTypes.js'
 import { type FHIRMedication } from '../../../models/fhir/medication.js'
 import { CodingSystem, FHIRExtensionUrl } from '../../codes.js'
+import { QuantityUnit } from '../../fhir/quantityUnit.js'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
@@ -22,10 +23,16 @@ export interface MedicationClassSpecification {
   medications: MedicationSpecification[]
 }
 
+export interface MedicationDailyDoseSpecification {
+  drug: string
+  frequency: number
+  quantity: number
+}
+
 export interface MedicationSpecification {
   code: string
-  minimumDailyDose?: number[] | number
-  targetDailyDose?: number[] | number
+  minimumDailyDose?: MedicationDailyDoseSpecification
+  targetDailyDose?: MedicationDailyDoseSpecification
   ingredients?: string[]
   drugs?: string[]
   fallbackTerms?: Record<string, RxTermInfo>
@@ -72,15 +79,6 @@ export class RxNormService {
         }
         console.log(`Processing medication ${medicationName}...`)
 
-        const fhirMedication = this.buildFHIRMedication(
-          medication.code,
-          medicationName,
-          medicationClass.key,
-          ingredients,
-          medication.minimumDailyDose,
-          medication.targetDailyDose,
-        )
-        medications[medication.code] = fhirMedication
         drugs[medication.code] = {}
 
         try {
@@ -126,9 +124,20 @@ export class RxNormService {
           }
         } catch (error) {
           console.error(
-            `Error processing medication ${fhirMedication.id}: ${JSON.stringify(error)}`,
+            `Error processing medication ${medication.code}: ${JSON.stringify(error)}`,
           )
         }
+
+        const fhirMedication = this.buildFHIRMedication(
+          medication.code,
+          medicationName,
+          medicationClass.key,
+          ingredients,
+          medication.minimumDailyDose,
+          medication.targetDailyDose,
+          drugs[medication.code],
+        )
+        medications[medication.code] = fhirMedication
       }
     }
 
@@ -154,8 +163,9 @@ export class RxNormService {
     name: string,
     medicationClass: string,
     ingredients: Array<{ rxcui: string; name: string }>,
-    minimumDailyDose: number[] | number | undefined,
-    targetDailyDose: number[] | number | undefined,
+    minimumDailyDose: MedicationDailyDoseSpecification | undefined,
+    targetDailyDose: MedicationDailyDoseSpecification | undefined,
+    drugs: Record<string, FHIRMedication>,
   ): FHIRMedication {
     const result: FHIRMedication = {
       id: rxcui,
@@ -187,63 +197,101 @@ export class RxNormService {
     if (medicationClass) {
       result.extension?.push({
         url: FHIRExtensionUrl.medicationClass,
-        valueReference: { reference: 'medicationClasses/' + medicationClass },
+        valueReference: { reference: `medicationClasses/${medicationClass}` },
       })
     }
     if (minimumDailyDose) {
       result.extension?.push({
         url: FHIRExtensionUrl.minimumDailyDose,
-        valueIngredient: ingredients.map((ingredient, index) => ({
-          itemCodeableConcept: {
-            coding: [
-              {
-                system: CodingSystem.rxNorm,
-                code: ingredient.rxcui,
-                display: ingredient.name,
+        valueMedicationRequest: {
+          medicationReference: {
+            reference: `medications/${rxcui}/drugs/${minimumDailyDose.drug}`,
+          },
+          extension: [
+            {
+              url: FHIRExtensionUrl.totalDailyDose,
+              valueQuantities: drugs[minimumDailyDose.drug].ingredient?.map(
+                (ingredient) => {
+                  const value =
+                    QuantityUnit.mg.valueOf(ingredient.strength?.numerator) ?? 0
+                  return {
+                    ...QuantityUnit.mg,
+                    value:
+                      value *
+                      minimumDailyDose.quantity *
+                      minimumDailyDose.frequency,
+                  }
+                },
+              ),
+            },
+          ],
+          dosageInstruction: [
+            {
+              timing: {
+                repeat: {
+                  frequency: minimumDailyDose.frequency,
+                  period: 1,
+                  periodUnit: 'd',
+                },
               },
-            ],
-          },
-          strength: {
-            numerator: {
-              value:
-                Array.isArray(minimumDailyDose) ?
-                  minimumDailyDose[index]
-                : minimumDailyDose,
-              unit: 'mg',
+              doseAndRate: [
+                {
+                  doseQuantity: {
+                    ...QuantityUnit.tablet,
+                    value: minimumDailyDose.quantity,
+                  },
+                },
+              ],
             },
-            denominator: {
-              value: 1,
-            },
-          },
-        })),
+          ],
+        },
       })
     }
     if (targetDailyDose) {
       result.extension?.push({
         url: FHIRExtensionUrl.targetDailyDose,
-        valueIngredient: ingredients.map((ingredient, index) => ({
-          itemCodeableConcept: {
-            coding: [
-              {
-                system: CodingSystem.rxNorm,
-                code: ingredient.rxcui,
-                display: ingredient.name,
+        valueMedicationRequest: {
+          medicationReference: {
+            reference: `medications/${rxcui}/drugs/${targetDailyDose.drug}`,
+          },
+          extension: [
+            {
+              url: FHIRExtensionUrl.totalDailyDose,
+              valueQuantities: drugs[targetDailyDose.drug].ingredient?.map(
+                (ingredient) => {
+                  const value =
+                    QuantityUnit.mg.valueOf(ingredient.strength?.numerator) ?? 0
+                  return {
+                    ...QuantityUnit.mg,
+                    value:
+                      value *
+                      targetDailyDose.quantity *
+                      targetDailyDose.frequency,
+                  }
+                },
+              ),
+            },
+          ],
+          dosageInstruction: [
+            {
+              timing: {
+                repeat: {
+                  frequency: targetDailyDose.frequency,
+                  period: 1,
+                  periodUnit: 'd',
+                },
               },
-            ],
-          },
-          strength: {
-            numerator: {
-              value:
-                Array.isArray(targetDailyDose) ?
-                  targetDailyDose[index]
-                : targetDailyDose,
-              unit: 'mg',
+              doseAndRate: [
+                {
+                  doseQuantity: {
+                    ...QuantityUnit.tablet,
+                    value: targetDailyDose.quantity,
+                  },
+                },
+              ],
             },
-            denominator: {
-              value: 1,
-            },
-          },
-        })),
+          ],
+        },
       })
     }
     return result
@@ -299,8 +347,8 @@ export class RxNormService {
         },
         strength: {
           numerator: {
+            ...QuantityUnit.mg,
             value: amounts[index],
-            unit: 'mg',
           },
           denominator: {
             value: 1,

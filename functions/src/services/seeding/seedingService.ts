@@ -50,11 +50,14 @@ export class SeedingService {
       try {
         return await retrieve()
       } catch (error) {
+        console.error('Could not retrieve cached data:', error)
         if (strategy === CachingStrategy.expectCache) throw error
       }
     }
 
+    console.log('will create data', strategy)
     const result = await create()
+    console.log('did create data', strategy)
     if (
       strategy === CachingStrategy.updateCache ||
       strategy === CachingStrategy.updateCacheIfNeeded

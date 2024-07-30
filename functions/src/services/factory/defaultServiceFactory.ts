@@ -17,6 +17,8 @@ import { FirestoreService } from '../database/firestoreService.js'
 import { FhirService } from '../fhir/fhirService.js'
 import { DefaultHealthSummaryService } from '../healthSummary/databaseHealthSummaryService.js'
 import { type HealthSummaryService } from '../healthSummary/healthSummaryService.js'
+import { DatabaseMedicationService } from '../medication/databaseMedicationService.js'
+import { type MedicationService } from '../medication/medicationService.js'
 import { DatabasePatientService } from '../patient/databasePatientService.js'
 import { type PatientService } from '../patient/patientService.js'
 import { RecommendationService } from '../recommendation/recommendationService.js'
@@ -60,6 +62,13 @@ export class DefaultServiceFactory implements ServiceFactory {
   }
 
   // Methods - Data
+
+  medication(): MedicationService {
+    return new DatabaseMedicationService(
+      this._databaseService,
+      new FhirService(),
+    )
+  }
 
   debugData(): DebugDataService {
     return new DebugDataService(this._auth, this._databaseService)
