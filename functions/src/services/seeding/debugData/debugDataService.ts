@@ -15,6 +15,7 @@ import { DrugReference, LoincCode } from '../../codes.js'
 import { type DatabaseService } from '../../database/databaseService.js'
 import { QuantityUnit } from '../../fhir/quantityUnit.js'
 import { SeedingService } from '../seedingService.js'
+import { FHIRObservation } from '../../../models/fhir/observation.js'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -128,13 +129,16 @@ export class DebugDataService extends SeedingService {
   }
 
   async seedUserBloodPressureObservations(userId: string, date: Date) {
-    const values = [
-      this.userDataFactory.bloodPressureObservation({
-        date: this.advanceDateByDays(date, -2),
-        systolic: 120,
-        diastolic: 80,
-      }),
-    ]
+    let values: FHIRObservation[] = []
+    for (let index = 0; index < 100; index += 1) {
+      values.push(
+        this.userDataFactory.bloodPressureObservation({
+          date: this.advanceDateByDays(date, -index * 0.7),
+          systolic: 80 + Math.sin(index) * (150-80),
+          diastolic: 50 + Math.sin(index + 0.4) * (90-50),
+        }),
+      )
+    }
 
     await this.replaceCollection(
       `users/${userId}/bloodPressureObservations`,

@@ -104,31 +104,24 @@ const defaultSeedInputSchema = z.object({
     .optional(),
 })
 
-export const defaultSeedFunction = validatedOnCall(
+export const defaultSeedFunction = validatedOnRequest(
   defaultSeedInputSchema,
-  async (request) => {
+  async (request, data, response) => {
     const factory = getServiceFactory()
 
-    if (!Flags.isEmulator)
-      factory.credential(request.auth).check(UserRole.admin)
-
-    if (request.data.staticData)
-      await updateStaticData(factory, request.data.staticData)
+    if (data.staticData) await updateStaticData(factory, data.staticData)
 
     const debugDataService = factory.debugData()
 
-    if (request.data.only.includes(DebugDataComponent.invitations))
+    if (data.only.includes(DebugDataComponent.invitations))
       await debugDataService.seedInvitations()
 
-    if (request.data.only.includes(DebugDataComponent.users))
+    if (data.only.includes(DebugDataComponent.users))
       await debugDataService.seedUsers()
 
-    for (const userData of request.data.userData ?? []) {
+    for (const userData of data.userData ?? []) {
       if (userData.only.includes(UserDebugDataComponent.appointments))
-        await debugDataService.seedUserAppointments(
-          userData.userId,
-          request.data.date,
-        )
+        await debugDataService.seedUserAppointments(userData.userId, data.date)
       if (userData.only.includes(UserDebugDataComponent.medicationRequests))
         await debugDataService.seedUserMedicationRequests(userData.userId)
       if (userData.only.includes(UserDebugDataComponent.messages))
@@ -138,36 +131,37 @@ export const defaultSeedFunction = validatedOnCall(
       )
         await debugDataService.seedUserBloodPressureObservations(
           userData.userId,
-          request.data.date,
+          data.date,
         )
       if (userData.only.includes(UserDebugDataComponent.bodyWeightObservations))
         await debugDataService.seedUserBodyWeightObservations(
           userData.userId,
-          request.data.date,
+          data.date,
         )
       if (userData.only.includes(UserDebugDataComponent.creatinineObservations))
         await debugDataService.seedUserCreatinineObservations(
           userData.userId,
-          request.data.date,
+          data.date,
         )
       if (userData.only.includes(UserDebugDataComponent.eGfrObservations))
         await debugDataService.seedUserEgfrObservations(
           userData.userId,
-          request.data.date,
+          data.date,
         )
       if (userData.only.includes(UserDebugDataComponent.heartRateObservations))
         await debugDataService.seedUserHeartRateObservations(
           userData.userId,
-          request.data.date,
+          data.date,
         )
       if (userData.only.includes(UserDebugDataComponent.potassiumObservations))
         await debugDataService.seedUserPotassiumObservations(
           userData.userId,
-          request.data.date,
+          data.date,
         )
     }
 
-    return 'Success'
+    response.write('Success', 'utf8')
+    response.end()
   },
 )
 
@@ -187,14 +181,11 @@ const customSeedInputSchema = z.object({
   firestore: z.record(z.string(), z.any()).default({}),
 })
 
-export const customSeedFunction = validatedOnCall(
+export const customSeedFunction = validatedOnRequest(
   customSeedInputSchema,
-  async (request) => {
+  async (request, data, response) => {
     const factory = getServiceFactory()
 
-    if (!Flags.isEmulator)
-      factory.credential(request.auth).check(UserRole.admin)
-
-    return factory.debugData().seedCustom(request.data)
+    await factory.debugData().seedCustom(data)
   },
 )
