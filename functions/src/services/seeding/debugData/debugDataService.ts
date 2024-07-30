@@ -54,10 +54,14 @@ export class DebugDataService extends SeedingService {
   // Methods
 
   async seedCustom(input: CustomSeedingOptions): Promise<string[]> {
-    const userIds = await Promise.all(
-      input.users.map((user) => this.createUser(user)),
-    )
-
+    let userIds: string[] = []
+    for (const user of input.users) {
+      try {
+        userIds.push(await this.createUser(user))
+      } catch (error) {
+        console.error(error)
+      }
+    }
     await this.databaseService.runTransaction((firestore, transaction) => {
       for (const collectionName in input.firestore) {
         this.setUnstructuredCollection(
@@ -67,7 +71,6 @@ export class DebugDataService extends SeedingService {
         )
       }
     })
-
     return userIds
   }
 
