@@ -178,6 +178,7 @@ describe('firestore.rules: organizations/{organizationId}', () => {
         .doc(`organizations/${otherOrganizationId}`)
         .set({ name: 'Stanford' }),
     )
+    console.log('owner')
     await assertSucceeds(
       ownerFirestore
         .doc(`organizations/${organizationId}`)

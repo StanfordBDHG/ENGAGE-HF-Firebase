@@ -125,6 +125,7 @@ export const updateUserInformationFunction = validatedOnCall(
         UserRole.clinician(user.content.organization),
       )
     }
+
     await userService.updateAuth(request.data.userId, request.data.data.auth)
   },
 )
