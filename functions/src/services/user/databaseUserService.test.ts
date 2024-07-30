@@ -73,7 +73,6 @@ describe('DatabaseUserService', () => {
       expect(auth.customClaims).to.deep.equal({
         type: UserType.admin,
         organization: null,
-        isOwner: false,
       })
 
       const invitationSnapshot = await firestore
@@ -115,9 +114,7 @@ describe('DatabaseUserService', () => {
           },
         },
         organizations: {
-          mockOrganization: {
-            owners: [],
-          },
+          mockOrganization: {},
         },
       }
 
@@ -130,7 +127,6 @@ describe('DatabaseUserService', () => {
       expect(auth.customClaims).to.deep.equal({
         type: UserType.clinician,
         organization: 'mockOrganization',
-        isOwner: false,
       })
 
       const invitationSnapshot = await firestore
@@ -174,9 +170,7 @@ describe('DatabaseUserService', () => {
           },
         },
         organizations: {
-          mockOrganization: {
-            owners: [],
-          },
+          mockOrganization: {},
         },
       }
 
@@ -189,57 +183,6 @@ describe('DatabaseUserService', () => {
       expect(auth.customClaims).to.deep.equal({
         type: UserType.patient,
         organization: 'mockOrganization',
-        isOwner: false,
-      })
-
-      const invitationSnapshot = await firestore
-        .collection('invitations')
-        .doc(invitationId)
-        .get()
-      expect(invitationSnapshot.exists).to.be.false
-      const invitationData = invitationSnapshot.data() as Invitation | undefined
-      expect(invitationData).to.be.undefined
-
-      const userSnapshot = await firestore.collection('users').doc(userId).get()
-      expect(userSnapshot.exists).to.be.true
-      const userData = userSnapshot.data() as User | undefined
-      expect(userData).to.exist
-      expect(userData?.invitationCode).to.equal(invitationId)
-      expect(userData?.dateOfEnrollment).to.equal(FieldValue.serverTimestamp())
-    })
-
-    it('enrolls a user', async () => {
-      const userId = 'mockUserUserId'
-      const invitationId = 'mockUser'
-      const displayName = 'Mock User'
-
-      mockFirestore.collections = {
-        invitations: {
-          mockUser: {
-            user: {
-              messagesSettings: {
-                dailyRemindersAreActive: true,
-                textNotificationsAreActive: true,
-                medicationRemindersAreActive: true,
-              },
-            },
-            auth: {
-              displayName: displayName,
-            },
-          },
-        },
-      }
-
-      const invitation = await userService.getInvitation(invitationId)
-      if (!invitation) assert.fail('Invitation not found')
-      await userService.enrollUser(invitation, userId)
-
-      const auth = await admin.auth().getUser(userId)
-      expect(auth.displayName).to.equal(displayName)
-      expect(auth.customClaims).to.deep.equal({
-        type: null,
-        organization: null,
-        isOwner: false,
       })
 
       const invitationSnapshot = await firestore

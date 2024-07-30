@@ -24,7 +24,7 @@ const createInvitationInputSchema = z.object({
     photoURL: z.string().optional(),
   }),
   user: z.object({
-    type: z.nativeEnum(UserType).optional(),
+    type: z.nativeEnum(UserType),
     organization: z.string().optional(),
     clinician: z.string().optional(),
     language: z.string().optional(),
