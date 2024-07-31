@@ -46,7 +46,9 @@ export const getUsersInformationFunction = validatedOnCall(
     const credential = new Credential(request.auth, userService)
     await credential.checkAny(
       UserRole.admin,
-      ...(organization ? [UserRole.clinician(organization)] : []),
+      ...(organization ?
+        [UserRole.clinician(organization), UserRole.owner(organization)]
+      : []),
     )
 
     const result: GetUsersInformationOutput = {}
