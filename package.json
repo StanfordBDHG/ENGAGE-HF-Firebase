@@ -1,5 +1,10 @@
 {
   "dependencies": {
     "firebase-admin": "^12.1.1"
+  },
+  "scripts": {
+    "prepare": "npm --prefix frontend install --save && npm --prefix functions install --save",
+    "build": "npm --prefix frontend run build && npm --prefix functions run clean && npm --prefix functions run build",
+    "start": "firebase emulators:exec --only auth,firestore,functions 'npm --prefix frontend start'"
   }
 }
