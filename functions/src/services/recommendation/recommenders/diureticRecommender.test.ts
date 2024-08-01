@@ -113,7 +113,7 @@ describe('DiureticRecommender', () => {
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: existingMedication.requestReference,
+        currentMedication: [existingMedication.requestReference],
         recommendedMedication: undefined,
         category: MedicationRecommendationCategory.personalTargetDoseReached,
       })

@@ -21,7 +21,11 @@ import {
   createInvitationFunction,
 } from './functions/invitation.js'
 import { dismissMessageFunction } from './functions/message.js'
-import { rebuildStaticDataFunction } from './functions/staticData.js'
+import {
+  customSeedFunction,
+  defaultSeedFunction,
+  updateStaticDataFunction,
+} from './functions/seeding.js'
 import {
   deleteUserFunction,
   getUsersInformationFunction,
@@ -49,9 +53,14 @@ export const checkInvitationCode = checkInvitationCodeFunction
 
 export const dismissMessage = dismissMessageFunction
 
+// seeding
+
+export const defaultSeed = defaultSeedFunction
+export const customSeed = customSeedFunction
+
 // staticData
 
-export const rebuildStaticData = rebuildStaticDataFunction
+export const updateStaticData = updateStaticDataFunction
 
 // users
 

@@ -44,13 +44,15 @@ export abstract class Recommender {
   // Helpers
 
   protected createRecommendation(
-    currentMedication: MedicationRequestContext | undefined,
+    currentRequests: MedicationRequestContext[],
     recommendedMedication: MedicationReference | undefined,
     category: MedicationRecommendationCategory,
   ): MedicationRecommendation[] {
     return [
       {
-        currentMedication: currentMedication?.requestReference,
+        currentMedication: currentRequests.map(
+          (context) => context.requestReference,
+        ),
         recommendedMedication:
           recommendedMedication ?
             {
@@ -62,47 +64,32 @@ export abstract class Recommender {
     ]
   }
 
-  protected isTargetDoseReached(
-    currentMedication: MedicationRequestContext,
+  protected isTargetDailyDoseReached(
+    currentMedication: MedicationRequestContext[],
   ): boolean {
-    if (!currentMedication.medication) throw new Error('Medication is missing')
-    const ingredients = currentMedication.drug?.ingredient ?? []
-    if (ingredients.length <= 0) throw new Error('Ingredients are missing')
-    const targetDailyDose = this.fhirService.extractTargetDailyDose(
-      currentMedication.medication,
-    )
+    const medication = currentMedication.at(0)?.medication
+    if (!medication) throw new Error('Medication is missing')
+
+    const targetDailyDose = this.fhirService
+      .targetDailyDose(medication)
+      ?.reduce((acc, dose) => acc + dose, 0)
     if (!targetDailyDose) throw new Error('Target daily dose is missing')
-    const targetIngredientDoses =
-      Array.isArray(targetDailyDose) ? targetDailyDose : [targetDailyDose]
-    if (targetIngredientDoses.length !== ingredients.length)
-      throw new Error('Target daily doses do not match ingredients')
 
-    let index = 0
-    for (const ingredient of ingredients) {
-      if (!ingredient.itemCodeableConcept)
-        throw new Error('Ingredient coding is missing')
+    const currentDailyDose = this.fhirService
+      .currentDailyDose(currentMedication)
+      .reduce((acc, dose) => acc + dose, 0)
 
-      const currentIngredientDose = this.fhirService.extractCurrentDailyDose(
-        currentMedication,
-        ingredient.itemCodeableConcept.coding ?? [],
-      )
-      if (currentIngredientDose <= 0)
-        throw new Error('Current daily dose is missing')
-
-      if (currentIngredientDose < targetIngredientDoses[index]) return false
-      index += 1
-    }
-    return true
+    return currentDailyDose >= targetDailyDose
   }
 
-  protected findCurrentMedication(
+  protected findCurrentRequests(
     requests: MedicationRequestContext[],
-    medicationReferences: MedicationClassReference[],
-  ): MedicationRequestContext | undefined {
-    return requests.find((request) =>
-      medicationReferences.some(
-        (medicationReference) =>
-          request.medicationClassReference?.reference === medicationReference,
+    references: MedicationClassReference[],
+  ): MedicationRequestContext[] {
+    return requests.filter((request) =>
+      references.some(
+        (reference) =>
+          request.medicationClassReference?.reference === reference.toString(),
       ),
     )
   }

@@ -1,0 +1,165 @@
+[
+  {
+    "auth": {
+      "displayName": "Engage Admin0",
+      "email": "engagehf-admin0@stanford.edu",
+      "password": "password"
+    },
+    "user": {
+      "type": "admin"
+    }
+  },
+  {
+    "auth": {
+      "displayName": "Engage Admin1",
+      "email": "engagehf-admin1@stanford.edu",
+      "password": "password"
+    },
+    "user": {
+      "type": "admin"
+    }
+  },
+  {
+    "auth": {
+      "displayName": "Stanford Owner0",
+      "email": "engagehf-owner0@stanford.edu",
+      "password": "password"
+    },
+    "user": {
+      "type": "owner",
+      "organization": "stanford"
+    }
+  },
+  {
+    "auth": {
+      "displayName": "Stanford Owner1",
+      "email": "engagehf-owner1@stanford.edu",
+      "password": "password"
+    },
+    "user": {
+      "type": "owner",
+      "organization": "stanford"
+    }
+  },
+  {
+    "auth": {
+      "displayName": "JHU Owner",
+      "email": "engagehf-owner0@jhu.edu",
+      "password": "password"
+    },
+    "user": {
+      "type": "owner",
+      "organization": "jhu"
+    }
+  },
+  {
+    "auth": {
+      "displayName": "UMich Owner",
+      "email": "engagehf-owner0@umich.edu",
+      "password": "password"
+    },
+    "user": {
+      "type": "owner",
+      "organization": "umich"
+    }
+  },
+  {
+    "auth": {
+      "displayName": "UW Owner",
+      "email": "engagehf-admin0@uw.edu",
+      "password": "password"
+    },
+    "user": {
+      "type": "owner",
+      "organization": "uw"
+    }
+  },
+  {
+    "auth": {
+      "displayName": "Stanford Clinician0",
+      "email": "engagehf-clinician0@stanford.edu",
+      "password": "password"
+    },
+    "user": {
+      "type": "clinician",
+      "organization": "stanford"
+    }
+  },
+  {
+    "auth": {
+      "displayName": "Stanford Clinician1",
+      "email": "engagehf-clinician1@stanford.edu",
+      "password": "password"
+    },
+    "user": {
+      "type": "clinician",
+      "organization": "stanford"
+    }
+  },
+  {
+    "auth": {
+      "displayName": "JHU Clinician",
+      "email": "engagehf-clinician@jhu.edu",
+      "password": "password"
+    },
+    "user": {
+      "type": "clinician",
+      "organization": "jhu"
+    }
+  },
+  {
+    "auth": {
+      "displayName": "UMich Clinician",
+      "email": "engagehf-clinician@umich.edu",
+      "password": "password"
+    },
+    "user": {
+      "type": "clinician",
+      "organization": "umich"
+    }
+  },
+  {
+    "auth": {
+      "displayName": "UW Clinician",
+      "email": "engagehf-clinician@uw.edu",
+      "password": "password"
+    },
+    "user": {
+      "type": "clinician",
+      "organization": "uw"
+    }
+  },
+  {
+    "auth": {
+      "displayName": "Stanford Patient0",
+      "email": "engagehf-patient0@stanford.edu",
+      "password": "password"
+    },
+    "user": {
+      "type": "patient",
+      "organization": "stanford"
+    }
+  },
+  {
+    "auth": {
+      "displayName": "Stanford Patient1",
+      "email": "engagehf-patient1@stanford.edu",
+      "password": "password"
+    },
+    "user": {
+      "type": "patient",
+      "organization": "stanford"
+    }
+  },
+  {
+    "auth": {
+      "displayName": "Stanford Patient2",
+      "email": "engagehf-patient2@stanford.edu",
+      "password": "password"
+    },
+    "user": {
+      "type": "patient",
+      "organization": "stanford"
+    }
+  }
+]

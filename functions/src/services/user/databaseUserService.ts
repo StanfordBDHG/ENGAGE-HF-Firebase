@@ -6,7 +6,6 @@
 // SPDX-License-Identifier: MIT
 //
 
-import admin from 'firebase-admin'
 import { type Auth } from 'firebase-admin/auth'
 import { FieldValue } from 'firebase-admin/firestore'
 import { https } from 'firebase-functions/v2'
@@ -33,7 +32,7 @@ export class DatabaseUserService implements UserService {
 
   // Constructor
 
-  constructor(databaseService: DatabaseService, auth: Auth = admin.auth()) {
+  constructor(auth: Auth, databaseService: DatabaseService) {
     this.auth = auth
     this.databaseService = databaseService
   }

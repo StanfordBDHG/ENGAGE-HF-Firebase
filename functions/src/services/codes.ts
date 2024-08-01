@@ -9,7 +9,7 @@ export enum FHIRExtensionUrl {
   medicationClass = 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass',
   minimumDailyDose = 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose',
   targetDailyDose = 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose',
-  currentMedication = 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/currentMedication',
+  totalDailyDose = 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose',
 }
 
 export enum CodingSystem {
@@ -59,10 +59,10 @@ export enum MedicationReference {
 }
 
 export enum DrugReference {
-  bisoprolol5 = 'medications/19484/drugs/854904',
-  eplerenone25 = 'medications/54280/drugs/353386',
-  furosemide20 = 'medications/4603/drugs/315970',
+  bisoprolol5 = 'medications/19484/drugs/854905',
+  eplerenone25 = 'medications/298869/drugs/351256',
+  furosemide20 = 'medications/4603/drugs/310429',
   sotagliflozin200 = 'medications/2638675/drugs/2638683',
-  perindopril4 = 'medications/54552/drugs/854987',
+  perindopril4 = 'medications/54552/drugs/854988',
   sacubitrilValsartan49_51 = 'medications/1656339/drugs/1656349',
 }

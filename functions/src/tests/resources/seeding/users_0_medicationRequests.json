@@ -1,0 +1,28 @@
+{
+  "0": {
+    "medicationReference": {
+      "reference": "medications/298869/drugs/351256"
+    },
+    "dosageInstruction": [
+      {
+        "timing": {
+          "repeat": {
+            "frequency": 2,
+            "period": 1,
+            "periodUnit": "d"
+          }
+        },
+        "doseAndRate": [
+          {
+            "doseQuantity": {
+              "unit": "tbl.",
+              "code": "{tbl}",
+              "system": "http://unitsofmeasure.org",
+              "value": 2
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -11,7 +11,6 @@ import admin from 'firebase-admin'
 import { FieldValue, type Firestore } from 'firebase-admin/firestore'
 import { https } from 'firebase-functions'
 import { describe } from 'mocha'
-import { DatabaseUserService } from './databaseUserService.js'
 import { type UserService } from './userService.js'
 import { type Invitation } from '../../models/invitation.js'
 import { type UserMessage, UserMessageType } from '../../models/message.js'
@@ -22,7 +21,7 @@ import {
   setupMockAuth,
   setupMockFirestore,
 } from '../../tests/setup.js'
-import { FirestoreService } from '../database/firestoreService.js'
+import { getServiceFactory } from '../factory/getServiceFactory.js'
 
 describe('DatabaseUserService', () => {
   let mockFirestore: MockFirestore
@@ -33,7 +32,7 @@ describe('DatabaseUserService', () => {
     setupMockAuth()
     mockFirestore = setupMockFirestore()
     firestore = admin.firestore()
-    userService = new DatabaseUserService(new FirestoreService())
+    userService = getServiceFactory().user()
   })
 
   afterEach(() => {
@@ -46,7 +45,7 @@ describe('DatabaseUserService', () => {
       const invitationId = 'mockAdmin'
       const displayName = 'Mock Admin'
 
-      mockFirestore.collections = {
+      mockFirestore.replaceAll({
         invitations: {
           mockAdmin: {
             user: {
@@ -62,7 +61,7 @@ describe('DatabaseUserService', () => {
             },
           },
         },
-      }
+      })
 
       const invitation = await userService.getInvitation(invitationId)
       if (!invitation) assert.fail('Invitation not found')
@@ -96,7 +95,7 @@ describe('DatabaseUserService', () => {
       const invitationId = 'mockClinician'
       const displayName = 'Mock Clinician'
 
-      mockFirestore.collections = {
+      mockFirestore.replaceAll({
         invitations: {
           mockClinician: {
             user: {
@@ -116,7 +115,7 @@ describe('DatabaseUserService', () => {
         organizations: {
           mockOrganization: {},
         },
-      }
+      })
 
       const invitation = await userService.getInvitation(invitationId)
       if (!invitation) assert.fail('Invitation not found')
@@ -150,7 +149,7 @@ describe('DatabaseUserService', () => {
       const invitationId = 'mockPatient'
       const displayName = 'Mock Patient'
 
-      mockFirestore.collections = {
+      mockFirestore.replaceAll({
         invitations: {
           mockPatient: {
             user: {
@@ -172,7 +171,7 @@ describe('DatabaseUserService', () => {
         organizations: {
           mockOrganization: {},
         },
-      }
+      })
 
       const invitation = await userService.getInvitation(invitationId)
       if (!invitation) assert.fail('Invitation not found')

@@ -56,6 +56,9 @@ export class MockUserService implements UserService {
     return {
       id: invitationId,
       content: {
+        user: {
+          type: UserType.patient,
+        },
         userId: 'test',
       },
     }
@@ -67,6 +70,9 @@ export class MockUserService implements UserService {
     return {
       id: '123',
       content: {
+        user: {
+          type: UserType.patient,
+        },
         userId: userId,
       },
     }

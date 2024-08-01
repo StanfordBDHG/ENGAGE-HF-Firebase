@@ -121,7 +121,7 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
       await this.patientService.getBloodPressureObservations(userId)
     const observations = observationDocs.map((doc) => doc.content)
     return [
-      this.fhirService.extractObservationValues(observations, {
+      this.fhirService.observationValues(observations, {
         code: LoincCode.bloodPressure,
         system: CodingSystem.loinc,
         unit: QuantityUnit.mmHg,
@@ -130,7 +130,7 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
           system: CodingSystem.loinc,
         },
       }),
-      this.fhirService.extractObservationValues(observations, {
+      this.fhirService.observationValues(observations, {
         code: LoincCode.bloodPressure,
         system: CodingSystem.loinc,
         unit: QuantityUnit.mmHg,
@@ -145,7 +145,7 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
   private async getBodyWeightObservations(userId: string) {
     const observationDocs =
       await this.patientService.getBodyWeightObservations(userId)
-    return this.fhirService.extractObservationValues(
+    return this.fhirService.observationValues(
       observationDocs.map((doc) => doc.content),
       {
         code: LoincCode.bodyWeight,
@@ -158,7 +158,7 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
   private async getHeartRateObservations(userId: string) {
     const observationDocs =
       await this.patientService.getHeartRateObservations(userId)
-    return this.fhirService.extractObservationValues(
+    return this.fhirService.observationValues(
       observationDocs.map((doc) => doc.content),
       {
         code: LoincCode.heartRate,
@@ -173,7 +173,7 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
       await this.patientService.getMostRecentCreatinineObservation(userId)
     return observation ?
         this.fhirService
-          .extractObservationValues([observation.content], {
+          .observationValues([observation.content], {
             code: LoincCode.creatinine,
             system: CodingSystem.loinc,
             unit: QuantityUnit.mg_dL,
@@ -187,7 +187,7 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
       await this.patientService.getMostRecentDryWeightObservation(userId)
     return observation ?
         this.fhirService
-          .extractObservationValues([observation.content], {
+          .observationValues([observation.content], {
             code: LoincCode.bodyWeight,
             system: CodingSystem.loinc,
             unit: QuantityUnit.lbs,
@@ -205,7 +205,7 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
       )
     return observation ?
         this.fhirService
-          .extractObservationValues([observation.content], {
+          .observationValues([observation.content], {
             code: LoincCode.estimatedGlomerularFiltrationRate,
             system: CodingSystem.loinc,
             unit: QuantityUnit.mL_min_173m2,
@@ -219,7 +219,7 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
       await this.patientService.getMostRecentPotassiumObservation(userId)
     return observation ?
         this.fhirService
-          .extractObservationValues([observation.content], {
+          .observationValues([observation.content], {
             code: LoincCode.potassium,
             system: CodingSystem.loinc,
             unit: QuantityUnit.mEq_L,

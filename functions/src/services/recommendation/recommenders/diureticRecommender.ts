@@ -18,12 +18,12 @@ export class DiureticRecommender extends Recommender {
   // Methods
 
   compute(input: RecommendationInput): MedicationRecommendation[] {
-    const currentMedication = this.findCurrentMedication(input.requests, [
+    const currentRequests = this.findCurrentRequests(input.requests, [
       MedicationClassReference.diuretics,
     ])
-    if (!currentMedication) return []
+    if (currentRequests.length === 0) return []
     return this.createRecommendation(
-      currentMedication,
+      currentRequests,
       undefined,
       MedicationRecommendationCategory.personalTargetDoseReached,
     )

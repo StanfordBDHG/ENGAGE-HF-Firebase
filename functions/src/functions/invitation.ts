@@ -10,11 +10,8 @@ import { https, logger } from 'firebase-functions/v2'
 import { z } from 'zod'
 import { validatedOnCall } from './helpers.js'
 import { UserType } from '../models/user.js'
-import { Credential, UserRole } from '../services/credential.js'
-import { CacheDatabaseService } from '../services/database/cacheDatabaseService.js'
-import { FirestoreService } from '../services/database/firestoreService.js'
-import { DatabaseUserService } from '../services/user/databaseUserService.js'
-import { type UserService } from '../services/user/userService.js'
+import { UserRole } from '../services/credential/credential.js'
+import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
 const createInvitationInputSchema = z.object({
   auth: z.object({
@@ -42,14 +39,12 @@ export const createInvitationFunction = validatedOnCall(
     if (!request.auth?.uid)
       throw new https.HttpsError('unauthenticated', 'User is not authenticated')
 
-    const userService: UserService = new DatabaseUserService(
-      new CacheDatabaseService(new FirestoreService()),
-    )
-    const credential = new Credential(request.auth, userService)
+    const factory = getServiceFactory()
+    const credential = factory.credential(request.auth)
     if (request.data.user.type === UserType.admin) {
-      await credential.checkAny(UserRole.admin)
+      credential.check(UserRole.admin)
     } else if (request.data.user.organization) {
-      await credential.checkAny(
+      credential.check(
         UserRole.admin,
         UserRole.owner(request.data.user.organization),
         UserRole.clinician(request.data.user.organization),
@@ -58,19 +53,23 @@ export const createInvitationFunction = validatedOnCall(
       throw credential.permissionDeniedError()
     }
 
-    const usesGeneratedCode =
-      request.data.user.type === UserType.patient ||
-      request.data.auth.email === undefined
+    const userService = factory.user()
+    const isPatient = request.data.user.type === UserType.patient
 
     for (let counter = 0; ; counter++) {
       const invitationCode =
-        (usesGeneratedCode ? request.data.auth.email : undefined) ??
-        generateInvitationCode(8)
+        isPatient ? generateInvitationCode(8) : request.data.auth.email
+      if (!invitationCode)
+        throw new https.HttpsError(
+          'invalid-argument',
+          'Invalid invitation code',
+        )
+
       try {
         await userService.createInvitation(invitationCode, request.data)
         return { code: invitationCode }
       } catch (error) {
-        if (counter < 4 && !usesGeneratedCode) continue
+        if (counter < 4 && isPatient) continue
         throw error
       }
     }
@@ -110,15 +109,15 @@ export const checkInvitationCodeFunction = validatedOnCall(
     const userId = request.auth.uid
     const { invitationCode } = request.data
 
-    const service: UserService = new DatabaseUserService(
-      new CacheDatabaseService(new FirestoreService()),
-    )
     logger.debug(
       `User (${userId}) -> ENGAGE-HF, InvitationCode ${invitationCode}`,
     )
 
+    const factory = getServiceFactory()
+    const userService = factory.user()
+
     try {
-      await service.setInvitationUserId(invitationCode, userId)
+      await userService.setInvitationUserId(invitationCode, userId)
 
       logger.debug(
         `User (${userId}) successfully enrolled in study (ENGAGE-HF) with invitation code: ${invitationCode}`,

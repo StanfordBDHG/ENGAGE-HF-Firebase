@@ -20,16 +20,16 @@ export class RasiRecommender extends Recommender {
   // Methods
 
   compute(input: RecommendationInput): MedicationRecommendation[] {
-    const arni = this.findCurrentMedication(input.requests, [
+    const arni = this.findCurrentRequests(input.requests, [
       MedicationClassReference.angiotensinReceptorNeprilysinInhibitors,
     ])
-    if (arni) return this.computeArni(arni, input)
+    if (arni.length > 0) return this.computeArni(arni, input)
 
-    const aceiAndArb = this.findCurrentMedication(input.requests, [
+    const aceiAndArb = this.findCurrentRequests(input.requests, [
       MedicationClassReference.angiotensinConvertingEnzymeInhibitors,
       MedicationClassReference.angiotensinReceptorBlockers,
     ])
-    if (aceiAndArb) return this.computeAceiAndArb(aceiAndArb, input)
+    if (aceiAndArb.length > 0) return this.computeAceiAndArb(aceiAndArb, input)
 
     return this.computeNew(input)
   }
@@ -37,7 +37,7 @@ export class RasiRecommender extends Recommender {
   // Helpers
 
   private computeAceiAndArb(
-    request: MedicationRequestContext,
+    requests: MedicationRequestContext[],
     input: RecommendationInput,
   ): MedicationRecommendation[] {
     const contraindicationToArni =
@@ -50,9 +50,9 @@ export class RasiRecommender extends Recommender {
       case ContraindicationCategory.severeAllergyIntolerance:
       case ContraindicationCategory.allergyIntolerance:
       case ContraindicationCategory.clinicianListed:
-        if (this.isTargetDoseReached(request))
+        if (this.isTargetDailyDoseReached(requests))
           return this.createRecommendation(
-            request,
+            requests,
             undefined,
             MedicationRecommendationCategory.targetDoseReached,
           )
@@ -63,7 +63,7 @@ export class RasiRecommender extends Recommender {
         const medianSystolic = this.medianValue(systolicValuesInLastTwoWeeks)
         if (!medianSystolic)
           return this.createRecommendation(
-            request,
+            requests,
             undefined,
             MedicationRecommendationCategory.morePatientObservationsRequired,
           )
@@ -74,7 +74,7 @@ export class RasiRecommender extends Recommender {
 
         if (medianSystolic < 100 || lowSystolicCount >= 2)
           return this.createRecommendation(
-            request,
+            requests,
             undefined,
             MedicationRecommendationCategory.personalTargetDoseReached,
           )
@@ -88,20 +88,20 @@ export class RasiRecommender extends Recommender {
             potassiumObservation.value >= 5)
         )
           return this.createRecommendation(
-            request,
+            requests,
             undefined,
             MedicationRecommendationCategory.personalTargetDoseReached,
           )
 
         if (input.symptomScores && input.symptomScores.dizzinessScore >= 3)
           return this.createRecommendation(
-            request,
+            requests,
             undefined,
             MedicationRecommendationCategory.personalTargetDoseReached,
           )
 
         return this.createRecommendation(
-          request,
+          requests,
           undefined,
           MedicationRecommendationCategory.improvementAvailable,
         )
@@ -116,7 +116,7 @@ export class RasiRecommender extends Recommender {
 
     if (!medianSystolic)
       return this.createRecommendation(
-        request,
+        requests,
         undefined,
         MedicationRecommendationCategory.morePatientObservationsRequired,
       )
@@ -127,7 +127,7 @@ export class RasiRecommender extends Recommender {
 
     if (medianSystolic < 100 || lowCount >= 2)
       return this.createRecommendation(
-        request,
+        requests,
         undefined,
         MedicationRecommendationCategory.personalTargetDoseReached,
       )
@@ -140,32 +140,32 @@ export class RasiRecommender extends Recommender {
       (creatinineObservation.value >= 2.5 || potassiumObservation.value >= 5)
     )
       return this.createRecommendation(
-        request,
+        requests,
         undefined,
         MedicationRecommendationCategory.personalTargetDoseReached,
       )
 
     if (input.symptomScores && input.symptomScores.dizzinessScore >= 3)
       return this.createRecommendation(
-        request,
+        requests,
         undefined,
         MedicationRecommendationCategory.personalTargetDoseReached,
       )
 
     return this.createRecommendation(
-      request,
+      requests,
       MedicationReference.sacubitrilValsartan,
       MedicationRecommendationCategory.improvementAvailable,
     )
   }
 
   private computeArni(
-    request: MedicationRequestContext,
+    requests: MedicationRequestContext[],
     input: RecommendationInput,
   ): MedicationRecommendation[] {
-    if (this.isTargetDoseReached(request))
+    if (this.isTargetDailyDoseReached(requests))
       return this.createRecommendation(
-        request,
+        requests,
         undefined,
         MedicationRecommendationCategory.targetDoseReached,
       )
@@ -176,14 +176,14 @@ export class RasiRecommender extends Recommender {
 
     if (!medianSystolic)
       return this.createRecommendation(
-        request,
+        requests,
         undefined,
         MedicationRecommendationCategory.morePatientObservationsRequired,
       )
 
     if (medianSystolic < 100)
       return this.createRecommendation(
-        request,
+        requests,
         undefined,
         MedicationRecommendationCategory.personalTargetDoseReached,
       )
@@ -196,20 +196,20 @@ export class RasiRecommender extends Recommender {
       (creatinineObservation.value >= 2.5 || potassiumObservation.value >= 5)
     )
       return this.createRecommendation(
-        request,
+        requests,
         undefined,
         MedicationRecommendationCategory.personalTargetDoseReached,
       )
 
     if (input.symptomScores && input.symptomScores.dizzinessScore >= 3)
       return this.createRecommendation(
-        request,
+        requests,
         undefined,
         MedicationRecommendationCategory.personalTargetDoseReached,
       )
 
     return this.createRecommendation(
-      request,
+      requests,
       undefined,
       MedicationRecommendationCategory.improvementAvailable,
     )
@@ -247,7 +247,7 @@ export class RasiRecommender extends Recommender {
       contraindicationToArb !== ContraindicationCategory.none
     )
       return this.createRecommendation(
-        undefined,
+        [],
         MedicationReference.losartan,
         MedicationRecommendationCategory.noActionRequired,
       )
@@ -259,7 +259,7 @@ export class RasiRecommender extends Recommender {
 
     if (!medianSystolic)
       return this.createRecommendation(
-        undefined,
+        [],
         MedicationReference.losartan,
         MedicationRecommendationCategory.morePatientObservationsRequired,
       )
@@ -270,7 +270,7 @@ export class RasiRecommender extends Recommender {
 
     if (medianSystolic < 100 || lowCount >= 2)
       return this.createRecommendation(
-        undefined,
+        [],
         MedicationReference.losartan,
         MedicationRecommendationCategory.noActionRequired,
       )
@@ -283,7 +283,7 @@ export class RasiRecommender extends Recommender {
       (creatinineObservation.value >= 2.5 || potassiumObservation.value >= 5)
     )
       return this.createRecommendation(
-        undefined,
+        [],
         MedicationReference.losartan,
         MedicationRecommendationCategory.noActionRequired,
       )
@@ -299,13 +299,13 @@ export class RasiRecommender extends Recommender {
       case ContraindicationCategory.allergyIntolerance:
       case ContraindicationCategory.clinicianListed:
         return this.createRecommendation(
-          undefined,
+          [],
           MedicationReference.losartan,
           MedicationRecommendationCategory.notStarted,
         )
       case ContraindicationCategory.none:
         return this.createRecommendation(
-          undefined,
+          [],
           MedicationReference.sacubitrilValsartan,
           MedicationRecommendationCategory.notStarted,
         )

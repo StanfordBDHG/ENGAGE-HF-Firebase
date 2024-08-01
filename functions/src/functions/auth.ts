@@ -14,15 +14,11 @@ import {
   beforeUserSignedIn,
 } from 'firebase-functions/v2/identity'
 import { UserType } from '../models/user.js'
-import { CacheDatabaseService } from '../services/database/cacheDatabaseService.js'
-import { FirestoreService } from '../services/database/firestoreService.js'
-import { DatabaseUserService } from '../services/user/databaseUserService.js'
-import { type UserService } from '../services/user/userService.js'
+import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
 export const beforeUserCreatedFunction = beforeUserCreated(async (event) => {
-  const service: UserService = new DatabaseUserService(
-    new CacheDatabaseService(new FirestoreService()),
-  )
+  const factory = getServiceFactory()
+  const userService = factory.user()
   const userId = event.data.uid
   console.log(`beforeUserCreated for userId: ${userId}`)
 
@@ -48,7 +44,7 @@ export const beforeUserCreatedFunction = beforeUserCreated(async (event) => {
         'Organization not found.',
       )
 
-    const invitation = await service.getInvitation(event.data.email)
+    const invitation = await userService.getInvitation(event.data.email)
     if (!invitation?.content) {
       throw new https.HttpsError(
         'not-found',
@@ -57,7 +53,7 @@ export const beforeUserCreatedFunction = beforeUserCreated(async (event) => {
     }
 
     if (
-      invitation.content.user?.type === UserType.admin &&
+      invitation.content.user.type === UserType.admin &&
       invitation.content.user.organization !== organization.id
     )
       throw new https.HttpsError(
@@ -65,11 +61,11 @@ export const beforeUserCreatedFunction = beforeUserCreated(async (event) => {
         'Organization does not match invitation code.',
       )
 
-    await service.enrollUser(invitation, userId)
+    await userService.enrollUser(invitation, userId)
   } else {
     try {
       // Check Firestore to confirm whether an invitation code has been associated with a user.
-      const invitation = await service.getInvitationByUserId(userId)
+      const invitation = await userService.getInvitationByUserId(userId)
 
       if (!invitation) {
         throw new https.HttpsError(
@@ -78,7 +74,7 @@ export const beforeUserCreatedFunction = beforeUserCreated(async (event) => {
         )
       }
 
-      await service.enrollUser(invitation, userId)
+      await userService.enrollUser(invitation, userId)
     } catch (error) {
       if (error instanceof Error) {
         logger.error(`Error processing request: ${error.message}`)
@@ -94,20 +90,14 @@ export const beforeUserCreatedFunction = beforeUserCreated(async (event) => {
 })
 
 export const beforeUserSignedInFunction = beforeUserSignedIn(async (event) => {
-  const userService = new DatabaseUserService(
-    new CacheDatabaseService(new FirestoreService()),
-  )
-  await userService.updateClaims(event.data.uid)
+  await getServiceFactory().user().updateClaims(event.data.uid)
 })
 
 export const onUserWrittenFunction = onDocumentWritten(
   'users/{userId}',
   async (event) => {
-    const userService = new DatabaseUserService(
-      new CacheDatabaseService(new FirestoreService()),
-    )
     try {
-      await userService.updateClaims(event.params.userId)
+      await getServiceFactory().user().updateClaims(event.params.userId)
     } catch (error) {
       logger.error(
         `Error processing claims update for userId '${event.params.userId}' on change of user: ${String(error)}`,

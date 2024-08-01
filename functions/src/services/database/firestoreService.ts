@@ -5,7 +5,7 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import admin from 'firebase-admin'
+
 import {
   type BulkWriter,
   type BulkWriterOptions,
@@ -21,7 +21,7 @@ export class FirestoreService implements DatabaseService {
 
   // Constructor
 
-  constructor(firestore: Firestore = admin.firestore()) {
+  constructor(firestore: Firestore) {
     this.firestore = firestore
   }
 

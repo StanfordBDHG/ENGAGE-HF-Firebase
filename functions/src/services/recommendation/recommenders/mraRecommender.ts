@@ -19,14 +19,14 @@ export class MraRecommender extends Recommender {
   // Methods
 
   compute(input: RecommendationInput): MedicationRecommendation[] {
-    const currentMedication = this.findCurrentMedication(input.requests, [
+    const currentRequests = this.findCurrentRequests(input.requests, [
       MedicationClassReference.mineralocorticoidReceptorAntagonists,
     ])
-    if (!currentMedication) return this.computeNew(input)
+    if (currentRequests.length === 0) return this.computeNew(input)
 
-    if (this.isTargetDoseReached(currentMedication))
+    if (this.isTargetDailyDoseReached(currentRequests))
       return this.createRecommendation(
-        currentMedication,
+        currentRequests,
         undefined,
         MedicationRecommendationCategory.targetDoseReached,
       )
@@ -44,20 +44,20 @@ export class MraRecommender extends Recommender {
       potassiumObservation.date.getTime() < lastMonth
     )
       return this.createRecommendation(
-        currentMedication,
+        currentRequests,
         undefined,
         MedicationRecommendationCategory.moreLabObservationsRequired,
       )
 
     if (creatinineObservation.value > 2.5 || potassiumObservation.value > 5)
       return this.createRecommendation(
-        currentMedication,
+        currentRequests,
         undefined,
         MedicationRecommendationCategory.personalTargetDoseReached,
       )
 
     return this.createRecommendation(
-      currentMedication,
+      currentRequests,
       undefined,
       MedicationRecommendationCategory.improvementAvailable,
     )
@@ -76,7 +76,7 @@ export class MraRecommender extends Recommender {
         return []
       case ContraindicationCategory.clinicianListed:
         return this.createRecommendation(
-          undefined,
+          [],
           MedicationReference.spironolactone,
           MedicationRecommendationCategory.noActionRequired,
         )
@@ -87,7 +87,7 @@ export class MraRecommender extends Recommender {
     const creatinine = input.vitals.creatinine?.value
     if (creatinine && creatinine >= 2.5)
       return this.createRecommendation(
-        undefined,
+        [],
         MedicationReference.spironolactone,
         MedicationRecommendationCategory.noActionRequired,
       )
@@ -95,13 +95,13 @@ export class MraRecommender extends Recommender {
     const potassium = input.vitals.potassium?.value
     if (potassium && potassium >= 5)
       return this.createRecommendation(
-        undefined,
+        [],
         MedicationReference.spironolactone,
         MedicationRecommendationCategory.noActionRequired,
       )
 
     return this.createRecommendation(
-      undefined,
+      [],
       MedicationReference.spironolactone,
       MedicationRecommendationCategory.notStarted,
     )

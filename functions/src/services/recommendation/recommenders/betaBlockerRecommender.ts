@@ -19,14 +19,14 @@ export class BetaBlockerRecommender extends Recommender {
   // Methods
 
   compute(input: RecommendationInput): MedicationRecommendation[] {
-    const currentMedication = this.findCurrentMedication(input.requests, [
+    const currentRequests = this.findCurrentRequests(input.requests, [
       MedicationClassReference.betaBlockers,
     ])
-    if (!currentMedication) return this.computeNew(input)
+    if (currentRequests.length === 0) return this.computeNew(input)
 
-    if (this.isTargetDoseReached(currentMedication))
+    if (this.isTargetDailyDoseReached(currentRequests))
       return this.createRecommendation(
-        currentMedication,
+        currentRequests,
         undefined,
         MedicationRecommendationCategory.targetDoseReached,
       )
@@ -40,14 +40,14 @@ export class BetaBlockerRecommender extends Recommender {
 
     if (!medianSystolic || !medianHeartRate)
       return this.createRecommendation(
-        currentMedication,
+        currentRequests,
         undefined,
         MedicationRecommendationCategory.morePatientObservationsRequired,
       )
 
     if (medianSystolic < 100 || medianHeartRate < 60)
       return this.createRecommendation(
-        currentMedication,
+        currentRequests,
         undefined,
         MedicationRecommendationCategory.personalTargetDoseReached,
       )
@@ -57,13 +57,13 @@ export class BetaBlockerRecommender extends Recommender {
       input.symptomScores.dizzinessScore >= 3
     )
       return this.createRecommendation(
-        currentMedication,
+        currentRequests,
         undefined,
         MedicationRecommendationCategory.personalTargetDoseReached,
       )
 
     return this.createRecommendation(
-      currentMedication,
+      currentRequests,
       undefined,
       MedicationRecommendationCategory.improvementAvailable,
     )
@@ -84,7 +84,7 @@ export class BetaBlockerRecommender extends Recommender {
         return []
       case ContraindicationCategory.clinicianListed:
         return this.createRecommendation(
-          undefined,
+          [],
           MedicationReference.carvedilol,
           MedicationRecommendationCategory.noActionRequired,
         )
@@ -101,20 +101,20 @@ export class BetaBlockerRecommender extends Recommender {
 
     if (!medianSystolic || !medianHeartRate)
       return this.createRecommendation(
-        undefined,
+        [],
         MedicationReference.carvedilol,
         MedicationRecommendationCategory.morePatientObservationsRequired,
       )
 
     if (medianSystolic < 100 || medianHeartRate < 60)
       return this.createRecommendation(
-        undefined,
+        [],
         MedicationReference.carvedilol,
         MedicationRecommendationCategory.noActionRequired,
       )
 
     return this.createRecommendation(
-      undefined,
+      [],
       MedicationReference.carvedilol,
       MedicationRecommendationCategory.notStarted,
     )
