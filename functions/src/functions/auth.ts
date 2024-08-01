@@ -100,33 +100,6 @@ export const beforeUserSignedInFunction = beforeUserSignedIn(async (event) => {
   await userService.updateClaims(event.data.uid)
 })
 
-export const onOrganizationWrittenFunction = onDocumentWritten(
-  'organizations/{organizationId}',
-  async (event) => {
-    const userService = new DatabaseUserService(
-      new CacheDatabaseService(new FirestoreService()),
-    )
-
-    const ownersBefore = (event.data?.before.get('owners') ?? []) as string[]
-    const ownersAfter = (event.data?.after.get('owners') ?? []) as string[]
-
-    const ownersChanged = [
-      ...ownersBefore.filter((owner) => !ownersAfter.includes(owner)),
-      ...ownersAfter.filter((owner) => !ownersBefore.includes(owner)),
-    ]
-
-    for (const ownerId of ownersChanged) {
-      try {
-        await userService.updateClaims(ownerId)
-      } catch (error) {
-        logger.error(
-          `Error processing claims update for userId '${ownerId}' on change of organization: ${String(error)}`,
-        )
-      }
-    }
-  },
-)
-
 export const onUserWrittenFunction = onDocumentWritten(
   'users/{userId}',
   async (event) => {

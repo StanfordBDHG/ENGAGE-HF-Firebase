@@ -101,7 +101,6 @@ Based on the [Extension](https://hl7.org/fhir/R4B/extensibility.html#Extension) 
 |phoneNumber|string|e.g. "(650) 493-5000"|-|
 |emailAddress|string|e.g. "dothfteam@stanford.edu"|-|
 |ssoProviderId|string|-|The providerId as used for single sign-on.|
-|owners|list of string|-|All the userIds of the organization owners.|
 
 ## questionnaires
 
@@ -135,10 +134,10 @@ In this section, we describe all user-related data to be stored. The security ru
 
 |Property|Type|Values|Comments|
 |-|-|-|-|
-|type|optional string|e.g. "admin", "clinician", "patient"|The type of the user. It may be set to null for owners or users not requiring any further permissions.|
+|type|string|e.g. "admin", "owners", "clinician", "patient"|The type of the user.|
 |dateOfEnrollment|Date|-|The date when the invitation code was used to create this user.|
 |dateOfBirth|optional Date|-|The date when the user was born.|
-|genderIdentity|optional string|-|The gender identity chosen when a patient redeemed the invitation. TBD: Available values.|
+|genderIdentity|optional string|"female","male","transgender","nonBinary","preferNotToState"|The gender identity chosen when a patient redeemed the invitation.|
 |organization|optional string|-|The id of the organization a clinician, patient or owner is associated with.|
 |invitationCode|string|-|The invitationCode to be used when logging in to the app for the first time.|
 |language|optional string|e.g. "en"|Following IETF BCP-47 / [FHIR ValueSet languages](https://hl7.org/fhir/R4B/valueset-languages.html).|
@@ -508,7 +507,7 @@ A user usually has one of these roles assigned (some combinations are technicall
 |Role|Scope|Rights|Source of Truth|
 |-|-|-|-|
 |Admin|Everything|R/W|User type is `admin`.|
-|Owner|In organization|R/W of users, R/W of organization|`organization/$organizationId$` contains `userId` in `owners` property|
+|Owner|In organization|R/W of users, R/W of organization|User type is `owner`.|
 |Clinician|In organization|R/W of users|User type is `clinician`.|
 |Patient|Own data|R/W of `users/$userId$` incl patient-specific collections|User type is `patient`.|
 |User|Own data|R/W of `users/$userId$`|auth has same userId|

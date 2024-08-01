@@ -5,8 +5,7 @@
     "contactName": "Alex Sandhu, MD",
     "phoneNumber": "+1 (650) 493-5000",
     "emailAddress": "dothfteam@stanford.edu",
-    "ssoProviderId": "oidc.stanford",
-    "owners": []
+    "ssoProviderId": "oidc.stanford"
   },
   "jhu": {
     "id": "jhu",
@@ -14,8 +13,7 @@
     "contactName": "Someone from JHU",
     "phoneNumber": "+1 (555) 123-4567",
     "emailAddress": "engagehf@jhu.edu",
-    "ssoProviderId": "",
-    "owners": []
+    "ssoProviderId": ""
   },
   "umich": {
     "id": "umich",
@@ -23,8 +21,7 @@
     "contactName": "Someone from UMich",
     "phoneNumber": "+1 (555) 123-4567",
     "emailAddress": "engagehf@umich.edu",
-    "ssoProviderId": "",
-    "owners": []
+    "ssoProviderId": ""
   },
   "uw": {
     "id": "uw",
@@ -32,7 +29,6 @@
     "contactName": "Someone from UW",
     "phoneNumber": "+1 (555) 123-4567",
     "emailAddress": "engagehf@uw.edu",
-    "ssoProviderId": "",
-    "owners": []
+    "ssoProviderId": ""
   }
 }

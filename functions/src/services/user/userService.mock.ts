@@ -104,7 +104,6 @@ export class MockUserService implements UserService {
         phoneNumber: '+1 (650) 493-5000',
         emailAddress: 'dothfteam@stanford.edu',
         ssoProviderId: 'oidc.stanford',
-        owners: [],
       },
     }
   }

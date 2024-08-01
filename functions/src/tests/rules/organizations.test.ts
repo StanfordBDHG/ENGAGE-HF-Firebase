@@ -51,22 +51,22 @@ describe('firestore.rules: organizations/{organizationId}', () => {
 
     ownerFirestore = testEnvironment
       .authenticatedContext(ownerId, {
+        type: UserType.owner,
         organization: organizationId,
-        isOwner: true,
       })
       .firestore()
 
     clinicianFirestore = testEnvironment
       .authenticatedContext(clinicianId, {
-        organization: organizationId,
         type: UserType.clinician,
+        organization: organizationId,
       })
       .firestore()
 
     patientFirestore = testEnvironment
       .authenticatedContext(patientId, {
-        organization: organizationId,
         type: UserType.patient,
+        organization: organizationId,
       })
       .firestore()
 
@@ -77,23 +77,18 @@ describe('firestore.rules: organizations/{organizationId}', () => {
     await testEnvironment.clearFirestore()
     await testEnvironment.withSecurityRulesDisabled(async (environment) => {
       const firestore = environment.firestore()
-      await firestore
-        .doc(`organizations/${organizationId}`)
-        .set({ owners: [ownerId] })
-      await firestore
-        .doc(`organizations/${otherOrganizationId}`)
-        .set({ owners: [] })
+      await firestore.doc(`organizations/${organizationId}`).set({})
+      await firestore.doc(`organizations/${otherOrganizationId}`).set({})
       await firestore.doc(`users/${adminId}`).set({ type: UserType.admin })
       await firestore
         .doc(`users/${ownerId}`)
-        .set({ organization: organizationId })
+        .set({ type: UserType.owner, organization: organizationId })
       await firestore
         .doc(`users/${clinicianId}`)
         .set({ type: UserType.clinician, organization: organizationId })
       await firestore
         .doc(`users/${patientId}`)
         .set({ type: UserType.patient, organization: organizationId })
-      await firestore.doc(`users/${userId}`).set({})
     })
   })
 
@@ -112,38 +107,38 @@ describe('firestore.rules: organizations/{organizationId}', () => {
     await assertSucceeds(
       ownerFirestore.doc(`organizations/${organizationId}`).get(),
     )
-    await assertSucceeds(
+    await assertFails(
       ownerFirestore.doc(`organizations/${otherOrganizationId}`).get(),
     )
 
     await assertSucceeds(
       clinicianFirestore.doc(`organizations/${organizationId}`).get(),
     )
-    await assertSucceeds(
+    await assertFails(
       clinicianFirestore.doc(`organizations/${otherOrganizationId}`).get(),
     )
 
     await assertSucceeds(
       patientFirestore.doc(`organizations/${organizationId}`).get(),
     )
-    await assertSucceeds(
+    await assertFails(
       patientFirestore.doc(`organizations/${otherOrganizationId}`).get(),
     )
 
-    await assertSucceeds(
+    await assertFails(
       userFirestore.doc(`organizations/${organizationId}`).get(),
     )
-    await assertSucceeds(
+    await assertFails(
       userFirestore.doc(`organizations/${otherOrganizationId}`).get(),
     )
   })
 
   it('lists organizations', async () => {
     await assertSucceeds(adminFirestore.collection('organizations').get())
-    await assertSucceeds(ownerFirestore.collection('organizations').get())
-    await assertSucceeds(clinicianFirestore.collection('organizations').get())
-    await assertSucceeds(patientFirestore.collection('organizations').get())
-    await assertSucceeds(userFirestore.collection('organizations').get())
+    await assertFails(ownerFirestore.collection('organizations').get())
+    await assertFails(clinicianFirestore.collection('organizations').get())
+    await assertFails(patientFirestore.collection('organizations').get())
+    await assertFails(userFirestore.collection('organizations').get())
   })
 
   it('creates organizations/{organizationsId}', async () => {
@@ -172,41 +167,57 @@ describe('firestore.rules: organizations/{organizationId}', () => {
     )
   })
 
-  it('updates organizations/{organizationsId} owners', async () => {
+  it('updates organizations/{organizationsId}', async () => {
     await assertSucceeds(
       adminFirestore
         .doc(`organizations/${organizationId}`)
-        .set({ owners: [clinicianId] }, { merge: true }),
+        .set({ name: 'Stanford' }),
     )
     await assertSucceeds(
       adminFirestore
-        .doc(`organizations/${organizationId}`)
-        .set({ owners: [ownerId] }, { merge: true }),
+        .doc(`organizations/${otherOrganizationId}`)
+        .set({ name: 'Stanford' }),
     )
+    console.log('owner')
     await assertSucceeds(
       ownerFirestore
         .doc(`organizations/${organizationId}`)
-        .set({ owners: [clinicianId] }, { merge: true }),
+        .set({ name: 'Stanford' }),
     )
-    await assertSucceeds(
-      adminFirestore
-        .doc(`organizations/${organizationId}`)
-        .set({ owners: [ownerId] }, { merge: true }),
+    await assertFails(
+      ownerFirestore
+        .doc(`organizations/${otherOrganizationId}`)
+        .set({ name: 'Stanford' }),
     )
     await assertFails(
       clinicianFirestore
         .doc(`organizations/${organizationId}`)
-        .set({ owners: [clinicianId] }, { merge: true }),
+        .set({ name: 'Stanford' }),
+    )
+    await assertFails(
+      clinicianFirestore
+        .doc(`organizations/${otherOrganizationId}`)
+        .set({ name: 'Stanford' }),
     )
     await assertFails(
       patientFirestore
         .doc(`organizations/${organizationId}`)
-        .set({ owners: [patientId] }, { merge: true }),
+        .set({ name: 'Stanford' }),
+    )
+    await assertFails(
+      patientFirestore
+        .doc(`organizations/${otherOrganizationId}`)
+        .set({ name: 'Stanford' }),
     )
     await assertFails(
       userFirestore
         .doc(`organizations/${organizationId}`)
-        .set({ owners: [userId] }, { merge: true }),
+        .set({ name: 'Stanford' }),
+    )
+    await assertFails(
+      userFirestore
+        .doc(`organizations/${otherOrganizationId}`)
+        .set({ name: 'Stanford' }),
     )
   })
 })

@@ -41,12 +41,8 @@ describe('Credential', () => {
   beforeEach(() => {
     mockFirestore.collections = {
       organizations: {
-        mockOrganization: {
-          owners: ['mockOwner'],
-        },
-        otherOrganization: {
-          owners: [],
-        },
+        mockOrganization: {},
+        otherOrganization: {},
       },
       users: {
         mockAdmin: {
@@ -57,6 +53,7 @@ describe('Credential', () => {
           organization: 'mockOrganization',
         },
         mockOwner: {
+          type: UserType.owner,
           organization: 'mockOrganization',
         },
         mockPatient: {

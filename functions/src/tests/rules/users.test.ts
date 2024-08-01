@@ -51,8 +51,8 @@ describe('firestore.rules: users/{userId}', () => {
 
     ownerFirestore = testEnvironment
       .authenticatedContext(ownerId, {
+        type: UserType.owner,
         organization: organizationId,
-        isOwner: true,
       })
       .firestore()
 
@@ -77,12 +77,8 @@ describe('firestore.rules: users/{userId}', () => {
     await testEnvironment.clearFirestore()
     await testEnvironment.withSecurityRulesDisabled(async (environment) => {
       const firestore = environment.firestore()
-      await firestore
-        .doc(`organizations/${organizationId}`)
-        .set({ owners: [ownerId] })
-      await firestore
-        .doc(`organizations/${otherOrganizationId}`)
-        .set({ owners: [] })
+      await firestore.doc(`organizations/${organizationId}`).set({})
+      await firestore.doc(`organizations/${otherOrganizationId}`).set({})
       await firestore.doc(`users/${adminId}`).set({ type: UserType.admin })
       await firestore
         .doc(`users/${ownerId}`)
@@ -147,8 +143,8 @@ describe('firestore.rules: users/{userId}', () => {
     await assertFails(
       testEnvironment
         .authenticatedContext(ownerId, {
+          type: UserType.owner,
           organization: otherOrganizationId,
-          isOwner: true,
         })
         .firestore()
         .collection('users')
@@ -167,8 +163,8 @@ describe('firestore.rules: users/{userId}', () => {
     await assertFails(
       testEnvironment
         .authenticatedContext(clinicianId, {
-          organization: otherOrganizationId,
           type: UserType.clinician,
+          organization: otherOrganizationId,
         })
         .firestore()
         .collection('users')
@@ -249,6 +245,7 @@ describe('firestore.rules: users/{userId}', () => {
         .doc(`users/${clinicianId}`)
         .set({ dateOfBirth: new Date('2011-01-01') }, { merge: true }),
     )
+    console.log('patient')
     await assertSucceeds(
       ownerFirestore
         .doc(`users/${patientId}`)
