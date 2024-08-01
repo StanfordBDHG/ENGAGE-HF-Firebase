@@ -7,18 +7,16 @@
 //
 
 import { expect } from 'chai'
+import { type DecodedIdToken } from 'firebase-admin/auth'
 import { type AuthData } from 'firebase-functions/v2/tasks'
 import { describe } from 'mocha'
-import { Credential, UserRole } from './credential.js'
-import { FirestoreService } from './database/firestoreService.js'
-import { DatabaseUserService, UserClaims } from './user/databaseUserService.js'
-import { type UserService } from './user/userService.js'
+import { UserRole } from './credential.js'
+import { getServiceFactory } from './factory/getServiceFactory.js'
+import { type ServiceFactory } from './factory/serviceFactory.js'
+import { type UserClaims } from './user/databaseUserService.js'
 import { UserType } from '../models/user.js'
 import { type MockFirestore } from '../tests/mocks/firestore.js'
 import { setupMockAuth, setupMockFirestore } from '../tests/setup.js'
-import { getServiceFactory } from './factory/getServiceFactory.js'
-import { ServiceFactory } from './factory/serviceFactory.js'
-import { DecodedIdToken } from 'firebase-admin/auth'
 
 describe('Credential', () => {
   let mockFirestore: MockFirestore

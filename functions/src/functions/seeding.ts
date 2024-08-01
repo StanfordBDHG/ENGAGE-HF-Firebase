@@ -9,11 +9,11 @@
 import { type TypeOf, z } from 'zod'
 import { validatedOnCall, validatedOnRequest } from './helpers.js'
 import { Flags } from '../flags.js'
+import { UserType } from '../models/user.js'
 import { UserRole } from '../services/credential/credential.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 import { type ServiceFactory } from '../services/factory/serviceFactory.js'
 import { CachingStrategy } from '../services/seeding/seedingService.js'
-import { UserType } from '../models/user.js'
 
 enum StaticDataComponent {
   medicationClasses = 'medicationClasses',
@@ -143,7 +143,7 @@ export const defaultSeedFunction = validatedOnRequest(
       }
     }
 
-    for (const userData of data.userData ?? []) {
+    for (const userData of data.userData) {
       if (userData.only.includes(UserDebugDataComponent.appointments))
         await debugDataService.seedUserAppointments(userData.userId, data.date)
       if (userData.only.includes(UserDebugDataComponent.medicationRequests))

@@ -8,6 +8,7 @@
 
 import { type Auth } from 'firebase-admin/auth'
 import { UserDebugDataFactory } from './userDebugDataFactory.js'
+import { chunks } from '../../../extensions/array.js'
 import { AppointmentStatus } from '../../../models/fhir/appointment.js'
 import { type FHIRQuestionnaire } from '../../../models/fhir/questionnaire.js'
 import { type Invitation } from '../../../models/invitation.js'
@@ -15,8 +16,6 @@ import { DrugReference, LoincCode } from '../../codes.js'
 import { type DatabaseService } from '../../database/databaseService.js'
 import { QuantityUnit } from '../../fhir/quantityUnit.js'
 import { SeedingService } from '../seedingService.js'
-import { FHIRObservation } from '../../../models/fhir/observation.js'
-import { chunks } from '../../../extensions/array.js'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -54,7 +53,7 @@ export class DebugDataService extends SeedingService {
   // Methods
 
   async seedCustom(input: CustomSeedingOptions): Promise<string[]> {
-    let userIds: string[] = []
+    const userIds: string[] = []
     for (const user of input.users) {
       try {
         userIds.push(await this.createUser(user))
