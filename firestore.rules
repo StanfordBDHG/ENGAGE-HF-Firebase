@@ -53,7 +53,7 @@ service cloud.firestore {
       allow update: if isAdmin() || (securityRelatedFieldsDidNotChange() && isOwnerOrClinicianOf(resource.data.user.organization));
     }
 
-    match /medicationClasses/{documents=**} {
+    match /medicationClasses/{medicationClassId} {
       allow read: if isAuthenticated();
       allow write: if isAdmin();
     }
