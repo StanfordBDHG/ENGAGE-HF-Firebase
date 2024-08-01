@@ -128,18 +128,76 @@ export const defaultSeedFunction = validatedOnRequest(
       for (const userId of userIds) {
         const user = await userService.getUser(userId)
         if (user?.content.type !== UserType.patient) continue
-        await debugDataService.seedUserAppointments(userId, data.date)
-        await debugDataService.seedUserBloodPressureObservations(
-          userId,
-          data.date,
+        if (
+          data.onlyUserCollections.includes(UserDebugDataComponent.appointments)
         )
-        await debugDataService.seedUserBodyWeightObservations(userId, data.date)
-        await debugDataService.seedUserCreatinineObservations(userId, data.date)
-        await debugDataService.seedUserEgfrObservations(userId, data.date)
-        await debugDataService.seedUserHeartRateObservations(userId, data.date)
-        await debugDataService.seedUserPotassiumObservations(userId, data.date)
-        await debugDataService.seedUserMedicationRequests(userId)
-        await debugDataService.seedUserMessages(userId)
+          await debugDataService.seedUserAppointments(userId, data.date)
+        if (
+          data.onlyUserCollections.includes(
+            UserDebugDataComponent.bloodPressureObservations,
+          )
+        )
+          await debugDataService.seedUserBloodPressureObservations(
+            userId,
+            data.date,
+          )
+
+        if (
+          data.onlyUserCollections.includes(
+            UserDebugDataComponent.bodyWeightObservations,
+          )
+        )
+          await debugDataService.seedUserBodyWeightObservations(
+            userId,
+            data.date,
+          )
+
+        if (
+          data.onlyUserCollections.includes(
+            UserDebugDataComponent.creatinineObservations,
+          )
+        )
+          await debugDataService.seedUserCreatinineObservations(
+            userId,
+            data.date,
+          )
+
+        if (
+          data.onlyUserCollections.includes(
+            UserDebugDataComponent.eGfrObservations,
+          )
+        )
+          await debugDataService.seedUserEgfrObservations(userId, data.date)
+
+        if (
+          data.onlyUserCollections.includes(
+            UserDebugDataComponent.heartRateObservations,
+          )
+        )
+          await debugDataService.seedUserHeartRateObservations(
+            userId,
+            data.date,
+          )
+
+        if (
+          data.onlyUserCollections.includes(
+            UserDebugDataComponent.potassiumObservations,
+          )
+        )
+          await debugDataService.seedUserPotassiumObservations(
+            userId,
+            data.date,
+          )
+
+        if (
+          data.onlyUserCollections.includes(
+            UserDebugDataComponent.medicationRequests,
+          )
+        )
+          await debugDataService.seedUserMedicationRequests(userId)
+
+        if (data.onlyUserCollections.includes(UserDebugDataComponent.messages))
+          await debugDataService.seedUserMessages(userId)
       }
     }
 
