@@ -6,9 +6,9 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { type FHIRCoding, type FHIRElement } from './baseTypes.js'
+import { type FHIRResource, type FHIRCoding } from './baseTypes.js'
 
-export interface FHIRQuestionnaire extends FHIRElement {
+export interface FHIRQuestionnaire extends FHIRResource {
   title?: string
   language?: string
   publisher?: string
