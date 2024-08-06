@@ -7,6 +7,7 @@
 //
 
 import { type Auth } from 'firebase-admin/auth'
+import { type Storage } from 'firebase-admin/storage'
 import { UserDebugDataFactory } from './userDebugDataFactory.js'
 import { chunks } from '../../../extensions/array.js'
 import { AppointmentStatus } from '../../../models/fhir/appointment.js'
@@ -16,7 +17,6 @@ import { DrugReference, LoincCode } from '../../codes.js'
 import { type DatabaseService } from '../../database/databaseService.js'
 import { QuantityUnit } from '../../fhir/quantityUnit.js'
 import { SeedingService } from '../seedingService.js'
-import { Storage } from 'firebase-admin/storage'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
