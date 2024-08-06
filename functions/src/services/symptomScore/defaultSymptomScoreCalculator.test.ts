@@ -19,7 +19,7 @@ describe('DefaultSymptomScoreCalculator', () => {
     const score = calculator.calculate(response)
     expect(score).to.deep.equal({
       questionnaireResponseId: response.id,
-      date: response.authored,
+      date: new Date(response.authored),
       overallScore: 54,
       socialLimitsScore: 58,
       physicalLimitsScore: 42,

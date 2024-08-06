@@ -32,7 +32,7 @@ export class DefaultSymptomScoreCalculator implements SymptomScoreCalculator {
 
     const result: SymptomScore = {
       questionnaireResponseId: questionnaireResponse.id,
-      date: questionnaireResponse.authored,
+      date: new Date(questionnaireResponse.authored),
       overallScore: 0,
       socialLimitsScore: undefined,
       physicalLimitsScore: undefined,

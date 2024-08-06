@@ -54,11 +54,11 @@ export class UserDebugDataFactory {
     return {
       resourceType: 'Appointment',
       status: AppointmentStatus.booked,
-      created: input.created,
-      start: input.start,
+      created: input.created.toISOString(),
+      start: input.start.toISOString(),
       end: new Date(
         input.start.getTime() + input.durationInMinutes * 60 * 1000,
-      ),
+      ).toISOString(),
       participant: [
         {
           actor: {
@@ -276,7 +276,7 @@ export class UserDebugDataFactory {
           },
         },
       ],
-      effectiveDateTime: input.date,
+      effectiveDateTime: input.date.toISOString(),
     }
   }
 
@@ -304,7 +304,7 @@ export class UserDebugDataFactory {
         system: input.unit.system,
         code: input.unit.code,
       },
-      effectiveDateTime: input.date,
+      effectiveDateTime: input.date.toISOString(),
     }
   }
 
