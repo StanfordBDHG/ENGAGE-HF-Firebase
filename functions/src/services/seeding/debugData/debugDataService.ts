@@ -16,6 +16,7 @@ import { DrugReference, LoincCode } from '../../codes.js'
 import { type DatabaseService } from '../../database/databaseService.js'
 import { QuantityUnit } from '../../fhir/quantityUnit.js'
 import { SeedingService } from '../seedingService.js'
+import { Storage } from 'firebase-admin/storage'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -38,15 +39,17 @@ export class DebugDataService extends SeedingService {
   // Properties
 
   private readonly auth: Auth
+  private readonly storage: Storage
   private readonly databaseService: DatabaseService
   private readonly userDataFactory: UserDebugDataFactory
 
   // Constructor
 
-  constructor(auth: Auth, databaseService: DatabaseService) {
+  constructor(auth: Auth, databaseService: DatabaseService, storage: Storage) {
     super({ useIndicesAsKeys: true, path: './data/debug/' })
     this.auth = auth
     this.databaseService = databaseService
+    this.storage = storage
     this.userDataFactory = new UserDebugDataFactory()
   }
 
@@ -85,6 +88,13 @@ export class DebugDataService extends SeedingService {
       users.map((user) => this.createUser(user)),
     )
     return userIds
+  }
+
+  async seedUserConsent(userId: string) {
+    await this.storage.bucket().upload('data/consent.pdf', {
+      destination: `users/${userId}/consent/consent.pdf`,
+      contentType: 'application/pdf',
+    })
   }
 
   async seedUserAppointments(userId: string, date: Date) {

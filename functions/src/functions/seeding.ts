@@ -74,6 +74,7 @@ enum DebugDataComponent {
 }
 
 enum UserDebugDataComponent {
+  consent = 'consent',
   appointments = 'appointments',
   medicationRequests = 'medicationRequests',
   messages = 'messages',
@@ -198,6 +199,8 @@ export const defaultSeedFunction = validatedOnRequest(
 
         if (data.onlyUserCollections.includes(UserDebugDataComponent.messages))
           await debugDataService.seedUserMessages(userId)
+        if (data.onlyUserCollections.includes(UserDebugDataComponent.consent))
+          await debugDataService.seedUserConsent(userId)
       }
     }
 
@@ -240,6 +243,8 @@ export const defaultSeedFunction = validatedOnRequest(
           userData.userId,
           data.date,
         )
+      if (userData.only.includes(UserDebugDataComponent.consent))
+        await debugDataService.seedUserConsent(userData.userId)
     }
 
     response.write('Success', 'utf8')
