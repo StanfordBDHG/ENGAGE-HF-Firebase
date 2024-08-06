@@ -52,6 +52,7 @@ export class UserDebugDataFactory {
     durationInMinutes: number
   }): FHIRAppointment {
     return {
+      resourceType: 'Appointment',
       status: AppointmentStatus.booked,
       created: input.created,
       start: input.start,
@@ -76,6 +77,7 @@ export class UserDebugDataFactory {
     quantity: number
   }): FHIRMedicationRequest {
     return {
+      resourceType: 'MedicationRequest',
       medicationReference: {
         reference: input.drugReference,
       },
@@ -225,6 +227,7 @@ export class UserDebugDataFactory {
     diastolic: number
   }): FHIRObservation {
     return {
+      resourceType: 'Observation',
       status: FHIRObservationStatus.final,
       code: {
         coding: [
@@ -282,8 +285,9 @@ export class UserDebugDataFactory {
     value: number
     unit: QuantityUnit
     code: LoincCode
-  }) {
+  }): FHIRObservation {
     return {
+      resourceType: 'Observation',
       status: FHIRObservationStatus.final,
       code: {
         coding: [
@@ -312,6 +316,7 @@ export class UserDebugDataFactory {
     const linkIds = symptomQuestionnaireLinkIds(input.questionnaire)
 
     return {
+      resourceType: 'QuestionnaireResponse',
       id: input.questionnaireResponse,
       questionnaire: input.questionnaire,
       authored: input.date,
