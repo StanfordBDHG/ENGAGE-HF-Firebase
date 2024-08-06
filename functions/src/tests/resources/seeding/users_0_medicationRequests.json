@@ -1,5 +1,6 @@
 {
   "0": {
+    "resourceType": "MedicationRequest",
     "medicationReference": {
       "reference": "medications/298869/drugs/351256"
     },
