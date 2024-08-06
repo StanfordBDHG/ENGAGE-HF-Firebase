@@ -161,5 +161,38 @@
       "type": "patient",
       "organization": "stanford"
     }
+  },
+  {
+    "auth": {
+      "displayName": "JHU Patient0",
+      "email": "engagehf-patient0@jhu.edu",
+      "password": "password"
+    },
+    "user": {
+      "type": "patient",
+      "organization": "jhu"
+    }
+  },
+  {
+    "auth": {
+      "displayName": "JHU Patient1",
+      "email": "engagehf-patient1@jhu.edu",
+      "password": "password"
+    },
+    "user": {
+      "type": "patient",
+      "organization": "jhu"
+    }
+  },
+  {
+    "auth": {
+      "displayName": "JHU Patient2",
+      "email": "engagehf-patient2@jhu.edu",
+      "password": "password"
+    },
+    "user": {
+      "type": "patient",
+      "organization": "jhu"
+    }
   }
 ]

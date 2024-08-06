@@ -7,6 +7,7 @@
 //
 
 import { type Auth } from 'firebase-admin/auth'
+import { type Storage } from 'firebase-admin/storage'
 import { UserDebugDataFactory } from './userDebugDataFactory.js'
 import { chunks } from '../../../extensions/array.js'
 import { AppointmentStatus } from '../../../models/fhir/appointment.js'
@@ -38,15 +39,17 @@ export class DebugDataService extends SeedingService {
   // Properties
 
   private readonly auth: Auth
+  private readonly storage: Storage
   private readonly databaseService: DatabaseService
   private readonly userDataFactory: UserDebugDataFactory
 
   // Constructor
 
-  constructor(auth: Auth, databaseService: DatabaseService) {
+  constructor(auth: Auth, databaseService: DatabaseService, storage: Storage) {
     super({ useIndicesAsKeys: true, path: './data/debug/' })
     this.auth = auth
     this.databaseService = databaseService
+    this.storage = storage
     this.userDataFactory = new UserDebugDataFactory()
   }
 
@@ -85,6 +88,13 @@ export class DebugDataService extends SeedingService {
       users.map((user) => this.createUser(user)),
     )
     return userIds
+  }
+
+  async seedUserConsent(userId: string) {
+    await this.storage.bucket().upload('data/consent.pdf', {
+      destination: `users/${userId}/consent/consent.pdf`,
+      contentType: 'application/pdf',
+    })
   }
 
   async seedUserAppointments(userId: string, date: Date) {
