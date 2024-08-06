@@ -13,6 +13,7 @@ import {
 
 export function mockQuestionnaire(): FHIRQuestionnaire {
   return {
+    resourceType: 'Questionnaire',
     title: 'KCCQ-12',
     language: 'en-US',
     publisher: 'Stanford Biodesign Digital Health',

@@ -7,8 +7,8 @@
 //
 
 import {
+  type FHIRResource,
   type FHIRCodeableConcept,
-  type FHIRElement,
   type FHIRReference,
 } from './baseTypes'
 import { type User } from '../user'
@@ -26,7 +26,7 @@ export enum AppointmentStatus {
   waitlist = 'waitlist',
 }
 
-export interface FHIRAppointment extends FHIRElement {
+export interface FHIRAppointment extends FHIRResource {
   status: AppointmentStatus
   created: string
   start: string

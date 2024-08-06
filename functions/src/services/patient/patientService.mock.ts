@@ -42,6 +42,7 @@ export class MockPatientService implements PatientService {
     return {
       id: '123',
       content: {
+        resourceType: 'Appointment',
         status: AppointmentStatus.pending,
         created: new Date('2024-01-01').toISOString(),
         start: new Date('2024-02-03').toISOString(),
@@ -82,6 +83,7 @@ export class MockPatientService implements PatientService {
   ): Promise<Array<Document<FHIRMedicationRequest>>> {
     const values: FHIRMedicationRequest[] = [
       {
+        resourceType: 'MedicationRequest',
         medicationReference: {
           reference: 'medications/203160/drugs/20352',
         },
@@ -133,6 +135,7 @@ export class MockPatientService implements PatientService {
     date: Date,
   ): FHIRObservation {
     return {
+      resourceType: 'Observation',
       code: {
         coding: [
           {
@@ -244,6 +247,7 @@ export class MockPatientService implements PatientService {
     date: Date,
   ): FHIRObservation {
     return {
+      resourceType: 'Observation',
       code: {
         coding: [
           {
@@ -289,6 +293,7 @@ export class MockPatientService implements PatientService {
 
   private heartRateObservation(value: number, date: Date): FHIRObservation {
     return {
+      resourceType: 'Observation',
       code: {
         coding: [
           {
@@ -319,6 +324,7 @@ export class MockPatientService implements PatientService {
     return {
       id: '0',
       content: {
+        resourceType: 'Observation',
         code: {
           coding: [
             {
@@ -344,6 +350,7 @@ export class MockPatientService implements PatientService {
     return {
       id: '0',
       content: {
+        resourceType: 'Observation',
         code: {
           coding: [
             {
@@ -369,6 +376,7 @@ export class MockPatientService implements PatientService {
     return {
       id: '0',
       content: {
+        resourceType: 'Observation',
         code: {
           coding: [
             {
@@ -395,6 +403,7 @@ export class MockPatientService implements PatientService {
     return {
       id: '0',
       content: {
+        resourceType: 'Observation',
         code: {
           coding: [
             {

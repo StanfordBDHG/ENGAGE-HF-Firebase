@@ -12,9 +12,10 @@ import {
   type FHIRElement,
   type FHIRRatio,
   type FHIRReference,
+  type FHIRResource,
 } from './baseTypes.js'
 
-export interface FHIRMedication extends FHIRElement {
+export interface FHIRMedication extends FHIRResource {
   code?: FHIRCodeableConcept
   form?: FHIRCodeableConcept
   ingredient?: FHIRMedicationIngredient[]
@@ -25,7 +26,7 @@ export interface FHIRMedicationIngredient {
   itemCodeableConcept?: FHIRCodeableConcept
 }
 
-export interface FHIRMedicationRequest extends FHIRElement {
+export interface FHIRMedicationRequest extends FHIRResource {
   medicationReference?: FHIRReference<FHIRMedication>
   dosageInstruction?: FHIRDosage[]
 }

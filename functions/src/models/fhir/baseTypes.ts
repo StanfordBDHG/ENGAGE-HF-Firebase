@@ -26,6 +26,10 @@ export interface FHIRElement {
   extension?: FHIRExtension[]
 }
 
+export interface FHIRResource extends FHIRElement {
+  resourceType: string
+}
+
 export interface FHIRExtension {
   url: string
   valueQuantities?: FHIRSimpleQuantity[]
