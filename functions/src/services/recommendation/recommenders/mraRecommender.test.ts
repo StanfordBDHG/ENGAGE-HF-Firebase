@@ -14,7 +14,7 @@ import { MedicationRecommendationCategory } from '../../../models/medicationReco
 import { type MedicationRequestContext } from '../../../models/medicationRequestContext.js'
 import { MockContraindicationService } from '../../../tests/mocks/contraindicationService.js'
 import { mockHealthSummaryData } from '../../../tests/mocks/healthSummaryData.js'
-import { setupMockAuth, setupMockFirestore } from '../../../tests/setup.js'
+import { cleanupMocks, setupMockFirebase } from '../../../tests/setup.js'
 import {
   DrugReference,
   type MedicationClassReference,
@@ -48,8 +48,7 @@ describe('MraRecommender', () => {
   let medicationService: MedicationService
 
   before(async () => {
-    setupMockAuth()
-    setupMockFirestore()
+    setupMockFirebase()
     const factory = getServiceFactory()
     const staticDataService = factory.staticData()
     await staticDataService.updateMedicationClasses(CachingStrategy.expectCache)
@@ -61,6 +60,10 @@ describe('MraRecommender', () => {
     healthSummaryData = await mockHealthSummaryData(new Date())
     medicationContraindication = (_) => ContraindicationCategory.none
     medicationClassContraindication = (_) => ContraindicationCategory.none
+  })
+
+  after(() => {
+    cleanupMocks()
   })
 
   describe('No treatment', () => {

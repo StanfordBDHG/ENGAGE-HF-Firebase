@@ -11,7 +11,7 @@ import { expect } from 'chai'
 import { describe } from 'mocha'
 import { type DebugDataService } from './debugDataService.js'
 import { type MockFirestore } from '../../../tests/mocks/firestore.js'
-import { setupMockAuth, setupMockFirestore } from '../../../tests/setup.js'
+import { cleanupMocks, setupMockFirebase } from '../../../tests/setup.js'
 import { TestFlags } from '../../../tests/testFlags.js'
 import { getServiceFactory } from '../../factory/getServiceFactory.js'
 
@@ -21,9 +21,12 @@ describe('DebugDataService', () => {
   let mockFirestore: MockFirestore
 
   before(() => {
-    setupMockAuth()
-    mockFirestore = setupMockFirestore()
+    mockFirestore = setupMockFirebase().firestore
     service = getServiceFactory().debugData()
+  })
+
+  after(() => {
+    cleanupMocks()
   })
 
   async function generatesSameCollectionAsBefore(
