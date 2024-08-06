@@ -91,11 +91,10 @@ export class DebugDataService extends SeedingService {
   }
 
   async seedUserConsent(userId: string) {
-    const response = await this.storage.bucket().upload('data/consent.pdf', {
+    await this.storage.bucket().upload('data/consent.pdf', {
       destination: `users/${userId}/consent/consent.pdf`,
       contentType: 'application/pdf',
     })
-    console.log(response[0])
   }
 
   async seedUserAppointments(userId: string, date: Date) {
