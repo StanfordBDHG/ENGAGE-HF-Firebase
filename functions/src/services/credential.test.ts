@@ -16,15 +16,14 @@ import { type ServiceFactory } from './factory/serviceFactory.js'
 import { type UserClaims } from './user/databaseUserService.js'
 import { UserType } from '../models/user.js'
 import { type MockFirestore } from '../tests/mocks/firestore.js'
-import { setupMockAuth, setupMockFirestore } from '../tests/setup.js'
+import { setupMockFirebase } from '../tests/setup.js'
 
 describe('Credential', () => {
   let mockFirestore: MockFirestore
   let serviceFactory: ServiceFactory
 
   beforeEach(() => {
-    setupMockAuth()
-    mockFirestore = setupMockFirestore()
+    mockFirestore = setupMockFirebase().firestore
     serviceFactory = getServiceFactory()
   })
 
