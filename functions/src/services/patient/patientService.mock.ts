@@ -197,41 +197,13 @@ export class MockPatientService implements PatientService {
     userId: string,
   ): Promise<Array<Document<FHIRObservation>>> {
     const values = [
-      this.bodyWeightObservation(
-        269,
-        QuantityUnit.lbs,
-        new Date('2024-02-01'),
-      ),
-      this.bodyWeightObservation(
-        267,
-        QuantityUnit.lbs,
-        new Date('2024-01-31'),
-      ),
-      this.bodyWeightObservation(
-        267,
-        QuantityUnit.lbs,
-        new Date('2024-01-30'),
-      ),
-      this.bodyWeightObservation(
-        265,
-        QuantityUnit.lbs,
-        new Date('2024-01-29'),
-      ),
-      this.bodyWeightObservation(
-        268,
-        QuantityUnit.lbs,
-        new Date('2024-01-28'),
-      ),
-      this.bodyWeightObservation(
-        268,
-        QuantityUnit.lbs,
-        new Date('2024-01-27'),
-      ),
-      this.bodyWeightObservation(
-        266,
-        QuantityUnit.lbs,
-        new Date('2024-01-26'),
-      ),
+      this.bodyWeightObservation(269, QuantityUnit.lbs, new Date('2024-02-01')),
+      this.bodyWeightObservation(267, QuantityUnit.lbs, new Date('2024-01-31')),
+      this.bodyWeightObservation(267, QuantityUnit.lbs, new Date('2024-01-30')),
+      this.bodyWeightObservation(265, QuantityUnit.lbs, new Date('2024-01-29')),
+      this.bodyWeightObservation(268, QuantityUnit.lbs, new Date('2024-01-28')),
+      this.bodyWeightObservation(268, QuantityUnit.lbs, new Date('2024-01-27')),
+      this.bodyWeightObservation(266, QuantityUnit.lbs, new Date('2024-01-26')),
       this.bodyWeightObservation(266, QuantityUnit.lbs, new Date('2024-01-25')),
       this.bodyWeightObservation(267, QuantityUnit.lbs, new Date('2024-01-24')),
     ]

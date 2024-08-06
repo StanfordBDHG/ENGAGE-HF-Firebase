@@ -304,7 +304,7 @@ export class UserDebugDataFactory {
         system: input.unit.system,
         code: input.unit.code,
       },
-      effectiveDateTime: input.date,
+      effectiveDateTime: input.date.toISOString(),
     }
   }
 
