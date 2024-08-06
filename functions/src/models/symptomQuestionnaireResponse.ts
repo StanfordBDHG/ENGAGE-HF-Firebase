@@ -9,7 +9,7 @@
 export interface SymptomQuestionnaireResponse {
   questionnaire: string
   questionnaireResponse?: string
-  date: Date
+  date: string
   answer1a: number
   answer1b: number
   answer1c: number

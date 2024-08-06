@@ -121,9 +121,9 @@ export class MockUserService implements UserService {
       id: userId,
       content: {
         type: UserType.clinician,
-        dateOfBirth: new Date('1970-01-02'),
+        dateOfBirth: new Date('1970-01-02').toISOString(),
         clinician: 'mockClinician',
-        dateOfEnrollment: new Date('2024-04-02'),
+        dateOfEnrollment: new Date('2024-04-02').toISOString(),
         invitationCode: '123',
         messagesSettings: {
           dailyRemindersAreActive: true,

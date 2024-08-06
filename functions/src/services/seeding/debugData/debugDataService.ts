@@ -314,7 +314,7 @@ export class DebugDataService extends SeedingService {
       this.userDataFactory.questionnaireResponse({
         questionnaire: questionnaire?.id ?? '',
         questionnaireResponse: index.toString(),
-        date: this.advanceDateByDays(date, -(index * 14) - 2),
+        date: this.advanceDateByDays(date, -(index * 14) - 2).toISOString(),
         answer1a: Math.floor(1 + chunk[0] * 6),
         answer1b: Math.floor(1 + chunk[1] * 6),
         answer1c: Math.floor(1 + chunk[2] * 6),

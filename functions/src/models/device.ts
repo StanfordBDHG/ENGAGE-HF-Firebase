@@ -12,7 +12,7 @@ export enum UserDevicePlatform {
 }
 
 export interface UserDevice {
-  modifiedDate: Date
+  modifiedDate: string
   notificationToken: string
   platform?: UserDevicePlatform
   osVersion?: string

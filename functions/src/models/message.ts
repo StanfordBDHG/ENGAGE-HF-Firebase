@@ -18,8 +18,8 @@ export enum UserMessageType {
 }
 
 export interface UserMessage {
-  dueDate?: Date
-  completionDate?: Date
+  dueDate?: string
+  completionDate?: string
   type: UserMessageType
   title: LocalizedText
   description?: LocalizedText

@@ -204,7 +204,7 @@ describe('DatabaseUserService', () => {
   describe('dismissMessage', () => {
     it('should update the completionDate of messages', async () => {
       const message: UserMessage = {
-        dueDate: new Date('2024-01-01'),
+        dueDate: new Date('2024-01-01').toISOString(),
         type: UserMessageType.medicationChange,
         title: 'Medication Change',
         description: 'You have a new medication!',
@@ -221,7 +221,7 @@ describe('DatabaseUserService', () => {
 
     it('should not update the completionDate of messages', async () => {
       const message: UserMessage = {
-        dueDate: new Date('2024-01-01'),
+        dueDate: new Date('2024-01-01').toISOString(),
         type: UserMessageType.preAppointment,
         title: 'Upcoming appointment',
         description: 'You have an upcoming appointment!',

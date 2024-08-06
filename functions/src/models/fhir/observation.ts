@@ -35,6 +35,6 @@ export interface FHIRObservation extends FHIRElement {
   component?: FHIRObservationComponent[]
   valueQuantity?: FHIRSimpleQuantity
   effectivePeriod?: FHIRPeriod
-  effectiveDateTime?: Date
-  effectiveInstant?: Date
+  effectiveDateTime?: string
+  effectiveInstant?: string
 }

@@ -225,36 +225,36 @@ describe('firestore.rules: users/{userId}', () => {
     await assertFails(
       ownerFirestore
         .doc(`users/${clinicianId}`)
-        .set({ dateOfBirth: new Date('2011-01-01') }),
+        .set({ dateOfBirth: new Date('2011-01-01').toISOString() }),
     )
     await assertFails(
       ownerFirestore
         .doc(`users/${clinicianId}`)
-        .set({ dateOfBirth: new Date('2011-01-01') }, { merge: false }),
+        .set({ dateOfBirth: new Date('2011-01-01').toISOString() }, { merge: false }),
     )
     await assertFails(
       ownerFirestore
         .doc(`users/${clinicianId}`)
         .set(
-          { type: UserType.patient, dateOfBirth: new Date('2011-01-01') },
+          { type: UserType.patient, dateOfBirth: new Date('2011-01-01').toISOString() },
           { merge: false },
         ),
     )
     await assertSucceeds(
       ownerFirestore
         .doc(`users/${clinicianId}`)
-        .set({ dateOfBirth: new Date('2011-01-01') }, { merge: true }),
+        .set({ dateOfBirth: new Date('2011-01-01').toISOString() }, { merge: true }),
     )
     console.log('patient')
     await assertSucceeds(
       ownerFirestore
         .doc(`users/${patientId}`)
-        .set({ dateOfBirth: new Date('2011-01-01') }, { merge: true }),
+        .set({ dateOfBirth: new Date('2011-01-01').toISOString() }, { merge: true }),
     )
     await assertFails(
       ownerFirestore
         .doc(`users/${userId}`)
-        .set({ dateOfBirth: new Date('2011-01-01') }, { merge: true }),
+        .set({ dateOfBirth: new Date('2011-01-01').toISOString() }, { merge: true }),
     )
   })
 })

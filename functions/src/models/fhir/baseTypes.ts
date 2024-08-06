@@ -34,8 +34,8 @@ export interface FHIRExtension {
 }
 
 export interface FHIRPeriod {
-  start?: Date
-  end?: Date
+  start?: string
+  end?: string
 }
 
 export interface FHIRRatio {
