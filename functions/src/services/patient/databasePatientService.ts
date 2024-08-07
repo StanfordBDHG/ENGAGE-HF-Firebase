@@ -84,7 +84,7 @@ export class DatabasePatientService implements PatientService {
 
   async updateMedicationRecommendations(
     userId: string,
-    recommendations: Array<MedicationRecommendation>,
+    recommendations: MedicationRecommendation[],
   ): Promise<void> {
     await this.databaseService.runTransaction(
       async (firestore, transaction) => {
@@ -194,7 +194,7 @@ export class DatabasePatientService implements PatientService {
     userId: string,
     cutoffDate: Date,
   ): Promise<Array<Document<SymptomScore>>> {
-    return await this.databaseService.getQuery<SymptomScore>((firestore) =>
+    return this.databaseService.getQuery<SymptomScore>((firestore) =>
       firestore
         .collection(`users/${userId}/symptomScores`)
         .where('date', '>', cutoffDate)

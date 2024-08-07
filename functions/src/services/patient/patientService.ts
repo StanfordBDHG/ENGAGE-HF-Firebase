@@ -13,7 +13,6 @@ import { type FHIRObservation } from '../../models/fhir/observation.js'
 import { type FHIRQuestionnaireResponse } from '../../models/fhir/questionnaireResponse.js'
 import { type MedicationRecommendation } from '../../models/medicationRecommendation.js'
 import { type SymptomScore } from '../../models/symptomScore.js'
-import { Vitals } from '../../models/vitals.js'
 import { type Document } from '../database/databaseService.js'
 
 export interface PatientService {
@@ -40,7 +39,7 @@ export interface PatientService {
   ): Promise<Array<Document<FHIRMedicationRequest>>>
   updateMedicationRecommendations(
     userId: string,
-    recommendations: Array<MedicationRecommendation>,
+    recommendations: MedicationRecommendation[],
   ): Promise<void>
 
   // Observations

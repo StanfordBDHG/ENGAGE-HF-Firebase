@@ -8,6 +8,7 @@
 
 import { type TypeOf, z } from 'zod'
 import { validatedOnCall, validatedOnRequest } from './helpers.js'
+import { updateMedicationRecommendations } from './recommendation.js'
 import { Flags } from '../flags.js'
 import { UserType } from '../models/user.js'
 import { UserRole } from '../services/credential/credential.js'
@@ -76,6 +77,7 @@ enum DebugDataComponent {
 enum UserDebugDataComponent {
   consent = 'consent',
   appointments = 'appointments',
+  medicationRecommendations = 'medicationRecommendations',
   medicationRequests = 'medicationRequests',
   messages = 'messages',
   bodyWeightObservations = 'bodyWeightObservations',
@@ -206,6 +208,18 @@ export const defaultSeed = validatedOnRequest(
             await debugDataService.seedUserMessages(userId)
           if (data.onlyUserCollections.includes(UserDebugDataComponent.consent))
             await debugDataService.seedUserConsent(userId)
+          if (
+            data.onlyUserCollections.includes(
+              UserDebugDataComponent.medicationRecommendations,
+            )
+          )
+            await updateMedicationRecommendations({
+              userId: userId,
+              patientService: factory.patient(),
+              healthSummaryService: factory.healthSummary(),
+              medicationService: factory.medication(),
+              recommendationService: factory.recommendation(),
+            })
         } catch (error) {
           console.error(`Failed to seed user ${userId}: ${String(error)}`)
         }

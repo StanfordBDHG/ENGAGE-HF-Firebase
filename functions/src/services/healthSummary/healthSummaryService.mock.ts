@@ -38,7 +38,7 @@ export class MockHealthSummaryService implements HealthSummaryService {
       recommendations: [
         {
           currentMedication: [],
-          recommendedMedication: undefined,
+          recommendedMedication: null,
           displayInformation: {
             title: 'Losartan (Cozaar)',
             subtitle: '',
@@ -55,7 +55,7 @@ export class MockHealthSummaryService implements HealthSummaryService {
         },
         {
           currentMedication: [],
-          recommendedMedication: undefined,
+          recommendedMedication: null,
           displayInformation: {
             title: 'Dapagliflozin (Farxiga)',
             subtitle: '',
@@ -71,7 +71,7 @@ export class MockHealthSummaryService implements HealthSummaryService {
         },
         {
           currentMedication: [],
-          recommendedMedication: undefined,
+          recommendedMedication: null,
           displayInformation: {
             title: 'Carvedilol (Coreg)',
             subtitle: '',

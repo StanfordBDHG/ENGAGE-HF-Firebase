@@ -7,96 +7,118 @@
 //
 
 import { onDocumentWritten } from 'firebase-functions/v2/firestore'
-import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 import { advanceDateByDays } from '../extensions/date.js'
-import { RecommendationInput } from '../services/recommendation/recommenders/recommender.js'
+import { getServiceFactory } from '../services/factory/getServiceFactory.js'
+import { type HealthSummaryService } from '../services/healthSummary/healthSummaryService.js'
+import { type MedicationService } from '../services/medication/medicationService.js'
+import { type PatientService } from '../services/patient/patientService.js'
+import { type RecommendationService } from '../services/recommendation/recommendationService.js'
+import { type RecommendationInput } from '../services/recommendation/recommenders/recommender.js'
 
 export const onUserAllergyIntoleranceWritten = onDocumentWritten(
   'users/{userId}/allergyIntolerances/{allergyIntoleranceId}',
-  async (event) => updateMedicationRecommendations(event.params.userId),
+  async (event) => updateMedicationRecommendationsForUser(event.params.userId),
 )
 
 export const onUserCreatinineObservationWritten = onDocumentWritten(
   'users/{userId}/creatinineObservations/{observationId}',
-  async (event) => updateMedicationRecommendations(event.params.userId),
+  async (event) => updateMedicationRecommendationsForUser(event.params.userId),
 )
 
 export const onUserBloodPressureObservationWritten = onDocumentWritten(
   'users/{userId}/bodyWeightObservations/{observationId}',
-  async (event) => updateMedicationRecommendations(event.params.userId),
+  async (event) => updateMedicationRecommendationsForUser(event.params.userId),
 )
 
 export const onUserBodyWeightObservationWritten = onDocumentWritten(
   'users/{userId}/bodyWeightObservations/{observationId}',
-  async (event) => updateMedicationRecommendations(event.params.userId),
+  async (event) => updateMedicationRecommendationsForUser(event.params.userId),
 )
 
 export const onUserDryWeightObservationWritten = onDocumentWritten(
   'users/{userId}/dryWeightObservations/{observationId}',
-  async (event) => updateMedicationRecommendations(event.params.userId),
+  async (event) => updateMedicationRecommendationsForUser(event.params.userId),
 )
 
 export const onUserEgfrObservationWritten = onDocumentWritten(
   'users/{userId}/eGfrObservations/{observationId}',
-  async (event) => updateMedicationRecommendations(event.params.userId),
+  async (event) => updateMedicationRecommendationsForUser(event.params.userId),
 )
 
 export const onUserHeartRateObservationWritten = onDocumentWritten(
   'users/{userId}/heartRateObservations/{observationId}',
-  async (event) => updateMedicationRecommendations(event.params.userId),
+  async (event) => updateMedicationRecommendationsForUser(event.params.userId),
 )
 
 export const onUserMedicationRequestWritten = onDocumentWritten(
   'users/{userId}/medicationRequests/{medicationRequestId}',
-  async (event) => updateMedicationRecommendations(event.params.userId),
+  async (event) => updateMedicationRecommendationsForUser(event.params.userId),
 )
 
 export const onUserPotassiumObservationWritten = onDocumentWritten(
   'users/{userId}/potassiumObservations/{observationId}',
-  async (event) => updateMedicationRecommendations(event.params.userId),
+  async (event) => updateMedicationRecommendationsForUser(event.params.userId),
 )
 
-async function updateMedicationRecommendations(userId: string) {
+async function updateMedicationRecommendationsForUser(userId: string) {
+  const factory = getServiceFactory()
+  await updateMedicationRecommendations({
+    userId: userId,
+    patientService: factory.patient(),
+    healthSummaryService: factory.healthSummary(),
+    medicationService: factory.medication(),
+    recommendationService: factory.recommendation(),
+  })
+}
+
+export async function updateMedicationRecommendations(input: {
+  patientService: PatientService
+  healthSummaryService: HealthSummaryService
+  medicationService: MedicationService
+  recommendationService: RecommendationService
+  userId: string
+}) {
   try {
-    const factory = getServiceFactory()
-    const patientService = factory.patient()
-    const healthSummaryService = factory.healthSummary()
-    const medicationService = factory.medication()
+    const requests = await input.patientService.getMedicationRequests(
+      input.userId,
+    )
+    const contraindications = await input.patientService.getContraindications(
+      input.userId,
+    )
 
-    const requests = await patientService.getMedicationRequests(userId)
-    const contraindications = await patientService.getContraindications(userId)
-
-    const vitals = await healthSummaryService.getVitals(
-      userId,
+    const vitals = await input.healthSummaryService.getVitals(
+      input.userId,
       advanceDateByDays(new Date(), -14),
     )
 
-    const latestSymptomScore =
-      await patientService.getLatestSymptomScore(userId)
+    const latestSymptomScore = await input.patientService.getLatestSymptomScore(
+      input.userId,
+    )
 
     const requestContexts = await Promise.all(
-      requests.map(
-        async (document) =>
-          await medicationService.getContext(document.content, {
-            reference: `users/${userId}/medicationRequests/${document.id}`,
-          }),
+      requests.map(async (document) =>
+        input.medicationService.getContext(document.content, {
+          reference: `users/${input.userId}/medicationRequests/${document.id}`,
+        }),
       ),
     )
-    const input: RecommendationInput = {
+    const recommendationInput: RecommendationInput = {
       requests: requestContexts,
       contraindications: contraindications.map((document) => document.content),
       vitals: vitals,
       latestSymptomScore: latestSymptomScore?.content,
     }
 
-    const recommendationService = factory.recommendation()
-    const recommendations = await recommendationService.compute(input)
+    const recommendations =
+      await input.recommendationService.compute(recommendationInput)
 
-    await patientService.updateMedicationRecommendations(
-      userId,
+    await input.patientService.updateMedicationRecommendations(
+      input.userId,
       recommendations,
     )
   } catch (error) {
-    console.error(`Error updating medication recommendations: ${String(error)}`)
+    console.error(
+      `Error updating medication recommendations for user ${input.userId}: ${String(error)}`,
+    )
   }
 }

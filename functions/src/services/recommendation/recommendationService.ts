@@ -77,7 +77,9 @@ export class RecommendationService {
   ): Promise<MedicationRecommendation> {
     const recommendedMedication =
       output.recommendedMedication ?
-        await this.medicationService.getMedication(output.recommendedMedication)
+        await this.medicationService.getReference({
+          reference: output.recommendedMedication,
+        })
       : undefined
 
     const medication =
@@ -149,10 +151,10 @@ export class RecommendationService {
             reference: output.recommendedMedication,
             display:
               recommendedMedication?.content ?
-                this.fhirService.displayName(recommendedMedication?.content)
+                this.fhirService.displayName(recommendedMedication.content)
               : undefined,
           }
-        : undefined,
+        : null,
       displayInformation: {
         title: title ?? '',
         subtitle: subtitle ?? '',

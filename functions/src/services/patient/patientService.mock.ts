@@ -24,7 +24,6 @@ import { mockQuestionnaireResponse } from '../../tests/mocks/questionnaireRespon
 import { CodingSystem, LoincCode } from '../codes.js'
 import { type Document } from '../database/databaseService.js'
 import { QuantityUnit } from '../fhir/quantityUnit.js'
-import { Vitals } from '../../models/vitals.js'
 
 /* eslint-disable @typescript-eslint/require-await */
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -110,7 +109,7 @@ export class MockPatientService implements PatientService {
 
   async updateMedicationRecommendations(
     userId: string,
-    recommendations: Array<MedicationRecommendation>,
+    recommendations: MedicationRecommendation[],
   ): Promise<void> {
     return
   }

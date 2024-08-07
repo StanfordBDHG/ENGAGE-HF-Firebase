@@ -11,9 +11,9 @@ import {
   type RxNormService,
 } from './rxNormService.js'
 import { type FHIRMedication } from '../../../models/fhir/medication.js'
+import { type MedicationClass } from '../../../models/medicationClass.js'
 import { type DatabaseService } from '../../database/databaseService.js'
 import { type CachingStrategy, SeedingService } from '../seedingService.js'
-import { MedicationClass } from '../../../models/medicationClass.js'
 
 export class StaticDataService extends SeedingService {
   // Properties

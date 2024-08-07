@@ -25,7 +25,7 @@ export enum MedicationRecommendationType {
 
 export interface MedicationRecommendation {
   currentMedication: Array<FHIRReference<FHIRMedicationRequest>>
-  recommendedMedication?: FHIRReference<FHIRMedication>
+  recommendedMedication: FHIRReference<FHIRMedication> | null
   displayInformation: MedicationRecommendationDisplayInformation
 }
 
