@@ -7,8 +7,8 @@
 //
 
 import { advanceDateByDays } from '../../extensions/date.js'
-import { ServiceFactory } from '../factory/serviceFactory.js'
-import { RecommendationInput } from '../recommendation/recommenders/recommender.js'
+import { type ServiceFactory } from '../factory/serviceFactory.js'
+import { type RecommendationInput } from '../recommendation/recommenders/recommender.js'
 
 export class TriggerService {
   private readonly factory: ServiceFactory

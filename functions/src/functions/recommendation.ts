@@ -7,7 +7,13 @@
 //
 
 import { onDocumentWritten } from 'firebase-functions/v2/firestore'
+import { onSchedule } from 'firebase-functions/v2/scheduler'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
+
+export const onScheduleUpdateMedicationRecommendations = onSchedule(
+  'every 24 hours',
+  async () => getServiceFactory().trigger().updateRecommendationsForAllUsers(),
+)
 
 export const onUserAllergyIntoleranceWritten = onDocumentWritten(
   'users/{userId}/allergyIntolerances/{allergyIntoleranceId}',

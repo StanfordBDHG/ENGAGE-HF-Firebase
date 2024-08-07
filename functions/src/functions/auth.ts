@@ -61,6 +61,7 @@ export const beforeUserCreatedFunction = beforeUserCreated(async (event) => {
       )
 
     await userService.enrollUser(invitation, userId)
+    await factory.trigger().updateRecommendationsForUser(userId)
   } else {
     try {
       // Check Firestore to confirm whether an invitation code has been associated with a user.
@@ -74,6 +75,7 @@ export const beforeUserCreatedFunction = beforeUserCreated(async (event) => {
       }
 
       await userService.enrollUser(invitation, userId)
+      await factory.trigger().updateRecommendationsForUser(userId)
     } catch (error) {
       if (error instanceof Error) {
         logger.error(`Error processing request: ${error.message}`)
