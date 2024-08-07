@@ -13,7 +13,7 @@ import { type UserService } from './userService.js'
 import { type Invitation } from '../../models/invitation.js'
 import { type UserMessage } from '../../models/message.js'
 import { type Organization } from '../../models/organization.js'
-import { type UserAuth, type User, type UserType } from '../../models/user.js'
+import { UserType, type UserAuth, type User } from '../../models/user.js'
 import {
   type Document,
   type DatabaseService,
@@ -161,6 +161,12 @@ export class DatabaseUserService implements UserService {
   }
 
   // Users
+
+  async getAllPatients(): Promise<Array<Document<User>>> {
+    return this.databaseService.getQuery<User>((firestore) =>
+      firestore.collection('users').where('type', '==', UserType.patient),
+    )
+  }
 
   async getUser(userId: string): Promise<Document<User> | undefined> {
     return this.databaseService.getDocument<User>(`users/${userId}`)

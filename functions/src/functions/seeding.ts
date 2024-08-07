@@ -8,7 +8,6 @@
 
 import { type TypeOf, z } from 'zod'
 import { validatedOnCall, validatedOnRequest } from './helpers.js'
-import { updateMedicationRecommendations } from './recommendation.js'
 import { Flags } from '../flags.js'
 import { UserType } from '../models/user.js'
 import { UserRole } from '../services/credential/credential.js'
@@ -120,6 +119,7 @@ export const defaultSeed = validatedOnRequest(
     if (data.staticData) await updateStaticData(factory, data.staticData)
 
     const debugDataService = factory.debugData()
+    const triggerService = factory.trigger()
 
     if (data.only.includes(DebugDataComponent.invitations))
       await debugDataService.seedInvitations()
@@ -213,13 +213,7 @@ export const defaultSeed = validatedOnRequest(
               UserDebugDataComponent.medicationRecommendations,
             )
           )
-            await updateMedicationRecommendations({
-              userId: userId,
-              patientService: factory.patient(),
-              healthSummaryService: factory.healthSummary(),
-              medicationService: factory.medication(),
-              recommendationService: factory.recommendation(),
-            })
+            await triggerService.updateRecommendationsForUser(userId)
         } catch (error) {
           console.error(`Failed to seed user ${userId}: ${String(error)}`)
         }
@@ -281,6 +275,12 @@ export const defaultSeed = validatedOnRequest(
           )
         if (userData.only.includes(UserDebugDataComponent.consent))
           await debugDataService.seedUserConsent(userData.userId)
+        if (
+          userData.only.includes(
+            UserDebugDataComponent.medicationRecommendations,
+          )
+        )
+          await triggerService.updateRecommendationsForUser(userData.userId)
       } catch (error) {
         console.error(
           `Failed to seed user data ${userData.userId}: ${String(error)}`,

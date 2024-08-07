@@ -42,6 +42,7 @@ export interface UserService {
 
   // Users
 
+  getAllPatients(): Promise<Array<Document<User>>>
   getUser(userId: string): Promise<Document<User> | undefined>
   deleteUser(userId: string): Promise<void>
 

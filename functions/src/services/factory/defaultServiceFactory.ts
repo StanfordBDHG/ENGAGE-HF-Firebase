@@ -28,6 +28,7 @@ import { RxNormService } from '../seeding/staticData/rxNormService.js'
 import { StaticDataService } from '../seeding/staticData/staticDataService.js'
 import { DatabaseUserService } from '../user/databaseUserService.js'
 import { type UserService } from '../user/userService.js'
+import { TriggerService } from '../trigger/triggerService.js'
 
 export class DefaultServiceFactory implements ServiceFactory {
   // Properties - Options
@@ -99,6 +100,8 @@ export class DefaultServiceFactory implements ServiceFactory {
       new StaticDataService(this.databaseService.get(), new RxNormService()),
   )
 
+  private readonly triggerService = new Lazy(() => new TriggerService(this))
+
   private readonly userService = new Lazy(
     () =>
       new DatabaseUserService(
@@ -149,5 +152,11 @@ export class DefaultServiceFactory implements ServiceFactory {
 
   recommendation(): RecommendationService {
     return this.recommendationService.get()
+  }
+
+  // Methods - Trigger
+
+  trigger(): TriggerService {
+    return this.triggerService.get()
   }
 }
