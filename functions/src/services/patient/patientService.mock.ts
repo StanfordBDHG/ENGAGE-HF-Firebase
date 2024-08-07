@@ -42,10 +42,11 @@ export class MockPatientService implements PatientService {
     return {
       id: '123',
       content: {
+        resourceType: 'Appointment',
         status: AppointmentStatus.pending,
-        created: new Date('2024-01-01'),
-        start: new Date('2024-02-03'),
-        end: new Date('2024-02-03'),
+        created: new Date('2024-01-01').toISOString(),
+        start: new Date('2024-02-03').toISOString(),
+        end: new Date('2024-02-03').toISOString(),
         participant: [
           {
             actor: {
@@ -82,6 +83,7 @@ export class MockPatientService implements PatientService {
   ): Promise<Array<Document<FHIRMedicationRequest>>> {
     const values: FHIRMedicationRequest[] = [
       {
+        resourceType: 'MedicationRequest',
         medicationReference: {
           reference: 'medications/203160/drugs/20352',
         },
@@ -133,6 +135,7 @@ export class MockPatientService implements PatientService {
     date: Date,
   ): FHIRObservation {
     return {
+      resourceType: 'Observation',
       code: {
         coding: [
           {
@@ -184,7 +187,7 @@ export class MockPatientService implements PatientService {
           },
         },
       ],
-      effectiveDateTime: date,
+      effectiveDateTime: date.toISOString(),
       id: 'DDA0F363-2BA3-426F-9F68-1C938FFDF943',
       status: FHIRObservationStatus.final,
     }
@@ -194,48 +197,13 @@ export class MockPatientService implements PatientService {
     userId: string,
   ): Promise<Array<Document<FHIRObservation>>> {
     const values = [
-      this.bodyWeightObservation(
-        269,
-        QuantityUnit.lbs,
-
-        new Date('2024-02-01'),
-      ),
-      this.bodyWeightObservation(
-        267,
-        QuantityUnit.lbs,
-
-        new Date('2024-01-31'),
-      ),
-      this.bodyWeightObservation(
-        267,
-        QuantityUnit.lbs,
-
-        new Date('2024-01-30'),
-      ),
-      this.bodyWeightObservation(
-        265,
-        QuantityUnit.lbs,
-
-        new Date('2024-01-29'),
-      ),
-      this.bodyWeightObservation(
-        268,
-        QuantityUnit.lbs,
-
-        new Date('2024-01-28'),
-      ),
-      this.bodyWeightObservation(
-        268,
-        QuantityUnit.lbs,
-
-        new Date('2024-01-27'),
-      ),
-      this.bodyWeightObservation(
-        266,
-        QuantityUnit.lbs,
-
-        new Date('2024-01-26'),
-      ),
+      this.bodyWeightObservation(269, QuantityUnit.lbs, new Date('2024-02-01')),
+      this.bodyWeightObservation(267, QuantityUnit.lbs, new Date('2024-01-31')),
+      this.bodyWeightObservation(267, QuantityUnit.lbs, new Date('2024-01-30')),
+      this.bodyWeightObservation(265, QuantityUnit.lbs, new Date('2024-01-29')),
+      this.bodyWeightObservation(268, QuantityUnit.lbs, new Date('2024-01-28')),
+      this.bodyWeightObservation(268, QuantityUnit.lbs, new Date('2024-01-27')),
+      this.bodyWeightObservation(266, QuantityUnit.lbs, new Date('2024-01-26')),
       this.bodyWeightObservation(266, QuantityUnit.lbs, new Date('2024-01-25')),
       this.bodyWeightObservation(267, QuantityUnit.lbs, new Date('2024-01-24')),
     ]
@@ -251,6 +219,7 @@ export class MockPatientService implements PatientService {
     date: Date,
   ): FHIRObservation {
     return {
+      resourceType: 'Observation',
       code: {
         coding: [
           {
@@ -265,7 +234,7 @@ export class MockPatientService implements PatientService {
           },
         ],
       },
-      effectiveDateTime: date,
+      effectiveDateTime: date.toISOString(),
       status: FHIRObservationStatus.final,
       valueQuantity: {
         ...unit,
@@ -296,6 +265,7 @@ export class MockPatientService implements PatientService {
 
   private heartRateObservation(value: number, date: Date): FHIRObservation {
     return {
+      resourceType: 'Observation',
       code: {
         coding: [
           {
@@ -310,7 +280,7 @@ export class MockPatientService implements PatientService {
           },
         ],
       },
-      effectiveDateTime: date,
+      effectiveDateTime: date.toISOString(),
       id: 'C38FFD7E-7B86-4C79-9C8A-0B90E2F3DF14',
       status: FHIRObservationStatus.final,
       valueQuantity: {
@@ -326,6 +296,7 @@ export class MockPatientService implements PatientService {
     return {
       id: '0',
       content: {
+        resourceType: 'Observation',
         code: {
           coding: [
             {
@@ -335,7 +306,7 @@ export class MockPatientService implements PatientService {
             },
           ],
         },
-        effectiveDateTime: new Date('2024-01-29'),
+        effectiveDateTime: new Date('2024-01-29').toISOString(),
         status: FHIRObservationStatus.final,
         valueQuantity: {
           ...QuantityUnit.mg_dL,
@@ -351,6 +322,7 @@ export class MockPatientService implements PatientService {
     return {
       id: '0',
       content: {
+        resourceType: 'Observation',
         code: {
           coding: [
             {
@@ -360,7 +332,7 @@ export class MockPatientService implements PatientService {
             },
           ],
         },
-        effectiveDateTime: new Date('2024-01-29'),
+        effectiveDateTime: new Date('2024-01-29').toISOString(),
         status: FHIRObservationStatus.final,
         valueQuantity: {
           ...QuantityUnit.lbs,
@@ -376,6 +348,7 @@ export class MockPatientService implements PatientService {
     return {
       id: '0',
       content: {
+        resourceType: 'Observation',
         code: {
           coding: [
             {
@@ -386,7 +359,7 @@ export class MockPatientService implements PatientService {
             },
           ],
         },
-        effectiveDateTime: new Date('2024-01-29'),
+        effectiveDateTime: new Date('2024-01-29').toISOString(),
         status: FHIRObservationStatus.final,
         valueQuantity: {
           ...QuantityUnit.mL_min_173m2,
@@ -402,6 +375,7 @@ export class MockPatientService implements PatientService {
     return {
       id: '0',
       content: {
+        resourceType: 'Observation',
         code: {
           coding: [
             {
@@ -411,7 +385,7 @@ export class MockPatientService implements PatientService {
             },
           ],
         },
-        effectiveDateTime: new Date('2024-01-29'),
+        effectiveDateTime: new Date('2024-01-29').toISOString(),
         status: FHIRObservationStatus.final,
         valueQuantity: {
           ...QuantityUnit.mEq_L,

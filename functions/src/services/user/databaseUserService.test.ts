@@ -16,11 +16,7 @@ import { type Invitation } from '../../models/invitation.js'
 import { type UserMessage, UserMessageType } from '../../models/message.js'
 import { UserType, type User } from '../../models/user.js'
 import { type MockFirestore } from '../../tests/mocks/firestore.js'
-import {
-  cleanupMocks,
-  setupMockAuth,
-  setupMockFirestore,
-} from '../../tests/setup.js'
+import { cleanupMocks, setupMockFirebase } from '../../tests/setup.js'
 import { getServiceFactory } from '../factory/getServiceFactory.js'
 
 describe('DatabaseUserService', () => {
@@ -29,8 +25,7 @@ describe('DatabaseUserService', () => {
   let firestore: Firestore
 
   beforeEach(() => {
-    setupMockAuth()
-    mockFirestore = setupMockFirestore()
+    mockFirestore = setupMockFirebase().firestore
     firestore = admin.firestore()
     userService = getServiceFactory().user()
   })
@@ -204,7 +199,7 @@ describe('DatabaseUserService', () => {
   describe('dismissMessage', () => {
     it('should update the completionDate of messages', async () => {
       const message: UserMessage = {
-        dueDate: new Date('2024-01-01'),
+        dueDate: new Date('2024-01-01').toISOString(),
         type: UserMessageType.medicationChange,
         title: 'Medication Change',
         description: 'You have a new medication!',
@@ -221,7 +216,7 @@ describe('DatabaseUserService', () => {
 
     it('should not update the completionDate of messages', async () => {
       const message: UserMessage = {
-        dueDate: new Date('2024-01-01'),
+        dueDate: new Date('2024-01-01').toISOString(),
         type: UserMessageType.preAppointment,
         title: 'Upcoming appointment',
         description: 'You have an upcoming appointment!',

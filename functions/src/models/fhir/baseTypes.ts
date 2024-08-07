@@ -26,6 +26,10 @@ export interface FHIRElement {
   extension?: FHIRExtension[]
 }
 
+export interface FHIRResource extends FHIRElement {
+  resourceType: string
+}
+
 export interface FHIRExtension {
   url: string
   valueQuantities?: FHIRSimpleQuantity[]
@@ -34,8 +38,8 @@ export interface FHIRExtension {
 }
 
 export interface FHIRPeriod {
-  start?: Date
-  end?: Date
+  start?: string
+  end?: string
 }
 
 export interface FHIRRatio {

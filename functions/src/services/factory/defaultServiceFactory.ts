@@ -33,6 +33,7 @@ export class DefaultServiceFactory implements ServiceFactory {
 
   private readonly _auth = admin.auth()
   private readonly _firestore = admin.firestore()
+  private readonly _storage = admin.storage()
   private readonly _userService: UserService
 
   private readonly _databaseService: DatabaseService
@@ -71,7 +72,11 @@ export class DefaultServiceFactory implements ServiceFactory {
   }
 
   debugData(): DebugDataService {
-    return new DebugDataService(this._auth, this._databaseService)
+    return new DebugDataService(
+      this._auth,
+      this._databaseService,
+      this._storage,
+    )
   }
 
   staticData(): StaticDataService {

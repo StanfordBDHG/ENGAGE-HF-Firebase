@@ -168,6 +168,7 @@ export class RxNormService {
     drugs: Record<string, FHIRMedication>,
   ): FHIRMedication {
     const result: FHIRMedication = {
+      resourceType: 'Medication',
       id: rxcui,
       code: {
         coding: [
@@ -204,6 +205,7 @@ export class RxNormService {
       result.extension?.push({
         url: FHIRExtensionUrl.minimumDailyDose,
         valueMedicationRequest: {
+          resourceType: 'MedicationRequest',
           medicationReference: {
             reference: `medications/${rxcui}/drugs/${minimumDailyDose.drug}`,
           },
@@ -251,6 +253,7 @@ export class RxNormService {
       result.extension?.push({
         url: FHIRExtensionUrl.targetDailyDose,
         valueMedicationRequest: {
+          resourceType: 'MedicationRequest',
           medicationReference: {
             reference: `medications/${rxcui}/drugs/${targetDailyDose.drug}`,
           },
@@ -316,6 +319,7 @@ export class RxNormService {
       .split('-')
       .map(parseFloat)
     return {
+      resourceType: 'Medication',
       id: rxcui,
       code: {
         coding: [

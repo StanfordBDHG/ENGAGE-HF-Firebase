@@ -52,12 +52,13 @@ export class UserDebugDataFactory {
     durationInMinutes: number
   }): FHIRAppointment {
     return {
+      resourceType: 'Appointment',
       status: AppointmentStatus.booked,
-      created: input.created,
-      start: input.start,
+      created: input.created.toISOString(),
+      start: input.start.toISOString(),
       end: new Date(
         input.start.getTime() + input.durationInMinutes * 60 * 1000,
-      ),
+      ).toISOString(),
       participant: [
         {
           actor: {
@@ -76,6 +77,7 @@ export class UserDebugDataFactory {
     quantity: number
   }): FHIRMedicationRequest {
     return {
+      resourceType: 'MedicationRequest',
       medicationReference: {
         reference: input.drugReference,
       },
@@ -225,6 +227,7 @@ export class UserDebugDataFactory {
     diastolic: number
   }): FHIRObservation {
     return {
+      resourceType: 'Observation',
       status: FHIRObservationStatus.final,
       code: {
         coding: [
@@ -273,7 +276,7 @@ export class UserDebugDataFactory {
           },
         },
       ],
-      effectiveDateTime: input.date,
+      effectiveDateTime: input.date.toISOString(),
     }
   }
 
@@ -282,8 +285,9 @@ export class UserDebugDataFactory {
     value: number
     unit: QuantityUnit
     code: LoincCode
-  }) {
+  }): FHIRObservation {
     return {
+      resourceType: 'Observation',
       status: FHIRObservationStatus.final,
       code: {
         coding: [
@@ -300,7 +304,7 @@ export class UserDebugDataFactory {
         system: input.unit.system,
         code: input.unit.code,
       },
-      effectiveDateTime: input.date,
+      effectiveDateTime: input.date.toISOString(),
     }
   }
 
@@ -312,6 +316,7 @@ export class UserDebugDataFactory {
     const linkIds = symptomQuestionnaireLinkIds(input.questionnaire)
 
     return {
+      resourceType: 'QuestionnaireResponse',
       id: input.questionnaireResponse,
       questionnaire: input.questionnaire,
       authored: input.date,

@@ -1,6 +1,7 @@
 [
   {
     "auth": {
+      "uid": "engagehf-admin0@stanford.edu",
       "displayName": "Engage Admin0",
       "email": "engagehf-admin0@stanford.edu",
       "password": "password"
@@ -11,6 +12,7 @@
   },
   {
     "auth": {
+      "uid": "engagehf-admin1@stanford.edu",
       "displayName": "Engage Admin1",
       "email": "engagehf-admin1@stanford.edu",
       "password": "password"
@@ -21,6 +23,7 @@
   },
   {
     "auth": {
+      "uid": "engagehf-owner0@stanford.edu",
       "displayName": "Stanford Owner0",
       "email": "engagehf-owner0@stanford.edu",
       "password": "password"
@@ -32,6 +35,7 @@
   },
   {
     "auth": {
+      "uid": "engagehf-owner1@stanford.edu",
       "displayName": "Stanford Owner1",
       "email": "engagehf-owner1@stanford.edu",
       "password": "password"
@@ -43,6 +47,7 @@
   },
   {
     "auth": {
+      "uid": "engagehf-owner0@jhu.edu",
       "displayName": "JHU Owner",
       "email": "engagehf-owner0@jhu.edu",
       "password": "password"
@@ -54,6 +59,7 @@
   },
   {
     "auth": {
+      "uid": "engagehf-owner0@umich.edu",
       "displayName": "UMich Owner",
       "email": "engagehf-owner0@umich.edu",
       "password": "password"
@@ -65,6 +71,7 @@
   },
   {
     "auth": {
+      "uid": "engagehf-admin0@uw.edu",
       "displayName": "UW Owner",
       "email": "engagehf-admin0@uw.edu",
       "password": "password"
@@ -76,6 +83,7 @@
   },
   {
     "auth": {
+      "uid": "engagehf-clinician0@stanford.edu",
       "displayName": "Stanford Clinician0",
       "email": "engagehf-clinician0@stanford.edu",
       "password": "password"
@@ -87,6 +95,7 @@
   },
   {
     "auth": {
+      "uid": "engagehf-clinician1@stanford.edu",
       "displayName": "Stanford Clinician1",
       "email": "engagehf-clinician1@stanford.edu",
       "password": "password"
@@ -98,6 +107,7 @@
   },
   {
     "auth": {
+      "uid": "engagehf-clinician@jhu.edu",
       "displayName": "JHU Clinician",
       "email": "engagehf-clinician@jhu.edu",
       "password": "password"
@@ -109,6 +119,7 @@
   },
   {
     "auth": {
+      "uid": "engagehf-clinician@umich.edu",
       "displayName": "UMich Clinician",
       "email": "engagehf-clinician@umich.edu",
       "password": "password"
@@ -120,6 +131,7 @@
   },
   {
     "auth": {
+      "uid": "engagehf-clinician@uw.edu",
       "displayName": "UW Clinician",
       "email": "engagehf-clinician@uw.edu",
       "password": "password"
@@ -131,6 +143,7 @@
   },
   {
     "auth": {
+      "uid": "engagehf-patient0@stanford.edu",
       "displayName": "Stanford Patient0",
       "email": "engagehf-patient0@stanford.edu",
       "password": "password"
@@ -142,6 +155,7 @@
   },
   {
     "auth": {
+      "uid": "engagehf-patient1@stanford.edu",
       "displayName": "Stanford Patient1",
       "email": "engagehf-patient1@stanford.edu",
       "password": "password"
@@ -153,6 +167,7 @@
   },
   {
     "auth": {
+      "uid": "engagehf-patient2@stanford.edu",
       "displayName": "Stanford Patient2",
       "email": "engagehf-patient2@stanford.edu",
       "password": "password"
@@ -160,6 +175,42 @@
     "user": {
       "type": "patient",
       "organization": "stanford"
+    }
+  },
+  {
+    "auth": {
+      "uid": "engagehf-patient0@jhu.edu",
+      "displayName": "JHU Patient0",
+      "email": "engagehf-patient0@jhu.edu",
+      "password": "password"
+    },
+    "user": {
+      "type": "patient",
+      "organization": "jhu"
+    }
+  },
+  {
+    "auth": {
+      "uid": "engagehf-patient1@jhu.edu",
+      "displayName": "JHU Patient1",
+      "email": "engagehf-patient1@jhu.edu",
+      "password": "password"
+    },
+    "user": {
+      "type": "patient",
+      "organization": "jhu"
+    }
+  },
+  {
+    "auth": {
+      "uid": "engagehf-patient2@jhu.edu",
+      "displayName": "JHU Patient2",
+      "email": "engagehf-patient2@jhu.edu",
+      "password": "password"
+    },
+    "user": {
+      "type": "patient",
+      "organization": "jhu"
     }
   }
 ]

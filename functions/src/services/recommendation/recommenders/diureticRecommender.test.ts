@@ -53,6 +53,7 @@ describe('DiureticRecommender', () => {
             'users/mockPatient/medicationRequests/mockMedicationRequest',
         },
         request: {
+          resourceType: 'MedicationRequest',
           medicationReference: {
             reference: DrugReference.furosemide20,
           },
@@ -78,6 +79,7 @@ describe('DiureticRecommender', () => {
           reference: MedicationReference.furosemide,
         },
         medication: {
+          resourceType: 'Medication',
           code: {
             coding: [
               {

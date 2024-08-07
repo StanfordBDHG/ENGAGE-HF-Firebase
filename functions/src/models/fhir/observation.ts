@@ -7,8 +7,8 @@
 //
 
 import {
+  type FHIRResource,
   type FHIRCodeableConcept,
-  type FHIRElement,
   type FHIRPeriod,
   type FHIRSimpleQuantity,
 } from './baseTypes.js'
@@ -29,12 +29,12 @@ export interface FHIRObservationComponent {
   valueQuantity?: FHIRSimpleQuantity
 }
 
-export interface FHIRObservation extends FHIRElement {
+export interface FHIRObservation extends FHIRResource {
   status: FHIRObservationStatus
   code: FHIRCodeableConcept
   component?: FHIRObservationComponent[]
   valueQuantity?: FHIRSimpleQuantity
   effectivePeriod?: FHIRPeriod
-  effectiveDateTime?: Date
-  effectiveInstant?: Date
+  effectiveDateTime?: string
+  effectiveInstant?: string
 }
