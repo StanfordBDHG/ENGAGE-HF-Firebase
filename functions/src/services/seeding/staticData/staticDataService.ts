@@ -13,6 +13,7 @@ import {
 import { type FHIRMedication } from '../../../models/fhir/medication.js'
 import { type DatabaseService } from '../../database/databaseService.js'
 import { type CachingStrategy, SeedingService } from '../seedingService.js'
+import { MedicationClass } from '../../../models/medicationClass.js'
 
 export class StaticDataService extends SeedingService {
   // Properties
@@ -129,10 +130,19 @@ export class StaticDataService extends SeedingService {
         drugs: this.readJSON(drugsFile),
       }),
       async () => {
-        const data: MedicationClassSpecification[] = await this.readJSON(
-          'medicationCodes.json',
+        const medicationClasses: MedicationClass[] = await this.readJSON(
+          'medicationClasses.json',
         )
-        return this.rxNormService.buildFHIRCollections(data)
+        const medicationClassMap = new Map<string, MedicationClass>()
+        medicationClasses.forEach((medicationClass, index) => {
+          medicationClassMap.set(index.toString(), medicationClass)
+        })
+        const specification: MedicationClassSpecification[] =
+          await this.readJSON('medicationCodes.json')
+        return this.rxNormService.buildFHIRCollections(
+          medicationClassMap,
+          specification,
+        )
       },
       (result) => {
         this.writeJSON('medications.json', result.medications)

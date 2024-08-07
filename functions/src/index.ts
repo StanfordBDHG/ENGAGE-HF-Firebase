@@ -10,60 +10,16 @@
 // https://github.com/StanfordBDHG/PediatricAppleWatchStudy/pull/54/files
 
 import admin from 'firebase-admin'
-import {
-  beforeUserCreatedFunction,
-  beforeUserSignedInFunction,
-  onUserWrittenFunction,
-} from './functions/auth.js'
-import { exportHealthSummaryFunction } from './functions/healthSummary.js'
-import {
-  checkInvitationCodeFunction,
-  createInvitationFunction,
-} from './functions/invitation.js'
-import { dismissMessageFunction } from './functions/message.js'
-import {
-  customSeedFunction,
-  defaultSeedFunction,
-  updateStaticDataFunction,
-} from './functions/seeding.js'
-import {
-  deleteUserFunction,
-  getUsersInformationFunction,
-  updateUserInformationFunction,
-} from './functions/users.js'
 
 admin.initializeApp()
 
-// auth
-
-export const beforeUserCreated = beforeUserCreatedFunction
-export const beforeUserSignedIn = beforeUserSignedInFunction
-export const onUserWritten = onUserWrittenFunction
-
-// healthSummary
-
-export const exportHealthSummary = exportHealthSummaryFunction
-
-// invitation
-
-export const createInvitation = createInvitationFunction
-export const checkInvitationCode = checkInvitationCodeFunction
-
-// message
-
-export const dismissMessage = dismissMessageFunction
-
-// seeding
-
-export const defaultSeed = defaultSeedFunction
-export const customSeed = customSeedFunction
-
-// staticData
-
-export const updateStaticData = updateStaticDataFunction
-
-// users
-
-export const getUsersInformation = getUsersInformationFunction
-export const deleteUser = deleteUserFunction
-export const updateUserInformation = updateUserInformationFunction
+export {
+  beforeUserCreatedFunction as beforeUserCreated,
+  beforeUserSignedInFunction as beforeUserSignedIn,
+} from './functions/auth.js'
+export * from './functions/healthSummary.js'
+export * from './functions/invitation.js'
+export * from './functions/message.js'
+export * from './functions/recommendation.js'
+export * from './functions/seeding.js'
+export * from './functions/user.js'

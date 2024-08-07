@@ -17,7 +17,7 @@ const dismissMessageInputSchema = z.object({
   didPerformAction: z.boolean().optional(),
 })
 
-export const dismissMessageFunction = validatedOnCall(
+export const dismissMessage = validatedOnCall(
   dismissMessageInputSchema,
   async (request): Promise<void> => {
     if (!request.auth?.uid)

@@ -102,6 +102,7 @@ export class DefaultServiceFactory implements ServiceFactory {
     return new RecommendationService(
       new DefaultContraindicationService(fhirService),
       fhirService,
+      this.medication(),
     )
   }
 }

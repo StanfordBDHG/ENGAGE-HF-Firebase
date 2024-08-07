@@ -15,7 +15,8 @@
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
-          "reference": "medicationClasses/6"
+          "reference": "medicationClasses/6",
+          "display": "Diuretics"
         }
       }
     ]
@@ -36,7 +37,8 @@
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
-          "reference": "medicationClasses/3"
+          "reference": "medicationClasses/3",
+          "display": "ACE inhibitors"
         }
       },
       {
@@ -44,7 +46,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/1998/drugs/308963"
+            "reference": "medications/1998/drugs/308963",
+            "display": "Captopril (Oral Pill)"
           },
           "extension": [
             {
@@ -87,7 +90,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/1998/drugs/308962"
+            "reference": "medications/1998/drugs/308962",
+            "display": "Captopril (Oral Pill)"
           },
           "extension": [
             {
@@ -143,7 +147,8 @@
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
-          "reference": "medicationClasses/3"
+          "reference": "medicationClasses/3",
+          "display": "ACE inhibitors"
         }
       },
       {
@@ -151,7 +156,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/3827/drugs/858813"
+            "reference": "medications/3827/drugs/858813",
+            "display": "Enalapril (Oral Pill)"
           },
           "extension": [
             {
@@ -194,7 +200,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/3827/drugs/858810"
+            "reference": "medications/3827/drugs/858810",
+            "display": "Enalapril (Oral Pill)"
           },
           "extension": [
             {
@@ -250,7 +257,8 @@
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
-          "reference": "medicationClasses/6"
+          "reference": "medicationClasses/6",
+          "display": "Diuretics"
         }
       }
     ]
@@ -271,7 +279,8 @@
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
-          "reference": "medicationClasses/6"
+          "reference": "medicationClasses/6",
+          "display": "Diuretics"
         }
       }
     ]
@@ -292,7 +301,8 @@
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
-          "reference": "medicationClasses/2"
+          "reference": "medicationClasses/2",
+          "display": "Mineralocorticoid Receptor Antagonists (MRAs)"
         }
       },
       {
@@ -300,7 +310,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/9997/drugs/313096"
+            "reference": "medications/9997/drugs/313096",
+            "display": "Spironolactone (Oral Pill)"
           },
           "extension": [
             {
@@ -343,7 +354,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/9997/drugs/313096"
+            "reference": "medications/9997/drugs/313096",
+            "display": "Spironolactone (Oral Pill)"
           },
           "extension": [
             {
@@ -399,7 +411,8 @@
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
-          "reference": "medicationClasses/3"
+          "reference": "medicationClasses/3",
+          "display": "ACE inhibitors"
         }
       },
       {
@@ -407,7 +420,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/18867/drugs/898723"
+            "reference": "medications/18867/drugs/898723",
+            "display": "Benazepril (Oral Pill)"
           },
           "extension": [
             {
@@ -450,7 +464,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/18867/drugs/898719"
+            "reference": "medications/18867/drugs/898719",
+            "display": "Benazepril (Oral Pill)"
           },
           "extension": [
             {
@@ -506,7 +521,8 @@
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
-          "reference": "medicationClasses/0"
+          "reference": "medicationClasses/0",
+          "display": "Beta blockers"
         }
       },
       {
@@ -514,7 +530,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/19484/drugs/854905"
+            "reference": "medications/19484/drugs/854905",
+            "display": "Bisoprolol (Oral Pill)"
           },
           "extension": [
             {
@@ -557,7 +574,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/19484/drugs/854901"
+            "reference": "medications/19484/drugs/854901",
+            "display": "Bisoprolol (Oral Pill)"
           },
           "extension": [
             {
@@ -613,7 +631,8 @@
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
-          "reference": "medicationClasses/0"
+          "reference": "medicationClasses/0",
+          "display": "Beta blockers"
         }
       },
       {
@@ -621,7 +640,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/20352/drugs/200031"
+            "reference": "medications/20352/drugs/200031",
+            "display": "Carvedilol (Oral Pill)"
           },
           "extension": [
             {
@@ -664,7 +684,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/20352/drugs/200033"
+            "reference": "medications/20352/drugs/200033",
+            "display": "Carvedilol (Oral Pill)"
           },
           "extension": [
             {
@@ -720,7 +741,8 @@
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
-          "reference": "medicationClasses/3"
+          "reference": "medicationClasses/3",
+          "display": "ACE inhibitors"
         }
       },
       {
@@ -728,7 +750,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/29046/drugs/311353"
+            "reference": "medications/29046/drugs/311353",
+            "display": "Lisinopril (Oral Pill)"
           },
           "extension": [
             {
@@ -771,7 +794,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/29046/drugs/197884"
+            "reference": "medications/29046/drugs/197884",
+            "display": "Lisinopril (Oral Pill)"
           },
           "extension": [
             {
@@ -827,7 +851,8 @@
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
-          "reference": "medicationClasses/3"
+          "reference": "medicationClasses/3",
+          "display": "ACE inhibitors"
         }
       },
       {
@@ -835,7 +860,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/30131/drugs/1299897"
+            "reference": "medications/30131/drugs/1299897",
+            "display": "Moexipril (Oral Pill)"
           },
           "extension": [
             {
@@ -878,7 +904,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/30131/drugs/1299896"
+            "reference": "medications/30131/drugs/1299896",
+            "display": "Moexipril (Oral Pill)"
           },
           "extension": [
             {
@@ -934,7 +961,8 @@
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
-          "reference": "medicationClasses/3"
+          "reference": "medicationClasses/3",
+          "display": "ACE inhibitors"
         }
       },
       {
@@ -942,7 +970,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/35208/drugs/312748"
+            "reference": "medications/35208/drugs/312748",
+            "display": "Quinapril (Oral Pill)"
           },
           "extension": [
             {
@@ -985,7 +1014,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/35208/drugs/314203"
+            "reference": "medications/35208/drugs/314203",
+            "display": "Quinapril (Oral Pill)"
           },
           "extension": [
             {
@@ -1041,7 +1071,8 @@
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
-          "reference": "medicationClasses/3"
+          "reference": "medicationClasses/3",
+          "display": "ACE inhibitors"
         }
       },
       {
@@ -1049,7 +1080,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/35296/drugs/401965"
+            "reference": "medications/35296/drugs/401965",
+            "display": "Ramipril (Oral Pill)"
           },
           "extension": [
             {
@@ -1092,7 +1124,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/35296/drugs/401968"
+            "reference": "medications/35296/drugs/401968",
+            "display": "Ramipril (Oral Pill)"
           },
           "extension": [
             {
@@ -1148,7 +1181,8 @@
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
-          "reference": "medicationClasses/6"
+          "reference": "medicationClasses/6",
+          "display": "Diuretics"
         }
       }
     ]
@@ -1169,7 +1203,8 @@
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
-          "reference": "medicationClasses/3"
+          "reference": "medicationClasses/3",
+          "display": "ACE inhibitors"
         }
       },
       {
@@ -1177,7 +1212,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/38454/drugs/199353"
+            "reference": "medications/38454/drugs/199353",
+            "display": "Trandolapril (Oral Pill)"
           },
           "extension": [
             {
@@ -1220,7 +1256,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/38454/drugs/199352"
+            "reference": "medications/38454/drugs/199352",
+            "display": "Trandolapril (Oral Pill)"
           },
           "extension": [
             {
@@ -1276,7 +1313,8 @@
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
-          "reference": "medicationClasses/3"
+          "reference": "medicationClasses/3",
+          "display": "ACE inhibitors"
         }
       },
       {
@@ -1284,7 +1322,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/54552/drugs/854984"
+            "reference": "medications/54552/drugs/854984",
+            "display": "Perindopril (Oral Pill)"
           },
           "extension": [
             {
@@ -1327,7 +1366,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/54552/drugs/854925"
+            "reference": "medications/54552/drugs/854925",
+            "display": "Perindopril (Oral Pill)"
           },
           "extension": [
             {
@@ -1383,7 +1423,8 @@
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
-          "reference": "medicationClasses/4"
+          "reference": "medicationClasses/4",
+          "display": "ARBs"
         }
       },
       {
@@ -1391,7 +1432,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/69749/drugs/349483"
+            "reference": "medications/69749/drugs/349483",
+            "display": "Valsartan (Oral Pill)"
           },
           "extension": [
             {
@@ -1434,7 +1476,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/69749/drugs/349201"
+            "reference": "medications/69749/drugs/349201",
+            "display": "Valsartan (Oral Pill)"
           },
           "extension": [
             {
@@ -1490,7 +1533,8 @@
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
-          "reference": "medicationClasses/4"
+          "reference": "medicationClasses/4",
+          "display": "ARBs"
         }
       },
       {
@@ -1498,7 +1542,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/73494/drugs/205304"
+            "reference": "medications/73494/drugs/205304",
+            "display": "Telmisartan (Oral Pill)"
           },
           "extension": [
             {
@@ -1541,7 +1586,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/73494/drugs/205305"
+            "reference": "medications/73494/drugs/205305",
+            "display": "Telmisartan (Oral Pill)"
           },
           "extension": [
             {
@@ -1597,7 +1643,8 @@
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
-          "reference": "medicationClasses/4"
+          "reference": "medicationClasses/4",
+          "display": "ARBs"
         }
       },
       {
@@ -1605,7 +1652,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/83515/drugs/310139"
+            "reference": "medications/83515/drugs/310139",
+            "display": "Eprosartan (Oral Pill)"
           },
           "extension": [
             {
@@ -1648,7 +1696,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/83515/drugs/310140"
+            "reference": "medications/83515/drugs/310140",
+            "display": "Eprosartan (Oral Pill)"
           },
           "extension": [
             {
@@ -1704,7 +1753,8 @@
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
-          "reference": "medicationClasses/4"
+          "reference": "medicationClasses/4",
+          "display": "ARBs"
         }
       },
       {
@@ -1712,7 +1762,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/83818/drugs/200094"
+            "reference": "medications/83818/drugs/200094",
+            "display": "Irbesartan (Oral Pill)"
           },
           "extension": [
             {
@@ -1755,7 +1806,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/83818/drugs/200096"
+            "reference": "medications/83818/drugs/200096",
+            "display": "Irbesartan (Oral Pill)"
           },
           "extension": [
             {
@@ -1811,7 +1863,8 @@
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
-          "reference": "medicationClasses/4"
+          "reference": "medicationClasses/4",
+          "display": "ARBs"
         }
       },
       {
@@ -1819,7 +1872,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/118463/drugs/349373"
+            "reference": "medications/118463/drugs/349373",
+            "display": "Olmesartan (Oral Pill)"
           },
           "extension": [
             {
@@ -1862,7 +1916,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/118463/drugs/349405"
+            "reference": "medications/118463/drugs/349405",
+            "display": "Olmesartan (Oral Pill)"
           },
           "extension": [
             {
@@ -1918,7 +1973,8 @@
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
-          "reference": "medicationClasses/4"
+          "reference": "medicationClasses/4",
+          "display": "ARBs"
         }
       },
       {
@@ -1926,7 +1982,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/203160/drugs/979485"
+            "reference": "medications/203160/drugs/979485",
+            "display": "Losartan (Oral Pill)"
           },
           "extension": [
             {
@@ -1969,7 +2026,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/203160/drugs/979480"
+            "reference": "medications/203160/drugs/979480",
+            "display": "Losartan (Oral Pill)"
           },
           "extension": [
             {
@@ -2025,7 +2083,8 @@
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
-          "reference": "medicationClasses/4"
+          "reference": "medicationClasses/4",
+          "display": "ARBs"
         }
       },
       {
@@ -2033,7 +2092,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/214354/drugs/153822"
+            "reference": "medications/214354/drugs/153822",
+            "display": "Candesartan (Oral Pill)"
           },
           "extension": [
             {
@@ -2076,7 +2136,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/214354/drugs/639537"
+            "reference": "medications/214354/drugs/639537",
+            "display": "Candesartan (Oral Pill)"
           },
           "extension": [
             {
@@ -2132,7 +2193,8 @@
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
-          "reference": "medicationClasses/0"
+          "reference": "medicationClasses/0",
+          "display": "Beta blockers"
         }
       },
       {
@@ -2140,7 +2202,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/221124/drugs/1999035"
+            "reference": "medications/221124/drugs/1999035",
+            "display": "Metoprolol XR (Oral Pill)"
           },
           "extension": [
             {
@@ -2183,7 +2246,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/221124/drugs/866419"
+            "reference": "medications/221124/drugs/866419",
+            "display": "Metoprolol XR (Oral Pill)"
           },
           "extension": [
             {
@@ -2239,7 +2303,8 @@
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
-          "reference": "medicationClasses/3"
+          "reference": "medicationClasses/3",
+          "display": "ACE inhibitors"
         }
       },
       {
@@ -2247,7 +2312,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/227278/drugs/857169"
+            "reference": "medications/227278/drugs/857169",
+            "display": "Fosinopril (Oral Pill)"
           },
           "extension": [
             {
@@ -2290,7 +2356,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/227278/drugs/857187"
+            "reference": "medications/227278/drugs/857187",
+            "display": "Fosinopril (Oral Pill)"
           },
           "extension": [
             {
@@ -2346,7 +2413,8 @@
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
-          "reference": "medicationClasses/2"
+          "reference": "medicationClasses/2",
+          "display": "Mineralocorticoid Receptor Antagonists (MRAs)"
         }
       },
       {
@@ -2354,7 +2422,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/298869/drugs/351256"
+            "reference": "medications/298869/drugs/351256",
+            "display": "Eplerenone (Oral Pill)"
           },
           "extension": [
             {
@@ -2397,7 +2466,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/298869/drugs/351257"
+            "reference": "medications/298869/drugs/351257",
+            "display": "Eplerenone (Oral Pill)"
           },
           "extension": [
             {
@@ -2453,7 +2523,8 @@
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
-          "reference": "medicationClasses/0"
+          "reference": "medicationClasses/0",
+          "display": "Beta blockers"
         }
       },
       {
@@ -2461,7 +2532,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/668310/drugs/860510"
+            "reference": "medications/668310/drugs/860510",
+            "display": "Carvedilol XR (Oral Pill)"
           },
           "extension": [
             {
@@ -2504,7 +2576,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/668310/drugs/860532"
+            "reference": "medications/668310/drugs/860532",
+            "display": "Carvedilol XR (Oral Pill)"
           },
           "extension": [
             {
@@ -2560,7 +2633,8 @@
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
-          "reference": "medicationClasses/4"
+          "reference": "medicationClasses/4",
+          "display": "ARBs"
         }
       },
       {
@@ -2568,7 +2642,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/1091642/drugs/1091646"
+            "reference": "medications/1091642/drugs/1091646",
+            "display": "Azilsartan (Oral Pill)"
           },
           "extension": [
             {
@@ -2611,7 +2686,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/1091642/drugs/1091652"
+            "reference": "medications/1091642/drugs/1091652",
+            "display": "Azilsartan (Oral Pill)"
           },
           "extension": [
             {
@@ -2667,7 +2743,8 @@
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
-          "reference": "medicationClasses/1"
+          "reference": "medicationClasses/1",
+          "display": "SGLT2 Inhibitors"
         }
       },
       {
@@ -2675,7 +2752,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/1373458/drugs/1373463"
+            "reference": "medications/1373458/drugs/1373463",
+            "display": "Canagliflozin (Oral Pill)"
           },
           "extension": [
             {
@@ -2718,7 +2796,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/1373458/drugs/1373463"
+            "reference": "medications/1373458/drugs/1373463",
+            "display": "Canagliflozin (Oral Pill)"
           },
           "extension": [
             {
@@ -2774,7 +2853,8 @@
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
-          "reference": "medicationClasses/1"
+          "reference": "medicationClasses/1",
+          "display": "SGLT2 Inhibitors"
         }
       },
       {
@@ -2782,7 +2862,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/1488564/drugs/1488574"
+            "reference": "medications/1488564/drugs/1488574",
+            "display": "Dapagliflozin (Oral Pill)"
           },
           "extension": [
             {
@@ -2825,7 +2906,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/1488564/drugs/1488569"
+            "reference": "medications/1488564/drugs/1488569",
+            "display": "Dapagliflozin (Oral Pill)"
           },
           "extension": [
             {
@@ -2881,7 +2963,8 @@
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
-          "reference": "medicationClasses/1"
+          "reference": "medicationClasses/1",
+          "display": "SGLT2 Inhibitors"
         }
       },
       {
@@ -2889,7 +2972,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/1545653/drugs/1545658"
+            "reference": "medications/1545653/drugs/1545658",
+            "display": "Empagliflozin (Oral Pill)"
           },
           "extension": [
             {
@@ -2932,7 +3016,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/1545653/drugs/1545666"
+            "reference": "medications/1545653/drugs/1545666",
+            "display": "Empagliflozin (Oral Pill)"
           },
           "extension": [
             {
@@ -3012,7 +3097,8 @@
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
-          "reference": "medicationClasses/5"
+          "reference": "medicationClasses/5",
+          "display": "Angiotensin Receptor/Neprilysin Inhibitors (ARNI)"
         }
       },
       {
@@ -3020,7 +3106,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/1656339/drugs/1656340"
+            "reference": "medications/1656339/drugs/1656340",
+            "display": "Sacubitril/Valsartan (Oral Pill)"
           },
           "extension": [
             {
@@ -3069,7 +3156,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/1656339/drugs/1656354"
+            "reference": "medications/1656339/drugs/1656354",
+            "display": "Sacubitril/Valsartan (Oral Pill)"
           },
           "extension": [
             {
@@ -3131,7 +3219,8 @@
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
-          "reference": "medicationClasses/1"
+          "reference": "medicationClasses/1",
+          "display": "SGLT2 Inhibitors"
         }
       },
       {
@@ -3139,7 +3228,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/1992672/drugs/1992810"
+            "reference": "medications/1992672/drugs/1992810",
+            "display": "Ertugliflozin (Oral Pill)"
           },
           "extension": [
             {
@@ -3182,7 +3272,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/1992672/drugs/1992819"
+            "reference": "medications/1992672/drugs/1992819",
+            "display": "Ertugliflozin (Oral Pill)"
           },
           "extension": [
             {
@@ -3238,7 +3329,8 @@
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
-          "reference": "medicationClasses/1"
+          "reference": "medicationClasses/1",
+          "display": "SGLT2 Inhibitors"
         }
       },
       {
@@ -3246,7 +3338,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/2627044/drugs/2637859"
+            "reference": "medications/2627044/drugs/2637859",
+            "display": "Bexagliflozin (Oral Pill)"
           },
           "extension": [
             {
@@ -3289,7 +3382,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/2627044/drugs/2637859"
+            "reference": "medications/2627044/drugs/2637859",
+            "display": "Bexagliflozin (Oral Pill)"
           },
           "extension": [
             {
@@ -3345,7 +3439,8 @@
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
-          "reference": "medicationClasses/1"
+          "reference": "medicationClasses/1",
+          "display": "SGLT2 Inhibitors"
         }
       },
       {
@@ -3353,7 +3448,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/2638675/drugs/2638683"
+            "reference": "medications/2638675/drugs/2638683",
+            "display": "Sotagliflozin (Oral Pill)"
           },
           "extension": [
             {
@@ -3396,7 +3492,8 @@
         "valueMedicationRequest": {
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/2638675/drugs/2638691"
+            "reference": "medications/2638675/drugs/2638691",
+            "display": "Sotagliflozin (Oral Pill)"
           },
           "extension": [
             {

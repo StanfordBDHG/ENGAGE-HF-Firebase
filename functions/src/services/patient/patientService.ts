@@ -13,6 +13,7 @@ import { type FHIRObservation } from '../../models/fhir/observation.js'
 import { type FHIRQuestionnaireResponse } from '../../models/fhir/questionnaireResponse.js'
 import { type MedicationRecommendation } from '../../models/medicationRecommendation.js'
 import { type SymptomScore } from '../../models/symptomScore.js'
+import { Vitals } from '../../models/vitals.js'
 import { type Document } from '../database/databaseService.js'
 
 export interface PatientService {
@@ -23,9 +24,9 @@ export interface PatientService {
     userId: string,
   ): Promise<Document<FHIRAppointment> | undefined>
 
-  // AllergyIntolerances
+  // Contraindications
 
-  getAllergyIntolerances(
+  getContraindications(
     userId: string,
   ): Promise<Array<Document<FHIRAllergyIntolerance>>>
 
@@ -37,17 +38,24 @@ export interface PatientService {
   getMedicationRequests(
     userId: string,
   ): Promise<Array<Document<FHIRMedicationRequest>>>
+  updateMedicationRecommendations(
+    userId: string,
+    recommendations: Array<MedicationRecommendation>,
+  ): Promise<void>
 
   // Observations
 
   getBloodPressureObservations(
     userId: string,
+    cutoffDate: Date,
   ): Promise<Array<Document<FHIRObservation>>>
   getBodyWeightObservations(
     userId: string,
+    cutoffDate: Date,
   ): Promise<Array<Document<FHIRObservation>>>
   getHeartRateObservations(
     userId: string,
+    cutoffDate: Date,
   ): Promise<Array<Document<FHIRObservation>>>
 
   getMostRecentCreatinineObservation(
@@ -68,5 +76,11 @@ export interface PatientService {
   getQuestionnaireResponses(
     userId: string,
   ): Promise<Array<Document<FHIRQuestionnaireResponse>>>
-  getSymptomScores(userId: string): Promise<Array<Document<SymptomScore>>>
+  getSymptomScores(
+    userId: string,
+    cutoffDate: Date,
+  ): Promise<Array<Document<SymptomScore>>>
+  getLatestSymptomScore(
+    userId: string,
+  ): Promise<Document<SymptomScore> | undefined>
 }

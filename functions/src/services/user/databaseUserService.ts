@@ -136,9 +136,9 @@ export class DatabaseUserService implements UserService {
 
     await this.databaseService.runTransaction((firestore, transaction) => {
       transaction.create(firestore.doc(`users/${userId}`), {
+        ...invitation.content.user,
         invitationCode: invitation.id,
         dateOfEnrollment: FieldValue.serverTimestamp(),
-        ...invitation.content.user,
       })
       transaction.delete(firestore.doc(`invitations/${invitation.id}`))
     })

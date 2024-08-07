@@ -110,7 +110,7 @@ const defaultSeedInputSchema = z.object({
     .default([]),
 })
 
-export const defaultSeedFunction = validatedOnRequest(
+export const defaultSeed = validatedOnRequest(
   defaultSeedInputSchema,
   async (_, data, response) => {
     const factory = getServiceFactory()
@@ -295,7 +295,7 @@ const customSeedInputSchema = z.object({
   firestore: z.record(z.string(), z.any()).default({}),
 })
 
-export const customSeedFunction = validatedOnRequest(
+export const customSeed = validatedOnRequest(
   customSeedInputSchema,
   async (_, data, response) => {
     const factory = getServiceFactory()

@@ -6,19 +6,19 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { Recommender } from './recommender.js'
 import {
-  MedicationRecommendationCategory,
-  type MedicationRecommendation,
-} from '../../../models/medicationRecommendation.js'
+  type RecommendationInput,
+  type RecommendationOutput,
+  Recommender,
+} from './recommender.js'
+import { MedicationRecommendationType } from '../../../models/medicationRecommendation.js'
 import { MedicationClassReference, MedicationReference } from '../../codes.js'
 import { ContraindicationCategory } from '../../contraindication/contraindicationService.js'
-import { type RecommendationInput } from '../recommendationService.js'
 
 export class MraRecommender extends Recommender {
   // Methods
 
-  compute(input: RecommendationInput): MedicationRecommendation[] {
+  compute(input: RecommendationInput): RecommendationOutput[] {
     const currentRequests = this.findCurrentRequests(input.requests, [
       MedicationClassReference.mineralocorticoidReceptorAntagonists,
     ])
@@ -28,7 +28,7 @@ export class MraRecommender extends Recommender {
       return this.createRecommendation(
         currentRequests,
         undefined,
-        MedicationRecommendationCategory.targetDoseReached,
+        MedicationRecommendationType.targetDoseReached,
       )
 
     const durationOfOneDayInMilliseconds = 1000 * 60 * 60 * 24 * 7
@@ -46,26 +46,26 @@ export class MraRecommender extends Recommender {
       return this.createRecommendation(
         currentRequests,
         undefined,
-        MedicationRecommendationCategory.moreLabObservationsRequired,
+        MedicationRecommendationType.moreLabObservationsRequired,
       )
 
     if (creatinineObservation.value > 2.5 || potassiumObservation.value > 5)
       return this.createRecommendation(
         currentRequests,
         undefined,
-        MedicationRecommendationCategory.personalTargetDoseReached,
+        MedicationRecommendationType.personalTargetDoseReached,
       )
 
     return this.createRecommendation(
       currentRequests,
       undefined,
-      MedicationRecommendationCategory.improvementAvailable,
+      MedicationRecommendationType.improvementAvailable,
     )
   }
 
   // Helpers
 
-  private computeNew(input: RecommendationInput): MedicationRecommendation[] {
+  private computeNew(input: RecommendationInput): RecommendationOutput[] {
     const contraindication = this.contraindicationService.checkMedicationClass(
       input.contraindications,
       MedicationClassReference.mineralocorticoidReceptorAntagonists,
@@ -78,7 +78,7 @@ export class MraRecommender extends Recommender {
         return this.createRecommendation(
           [],
           MedicationReference.spironolactone,
-          MedicationRecommendationCategory.noActionRequired,
+          MedicationRecommendationType.noActionRequired,
         )
       case ContraindicationCategory.none:
         break
@@ -89,7 +89,7 @@ export class MraRecommender extends Recommender {
       return this.createRecommendation(
         [],
         MedicationReference.spironolactone,
-        MedicationRecommendationCategory.noActionRequired,
+        MedicationRecommendationType.noActionRequired,
       )
 
     const potassium = input.vitals.potassium?.value
@@ -97,13 +97,13 @@ export class MraRecommender extends Recommender {
       return this.createRecommendation(
         [],
         MedicationReference.spironolactone,
-        MedicationRecommendationCategory.noActionRequired,
+        MedicationRecommendationType.noActionRequired,
       )
 
     return this.createRecommendation(
       [],
       MedicationReference.spironolactone,
-      MedicationRecommendationCategory.notStarted,
+      MedicationRecommendationType.notStarted,
     )
   }
 }

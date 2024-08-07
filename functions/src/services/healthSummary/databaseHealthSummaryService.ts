@@ -7,10 +7,9 @@
 //
 
 import { type HealthSummaryService } from './healthSummaryService.js'
-import {
-  type MedicationOptimization,
-  type HealthSummaryData,
-} from '../../models/healthSummaryData.js'
+import { advanceDateByDays } from '../../extensions/date.js'
+import { type HealthSummaryData } from '../../models/healthSummaryData.js'
+import { type MedicationRecommendation } from '../../models/medicationRecommendation.js'
 import { type SymptomScore } from '../../models/symptomScore.js'
 import { type Vitals } from '../../models/vitals.js'
 import { CodingSystem, LoincCode } from '../codes.js'
@@ -41,15 +40,21 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
   // Methods
 
   async getHealthSummaryData(userId: string): Promise<HealthSummaryData> {
-    const [auth, patient, nextAppointment, medications, symptomScores, vitals] =
-      await Promise.all([
-        this.userService.getAuth(userId),
-        this.userService.getUser(userId),
-        this.patientService.getNextAppointment(userId),
-        this.getMedications(userId),
-        this.getSymptomScores(userId),
-        this.getVitals(userId),
-      ])
+    const [
+      auth,
+      patient,
+      nextAppointment,
+      recommendations,
+      symptomScores,
+      vitals,
+    ] = await Promise.all([
+      this.userService.getAuth(userId),
+      this.userService.getUser(userId),
+      this.patientService.getNextAppointment(userId),
+      this.getMedicationRecommendations(userId),
+      this.getSymptomScores(userId, new Date(0)),
+      this.getVitals(userId, advanceDateByDays(new Date(), -14)),
+    ])
 
     const clinician =
       patient?.content.clinician ?
@@ -61,7 +66,7 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
       dateOfBirth: patient?.content.dateOfBirth,
       clinicianName: clinician?.displayName ?? '---',
       nextAppointment: nextAppointment?.content.start,
-      medications: medications,
+      recommendations: recommendations,
       vitals: vitals,
       symptomScores: symptomScores,
     }
@@ -69,24 +74,30 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
 
   // Methods - Symptom Scores
 
-  private async getSymptomScores(userId: string): Promise<SymptomScore[]> {
-    return (await this.patientService.getSymptomScores(userId)).map(
-      (doc) => doc.content,
+  async getSymptomScores(
+    userId: string,
+    cutoffDate: Date,
+  ): Promise<SymptomScore[]> {
+    const result = await this.patientService.getSymptomScores(
+      userId,
+      cutoffDate,
     )
+    return result.map((doc) => doc.content)
   }
 
-  // Methods - Medication Requests
+  // Methods - Medication Recommendations
 
-  // eslint-disable-next-line @typescript-eslint/require-await
-  private async getMedications(
-    userId: string, // eslint-disable-line @typescript-eslint/no-unused-vars
-  ): Promise<MedicationOptimization[]> {
-    return []
+  async getMedicationRecommendations(
+    userId: string,
+  ): Promise<MedicationRecommendation[]> {
+    const result =
+      await this.patientService.getMedicationRecommendations(userId)
+    return result.map((doc) => doc.content)
   }
 
   // Methods - Vitals
 
-  private async getVitals(userId: string): Promise<Vitals> {
+  async getVitals(userId: string, cutoffDate: Date): Promise<Vitals> {
     const [
       [systolicBloodPressure, diastolicBloodPressure],
       heartRate,
@@ -96,9 +107,9 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
       estimatedGlomerularFiltrationRate,
       potassium,
     ] = await Promise.all([
-      this.getBloodPressureObservations(userId),
-      this.getHeartRateObservations(userId),
-      this.getBodyWeightObservations(userId),
+      this.getBloodPressureObservations(userId, cutoffDate),
+      this.getHeartRateObservations(userId, cutoffDate),
+      this.getBodyWeightObservations(userId, cutoffDate),
       this.getMostRecentCreatinineObservation(userId),
       this.getMostRecentDryWeightObservation(userId),
       this.getMostRecentEstimatedGlomerularFiltrationRateObservation(userId),
@@ -116,9 +127,9 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
     }
   }
 
-  private async getBloodPressureObservations(userId: string) {
+  private async getBloodPressureObservations(userId: string, cutoffDate: Date) {
     const observationDocs =
-      await this.patientService.getBloodPressureObservations(userId)
+      await this.patientService.getBloodPressureObservations(userId, cutoffDate)
     const observations = observationDocs.map((doc) => doc.content)
     return [
       this.fhirService.observationValues(observations, {
@@ -142,9 +153,11 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
     ]
   }
 
-  private async getBodyWeightObservations(userId: string) {
-    const observationDocs =
-      await this.patientService.getBodyWeightObservations(userId)
+  private async getBodyWeightObservations(userId: string, cutoffDate: Date) {
+    const observationDocs = await this.patientService.getBodyWeightObservations(
+      userId,
+      cutoffDate,
+    )
     return this.fhirService.observationValues(
       observationDocs.map((doc) => doc.content),
       {
@@ -155,9 +168,11 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
     )
   }
 
-  private async getHeartRateObservations(userId: string) {
-    const observationDocs =
-      await this.patientService.getHeartRateObservations(userId)
+  private async getHeartRateObservations(userId: string, cutoffDate: Date) {
+    const observationDocs = await this.patientService.getHeartRateObservations(
+      userId,
+      cutoffDate,
+    )
     return this.fhirService.observationValues(
       observationDocs.map((doc) => doc.content),
       {

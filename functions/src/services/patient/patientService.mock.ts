@@ -24,6 +24,7 @@ import { mockQuestionnaireResponse } from '../../tests/mocks/questionnaireRespon
 import { CodingSystem, LoincCode } from '../codes.js'
 import { type Document } from '../database/databaseService.js'
 import { QuantityUnit } from '../fhir/quantityUnit.js'
+import { Vitals } from '../../models/vitals.js'
 
 /* eslint-disable @typescript-eslint/require-await */
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -58,9 +59,9 @@ export class MockPatientService implements PatientService {
     }
   }
 
-  // Methods - AllergyIntolerances
+  // Methods - Contraindications
 
-  async getAllergyIntolerances(
+  async getContraindications(
     userId: string,
   ): Promise<Array<Document<FHIRAllergyIntolerance>>> {
     return []
@@ -105,6 +106,13 @@ export class MockPatientService implements PatientService {
       id: index.toString(),
       content: value,
     }))
+  }
+
+  async updateMedicationRecommendations(
+    userId: string,
+    recommendations: Array<MedicationRecommendation>,
+  ): Promise<void> {
+    return
   }
 
   // Methods - Observations
@@ -443,6 +451,7 @@ export class MockPatientService implements PatientService {
 
   async getSymptomScores(
     userId: string,
+    cutoffDate: Date,
   ): Promise<Array<Document<SymptomScore>>> {
     const values: SymptomScore[] = [
       {
@@ -486,5 +495,11 @@ export class MockPatientService implements PatientService {
       id: index.toString(),
       content: value,
     }))
+  }
+
+  async getLatestSymptomScore(
+    userId: string,
+  ): Promise<Document<SymptomScore> | undefined> {
+    return (await this.getSymptomScores(userId, new Date())).at(0)
   }
 }

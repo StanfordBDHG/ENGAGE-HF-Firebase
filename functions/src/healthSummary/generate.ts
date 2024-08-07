@@ -23,12 +23,24 @@ import {
   presortedMedian,
   presortedPercentile,
 } from '../extensions/array.js'
+import { localize } from '../extensions/localizedText.js'
 import { type HealthSummaryData } from '../models/healthSummaryData.js'
-import { MedicationRecommendationCategory } from '../models/medicationRecommendation.js'
+import { type LocalizedText } from '../models/helpers.js'
+import {
+  type MedicationRecommendationDoseSchedule,
+  MedicationRecommendationType,
+} from '../models/medicationRecommendation.js'
 import { type Observation } from '../models/vitals.js'
 
-export function generateHealthSummary(data: HealthSummaryData): Buffer {
-  const generator = new HealthSummaryPDFGenerator(data)
+export interface HealthSummaryOptions {
+  language: string
+}
+
+export function generateHealthSummary(
+  data: HealthSummaryData,
+  options: HealthSummaryOptions,
+): Buffer {
+  const generator = new HealthSummaryPDFGenerator(data, options)
   generator.addFirstPage()
   generator.addSecondPage()
   return generator.finish()
@@ -49,6 +61,8 @@ interface TextStyle {
 
 class HealthSummaryPDFGenerator {
   data: HealthSummaryData
+  options: HealthSummaryOptions
+
   doc: jsPDF
   pageWidth = 612
   pageHeight = 792
@@ -103,8 +117,10 @@ class HealthSummaryPDFGenerator {
     } as TextStyle,
   }
 
-  constructor(data: HealthSummaryData) {
+  constructor(data: HealthSummaryData, options: HealthSummaryOptions) {
     this.data = data
+    this.options = options
+
     this.doc = new jsPDF('p', 'pt', [this.pageWidth, this.pageHeight])
     this.addFont(
       'resources/fonts/OpenSans-Regular.ttf',
@@ -175,15 +191,15 @@ class HealthSummaryPDFGenerator {
       },
     )
 
-    function colorForCategory(
-      category: MedicationRecommendationCategory,
+    function colorForRecommendationType(
+      category: MedicationRecommendationType,
     ): string | undefined {
       switch (category) {
-        case MedicationRecommendationCategory.targetDoseReached:
+        case MedicationRecommendationType.targetDoseReached:
           return 'rgb(0,255,0)'
-        case MedicationRecommendationCategory.improvementAvailable:
+        case MedicationRecommendationType.improvementAvailable:
           return 'rgb(255,255,0)'
-        case MedicationRecommendationCategory.notStarted:
+        case MedicationRecommendationType.notStarted:
           return 'rgb(211,211,211)'
       }
     }
@@ -206,29 +222,50 @@ class HealthSummaryPDFGenerator {
           title: 'Questions/Comments',
         },
       ],
-      ...this.data.medications.map((medication, index) => [
+      ...this.data.recommendations.map((recommendation, index) => [
         {
-          title: '[ ] ' + medication.name,
+          title:
+            '[ ] ' + this.localize(recommendation.displayInformation.title),
         },
         {
           styles: {
-            fillColor: colorForCategory(medication.category),
+            fillColor: colorForRecommendationType(
+              recommendation.displayInformation.type,
+            ),
           },
-          title: medication.dose,
+          title:
+            recommendation.displayInformation.dosageInformation.currentSchedule
+              .map((schedule) =>
+                this.formatDoseSchedule(
+                  schedule,
+                  recommendation.displayInformation.dosageInformation.unit,
+                ),
+              )
+              .join('\n'),
         },
         {
           styles: {
-            fillColor: colorForCategory(medication.category),
+            fillColor: colorForRecommendationType(
+              recommendation.displayInformation.type,
+            ),
           },
-          title: medication.targetDose,
+          title:
+            recommendation.displayInformation.dosageInformation.targetSchedule
+              .map((schedule) =>
+                this.formatDoseSchedule(
+                  schedule,
+                  recommendation.displayInformation.dosageInformation.unit,
+                ),
+              )
+              .join('\n'),
         },
         {
-          title: medication.potentialPositiveChange,
+          title: this.localize(recommendation.displayInformation.description),
         },
         {
           styles: {
             lineWidth: {
-              bottom: index === this.data.medications.length - 1 ? 0.5 : 0,
+              bottom: index === this.data.recommendations.length - 1 ? 0.5 : 0,
               top: 0,
               left: 0.5,
               right: 0.5,
@@ -723,5 +760,28 @@ class HealthSummaryPDFGenerator {
     const fileName = file.split('/').at(-1) ?? file
     this.doc.addFileToVFS(fileName, fontFileContent)
     this.doc.addFont(fileName, name, style.toString())
+  }
+
+  formatDoseSchedule(
+    schedule: MedicationRecommendationDoseSchedule,
+    unit: string,
+  ): string {
+    const prefix =
+      schedule.quantity.map((quantity) => quantity.toString()).join('/') +
+      ' ' +
+      unit +
+      ' '
+    switch (schedule.frequency) {
+      case 1:
+        return prefix + 'daily'
+      case 2:
+        return prefix + 'twice daily'
+      default:
+        return prefix + `${schedule.frequency}x daily`
+    }
+  }
+
+  localize(text: LocalizedText): string {
+    return localize(text, this.options.language)
   }
 }
