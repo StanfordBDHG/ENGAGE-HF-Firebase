@@ -9,7 +9,7 @@
 import { type FHIRResource, type FHIRCoding } from './baseTypes.js'
 
 export interface FHIRQuestionnaireResponse extends FHIRResource {
-  authored: Date
+  authored: string
   id?: string
   item?: FHIRQuestionnaireResponseItem[]
   questionnaire: string

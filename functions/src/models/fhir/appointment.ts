@@ -28,9 +28,9 @@ export enum AppointmentStatus {
 
 export interface FHIRAppointment extends FHIRResource {
   status: AppointmentStatus
-  created: Date
-  start: Date
-  end: Date
+  created: string
+  start: string
+  end: string
   comment?: string
   patientInstruction?: string
   participant?: FHIRAppointmentParticipant[]

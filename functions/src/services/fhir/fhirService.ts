@@ -188,12 +188,16 @@ export class FhirService {
             continue
           const value = options.unit.valueOf(component.valueQuantity)
           if (!value) continue
-          result.push({ date: date, value: value, unit: options.unit })
+          result.push({
+            date: new Date(date),
+            value: value,
+            unit: options.unit,
+          })
         }
       } else {
         const value = options.unit.valueOf(observation.valueQuantity)
         if (!value) continue
-        result.push({ date: date, value: value, unit: options.unit })
+        result.push({ date: new Date(date), value: value, unit: options.unit })
       }
     }
     return result

@@ -21,7 +21,7 @@ describe('UserDebugDataFactory', () => {
       questionnaire:
         'http://spezi.health/fhir/questionnaire/9528ccc2-d1be-4c4c-9c3c-19f78e51ec19',
       questionnaireResponse: 'questionnaireResponse',
-      date: new Date(),
+      date: new Date().toISOString(),
       answer1a: 1,
       answer1b: 2,
       answer1c: 4,
