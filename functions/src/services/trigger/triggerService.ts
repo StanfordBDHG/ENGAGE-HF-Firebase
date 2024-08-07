@@ -17,6 +17,16 @@ export class TriggerService {
     this.factory = factory
   }
 
+  async userEnrolled(userId: string) {
+    try {
+      await this.updateRecommendationsForUser(userId)
+    } catch (error) {
+      console.error(
+        `Error updating user data for enrollment for user ${userId}: ${String(error)}`,
+      )
+    }
+  }
+
   async updateRecommendationsForAllUsers() {
     try {
       const userService = this.factory.user()
