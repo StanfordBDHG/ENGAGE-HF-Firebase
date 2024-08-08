@@ -11,7 +11,7 @@ import { type Message } from 'firebase-admin/messaging'
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 export class MockMessaging {
-  sendEach(messages: Message[], dryRun?: boolean): Promise<void> {
-    return Promise.resolve()
+  async sendEach(messages: Message[], dryRun?: boolean) {
+    return
   }
 }
