@@ -141,14 +141,4 @@ export class MockUserService implements UserService {
   async deleteUser(userId: string): Promise<void> {
     return
   }
-
-  // Methods - Messages
-
-  async dismissMessage(
-    userId: string,
-    messageId: string,
-    didPerformAction: boolean,
-  ): Promise<void> {
-    return
-  }
 }

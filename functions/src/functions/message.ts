@@ -39,7 +39,7 @@ export const dismissMessage = validatedOnCall(
         .check(UserRole.admin, UserRole.user(userId))
 
       await factory
-        .user()
+        .message()
         .dismissMessage(userId, messageId, didPerformAction ?? false)
     } catch (error) {
       console.error(error)

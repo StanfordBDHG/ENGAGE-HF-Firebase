@@ -28,8 +28,8 @@ import { getServiceFactory } from '../../factory/getServiceFactory.js'
 import { FhirService } from '../../fhir/fhirService.js'
 import { QuantityUnit } from '../../fhir/quantityUnit.js'
 import { type MedicationService } from '../../medication/medicationService.js'
-import { UserDebugDataFactory } from '../../seeding/debugData/userDebugDataFactory.js'
 import { CachingStrategy } from '../../seeding/seedingService.js'
+import { UserDataFactory } from '../../seeding/userData/userDataFactory.js'
 
 describe('RasiRecommender', () => {
   let medicationContraindication: (
@@ -246,7 +246,7 @@ describe('RasiRecommender', () => {
   describe('On perindopril (ACEI/ARB)', () => {
     let contextBelowTarget: MedicationRequestContext
     before(async () => {
-      const request = new UserDebugDataFactory().medicationRequest({
+      const request = UserDataFactory.medicationRequest({
         drugReference: DrugReference.perindopril4,
         frequencyPerDay: 1,
         quantity: 1,
@@ -268,7 +268,7 @@ describe('RasiRecommender', () => {
       })
 
       it('detects target dose reached', async () => {
-        const request = new UserDebugDataFactory().medicationRequest({
+        const request = UserDataFactory.medicationRequest({
           drugReference: DrugReference.perindopril4,
           frequencyPerDay: 2,
           quantity: 2,
@@ -517,7 +517,7 @@ describe('RasiRecommender', () => {
   describe('On sacubitril/valsartan', () => {
     let contextBelowTarget: MedicationRequestContext
     before(async () => {
-      const request = new UserDebugDataFactory().medicationRequest({
+      const request = UserDataFactory.medicationRequest({
         drugReference: DrugReference.sacubitrilValsartan49_51,
         frequencyPerDay: 1,
         quantity: 1,
@@ -529,7 +529,7 @@ describe('RasiRecommender', () => {
 
     it('detects target dose reached', async () => {
       // TODO: What should happen if target dose for one ingredient is reached but not another?
-      const request = new UserDebugDataFactory().medicationRequest({
+      const request = UserDataFactory.medicationRequest({
         drugReference: DrugReference.sacubitrilValsartan49_51,
         frequencyPerDay: 2,
         quantity: 2,

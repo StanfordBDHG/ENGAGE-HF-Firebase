@@ -22,10 +22,12 @@ import { CodingSystem, type DrugReference, LoincCode } from '../../codes.js'
 import { QuantityUnit } from '../../fhir/quantityUnit.js'
 import { symptomQuestionnaireLinkIds } from '../../fhir/symptomQuestionnaireLinkIds.js'
 
-export class UserDebugDataFactory {
+/* eslint-disable @typescript-eslint/no-extraneous-class */
+
+export class UserDataFactory {
   // Properties
 
-  private readonly loincDisplay = new Map<LoincCode, string>([
+  private static readonly loincDisplay = new Map<LoincCode, string>([
     [
       LoincCode.bloodPressure,
       'Blood pressure panel with all children optional',
@@ -42,9 +44,14 @@ export class UserDebugDataFactory {
     [LoincCode.potassium, 'Potassium [Moles/volume] in Blood'],
   ])
 
+  // Constructor
+
+  /* eslint-disable-next-line @typescript-eslint/no-empty-function */
+  private constructor() {}
+
   // Methods - Appointments
 
-  appointment(input: {
+  static appointment(input: {
     userId: string
     created: Date
     status: AppointmentStatus
@@ -71,7 +78,7 @@ export class UserDebugDataFactory {
 
   // Methods - MedicationRequests
 
-  medicationRequest(input: {
+  static medicationRequest(input: {
     drugReference: DrugReference
     frequencyPerDay: number
     quantity: number
@@ -105,7 +112,9 @@ export class UserDebugDataFactory {
 
   // Methods - Messages
 
-  medicationChangeMessage(input: { videoReference: string }): UserMessage {
+  static medicationChangeMessage(input: {
+    videoReference: string
+  }): UserMessage {
     return {
       title: {
         en: 'Medication Change',
@@ -121,7 +130,7 @@ export class UserDebugDataFactory {
     }
   }
 
-  weightGainMessage(): UserMessage {
+  static weightGainMessage(): UserMessage {
     return {
       title: {
         en: 'Weight Gain',
@@ -137,7 +146,7 @@ export class UserDebugDataFactory {
     }
   }
 
-  medicationUptitrationMessage(): UserMessage {
+  static medicationUptitrationMessage(): UserMessage {
     return {
       title: {
         en: 'Medication Uptitration',
@@ -153,7 +162,7 @@ export class UserDebugDataFactory {
     }
   }
 
-  welcomeMessage(input: { videoReference: string }): UserMessage {
+  static welcomeMessage(input: { videoReference: string }): UserMessage {
     return {
       title: {
         en: 'Welcome',
@@ -169,7 +178,7 @@ export class UserDebugDataFactory {
     }
   }
 
-  vitalsMessage(): UserMessage {
+  static vitalsMessage(): UserMessage {
     return {
       title: {
         en: 'Vitals',
@@ -185,7 +194,7 @@ export class UserDebugDataFactory {
     }
   }
 
-  symptomQuestionnaireMessage(input: {
+  static symptomQuestionnaireMessage(input: {
     questionnaireReference: string
   }): UserMessage {
     return {
@@ -203,7 +212,7 @@ export class UserDebugDataFactory {
     }
   }
 
-  preAppointmentMessage(): UserMessage {
+  static preAppointmentMessage(): UserMessage {
     return {
       title: {
         en: 'Appointment Reminder',
@@ -221,7 +230,7 @@ export class UserDebugDataFactory {
 
   // Methods - Observations
 
-  bloodPressureObservation(input: {
+  static bloodPressureObservation(input: {
     date: Date
     systolic: number
     diastolic: number
@@ -280,7 +289,7 @@ export class UserDebugDataFactory {
     }
   }
 
-  observation(input: {
+  static observation(input: {
     date: Date
     value: number
     unit: QuantityUnit
@@ -310,7 +319,7 @@ export class UserDebugDataFactory {
 
   // Methods - QuestionnaireResponses
 
-  questionnaireResponse(
+  static questionnaireResponse(
     input: SymptomQuestionnaireResponse,
   ): FHIRQuestionnaireResponse {
     const linkIds = symptomQuestionnaireLinkIds(input.questionnaire)

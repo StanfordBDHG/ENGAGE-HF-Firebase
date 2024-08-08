@@ -45,12 +45,4 @@ export interface UserService {
   getAllPatients(): Promise<Array<Document<User>>>
   getUser(userId: string): Promise<Document<User> | undefined>
   deleteUser(userId: string): Promise<void>
-
-  // Messages
-
-  dismissMessage(
-    userId: string,
-    messageId: string,
-    didPerformAction: boolean,
-  ): Promise<void>
 }

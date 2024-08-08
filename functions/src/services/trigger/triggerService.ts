@@ -11,6 +11,7 @@ import { advanceDateByDays } from '../../extensions/date.js'
 import { type FHIRQuestionnaireResponse } from '../../models/fhir/questionnaireResponse.js'
 import { type ServiceFactory } from '../factory/serviceFactory.js'
 import { type RecommendationInput } from '../recommendation/recommenders/recommender.js'
+import { UserDataFactory } from '../seeding/userData/userDataFactory.js'
 
 export class TriggerService {
   private readonly factory: ServiceFactory
@@ -22,6 +23,12 @@ export class TriggerService {
   async userEnrolled(userId: string) {
     try {
       await this.updateRecommendationsForUser(userId)
+      await this.factory.message().addMessage(
+        userId,
+        UserDataFactory.welcomeMessage({
+          videoReference: 'videoSections/0/videos/0',
+        }),
+      )
     } catch (error) {
       console.error(
         `Error updating user data for enrollment for user ${userId}: ${String(error)}`,
