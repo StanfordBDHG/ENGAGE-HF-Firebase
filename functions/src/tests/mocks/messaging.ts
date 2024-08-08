@@ -6,7 +6,9 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { Message } from 'firebase-admin/messaging'
+import { type Message } from 'firebase-admin/messaging'
+
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
 export class MockMessaging {
   sendEach(messages: Message[], dryRun?: boolean): Promise<void> {
