@@ -117,6 +117,9 @@ export const defaultSeed = validatedOnRequest(
   async (_, data, response) => {
     const factory = getServiceFactory()
 
+    if (!Flags.isEmulator)
+      throw factory.credential(undefined).permissionDeniedError()
+
     if (data.staticData) await updateStaticData(factory, data.staticData)
 
     const debugDataService = factory.debugData()
