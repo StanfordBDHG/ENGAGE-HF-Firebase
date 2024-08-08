@@ -142,8 +142,8 @@ class MockFirestoreDocRef extends MockFirestoreRef {
 
   listCollections() {
     const prefix = this.path + '/'
-    let result: string[] = []
-    this.firestore.collections.forEach((value, key) => {
+    const result: string[] = []
+    this.firestore.collections.forEach((_, key) => {
       if (!key.startsWith(prefix)) return
       const collectionName = key.slice(prefix.length)
       if (collectionName.includes('/')) return
