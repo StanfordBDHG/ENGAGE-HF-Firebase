@@ -13,11 +13,16 @@ import { advanceDateByDays } from '../../../extensions/date.js'
 import { AppointmentStatus } from '../../../models/fhir/appointment.js'
 import { type FHIRQuestionnaire } from '../../../models/fhir/questionnaire.js'
 import { type Invitation } from '../../../models/invitation.js'
-import { DrugReference, LoincCode } from '../../codes.js'
+import { LoincCode } from '../../codes.js'
 import { type DatabaseService } from '../../database/databaseService.js'
 import { QuantityUnit } from '../../fhir/quantityUnit.js'
 import { SeedingService } from '../seedingService.js'
 import { UserDataFactory } from '../userData/userDataFactory.js'
+import {
+  DrugReference,
+  QuestionnaireReference,
+  VideoReference,
+} from '../../references.js'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -124,17 +129,17 @@ export class DebugDataService extends SeedingService {
   async seedUserMessages(userId: string) {
     const values = [
       UserDataFactory.medicationChangeMessage({
-        videoReference: 'videoSections/1/videos/2',
+        videoReference: VideoReference.aceiAndArbs,
       }),
       UserDataFactory.medicationUptitrationMessage(),
       UserDataFactory.preAppointmentMessage(),
       UserDataFactory.symptomQuestionnaireMessage({
-        questionnaireReference: 'questionnaires/0',
+        questionnaireReference: QuestionnaireReference.enUS,
       }),
       UserDataFactory.vitalsMessage(),
       UserDataFactory.weightGainMessage(),
       UserDataFactory.welcomeMessage({
-        videoReference: 'videoSections/0/videos/0',
+        videoReference: VideoReference.welcome,
       }),
     ]
     await this.replaceCollection(`users/${userId}/messages`, values)

@@ -18,6 +18,7 @@ export enum UserMessageType {
 }
 
 export interface UserMessage {
+  creationDate: Date
   dueDate?: Date
   completionDate?: Date
   type: UserMessageType

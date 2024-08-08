@@ -18,9 +18,10 @@ import {
 import { type FHIRQuestionnaireResponse } from '../../../models/fhir/questionnaireResponse.js'
 import { type UserMessage, UserMessageType } from '../../../models/message.js'
 import { type SymptomQuestionnaireResponse } from '../../../models/symptomQuestionnaireResponse.js'
-import { CodingSystem, type DrugReference, LoincCode } from '../../codes.js'
+import { CodingSystem, LoincCode } from '../../codes.js'
 import { QuantityUnit } from '../../fhir/quantityUnit.js'
 import { symptomQuestionnaireLinkIds } from '../../fhir/symptomQuestionnaireLinkIds.js'
+import { DrugReference, QuestionnaireReference, VideoReference } from '../../references.js'
 
 /* eslint-disable @typescript-eslint/no-extraneous-class */
 
@@ -113,9 +114,10 @@ export class UserDataFactory {
   // Methods - Messages
 
   static medicationChangeMessage(input: {
-    videoReference: string
+    videoReference: VideoReference
   }): UserMessage {
     return {
+      creationDate: new Date(),
       title: {
         en: 'Medication Change',
         de: 'Änderung der Medikation',
@@ -132,6 +134,7 @@ export class UserDataFactory {
 
   static weightGainMessage(): UserMessage {
     return {
+      creationDate: new Date(),
       title: {
         en: 'Weight Gain',
         de: 'Gewichtszunahme',
@@ -148,6 +151,7 @@ export class UserDataFactory {
 
   static medicationUptitrationMessage(): UserMessage {
     return {
+      creationDate: new Date(),
       title: {
         en: 'Medication Uptitration',
         de: 'Medikationserhöhung',
@@ -162,8 +166,9 @@ export class UserDataFactory {
     }
   }
 
-  static welcomeMessage(input: { videoReference: string }): UserMessage {
+  static welcomeMessage(input: { videoReference: VideoReference }): UserMessage {
     return {
+      creationDate: new Date(),
       title: {
         en: 'Welcome',
         de: 'Willkommen',
@@ -180,6 +185,7 @@ export class UserDataFactory {
 
   static vitalsMessage(): UserMessage {
     return {
+      creationDate: new Date(),
       title: {
         en: 'Vitals',
         de: 'Vitalwerte',
@@ -195,9 +201,10 @@ export class UserDataFactory {
   }
 
   static symptomQuestionnaireMessage(input: {
-    questionnaireReference: string
+    questionnaireReference: QuestionnaireReference
   }): UserMessage {
     return {
+      creationDate: new Date(),
       title: {
         en: 'Symptom Questionnaire',
         de: 'Symptomfragebogen',
@@ -214,6 +221,7 @@ export class UserDataFactory {
 
   static preAppointmentMessage(): UserMessage {
     return {
+      creationDate: new Date(),
       title: {
         en: 'Appointment Reminder',
         de: 'Terminerinnerung',

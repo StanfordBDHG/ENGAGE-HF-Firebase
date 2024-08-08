@@ -13,15 +13,10 @@ import { MedicationRecommendationType } from '../../../models/medicationRecommen
 import { type MedicationRequestContext } from '../../../models/medicationRequestContext.js'
 import { MockContraindicationService } from '../../../tests/mocks/contraindicationService.js'
 import { mockHealthSummaryData } from '../../../tests/mocks/healthSummaryData.js'
-import {
-  CodingSystem,
-  DrugReference,
-  FHIRExtensionUrl,
-  MedicationClassReference,
-  MedicationReference,
-} from '../../codes.js'
+import { CodingSystem, FHIRExtensionUrl } from '../../codes.js'
 import { ContraindicationCategory } from '../../contraindication/contraindicationService.js'
 import { FhirService } from '../../fhir/fhirService.js'
+import { DrugReference, MedicationClassReference, MedicationReference } from '../../references.js'
 
 describe('DiureticRecommender', () => {
   const recommender = new DiureticRecommender(

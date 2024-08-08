@@ -12,7 +12,7 @@ import {
   Recommender,
 } from './recommender.js'
 import { MedicationRecommendationType } from '../../../models/medicationRecommendation.js'
-import { MedicationClassReference } from '../../codes.js'
+import { MedicationClassReference } from '../../references.js'
 
 export class DiureticRecommender extends Recommender {
   // Methods

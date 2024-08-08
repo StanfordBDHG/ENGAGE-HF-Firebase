@@ -7,9 +7,9 @@
 //
 
 import { type UserService } from './userService.js'
-import { type Invitation } from '../../models/invitation.js'
+import { UserAuth, type Invitation } from '../../models/invitation.js'
 import { type Organization } from '../../models/organization.js'
-import { type UserAuth, type User, UserType } from '../../models/user.js'
+import { type User, UserType } from '../../models/user.js'
 import { type Document } from '../database/databaseService.js'
 
 /* eslint-disable @typescript-eslint/require-await */
@@ -125,9 +125,9 @@ export class MockUserService implements UserService {
       id: userId,
       content: {
         type: UserType.clinician,
-        dateOfBirth: new Date('1970-01-02').toISOString(),
+        dateOfBirth: new Date('1970-01-02'),
         clinician: 'mockClinician',
-        dateOfEnrollment: new Date('2024-04-02').toISOString(),
+        dateOfEnrollment: new Date('2024-04-02'),
         invitationCode: '123',
         messagesSettings: {
           dailyRemindersAreActive: true,

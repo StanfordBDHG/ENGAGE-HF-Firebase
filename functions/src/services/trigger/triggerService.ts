@@ -12,13 +12,67 @@ import { type FHIRQuestionnaireResponse } from '../../models/fhir/questionnaireR
 import { type ServiceFactory } from '../factory/serviceFactory.js'
 import { type RecommendationInput } from '../recommendation/recommenders/recommender.js'
 import { UserDataFactory } from '../seeding/userData/userDataFactory.js'
+import { QuestionnaireReference, VideoReference } from '../references.js'
 
 export class TriggerService {
+  // Properties
+
   private readonly factory: ServiceFactory
+
+  // Constructor
 
   constructor(factory: ServiceFactory) {
     this.factory = factory
   }
+
+  // Methods - Schedule
+
+  async everyMorning() {
+    try {
+      const messageService = this.factory.message()
+      const users = await this.factory.user().getAllPatients()
+
+      const symptomReminderMessage =
+        UserDataFactory.symptomQuestionnaireMessage({
+          // TODO: Possibly select different questionnaire depending on localization
+          questionnaireReference: QuestionnaireReference.enUS,
+        })
+      const vitalsMessage = UserDataFactory.vitalsMessage()
+
+      await Promise.all(
+        users.map(async (user) => {
+          try {
+            await messageService.addMessage(user.id, vitalsMessage)
+            await messageService.sendNotification(user.id, vitalsMessage, {
+              language: user.content.language,
+            })
+
+            const enrollmentDate = user.content.dateOfEnrollment
+            const durationOfOneDayInMilliseconds = 24 * 60 * 60 * 1000
+            if (
+              enrollmentDate.getTime() % (durationOfOneDayInMilliseconds * 14) <
+              durationOfOneDayInMilliseconds
+            ) {
+              await messageService.addMessage(user.id, symptomReminderMessage)
+              await messageService.sendNotification(
+                user.id,
+                symptomReminderMessage,
+                { language: user.content.language },
+              )
+            }
+          } catch (error) {
+            console.error(
+              `Error running every morning trigger for user ${user.id}: ${String(error)}`,
+            )
+          }
+        }),
+      )
+    } catch (error) {
+      console.error(`Error running every morning trigger: ${String(error)}`)
+    }
+  }
+
+  // Methods - Triggers
 
   async userEnrolled(userId: string) {
     try {
@@ -26,7 +80,7 @@ export class TriggerService {
       await this.factory.message().addMessage(
         userId,
         UserDataFactory.welcomeMessage({
-          videoReference: 'videoSections/0/videos/0',
+          videoReference: VideoReference.welcome,
         }),
       )
     } catch (error) {
@@ -58,6 +112,8 @@ export class TriggerService {
       )
     }
   }
+
+  // Methods - Actions
 
   async updateAllSymptomScores(userId: string) {
     try {
