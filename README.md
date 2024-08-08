@@ -305,7 +305,7 @@ Diuretics, if currently present as medication request, will be shown as a recomm
 |description|LocalizedText|e.g. "Personal target dose reached. No action required."|The explanation of the recommendation, displayed along with a summary of the medication.|
 |type|[Medication Recommendation Type](#Medication-Recommendation-Type)|e.g. "personalTargetDoseReached"|See [Medication Recommendation Type](#Medication-Recommendation-Type) for more information.|
 |dosageInformation|DosageInformation|See [Dosage Information](#Dosage-Information)|A description of the current, minimum, and target doses for a given medication. 
-When the patient is not yet taking the medication, its current target dose will be an empty list.| 
+When the patient is not yet taking the medication, its currentSchedule will be an empty list.| 
 
 The `DosageInformation` property contains the following information:
 
