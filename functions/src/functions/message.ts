@@ -13,23 +13,18 @@ import { UserRole } from '../services/credential/credential.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
 const dismissMessageInputSchema = z.object({
+  userId: z.string().or(z.null()).default(null),
   messageId: z.string(),
-  didPerformAction: z.boolean().optional(),
+  didPerformAction: z.boolean().default(false),
 })
 
 export const dismissMessage = validatedOnCall(
   dismissMessageInputSchema,
   async (request): Promise<void> => {
-    if (!request.auth?.uid)
-      throw new https.HttpsError(
-        'unauthenticated',
-        'User is not properly authenticated.',
-      )
+    const userId = request.data.userId ?? request.auth?.uid
 
-    const userId = request.auth.uid
-    const { messageId, didPerformAction } = request.data
-    if (!messageId)
-      throw new https.HttpsError('invalid-argument', 'Message ID is required')
+    if (!userId)
+      throw new https.HttpsError('not-found', 'User could not be found.')
 
     try {
       const factory = getServiceFactory()
@@ -40,7 +35,11 @@ export const dismissMessage = validatedOnCall(
 
       await factory
         .message()
-        .dismissMessage(userId, messageId, didPerformAction ?? false)
+        .dismissMessage(
+          userId,
+          request.data.messageId,
+          request.data.didPerformAction,
+        )
     } catch (error) {
       console.error(error)
       throw new https.HttpsError('internal', 'Internal server error.')
