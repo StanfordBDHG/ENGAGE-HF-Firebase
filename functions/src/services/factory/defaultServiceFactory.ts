@@ -29,6 +29,8 @@ import { StaticDataService } from '../seeding/staticData/staticDataService.js'
 import { TriggerService } from '../trigger/triggerService.js'
 import { DatabaseUserService } from '../user/databaseUserService.js'
 import { type UserService } from '../user/userService.js'
+import { SymptomScoreCalculator } from '../symptomScore/symptomScoreCalculator.js'
+import { DefaultSymptomScoreCalculator } from '../symptomScore/defaultSymptomScoreCalculator.js'
 
 export class DefaultServiceFactory implements ServiceFactory {
   // Properties - Options
@@ -100,6 +102,10 @@ export class DefaultServiceFactory implements ServiceFactory {
       new StaticDataService(this.databaseService.get(), new RxNormService()),
   )
 
+  private readonly symptomScoreCalculator = new Lazy(
+    () => new DefaultSymptomScoreCalculator(this.fhirService.get()),
+  )
+
   private readonly triggerService = new Lazy(() => new TriggerService(this))
 
   private readonly userService = new Lazy(
@@ -152,6 +158,10 @@ export class DefaultServiceFactory implements ServiceFactory {
 
   recommendation(): RecommendationService {
     return this.recommendationService.get()
+  }
+
+  symptomScore(): SymptomScoreCalculator {
+    return this.symptomScoreCalculator.get()
   }
 
   // Methods - Trigger

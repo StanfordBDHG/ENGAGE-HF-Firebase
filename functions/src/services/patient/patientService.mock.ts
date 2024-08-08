@@ -419,6 +419,7 @@ export class MockPatientService implements PatientService {
   ): Promise<Array<Document<SymptomScore>>> {
     const values: SymptomScore[] = [
       {
+        questionnaireResponseId: '4',
         overallScore: 40,
         physicalLimitsScore: 50,
         socialLimitsScore: 38,
@@ -428,6 +429,7 @@ export class MockPatientService implements PatientService {
         date: new Date('2024-01-24'),
       },
       {
+        questionnaireResponseId: '3',
         overallScore: 60,
         physicalLimitsScore: 58,
         socialLimitsScore: 75,
@@ -437,6 +439,7 @@ export class MockPatientService implements PatientService {
         date: new Date('2024-01-15'),
       },
       {
+        questionnaireResponseId: '2',
         overallScore: 44,
         physicalLimitsScore: 50,
         socialLimitsScore: 41,
@@ -446,6 +449,7 @@ export class MockPatientService implements PatientService {
         date: new Date('2023-12-30'),
       },
       {
+        questionnaireResponseId: '1',
         overallScore: 75,
         physicalLimitsScore: 58,
         socialLimitsScore: 75,
@@ -465,5 +469,13 @@ export class MockPatientService implements PatientService {
     userId: string,
   ): Promise<Document<SymptomScore> | undefined> {
     return (await this.getSymptomScores(userId, new Date())).at(0)
+  }
+
+  async updateSymptomScore(
+    userId: string,
+    symptomScoreId: string,
+    symptomScore: SymptomScore | undefined,
+  ): Promise<void> {
+    return
   }
 }

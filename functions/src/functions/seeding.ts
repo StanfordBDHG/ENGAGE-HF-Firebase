@@ -86,6 +86,7 @@ enum UserDebugDataComponent {
   eGfrObservations = 'eGfrObservations',
   potassiumObservations = 'potassiumObservations',
   questionnaireResponses = 'questionnaireResponses',
+  symptomScores = 'symptomScores',
 }
 
 const defaultSeedInputSchema = z.object({
@@ -214,6 +215,23 @@ export const defaultSeed = validatedOnRequest(
             )
           )
             await triggerService.updateRecommendationsForUser(userId)
+
+          if (
+            data.onlyUserCollections.includes(
+              UserDebugDataComponent.questionnaireResponses,
+            )
+          )
+            await debugDataService.seedUserQuestionnaireResponses(
+              userId,
+              data.date,
+            )
+
+          if (
+            data.onlyUserCollections.includes(
+              UserDebugDataComponent.symptomScores,
+            )
+          )
+            await triggerService.updateAllSymptomScores(userId)
         } catch (error) {
           console.error(`Failed to seed user ${userId}: ${String(error)}`)
         }
@@ -281,6 +299,16 @@ export const defaultSeed = validatedOnRequest(
           )
         )
           await triggerService.updateRecommendationsForUser(userData.userId)
+        if (
+          userData.only.includes(UserDebugDataComponent.questionnaireResponses)
+        )
+          await debugDataService.seedUserQuestionnaireResponses(
+            userData.userId,
+            data.date,
+          )
+
+        if (userData.only.includes(UserDebugDataComponent.symptomScores))
+          await triggerService.updateAllSymptomScores(userData.userId)
       } catch (error) {
         console.error(
           `Failed to seed user data ${userData.userId}: ${String(error)}`,

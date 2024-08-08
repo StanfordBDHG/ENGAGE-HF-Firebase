@@ -307,7 +307,7 @@ export class DebugDataService extends SeedingService {
 
   async seedUserQuestionnaireResponses(userId: string, date: Date) {
     const questionnaire = this.readJSON<FHIRQuestionnaire[]>(
-      'questionnaires.json',
+      '../questionnaires.json',
     ).at(0)
 
     // This is just a list of pseudo-random numbers that is used to generate
@@ -359,7 +359,7 @@ export class DebugDataService extends SeedingService {
 
     const values = chunks(randomNumbers, 13).map((chunk, index) =>
       this.userDataFactory.questionnaireResponse({
-        questionnaire: questionnaire?.id ?? '',
+        questionnaire: questionnaire?.url ?? '',
         questionnaireResponse: index.toString(),
         date: advanceDateByDays(date, -(index * 14) - 2).toISOString(),
         answer1a: Math.floor(1 + chunk[0] * 6),

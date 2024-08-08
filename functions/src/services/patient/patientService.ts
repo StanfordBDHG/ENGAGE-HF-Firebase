@@ -82,4 +82,10 @@ export interface PatientService {
   getLatestSymptomScore(
     userId: string,
   ): Promise<Document<SymptomScore> | undefined>
+
+  updateSymptomScore(
+    userId: string,
+    symptomScoreId: string,
+    symptomScore: SymptomScore | undefined,
+  ): Promise<void>
 }

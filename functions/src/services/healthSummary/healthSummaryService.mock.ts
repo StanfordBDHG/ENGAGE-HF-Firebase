@@ -89,6 +89,7 @@ export class MockHealthSummaryService implements HealthSummaryService {
       vitals: await this.getVitals(userId),
       symptomScores: [
         {
+          questionnaireResponseId: '4',
           overallScore: 40,
           physicalLimitsScore: 50,
           socialLimitsScore: 38,
@@ -98,6 +99,7 @@ export class MockHealthSummaryService implements HealthSummaryService {
           date: this.startDateAdvancedByDays(-9),
         },
         {
+          questionnaireResponseId: '3',
           overallScore: 60,
           physicalLimitsScore: 58,
           socialLimitsScore: 75,
@@ -107,6 +109,7 @@ export class MockHealthSummaryService implements HealthSummaryService {
           date: this.startDateAdvancedByDays(-18),
         },
         {
+          questionnaireResponseId: '2',
           overallScore: 44,
           physicalLimitsScore: 50,
           socialLimitsScore: 41,
@@ -116,6 +119,7 @@ export class MockHealthSummaryService implements HealthSummaryService {
           date: this.startDateAdvancedByDays(-34),
         },
         {
+          questionnaireResponseId: '1',
           overallScore: 75,
           physicalLimitsScore: 58,
           socialLimitsScore: 75,
