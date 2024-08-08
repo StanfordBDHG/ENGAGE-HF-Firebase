@@ -251,7 +251,6 @@ Based on [FHIR MedicationRequest](https://hl7.org/fhir/R4B/medicationrequest.htm
 |id|string|-|[Resource](https://hl7.org/fhir/R4B/resource.html): Logical id of this artifact|
 |medication|Reference(Medication) or CodeableConcept|-|CodeableConcept containing one of the codes from /medications/$medicationId$|
 |dosageInstruction|Dosage|-|-|
-|patient|string|e.g. "allergy", "intolerance"|`userId` as used in /users/$userId$ and related collections.|
 
 The `dosageInstruction` property may contain values with the following properties:
 
