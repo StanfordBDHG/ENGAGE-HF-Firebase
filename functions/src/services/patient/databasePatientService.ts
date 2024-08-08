@@ -220,17 +220,15 @@ export class DatabasePatientService implements PatientService {
     symptomScoreId: string,
     symptomScore: SymptomScore | undefined,
   ): Promise<void> {
-    return this.databaseService.runTransaction(
-      async (firestore, transaction) => {
-        const ref = firestore.doc(
-          `users/${userId}/symptomScores/${symptomScoreId}`,
-        )
-        if (symptomScore) {
-          transaction.set(ref, symptomScore)
-        } else {
-          transaction.delete(ref)
-        }
-      },
-    )
+    return this.databaseService.runTransaction((firestore, transaction) => {
+      const ref = firestore.doc(
+        `users/${userId}/symptomScores/${symptomScoreId}`,
+      )
+      if (symptomScore) {
+        transaction.set(ref, symptomScore)
+      } else {
+        transaction.delete(ref)
+      }
+    })
   }
 }

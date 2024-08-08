@@ -17,6 +17,6 @@ export const onUserQuestionnaireResponseWritten = onDocumentWritten(
       .questionnaireResponseWritten(
         event.params.userId,
         event.params.questionnaireResponseId,
-        event.data?.after?.data(),
+        event.data?.after.data(),
       ),
 )

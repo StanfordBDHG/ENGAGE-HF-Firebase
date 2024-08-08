@@ -6,13 +6,11 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { DocumentData, DocumentSnapshot } from 'firebase-admin/firestore'
+import { type DocumentData } from 'firebase-admin/firestore'
 import { advanceDateByDays } from '../../extensions/date.js'
+import { type FHIRQuestionnaireResponse } from '../../models/fhir/questionnaireResponse.js'
 import { type ServiceFactory } from '../factory/serviceFactory.js'
 import { type RecommendationInput } from '../recommendation/recommenders/recommender.js'
-import { SymptomScore } from '../../models/symptomScore.js'
-import { SymptomQuestionnaireResponse } from '../../models/symptomQuestionnaireResponse.js'
-import { FHIRQuestionnaireResponse } from '../../models/fhir/questionnaireResponse.js'
 
 export class TriggerService {
   private readonly factory: ServiceFactory

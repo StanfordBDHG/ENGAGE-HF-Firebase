@@ -26,11 +26,11 @@ import { RecommendationService } from '../recommendation/recommendationService.j
 import { DebugDataService } from '../seeding/debugData/debugDataService.js'
 import { RxNormService } from '../seeding/staticData/rxNormService.js'
 import { StaticDataService } from '../seeding/staticData/staticDataService.js'
+import { DefaultSymptomScoreCalculator } from '../symptomScore/defaultSymptomScoreCalculator.js'
+import { type SymptomScoreCalculator } from '../symptomScore/symptomScoreCalculator.js'
 import { TriggerService } from '../trigger/triggerService.js'
 import { DatabaseUserService } from '../user/databaseUserService.js'
 import { type UserService } from '../user/userService.js'
-import { SymptomScoreCalculator } from '../symptomScore/symptomScoreCalculator.js'
-import { DefaultSymptomScoreCalculator } from '../symptomScore/defaultSymptomScoreCalculator.js'
 
 export class DefaultServiceFactory implements ServiceFactory {
   // Properties - Options
