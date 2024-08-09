@@ -44,7 +44,7 @@ export class DatabaseMedicationService implements MedicationService {
     const drug = (await this.getReference(drugReference))?.content
     if (!drug) throw new Error('Drug not found')
     const medicationReference: FHIRReference<FHIRMedication> = {
-      reference: drugReference.reference?.split('/').slice(0, 2).join('/'),
+      reference: drugReference.reference.split('/').slice(0, 2).join('/'),
     }
     const medication = (await this.getReference(medicationReference))?.content
     medicationReference.display =

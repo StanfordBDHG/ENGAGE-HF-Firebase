@@ -18,14 +18,17 @@ import {
 import { type FHIRQuestionnaireResponse } from '../../../models/fhir/questionnaireResponse.js'
 import { type UserMessage, UserMessageType } from '../../../models/message.js'
 import { type SymptomQuestionnaireResponse } from '../../../models/symptomQuestionnaireResponse.js'
-import { CodingSystem, type DrugReference, LoincCode } from '../../codes.js'
+import { CodingSystem, LoincCode } from '../../codes.js'
 import { QuantityUnit } from '../../fhir/quantityUnit.js'
 import { symptomQuestionnaireLinkIds } from '../../fhir/symptomQuestionnaireLinkIds.js'
+import { DrugReference, QuestionnaireReference, VideoReference } from '../../references.js'
 
-export class UserDebugDataFactory {
+/* eslint-disable @typescript-eslint/no-extraneous-class */
+
+export class UserDataFactory {
   // Properties
 
-  private readonly loincDisplay = new Map<LoincCode, string>([
+  private static readonly loincDisplay = new Map<LoincCode, string>([
     [
       LoincCode.bloodPressure,
       'Blood pressure panel with all children optional',
@@ -42,9 +45,14 @@ export class UserDebugDataFactory {
     [LoincCode.potassium, 'Potassium [Moles/volume] in Blood'],
   ])
 
+  // Constructor
+
+  /* eslint-disable-next-line @typescript-eslint/no-empty-function */
+  private constructor() {}
+
   // Methods - Appointments
 
-  appointment(input: {
+  static appointment(input: {
     userId: string
     created: Date
     status: AppointmentStatus
@@ -71,7 +79,7 @@ export class UserDebugDataFactory {
 
   // Methods - MedicationRequests
 
-  medicationRequest(input: {
+  static medicationRequest(input: {
     drugReference: DrugReference
     frequencyPerDay: number
     quantity: number
@@ -105,8 +113,11 @@ export class UserDebugDataFactory {
 
   // Methods - Messages
 
-  medicationChangeMessage(input: { videoReference: string }): UserMessage {
+  static medicationChangeMessage(input: {
+    videoReference: VideoReference
+  }): UserMessage {
     return {
+      creationDate: new Date(),
       title: {
         en: 'Medication Change',
         de: 'Änderung der Medikation',
@@ -121,8 +132,9 @@ export class UserDebugDataFactory {
     }
   }
 
-  weightGainMessage(): UserMessage {
+  static weightGainMessage(): UserMessage {
     return {
+      creationDate: new Date(),
       title: {
         en: 'Weight Gain',
         de: 'Gewichtszunahme',
@@ -137,8 +149,9 @@ export class UserDebugDataFactory {
     }
   }
 
-  medicationUptitrationMessage(): UserMessage {
+  static medicationUptitrationMessage(): UserMessage {
     return {
+      creationDate: new Date(),
       title: {
         en: 'Medication Uptitration',
         de: 'Medikationserhöhung',
@@ -153,8 +166,9 @@ export class UserDebugDataFactory {
     }
   }
 
-  welcomeMessage(input: { videoReference: string }): UserMessage {
+  static welcomeMessage(input: { videoReference: VideoReference }): UserMessage {
     return {
+      creationDate: new Date(),
       title: {
         en: 'Welcome',
         de: 'Willkommen',
@@ -169,8 +183,9 @@ export class UserDebugDataFactory {
     }
   }
 
-  vitalsMessage(): UserMessage {
+  static vitalsMessage(): UserMessage {
     return {
+      creationDate: new Date(),
       title: {
         en: 'Vitals',
         de: 'Vitalwerte',
@@ -185,10 +200,11 @@ export class UserDebugDataFactory {
     }
   }
 
-  symptomQuestionnaireMessage(input: {
-    questionnaireReference: string
+  static symptomQuestionnaireMessage(input: {
+    questionnaireReference: QuestionnaireReference
   }): UserMessage {
     return {
+      creationDate: new Date(),
       title: {
         en: 'Symptom Questionnaire',
         de: 'Symptomfragebogen',
@@ -203,8 +219,9 @@ export class UserDebugDataFactory {
     }
   }
 
-  preAppointmentMessage(): UserMessage {
+  static preAppointmentMessage(): UserMessage {
     return {
+      creationDate: new Date(),
       title: {
         en: 'Appointment Reminder',
         de: 'Terminerinnerung',
@@ -221,7 +238,7 @@ export class UserDebugDataFactory {
 
   // Methods - Observations
 
-  bloodPressureObservation(input: {
+  static bloodPressureObservation(input: {
     date: Date
     systolic: number
     diastolic: number
@@ -280,7 +297,7 @@ export class UserDebugDataFactory {
     }
   }
 
-  observation(input: {
+  static observation(input: {
     date: Date
     value: number
     unit: QuantityUnit
@@ -310,7 +327,7 @@ export class UserDebugDataFactory {
 
   // Methods - QuestionnaireResponses
 
-  questionnaireResponse(
+  static questionnaireResponse(
     input: SymptomQuestionnaireResponse,
   ): FHIRQuestionnaireResponse {
     const linkIds = symptomQuestionnaireLinkIds(input.questionnaire)

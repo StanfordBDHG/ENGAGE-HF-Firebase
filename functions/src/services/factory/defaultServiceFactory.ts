@@ -20,6 +20,8 @@ import { DefaultHealthSummaryService } from '../healthSummary/databaseHealthSumm
 import { type HealthSummaryService } from '../healthSummary/healthSummaryService.js'
 import { DatabaseMedicationService } from '../medication/databaseMedicationService.js'
 import { type MedicationService } from '../medication/medicationService.js'
+import { DefaultMessageService } from '../message/defaultMessageService.js'
+import { type MessageService } from '../message/messageService.js'
 import { DatabasePatientService } from '../patient/databasePatientService.js'
 import { type PatientService } from '../patient/patientService.js'
 import { RecommendationService } from '../recommendation/recommendationService.js'
@@ -41,6 +43,7 @@ export class DefaultServiceFactory implements ServiceFactory {
 
   private readonly auth = new Lazy(() => admin.auth())
   private readonly firestore = new Lazy(() => admin.firestore())
+  private readonly messaging = new Lazy(() => admin.messaging())
   private readonly storage = new Lazy(() => admin.storage())
 
   // Properties - Database Layer
@@ -81,6 +84,14 @@ export class DefaultServiceFactory implements ServiceFactory {
       new DatabaseMedicationService(
         this.databaseService.get(),
         this.fhirService.get(),
+      ),
+  )
+
+  private readonly messageService = new Lazy(
+    () =>
+      new DefaultMessageService(
+        this.messaging.get(),
+        this.databaseService.get(),
       ),
   )
 
@@ -165,6 +176,10 @@ export class DefaultServiceFactory implements ServiceFactory {
   }
 
   // Methods - Trigger
+
+  message(): MessageService {
+    return this.messageService.get()
+  }
 
   trigger(): TriggerService {
     return this.triggerService.get()

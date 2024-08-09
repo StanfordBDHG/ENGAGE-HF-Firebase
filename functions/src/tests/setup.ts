@@ -14,6 +14,7 @@ export function setupMockFirebase(): MockFirebase {
   const result = new MockFirebase()
   stub(admin, 'auth').get(() => () => result.auth)
   stub(admin, 'firestore').get(() => () => result.firestore)
+  stub(admin, 'messaging').get(() => () => result.messaging)
   stub(admin, 'storage').get(() => () => result.storage)
   return result
 }

@@ -12,8 +12,8 @@ import {
   Recommender,
 } from './recommender.js'
 import { MedicationRecommendationType } from '../../../models/medicationRecommendation.js'
-import { MedicationClassReference, MedicationReference } from '../../codes.js'
 import { ContraindicationCategory } from '../../contraindication/contraindicationService.js'
+import { MedicationClassReference, MedicationReference } from '../../references.js'
 
 export class BetaBlockerRecommender extends Recommender {
   // Methods

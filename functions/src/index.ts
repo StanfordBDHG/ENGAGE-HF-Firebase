@@ -17,10 +17,12 @@ export {
   beforeUserCreatedFunction as beforeUserCreated,
   beforeUserSignedInFunction as beforeUserSignedIn,
 } from './functions/auth.js'
+export * from './functions/device.js'
 export * from './functions/healthSummary.js'
 export * from './functions/invitation.js'
 export * from './functions/message.js'
 export * from './functions/recommendation.js'
 export * from './functions/seeding.js'
 export * from './functions/symptomScore.js'
+export * from './functions/trigger.js'
 export * from './functions/user.js'
