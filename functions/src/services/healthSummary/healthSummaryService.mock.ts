@@ -45,6 +45,7 @@ export class MockHealthSummaryService implements HealthSummaryService {
             description:
               'Switch to Sacubitril-Valsartan (More Effective Medication)',
             type: MedicationRecommendationType.improvementAvailable,
+            videoPath: null,
             dosageInformation: {
               minimumSchedule: [{ frequency: 1, quantity: [25] }],
               currentSchedule: [{ frequency: 1, quantity: [25] }],
@@ -61,6 +62,7 @@ export class MockHealthSummaryService implements HealthSummaryService {
             subtitle: '',
             description: 'Continue Dose',
             type: MedicationRecommendationType.targetDoseReached,
+            videoPath: null,
             dosageInformation: {
               minimumSchedule: [{ frequency: 1, quantity: [5] }],
               currentSchedule: [{ frequency: 1, quantity: [10] }],
@@ -77,6 +79,7 @@ export class MockHealthSummaryService implements HealthSummaryService {
             subtitle: '',
             description: 'Start Medication',
             type: MedicationRecommendationType.notStarted,
+            videoPath: null,
             dosageInformation: {
               minimumSchedule: [{ frequency: 1, quantity: [5] }],
               currentSchedule: [],

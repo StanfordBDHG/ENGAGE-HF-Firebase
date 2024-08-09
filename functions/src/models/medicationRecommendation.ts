@@ -34,6 +34,7 @@ export interface MedicationRecommendationDisplayInformation {
   subtitle: LocalizedText
   description: LocalizedText
   type: MedicationRecommendationType
+  videoPath: string | null
   dosageInformation: MedicationRecommendationDosageInformation
 }
 
