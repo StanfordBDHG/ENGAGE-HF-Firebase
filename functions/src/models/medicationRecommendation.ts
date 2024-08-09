@@ -11,26 +11,41 @@ import {
   type FHIRMedication,
   type FHIRMedicationRequest,
 } from './fhir/medication.js'
-import { type MedicationRequestContext } from './medicationRequestContext.js'
+import { type LocalizedText } from './helpers.js'
 
-export enum MedicationRecommendationCategory {
+export enum MedicationRecommendationType {
+  improvementAvailable = 'improvementAvailable',
   moreLabObservationsRequired = 'moreLabObservationsRequired',
   morePatientObservationsRequired = 'morePatientObservationsRequired',
   noActionRequired = 'noActionRequired',
-  targetDoseReached = 'targetDoseReached',
-  personalTargetDoseReached = 'personalTargetDoseReached',
-  improvementAvailable = 'improvementAvailable',
   notStarted = 'notStarted',
+  personalTargetDoseReached = 'personalTargetDoseReached',
+  targetDoseReached = 'targetDoseReached',
 }
 
 export interface MedicationRecommendation {
   currentMedication: Array<FHIRReference<FHIRMedicationRequest>>
-  recommendedMedication?: FHIRReference<FHIRMedication>
-  category: MedicationRecommendationCategory
+  recommendedMedication: FHIRReference<FHIRMedication> | null
+  displayInformation: MedicationRecommendationDisplayInformation
 }
 
-export interface MedicationRecommendationContext {
-  currentMedication: MedicationRequestContext[]
-  recommendedMedication?: FHIRMedication
-  category: MedicationRecommendationCategory
+export interface MedicationRecommendationDisplayInformation {
+  title: LocalizedText
+  subtitle: LocalizedText
+  description: LocalizedText
+  type: MedicationRecommendationType
+  videoPath: string | null
+  dosageInformation: MedicationRecommendationDosageInformation
+}
+
+export interface MedicationRecommendationDosageInformation {
+  currentSchedule: MedicationRecommendationDoseSchedule[]
+  minimumSchedule: MedicationRecommendationDoseSchedule[]
+  targetSchedule: MedicationRecommendationDoseSchedule[]
+  unit: string
+}
+
+export interface MedicationRecommendationDoseSchedule {
+  frequency: number
+  quantity: number[]
 }

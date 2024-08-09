@@ -33,7 +33,7 @@ export function validatedOnCall<
 > {
   return onCall((request) => {
     try {
-      schema.parse(request.data)
+      request.data = schema.parse(request.data) as TypeOf<Schema>
       return handler(request)
     } catch (error) {
       if (error instanceof z.ZodError) {
@@ -61,7 +61,7 @@ export function validatedOnCallWithOptions<
 > {
   return onCall(options, (request) => {
     try {
-      schema.parse(request.data)
+      request.data = schema.parse(request.data) as TypeOf<Schema>
       return handler(request)
     } catch (error) {
       if (error instanceof z.ZodError) {

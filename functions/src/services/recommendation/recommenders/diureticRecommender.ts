@@ -6,18 +6,18 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { Recommender } from './recommender.js'
 import {
-  MedicationRecommendationCategory,
-  type MedicationRecommendation,
-} from '../../../models/medicationRecommendation.js'
+  type RecommendationInput,
+  type RecommendationOutput,
+  Recommender,
+} from './recommender.js'
+import { MedicationRecommendationType } from '../../../models/medicationRecommendation.js'
 import { MedicationClassReference } from '../../codes.js'
-import { type RecommendationInput } from '../recommendationService.js'
 
 export class DiureticRecommender extends Recommender {
   // Methods
 
-  compute(input: RecommendationInput): MedicationRecommendation[] {
+  compute(input: RecommendationInput): RecommendationOutput[] {
     const currentRequests = this.findCurrentRequests(input.requests, [
       MedicationClassReference.diuretics,
     ])
@@ -25,7 +25,7 @@ export class DiureticRecommender extends Recommender {
     return this.createRecommendation(
       currentRequests,
       undefined,
-      MedicationRecommendationCategory.personalTargetDoseReached,
+      MedicationRecommendationType.personalTargetDoseReached,
     )
   }
 }

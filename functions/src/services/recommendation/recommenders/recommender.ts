@@ -7,19 +7,30 @@
 //
 
 import { median } from '../../../extensions/array.js'
-import {
-  type MedicationRecommendationCategory,
-  type MedicationRecommendation,
-} from '../../../models/medicationRecommendation.js'
+import { type FHIRAllergyIntolerance } from '../../../models/fhir/allergyIntolerance.js'
+import { type MedicationRecommendationType } from '../../../models/medicationRecommendation.js'
 import { type MedicationRequestContext } from '../../../models/medicationRequestContext.js'
-import { type Observation } from '../../../models/vitals.js'
+import { type SymptomScore } from '../../../models/symptomScore.js'
+import { type Vitals, type Observation } from '../../../models/vitals.js'
 import {
   type MedicationClassReference,
   type MedicationReference,
 } from '../../codes.js'
 import { type ContraindicationService } from '../../contraindication/contraindicationService.js'
 import { type FhirService } from '../../fhir/fhirService.js'
-import { type RecommendationInput } from '../recommendationService.js'
+
+export interface RecommendationInput {
+  requests: MedicationRequestContext[]
+  contraindications: FHIRAllergyIntolerance[]
+  vitals: Vitals
+  latestSymptomScore?: SymptomScore
+}
+
+export interface RecommendationOutput {
+  currentMedication: MedicationRequestContext[]
+  recommendedMedication?: MedicationReference
+  type: MedicationRecommendationType
+}
 
 export abstract class Recommender {
   // Properties
@@ -39,27 +50,20 @@ export abstract class Recommender {
 
   // Methods
 
-  abstract compute(input: RecommendationInput): MedicationRecommendation[]
+  abstract compute(input: RecommendationInput): RecommendationOutput[]
 
   // Helpers
 
   protected createRecommendation(
-    currentRequests: MedicationRequestContext[],
+    currentMedication: MedicationRequestContext[],
     recommendedMedication: MedicationReference | undefined,
-    category: MedicationRecommendationCategory,
-  ): MedicationRecommendation[] {
+    type: MedicationRecommendationType,
+  ): RecommendationOutput[] {
     return [
       {
-        currentMedication: currentRequests.map(
-          (context) => context.requestReference,
-        ),
-        recommendedMedication:
-          recommendedMedication ?
-            {
-              reference: recommendedMedication,
-            }
-          : undefined,
-        category,
+        currentMedication: currentMedication,
+        recommendedMedication: recommendedMedication,
+        type: type,
       },
     ]
   }
@@ -89,7 +93,7 @@ export abstract class Recommender {
     return requests.filter((request) =>
       references.some(
         (reference) =>
-          request.medicationClassReference?.reference === reference.toString(),
+          request.medicationClassReference.reference === reference.toString(),
       ),
     )
   }

@@ -1,5 +1,6 @@
 {
   "0": {
+    "id": "0",
     "resourceType": "Observation",
     "status": "final",
     "code": {

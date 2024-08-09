@@ -27,7 +27,7 @@ describe('HealthSummaryService', () => {
       await healthSummaryService.getHealthSummaryData('mockUser')
     const expectedData = await mockHealthSummaryData()
     // TODO: Remove the next line to check whether medication optimizations also match the expected value.
-    expectedData.medications = []
+    expectedData.recommendations = []
     expect(actualData).to.deep.equal(expectedData)
   })
 })

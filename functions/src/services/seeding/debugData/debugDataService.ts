@@ -10,6 +10,7 @@ import { type Auth } from 'firebase-admin/auth'
 import { type Storage } from 'firebase-admin/storage'
 import { UserDebugDataFactory } from './userDebugDataFactory.js'
 import { chunks } from '../../../extensions/array.js'
+import { advanceDateByDays } from '../../../extensions/date.js'
 import { AppointmentStatus } from '../../../models/fhir/appointment.js'
 import { type FHIRQuestionnaire } from '../../../models/fhir/questionnaire.js'
 import { type Invitation } from '../../../models/invitation.js'
@@ -101,9 +102,9 @@ export class DebugDataService extends SeedingService {
     const values = [
       this.userDataFactory.appointment({
         userId,
-        created: this.advanceDateByDays(date, -2),
+        created: advanceDateByDays(date, -2),
         status: AppointmentStatus.booked,
-        start: this.advanceDateByDays(date, 2),
+        start: advanceDateByDays(date, 2),
         durationInMinutes: 30,
       }),
     ]
@@ -160,7 +161,8 @@ export class DebugDataService extends SeedingService {
 
     const values = randomNumbers.map((number, index) =>
       this.userDataFactory.bloodPressureObservation({
-        date: this.advanceDateByDays(date, -index - 2),
+        id: index.toString(),
+        date: advanceDateByDays(date, -index - 2),
         systolic: 80 + number * 70,
         diastolic: 50 + number * 40,
       }),
@@ -191,14 +193,16 @@ export class DebugDataService extends SeedingService {
 
     const values = [
       this.userDataFactory.observation({
-        date: this.advanceDateByDays(date, -2),
+        id: '0',
+        date: advanceDateByDays(date, -2),
         value: 70,
         unit: QuantityUnit.kg,
         code: LoincCode.bodyWeight,
       }),
       ...randomNumbers.map((number, index) =>
         this.userDataFactory.observation({
-          date: this.advanceDateByDays(date, -index - 3),
+          id: (index + 1).toString(),
+          date: advanceDateByDays(date, -index - 3),
           value: 150 + number * 20,
           unit: QuantityUnit.lbs,
           code: LoincCode.bodyWeight,
@@ -214,7 +218,8 @@ export class DebugDataService extends SeedingService {
   async seedUserCreatinineObservations(userId: string, date: Date) {
     const values = [
       this.userDataFactory.observation({
-        date: this.advanceDateByDays(date, -2),
+        id: '0',
+        date: advanceDateByDays(date, -2),
         value: 1.2,
         unit: QuantityUnit.mg_dL,
         code: LoincCode.creatinine,
@@ -230,7 +235,8 @@ export class DebugDataService extends SeedingService {
   async seedUserDryWeightObservations(userId: string, date: Date) {
     const values = [
       this.userDataFactory.observation({
-        date: this.advanceDateByDays(date, -2),
+        id: '0',
+        date: advanceDateByDays(date, -2),
         value: 71.5,
         unit: QuantityUnit.kg,
         code: LoincCode.bodyWeight,
@@ -246,7 +252,8 @@ export class DebugDataService extends SeedingService {
   async seedUserEgfrObservations(userId: string, date: Date) {
     const values = [
       this.userDataFactory.observation({
-        date: this.advanceDateByDays(date, -2),
+        id: '0',
+        date: advanceDateByDays(date, -2),
         value: 60,
         unit: QuantityUnit.mL_min_173m2,
         code: LoincCode.estimatedGlomerularFiltrationRate,
@@ -275,7 +282,8 @@ export class DebugDataService extends SeedingService {
 
     const values = randomNumbers.map((number, index) =>
       this.userDataFactory.observation({
-        date: this.advanceDateByDays(date, -index - 2),
+        id: index.toString(),
+        date: advanceDateByDays(date, -index - 2),
         value: 60 + number * 40,
         unit: QuantityUnit.bpm,
         code: LoincCode.heartRate,
@@ -291,7 +299,8 @@ export class DebugDataService extends SeedingService {
   async seedUserPotassiumObservations(userId: string, date: Date) {
     const values = [
       this.userDataFactory.observation({
-        date: this.advanceDateByDays(date, -2),
+        id: '0',
+        date: advanceDateByDays(date, -2),
         value: 4.2,
         unit: QuantityUnit.mEq_L,
         code: LoincCode.potassium,
@@ -306,7 +315,7 @@ export class DebugDataService extends SeedingService {
 
   async seedUserQuestionnaireResponses(userId: string, date: Date) {
     const questionnaire = this.readJSON<FHIRQuestionnaire[]>(
-      'questionnaires.json',
+      '../questionnaires.json',
     ).at(0)
 
     // This is just a list of pseudo-random numbers that is used to generate
@@ -358,9 +367,9 @@ export class DebugDataService extends SeedingService {
 
     const values = chunks(randomNumbers, 13).map((chunk, index) =>
       this.userDataFactory.questionnaireResponse({
-        questionnaire: questionnaire?.id ?? '',
+        questionnaire: questionnaire?.url ?? '',
         questionnaireResponse: index.toString(),
-        date: this.advanceDateByDays(date, -(index * 14) - 2).toISOString(),
+        date: advanceDateByDays(date, -(index * 14) - 2).toISOString(),
         answer1a: Math.floor(1 + chunk[0] * 6),
         answer1b: Math.floor(1 + chunk[1] * 6),
         answer1c: Math.floor(1 + chunk[2] * 6),
@@ -383,10 +392,6 @@ export class DebugDataService extends SeedingService {
   }
 
   // Helpers
-
-  private advanceDateByDays(date: Date, days: number): Date {
-    return new Date(date.getTime() + days * 24 * 60 * 60 * 1000)
-  }
 
   private async createUser(user: UserSeedingOptions): Promise<string> {
     const authUser = await this.auth.createUser(user.auth)

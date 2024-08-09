@@ -15,7 +15,10 @@ import {
   type FHIRExtension,
   type FHIRElement,
 } from '../../models/fhir/baseTypes.js'
-import { type FHIRMedication } from '../../models/fhir/medication.js'
+import {
+  type FHIRMedicationRequest,
+  type FHIRMedication,
+} from '../../models/fhir/medication.js'
 import { type FHIRObservation } from '../../models/fhir/observation.js'
 import { type FHIRQuestionnaireResponse } from '../../models/fhir/questionnaireResponse.js'
 import { type MedicationRequestContext } from '../../models/medicationRequestContext.js'
@@ -74,11 +77,17 @@ export class FhirService {
     ).at(0)?.valueReference
   }
 
-  minimumDailyDose(medication: FHIRMedication): number[] | undefined {
-    const request = this.extensionsWithUrl(
+  minimumDailyDoseRequest(
+    medication: FHIRMedication,
+  ): FHIRMedicationRequest | undefined {
+    return this.extensionsWithUrl(
       medication,
       FHIRExtensionUrl.minimumDailyDose,
     ).at(0)?.valueMedicationRequest
+  }
+
+  minimumDailyDose(medication: FHIRMedication): number[] | undefined {
+    const request = this.minimumDailyDoseRequest(medication)
     if (!request) return undefined
     return this.extensionsWithUrl(request, FHIRExtensionUrl.totalDailyDose)
       .at(0)
@@ -102,7 +111,7 @@ export class FhirService {
         }
       }
 
-      const ingredients = context.drug?.ingredient ?? []
+      const ingredients = context.drug.ingredient ?? []
 
       while (dailyDoses.length < ingredients.length) {
         dailyDoses.push(0)
@@ -117,11 +126,17 @@ export class FhirService {
     return dailyDoses
   }
 
-  targetDailyDose(medication: FHIRMedication): number[] | undefined {
-    const request = this.extensionsWithUrl(
+  targetDailyDoseRequest(
+    medication: FHIRMedication,
+  ): FHIRMedicationRequest | undefined {
+    return this.extensionsWithUrl(
       medication,
       FHIRExtensionUrl.targetDailyDose,
     ).at(0)?.valueMedicationRequest
+  }
+
+  targetDailyDose(medication: FHIRMedication): number[] | undefined {
+    const request = this.targetDailyDoseRequest(medication)
     if (!request) return undefined
     const result = this.extensionsWithUrl(
       request,

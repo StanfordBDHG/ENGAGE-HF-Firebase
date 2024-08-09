@@ -23,9 +23,9 @@ export interface PatientService {
     userId: string,
   ): Promise<Document<FHIRAppointment> | undefined>
 
-  // AllergyIntolerances
+  // Contraindications
 
-  getAllergyIntolerances(
+  getContraindications(
     userId: string,
   ): Promise<Array<Document<FHIRAllergyIntolerance>>>
 
@@ -37,17 +37,24 @@ export interface PatientService {
   getMedicationRequests(
     userId: string,
   ): Promise<Array<Document<FHIRMedicationRequest>>>
+  updateMedicationRecommendations(
+    userId: string,
+    recommendations: MedicationRecommendation[],
+  ): Promise<void>
 
   // Observations
 
   getBloodPressureObservations(
     userId: string,
+    cutoffDate: Date,
   ): Promise<Array<Document<FHIRObservation>>>
   getBodyWeightObservations(
     userId: string,
+    cutoffDate: Date,
   ): Promise<Array<Document<FHIRObservation>>>
   getHeartRateObservations(
     userId: string,
+    cutoffDate: Date,
   ): Promise<Array<Document<FHIRObservation>>>
 
   getMostRecentCreatinineObservation(
@@ -68,5 +75,17 @@ export interface PatientService {
   getQuestionnaireResponses(
     userId: string,
   ): Promise<Array<Document<FHIRQuestionnaireResponse>>>
-  getSymptomScores(userId: string): Promise<Array<Document<SymptomScore>>>
+  getSymptomScores(
+    userId: string,
+    cutoffDate: Date,
+  ): Promise<Array<Document<SymptomScore>>>
+  getLatestSymptomScore(
+    userId: string,
+  ): Promise<Document<SymptomScore> | undefined>
+
+  updateSymptomScore(
+    userId: string,
+    symptomScoreId: string,
+    symptomScore: SymptomScore | undefined,
+  ): Promise<void>
 }

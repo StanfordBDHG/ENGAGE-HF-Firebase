@@ -8,11 +8,12 @@
 
 import admin from 'firebase-admin'
 import { type AuthData } from 'firebase-functions/v2/tasks'
+import { type ServiceFactoryOptions } from './getServiceFactory.js'
+import { Lazy } from './lazy.js'
 import { type ServiceFactory } from './serviceFactory.js'
 import { DefaultContraindicationService } from '../contraindication/defaultContraindicationService.js'
 import { Credential } from '../credential/credential.js'
 import { CacheDatabaseService } from '../database/cacheDatabaseService.js'
-import { type DatabaseService } from '../database/databaseService.js'
 import { FirestoreService } from '../database/firestoreService.js'
 import { FhirService } from '../fhir/fhirService.js'
 import { DefaultHealthSummaryService } from '../healthSummary/databaseHealthSummaryService.js'
@@ -25,31 +26,100 @@ import { RecommendationService } from '../recommendation/recommendationService.j
 import { DebugDataService } from '../seeding/debugData/debugDataService.js'
 import { RxNormService } from '../seeding/staticData/rxNormService.js'
 import { StaticDataService } from '../seeding/staticData/staticDataService.js'
+import { DefaultSymptomScoreCalculator } from '../symptomScore/defaultSymptomScoreCalculator.js'
+import { type SymptomScoreCalculator } from '../symptomScore/symptomScoreCalculator.js'
+import { TriggerService } from '../trigger/triggerService.js'
 import { DatabaseUserService } from '../user/databaseUserService.js'
 import { type UserService } from '../user/userService.js'
 
 export class DefaultServiceFactory implements ServiceFactory {
-  // Properties
+  // Properties - Options
 
-  private readonly _auth = admin.auth()
-  private readonly _firestore = admin.firestore()
-  private readonly _storage = admin.storage()
-  private readonly _userService: UserService
+  private readonly options: ServiceFactoryOptions
 
-  private readonly _databaseService: DatabaseService
-  private readonly _uncachedDatabaseService: DatabaseService
+  // Properties - Firebase
+
+  private readonly auth = new Lazy(() => admin.auth())
+  private readonly firestore = new Lazy(() => admin.firestore())
+  private readonly storage = new Lazy(() => admin.storage())
+
+  // Properties - Database Layer
+
+  private readonly databaseService = new Lazy(() =>
+    this.options.allowCaching ?
+      new CacheDatabaseService(this.uncachedDatabaseService.get())
+    : this.uncachedDatabaseService.get(),
+  )
+  private readonly uncachedDatabaseService = new Lazy(
+    () => new FirestoreService(this.firestore.get()),
+  )
+
+  // Properties - Services
+
+  private readonly debugDataService = new Lazy(
+    () =>
+      new DebugDataService(
+        this.auth.get(),
+        this.databaseService.get(),
+        this.storage.get(),
+      ),
+  )
+
+  private readonly fhirService = new Lazy(() => new FhirService())
+
+  private readonly healthSummaryService = new Lazy(
+    () =>
+      new DefaultHealthSummaryService(
+        this.fhirService.get(),
+        this.patientService.get(),
+        this.userService.get(),
+      ),
+  )
+
+  private readonly medicationService = new Lazy(
+    () =>
+      new DatabaseMedicationService(
+        this.databaseService.get(),
+        this.fhirService.get(),
+      ),
+  )
+
+  private readonly patientService = new Lazy(
+    () => new DatabasePatientService(this.databaseService.get()),
+  )
+
+  private readonly recommendationService = new Lazy(() => {
+    const fhirService = this.fhirService.get()
+    return new RecommendationService(
+      new DefaultContraindicationService(fhirService),
+      fhirService,
+      this.medicationService.get(),
+    )
+  })
+
+  private readonly staticDataService = new Lazy(
+    () =>
+      new StaticDataService(this.databaseService.get(), new RxNormService()),
+  )
+
+  private readonly symptomScoreCalculator = new Lazy(
+    () => new DefaultSymptomScoreCalculator(this.fhirService.get()),
+  )
+
+  private readonly triggerService = new Lazy(() => new TriggerService(this))
+
+  private readonly userService = new Lazy(
+    () =>
+      new DatabaseUserService(
+        this.auth.get(),
+        this.uncachedDatabaseService.get(),
+      ),
+  )
 
   // Constructor
 
-  constructor() {
-    this._uncachedDatabaseService = new FirestoreService(this._firestore)
-    this._userService = new DatabaseUserService(
-      this._auth,
-      this._uncachedDatabaseService,
-    )
-    this._databaseService = new CacheDatabaseService(
-      this._uncachedDatabaseService,
-    )
+  constructor(options: ServiceFactoryOptions) {
+    this.options = options
   }
 
   // Methods - User
@@ -59,49 +129,44 @@ export class DefaultServiceFactory implements ServiceFactory {
   }
 
   user(): UserService {
-    return this._userService
+    return this.userService.get()
   }
 
   // Methods - Data
 
   medication(): MedicationService {
-    return new DatabaseMedicationService(
-      this._databaseService,
-      new FhirService(),
-    )
+    return this.medicationService.get()
   }
 
   debugData(): DebugDataService {
-    return new DebugDataService(
-      this._auth,
-      this._databaseService,
-      this._storage,
-    )
+    return this.debugDataService.get()
   }
 
   staticData(): StaticDataService {
-    return new StaticDataService(this._databaseService, new RxNormService())
+    return this.staticDataService.get()
   }
 
   // Methods - Patient
 
   healthSummary(): HealthSummaryService {
-    return new DefaultHealthSummaryService(
-      new FhirService(),
-      this.patient(),
-      this._userService,
-    )
+    return this.healthSummaryService.get()
   }
 
   patient(): PatientService {
-    return new DatabasePatientService(this._databaseService)
+    return this.patientService.get()
   }
 
   recommendation(): RecommendationService {
-    const fhirService = new FhirService()
-    return new RecommendationService(
-      new DefaultContraindicationService(fhirService),
-      fhirService,
-    )
+    return this.recommendationService.get()
+  }
+
+  symptomScore(): SymptomScoreCalculator {
+    return this.symptomScoreCalculator.get()
+  }
+
+  // Methods - Trigger
+
+  trigger(): TriggerService {
+    return this.triggerService.get()
   }
 }

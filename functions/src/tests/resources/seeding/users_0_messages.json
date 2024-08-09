@@ -1,5 +1,7 @@
 {
   "0": {
+    "completionDate": null,
+    "dueDate": null,
     "title": {
       "en": "Medication Change",
       "de": "Änderung der Medikation"
@@ -13,6 +15,8 @@
     "isDismissible": true
   },
   "1": {
+    "completionDate": null,
+    "dueDate": null,
     "title": {
       "en": "Medication Uptitration",
       "de": "Medikationserhöhung"
@@ -26,6 +30,8 @@
     "isDismissible": true
   },
   "2": {
+    "completionDate": null,
+    "dueDate": null,
     "title": {
       "en": "Appointment Reminder",
       "de": "Terminerinnerung"
@@ -39,6 +45,8 @@
     "isDismissible": false
   },
   "3": {
+    "completionDate": null,
+    "dueDate": null,
     "title": {
       "en": "Symptom Questionnaire",
       "de": "Symptomfragebogen"
@@ -52,6 +60,8 @@
     "isDismissible": false
   },
   "4": {
+    "completionDate": null,
+    "dueDate": null,
     "title": {
       "en": "Vitals",
       "de": "Vitalwerte"
@@ -65,6 +75,8 @@
     "isDismissible": false
   },
   "5": {
+    "completionDate": null,
+    "dueDate": null,
     "title": {
       "en": "Weight Gain",
       "de": "Gewichtszunahme"
@@ -78,6 +90,8 @@
     "isDismissible": true
   },
   "6": {
+    "completionDate": null,
+    "dueDate": null,
     "title": {
       "en": "Welcome",
       "de": "Willkommen"
