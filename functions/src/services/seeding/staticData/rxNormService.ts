@@ -12,6 +12,7 @@ import { type FHIRMedication } from '../../../models/fhir/medication.js'
 import { type MedicationClass } from '../../../models/medicationClass.js'
 import { CodingSystem, FHIRExtensionUrl } from '../../codes.js'
 import { QuantityUnit } from '../../fhir/quantityUnit.js'
+import { capitalize } from '../../../extensions/string.js'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
@@ -180,7 +181,7 @@ export class RxNormService {
           {
             system: CodingSystem.rxNorm,
             code: rxcui,
-            display: name,
+            display: capitalize(name),
           },
         ],
       },
@@ -192,7 +193,7 @@ export class RxNormService {
                 {
                   system: CodingSystem.rxNorm,
                   code: ingredient.rxcui,
-                  display: ingredient.name,
+                  display: capitalize(ingredient.name),
                 },
               ],
             },
@@ -337,7 +338,9 @@ export class RxNormService {
           {
             system: CodingSystem.rxNorm,
             code: rxcui,
-            display: rxTermInfo?.displayName ?? rxTermInfo?.fullName,
+            display: capitalize(
+              rxTermInfo?.displayName ?? rxTermInfo?.fullName ?? '',
+            ),
           },
         ],
       },
@@ -356,7 +359,7 @@ export class RxNormService {
             {
               system: CodingSystem.rxNorm,
               code: ingredient.rxcui,
-              display: ingredient.name,
+              display: capitalize(ingredient.name),
             },
           ],
         },
