@@ -43,7 +43,7 @@ export const beforeUserCreatedFunction = beforeUserCreated(async (event) => {
         'Organization not found.',
       )
 
-    const invitation = await userService.getInvitation(event.data.email)
+    const invitation = await userService.getInvitationByCode(event.data.email)
     if (!invitation?.content) {
       throw new https.HttpsError(
         'not-found',

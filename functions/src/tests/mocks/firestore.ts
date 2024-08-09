@@ -107,6 +107,81 @@ class MockFirestoreCollectionRef extends MockFirestoreRef {
       size: size,
     }
   }
+
+  where(field: string, operator: string, value: any) {
+    return new MockFirestoreFilteredCollectionRef(this, field, operator, value)
+  }
+
+  limit(limit: number) {
+    return new MockFirestoreLimitedCollectionRef(this, limit)
+  }
+}
+
+class MockFirestoreFilteredCollectionRef extends MockFirestoreCollectionRef {
+  readonly ref: MockFirestoreCollectionRef
+  readonly field: string
+  readonly operator: string
+  readonly value: any
+
+  constructor(
+    ref: MockFirestoreCollectionRef,
+    field: string,
+    operator: string,
+    value: any,
+  ) {
+    super(ref.firestore, ref.path)
+    this.ref = ref
+    this.field = field
+    this.operator = operator
+    this.value = value
+  }
+
+  get() {
+    const docs = this.ref.get().docs.filter((doc) => {
+      const value = doc.data()[this.field]
+      switch (this.operator) {
+        case '==':
+          return value === this.value
+        case '<':
+          return value < this.value
+        case '<=':
+          return value <= this.value
+        case '>':
+          return value > this.value
+        case '>=':
+          return value >= this.value
+        default:
+          throw new Error('Unsupported operator')
+      }
+    })
+
+    return {
+      docs: docs,
+      ref: this as any,
+      size: docs.length,
+    }
+  }
+}
+
+class MockFirestoreLimitedCollectionRef extends MockFirestoreCollectionRef {
+  readonly ref: MockFirestoreCollectionRef
+  readonly _limit: number
+
+  constructor(ref: MockFirestoreCollectionRef, limit: number) {
+    super(ref.firestore, ref.path)
+    this.ref = ref
+    this._limit = limit
+  }
+
+  get() {
+    const docs = this.ref.get().docs.slice(0, this._limit)
+
+    return {
+      docs: docs,
+      ref: this as any,
+      size: docs.length,
+    }
+  }
 }
 
 class MockFirestoreDocRef extends MockFirestoreRef {

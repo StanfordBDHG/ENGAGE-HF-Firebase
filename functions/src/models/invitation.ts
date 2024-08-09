@@ -10,6 +10,8 @@ import { type UserAuth, type User } from './user.js'
 export interface Invitation {
   userId?: string
 
+  code: string
+
   auth?: UserAuth
   user: User
 }

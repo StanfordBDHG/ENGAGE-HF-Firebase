@@ -70,35 +70,53 @@ export class DatabaseUserService implements UserService {
 
   // Invitations
 
-  async createInvitation(
-    invitationId: string,
-    content: Invitation,
-  ): Promise<void> {
-    await this.databaseService.runTransaction((firestore, transaction) => {
-      transaction.create(firestore.doc(`invitations/${invitationId}`), content)
-    })
-  }
-
-  async getInvitation(
-    invitationId: string,
-  ): Promise<Document<Invitation> | undefined> {
-    return this.databaseService.getDocument<Invitation>(
-      `invitations/${invitationId}`,
+  async createInvitation(content: Invitation): Promise<void> {
+    await this.databaseService.runTransaction(
+      async (firestore, transaction) => {
+        const invitations = await transaction.get(
+          firestore
+            .collection('invitations')
+            .where('code', '==', content.code)
+            .limit(1),
+        )
+        if (!invitations.empty)
+          throw new https.HttpsError(
+            'invalid-argument',
+            'Invitation code is not unique.',
+          )
+        transaction.create(firestore.collection(`invitations`).doc(), content)
+      },
     )
   }
 
+  async getInvitationByCode(
+    invitationCode: string,
+  ): Promise<Document<Invitation> | undefined> {
+    const result = await this.databaseService.getQuery<Invitation>(
+      (firestore) =>
+        firestore
+          .collection('invitations')
+          .where('code', '==', invitationCode)
+          .limit(1),
+    )
+    return result.at(0)
+  }
+
   async setInvitationUserId(
-    invitationId: string,
+    invitationCode: string,
     userId: string,
   ): Promise<void> {
     await this.databaseService.runTransaction(
       async (firestore, transaction) => {
-        const invitationRef = firestore.doc(`invitations/${invitationId}`)
-        const invitationDoc = await transaction.get(invitationRef)
-        if (!invitationDoc.exists) {
-          throw new Error('Invitation not found')
-        }
-        transaction.update(invitationRef, { userId: userId })
+        const invitation = (
+          await firestore
+            .collection(`invitations`)
+            .where('code', '==', invitationCode)
+            .limit(1)
+            .get()
+        ).docs.at(0)
+        if (!invitation) throw new Error('Invitation not found')
+        transaction.update(invitation.ref, { userId: userId })
       },
     )
   }
@@ -138,7 +156,7 @@ export class DatabaseUserService implements UserService {
       async (firestore, transaction) => {
         transaction.create(firestore.doc(`users/${userId}`), {
           ...invitation.content.user,
-          invitationCode: invitation.id,
+          invitationCode: invitation.content.code,
           dateOfEnrollment: FieldValue.serverTimestamp(),
         })
 
