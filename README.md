@@ -44,6 +44,7 @@ For SSO users (e.g. clinicians,owners), upon the first login using SSO, the rela
 
 |Property|Type|Values|Comments|
 |-|-|-|-|
+|code|string|e.g. 'PAULPAUL'|An 8-digit invitation code or SSO email address.|
 |userId|optional string|-|The userId associated with the invitation. This is set when an anonymous user has entered an invitation code, but has not used a proper account to log in yet.|
 |auth|optional Auth|Authentication information to be set when redeeming invitation. Will no longer be set once invitation has been redeemed.|
 |auth>displayName|optional string|Display name for the user.|
