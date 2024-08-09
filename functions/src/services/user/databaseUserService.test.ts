@@ -164,7 +164,7 @@ describe('DatabaseUserService', () => {
         type: UserType.patient,
         organization: 'mockOrganization',
       })
-      
+
       const userSnapshot = await firestore.collection('users').doc(userId).get()
       expect(userSnapshot.exists).to.be.true
       const userData = userSnapshot.data() as User | undefined
