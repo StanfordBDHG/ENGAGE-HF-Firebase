@@ -34,6 +34,7 @@ describe('DefaultMessageService', () => {
       const message: UserMessage = {
         creationDate: new Date('2024-01-01'),
         dueDate: new Date('2024-01-01'),
+        completionDate: null,
         type: UserMessageType.medicationChange,
         title: 'Medication Change',
         description: 'You have a new medication!',
@@ -52,6 +53,7 @@ describe('DefaultMessageService', () => {
       const message: UserMessage = {
         creationDate: new Date('2024-01-01'),
         dueDate: new Date('2024-01-01'),
+        completionDate: null,
         type: UserMessageType.preAppointment,
         title: 'Upcoming appointment',
         description: 'You have an upcoming appointment!',

@@ -10,7 +10,7 @@ import { type FHIRAllergyIntolerance } from '../../models/fhir/allergyIntoleranc
 import {
   type MedicationClassReference,
   type MedicationReference,
-} from '../codes.js'
+} from '../references.js'
 
 export enum ContraindicationCategory {
   none,
