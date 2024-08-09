@@ -5,7 +5,7 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import { UserRegistration } from './user.js'
+import { type UserRegistration } from './user.js'
 
 export interface Invitation {
   userId?: string

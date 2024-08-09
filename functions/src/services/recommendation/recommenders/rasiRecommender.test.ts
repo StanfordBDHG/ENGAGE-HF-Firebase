@@ -23,9 +23,13 @@ import { getServiceFactory } from '../../factory/getServiceFactory.js'
 import { FhirService } from '../../fhir/fhirService.js'
 import { QuantityUnit } from '../../fhir/quantityUnit.js'
 import { type MedicationService } from '../../medication/medicationService.js'
+import {
+  DrugReference,
+  MedicationClassReference,
+  MedicationReference,
+} from '../../references.js'
 import { CachingStrategy } from '../../seeding/seedingService.js'
 import { UserDataFactory } from '../../seeding/userData/userDataFactory.js'
-import { DrugReference, MedicationClassReference, MedicationReference } from '../../references.js'
 
 describe('RasiRecommender', () => {
   let medicationContraindication: (

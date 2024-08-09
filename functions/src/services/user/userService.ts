@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { UserAuth, type Invitation } from '../../models/invitation.js'
+import { type UserAuth, type Invitation } from '../../models/invitation.js'
 import { type Organization } from '../../models/organization.js'
 import { type User } from '../../models/user.js'
 import { type Document } from '../database/databaseService.js'

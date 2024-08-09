@@ -7,7 +7,7 @@
 //
 
 import { type HealthSummaryData } from '../../models/healthSummaryData.js'
-import { Observation, type Vitals } from '../../models/vitals.js'
+import { type Observation, type Vitals } from '../../models/vitals.js'
 
 export interface HealthSummaryService {
   getHealthSummaryData(userId: string): Promise<HealthSummaryData>

@@ -7,7 +7,7 @@
         {
           "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
           "code": "1808",
-          "display": "bumetanide"
+          "display": "Bumetanide"
         }
       ]
     },
@@ -29,7 +29,7 @@
         {
           "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
           "code": "1998",
-          "display": "captopril"
+          "display": "Captopril"
         }
       ]
     },
@@ -139,7 +139,7 @@
         {
           "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
           "code": "3827",
-          "display": "enalapril"
+          "display": "Enalapril"
         }
       ]
     },
@@ -249,7 +249,7 @@
         {
           "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
           "code": "4109",
-          "display": "ethacrynic acid"
+          "display": "Ethacrynic Acid"
         }
       ]
     },
@@ -271,7 +271,7 @@
         {
           "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
           "code": "4603",
-          "display": "furosemide"
+          "display": "Furosemide"
         }
       ]
     },
@@ -293,7 +293,7 @@
         {
           "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
           "code": "9997",
-          "display": "spironolactone"
+          "display": "Spironolactone"
         }
       ]
     },
@@ -403,7 +403,7 @@
         {
           "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
           "code": "18867",
-          "display": "benazepril"
+          "display": "Benazepril"
         }
       ]
     },
@@ -513,7 +513,7 @@
         {
           "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
           "code": "19484",
-          "display": "bisoprolol"
+          "display": "Bisoprolol"
         }
       ]
     },
@@ -623,7 +623,7 @@
         {
           "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
           "code": "20352",
-          "display": "carvedilol"
+          "display": "Carvedilol"
         }
       ]
     },
@@ -733,7 +733,7 @@
         {
           "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
           "code": "29046",
-          "display": "lisinopril"
+          "display": "Lisinopril"
         }
       ]
     },
@@ -843,7 +843,7 @@
         {
           "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
           "code": "30131",
-          "display": "moexipril"
+          "display": "Moexipril"
         }
       ]
     },
@@ -953,7 +953,7 @@
         {
           "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
           "code": "35208",
-          "display": "quinapril"
+          "display": "Quinapril"
         }
       ]
     },
@@ -1063,7 +1063,7 @@
         {
           "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
           "code": "35296",
-          "display": "ramipril"
+          "display": "Ramipril"
         }
       ]
     },
@@ -1173,7 +1173,7 @@
         {
           "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
           "code": "38413",
-          "display": "torsemide"
+          "display": "Torsemide"
         }
       ]
     },
@@ -1195,7 +1195,7 @@
         {
           "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
           "code": "38454",
-          "display": "trandolapril"
+          "display": "Trandolapril"
         }
       ]
     },
@@ -1305,7 +1305,7 @@
         {
           "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
           "code": "54552",
-          "display": "perindopril"
+          "display": "Perindopril"
         }
       ]
     },
@@ -1415,7 +1415,7 @@
         {
           "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
           "code": "69749",
-          "display": "valsartan"
+          "display": "Valsartan"
         }
       ]
     },
@@ -1525,7 +1525,7 @@
         {
           "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
           "code": "73494",
-          "display": "telmisartan"
+          "display": "Telmisartan"
         }
       ]
     },
@@ -1635,7 +1635,7 @@
         {
           "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
           "code": "83515",
-          "display": "eprosartan"
+          "display": "Eprosartan"
         }
       ]
     },
@@ -1745,7 +1745,7 @@
         {
           "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
           "code": "83818",
-          "display": "irbesartan"
+          "display": "Irbesartan"
         }
       ]
     },
@@ -1855,7 +1855,7 @@
         {
           "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
           "code": "118463",
-          "display": "olmesartan medoxomil"
+          "display": "Olmesartan Medoxomil"
         }
       ]
     },
@@ -1965,7 +1965,7 @@
         {
           "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
           "code": "203160",
-          "display": "losartan potassium"
+          "display": "Losartan Potassium"
         }
       ]
     },
@@ -2075,7 +2075,7 @@
         {
           "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
           "code": "214354",
-          "display": "candesartan"
+          "display": "Candesartan"
         }
       ]
     },
@@ -2185,7 +2185,7 @@
         {
           "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
           "code": "221124",
-          "display": "metoprolol succinate"
+          "display": "Metoprolol Succinate"
         }
       ]
     },
@@ -2295,7 +2295,7 @@
         {
           "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
           "code": "227278",
-          "display": "fosinopril sodium"
+          "display": "Fosinopril Sodium"
         }
       ]
     },
@@ -2405,7 +2405,7 @@
         {
           "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
           "code": "298869",
-          "display": "eplerenone"
+          "display": "Eplerenone"
         }
       ]
     },
@@ -2515,7 +2515,7 @@
         {
           "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
           "code": "668310",
-          "display": "carvedilol phosphate"
+          "display": "Carvedilol Phosphate"
         }
       ]
     },
@@ -2625,7 +2625,7 @@
         {
           "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
           "code": "1091642",
-          "display": "azilsartan medoxomil"
+          "display": "Azilsartan Medoxomil"
         }
       ]
     },
@@ -2735,7 +2735,7 @@
         {
           "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
           "code": "1373458",
-          "display": "canagliflozin"
+          "display": "Canagliflozin"
         }
       ]
     },
@@ -2845,7 +2845,7 @@
         {
           "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
           "code": "1488564",
-          "display": "dapagliflozin"
+          "display": "Dapagliflozin"
         }
       ]
     },
@@ -2955,7 +2955,7 @@
         {
           "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
           "code": "1545653",
-          "display": "empagliflozin"
+          "display": "Empagliflozin"
         }
       ]
     },
@@ -3065,7 +3065,7 @@
         {
           "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
           "code": "1656339",
-          "display": "sacubitril / valsartan"
+          "display": "Sacubitril / Valsartan"
         }
       ]
     },
@@ -3076,7 +3076,7 @@
             {
               "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
               "code": "1656328",
-              "display": "sacubitril"
+              "display": "Sacubitril"
             }
           ]
         }
@@ -3087,7 +3087,7 @@
             {
               "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
               "code": "69749",
-              "display": "valsartan"
+              "display": "Valsartan"
             }
           ]
         }
@@ -3211,7 +3211,7 @@
         {
           "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
           "code": "1992672",
-          "display": "ertugliflozin"
+          "display": "Ertugliflozin"
         }
       ]
     },
@@ -3321,7 +3321,7 @@
         {
           "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
           "code": "2627044",
-          "display": "bexagliflozin"
+          "display": "Bexagliflozin"
         }
       ]
     },
@@ -3431,7 +3431,7 @@
         {
           "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
           "code": "2638675",
-          "display": "sotagliflozin"
+          "display": "Sotagliflozin"
         }
       ]
     },

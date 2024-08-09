@@ -16,13 +16,13 @@ import { type Invitation } from '../../../models/invitation.js'
 import { LoincCode } from '../../codes.js'
 import { type DatabaseService } from '../../database/databaseService.js'
 import { QuantityUnit } from '../../fhir/quantityUnit.js'
-import { SeedingService } from '../seedingService.js'
-import { UserDataFactory } from '../userData/userDataFactory.js'
 import {
   DrugReference,
   QuestionnaireReference,
   VideoReference,
 } from '../../references.js'
+import { SeedingService } from '../seedingService.js'
+import { UserDataFactory } from '../userData/userDataFactory.js'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -164,6 +164,7 @@ export class DebugDataService extends SeedingService {
 
     const values = randomNumbers.map((number, index) =>
       UserDataFactory.bloodPressureObservation({
+        id: index.toString(),
         date: advanceDateByDays(date, -index - 2),
         systolic: 80 + number * 70,
         diastolic: 50 + number * 40,
@@ -195,6 +196,7 @@ export class DebugDataService extends SeedingService {
 
     const values = [
       UserDataFactory.observation({
+        id: '0',
         date: advanceDateByDays(date, -2),
         value: 70,
         unit: QuantityUnit.kg,
@@ -202,6 +204,7 @@ export class DebugDataService extends SeedingService {
       }),
       ...randomNumbers.map((number, index) =>
         UserDataFactory.observation({
+          id: (index + 1).toString(),
           date: advanceDateByDays(date, -index - 3),
           value: 150 + number * 20,
           unit: QuantityUnit.lbs,
@@ -218,6 +221,7 @@ export class DebugDataService extends SeedingService {
   async seedUserCreatinineObservations(userId: string, date: Date) {
     const values = [
       UserDataFactory.observation({
+        id: '0',
         date: advanceDateByDays(date, -2),
         value: 1.2,
         unit: QuantityUnit.mg_dL,
@@ -234,6 +238,7 @@ export class DebugDataService extends SeedingService {
   async seedUserDryWeightObservations(userId: string, date: Date) {
     const values = [
       UserDataFactory.observation({
+        id: '0',
         date: advanceDateByDays(date, -2),
         value: 71.5,
         unit: QuantityUnit.kg,
@@ -250,6 +255,7 @@ export class DebugDataService extends SeedingService {
   async seedUserEgfrObservations(userId: string, date: Date) {
     const values = [
       UserDataFactory.observation({
+        id: '0',
         date: advanceDateByDays(date, -2),
         value: 60,
         unit: QuantityUnit.mL_min_173m2,
@@ -279,6 +285,7 @@ export class DebugDataService extends SeedingService {
 
     const values = randomNumbers.map((number, index) =>
       UserDataFactory.observation({
+        id: index.toString(),
         date: advanceDateByDays(date, -index - 2),
         value: 60 + number * 40,
         unit: QuantityUnit.bpm,
@@ -295,6 +302,7 @@ export class DebugDataService extends SeedingService {
   async seedUserPotassiumObservations(userId: string, date: Date) {
     const values = [
       UserDataFactory.observation({
+        id: '0',
         date: advanceDateByDays(date, -2),
         value: 4.2,
         unit: QuantityUnit.mEq_L,

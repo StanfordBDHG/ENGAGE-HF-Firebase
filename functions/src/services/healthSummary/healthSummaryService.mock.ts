@@ -10,7 +10,7 @@ import { type HealthSummaryService } from './healthSummaryService.js'
 import { advanceDateByDays } from '../../extensions/date.js'
 import { type HealthSummaryData } from '../../models/healthSummaryData.js'
 import { MedicationRecommendationType } from '../../models/medicationRecommendation.js'
-import { Observation, type Vitals } from '../../models/vitals.js'
+import { type Observation, type Vitals } from '../../models/vitals.js'
 import { QuantityUnit } from '../fhir/quantityUnit.js'
 
 /* eslint-disable @typescript-eslint/require-await */
@@ -45,6 +45,7 @@ export class MockHealthSummaryService implements HealthSummaryService {
             description:
               'Switch to Sacubitril-Valsartan (More Effective Medication)',
             type: MedicationRecommendationType.improvementAvailable,
+            videoPath: null,
             dosageInformation: {
               minimumSchedule: [{ frequency: 1, quantity: [25] }],
               currentSchedule: [{ frequency: 1, quantity: [25] }],
@@ -61,6 +62,7 @@ export class MockHealthSummaryService implements HealthSummaryService {
             subtitle: '',
             description: 'Continue Dose',
             type: MedicationRecommendationType.targetDoseReached,
+            videoPath: null,
             dosageInformation: {
               minimumSchedule: [{ frequency: 1, quantity: [5] }],
               currentSchedule: [{ frequency: 1, quantity: [10] }],
@@ -77,6 +79,7 @@ export class MockHealthSummaryService implements HealthSummaryService {
             subtitle: '',
             description: 'Start Medication',
             type: MedicationRecommendationType.notStarted,
+            videoPath: null,
             dosageInformation: {
               minimumSchedule: [{ frequency: 1, quantity: [5] }],
               currentSchedule: [],

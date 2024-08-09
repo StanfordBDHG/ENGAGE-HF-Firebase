@@ -16,7 +16,11 @@ import { mockHealthSummaryData } from '../../../tests/mocks/healthSummaryData.js
 import { CodingSystem, FHIRExtensionUrl } from '../../codes.js'
 import { ContraindicationCategory } from '../../contraindication/contraindicationService.js'
 import { FhirService } from '../../fhir/fhirService.js'
-import { DrugReference, MedicationClassReference, MedicationReference } from '../../references.js'
+import {
+  DrugReference,
+  MedicationClassReference,
+  MedicationReference,
+} from '../../references.js'
 
 describe('DiureticRecommender', () => {
   const recommender = new DiureticRecommender(

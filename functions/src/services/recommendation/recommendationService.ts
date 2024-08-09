@@ -87,18 +87,32 @@ export class RecommendationService {
       recommendedMedication?.content
     const title =
       medication ? this.fhirService.displayName(medication) : undefined
-    const subtitle =
-      output.currentMedication.at(0)?.medicationClass.name ??
-      (() => {
-        const recommendedMedicationContent = recommendedMedication?.content
-        const reference =
-          recommendedMedicationContent ?
-            this.fhirService.medicationClassReference(
-              recommendedMedicationContent,
-            )
-          : undefined
-        return reference ? reference.display : undefined
-      })()
+
+    const currentMedicationClass =
+      output.currentMedication.at(0)?.medicationClass
+    const currentMedicationClassReference =
+      output.currentMedication.at(0)?.medicationClassReference
+
+    const recommendedMedicationClass = await (async () => {
+      const recommendedMedicationContent = recommendedMedication?.content
+      const reference =
+        recommendedMedicationContent ?
+          this.fhirService.medicationClassReference(
+            recommendedMedicationContent,
+          )
+        : undefined
+      if (
+        currentMedicationClass &&
+        currentMedicationClassReference &&
+        reference &&
+        currentMedicationClassReference.reference === reference.reference
+      ) {
+        return currentMedicationClass
+      }
+      return reference ?
+          (await this.medicationService.getClassReference(reference))?.content
+        : undefined
+    })()
 
     const minimumDailyDoseRequest =
       medication ?
@@ -157,12 +171,19 @@ export class RecommendationService {
         : null,
       displayInformation: {
         title: title ?? '',
-        subtitle: subtitle ?? '',
+        subtitle:
+          currentMedicationClass?.name ??
+          recommendedMedicationClass?.name ??
+          '',
         description: this.recommendationDescription(
           output,
           recommendedMedication?.content ?? null,
         ),
         type: output.type,
+        videoPath:
+          recommendedMedicationClass?.videoPath ??
+          currentMedicationClass?.videoPath ??
+          null,
         dosageInformation: {
           minimumSchedule: minimumDailyDoseSchedule,
           currentSchedule: currentDailyDoseSchedule,

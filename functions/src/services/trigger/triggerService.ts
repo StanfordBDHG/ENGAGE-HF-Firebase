@@ -7,6 +7,7 @@
 //
 
 import { type DocumentData } from 'firebase-admin/firestore'
+import { median } from '../../extensions/array.js'
 import {
   advanceDateByDays,
   advanceDateByMinutes,
@@ -14,10 +15,8 @@ import {
 import { type FHIRQuestionnaireResponse } from '../../models/fhir/questionnaireResponse.js'
 import { type ServiceFactory } from '../factory/serviceFactory.js'
 import { type RecommendationInput } from '../recommendation/recommenders/recommender.js'
-import { UserDataFactory } from '../seeding/userData/userDataFactory.js'
 import { QuestionnaireReference, VideoReference } from '../references.js'
-import { FHIRObservation } from '../../models/fhir/observation.js'
-import { median } from '../../extensions/array.js'
+import { UserDataFactory } from '../seeding/userData/userDataFactory.js'
 
 export class TriggerService {
   // Properties
@@ -44,12 +43,11 @@ export class TriggerService {
       )
 
       await Promise.all(
-        appointments.map(
-          async (appointment) =>
-            await messageService.addMessage(
-              appointment.path.split('/')[1],
-              UserDataFactory.preAppointmentMessage(),
-            ),
+        appointments.map(async (appointment) =>
+          messageService.addMessage(
+            appointment.path.split('/')[1],
+            UserDataFactory.preAppointmentMessage(),
+          ),
         ),
       )
     } catch (error) {
@@ -153,15 +151,17 @@ export class TriggerService {
           advanceDateByDays(date, -7),
         )
 
-        if (bodyWeightObservations.length < 1) return
-
       const bodyWeightMedian = median(
         bodyWeightObservations.map((observation) => observation.value),
       )
+      if (!bodyWeightMedian) return
+      const mostRecentBodyWeight = bodyWeightObservations[0].value
 
-      const mostRecentBodyWeight = bodyWeightObservations.at(0)?.value
-
-
+      if (mostRecentBodyWeight - bodyWeightMedian > 7) {
+        await this.factory
+          .message()
+          .addMessage(userId, UserDataFactory.weightGainMessage())
+      }
     } catch (error) {
       console.error(
         `Error on user body weight observation written: ${String(error)}`,

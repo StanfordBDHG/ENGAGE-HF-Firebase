@@ -10,7 +10,7 @@ import { type Auth } from 'firebase-admin/auth'
 import { FieldValue } from 'firebase-admin/firestore'
 import { https } from 'firebase-functions/v2'
 import { type UserService } from './userService.js'
-import { UserAuth, type Invitation } from '../../models/invitation.js'
+import { type UserAuth, type Invitation } from '../../models/invitation.js'
 import { type Organization } from '../../models/organization.js'
 import { UserType, type User } from '../../models/user.js'
 import {

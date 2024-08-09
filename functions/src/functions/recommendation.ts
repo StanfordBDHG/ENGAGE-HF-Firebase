@@ -9,8 +9,6 @@
 import { onDocumentWritten } from 'firebase-functions/v2/firestore'
 import { onSchedule } from 'firebase-functions/v2/scheduler'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
-import { FHIRAppointment } from '../models/fhir/appointment.js'
-import { FHIRObservation } from '../models/fhir/observation.js'
 
 export const onScheduleUpdateMedicationRecommendations = onSchedule(
   'every 24 hours',

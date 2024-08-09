@@ -21,7 +21,11 @@ import { type SymptomQuestionnaireResponse } from '../../../models/symptomQuesti
 import { CodingSystem, LoincCode } from '../../codes.js'
 import { QuantityUnit } from '../../fhir/quantityUnit.js'
 import { symptomQuestionnaireLinkIds } from '../../fhir/symptomQuestionnaireLinkIds.js'
-import { DrugReference, QuestionnaireReference, VideoReference } from '../../references.js'
+import {
+  type DrugReference,
+  type QuestionnaireReference,
+  type VideoReference,
+} from '../../references.js'
 
 /* eslint-disable @typescript-eslint/no-extraneous-class */
 
@@ -118,6 +122,8 @@ export class UserDataFactory {
   }): UserMessage {
     return {
       creationDate: new Date(),
+      completionDate: null,
+      dueDate: null,
       title: {
         en: 'Medication Change',
         de: 'Änderung der Medikation',
@@ -135,6 +141,8 @@ export class UserDataFactory {
   static weightGainMessage(): UserMessage {
     return {
       creationDate: new Date(),
+      completionDate: null,
+      dueDate: null,
       title: {
         en: 'Weight Gain',
         de: 'Gewichtszunahme',
@@ -152,6 +160,8 @@ export class UserDataFactory {
   static medicationUptitrationMessage(): UserMessage {
     return {
       creationDate: new Date(),
+      completionDate: null,
+      dueDate: null,
       title: {
         en: 'Medication Uptitration',
         de: 'Medikationserhöhung',
@@ -166,9 +176,13 @@ export class UserDataFactory {
     }
   }
 
-  static welcomeMessage(input: { videoReference: VideoReference }): UserMessage {
+  static welcomeMessage(input: {
+    videoReference: VideoReference
+  }): UserMessage {
     return {
       creationDate: new Date(),
+      completionDate: null,
+      dueDate: null,
       title: {
         en: 'Welcome',
         de: 'Willkommen',
@@ -186,6 +200,8 @@ export class UserDataFactory {
   static vitalsMessage(): UserMessage {
     return {
       creationDate: new Date(),
+      completionDate: null,
+      dueDate: null,
       title: {
         en: 'Vitals',
         de: 'Vitalwerte',
@@ -205,6 +221,8 @@ export class UserDataFactory {
   }): UserMessage {
     return {
       creationDate: new Date(),
+      completionDate: null,
+      dueDate: null,
       title: {
         en: 'Symptom Questionnaire',
         de: 'Symptomfragebogen',
@@ -222,6 +240,8 @@ export class UserDataFactory {
   static preAppointmentMessage(): UserMessage {
     return {
       creationDate: new Date(),
+      completionDate: null,
+      dueDate: null,
       title: {
         en: 'Appointment Reminder',
         de: 'Terminerinnerung',
@@ -239,11 +259,13 @@ export class UserDataFactory {
   // Methods - Observations
 
   static bloodPressureObservation(input: {
+    id: string
     date: Date
     systolic: number
     diastolic: number
   }): FHIRObservation {
     return {
+      id: input.id,
       resourceType: 'Observation',
       status: FHIRObservationStatus.final,
       code: {
@@ -298,12 +320,14 @@ export class UserDataFactory {
   }
 
   static observation(input: {
+    id: string
     date: Date
     value: number
     unit: QuantityUnit
     code: LoincCode
   }): FHIRObservation {
     return {
+      id: input.id,
       resourceType: 'Observation',
       status: FHIRObservationStatus.final,
       code: {

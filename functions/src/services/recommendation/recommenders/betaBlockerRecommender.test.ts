@@ -16,18 +16,17 @@ import { type MedicationRequestContext } from '../../../models/medicationRequest
 import { MockContraindicationService } from '../../../tests/mocks/contraindicationService.js'
 import { mockHealthSummaryData } from '../../../tests/mocks/healthSummaryData.js'
 import { cleanupMocks, setupMockFirebase } from '../../../tests/setup.js'
-
 import { ContraindicationCategory } from '../../contraindication/contraindicationService.js'
 import { getServiceFactory } from '../../factory/getServiceFactory.js'
 import { FhirService } from '../../fhir/fhirService.js'
 import { type MedicationService } from '../../medication/medicationService.js'
-import { CachingStrategy } from '../../seeding/seedingService.js'
-import { UserDataFactory } from '../../seeding/userData/userDataFactory.js'
 import {
   DrugReference,
-  MedicationClassReference,
+  type MedicationClassReference,
   MedicationReference,
 } from '../../references.js'
+import { CachingStrategy } from '../../seeding/seedingService.js'
+import { UserDataFactory } from '../../seeding/userData/userDataFactory.js'
 
 describe('BetaBlockerRecommender', () => {
   let medicationContraindication: (

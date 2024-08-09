@@ -14,7 +14,10 @@ import { type SymptomScore } from '../../../models/symptomScore.js'
 import { type Vitals, type Observation } from '../../../models/vitals.js'
 import { type ContraindicationService } from '../../contraindication/contraindicationService.js'
 import { type FhirService } from '../../fhir/fhirService.js'
-import { MedicationClassReference, MedicationReference } from '../../references.js'
+import {
+  type MedicationClassReference,
+  type MedicationReference,
+} from '../../references.js'
 
 export interface RecommendationInput {
   requests: MedicationRequestContext[]

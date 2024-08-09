@@ -7,7 +7,7 @@
 //
 
 import { type UserService } from './userService.js'
-import { UserAuth, type Invitation } from '../../models/invitation.js'
+import { type UserAuth, type Invitation } from '../../models/invitation.js'
 import { type Organization } from '../../models/organization.js'
 import { type User, UserType } from '../../models/user.js'
 import { type Document } from '../database/databaseService.js'

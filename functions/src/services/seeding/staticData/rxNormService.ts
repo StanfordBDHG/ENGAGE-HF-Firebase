@@ -7,6 +7,7 @@
 //
 import * as https from 'https'
 import { localize } from '../../../extensions/localizedText.js'
+import { capitalize } from '../../../extensions/string.js'
 import { type FHIRExtension } from '../../../models/fhir/baseTypes.js'
 import { type FHIRMedication } from '../../../models/fhir/medication.js'
 import { type MedicationClass } from '../../../models/medicationClass.js'
@@ -180,7 +181,7 @@ export class RxNormService {
           {
             system: CodingSystem.rxNorm,
             code: rxcui,
-            display: name,
+            display: capitalize(name),
           },
         ],
       },
@@ -192,7 +193,7 @@ export class RxNormService {
                 {
                   system: CodingSystem.rxNorm,
                   code: ingredient.rxcui,
-                  display: ingredient.name,
+                  display: capitalize(ingredient.name),
                 },
               ],
             },
@@ -337,7 +338,9 @@ export class RxNormService {
           {
             system: CodingSystem.rxNorm,
             code: rxcui,
-            display: rxTermInfo?.displayName ?? rxTermInfo?.fullName,
+            display: capitalize(
+              rxTermInfo?.displayName ?? rxTermInfo?.fullName ?? '',
+            ),
           },
         ],
       },
@@ -356,7 +359,7 @@ export class RxNormService {
             {
               system: CodingSystem.rxNorm,
               code: ingredient.rxcui,
-              display: ingredient.name,
+              display: capitalize(ingredient.name),
             },
           ],
         },
