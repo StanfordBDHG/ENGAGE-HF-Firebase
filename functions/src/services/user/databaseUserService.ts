@@ -156,7 +156,7 @@ export class DatabaseUserService implements UserService {
       async (firestore, transaction) => {
         transaction.create(firestore.doc(`users/${userId}`), {
           ...invitation.content.user,
-          invitationCode: invitation.id,
+          invitationCode: invitation.content.code,
           dateOfEnrollment: FieldValue.serverTimestamp(),
         })
 

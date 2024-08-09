@@ -165,16 +165,16 @@ class MockFirestoreFilteredCollectionRef extends MockFirestoreCollectionRef {
 
 class MockFirestoreLimitedCollectionRef extends MockFirestoreCollectionRef {
   readonly ref: MockFirestoreCollectionRef
-  readonly limit: number
+  readonly _limit: number
 
   constructor(ref: MockFirestoreCollectionRef, limit: number) {
     super(ref.firestore, ref.path)
     this.ref = ref
-    this.limit = limit
+    this._limit = limit
   }
 
   get() {
-    const docs = this.ref.get().docs.slice(0, this.limit)
+    const docs = this.ref.get().docs.slice(0, this._limit)
 
     return {
       docs: docs,

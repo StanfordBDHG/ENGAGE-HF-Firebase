@@ -41,7 +41,8 @@ describe('DatabaseUserService', () => {
 
       mockFirestore.replaceAll({
         invitations: {
-          mockAdmin: {
+          invitationId: {
+            code: invitationCode,
             user: {
               type: UserType.admin,
               messagesSettings: {
@@ -91,7 +92,8 @@ describe('DatabaseUserService', () => {
 
       mockFirestore.replaceAll({
         invitations: {
-          mockClinician: {
+          invitationId: {
+            code: invitationCode,
             user: {
               type: UserType.clinician,
               messagesSettings: {
@@ -145,7 +147,8 @@ describe('DatabaseUserService', () => {
 
       mockFirestore.replaceAll({
         invitations: {
-          mockPatient: {
+          invitationId: {
+            code: invitationCode,
             user: {
               type: UserType.patient,
               clinician: 'mockClinician',
