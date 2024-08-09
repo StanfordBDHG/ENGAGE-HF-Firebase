@@ -125,25 +125,37 @@ export class DatabasePatientService implements PatientService {
 
   async getBloodPressureObservations(
     userId: string,
+    cutoffDate: Date,
   ): Promise<Array<Document<FHIRObservation>>> {
-    return this.databaseService.getCollection<FHIRObservation>(
-      `users/${userId}/bloodPressureObservations`,
+    return this.databaseService.getQuery<FHIRObservation>((firestore) =>
+      firestore
+        .collection(`users/${userId}/bloodPressureObservations`)
+        .where('effectiveDateTime', '>', cutoffDate.toISOString())
+        .orderBy('effectiveDateTime', 'desc'),
     )
   }
 
   async getBodyWeightObservations(
     userId: string,
+    cutoffDate: Date,
   ): Promise<Array<Document<FHIRObservation>>> {
-    return this.databaseService.getCollection<FHIRObservation>(
-      `users/${userId}/bodyWeightObservations`,
+    return this.databaseService.getQuery<FHIRObservation>((firestore) =>
+      firestore
+        .collection(`users/${userId}/bodyWeightObservations`)
+        .where('effectiveDateTime', '>', cutoffDate.toISOString())
+        .orderBy('effectiveDateTime', 'desc'),
     )
   }
 
   async getHeartRateObservations(
     userId: string,
+    cutoffDate: Date,
   ): Promise<Array<Document<FHIRObservation>>> {
-    return this.databaseService.getCollection<FHIRObservation>(
-      `users/${userId}/heartRateObservations`,
+    return this.databaseService.getQuery<FHIRObservation>((firestore) =>
+      firestore
+        .collection(`users/${userId}/heartRateObservations`)
+        .where('effectiveDateTime', '>', cutoffDate.toISOString())
+        .orderBy('effectiveDateTime', 'desc'),
     )
   }
 
@@ -211,13 +223,13 @@ export class DatabasePatientService implements PatientService {
 
   async getSymptomScores(
     userId: string,
-    cutoffDate: Date,
+    limit: number | null,
   ): Promise<Array<Document<SymptomScore>>> {
     return this.databaseService.getQuery<SymptomScore>((firestore) =>
       firestore
         .collection(`users/${userId}/symptomScores`)
-        .where('date', '>', cutoffDate)
-        .orderBy('date', 'desc'),
+        .orderBy('date', 'desc')
+        .limit(limit ?? Infinity),
     )
   }
 

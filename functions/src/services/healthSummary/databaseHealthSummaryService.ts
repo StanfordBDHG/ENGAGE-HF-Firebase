@@ -52,7 +52,7 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
       this.userService.getUser(userId),
       this.patientService.getNextAppointment(userId),
       this.getMedicationRecommendations(userId),
-      this.getSymptomScores(userId, new Date(0)),
+      this.getSymptomScores(userId, advanceDateByDays(new Date(), -56)),
       this.getVitals(userId, advanceDateByDays(new Date(), -14)),
     ])
 
