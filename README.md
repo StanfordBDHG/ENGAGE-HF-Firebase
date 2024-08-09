@@ -280,7 +280,6 @@ These are the output values of the recommendation algorithms. Depending on the t
 |-|-|-|-|
 |currentMedication|optional Reference(FHIRMedicationRequest)|e.g. `{"reference":"users/123/medicationRequest/2"}`|Reference to the existing medication request, if applicable.|
 |recommendedMedication|optional Reference(FHIRMedication)|e.g. `{"reference":"medications/2"}`|Reference to the recommended medication, if applicable. This should always direct to a medication, not a drug.|
-|type|MedicationRecommendationType|e.g. "notStarted"|This type describes the outcome of the recommendation algorithm and is described in more detail below.|
 |displayInformation|DisplayInformation|-|The information necessary for the client to display the medication recommendation.|
 
 #### Medication Recommendation Type
@@ -301,11 +300,12 @@ Diuretics, if currently present as medication request, will be shown as a recomm
 
 |Property|Type|Values|Comments|
 |-|-|-|-|
-|title|string|e.g. "Carvedilol"|The name of the medication (not the tablet), e.g. coming from `medications/1998`.|
-|subtitle|string|e.g. "Beta Blockers"|The medication class name, e.g. coming from `medicationClasses/0`.|
-|description|string|e.g. "Personal target dose reached. No action required."|The explanation of the recommendation, displayed along with a summary of the medication.|
-|type|string|e.g. "personalTargetDoseReached"|See [Medication Recommendation Type](#Medication-Recommendation-Type)|
-|dosageInformation|optional DosageInformation|See [Dosage Information](#Dosage-Information)|A description of the current, minimum, and target doses for a given medication. Only present when the patient has an active medication request for the medication.| 
+|title|LocalizedText|e.g. "Carvedilol"|The name of the medication (not the tablet), e.g. coming from `medications/1998`.|
+|subtitle|LocalizedText|e.g. "Beta Blockers"|The medication class name, e.g. coming from `medicationClasses/0`.|
+|description|LocalizedText|e.g. "Personal target dose reached. No action required."|The explanation of the recommendation, displayed along with a summary of the medication.|
+|type|[Medication Recommendation Type](#Medication-Recommendation-Type)|e.g. "personalTargetDoseReached"|See [Medication Recommendation Type](#Medication-Recommendation-Type) for more information.|
+|dosageInformation|DosageInformation|See [Dosage Information](#Dosage-Information)|A description of the current, minimum, and target doses for a given medication. 
+When the patient is not yet taking the medication, its currentSchedule will be an empty list.| 
 
 The `DosageInformation` property contains the following information:
 
@@ -314,7 +314,7 @@ The `DosageInformation` property contains the following information:
 |currentSchedule|list of DoseSchedule|e.g. \[25mg twice daily, 10mg daily\]|A list tracking how many times per day the patient currently takes each tablet.|
 |minimumSchedule|list of DoseSchedule|e.g. \[6.25mg daily\]|A list tracking how many times per day the patient would take each tablet on a minimal dose.|
 |targetSchedule|list of DoseSchedule|e.g. \[6.25mg daily\]|A list tracking how many times per day the patient would take each tablet on a maximal dose.|
-|unit|string|e.g. "mg" |The unit by which the ingredients in the medications are measured, as found in `medications/$medicationId$/drugs/$drugId$`.|
+|unit|string|e.g. "mg"|The unit by which the ingredients in the medications are measured, as found in `medications/$medicationId$/drugs/$drugId$`.|
 
 The `DoseSchedule` object describes the number of tablets taken per day for a single medication as described in `medications/$medicationId$/drugs/$drugId$`. For example, taking two 5mg tablets in the morning and one 15mg tablet in the afternoon would result in two schedules: 5mg twice daily, and 15mg daily. Compound (multi-ingredient) tablets have multiple quantities per tablet, and will be displayed as e.g. 24/26mg twice daily. `DoseSchedule` has the following properties:
 
