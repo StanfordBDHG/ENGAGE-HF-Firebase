@@ -37,6 +37,9 @@ export interface UserService {
 
   // Organizations
 
+  getOrganizationBySsoProviderId(
+    providerId: string,
+  ): Promise<Document<Organization> | undefined>
   getOrganizations(): Promise<Array<Document<Organization>>>
   getOrganization(
     organizationId: string,
