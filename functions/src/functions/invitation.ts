@@ -9,6 +9,7 @@
 import { https, logger } from 'firebase-functions/v2'
 import { z } from 'zod'
 import { validatedOnCall } from './helpers.js'
+import { type Invitation } from '../models/invitation.js'
 import { UserType } from '../models/user.js'
 import { UserRole } from '../services/credential/credential.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
@@ -67,7 +68,11 @@ export const createInvitation = validatedOnCall(
         )
 
       try {
-        await userService.createInvitation(invitationCode, request.data)
+        const invitation: Invitation = {
+          ...request.data,
+          code: invitationCode,
+        }
+        await userService.createInvitation(invitation)
         return { code: invitationCode }
       } catch (error) {
         if (counter < 4 && isPatient) continue

@@ -45,21 +45,21 @@ export class MockUserService implements UserService {
 
   // Methods - Invitations
 
-  async createInvitation(
-    invitationId: string,
-    content: Invitation,
-  ): Promise<void> {
+  async createInvitation(content: Invitation): Promise<void> {
     return
   }
 
-  async getInvitation(invitationId: string): Promise<Document<Invitation>> {
+  async getInvitationByCode(
+    invitationCode: string,
+  ): Promise<Document<Invitation>> {
     return {
-      id: invitationId,
-      path: 'invitations/' + invitationId,
+      id: '1',
+      path: 'invitations/1',
       content: {
         user: {
           type: UserType.patient,
         },
+        code: invitationCode,
         userId: 'test',
       },
     }
@@ -75,13 +75,14 @@ export class MockUserService implements UserService {
         user: {
           type: UserType.patient,
         },
+        code: 'test',
         userId: userId,
       },
     }
   }
 
   async setInvitationUserId(
-    invitationId: string,
+    invitationCode: string,
     userId: string,
   ): Promise<void> {
     return
