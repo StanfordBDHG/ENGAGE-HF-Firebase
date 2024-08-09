@@ -54,9 +54,9 @@ export class DatabasePatientService implements PatientService {
     return result.at(0)
   }
 
-  // Methods - AllergyIntolerances
+  // Methods - Contraindications
 
-  async getAllergyIntolerances(
+  async getContraindications(
     userId: string,
   ): Promise<Array<Document<FHIRAllergyIntolerance>>> {
     return this.databaseService.getCollection<FHIRAllergyIntolerance>(
@@ -79,6 +79,26 @@ export class DatabasePatientService implements PatientService {
   ): Promise<Array<Document<FHIRMedicationRequest>>> {
     return this.databaseService.getCollection<FHIRMedicationRequest>(
       `users/${userId}/medicationRequests`,
+    )
+  }
+
+  async updateMedicationRecommendations(
+    userId: string,
+    recommendations: MedicationRecommendation[],
+  ): Promise<void> {
+    await this.databaseService.runTransaction(
+      async (firestore, transaction) => {
+        const collection = firestore.collection(
+          `users/${userId}/medicationRecommendations`,
+        )
+        const result = await transaction.get(collection)
+        for (const doc of result.docs) {
+          transaction.delete(doc.ref)
+        }
+        for (const recommendation of recommendations) {
+          transaction.create(collection.doc(), recommendation)
+        }
+      },
     )
   }
 
@@ -172,9 +192,43 @@ export class DatabasePatientService implements PatientService {
 
   async getSymptomScores(
     userId: string,
+    cutoffDate: Date,
   ): Promise<Array<Document<SymptomScore>>> {
-    return this.databaseService.getCollection<SymptomScore>(
-      `users/${userId}/symptomScores`,
+    return this.databaseService.getQuery<SymptomScore>((firestore) =>
+      firestore
+        .collection(`users/${userId}/symptomScores`)
+        .where('date', '>', cutoffDate)
+        .orderBy('date', 'desc'),
     )
+  }
+
+  async getLatestSymptomScore(
+    userId: string,
+  ): Promise<Document<SymptomScore> | undefined> {
+    const result = await this.databaseService.getQuery<SymptomScore>(
+      (firestore) =>
+        firestore
+          .collection(`users/${userId}/symptomScores`)
+          .orderBy('date', 'desc')
+          .limit(1),
+    )
+    return result.at(0)
+  }
+
+  async updateSymptomScore(
+    userId: string,
+    symptomScoreId: string,
+    symptomScore: SymptomScore | undefined,
+  ): Promise<void> {
+    return this.databaseService.runTransaction((firestore, transaction) => {
+      const ref = firestore.doc(
+        `users/${userId}/symptomScores/${symptomScoreId}`,
+      )
+      if (symptomScore) {
+        transaction.set(ref, symptomScore)
+      } else {
+        transaction.delete(ref)
+      }
+    })
   }
 }

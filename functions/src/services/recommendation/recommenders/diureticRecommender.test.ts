@@ -9,7 +9,7 @@
 import { expect } from 'chai'
 import { describe, it } from 'mocha'
 import { DiureticRecommender } from './diureticRecommender.js'
-import { MedicationRecommendationCategory } from '../../../models/medicationRecommendation.js'
+import { MedicationRecommendationType } from '../../../models/medicationRecommendation.js'
 import { type MedicationRequestContext } from '../../../models/medicationRequestContext.js'
 import { MockContraindicationService } from '../../../tests/mocks/contraindicationService.js'
 import { mockHealthSummaryData } from '../../../tests/mocks/healthSummaryData.js'
@@ -39,7 +39,7 @@ describe('DiureticRecommender', () => {
         requests: [],
         contraindications: [],
         vitals: healthSummaryData.vitals,
-        symptomScores: healthSummaryData.symptomScores.at(-1),
+        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
       })
       expect(result).to.have.length(0)
     })
@@ -74,6 +74,21 @@ describe('DiureticRecommender', () => {
               ],
             },
           ],
+        },
+        drugReference: {
+          reference: DrugReference.furosemide20,
+        },
+        drug: {
+          resourceType: 'Medication',
+          code: {
+            coding: [
+              {
+                system: CodingSystem.rxNorm,
+                code: DrugReference.furosemide20.split('/').at(-1),
+                display: 'Furosemide 20mg',
+              },
+            ],
+          },
         },
         medicationReference: {
           reference: MedicationReference.furosemide,
@@ -111,13 +126,13 @@ describe('DiureticRecommender', () => {
         requests: [existingMedication],
         contraindications: [],
         vitals: healthSummaryData.vitals,
-        symptomScores: healthSummaryData.symptomScores.at(-1),
+        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: [existingMedication.requestReference],
+        currentMedication: [existingMedication],
         recommendedMedication: undefined,
-        category: MedicationRecommendationCategory.personalTargetDoseReached,
+        type: MedicationRecommendationType.personalTargetDoseReached,
       })
     })
   })

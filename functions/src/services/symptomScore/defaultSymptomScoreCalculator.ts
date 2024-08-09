@@ -31,13 +31,13 @@ export class DefaultSymptomScoreCalculator implements SymptomScoreCalculator {
     )
 
     const result: SymptomScore = {
-      questionnaireResponseId: questionnaireResponse.id,
+      questionnaireResponseId: questionnaireResponse.id ?? null,
       date: new Date(questionnaireResponse.authored),
       overallScore: 0,
-      socialLimitsScore: undefined,
-      physicalLimitsScore: undefined,
-      qualityOfLifeScore: undefined,
-      symptomFrequencyScore: undefined,
+      socialLimitsScore: null,
+      physicalLimitsScore: null,
+      qualityOfLifeScore: null,
+      symptomFrequencyScore: null,
       dizzinessScore: response.answer9,
     }
 

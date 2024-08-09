@@ -6,7 +6,8 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { https } from 'firebase-functions'
+import { https, logger } from 'firebase-functions'
+import { onDocumentWritten } from 'firebase-functions/v2/firestore'
 import { z } from 'zod'
 import { validatedOnCall } from './helpers.js'
 import { type Result } from './types.js'
@@ -26,7 +27,7 @@ export interface UserInformation {
 
 export type GetUsersInformationOutput = Record<string, Result<UserInformation>>
 
-export const getUsersInformationFunction = validatedOnCall(
+export const getUsersInformation = validatedOnCall(
   getUsersInformationInputSchema,
   async (request): Promise<GetUsersInformationOutput> => {
     if (!request.auth?.uid)
@@ -106,7 +107,7 @@ const updateUserInformationInputSchema = z.object({
   }),
 })
 
-export const updateUserInformationFunction = validatedOnCall(
+export const updateUserInformation = validatedOnCall(
   updateUserInformationInputSchema,
   async (request): Promise<void> => {
     if (!request.auth?.uid)
@@ -134,7 +135,7 @@ const deleteUserInputSchema = z.object({
   userId: z.string(),
 })
 
-export const deleteUserFunction = validatedOnCall(
+export const deleteUser = validatedOnCall(
   deleteUserInputSchema,
   async (request): Promise<void> => {
     if (!request.auth?.uid)
@@ -154,5 +155,18 @@ export const deleteUserFunction = validatedOnCall(
       )
     }
     await userService.deleteUser(request.data.userId)
+  },
+)
+
+export const onUserWritten = onDocumentWritten(
+  'users/{userId}',
+  async (event) => {
+    try {
+      await getServiceFactory().user().updateClaims(event.params.userId)
+    } catch (error) {
+      logger.error(
+        `Error processing claims update for userId '${event.params.userId}' on change of user: ${String(error)}`,
+      )
+    }
   },
 )

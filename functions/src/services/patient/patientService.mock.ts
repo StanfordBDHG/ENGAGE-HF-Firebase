@@ -58,9 +58,9 @@ export class MockPatientService implements PatientService {
     }
   }
 
-  // Methods - AllergyIntolerances
+  // Methods - Contraindications
 
-  async getAllergyIntolerances(
+  async getContraindications(
     userId: string,
   ): Promise<Array<Document<FHIRAllergyIntolerance>>> {
     return []
@@ -105,6 +105,13 @@ export class MockPatientService implements PatientService {
       id: index.toString(),
       content: value,
     }))
+  }
+
+  async updateMedicationRecommendations(
+    userId: string,
+    recommendations: MedicationRecommendation[],
+  ): Promise<void> {
+    return
   }
 
   // Methods - Observations
@@ -408,9 +415,11 @@ export class MockPatientService implements PatientService {
 
   async getSymptomScores(
     userId: string,
+    cutoffDate: Date,
   ): Promise<Array<Document<SymptomScore>>> {
     const values: SymptomScore[] = [
       {
+        questionnaireResponseId: '4',
         overallScore: 40,
         physicalLimitsScore: 50,
         socialLimitsScore: 38,
@@ -420,6 +429,7 @@ export class MockPatientService implements PatientService {
         date: new Date('2024-01-24'),
       },
       {
+        questionnaireResponseId: '3',
         overallScore: 60,
         physicalLimitsScore: 58,
         socialLimitsScore: 75,
@@ -429,6 +439,7 @@ export class MockPatientService implements PatientService {
         date: new Date('2024-01-15'),
       },
       {
+        questionnaireResponseId: '2',
         overallScore: 44,
         physicalLimitsScore: 50,
         socialLimitsScore: 41,
@@ -438,6 +449,7 @@ export class MockPatientService implements PatientService {
         date: new Date('2023-12-30'),
       },
       {
+        questionnaireResponseId: '1',
         overallScore: 75,
         physicalLimitsScore: 58,
         socialLimitsScore: 75,
@@ -451,5 +463,19 @@ export class MockPatientService implements PatientService {
       id: index.toString(),
       content: value,
     }))
+  }
+
+  async getLatestSymptomScore(
+    userId: string,
+  ): Promise<Document<SymptomScore> | undefined> {
+    return (await this.getSymptomScores(userId, new Date())).at(0)
+  }
+
+  async updateSymptomScore(
+    userId: string,
+    symptomScoreId: string,
+    symptomScore: SymptomScore | undefined,
+  ): Promise<void> {
+    return
   }
 }

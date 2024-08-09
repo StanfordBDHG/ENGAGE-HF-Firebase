@@ -6,8 +6,10 @@
 // SPDX-License-Identifier: MIT
 //
 import * as https from 'https'
+import { localize } from '../../../extensions/localizedText.js'
 import { type FHIRExtension } from '../../../models/fhir/baseTypes.js'
 import { type FHIRMedication } from '../../../models/fhir/medication.js'
+import { type MedicationClass } from '../../../models/medicationClass.js'
 import { CodingSystem, FHIRExtensionUrl } from '../../codes.js'
 import { QuantityUnit } from '../../fhir/quantityUnit.js'
 
@@ -49,7 +51,8 @@ export class RxNormService {
   // Methods
 
   async buildFHIRCollections(
-    medicationClasses: MedicationClassSpecification[],
+    medicationClasses: Map<string, MedicationClass>,
+    specification: MedicationClassSpecification[],
   ): Promise<{
     medications: Record<string, FHIRMedication>
     drugs: Record<string, Record<string, FHIRMedication>>
@@ -57,7 +60,7 @@ export class RxNormService {
     const medications: Record<string, FHIRMedication> = {}
     const drugs: Record<string, Record<string, FHIRMedication>> = {}
 
-    for (const medicationClass of medicationClasses) {
+    for (const medicationClass of specification) {
       console.log(`Processing medication class ${medicationClass.key}...`)
 
       for (const medication of medicationClass.medications) {
@@ -132,6 +135,7 @@ export class RxNormService {
           medication.code,
           medicationName,
           medicationClass.key,
+          medicationClasses,
           ingredients,
           medication.minimumDailyDose,
           medication.targetDailyDose,
@@ -161,7 +165,8 @@ export class RxNormService {
   buildFHIRMedication(
     rxcui: string,
     name: string,
-    medicationClass: string,
+    medicationClassId: string,
+    medicationClasses: Map<string, MedicationClass>,
     ingredients: Array<{ rxcui: string; name: string }>,
     minimumDailyDose: MedicationDailyDoseSpecification | undefined,
     targetDailyDose: MedicationDailyDoseSpecification | undefined,
@@ -195,10 +200,14 @@ export class RxNormService {
         : undefined,
       extension: [] as FHIRExtension[],
     }
-    if (medicationClass) {
+    if (medicationClassId) {
+      const localizedName = medicationClasses.get(medicationClassId)?.name
       result.extension?.push({
         url: FHIRExtensionUrl.medicationClass,
-        valueReference: { reference: `medicationClasses/${medicationClass}` },
+        valueReference: {
+          reference: `medicationClasses/${medicationClassId}`,
+          display: localizedName ? localize(localizedName, 'en-US') : undefined, // TODO: What to do about localization here? Ignore?
+        },
       })
     }
     if (minimumDailyDose) {
@@ -208,6 +217,7 @@ export class RxNormService {
           resourceType: 'MedicationRequest',
           medicationReference: {
             reference: `medications/${rxcui}/drugs/${minimumDailyDose.drug}`,
+            display: drugs[minimumDailyDose.drug].code?.coding?.at(0)?.display,
           },
           extension: [
             {
@@ -256,6 +266,7 @@ export class RxNormService {
           resourceType: 'MedicationRequest',
           medicationReference: {
             reference: `medications/${rxcui}/drugs/${targetDailyDose.drug}`,
+            display: drugs[targetDailyDose.drug].code?.coding?.at(0)?.display,
           },
           extension: [
             {

@@ -107,6 +107,8 @@ export class UserDebugDataFactory {
 
   medicationChangeMessage(input: { videoReference: string }): UserMessage {
     return {
+      completionDate: null,
+      dueDate: null,
       title: {
         en: 'Medication Change',
         de: 'Änderung der Medikation',
@@ -123,6 +125,8 @@ export class UserDebugDataFactory {
 
   weightGainMessage(): UserMessage {
     return {
+      completionDate: null,
+      dueDate: null,
       title: {
         en: 'Weight Gain',
         de: 'Gewichtszunahme',
@@ -139,6 +143,8 @@ export class UserDebugDataFactory {
 
   medicationUptitrationMessage(): UserMessage {
     return {
+      completionDate: null,
+      dueDate: null,
       title: {
         en: 'Medication Uptitration',
         de: 'Medikationserhöhung',
@@ -155,6 +161,8 @@ export class UserDebugDataFactory {
 
   welcomeMessage(input: { videoReference: string }): UserMessage {
     return {
+      completionDate: null,
+      dueDate: null,
       title: {
         en: 'Welcome',
         de: 'Willkommen',
@@ -171,6 +179,8 @@ export class UserDebugDataFactory {
 
   vitalsMessage(): UserMessage {
     return {
+      completionDate: null,
+      dueDate: null,
       title: {
         en: 'Vitals',
         de: 'Vitalwerte',
@@ -189,6 +199,8 @@ export class UserDebugDataFactory {
     questionnaireReference: string
   }): UserMessage {
     return {
+      completionDate: null,
+      dueDate: null,
       title: {
         en: 'Symptom Questionnaire',
         de: 'Symptomfragebogen',
@@ -205,6 +217,8 @@ export class UserDebugDataFactory {
 
   preAppointmentMessage(): UserMessage {
     return {
+      completionDate: null,
+      dueDate: null,
       title: {
         en: 'Appointment Reminder',
         de: 'Terminerinnerung',
@@ -222,11 +236,13 @@ export class UserDebugDataFactory {
   // Methods - Observations
 
   bloodPressureObservation(input: {
+    id: string
     date: Date
     systolic: number
     diastolic: number
   }): FHIRObservation {
     return {
+      id: input.id,
       resourceType: 'Observation',
       status: FHIRObservationStatus.final,
       code: {
@@ -281,12 +297,14 @@ export class UserDebugDataFactory {
   }
 
   observation(input: {
+    id: string
     date: Date
     value: number
     unit: QuantityUnit
     code: LoincCode
   }): FHIRObservation {
     return {
+      id: input.id,
       resourceType: 'Observation',
       status: FHIRObservationStatus.final,
       code: {

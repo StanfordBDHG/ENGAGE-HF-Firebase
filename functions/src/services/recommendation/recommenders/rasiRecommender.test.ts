@@ -13,7 +13,7 @@ import { expect } from 'chai'
 import { describe, it } from 'mocha'
 import { RasiRecommender } from './rasiRecommender.js'
 import { type HealthSummaryData } from '../../../models/healthSummaryData.js'
-import { MedicationRecommendationCategory } from '../../../models/medicationRecommendation.js'
+import { MedicationRecommendationType } from '../../../models/medicationRecommendation.js'
 import { type MedicationRequestContext } from '../../../models/medicationRequestContext.js'
 import { MockContraindicationService } from '../../../tests/mocks/contraindicationService.js'
 import { mockHealthSummaryData } from '../../../tests/mocks/healthSummaryData.js'
@@ -86,7 +86,7 @@ describe('RasiRecommender', () => {
         requests: [],
         contraindications: [],
         vitals: healthSummaryData.vitals,
-        symptomScores: healthSummaryData.symptomScores.at(-1),
+        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
       })
       expect(result).to.have.length(0)
     })
@@ -105,7 +105,7 @@ describe('RasiRecommender', () => {
         requests: [],
         contraindications: [],
         vitals: healthSummaryData.vitals,
-        symptomScores: healthSummaryData.symptomScores.at(-1),
+        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
       })
       expect(result).to.have.length(0)
     })
@@ -120,15 +120,13 @@ describe('RasiRecommender', () => {
         requests: [],
         contraindications: [],
         vitals: healthSummaryData.vitals,
-        symptomScores: healthSummaryData.symptomScores.at(-1),
+        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
         currentMedication: [],
-        recommendedMedication: {
-          reference: MedicationReference.losartan,
-        },
-        category: MedicationRecommendationCategory.noActionRequired,
+        recommendedMedication: MedicationReference.losartan,
+        type: MedicationRecommendationType.noActionRequired,
       })
     })
 
@@ -139,16 +137,13 @@ describe('RasiRecommender', () => {
         requests: [],
         contraindications: [],
         vitals: healthSummaryData.vitals,
-        symptomScores: healthSummaryData.symptomScores.at(-1),
+        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
         currentMedication: [],
-        recommendedMedication: {
-          reference: MedicationReference.losartan,
-        },
-        category:
-          MedicationRecommendationCategory.morePatientObservationsRequired,
+        recommendedMedication: MedicationReference.losartan,
+        type: MedicationRecommendationType.morePatientObservationsRequired,
       })
     })
 
@@ -160,15 +155,13 @@ describe('RasiRecommender', () => {
         requests: [],
         contraindications: [],
         vitals: healthSummaryData.vitals,
-        symptomScores: healthSummaryData.symptomScores.at(-1),
+        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
         currentMedication: [],
-        recommendedMedication: {
-          reference: MedicationReference.losartan,
-        },
-        category: MedicationRecommendationCategory.noActionRequired,
+        recommendedMedication: MedicationReference.losartan,
+        type: MedicationRecommendationType.noActionRequired,
       })
     })
 
@@ -182,15 +175,13 @@ describe('RasiRecommender', () => {
         requests: [],
         contraindications: [],
         vitals: healthSummaryData.vitals,
-        symptomScores: healthSummaryData.symptomScores.at(-1),
+        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
         currentMedication: [],
-        recommendedMedication: {
-          reference: MedicationReference.losartan,
-        },
-        category: MedicationRecommendationCategory.noActionRequired,
+        recommendedMedication: MedicationReference.losartan,
+        type: MedicationRecommendationType.noActionRequired,
       })
     })
 
@@ -204,15 +195,13 @@ describe('RasiRecommender', () => {
         requests: [],
         contraindications: [],
         vitals: healthSummaryData.vitals,
-        symptomScores: healthSummaryData.symptomScores.at(-1),
+        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
         currentMedication: [],
-        recommendedMedication: {
-          reference: MedicationReference.losartan,
-        },
-        category: MedicationRecommendationCategory.noActionRequired,
+        recommendedMedication: MedicationReference.losartan,
+        type: MedicationRecommendationType.noActionRequired,
       })
     })
 
@@ -228,15 +217,13 @@ describe('RasiRecommender', () => {
         requests: [],
         contraindications: [],
         vitals: healthSummaryData.vitals,
-        symptomScores: healthSummaryData.symptomScores.at(-1),
+        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
         currentMedication: [],
-        recommendedMedication: {
-          reference: MedicationReference.losartan,
-        },
-        category: MedicationRecommendationCategory.notStarted,
+        recommendedMedication: MedicationReference.losartan,
+        type: MedicationRecommendationType.notStarted,
       })
     })
 
@@ -245,15 +232,13 @@ describe('RasiRecommender', () => {
         requests: [],
         contraindications: [],
         vitals: healthSummaryData.vitals,
-        symptomScores: healthSummaryData.symptomScores.at(-1),
+        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
         currentMedication: [],
-        recommendedMedication: {
-          reference: MedicationReference.sacubitrilValsartan,
-        },
-        category: MedicationRecommendationCategory.notStarted,
+        recommendedMedication: MedicationReference.sacubitrilValsartan,
+        type: MedicationRecommendationType.notStarted,
       })
     })
   })
@@ -295,13 +280,13 @@ describe('RasiRecommender', () => {
           requests: [contextAtTarget],
           contraindications: [],
           vitals: healthSummaryData.vitals,
-          symptomScores: healthSummaryData.symptomScores.at(-1),
+          latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         })
         expect(result).to.have.length(1)
         expect(result.at(0)).to.deep.equal({
-          currentMedication: [contextBelowTarget.requestReference],
+          currentMedication: [contextAtTarget],
           recommendedMedication: undefined,
-          category: MedicationRecommendationCategory.targetDoseReached,
+          type: MedicationRecommendationType.targetDoseReached,
         })
       })
 
@@ -312,14 +297,13 @@ describe('RasiRecommender', () => {
           requests: [contextBelowTarget],
           contraindications: [],
           vitals: healthSummaryData.vitals,
-          symptomScores: healthSummaryData.symptomScores.at(-1),
+          latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         })
         expect(result).to.have.length(1)
         expect(result.at(0)).to.deep.equal({
-          currentMedication: [contextBelowTarget.requestReference],
+          currentMedication: [contextBelowTarget],
           recommendedMedication: undefined,
-          category:
-            MedicationRecommendationCategory.morePatientObservationsRequired,
+          type: MedicationRecommendationType.morePatientObservationsRequired,
         })
       })
 
@@ -333,13 +317,13 @@ describe('RasiRecommender', () => {
           requests: [contextBelowTarget],
           contraindications: [],
           vitals: healthSummaryData.vitals,
-          symptomScores: healthSummaryData.symptomScores.at(-1),
+          latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         })
         expect(result).to.have.length(1)
         expect(result.at(0)).to.deep.equal({
-          currentMedication: [contextBelowTarget.requestReference],
+          currentMedication: [contextBelowTarget],
           recommendedMedication: undefined,
-          category: MedicationRecommendationCategory.personalTargetDoseReached,
+          type: MedicationRecommendationType.personalTargetDoseReached,
         })
       })
 
@@ -353,13 +337,13 @@ describe('RasiRecommender', () => {
           requests: [contextBelowTarget],
           contraindications: [],
           vitals: healthSummaryData.vitals,
-          symptomScores: healthSummaryData.symptomScores.at(-1),
+          latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         })
         expect(result).to.have.length(1)
         expect(result.at(0)).to.deep.equal({
-          currentMedication: [contextBelowTarget.requestReference],
+          currentMedication: [contextBelowTarget],
           recommendedMedication: undefined,
-          category: MedicationRecommendationCategory.personalTargetDoseReached,
+          type: MedicationRecommendationType.personalTargetDoseReached,
         })
       })
 
@@ -373,13 +357,13 @@ describe('RasiRecommender', () => {
           requests: [contextBelowTarget],
           contraindications: [],
           vitals: healthSummaryData.vitals,
-          symptomScores: healthSummaryData.symptomScores.at(-1),
+          latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         })
         expect(result).to.have.length(1)
         expect(result.at(0)).to.deep.equal({
-          currentMedication: [contextBelowTarget.requestReference],
+          currentMedication: [contextBelowTarget],
           recommendedMedication: undefined,
-          category: MedicationRecommendationCategory.personalTargetDoseReached,
+          type: MedicationRecommendationType.personalTargetDoseReached,
         })
       })
 
@@ -391,13 +375,13 @@ describe('RasiRecommender', () => {
           requests: [contextBelowTarget],
           contraindications: [],
           vitals: healthSummaryData.vitals,
-          symptomScores: healthSummaryData.symptomScores.at(-1),
+          latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         })
         expect(result).to.have.length(1)
         expect(result.at(0)).to.deep.equal({
-          currentMedication: [contextBelowTarget.requestReference],
+          currentMedication: [contextBelowTarget],
           recommendedMedication: undefined,
-          category: MedicationRecommendationCategory.personalTargetDoseReached,
+          type: MedicationRecommendationType.personalTargetDoseReached,
         })
       })
 
@@ -406,13 +390,13 @@ describe('RasiRecommender', () => {
           requests: [contextBelowTarget],
           contraindications: [],
           vitals: healthSummaryData.vitals,
-          symptomScores: healthSummaryData.symptomScores.at(-1),
+          latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         })
         expect(result).to.have.length(1)
         expect(result.at(0)).to.deep.equal({
-          currentMedication: [contextBelowTarget.requestReference],
+          currentMedication: [contextBelowTarget],
           recommendedMedication: undefined,
-          category: MedicationRecommendationCategory.improvementAvailable,
+          type: MedicationRecommendationType.improvementAvailable,
         })
       })
     })
@@ -425,14 +409,13 @@ describe('RasiRecommender', () => {
           requests: [contextBelowTarget],
           contraindications: [],
           vitals: healthSummaryData.vitals,
-          symptomScores: healthSummaryData.symptomScores.at(-1),
+          latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         })
         expect(result).to.have.length(1)
         expect(result.at(0)).to.deep.equal({
-          currentMedication: [contextBelowTarget.requestReference],
+          currentMedication: [contextBelowTarget],
           recommendedMedication: undefined,
-          category:
-            MedicationRecommendationCategory.morePatientObservationsRequired,
+          type: MedicationRecommendationType.morePatientObservationsRequired,
         })
       })
 
@@ -446,13 +429,13 @@ describe('RasiRecommender', () => {
           requests: [contextBelowTarget],
           contraindications: [],
           vitals: healthSummaryData.vitals,
-          symptomScores: healthSummaryData.symptomScores.at(-1),
+          latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         })
         expect(result).to.have.length(1)
         expect(result.at(0)).to.deep.equal({
-          currentMedication: [contextBelowTarget.requestReference],
+          currentMedication: [contextBelowTarget],
           recommendedMedication: undefined,
-          category: MedicationRecommendationCategory.personalTargetDoseReached,
+          type: MedicationRecommendationType.personalTargetDoseReached,
         })
       })
 
@@ -466,13 +449,13 @@ describe('RasiRecommender', () => {
           requests: [contextBelowTarget],
           contraindications: [],
           vitals: healthSummaryData.vitals,
-          symptomScores: healthSummaryData.symptomScores.at(-1),
+          latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         })
         expect(result).to.have.length(1)
         expect(result.at(0)).to.deep.equal({
-          currentMedication: [contextBelowTarget.requestReference],
+          currentMedication: [contextBelowTarget],
           recommendedMedication: undefined,
-          category: MedicationRecommendationCategory.personalTargetDoseReached,
+          type: MedicationRecommendationType.personalTargetDoseReached,
         })
       })
 
@@ -486,13 +469,13 @@ describe('RasiRecommender', () => {
           requests: [contextBelowTarget],
           contraindications: [],
           vitals: healthSummaryData.vitals,
-          symptomScores: healthSummaryData.symptomScores.at(-1),
+          latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         })
         expect(result).to.have.length(1)
         expect(result.at(0)).to.deep.equal({
-          currentMedication: [contextBelowTarget.requestReference],
+          currentMedication: [contextBelowTarget],
           recommendedMedication: undefined,
-          category: MedicationRecommendationCategory.personalTargetDoseReached,
+          type: MedicationRecommendationType.personalTargetDoseReached,
         })
       })
 
@@ -504,13 +487,13 @@ describe('RasiRecommender', () => {
           requests: [contextBelowTarget],
           contraindications: [],
           vitals: healthSummaryData.vitals,
-          symptomScores: healthSummaryData.symptomScores.at(-1),
+          latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         })
         expect(result).to.have.length(1)
         expect(result.at(0)).to.deep.equal({
-          currentMedication: [contextBelowTarget.requestReference],
+          currentMedication: [contextBelowTarget],
           recommendedMedication: undefined,
-          category: MedicationRecommendationCategory.personalTargetDoseReached,
+          type: MedicationRecommendationType.personalTargetDoseReached,
         })
       })
 
@@ -519,15 +502,13 @@ describe('RasiRecommender', () => {
           requests: [contextBelowTarget],
           contraindications: [],
           vitals: healthSummaryData.vitals,
-          symptomScores: healthSummaryData.symptomScores.at(-1),
+          latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         })
         expect(result).to.have.length(1)
         expect(result.at(0)).to.deep.equal({
-          currentMedication: [contextBelowTarget.requestReference],
-          recommendedMedication: {
-            reference: MedicationReference.sacubitrilValsartan,
-          },
-          category: MedicationRecommendationCategory.improvementAvailable,
+          currentMedication: [contextBelowTarget],
+          recommendedMedication: MedicationReference.sacubitrilValsartan,
+          type: MedicationRecommendationType.improvementAvailable,
         })
       })
     })
@@ -560,13 +541,13 @@ describe('RasiRecommender', () => {
         requests: [contextAtTarget],
         contraindications: [],
         vitals: healthSummaryData.vitals,
-        symptomScores: healthSummaryData.symptomScores.at(-1),
+        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: [contextBelowTarget.requestReference],
+        currentMedication: [contextAtTarget],
         recommendedMedication: undefined,
-        category: MedicationRecommendationCategory.targetDoseReached,
+        type: MedicationRecommendationType.targetDoseReached,
       })
     })
 
@@ -577,14 +558,13 @@ describe('RasiRecommender', () => {
         requests: [contextBelowTarget],
         contraindications: [],
         vitals: healthSummaryData.vitals,
-        symptomScores: healthSummaryData.symptomScores.at(-1),
+        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: [contextBelowTarget.requestReference],
+        currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
-        category:
-          MedicationRecommendationCategory.morePatientObservationsRequired,
+        type: MedicationRecommendationType.morePatientObservationsRequired,
       })
     })
 
@@ -596,13 +576,13 @@ describe('RasiRecommender', () => {
         requests: [contextBelowTarget],
         contraindications: [],
         vitals: healthSummaryData.vitals,
-        symptomScores: healthSummaryData.symptomScores.at(-1),
+        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: [contextBelowTarget.requestReference],
+        currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
-        category: MedicationRecommendationCategory.personalTargetDoseReached,
+        type: MedicationRecommendationType.personalTargetDoseReached,
       })
     })
 
@@ -616,13 +596,13 @@ describe('RasiRecommender', () => {
         requests: [contextBelowTarget],
         contraindications: [],
         vitals: healthSummaryData.vitals,
-        symptomScores: healthSummaryData.symptomScores.at(-1),
+        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: [contextBelowTarget.requestReference],
+        currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
-        category: MedicationRecommendationCategory.personalTargetDoseReached,
+        type: MedicationRecommendationType.personalTargetDoseReached,
       })
     })
 
@@ -636,13 +616,13 @@ describe('RasiRecommender', () => {
         requests: [contextBelowTarget],
         contraindications: [],
         vitals: healthSummaryData.vitals,
-        symptomScores: healthSummaryData.symptomScores.at(-1),
+        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: [contextBelowTarget.requestReference],
+        currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
-        category: MedicationRecommendationCategory.personalTargetDoseReached,
+        type: MedicationRecommendationType.personalTargetDoseReached,
       })
     })
 
@@ -654,13 +634,13 @@ describe('RasiRecommender', () => {
         requests: [contextBelowTarget],
         contraindications: [],
         vitals: healthSummaryData.vitals,
-        symptomScores: healthSummaryData.symptomScores.at(-1),
+        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: [contextBelowTarget.requestReference],
+        currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
-        category: MedicationRecommendationCategory.personalTargetDoseReached,
+        type: MedicationRecommendationType.personalTargetDoseReached,
       })
     })
 
@@ -669,13 +649,13 @@ describe('RasiRecommender', () => {
         requests: [contextBelowTarget],
         contraindications: [],
         vitals: healthSummaryData.vitals,
-        symptomScores: healthSummaryData.symptomScores.at(-1),
+        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: [contextBelowTarget.requestReference],
+        currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
-        category: MedicationRecommendationCategory.improvementAvailable,
+        type: MedicationRecommendationType.improvementAvailable,
       })
     })
   })

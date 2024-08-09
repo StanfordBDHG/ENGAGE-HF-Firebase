@@ -13,7 +13,7 @@ import { type UserService } from './userService.js'
 import { type Invitation } from '../../models/invitation.js'
 import { type UserMessage } from '../../models/message.js'
 import { type Organization } from '../../models/organization.js'
-import { type UserAuth, type User, type UserType } from '../../models/user.js'
+import { UserType, type UserAuth, type User } from '../../models/user.js'
 import {
   type Document,
   type DatabaseService,
@@ -134,14 +134,27 @@ export class DatabaseUserService implements UserService {
       photoURL: invitation.content.auth?.photoURL,
     })
 
-    await this.databaseService.runTransaction((firestore, transaction) => {
-      transaction.create(firestore.doc(`users/${userId}`), {
-        invitationCode: invitation.id,
-        dateOfEnrollment: FieldValue.serverTimestamp(),
-        ...invitation.content.user,
-      })
-      transaction.delete(firestore.doc(`invitations/${invitation.id}`))
-    })
+    await this.databaseService.runTransaction(
+      async (firestore, transaction) => {
+        transaction.create(firestore.doc(`users/${userId}`), {
+          ...invitation.content.user,
+          invitationCode: invitation.id,
+          dateOfEnrollment: FieldValue.serverTimestamp(),
+        })
+
+        const invitationRef = firestore.doc(`invitations/${invitation.id}`)
+        const collections = await invitationRef.listCollections()
+        for (const collection of collections) {
+          const items = await transaction.get(collection)
+          for (const item of items.docs) {
+            transaction.create(collection.doc(item.id), item.data())
+            transaction.delete(item.ref)
+          }
+        }
+
+        transaction.delete(invitationRef)
+      },
+    )
 
     await this.updateClaims(userId)
   }
@@ -161,6 +174,12 @@ export class DatabaseUserService implements UserService {
   }
 
   // Users
+
+  async getAllPatients(): Promise<Array<Document<User>>> {
+    return this.databaseService.getQuery<User>((firestore) =>
+      firestore.collection('users').where('type', '==', UserType.patient),
+    )
+  }
 
   async getUser(userId: string): Promise<Document<User> | undefined> {
     return this.databaseService.getDocument<User>(`users/${userId}`)

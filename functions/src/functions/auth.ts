@@ -8,7 +8,6 @@
 
 import admin from 'firebase-admin'
 import { https, logger } from 'firebase-functions/v2'
-import { onDocumentWritten } from 'firebase-functions/v2/firestore'
 import {
   beforeUserCreated,
   beforeUserSignedIn,
@@ -62,6 +61,7 @@ export const beforeUserCreatedFunction = beforeUserCreated(async (event) => {
       )
 
     await userService.enrollUser(invitation, userId)
+    await factory.trigger().userEnrolled(userId)
   } else {
     try {
       // Check Firestore to confirm whether an invitation code has been associated with a user.
@@ -75,6 +75,7 @@ export const beforeUserCreatedFunction = beforeUserCreated(async (event) => {
       }
 
       await userService.enrollUser(invitation, userId)
+      await factory.trigger().userEnrolled(userId)
     } catch (error) {
       if (error instanceof Error) {
         logger.error(`Error processing request: ${error.message}`)
@@ -92,16 +93,3 @@ export const beforeUserCreatedFunction = beforeUserCreated(async (event) => {
 export const beforeUserSignedInFunction = beforeUserSignedIn(async (event) => {
   await getServiceFactory().user().updateClaims(event.data.uid)
 })
-
-export const onUserWrittenFunction = onDocumentWritten(
-  'users/{userId}',
-  async (event) => {
-    try {
-      await getServiceFactory().user().updateClaims(event.params.userId)
-    } catch (error) {
-      logger.error(
-        `Error processing claims update for userId '${event.params.userId}' on change of user: ${String(error)}`,
-      )
-    }
-  },
-)

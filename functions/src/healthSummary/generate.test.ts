@@ -37,7 +37,7 @@ describe('generateHealthSummary', () => {
   })
 
   it('should still create as nice of a PDF as before', () => {
-    const actualData = generateHealthSummary(inputData)
+    const actualData = generateHealthSummary(inputData, { language: 'en' })
     const expectedPath = 'src/tests/resources/mockHealthSummary.pdf'
     if (TestFlags.regenerateValues) {
       fs.writeFileSync(expectedPath, actualData)
@@ -50,14 +50,14 @@ describe('generateHealthSummary', () => {
   it('should not fail on empty data', () => {
     inputData.dateOfBirth = undefined
     inputData.nextAppointment = undefined
-    inputData.medications = []
+    inputData.recommendations = []
     inputData.symptomScores = []
     inputData.vitals.systolicBloodPressure = []
     inputData.vitals.diastolicBloodPressure = []
     inputData.vitals.heartRate = []
     inputData.vitals.bodyWeight = []
     inputData.vitals.dryWeight = undefined
-    const actualData = generateHealthSummary(inputData)
+    const actualData = generateHealthSummary(inputData, { language: 'en' })
     const expectedPath = 'src/tests/resources/emptyHealthSummary.pdf'
     if (TestFlags.regenerateValues) {
       fs.writeFileSync(expectedPath, actualData)

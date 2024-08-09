@@ -39,29 +39,35 @@ export class DatabaseMedicationService implements MedicationService {
     request: FHIRMedicationRequest,
     reference: FHIRReference<FHIRMedicationRequest>,
   ): Promise<MedicationRequestContext> {
-    const result: MedicationRequestContext = {
-      request: request,
+    const drugReference = request.medicationReference
+    if (!drugReference) throw new Error('Drug reference not found')
+    const drug = (await this.getReference(drugReference))?.content
+    if (!drug) throw new Error('Drug not found')
+    const medicationReference: FHIRReference<FHIRMedication> = {
+      reference: drugReference.reference?.split('/').slice(0, 2).join('/'),
+    }
+    const medication = (await this.getReference(medicationReference))?.content
+    medicationReference.display =
+      medication ? this.fhirService.displayName(medication) : undefined
+    if (!medication) throw new Error('Medication not found')
+    const medicationClassReference =
+      this.fhirService.medicationClassReference(medication)
+    if (!medicationClassReference)
+      throw new Error('Medication class reference not found')
+    const medicationClass = (
+      await this.getClassReference(medicationClassReference)
+    )?.content
+    if (!medicationClass) throw new Error('Medication class not found')
+    return {
       requestReference: reference,
+      request,
+      drugReference,
+      drug,
+      medicationReference,
+      medication,
+      medicationClassReference,
+      medicationClass,
     }
-    result.drugReference = request.medicationReference
-    result.drug = (await this.getReference(result.drugReference))?.content
-    result.medicationReference = {
-      reference: result.drugReference?.reference
-        ?.split('/')
-        .slice(0, 2)
-        .join('/'),
-    }
-    result.medication = (
-      await this.getReference(result.medicationReference)
-    )?.content
-    if (!result.medication) return result
-    result.medicationClassReference = this.fhirService.medicationClassReference(
-      result.medication,
-    )
-    result.medicationClass = (
-      await this.getClassReference(result.medicationClassReference)
-    )?.content
-    return result
   }
 
   // Methods - Medication Classes
@@ -109,9 +115,9 @@ export class DatabaseMedicationService implements MedicationService {
     )
   }
 
-  // Helpers
+  // References
 
-  private async getClassReference(
+  async getClassReference(
     reference: FHIRReference<MedicationClass> | undefined,
   ): Promise<Document<MedicationClass> | undefined> {
     if (!reference?.reference) return undefined
@@ -120,7 +126,7 @@ export class DatabaseMedicationService implements MedicationService {
     )
   }
 
-  private async getReference(
+  async getReference(
     reference: FHIRReference<FHIRMedication> | undefined,
   ): Promise<Document<FHIRMedication> | undefined> {
     if (!reference?.reference) return undefined
