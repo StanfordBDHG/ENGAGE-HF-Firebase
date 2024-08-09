@@ -46,4 +46,14 @@ export interface MedicationService {
     medicationId: string,
     drugId: string,
   ): Promise<Document<FHIRMedication> | undefined>
+
+  // References
+
+  getClassReference(
+    reference: FHIRReference<MedicationClass> | undefined,
+  ): Promise<Document<MedicationClass> | undefined>
+
+  getReference(
+    reference: FHIRReference<FHIRMedication> | undefined,
+  ): Promise<Document<FHIRMedication> | undefined>
 }

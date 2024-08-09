@@ -76,6 +76,7 @@ enum DebugDataComponent {
 enum UserDebugDataComponent {
   consent = 'consent',
   appointments = 'appointments',
+  medicationRecommendations = 'medicationRecommendations',
   medicationRequests = 'medicationRequests',
   messages = 'messages',
   bodyWeightObservations = 'bodyWeightObservations',
@@ -85,6 +86,7 @@ enum UserDebugDataComponent {
   eGfrObservations = 'eGfrObservations',
   potassiumObservations = 'potassiumObservations',
   questionnaireResponses = 'questionnaireResponses',
+  symptomScores = 'symptomScores',
 }
 
 const defaultSeedInputSchema = z.object({
@@ -110,7 +112,7 @@ const defaultSeedInputSchema = z.object({
     .default([]),
 })
 
-export const defaultSeedFunction = validatedOnRequest(
+export const defaultSeed = validatedOnRequest(
   defaultSeedInputSchema,
   async (_, data, response) => {
     const factory = getServiceFactory()
@@ -118,6 +120,7 @@ export const defaultSeedFunction = validatedOnRequest(
     if (data.staticData) await updateStaticData(factory, data.staticData)
 
     const debugDataService = factory.debugData()
+    const triggerService = factory.trigger()
 
     if (data.only.includes(DebugDataComponent.invitations))
       await debugDataService.seedInvitations()
@@ -206,6 +209,29 @@ export const defaultSeedFunction = validatedOnRequest(
             await debugDataService.seedUserMessages(userId)
           if (data.onlyUserCollections.includes(UserDebugDataComponent.consent))
             await debugDataService.seedUserConsent(userId)
+          if (
+            data.onlyUserCollections.includes(
+              UserDebugDataComponent.medicationRecommendations,
+            )
+          )
+            await triggerService.updateRecommendationsForUser(userId)
+
+          if (
+            data.onlyUserCollections.includes(
+              UserDebugDataComponent.questionnaireResponses,
+            )
+          )
+            await debugDataService.seedUserQuestionnaireResponses(
+              userId,
+              data.date,
+            )
+
+          if (
+            data.onlyUserCollections.includes(
+              UserDebugDataComponent.symptomScores,
+            )
+          )
+            await triggerService.updateAllSymptomScores(userId)
         } catch (error) {
           console.error(`Failed to seed user ${userId}: ${String(error)}`)
         }
@@ -267,6 +293,22 @@ export const defaultSeedFunction = validatedOnRequest(
           )
         if (userData.only.includes(UserDebugDataComponent.consent))
           await debugDataService.seedUserConsent(userData.userId)
+        if (
+          userData.only.includes(
+            UserDebugDataComponent.medicationRecommendations,
+          )
+        )
+          await triggerService.updateRecommendationsForUser(userData.userId)
+        if (
+          userData.only.includes(UserDebugDataComponent.questionnaireResponses)
+        )
+          await debugDataService.seedUserQuestionnaireResponses(
+            userData.userId,
+            data.date,
+          )
+
+        if (userData.only.includes(UserDebugDataComponent.symptomScores))
+          await triggerService.updateAllSymptomScores(userData.userId)
       } catch (error) {
         console.error(
           `Failed to seed user data ${userData.userId}: ${String(error)}`,
@@ -295,7 +337,7 @@ const customSeedInputSchema = z.object({
   firestore: z.record(z.string(), z.any()).default({}),
 })
 
-export const customSeedFunction = validatedOnRequest(
+export const customSeed = validatedOnRequest(
   customSeedInputSchema,
   async (_, data, response) => {
     const factory = getServiceFactory()

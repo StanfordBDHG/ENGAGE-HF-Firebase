@@ -9,8 +9,9 @@
 import { expect } from 'chai'
 import { describe, it } from 'mocha'
 import { MraRecommender } from './mraRecommender.js'
+import { type RecommendationInput } from './recommender.js'
 import { type HealthSummaryData } from '../../../models/healthSummaryData.js'
-import { MedicationRecommendationCategory } from '../../../models/medicationRecommendation.js'
+import { MedicationRecommendationType } from '../../../models/medicationRecommendation.js'
 import { type MedicationRequestContext } from '../../../models/medicationRequestContext.js'
 import { MockContraindicationService } from '../../../tests/mocks/contraindicationService.js'
 import { mockHealthSummaryData } from '../../../tests/mocks/healthSummaryData.js'
@@ -27,7 +28,6 @@ import { QuantityUnit } from '../../fhir/quantityUnit.js'
 import { type MedicationService } from '../../medication/medicationService.js'
 import { UserDebugDataFactory } from '../../seeding/debugData/userDebugDataFactory.js'
 import { CachingStrategy } from '../../seeding/seedingService.js'
-import { type RecommendationInput } from '../recommendationService.js'
 
 describe('MraRecommender', () => {
   let medicationContraindication: (
@@ -97,10 +97,8 @@ describe('MraRecommender', () => {
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
         currentMedication: [],
-        recommendedMedication: {
-          reference: MedicationReference.spironolactone,
-        },
-        category: MedicationRecommendationCategory.noActionRequired,
+        recommendedMedication: MedicationReference.spironolactone,
+        type: MedicationRecommendationType.noActionRequired,
       })
     })
 
@@ -119,10 +117,8 @@ describe('MraRecommender', () => {
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
         currentMedication: [],
-        recommendedMedication: {
-          reference: MedicationReference.spironolactone,
-        },
-        category: MedicationRecommendationCategory.noActionRequired,
+        recommendedMedication: MedicationReference.spironolactone,
+        type: MedicationRecommendationType.noActionRequired,
       })
     })
 
@@ -141,10 +137,8 @@ describe('MraRecommender', () => {
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
         currentMedication: [],
-        recommendedMedication: {
-          reference: MedicationReference.spironolactone,
-        },
-        category: MedicationRecommendationCategory.noActionRequired,
+        recommendedMedication: MedicationReference.spironolactone,
+        type: MedicationRecommendationType.noActionRequired,
       })
     })
 
@@ -158,10 +152,8 @@ describe('MraRecommender', () => {
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
         currentMedication: [],
-        recommendedMedication: {
-          reference: MedicationReference.spironolactone,
-        },
-        category: MedicationRecommendationCategory.notStarted,
+        recommendedMedication: MedicationReference.spironolactone,
+        type: MedicationRecommendationType.notStarted,
       })
     })
   })
@@ -196,9 +188,9 @@ describe('MraRecommender', () => {
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: [contextAtTarget.requestReference],
+        currentMedication: [contextAtTarget],
         recommendedMedication: undefined,
-        category: MedicationRecommendationCategory.targetDoseReached,
+        type: MedicationRecommendationType.targetDoseReached,
       })
     })
 
@@ -216,9 +208,9 @@ describe('MraRecommender', () => {
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: [contextBelowTarget.requestReference],
+        currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
-        category: MedicationRecommendationCategory.moreLabObservationsRequired,
+        type: MedicationRecommendationType.moreLabObservationsRequired,
       })
     })
 
@@ -236,9 +228,9 @@ describe('MraRecommender', () => {
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: [contextBelowTarget.requestReference],
+        currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
-        category: MedicationRecommendationCategory.moreLabObservationsRequired,
+        type: MedicationRecommendationType.moreLabObservationsRequired,
       })
     })
 
@@ -256,9 +248,9 @@ describe('MraRecommender', () => {
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: [contextBelowTarget.requestReference],
+        currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
-        category: MedicationRecommendationCategory.personalTargetDoseReached,
+        type: MedicationRecommendationType.personalTargetDoseReached,
       })
     })
 
@@ -276,9 +268,9 @@ describe('MraRecommender', () => {
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: [contextBelowTarget.requestReference],
+        currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
-        category: MedicationRecommendationCategory.personalTargetDoseReached,
+        type: MedicationRecommendationType.personalTargetDoseReached,
       })
     })
 
@@ -291,9 +283,9 @@ describe('MraRecommender', () => {
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: [contextBelowTarget.requestReference],
+        currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
-        category: MedicationRecommendationCategory.improvementAvailable,
+        type: MedicationRecommendationType.improvementAvailable,
       })
     })
   })

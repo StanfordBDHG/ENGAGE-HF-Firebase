@@ -6,19 +6,19 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { Recommender } from './recommender.js'
 import {
-  MedicationRecommendationCategory,
-  type MedicationRecommendation,
-} from '../../../models/medicationRecommendation.js'
+  type RecommendationInput,
+  type RecommendationOutput,
+  Recommender,
+} from './recommender.js'
+import { MedicationRecommendationType } from '../../../models/medicationRecommendation.js'
 import { MedicationClassReference, MedicationReference } from '../../codes.js'
 import { ContraindicationCategory } from '../../contraindication/contraindicationService.js'
-import { type RecommendationInput } from '../recommendationService.js'
 
 export class BetaBlockerRecommender extends Recommender {
   // Methods
 
-  compute(input: RecommendationInput): MedicationRecommendation[] {
+  compute(input: RecommendationInput): RecommendationOutput[] {
     const currentRequests = this.findCurrentRequests(input.requests, [
       MedicationClassReference.betaBlockers,
     ])
@@ -28,7 +28,7 @@ export class BetaBlockerRecommender extends Recommender {
       return this.createRecommendation(
         currentRequests,
         undefined,
-        MedicationRecommendationCategory.targetDoseReached,
+        MedicationRecommendationType.targetDoseReached,
       )
 
     const medianSystolic = this.medianValue(
@@ -42,36 +42,36 @@ export class BetaBlockerRecommender extends Recommender {
       return this.createRecommendation(
         currentRequests,
         undefined,
-        MedicationRecommendationCategory.morePatientObservationsRequired,
+        MedicationRecommendationType.morePatientObservationsRequired,
       )
 
     if (medianSystolic < 100 || medianHeartRate < 60)
       return this.createRecommendation(
         currentRequests,
         undefined,
-        MedicationRecommendationCategory.personalTargetDoseReached,
+        MedicationRecommendationType.personalTargetDoseReached,
       )
 
     if (
-      input.symptomScores?.dizzinessScore &&
-      input.symptomScores.dizzinessScore >= 3
+      input.latestSymptomScore &&
+      input.latestSymptomScore.dizzinessScore >= 3
     )
       return this.createRecommendation(
         currentRequests,
         undefined,
-        MedicationRecommendationCategory.personalTargetDoseReached,
+        MedicationRecommendationType.personalTargetDoseReached,
       )
 
     return this.createRecommendation(
       currentRequests,
       undefined,
-      MedicationRecommendationCategory.improvementAvailable,
+      MedicationRecommendationType.improvementAvailable,
     )
   }
 
   // Helpers
 
-  private computeNew(input: RecommendationInput): MedicationRecommendation[] {
+  private computeNew(input: RecommendationInput): RecommendationOutput[] {
     const contraindicationCategory =
       this.contraindicationService.checkMedicationClass(
         input.contraindications,
@@ -86,7 +86,7 @@ export class BetaBlockerRecommender extends Recommender {
         return this.createRecommendation(
           [],
           MedicationReference.carvedilol,
-          MedicationRecommendationCategory.noActionRequired,
+          MedicationRecommendationType.noActionRequired,
         )
       case ContraindicationCategory.none:
         break
@@ -103,20 +103,20 @@ export class BetaBlockerRecommender extends Recommender {
       return this.createRecommendation(
         [],
         MedicationReference.carvedilol,
-        MedicationRecommendationCategory.morePatientObservationsRequired,
+        MedicationRecommendationType.morePatientObservationsRequired,
       )
 
     if (medianSystolic < 100 || medianHeartRate < 60)
       return this.createRecommendation(
         [],
         MedicationReference.carvedilol,
-        MedicationRecommendationCategory.noActionRequired,
+        MedicationRecommendationType.noActionRequired,
       )
 
     return this.createRecommendation(
       [],
       MedicationReference.carvedilol,
-      MedicationRecommendationCategory.notStarted,
+      MedicationRecommendationType.notStarted,
     )
   }
 }

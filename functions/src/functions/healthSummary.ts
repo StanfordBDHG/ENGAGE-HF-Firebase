@@ -17,7 +17,7 @@ const exportHealthSummaryInputSchema = z.object({
   userId: z.string(),
 })
 
-export const exportHealthSummaryFunction = validatedOnCall(
+export const exportHealthSummary = validatedOnCall(
   exportHealthSummaryInputSchema,
   async (request): Promise<Buffer> => {
     if (!request.data.userId)
@@ -26,23 +26,25 @@ export const exportHealthSummaryFunction = validatedOnCall(
     const factory = getServiceFactory()
     const userService = factory.user()
     const credential = factory.credential(request.auth)
-    try {
-      credential.check(UserRole.admin, UserRole.user(request.data.userId))
-    } catch {
-      const organization = (await userService.getUser(request.data.userId))
-        ?.content.organization
-      if (!organization)
-        throw new https.HttpsError('not-found', 'Organization not found')
-      credential.check(
-        UserRole.owner(organization),
-        UserRole.clinician(organization),
-      )
-    }
+    const user = await userService.getUser(request.data.userId)
+
+    credential.check(
+      UserRole.admin,
+      UserRole.user(request.data.userId),
+      ...(user?.content.organization ?
+        [
+          UserRole.owner(user.content.organization),
+          UserRole.clinician(user.content.organization),
+        ]
+      : []),
+    )
 
     const healthSummaryService = factory.healthSummary()
     const data = await healthSummaryService.getHealthSummaryData(
       request.data.userId,
     )
-    return generateHealthSummary(data)
+    return generateHealthSummary(data, {
+      language: user?.content.language ?? 'en',
+    })
   },
 )

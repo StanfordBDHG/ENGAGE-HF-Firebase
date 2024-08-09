@@ -34,7 +34,7 @@ export interface CreateInvitationOutput {
   code: string
 }
 
-export const createInvitationFunction = validatedOnCall(
+export const createInvitation = validatedOnCall(
   createInvitationInputSchema,
   async (request): Promise<CreateInvitationOutput> => {
     if (!request.auth?.uid)
@@ -91,7 +91,7 @@ const checkInvitationCodeInputSchema = z.object({
   invitationCode: z.string(),
 })
 
-export const checkInvitationCodeFunction = validatedOnCall(
+export const checkInvitationCode = validatedOnCall(
   checkInvitationCodeInputSchema,
   async (request): Promise<void> => {
     if (!request.auth?.uid) {

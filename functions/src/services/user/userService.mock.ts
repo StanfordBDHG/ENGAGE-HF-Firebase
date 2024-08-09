@@ -116,6 +116,10 @@ export class MockUserService implements UserService {
 
   // Methods - User
 
+  async getAllPatients(): Promise<Array<Document<User>>> {
+    return []
+  }
+
   async getUser(userId: string): Promise<Document<User>> {
     return {
       id: userId,
