@@ -101,7 +101,7 @@ describe('DebugDataService', () => {
     )
   })
 
-  it('recreates the same messages', async () => {
+  it('recreates the same potassium observations', async () => {
     await generatesSameCollectionAsBefore('users/0/potassiumObservations', () =>
       service.seedUserPotassiumObservations('0', date),
     )
@@ -115,7 +115,7 @@ describe('DebugDataService', () => {
 
   it('recreates the same messages', async () => {
     await generatesSameCollectionAsBefore('users/0/messages', () =>
-      service.seedUserMessages('0'),
+      service.seedUserMessages('0', date),
     )
   })
 })

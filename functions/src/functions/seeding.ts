@@ -209,7 +209,7 @@ export const defaultSeed = validatedOnRequest(
           if (
             data.onlyUserCollections.includes(UserDebugDataComponent.messages)
           )
-            await debugDataService.seedUserMessages(userId)
+            await debugDataService.seedUserMessages(userId, data.date)
           if (data.onlyUserCollections.includes(UserDebugDataComponent.consent))
             await debugDataService.seedUserConsent(userId)
           if (
@@ -251,7 +251,7 @@ export const defaultSeed = validatedOnRequest(
         if (userData.only.includes(UserDebugDataComponent.medicationRequests))
           await debugDataService.seedUserMedicationRequests(userData.userId)
         if (userData.only.includes(UserDebugDataComponent.messages))
-          await debugDataService.seedUserMessages(userData.userId)
+          await debugDataService.seedUserMessages(userData.userId, data.date)
         if (
           userData.only.includes(
             UserDebugDataComponent.bloodPressureObservations,

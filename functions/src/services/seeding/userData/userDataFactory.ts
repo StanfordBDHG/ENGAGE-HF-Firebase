@@ -118,10 +118,11 @@ export class UserDataFactory {
   // Methods - Messages
 
   static medicationChangeMessage(input: {
+    creationDate?: Date
     videoReference: VideoReference
   }): UserMessage {
     return {
-      creationDate: new Date(),
+      creationDate: input.creationDate ?? new Date(),
       completionDate: null,
       dueDate: null,
       title: {
@@ -138,9 +139,13 @@ export class UserDataFactory {
     }
   }
 
-  static weightGainMessage(): UserMessage {
+  static weightGainMessage(
+    input: {
+      creationDate?: Date
+    } = {},
+  ): UserMessage {
     return {
-      creationDate: new Date(),
+      creationDate: input.creationDate ?? new Date(),
       completionDate: null,
       dueDate: null,
       title: {
@@ -157,9 +162,13 @@ export class UserDataFactory {
     }
   }
 
-  static medicationUptitrationMessage(): UserMessage {
+  static medicationUptitrationMessage(
+    input: {
+      creationDate?: Date
+    } = {},
+  ): UserMessage {
     return {
-      creationDate: new Date(),
+      creationDate: input.creationDate ?? new Date(),
       completionDate: null,
       dueDate: null,
       title: {
@@ -177,10 +186,11 @@ export class UserDataFactory {
   }
 
   static welcomeMessage(input: {
+    creationDate?: Date
     videoReference: VideoReference
   }): UserMessage {
     return {
-      creationDate: new Date(),
+      creationDate: input.creationDate ?? new Date(),
       completionDate: null,
       dueDate: null,
       title: {
@@ -197,9 +207,13 @@ export class UserDataFactory {
     }
   }
 
-  static vitalsMessage(): UserMessage {
+  static vitalsMessage(
+    input: {
+      creationDate?: Date
+    } = {},
+  ): UserMessage {
     return {
-      creationDate: new Date(),
+      creationDate: input.creationDate ?? new Date(),
       completionDate: null,
       dueDate: null,
       title: {
@@ -217,10 +231,11 @@ export class UserDataFactory {
   }
 
   static symptomQuestionnaireMessage(input: {
+    creationDate?: Date
     questionnaireReference: QuestionnaireReference
   }): UserMessage {
     return {
-      creationDate: new Date(),
+      creationDate: input.creationDate ?? new Date(),
       completionDate: null,
       dueDate: null,
       title: {
@@ -237,9 +252,13 @@ export class UserDataFactory {
     }
   }
 
-  static preAppointmentMessage(): UserMessage {
+  static preAppointmentMessage(
+    input: {
+      creationDate?: Date
+    } = {},
+  ): UserMessage {
     return {
-      creationDate: new Date(),
+      creationDate: input.creationDate ?? new Date(),
       completionDate: null,
       dueDate: null,
       title: {

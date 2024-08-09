@@ -126,19 +126,30 @@ export class DebugDataService extends SeedingService {
     await this.replaceCollection(`users/${userId}/medicationRequests`, values)
   }
 
-  async seedUserMessages(userId: string) {
+  async seedUserMessages(userId: string, date: Date) {
     const values = [
       UserDataFactory.medicationChangeMessage({
+        creationDate: date,
         videoReference: VideoReference.aceiAndArbs,
       }),
-      UserDataFactory.medicationUptitrationMessage(),
-      UserDataFactory.preAppointmentMessage(),
+      UserDataFactory.medicationUptitrationMessage({
+        creationDate: date,
+      }),
+      UserDataFactory.preAppointmentMessage({
+        creationDate: date,
+      }),
       UserDataFactory.symptomQuestionnaireMessage({
+        creationDate: date,
         questionnaireReference: QuestionnaireReference.enUS,
       }),
-      UserDataFactory.vitalsMessage(),
-      UserDataFactory.weightGainMessage(),
+      UserDataFactory.vitalsMessage({
+        creationDate: date,
+      }),
+      UserDataFactory.weightGainMessage({
+        creationDate: date,
+      }),
       UserDataFactory.welcomeMessage({
+        creationDate: date,
         videoReference: VideoReference.welcome,
       }),
     ]
