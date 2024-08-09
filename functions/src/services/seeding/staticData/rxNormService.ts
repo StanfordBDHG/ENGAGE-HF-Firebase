@@ -7,12 +7,12 @@
 //
 import * as https from 'https'
 import { localize } from '../../../extensions/localizedText.js'
+import { capitalize } from '../../../extensions/string.js'
 import { type FHIRExtension } from '../../../models/fhir/baseTypes.js'
 import { type FHIRMedication } from '../../../models/fhir/medication.js'
 import { type MedicationClass } from '../../../models/medicationClass.js'
 import { CodingSystem, FHIRExtensionUrl } from '../../codes.js'
 import { QuantityUnit } from '../../fhir/quantityUnit.js'
-import { capitalize } from '../../../extensions/string.js'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
