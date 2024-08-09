@@ -37,7 +37,7 @@ describe('DatabaseUserService', () => {
   describe('enrollUser', () => {
     it('enrolls an admin', async () => {
       const userId = 'mockAdminUserId'
-      const invitationId = 'mockAdmin'
+      const invitationCode = 'mockAdmin'
       const displayName = 'Mock Admin'
 
       mockFirestore.replaceAll({
@@ -58,7 +58,7 @@ describe('DatabaseUserService', () => {
         },
       })
 
-      const invitation = await userService.getInvitation(invitationId)
+      const invitation = await userService.getInvitationByCode(invitationCode)
       if (!invitation) assert.fail('Invitation not found')
       await userService.enrollUser(invitation, userId)
 
@@ -69,25 +69,25 @@ describe('DatabaseUserService', () => {
         organization: null,
       })
 
-      const invitationSnapshot = await firestore
-        .collection('invitations')
-        .doc(invitationId)
-        .get()
-      expect(invitationSnapshot.exists).to.be.false
-      const invitationData = invitationSnapshot.data() as Invitation | undefined
-      expect(invitationData).to.be.undefined
+      const invitationSnapshot = (
+        await firestore
+          .collection('invitations')
+          .where('code', '==', invitationCode)
+          .get()
+      ).docs.at(0)
+      expect(invitationSnapshot).to.be.undefined
 
       const userSnapshot = await firestore.collection('users').doc(userId).get()
       expect(userSnapshot.exists).to.be.true
       const userData = userSnapshot.data() as User | undefined
       expect(userData).to.exist
-      expect(userData?.invitationCode).to.equal(invitationId)
+      expect(userData?.invitationCode).to.equal(invitationCode)
       expect(userData?.dateOfEnrollment).to.equal(FieldValue.serverTimestamp())
     })
 
     it('enrolls a clinician', async () => {
       const userId = 'mockClinicianUserId'
-      const invitationId = 'mockClinician'
+      const invitationCode = 'mockClinician'
       const displayName = 'Mock Clinician'
 
       mockFirestore.replaceAll({
@@ -112,7 +112,7 @@ describe('DatabaseUserService', () => {
         },
       })
 
-      const invitation = await userService.getInvitation(invitationId)
+      const invitation = await userService.getInvitationByCode(invitationCode)
       if (!invitation) assert.fail('Invitation not found')
       await userService.enrollUser(invitation, userId)
 
@@ -123,25 +123,25 @@ describe('DatabaseUserService', () => {
         organization: 'mockOrganization',
       })
 
-      const invitationSnapshot = await firestore
-        .collection('invitations')
-        .doc(invitationId)
-        .get()
-      expect(invitationSnapshot.exists).to.be.false
-      const invitationData = invitationSnapshot.data() as Invitation | undefined
-      expect(invitationData).to.be.undefined
+      const invitationSnapshot = (
+        await firestore
+          .collection('invitations')
+          .where('code', '==', invitationCode)
+          .get()
+      ).docs.at(0)
+      expect(invitationSnapshot).to.be.undefined
 
       const userSnapshot = await firestore.collection('users').doc(userId).get()
       expect(userSnapshot.exists).to.be.true
       const userData = userSnapshot.data() as User | undefined
       expect(userData).to.exist
-      expect(userData?.invitationCode).to.equal(invitationId)
+      expect(userData?.invitationCode).to.equal(invitationCode)
       expect(userData?.dateOfEnrollment).to.equal(FieldValue.serverTimestamp())
     })
 
     it('enrolls a patient', async () => {
       const userId = 'mockPatientUserId'
-      const invitationId = 'mockPatient'
+      const invitationCode = 'mockPatient'
       const displayName = 'Mock Patient'
 
       mockFirestore.replaceAll({
@@ -168,7 +168,7 @@ describe('DatabaseUserService', () => {
         },
       })
 
-      const invitation = await userService.getInvitation(invitationId)
+      const invitation = await userService.getInvitationByCode(invitationCode)
       if (!invitation) assert.fail('Invitation not found')
       await userService.enrollUser(invitation, userId)
 
@@ -179,19 +179,19 @@ describe('DatabaseUserService', () => {
         organization: 'mockOrganization',
       })
 
-      const invitationSnapshot = await firestore
-        .collection('invitations')
-        .doc(invitationId)
-        .get()
-      expect(invitationSnapshot.exists).to.be.false
-      const invitationData = invitationSnapshot.data() as Invitation | undefined
-      expect(invitationData).to.be.undefined
+      const invitationSnapshot = (
+        await firestore
+          .collection('invitations')
+          .where('code', '==', invitationCode)
+          .get()
+      ).docs.at(0)
+      expect(invitationSnapshot).to.be.undefined
 
       const userSnapshot = await firestore.collection('users').doc(userId).get()
       expect(userSnapshot.exists).to.be.true
       const userData = userSnapshot.data() as User | undefined
       expect(userData).to.exist
-      expect(userData?.invitationCode).to.equal(invitationId)
+      expect(userData?.invitationCode).to.equal(invitationCode)
       expect(userData?.dateOfEnrollment).to.equal(FieldValue.serverTimestamp())
     })
   })

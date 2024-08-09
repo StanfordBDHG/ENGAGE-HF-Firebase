@@ -12,6 +12,7 @@ import { validatedOnCall } from './helpers.js'
 import { UserType } from '../models/user.js'
 import { UserRole } from '../services/credential/credential.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
+import { Invitation } from '../models/invitation.js'
 
 const createInvitationInputSchema = z.object({
   auth: z.object({
@@ -66,7 +67,11 @@ export const createInvitation = validatedOnCall(
         )
 
       try {
-        await userService.createInvitation(invitationCode, request.data)
+        const invitation: Invitation = {
+          ...request.data,
+          code: invitationCode,
+        }
+        await userService.createInvitation(invitation)
         return { code: invitationCode }
       } catch (error) {
         if (counter < 4 && isPatient) continue
