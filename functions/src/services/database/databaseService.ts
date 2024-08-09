@@ -14,6 +14,7 @@ import {
 
 export interface Document<Content> {
   id: string
+  path: string
   content: Content
 }
 

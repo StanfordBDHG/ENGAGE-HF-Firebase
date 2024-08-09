@@ -7,12 +7,17 @@
 //
 
 import { type DocumentData } from 'firebase-admin/firestore'
-import { advanceDateByDays } from '../../extensions/date.js'
+import {
+  advanceDateByDays,
+  advanceDateByMinutes,
+} from '../../extensions/date.js'
 import { type FHIRQuestionnaireResponse } from '../../models/fhir/questionnaireResponse.js'
 import { type ServiceFactory } from '../factory/serviceFactory.js'
 import { type RecommendationInput } from '../recommendation/recommenders/recommender.js'
 import { UserDataFactory } from '../seeding/userData/userDataFactory.js'
 import { QuestionnaireReference, VideoReference } from '../references.js'
+import { FHIRObservation } from '../../models/fhir/observation.js'
+import { median } from '../../extensions/array.js'
 
 export class TriggerService {
   // Properties
@@ -26,6 +31,31 @@ export class TriggerService {
   }
 
   // Methods - Schedule
+
+  async every15Minutes() {
+    try {
+      const tomorrow = advanceDateByDays(new Date(), 1)
+      const patientService = this.factory.patient()
+      const messageService = this.factory.message()
+
+      const appointments = await patientService.getEveryAppoinment(
+        advanceDateByMinutes(tomorrow, -15),
+        advanceDateByMinutes(tomorrow, 15),
+      )
+
+      await Promise.all(
+        appointments.map(
+          async (appointment) =>
+            await messageService.addMessage(
+              appointment.path.split('/')[1],
+              UserDataFactory.preAppointmentMessage(),
+            ),
+        ),
+      )
+    } catch (error) {
+      console.error(`Error running every 15 minutes trigger: ${String(error)}`)
+    }
+  }
 
   async everyMorning() {
     try {
@@ -74,22 +104,6 @@ export class TriggerService {
 
   // Methods - Triggers
 
-  async userEnrolled(userId: string) {
-    try {
-      await this.updateRecommendationsForUser(userId)
-      await this.factory.message().addMessage(
-        userId,
-        UserDataFactory.welcomeMessage({
-          videoReference: VideoReference.welcome,
-        }),
-      )
-    } catch (error) {
-      console.error(
-        `Error updating user data for enrollment for user ${userId}: ${String(error)}`,
-      )
-    }
-  }
-
   async questionnaireResponseWritten(
     userId: string,
     questionnaireResponseId: string,
@@ -109,6 +123,48 @@ export class TriggerService {
     } catch (error) {
       console.error(
         `Error updating symptom scores for questionnaire response ${questionnaireResponseId} for user ${userId}: ${String(error)}`,
+      )
+    }
+  }
+
+  async userEnrolled(userId: string) {
+    try {
+      await this.updateRecommendationsForUser(userId)
+      await this.factory.message().addMessage(
+        userId,
+        UserDataFactory.welcomeMessage({
+          videoReference: VideoReference.welcome,
+        }),
+      )
+    } catch (error) {
+      console.error(
+        `Error updating user data for enrollment for user ${userId}: ${String(error)}`,
+      )
+    }
+  }
+
+  async userBodyWeightObservationWritten(userId: string): Promise<void> {
+    try {
+      const date = new Date()
+      const healthSummaryService = this.factory.healthSummary()
+      const bodyWeightObservations =
+        await healthSummaryService.getBodyWeightObservations(
+          userId,
+          advanceDateByDays(date, -7),
+        )
+
+        if (bodyWeightObservations.length < 1) return
+
+      const bodyWeightMedian = median(
+        bodyWeightObservations.map((observation) => observation.value),
+      )
+
+      const mostRecentBodyWeight = bodyWeightObservations.at(0)?.value
+
+
+    } catch (error) {
+      console.error(
+        `Error on user body weight observation written: ${String(error)}`,
       )
     }
   }

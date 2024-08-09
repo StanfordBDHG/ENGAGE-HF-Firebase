@@ -12,7 +12,7 @@ import { https } from 'firebase-functions'
 import { type MessageService } from './messageService.js'
 import { localize } from '../../extensions/localizedText.js'
 import { type UserDevice } from '../../models/device.js'
-import { type UserMessage } from '../../models/message.js'
+import { UserMessageType, type UserMessage } from '../../models/message.js'
 import { type DatabaseService } from '../database/databaseService.js'
 
 export class DefaultMessageService implements MessageService {

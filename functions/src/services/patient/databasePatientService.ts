@@ -18,6 +18,7 @@ import {
   type Document,
   type DatabaseService,
 } from '../database/databaseService.js'
+import { advanceDateByDays } from '../../extensions/date.js'
 
 export class DatabasePatientService implements PatientService {
   // Properties
@@ -31,6 +32,24 @@ export class DatabasePatientService implements PatientService {
   }
 
   // Methods - Appointments
+
+  async getEveryAppoinment(
+    fromDate: Date,
+    toDate: Date,
+  ): Promise<Array<Document<FHIRAppointment>>> {
+    const result = await this.databaseService.getQuery<FHIRAppointment>(
+      (firestore) =>
+        firestore
+          .collectionGroup('appointments')
+          .where('start', '>', advanceDateByDays(fromDate, -1).toISOString())
+          .where('start', '<', advanceDateByDays(toDate, 1).toISOString()),
+    )
+
+    return result.filter((appointment) => {
+      const start = new Date(appointment.content.start)
+      return start >= fromDate && start < toDate
+    })
+  }
 
   async getAppointments(
     userId: string,

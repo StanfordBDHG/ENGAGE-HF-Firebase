@@ -10,7 +10,7 @@ import { type HealthSummaryService } from './healthSummaryService.js'
 import { advanceDateByDays } from '../../extensions/date.js'
 import { type HealthSummaryData } from '../../models/healthSummaryData.js'
 import { MedicationRecommendationType } from '../../models/medicationRecommendation.js'
-import { type Vitals } from '../../models/vitals.js'
+import { Observation, type Vitals } from '../../models/vitals.js'
 import { QuantityUnit } from '../fhir/quantityUnit.js'
 
 /* eslint-disable @typescript-eslint/require-await */
@@ -133,8 +133,29 @@ export class MockHealthSummaryService implements HealthSummaryService {
   }
 
   async getVitals(userId: string): Promise<Vitals> {
+    const [systolicBloodPressure, diastolicBloodPressure] =
+      await this.getBloodPressureObservations(userId, this.startDate)
     return {
-      systolicBloodPressure: [
+      systolicBloodPressure: systolicBloodPressure,
+      diastolicBloodPressure: diastolicBloodPressure,
+      heartRate: await this.getHeartRateObservations(userId, this.startDate),
+      bodyWeight: await this.getBodyWeightObservations(userId, this.startDate),
+      dryWeight: await this.getMostRecentDryWeightObservation(userId),
+      creatinine: await this.getMostRecentCreatinineObservation(userId),
+      potassium: await this.getMostRecentPotassiumObservation(userId),
+      estimatedGlomerularFiltrationRate:
+        await this.getMostRecentEstimatedGlomerularFiltrationRateObservation(
+          userId,
+        ),
+    }
+  }
+
+  async getBloodPressureObservations(
+    userId: string,
+    cutoffDate: Date,
+  ): Promise<[Observation[], Observation[]]> {
+    return [
+      [
         {
           date: this.startDateAdvancedByDays(-1),
           value: 110,
@@ -181,7 +202,7 @@ export class MockHealthSummaryService implements HealthSummaryService {
           unit: QuantityUnit.mmHg,
         },
       ],
-      diastolicBloodPressure: [
+      [
         {
           date: this.startDateAdvancedByDays(-1),
           value: 70,
@@ -228,120 +249,152 @@ export class MockHealthSummaryService implements HealthSummaryService {
           unit: QuantityUnit.mmHg,
         },
       ],
-      heartRate: [
-        {
-          date: this.startDateAdvancedByDays(-1),
-          value: 79,
-          unit: QuantityUnit.bpm,
-        },
-        {
-          date: this.startDateAdvancedByDays(-2),
-          value: 62,
-          unit: QuantityUnit.bpm,
-        },
-        {
-          date: this.startDateAdvancedByDays(-3),
-          value: 77,
-          unit: QuantityUnit.bpm,
-        },
-        {
-          date: this.startDateAdvancedByDays(-4),
-          value: 63,
-          unit: QuantityUnit.bpm,
-        },
-        {
-          date: this.startDateAdvancedByDays(-5),
-          value: 61,
-          unit: QuantityUnit.bpm,
-        },
-        {
-          date: this.startDateAdvancedByDays(-6),
-          value: 70,
-          unit: QuantityUnit.bpm,
-        },
-        {
-          date: this.startDateAdvancedByDays(-7),
-          value: 67,
-          unit: QuantityUnit.bpm,
-        },
-        {
-          date: this.startDateAdvancedByDays(-8),
-          value: 80,
-          unit: QuantityUnit.bpm,
-        },
-        {
-          date: this.startDateAdvancedByDays(-9),
-          value: 65,
-          unit: QuantityUnit.bpm,
-        },
-      ],
-      bodyWeight: [
-        {
-          date: this.startDateAdvancedByDays(-1),
-          value: 269,
-          unit: QuantityUnit.lbs,
-        },
-        {
-          date: this.startDateAdvancedByDays(-2),
-          value: 267,
-          unit: QuantityUnit.lbs,
-        },
-        {
-          date: this.startDateAdvancedByDays(-3),
-          value: 267,
-          unit: QuantityUnit.lbs,
-        },
-        {
-          date: this.startDateAdvancedByDays(-4),
-          value: 265,
-          unit: QuantityUnit.lbs,
-        },
-        {
-          date: this.startDateAdvancedByDays(-5),
-          value: 268,
-          unit: QuantityUnit.lbs,
-        },
-        {
-          date: this.startDateAdvancedByDays(-6),
-          value: 268,
-          unit: QuantityUnit.lbs,
-        },
-        {
-          date: this.startDateAdvancedByDays(-7),
-          value: 266,
-          unit: QuantityUnit.lbs,
-        },
-        {
-          date: this.startDateAdvancedByDays(-8),
-          value: 266,
-          unit: QuantityUnit.lbs,
-        },
-        {
-          date: this.startDateAdvancedByDays(-9),
-          value: 267,
-          unit: QuantityUnit.lbs,
-        },
-      ],
-      dryWeight: {
+    ]
+  }
+
+  async getHeartRateObservations(
+    userId: string,
+    cutoffDate: Date,
+  ): Promise<Observation[]> {
+    return [
+      {
+        date: this.startDateAdvancedByDays(-1),
+        value: 79,
+        unit: QuantityUnit.bpm,
+      },
+      {
+        date: this.startDateAdvancedByDays(-2),
+        value: 62,
+        unit: QuantityUnit.bpm,
+      },
+      {
+        date: this.startDateAdvancedByDays(-3),
+        value: 77,
+        unit: QuantityUnit.bpm,
+      },
+      {
         date: this.startDateAdvancedByDays(-4),
-        value: 267.5,
+        value: 63,
+        unit: QuantityUnit.bpm,
+      },
+      {
+        date: this.startDateAdvancedByDays(-5),
+        value: 61,
+        unit: QuantityUnit.bpm,
+      },
+      {
+        date: this.startDateAdvancedByDays(-6),
+        value: 70,
+        unit: QuantityUnit.bpm,
+      },
+      {
+        date: this.startDateAdvancedByDays(-7),
+        value: 67,
+        unit: QuantityUnit.bpm,
+      },
+      {
+        date: this.startDateAdvancedByDays(-8),
+        value: 80,
+        unit: QuantityUnit.bpm,
+      },
+      {
+        date: this.startDateAdvancedByDays(-9),
+        value: 65,
+        unit: QuantityUnit.bpm,
+      },
+    ]
+  }
+
+  async getBodyWeightObservations(
+    userId: string,
+    cutoffDate: Date,
+  ): Promise<Observation[]> {
+    return [
+      {
+        date: this.startDateAdvancedByDays(-1),
+        value: 269,
         unit: QuantityUnit.lbs,
       },
-      creatinine: {
-        date: this.startDateAdvancedByDays(-4),
-        value: 1.1,
-        unit: QuantityUnit.mg_dL,
+      {
+        date: this.startDateAdvancedByDays(-2),
+        value: 267,
+        unit: QuantityUnit.lbs,
       },
-      potassium: {
-        date: this.startDateAdvancedByDays(-4),
-        value: 4.2,
-        unit: QuantityUnit.mEq_L,
+      {
+        date: this.startDateAdvancedByDays(-3),
+        value: 267,
+        unit: QuantityUnit.lbs,
       },
-      estimatedGlomerularFiltrationRate: {
+      {
         date: this.startDateAdvancedByDays(-4),
-        value: 60,
-        unit: QuantityUnit.mL_min_173m2,
+        value: 265,
+        unit: QuantityUnit.lbs,
       },
+      {
+        date: this.startDateAdvancedByDays(-5),
+        value: 268,
+        unit: QuantityUnit.lbs,
+      },
+      {
+        date: this.startDateAdvancedByDays(-6),
+        value: 268,
+        unit: QuantityUnit.lbs,
+      },
+      {
+        date: this.startDateAdvancedByDays(-7),
+        value: 266,
+        unit: QuantityUnit.lbs,
+      },
+      {
+        date: this.startDateAdvancedByDays(-8),
+        value: 266,
+        unit: QuantityUnit.lbs,
+      },
+      {
+        date: this.startDateAdvancedByDays(-9),
+        value: 267,
+        unit: QuantityUnit.lbs,
+      },
+    ]
+  }
+
+  async getMostRecentDryWeightObservation(
+    userId: string,
+  ): Promise<Observation | undefined> {
+    return {
+      date: this.startDateAdvancedByDays(-4),
+      value: 267.5,
+      unit: QuantityUnit.lbs,
+    }
+  }
+
+  async getMostRecentCreatinineObservation(
+    userId: string,
+  ): Promise<Observation | undefined> {
+    return {
+      date: this.startDateAdvancedByDays(-4),
+      value: 1.1,
+      unit: QuantityUnit.mg_dL,
+    }
+  }
+
+  async getMostRecentPotassiumObservation(
+    userId: string,
+  ): Promise<Observation | undefined> {
+    return {
+      date: this.startDateAdvancedByDays(-4),
+      value: 4.2,
+      unit: QuantityUnit.mEq_L,
+    }
+  }
+
+  async getMostRecentEstimatedGlomerularFiltrationRateObservation(
+    userId: string,
+  ): Promise<Observation | undefined> {
+    return {
+      date: this.startDateAdvancedByDays(-4),
+      value: 60,
+      unit: QuantityUnit.mL_min_173m2,
     }
   }
 

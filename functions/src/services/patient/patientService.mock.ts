@@ -31,6 +31,12 @@ import { QuantityUnit } from '../fhir/quantityUnit.js'
 export class MockPatientService implements PatientService {
   // Methods - Appointments
 
+  async getEveryAppoinment(
+    fromDate: Date,
+    toDate: Date,
+  ): Promise<Array<Document<FHIRAppointment>>> {
+    return []
+  }
   async getAppointments(
     userId: string,
   ): Promise<Array<Document<FHIRAppointment>>> {
@@ -41,6 +47,7 @@ export class MockPatientService implements PatientService {
   ): Promise<Document<FHIRAppointment> | undefined> {
     return {
       id: '123',
+      path: 'appointments/123',
       content: {
         resourceType: 'Appointment',
         status: AppointmentStatus.pending,
@@ -74,6 +81,7 @@ export class MockPatientService implements PatientService {
     const values: MedicationRecommendation[] = []
     return values.map((value, index) => ({
       id: index.toString(),
+      path: `users/${userId}/medicationRecommendations/${index}`,
       content: value,
     }))
   }
@@ -103,6 +111,7 @@ export class MockPatientService implements PatientService {
     ]
     return values.map((value, index) => ({
       id: index.toString(),
+      path: `users/${userId}/medicationRequests/${index}`,
       content: value,
     }))
   }
@@ -132,6 +141,7 @@ export class MockPatientService implements PatientService {
     ]
     return values.map((value, index) => ({
       id: index.toString(),
+      path: `users/${userId}/bloodPressureObservations/${index}`,
       content: value,
     }))
   }
@@ -216,6 +226,7 @@ export class MockPatientService implements PatientService {
     ]
     return values.map((value, index) => ({
       id: index.toString(),
+      path: `users/${userId}/bodyWeightObservations/${index}`,
       content: value,
     }))
   }
@@ -266,6 +277,7 @@ export class MockPatientService implements PatientService {
     ]
     return values.map((value, index) => ({
       id: index.toString(),
+      path: `users/${userId}/heartRateObservations/${index}`,
       content: value,
     }))
   }
@@ -302,6 +314,7 @@ export class MockPatientService implements PatientService {
   ): Promise<Document<FHIRObservation> | undefined> {
     return {
       id: '0',
+      path: `users/${userId}/creatinineObservations/0`,
       content: {
         resourceType: 'Observation',
         code: {
@@ -328,6 +341,8 @@ export class MockPatientService implements PatientService {
   ): Promise<Document<FHIRObservation> | undefined> {
     return {
       id: '0',
+      path: `users/${userId}/dryWeightObservations/0`,
+
       content: {
         resourceType: 'Observation',
         code: {
@@ -354,6 +369,7 @@ export class MockPatientService implements PatientService {
   ): Promise<Document<FHIRObservation> | undefined> {
     return {
       id: '0',
+      path: `users/${userId}/eGfrObservations/0`,
       content: {
         resourceType: 'Observation',
         code: {
@@ -381,6 +397,7 @@ export class MockPatientService implements PatientService {
   ): Promise<Document<FHIRObservation> | undefined> {
     return {
       id: '0',
+      path: `users/${userId}/potassiumObservations/0`,
       content: {
         resourceType: 'Observation',
         code: {
@@ -409,6 +426,7 @@ export class MockPatientService implements PatientService {
   ): Promise<Array<Document<FHIRQuestionnaireResponse>>> {
     return [mockQuestionnaireResponse()].map((value, index) => ({
       id: index.toString(),
+      path: `users/${userId}/questionnaireResponses/${index}`,
       content: value,
     }))
   }
@@ -461,6 +479,7 @@ export class MockPatientService implements PatientService {
     ]
     return values.map((value, index) => ({
       id: index.toString(),
+      path: `users/${userId}/symptomScores/${index}`,
       content: value,
     }))
   }

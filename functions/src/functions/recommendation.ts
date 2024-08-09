@@ -9,6 +9,8 @@
 import { onDocumentWritten } from 'firebase-functions/v2/firestore'
 import { onSchedule } from 'firebase-functions/v2/scheduler'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
+import { FHIRAppointment } from '../models/fhir/appointment.js'
+import { FHIRObservation } from '../models/fhir/observation.js'
 
 export const onScheduleUpdateMedicationRecommendations = onSchedule(
   'every 24 hours',
@@ -41,10 +43,14 @@ export const onUserBloodPressureObservationWritten = onDocumentWritten(
 
 export const onUserBodyWeightObservationWritten = onDocumentWritten(
   'users/{userId}/bodyWeightObservations/{observationId}',
-  async (event) =>
-    getServiceFactory()
-      .trigger()
-      .updateRecommendationsForUser(event.params.userId),
+  async (event) => {
+    const triggerService = getServiceFactory().trigger()
+
+    await Promise.all([
+      triggerService.updateRecommendationsForUser(event.params.userId),
+      triggerService.userBodyWeightObservationWritten(event.params.userId),
+    ])
+  },
 )
 
 export const onUserDryWeightObservationWritten = onDocumentWritten(

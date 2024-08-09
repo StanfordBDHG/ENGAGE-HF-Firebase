@@ -16,3 +16,10 @@ export const onScheduleEveryMorning = onSchedule(
   },
   async () => getServiceFactory().trigger().everyMorning(),
 )
+
+export const onScheduleEvery15Minutes = onSchedule(
+  {
+    schedule: '*/15 * * * *',
+  },
+  async () => getServiceFactory().trigger().every15Minutes(),
+)

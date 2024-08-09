@@ -55,6 +55,7 @@ export class MockUserService implements UserService {
   async getInvitation(invitationId: string): Promise<Document<Invitation>> {
     return {
       id: invitationId,
+      path: 'invitations/' + invitationId,
       content: {
         user: {
           type: UserType.patient,
@@ -69,6 +70,7 @@ export class MockUserService implements UserService {
   ): Promise<Document<Invitation> | undefined> {
     return {
       id: '123',
+      path: 'invitations/123',
       content: {
         user: {
           type: UserType.patient,
@@ -103,6 +105,7 @@ export class MockUserService implements UserService {
   ): Promise<Document<Organization> | undefined> {
     return {
       id: organizationId,
+      path: 'organizations/' + organizationId,
       content: {
         id: 'stanford',
         name: 'Stanford University',
@@ -123,6 +126,7 @@ export class MockUserService implements UserService {
   async getUser(userId: string): Promise<Document<User>> {
     return {
       id: userId,
+      path: 'users/' + userId,
       content: {
         type: UserType.clinician,
         dateOfBirth: new Date('1970-01-02'),
