@@ -9,10 +9,10 @@
 import { https, logger } from 'firebase-functions/v2'
 import { z } from 'zod'
 import { validatedOnCall } from './helpers.js'
+import { type Invitation } from '../models/invitation.js'
 import { UserType } from '../models/user.js'
 import { UserRole } from '../services/credential/credential.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
-import { Invitation } from '../models/invitation.js'
 
 const createInvitationInputSchema = z.object({
   auth: z.object({
