@@ -22,6 +22,7 @@ import {
   type Document,
   type DatabaseService,
 } from '../database/databaseService.js'
+import { localize } from '../../extensions/localizedText.js'
 
 export class DatabasePatientService implements PatientService {
   // Properties
@@ -96,11 +97,16 @@ export class DatabasePatientService implements PatientService {
         `users/${userId}/medicationRecommendations`,
       )
 
-    return result.sort(
-      (a, b) =>
+    return result.sort((a, b) => {
+      const priorityDiff =
         this.priorityForRecommendationType(a.content.displayInformation.type) -
-        this.priorityForRecommendationType(b.content.displayInformation.type),
-    )
+        this.priorityForRecommendationType(b.content.displayInformation.type)
+      if (priorityDiff !== 0) return priorityDiff
+
+      const medicationClassA = localize(a.content.displayInformation.subtitle)
+      const medicationClassB = localize(b.content.displayInformation.subtitle)
+      return medicationClassA.localeCompare(medicationClassB, 'en')
+    })
   }
 
   async getMedicationRequests(
