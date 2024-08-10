@@ -122,7 +122,7 @@ export class UserDataFactory {
     videoReference: VideoReference
   }): UserMessage {
     return {
-      creationDate: input.creationDate ?? new Date(),
+      creationDate: (input.creationDate ?? new Date()).toISOString(),
       completionDate: null,
       dueDate: null,
       title: {
@@ -145,7 +145,7 @@ export class UserDataFactory {
     } = {},
   ): UserMessage {
     return {
-      creationDate: input.creationDate ?? new Date(),
+      creationDate: (input.creationDate ?? new Date()).toISOString(),
       completionDate: null,
       dueDate: null,
       title: {
@@ -168,7 +168,7 @@ export class UserDataFactory {
     } = {},
   ): UserMessage {
     return {
-      creationDate: input.creationDate ?? new Date(),
+      creationDate: (input.creationDate ?? new Date()).toISOString(),
       completionDate: null,
       dueDate: null,
       title: {
@@ -190,7 +190,7 @@ export class UserDataFactory {
     videoReference: VideoReference
   }): UserMessage {
     return {
-      creationDate: input.creationDate ?? new Date(),
+      creationDate: (input.creationDate ?? new Date()).toISOString(),
       completionDate: null,
       dueDate: null,
       title: {
@@ -213,7 +213,7 @@ export class UserDataFactory {
     } = {},
   ): UserMessage {
     return {
-      creationDate: input.creationDate ?? new Date(),
+      creationDate: (input.creationDate ?? new Date()).toISOString(),
       completionDate: null,
       dueDate: null,
       title: {
@@ -235,7 +235,7 @@ export class UserDataFactory {
     questionnaireReference: QuestionnaireReference
   }): UserMessage {
     return {
-      creationDate: input.creationDate ?? new Date(),
+      creationDate: (input.creationDate ?? new Date()).toISOString(),
       completionDate: null,
       dueDate: null,
       title: {
@@ -258,7 +258,7 @@ export class UserDataFactory {
     } = {},
   ): UserMessage {
     return {
-      creationDate: input.creationDate ?? new Date(),
+      creationDate: (input.creationDate ?? new Date()).toISOString(),
       completionDate: null,
       dueDate: null,
       title: {

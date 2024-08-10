@@ -13,7 +13,10 @@ import { type FHIRAppointment } from '../../models/fhir/appointment.js'
 import { type FHIRMedicationRequest } from '../../models/fhir/medication.js'
 import { type FHIRObservation } from '../../models/fhir/observation.js'
 import { type FHIRQuestionnaireResponse } from '../../models/fhir/questionnaireResponse.js'
-import { type MedicationRecommendation } from '../../models/medicationRecommendation.js'
+import {
+  MedicationRecommendationType,
+  type MedicationRecommendation,
+} from '../../models/medicationRecommendation.js'
 import { type SymptomScore } from '../../models/symptomScore.js'
 import {
   type Document,
@@ -88,8 +91,15 @@ export class DatabasePatientService implements PatientService {
   async getMedicationRecommendations(
     userId: string,
   ): Promise<Array<Document<MedicationRecommendation>>> {
-    return this.databaseService.getCollection<MedicationRecommendation>(
-      `users/${userId}/medicationRecommendations`,
+    const result =
+      await this.databaseService.getCollection<MedicationRecommendation>(
+        `users/${userId}/medicationRecommendations`,
+      )
+
+    return result.sort(
+      (a, b) =>
+        this.priorityForRecommendationType(a.content.displayInformation.type) -
+        this.priorityForRecommendationType(b.content.displayInformation.type),
     )
   }
 
@@ -225,12 +235,12 @@ export class DatabasePatientService implements PatientService {
     userId: string,
     limit: number | null,
   ): Promise<Array<Document<SymptomScore>>> {
-    return this.databaseService.getQuery<SymptomScore>((firestore) =>
-      firestore
+    return this.databaseService.getQuery<SymptomScore>((firestore) => {
+      const query = firestore
         .collection(`users/${userId}/symptomScores`)
         .orderBy('date', 'desc')
-        .limit(limit ?? Infinity),
-    )
+      return limit ? query.limit(limit) : query
+    })
   }
 
   async getLatestSymptomScore(
@@ -261,5 +271,28 @@ export class DatabasePatientService implements PatientService {
         transaction.delete(ref)
       }
     })
+  }
+
+  // Helpers
+
+  private priorityForRecommendationType(
+    type: MedicationRecommendationType,
+  ): number {
+    switch (type) {
+      case MedicationRecommendationType.improvementAvailable:
+        return 1
+      case MedicationRecommendationType.morePatientObservationsRequired:
+        return 2
+      case MedicationRecommendationType.moreLabObservationsRequired:
+        return 3
+      case MedicationRecommendationType.personalTargetDoseReached:
+        return 4
+      case MedicationRecommendationType.targetDoseReached:
+        return 5
+      case MedicationRecommendationType.notStarted:
+        return 6
+      case MedicationRecommendationType.noActionRequired:
+        return 7
+    }
   }
 }

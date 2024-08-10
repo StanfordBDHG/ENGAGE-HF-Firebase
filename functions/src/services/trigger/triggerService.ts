@@ -78,7 +78,8 @@ export class TriggerService {
             const enrollmentDate = user.content.dateOfEnrollment
             const durationOfOneDayInMilliseconds = 24 * 60 * 60 * 1000
             if (
-              enrollmentDate.getTime() % (durationOfOneDayInMilliseconds * 14) <
+              new Date(enrollmentDate).getTime() %
+                (durationOfOneDayInMilliseconds * 14) <
               durationOfOneDayInMilliseconds
             ) {
               await messageService.addMessage(user.id, symptomReminderMessage)
@@ -174,10 +175,7 @@ export class TriggerService {
   async updateAllSymptomScores(userId: string) {
     try {
       const patientService = this.factory.patient()
-      const symptomScores = await patientService.getSymptomScores(
-        userId,
-        new Date(0),
-      )
+      const symptomScores = await patientService.getSymptomScores(userId, null)
       for (const symptomScore of symptomScores) {
         await patientService.updateSymptomScore(
           userId,

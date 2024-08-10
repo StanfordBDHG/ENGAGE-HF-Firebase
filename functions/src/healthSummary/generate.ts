@@ -408,7 +408,7 @@ class HealthSummaryPDFGenerator {
       ],
       ...this.data.symptomScores.map((score, index) => [
         {
-          title: this.formatDate(score.date),
+          title: this.formatDate(new Date(score.date)),
           styles: {
             fontStyle:
               index == this.data.symptomScores.length - 1 ? 'bold' : 'normal',
@@ -579,13 +579,13 @@ class HealthSummaryPDFGenerator {
     this.addText(this.data.name, this.textStyles.h1)
     this.moveDown(4)
     this.addText(
-      `DOB: ${this.data.dateOfBirth ? this.formatDate(this.data.dateOfBirth) : '---'}`,
+      `DOB: ${this.data.dateOfBirth ? this.formatDate(new Date(this.data.dateOfBirth)) : '---'}`,
     )
     this.moveDown(4)
     this.addText(`Provider: ${this.data.clinicianName}`)
     this.moveDown(4)
     this.addText(
-      `Next Appointment: ${this.data.nextAppointment ? this.formatDate(this.data.nextAppointment) : '---'}`,
+      `Next Appointment: ${this.data.nextAppointment ? this.formatDate(new Date(this.data.nextAppointment)) : '---'}`,
     )
 
     const innerWidth = this.pageWidth - this.margins.left - this.margins.right
@@ -748,7 +748,7 @@ class HealthSummaryPDFGenerator {
   }
 
   formatDate(date: Date): string {
-    return new Date(date).toLocaleDateString('en-US', {
+    return date.toLocaleDateString('en-US', {
       year: 'numeric',
       month: '2-digit',
       day: '2-digit',

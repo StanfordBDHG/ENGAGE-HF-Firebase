@@ -23,7 +23,7 @@ export interface UserRegistration {
   type: UserType
   organization?: string
 
-  dateOfBirth?: Date
+  dateOfBirth?: string
   clinician?: string
 
   messagesSettings?: UserMessagesSettings
@@ -33,6 +33,6 @@ export interface UserRegistration {
 }
 
 export interface User extends UserRegistration {
-  dateOfEnrollment: Date
+  dateOfEnrollment: string
   invitationCode: string
 }

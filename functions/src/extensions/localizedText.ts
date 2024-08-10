@@ -15,7 +15,7 @@ export function localize(text: LocalizedText, ...languages: string[]): string {
     const exactMatch = text[language]
     if (exactMatch) return exactMatch
 
-    const languagePrefix = language.split('-').at(0)
+    const languagePrefix = language.split(/-|_/).at(0)
     if (languagePrefix && text[languagePrefix]) return text[languagePrefix]
   }
 

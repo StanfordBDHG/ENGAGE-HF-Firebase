@@ -32,9 +32,9 @@ export class MockHealthSummaryService implements HealthSummaryService {
   async getHealthSummaryData(userId: string): Promise<HealthSummaryData> {
     return {
       name: 'John Doe',
-      dateOfBirth: new Date('1970-01-02'),
+      dateOfBirth: new Date('1970-01-02').toISOString(),
       clinicianName: 'Dr. XXX',
-      nextAppointment: this.startDateAdvancedByDays(1),
+      nextAppointment: this.startDateAdvancedByDays(1).toISOString(),
       recommendations: [
         {
           currentMedication: [],
@@ -99,7 +99,7 @@ export class MockHealthSummaryService implements HealthSummaryService {
           qualityOfLifeScore: 20,
           symptomFrequencyScore: 60,
           dizzinessScore: 50,
-          date: this.startDateAdvancedByDays(-9),
+          date: this.startDateAdvancedByDays(-9).toISOString(),
         },
         {
           questionnaireResponseId: '3',
@@ -109,7 +109,7 @@ export class MockHealthSummaryService implements HealthSummaryService {
           qualityOfLifeScore: 37,
           symptomFrequencyScore: 72,
           dizzinessScore: 70,
-          date: this.startDateAdvancedByDays(-18),
+          date: this.startDateAdvancedByDays(-18).toISOString(),
         },
         {
           questionnaireResponseId: '2',
@@ -119,7 +119,7 @@ export class MockHealthSummaryService implements HealthSummaryService {
           qualityOfLifeScore: 25,
           symptomFrequencyScore: 60,
           dizzinessScore: 50,
-          date: this.startDateAdvancedByDays(-34),
+          date: this.startDateAdvancedByDays(-34).toISOString(),
         },
         {
           questionnaireResponseId: '1',
@@ -129,7 +129,7 @@ export class MockHealthSummaryService implements HealthSummaryService {
           qualityOfLifeScore: 60,
           symptomFrequencyScore: 80,
           dizzinessScore: 100,
-          date: this.startDateAdvancedByDays(-49),
+          date: this.startDateAdvancedByDays(-49).toISOString(),
         },
       ],
     }

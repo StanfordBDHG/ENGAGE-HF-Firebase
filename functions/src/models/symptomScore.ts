@@ -8,7 +8,7 @@
 
 export interface SymptomScore {
   questionnaireResponseId: string | null
-  date: Date
+  date: string
   overallScore: number
   physicalLimitsScore: number | null
   symptomFrequencyScore: number | null

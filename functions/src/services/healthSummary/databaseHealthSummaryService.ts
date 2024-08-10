@@ -52,7 +52,7 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
       this.userService.getUser(userId),
       this.patientService.getNextAppointment(userId),
       this.getMedicationRecommendations(userId),
-      this.getSymptomScores(userId, advanceDateByDays(new Date(), -56)),
+      this.getSymptomScores(userId, 5),
       this.getVitals(userId, advanceDateByDays(new Date(), -14)),
     ])
 
@@ -65,10 +65,9 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
     const nextAppointmentStart = nextAppointment?.content.start
     return {
       name: auth.displayName ?? '---',
-      dateOfBirth: dateOfBirth ? new Date(dateOfBirth) : undefined,
+      dateOfBirth: dateOfBirth,
       clinicianName: clinician?.displayName ?? '---',
-      nextAppointment:
-        nextAppointmentStart ? new Date(nextAppointmentStart) : undefined,
+      nextAppointment: nextAppointmentStart,
       recommendations: recommendations,
       vitals: vitals,
       symptomScores: symptomScores,
@@ -79,12 +78,9 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
 
   async getSymptomScores(
     userId: string,
-    cutoffDate: Date,
+    limit: number | null,
   ): Promise<SymptomScore[]> {
-    const result = await this.patientService.getSymptomScores(
-      userId,
-      cutoffDate,
-    )
+    const result = await this.patientService.getSymptomScores(userId, limit)
     return result.map((doc) => doc.content)
   }
 

@@ -32,8 +32,8 @@ describe('DefaultMessageService', () => {
   describe('dismissMessage', () => {
     it('should update the completionDate of messages', async () => {
       const message: UserMessage = {
-        creationDate: new Date('2024-01-01'),
-        dueDate: new Date('2024-01-01'),
+        creationDate: new Date('2024-01-01').toISOString(),
+        dueDate: new Date('2024-01-01').toISOString(),
         completionDate: null,
         type: UserMessageType.medicationChange,
         title: 'Medication Change',
@@ -51,8 +51,8 @@ describe('DefaultMessageService', () => {
 
     it('should not update the completionDate of messages', async () => {
       const message: UserMessage = {
-        creationDate: new Date('2024-01-01'),
-        dueDate: new Date('2024-01-01'),
+        creationDate: new Date('2024-01-01').toISOString(),
+        dueDate: new Date('2024-01-01').toISOString(),
         completionDate: null,
         type: UserMessageType.preAppointment,
         title: 'Upcoming appointment',

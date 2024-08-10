@@ -12,9 +12,9 @@ import { type Vitals } from './vitals.js'
 
 export interface HealthSummaryData {
   name: string
-  dateOfBirth?: Date
+  dateOfBirth?: string
   clinicianName: string
-  nextAppointment?: Date
+  nextAppointment?: string
   recommendations: MedicationRecommendation[]
   vitals: Vitals
   symptomScores: SymptomScore[]
