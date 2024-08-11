@@ -32,7 +32,7 @@ const createInvitationInputSchema = z.object({
 })
 
 export interface CreateInvitationOutput {
-  code: string
+  id: string
 }
 
 export const createInvitation = validatedOnCall(
@@ -72,8 +72,8 @@ export const createInvitation = validatedOnCall(
           ...request.data,
           code: invitationCode,
         }
-        await userService.createInvitation(invitation)
-        return { code: invitationCode }
+        const { id } = await userService.createInvitation(invitation)
+        return { id }
       } catch (error) {
         if (counter < 4 && isPatient) continue
         throw error
