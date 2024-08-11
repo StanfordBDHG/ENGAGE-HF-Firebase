@@ -70,8 +70,8 @@ export class DatabaseUserService implements UserService {
 
   // Invitations
 
-  async createInvitation(content: Invitation): Promise<void> {
-    await this.databaseService.runTransaction(
+  async createInvitation(content: Invitation): Promise<{ id: string }> {
+    const id = await this.databaseService.runTransaction(
       async (firestore, transaction) => {
         const invitations = await transaction.get(
           firestore
@@ -84,9 +84,12 @@ export class DatabaseUserService implements UserService {
             'invalid-argument',
             'Invitation code is not unique.',
           )
-        transaction.create(firestore.collection(`invitations`).doc(), content)
+        const invitationDoc = firestore.collection(`invitations`).doc()
+        transaction.create(invitationDoc, content)
+        return invitationDoc.id
       },
     )
+    return { id }
   }
 
   async getInvitationByCode(

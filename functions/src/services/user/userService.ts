@@ -25,7 +25,7 @@ export interface UserService {
 
   // Invitations
 
-  createInvitation(content: Invitation): Promise<void>
+  createInvitation(content: Invitation): Promise<{ id: string }>
   getInvitationByCode(
     invitationCode: string,
   ): Promise<Document<Invitation> | undefined>

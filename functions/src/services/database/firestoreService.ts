@@ -59,12 +59,9 @@ export class FirestoreService implements DatabaseService {
     await writer.close()
   }
 
-  async runTransaction(
-    run: (
-      firestore: Firestore,
-      transaction: Transaction,
-    ) => Promise<void> | void,
-  ): Promise<void> {
+  async runTransaction<T>(
+    run: (firestore: Firestore, transaction: Transaction) => Promise<T> | T,
+  ): Promise<T> {
     return this.firestore.runTransaction(async (transaction) =>
       run(this.firestore, transaction),
     )
