@@ -57,12 +57,12 @@ export class CacheDatabaseService implements DatabaseService {
     return this.databaseService.bulkWrite(write, options)
   }
 
-  async runTransaction(
+  async runTransaction<T>(
     run: (
       firestore: Firestore,
       transaction: FirebaseFirestore.Transaction,
-    ) => Promise<void> | void,
-  ): Promise<void> {
+    ) => Promise<T> | T,
+  ): Promise<T> {
     return this.databaseService.runTransaction(run)
   }
 

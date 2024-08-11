@@ -45,8 +45,8 @@ export class MockUserService implements UserService {
 
   // Methods - Invitations
 
-  async createInvitation(content: Invitation): Promise<void> {
-    return
+  async createInvitation(content: Invitation): Promise<{ id: string }> {
+    return { id: 'OpEbLvZgsKwqVNnD8FzN' }
   }
 
   async getInvitationByCode(
