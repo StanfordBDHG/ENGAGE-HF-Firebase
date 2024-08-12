@@ -108,7 +108,7 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
     ] = await Promise.all([
       this.getBloodPressureObservations(userId, cutoffDate),
       this.getHeartRateObservations(userId, cutoffDate),
-      this.getBodyWeightObservations(userId, cutoffDate),
+      this.getBodyWeightObservations(userId, cutoffDate, QuantityUnit.lbs),
       this.getMostRecentCreatinineObservation(userId),
       this.getMostRecentDryWeightObservation(userId),
       this.getMostRecentEstimatedGlomerularFiltrationRateObservation(userId),
@@ -155,7 +155,11 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
     ]
   }
 
-  async getBodyWeightObservations(userId: string, cutoffDate: Date) {
+  async getBodyWeightObservations(
+    userId: string,
+    cutoffDate: Date,
+    unit: QuantityUnit,
+  ) {
     const observationDocs = await this.patientService.getBodyWeightObservations(
       userId,
       cutoffDate,
@@ -165,7 +169,7 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
       {
         code: LoincCode.bodyWeight,
         system: CodingSystem.loinc,
-        unit: QuantityUnit.lbs,
+        unit: unit,
       },
     )
   }

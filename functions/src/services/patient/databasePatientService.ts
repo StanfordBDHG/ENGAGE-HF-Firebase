@@ -8,6 +8,7 @@
 
 import { type PatientService } from './patientService.js'
 import { advanceDateByDays } from '../../extensions/date.js'
+import { localize } from '../../extensions/localizedText.js'
 import { type FHIRAllergyIntolerance } from '../../models/fhir/allergyIntolerance.js'
 import { type FHIRAppointment } from '../../models/fhir/appointment.js'
 import { type FHIRMedicationRequest } from '../../models/fhir/medication.js'
@@ -22,7 +23,6 @@ import {
   type Document,
   type DatabaseService,
 } from '../database/databaseService.js'
-import { localize } from '../../extensions/localizedText.js'
 
 export class DatabasePatientService implements PatientService {
   // Properties

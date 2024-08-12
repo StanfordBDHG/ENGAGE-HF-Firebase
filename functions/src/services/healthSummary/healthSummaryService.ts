@@ -8,6 +8,7 @@
 
 import { type HealthSummaryData } from '../../models/healthSummaryData.js'
 import { type Observation, type Vitals } from '../../models/vitals.js'
+import { type QuantityUnit } from '../fhir/quantityUnit.js'
 
 export interface HealthSummaryService {
   getHealthSummaryData(userId: string): Promise<HealthSummaryData>
@@ -24,6 +25,7 @@ export interface HealthSummaryService {
   getBodyWeightObservations(
     userId: string,
     cutoffDate: Date,
+    unit: QuantityUnit,
   ): Promise<Observation[]>
 
   getHeartRateObservations(

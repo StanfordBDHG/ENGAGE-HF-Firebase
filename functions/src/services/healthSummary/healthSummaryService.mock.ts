@@ -142,7 +142,11 @@ export class MockHealthSummaryService implements HealthSummaryService {
       systolicBloodPressure: systolicBloodPressure,
       diastolicBloodPressure: diastolicBloodPressure,
       heartRate: await this.getHeartRateObservations(userId, this.startDate),
-      bodyWeight: await this.getBodyWeightObservations(userId, this.startDate),
+      bodyWeight: await this.getBodyWeightObservations(
+        userId,
+        this.startDate,
+        QuantityUnit.lbs,
+      ),
       dryWeight: await this.getMostRecentDryWeightObservation(userId),
       creatinine: await this.getMostRecentCreatinineObservation(userId),
       potassium: await this.getMostRecentPotassiumObservation(userId),
@@ -311,6 +315,7 @@ export class MockHealthSummaryService implements HealthSummaryService {
   async getBodyWeightObservations(
     userId: string,
     cutoffDate: Date,
+    unit: QuantityUnit,
   ): Promise<Observation[]> {
     return [
       {

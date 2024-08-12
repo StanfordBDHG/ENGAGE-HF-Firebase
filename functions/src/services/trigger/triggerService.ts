@@ -14,6 +14,7 @@ import {
 } from '../../extensions/date.js'
 import { type FHIRQuestionnaireResponse } from '../../models/fhir/questionnaireResponse.js'
 import { type ServiceFactory } from '../factory/serviceFactory.js'
+import { QuantityUnit } from '../fhir/quantityUnit.js'
 import { type RecommendationInput } from '../recommendation/recommenders/recommender.js'
 import { QuestionnaireReference, VideoReference } from '../references.js'
 import { UserDataFactory } from '../seeding/userData/userDataFactory.js'
@@ -150,6 +151,7 @@ export class TriggerService {
         await healthSummaryService.getBodyWeightObservations(
           userId,
           advanceDateByDays(date, -7),
+          QuantityUnit.lbs,
         )
 
       const bodyWeightMedian = median(
