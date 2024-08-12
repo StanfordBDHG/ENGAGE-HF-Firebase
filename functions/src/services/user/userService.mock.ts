@@ -95,6 +95,12 @@ export class MockUserService implements UserService {
 
   // Methods - Organizations
 
+  async getOrganizationBySsoProviderId(
+    providerId: string,
+  ): Promise<Document<Organization> | undefined> {
+    return undefined
+  }
+
   async getOrganizations(): Promise<Array<Document<Organization>>> {
     return []
   }

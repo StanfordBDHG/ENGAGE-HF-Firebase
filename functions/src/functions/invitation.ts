@@ -129,7 +129,16 @@ export const checkInvitationCode = validatedOnCall(
         `User (${userId}) successfully enrolled in study (ENGAGE-HF) with invitation code: ${invitationCode}`,
       )
 
-      return
+      const invitation = await userService.getInvitationByUserId(userId)
+
+      if (!invitation)
+        throw new https.HttpsError(
+          'not-found',
+          'Invitation not found for user.',
+        )
+
+      await userService.enrollUser(invitation, userId)
+      await factory.trigger().userEnrolled(userId)
     } catch (error) {
       if (error instanceof Error) {
         logger.error(`Error processing request: ${error.message}`)
