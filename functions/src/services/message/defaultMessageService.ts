@@ -109,7 +109,7 @@ export class DefaultMessageService implements MessageService {
   // Methods - Messages
 
   async addMessage(userId: string, message: UserMessage): Promise<boolean> {
-    return await this.databaseService.runTransaction(
+    return this.databaseService.runTransaction(
       async (firestore, transaction) => {
         const existingMessage = (
           await firestore
