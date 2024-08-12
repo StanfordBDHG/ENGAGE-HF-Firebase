@@ -17,6 +17,10 @@
 export class MockFirestore {
   collections = new Map<string, Map<string, unknown>>()
 
+  settings(value: any) {
+    return
+  }
+
   collection(path: string) {
     return new MockFirestoreCollectionRef(this, path)
   }
