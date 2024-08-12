@@ -14,6 +14,7 @@ import { UserRole } from '../services/credential/credential.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 import { type ServiceFactory } from '../services/factory/serviceFactory.js'
 import { CachingStrategy } from '../services/seeding/seedingService.js'
+import { debug } from 'console'
 
 enum StaticDataComponent {
   medicationClasses = 'medicationClasses',
@@ -81,6 +82,7 @@ enum UserDebugDataComponent {
   messages = 'messages',
   bodyWeightObservations = 'bodyWeightObservations',
   bloodPressureObservations = 'bloodPressureObservations',
+  dryWeightObservations = 'dryWeightObservations',
   heartRateObservations = 'heartRateObservations',
   creatinineObservations = 'creatinineObservations',
   eGfrObservations = 'eGfrObservations',
@@ -165,6 +167,16 @@ async function _defaultSeed(data: TypeOf<typeof defaultSeedInputSchema>) {
           )
         )
           await debugDataService.seedUserCreatinineObservations(
+            userId,
+            data.date,
+          )
+
+        if (
+          data.onlyUserCollections.includes(
+            UserDebugDataComponent.dryWeightObservations,
+          )
+        )
+          await debugDataService.seedUserDryWeightObservations(
             userId,
             data.date,
           )
@@ -258,6 +270,11 @@ async function _defaultSeed(data: TypeOf<typeof defaultSeedInputSchema>) {
         )
       if (userData.only.includes(UserDebugDataComponent.creatinineObservations))
         await debugDataService.seedUserCreatinineObservations(
+          userData.userId,
+          data.date,
+        )
+      if (userData.only.includes(UserDebugDataComponent.dryWeightObservations))
+        await debugDataService.seedUserDryWeightObservations(
           userData.userId,
           data.date,
         )
