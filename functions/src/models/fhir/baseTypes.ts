@@ -56,7 +56,7 @@ export interface FHIRReference<T> {
   reference: string
   type?: string
   identifier?: string
-  display?: string
+  display?: string | null
 }
 
 export interface FHIRSimpleQuantity {
