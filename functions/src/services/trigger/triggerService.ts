@@ -163,11 +163,10 @@ export class TriggerService {
       if (!bodyWeightMedian) return
       const mostRecentBodyWeight = bodyWeightObservations[0].value
 
-      if (mostRecentBodyWeight - bodyWeightMedian > 7) {
+      if (mostRecentBodyWeight - bodyWeightMedian >= 7)
         await this.factory
           .message()
           .addMessage(userId, UserDataFactory.weightGainMessage())
-      }
     } catch (error) {
       console.error(
         `Error on user body weight observation written: ${String(error)}`,

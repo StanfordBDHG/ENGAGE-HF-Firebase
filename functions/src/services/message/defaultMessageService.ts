@@ -10,9 +10,10 @@ import { FieldValue } from 'firebase-admin/firestore'
 import { type Messaging, type TokenMessage } from 'firebase-admin/messaging'
 import { https } from 'firebase-functions'
 import { type MessageService } from './messageService.js'
+import { advanceDateByDays } from '../../extensions/date.js'
 import { localize } from '../../extensions/localizedText.js'
 import { type UserDevice } from '../../models/device.js'
-import { type UserMessage } from '../../models/message.js'
+import { UserMessageType, type UserMessage } from '../../models/message.js'
 import { type DatabaseService } from '../database/databaseService.js'
 
 export class DefaultMessageService implements MessageService {
@@ -108,12 +109,30 @@ export class DefaultMessageService implements MessageService {
   // Methods - Messages
 
   async addMessage(userId: string, message: UserMessage): Promise<void> {
-    await this.databaseService.runTransaction((firestore, transaction) => {
-      const messageRef = firestore.collection(`users/${userId}/messages`).doc()
-      transaction.set(messageRef, {
-        ...message,
-      })
-    })
+    await this.databaseService.runTransaction(
+      async (firestore, transaction) => {
+        const existingMessage = (
+          await firestore
+            .collection(`users/${userId}/messages`)
+            .where('type', '==', message.type)
+            .where('completionDate', '==', null)
+            .orderBy('creationDate', 'desc')
+            .limit(1)
+            .get()
+        ).docs.at(0)
+
+        if (
+          !existingMessage ||
+          this.handleOldMessage(existingMessage, message, transaction)
+        ) {
+          const newMessageRef = firestore
+            .collection(`users/${userId}/messages`)
+            .doc()
+          transaction.set(newMessageRef, message)
+          return
+        }
+      },
+    )
   }
 
   async dismissMessage(
@@ -148,6 +167,41 @@ export class DefaultMessageService implements MessageService {
   }
 
   // Helpers
+
+  /// returns whether to save the new message or throw it away
+  private handleOldMessage(
+    oldMessage: FirebaseFirestore.QueryDocumentSnapshot,
+    newMessage: UserMessage,
+    transaction: FirebaseFirestore.Transaction,
+  ): boolean {
+    switch (newMessage.type) {
+      case UserMessageType.weightGain: {
+        const isOld =
+          new Date(oldMessage.data().creationDate as string) >=
+          advanceDateByDays(new Date(), -7)
+        if (isOld)
+          transaction.update(oldMessage.ref, {
+            completionDate: FieldValue.serverTimestamp(),
+          })
+        return true
+      }
+      case UserMessageType.welcome:
+      case UserMessageType.medicationChange:
+      case UserMessageType.medicationUptitration: {
+        return false
+      }
+      case UserMessageType.symptomQuestionnaire:
+      case UserMessageType.vitals: {
+        transaction.update(oldMessage.ref, {
+          completionDate: FieldValue.serverTimestamp(),
+        })
+        return true
+      }
+      case UserMessageType.preAppointment: {
+        return true
+      }
+    }
+  }
 
   private tokenMessage(
     message: UserMessage,
