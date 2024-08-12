@@ -32,7 +32,7 @@ const updateStaticDataInputSchema = z.object({
     .default(CachingStrategy.updateCacheIfNeeded),
 })
 
-async function updateStaticData(
+async function _updateStaticData(
   factory: ServiceFactory,
   input: TypeOf<typeof updateStaticDataInputSchema>,
 ) {
@@ -51,12 +51,12 @@ async function updateStaticData(
   await Promise.all(promises)
 }
 
-export const updateStaticDataFunction =
+export const updateStaticData =
   Flags.isEmulator ?
     validatedOnRequest(
       updateStaticDataInputSchema,
       async (_, data, response) => {
-        await updateStaticData(getServiceFactory(), data)
+        await _updateStaticData(getServiceFactory(), data)
         response.write('Success', 'utf8')
         response.end()
       },
@@ -64,7 +64,7 @@ export const updateStaticDataFunction =
   : validatedOnCall(updateStaticDataInputSchema, async (request) => {
       const factory = getServiceFactory()
       factory.credential(request.auth).check(UserRole.admin)
-      await updateStaticData(factory, request.data)
+      await _updateStaticData(factory, request.data)
       return 'Success'
     })
 
@@ -120,7 +120,7 @@ export const defaultSeed = validatedOnRequest(
     if (!Flags.isEmulator)
       throw factory.credential(undefined).permissionDeniedError()
 
-    if (data.staticData) await updateStaticData(factory, data.staticData)
+    if (data.staticData) await _updateStaticData(factory, data.staticData)
 
     const debugDataService = factory.debugData()
     const triggerService = factory.trigger()
