@@ -649,7 +649,7 @@ class HealthSummaryPDFGenerator {
       shapeRendering: 2,
       textRendering: 1,
       imageRendering: 0,
-      fitTo: { mode: 'zoom', value: 5 },
+      fitTo: { mode: 'zoom', value: 3 },
     }
     return new Resvg(svg, options).render().asPng()
   }
