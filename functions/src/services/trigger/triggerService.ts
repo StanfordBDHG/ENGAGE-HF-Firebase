@@ -130,12 +130,15 @@ export class TriggerService {
   async userEnrolled(userId: string) {
     try {
       await this.updateRecommendationsForUser(userId)
-      await this.factory.message().addMessage(
-        userId,
-        UserDataFactory.welcomeMessage({
-          videoReference: VideoReference.welcome,
-        }),
-      )
+      const messageService = this.factory.message()
+      const welcomeMessage = UserDataFactory.welcomeMessage({
+        videoReference: VideoReference.welcome,
+      })
+      await messageService.addMessage(userId, welcomeMessage)
+      const user = await this.factory.user().getUser(userId)
+      await messageService.sendNotification(userId, welcomeMessage, {
+        language: user?.content.language ?? 'en-US',
+      })
     } catch (error) {
       console.error(
         `Error updating user data for enrollment for user ${userId}: ${String(error)}`,
