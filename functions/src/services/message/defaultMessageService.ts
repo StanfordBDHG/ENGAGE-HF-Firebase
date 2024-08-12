@@ -108,8 +108,8 @@ export class DefaultMessageService implements MessageService {
 
   // Methods - Messages
 
-  async addMessage(userId: string, message: UserMessage): Promise<void> {
-    await this.databaseService.runTransaction(
+  async addMessage(userId: string, message: UserMessage): Promise<boolean> {
+    return await this.databaseService.runTransaction(
       async (firestore, transaction) => {
         const existingMessage = (
           await firestore
@@ -129,8 +129,10 @@ export class DefaultMessageService implements MessageService {
             .collection(`users/${userId}/messages`)
             .doc()
           transaction.set(newMessageRef, message)
-          return
+          return true
         }
+
+        return false
       },
     )
   }
@@ -179,11 +181,13 @@ export class DefaultMessageService implements MessageService {
         const isOld =
           new Date(oldMessage.data().creationDate as string) >=
           advanceDateByDays(new Date(), -7)
-        if (isOld)
+        if (isOld) {
           transaction.update(oldMessage.ref, {
             completionDate: FieldValue.serverTimestamp(),
           })
-        return true
+          return true
+        }
+        return false
       }
       case UserMessageType.welcome:
       case UserMessageType.medicationChange:

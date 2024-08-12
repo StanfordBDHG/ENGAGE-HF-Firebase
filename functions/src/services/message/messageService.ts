@@ -23,7 +23,7 @@ export interface MessageService {
 
   // Messages
 
-  addMessage(userId: string, message: UserMessage): Promise<void>
+  addMessage(userId: string, message: UserMessage): Promise<boolean>
 
   dismissMessage(
     userId: string,
