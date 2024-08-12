@@ -42,7 +42,11 @@ export class DefaultServiceFactory implements ServiceFactory {
   // Properties - Firebase
 
   private readonly auth = new Lazy(() => admin.auth())
-  private readonly firestore = new Lazy(() => admin.firestore())
+  private readonly firestore = new Lazy(() => {
+    const result = admin.firestore()
+    result.settings({ ignoreUndefinedProperties: true })
+    return result
+  })
   private readonly messaging = new Lazy(() => admin.messaging())
   private readonly storage = new Lazy(() => admin.storage())
 
