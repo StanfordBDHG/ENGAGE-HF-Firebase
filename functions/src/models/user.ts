@@ -21,7 +21,7 @@ export enum UserType {
 
 export interface User {
   type: UserType
-  dateOfBirth?: string
+  dateOfBirth?: string | null
   clinician?: string
   dateOfEnrollment?: string
   invitationCode?: string

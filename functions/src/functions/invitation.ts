@@ -27,7 +27,7 @@ const createInvitationInputSchema = z.object({
     clinician: z.string().optional(),
     language: z.string().optional(),
     timeZone: z.string().optional(),
-    dateOfBirth: z.string().datetime().optional(),
+    dateOfBirth: z.string().datetime().nullish(),
   }),
 })
 
