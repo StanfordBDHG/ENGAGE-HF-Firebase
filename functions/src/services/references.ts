@@ -17,12 +17,12 @@ export enum MedicationClassReference {
 }
 
 export enum MedicationReference {
-  spironolactone = 'medications/54279',
+  spironolactone = 'medications/9997',
   carvedilol = 'medications/20352',
   carvedilolPhosphate = 'medications/668310',
-  eplerenone = 'medications/54280',
-  dapagliflozin = 'medications/54281',
-  empagliflozin = 'medications/54282',
+  eplerenone = 'medications/298869',
+  dapagliflozin = 'medications/1488564',
+  empagliflozin = 'medications/1545653',
   losartan = 'medications/203160',
   sacubitrilValsartan = 'medications/1656339',
   bisoprolol = 'medications/19484',
