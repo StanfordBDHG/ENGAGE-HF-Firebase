@@ -377,6 +377,7 @@ export class DebugDataService extends SeedingService {
       97, 8, 81, 32, 61, 37, 34, 84, 25, 83, 79, 57, 12, 74, 94, 89, 46, 86, 55,
       59, 98, 40, 69, 93, 95, 78, 17, 23, 2, 73, 96, 68, 60, 39, 49, 85, 19, 80,
       35, 0, 75, 14, 10, 31, 4, 13, 30, 62, 56, 18, 21, 72, 3, 63, 92, 6, 99,
+      56, 42, 12,
     ].map((n) => n / 100)
 
     const values = chunks(randomNumbers, 13).map((chunk, index) =>
