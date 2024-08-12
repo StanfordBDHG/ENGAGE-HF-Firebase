@@ -14,7 +14,6 @@ import { UserRole } from '../services/credential/credential.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 import { type ServiceFactory } from '../services/factory/serviceFactory.js'
 import { CachingStrategy } from '../services/seeding/seedingService.js'
-import { debug } from 'console'
 
 enum StaticDataComponent {
   medicationClasses = 'medicationClasses',
