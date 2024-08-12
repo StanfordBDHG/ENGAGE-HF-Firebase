@@ -12,7 +12,7 @@ import {
 } from 'firebase-functions/v2/identity'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
-export const beforeUserCreatedFunction = beforeUserCreated(async (event) => {
+export const beforeUserCreatedFunction = beforeUserCreated((event) => {
   console.log(`beforeUserCreated with event: ${JSON.stringify(event)}`)
 })
 
