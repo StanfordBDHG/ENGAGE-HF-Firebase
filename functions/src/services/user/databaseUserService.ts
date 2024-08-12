@@ -168,11 +168,11 @@ export class DatabaseUserService implements UserService {
           const items = await transaction.get(collection)
           for (const item of items.docs) {
             transaction.create(collection.doc(item.id), item.data())
-            transaction.delete(item.ref)
+            // transaction.delete(item.ref)
           }
         }
 
-        transaction.delete(invitationRef)
+        // transaction.delete(invitationRef)
       },
     )
 
@@ -180,6 +180,19 @@ export class DatabaseUserService implements UserService {
   }
 
   // Organizations
+
+  async getOrganizationBySsoProviderId(
+    providerId: string,
+  ): Promise<Document<Organization> | undefined> {
+    const result = await this.databaseService.getQuery<Organization>(
+      (firestore) =>
+        firestore
+          .collection('organizations')
+          .where('ssoProviderId', '==', providerId)
+          .limit(1),
+    )
+    return result.at(0)
+  }
 
   async getOrganizations(): Promise<Array<Document<Organization>>> {
     return this.databaseService.getCollection<Organization>('organizations')

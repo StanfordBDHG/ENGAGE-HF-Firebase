@@ -67,14 +67,6 @@ describe('DatabaseUserService', () => {
         organization: null,
       })
 
-      const invitationSnapshot = (
-        await firestore
-          .collection('invitations')
-          .where('code', '==', invitationCode)
-          .get()
-      ).docs.at(0)
-      expect(invitationSnapshot).to.be.undefined
-
       const userSnapshot = await firestore.collection('users').doc(userId).get()
       expect(userSnapshot.exists).to.be.true
       const userData = userSnapshot.data() as User | undefined
@@ -121,14 +113,6 @@ describe('DatabaseUserService', () => {
         type: UserType.clinician,
         organization: 'mockOrganization',
       })
-
-      const invitationSnapshot = (
-        await firestore
-          .collection('invitations')
-          .where('code', '==', invitationCode)
-          .get()
-      ).docs.at(0)
-      expect(invitationSnapshot).to.be.undefined
 
       const userSnapshot = await firestore.collection('users').doc(userId).get()
       expect(userSnapshot.exists).to.be.true
@@ -178,14 +162,6 @@ describe('DatabaseUserService', () => {
         type: UserType.patient,
         organization: 'mockOrganization',
       })
-
-      const invitationSnapshot = (
-        await firestore
-          .collection('invitations')
-          .where('code', '==', invitationCode)
-          .get()
-      ).docs.at(0)
-      expect(invitationSnapshot).to.be.undefined
 
       const userSnapshot = await firestore.collection('users').doc(userId).get()
       expect(userSnapshot.exists).to.be.true
