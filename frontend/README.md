@@ -33,15 +33,15 @@ When tapping the blue button, we sign in anonymously and link to email credentia
 ### Red Button:
 
 When tapping the red button, we sign in using credentials.  
-- Results in console output of the website stating that it successfully logged in.
-- Both `beforeUserCreated` and `beforeUserSignedIn` are called, as there is console output of the functions log.
+- Results in the console output of the website state that it was successfully logged in.
+- Both `beforeUserCreated` and `beforeUserSignedIn` are called, as there is a console output of the functions log.
 
 > [!NOTE]
-> This demonstrates that the logs are generally working and the cloud functions are executed in other use cases.
+> This demonstrates that the logs are generally working, and the cloud functions are executed in other use cases.
 
-### Replicate in Production Setup
+### Production Setup
 
-Paste the Firebase Credentials in the [frontend application](https://github.com/StanfordBDHG/ENGAGE-HF-Firebase/blob/before-user-created/frontend/app/page.tsx#L15) and remove the localhost and Firebase Emulator settings.
+To replicate the issue in a deployed setup, please provide the Firebase Credentials in the [frontend application](https://github.com/StanfordBDHG/ENGAGE-HF-Firebase/blob/before-user-created/frontend/app/page.tsx#L15) and remove the localhost and Firebase Emulator settings in the relevant file to ensure that the example client connects to the real Firebase project.
 
 ### Additional Context:
 
