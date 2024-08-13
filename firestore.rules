@@ -36,6 +36,10 @@ service cloud.firestore {
       return get(/databases/$(databaseId)/documents/users/$(userId));
     }
 
+    function getInvitation(invitationId) {
+      return get(/databases/$(databaseId)/documents/invitations/$(invitationId));
+    }
+
     function isEqualOptional(object0, property0, object1, property1) {
       return (property0 in object0) 
         ? ((property1 in object1) && object0[property0] == object1[property1])
@@ -51,6 +55,35 @@ service cloud.firestore {
       allow read, delete: if isAdmin() || isOwnerOrClinicianOf(resource.data.user.organization);
       allow create: if isAdmin();
       allow update: if isAdmin() || (securityRelatedFieldsDidNotChange() && isOwnerOrClinicianOf(resource.data.user.organization));
+    }
+
+
+    match /invitations/{invitationId}/{collectionName}/{documentId} {
+      function isOwnerOrClinicianOfSameOrganization() {
+        let invitation = getInvitation(invitationId);
+        return isOwnerOrClinicianOf(invitation.user.organization);
+      }
+
+      function isPatientWritableCollectionName() {
+        return collectionName.matches('^[A-Za-z]+Observations$')
+          || collectionName in ['questionnaireResponses']
+      }
+
+      function isClinicianWritableCollectionName() {
+        return isPatientWritableCollectionName()
+          || collectionName in ['allergyIntolerances', 'appointments', 'medicationRequests'];
+      }
+
+      allow read: if isAdmin() 
+        || isOwnerOrClinicianOfSameOrganization();
+
+      allow write: if isAdmin() 
+        || (isOwnerOrClinicianOfSameOrganization() && isClinicianWritableCollectionName());
+    }
+
+    match /medicationClasses/{medicationClassId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
     }
 
     match /medications/{documents=**} {

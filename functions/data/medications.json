@@ -1,0 +1,3536 @@
+{
+  "1808": {
+    "resourceType": "Medication",
+    "id": "1808",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "1808",
+          "display": "Bumetanide"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/6",
+          "display": "Diuretics"
+        }
+      }
+    ]
+  },
+  "1998": {
+    "resourceType": "Medication",
+    "id": "1998",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "1998",
+          "display": "Captopril"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/3",
+          "display": "ACE inhibitors"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/1998/drugs/308963",
+            "display": "Captopril (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 18.75
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1.5
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/1998/drugs/308962",
+            "display": "Captopril (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 300
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 3,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "3827": {
+    "resourceType": "Medication",
+    "id": "3827",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "3827",
+          "display": "Enalapril"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/3",
+          "display": "ACE inhibitors"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/3827/drugs/858813",
+            "display": "Enalapril (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 5
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/3827/drugs/858810",
+            "display": "Enalapril (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 40
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 2,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "4109": {
+    "resourceType": "Medication",
+    "id": "4109",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "4109",
+          "display": "Ethacrynic Acid"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/6",
+          "display": "Diuretics"
+        }
+      }
+    ]
+  },
+  "4603": {
+    "resourceType": "Medication",
+    "id": "4603",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "4603",
+          "display": "Furosemide"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/6",
+          "display": "Diuretics"
+        }
+      }
+    ]
+  },
+  "9997": {
+    "resourceType": "Medication",
+    "id": "9997",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "9997",
+          "display": "Spironolactone"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/2",
+          "display": "Mineralocorticoid Receptor Antagonists (MRAs)"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/9997/drugs/313096",
+            "display": "Spironolactone (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 12.5
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 0.5
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/9997/drugs/313096",
+            "display": "Spironolactone (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 25
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "18867": {
+    "resourceType": "Medication",
+    "id": "18867",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "18867",
+          "display": "Benazepril"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/3",
+          "display": "ACE inhibitors"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/18867/drugs/898723",
+            "display": "Benazepril (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 5
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/18867/drugs/898719",
+            "display": "Benazepril (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 40
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "19484": {
+    "resourceType": "Medication",
+    "id": "19484",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "19484",
+          "display": "Bisoprolol"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/0",
+          "display": "Beta blockers"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/19484/drugs/854905",
+            "display": "Bisoprolol (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 1.25
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 0.25
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/19484/drugs/854901",
+            "display": "Bisoprolol (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 10
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "20352": {
+    "resourceType": "Medication",
+    "id": "20352",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "20352",
+          "display": "Carvedilol"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/0",
+          "display": "Beta blockers"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/20352/drugs/200031",
+            "display": "Carvedilol (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 6.25
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/20352/drugs/200033",
+            "display": "Carvedilol (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 25
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "29046": {
+    "resourceType": "Medication",
+    "id": "29046",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "29046",
+          "display": "Lisinopril"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/3",
+          "display": "ACE inhibitors"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/29046/drugs/311353",
+            "display": "Lisinopril (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 2.5
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/29046/drugs/197884",
+            "display": "Lisinopril (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 40
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "30131": {
+    "resourceType": "Medication",
+    "id": "30131",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "30131",
+          "display": "Moexipril"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/3",
+          "display": "ACE inhibitors"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/30131/drugs/1299897",
+            "display": "Moexipril (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 7.5
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/30131/drugs/1299896",
+            "display": "Moexipril (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 15
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "35208": {
+    "resourceType": "Medication",
+    "id": "35208",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "35208",
+          "display": "Quinapril"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/3",
+          "display": "ACE inhibitors"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/35208/drugs/312748",
+            "display": "Quinapril (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 10
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/35208/drugs/314203",
+            "display": "Quinapril (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 40
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "35296": {
+    "resourceType": "Medication",
+    "id": "35296",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "35296",
+          "display": "Ramipril"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/3",
+          "display": "ACE inhibitors"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/35296/drugs/401965",
+            "display": "Ramipril (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 1.25
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/35296/drugs/401968",
+            "display": "Ramipril (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 10
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "38413": {
+    "resourceType": "Medication",
+    "id": "38413",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "38413",
+          "display": "Torsemide"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/6",
+          "display": "Diuretics"
+        }
+      }
+    ]
+  },
+  "38454": {
+    "resourceType": "Medication",
+    "id": "38454",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "38454",
+          "display": "Trandolapril"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/3",
+          "display": "ACE inhibitors"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/38454/drugs/199353",
+            "display": "Trandolapril (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 1
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/38454/drugs/199352",
+            "display": "Trandolapril (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 4
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "54552": {
+    "resourceType": "Medication",
+    "id": "54552",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "54552",
+          "display": "Perindopril"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/3",
+          "display": "ACE inhibitors"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/54552/drugs/854984",
+            "display": "Perindopril (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 2
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/54552/drugs/854925",
+            "display": "Perindopril (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 16
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 2
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "69749": {
+    "resourceType": "Medication",
+    "id": "69749",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "69749",
+          "display": "Valsartan"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/4",
+          "display": "ARBs"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/69749/drugs/349483",
+            "display": "Valsartan (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 20
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 0.5
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/69749/drugs/349201",
+            "display": "Valsartan (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 320
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 2,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "73494": {
+    "resourceType": "Medication",
+    "id": "73494",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "73494",
+          "display": "Telmisartan"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/4",
+          "display": "ARBs"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/73494/drugs/205304",
+            "display": "Telmisartan (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 40
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/73494/drugs/205305",
+            "display": "Telmisartan (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 80
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "83515": {
+    "resourceType": "Medication",
+    "id": "83515",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "83515",
+          "display": "Eprosartan"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/4",
+          "display": "ARBs"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/83515/drugs/310139",
+            "display": "Eprosartan (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 400
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/83515/drugs/310140",
+            "display": "Eprosartan (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 600
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "83818": {
+    "resourceType": "Medication",
+    "id": "83818",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "83818",
+          "display": "Irbesartan"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/4",
+          "display": "ARBs"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/83818/drugs/200094",
+            "display": "Irbesartan (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 75
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/83818/drugs/200096",
+            "display": "Irbesartan (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 300
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "118463": {
+    "resourceType": "Medication",
+    "id": "118463",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "118463",
+          "display": "Olmesartan Medoxomil"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/4",
+          "display": "ARBs"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/118463/drugs/349373",
+            "display": "Olmesartan (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 10
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 2
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/118463/drugs/349405",
+            "display": "Olmesartan (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 40
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "203160": {
+    "resourceType": "Medication",
+    "id": "203160",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "203160",
+          "display": "Losartan Potassium"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/4",
+          "display": "ARBs"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/203160/drugs/979485",
+            "display": "Losartan (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 25
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/203160/drugs/979480",
+            "display": "Losartan (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 150
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1.5
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "214354": {
+    "resourceType": "Medication",
+    "id": "214354",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "214354",
+          "display": "Candesartan"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/4",
+          "display": "ARBs"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/214354/drugs/153822",
+            "display": "Candesartan (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 4
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/214354/drugs/639537",
+            "display": "Candesartan (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 32
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "221124": {
+    "resourceType": "Medication",
+    "id": "221124",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "221124",
+          "display": "Metoprolol Succinate"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/0",
+          "display": "Beta blockers"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/221124/drugs/1999035",
+            "display": "Metoprolol XR (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 12.5
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 0.5
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/221124/drugs/866419",
+            "display": "Metoprolol XR (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 200
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "227278": {
+    "resourceType": "Medication",
+    "id": "227278",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "227278",
+          "display": "Fosinopril Sodium"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/3",
+          "display": "ACE inhibitors"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/227278/drugs/857169",
+            "display": "Fosinopril (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 5
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 0.5
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/227278/drugs/857187",
+            "display": "Fosinopril (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 40
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "298869": {
+    "resourceType": "Medication",
+    "id": "298869",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "298869",
+          "display": "Eplerenone"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/2",
+          "display": "Mineralocorticoid Receptor Antagonists (MRAs)"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/298869/drugs/351256",
+            "display": "Eplerenone (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 12.5
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 0.5
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/298869/drugs/351257",
+            "display": "Eplerenone (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 50
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "668310": {
+    "resourceType": "Medication",
+    "id": "668310",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "668310",
+          "display": "Carvedilol Phosphate"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/0",
+          "display": "Beta blockers"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/668310/drugs/860510",
+            "display": "Carvedilol XR (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 10
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/668310/drugs/860532",
+            "display": "Carvedilol XR (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 80
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "1091642": {
+    "resourceType": "Medication",
+    "id": "1091642",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "1091642",
+          "display": "Azilsartan Medoxomil"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/4",
+          "display": "ARBs"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/1091642/drugs/1091646",
+            "display": "Azilsartan (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 40
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/1091642/drugs/1091652",
+            "display": "Azilsartan (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 80
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "1373458": {
+    "resourceType": "Medication",
+    "id": "1373458",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "1373458",
+          "display": "Canagliflozin"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/1",
+          "display": "SGLT2 Inhibitors"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/1373458/drugs/1373463",
+            "display": "Canagliflozin (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 100
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/1373458/drugs/1373463",
+            "display": "Canagliflozin (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 100
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "1488564": {
+    "resourceType": "Medication",
+    "id": "1488564",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "1488564",
+          "display": "Dapagliflozin"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/1",
+          "display": "SGLT2 Inhibitors"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/1488564/drugs/1488574",
+            "display": "Dapagliflozin (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 5
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/1488564/drugs/1488569",
+            "display": "Dapagliflozin (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 10
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "1545653": {
+    "resourceType": "Medication",
+    "id": "1545653",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "1545653",
+          "display": "Empagliflozin"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/1",
+          "display": "SGLT2 Inhibitors"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/1545653/drugs/1545658",
+            "display": "Empagliflozin (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 5
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 0.5
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/1545653/drugs/1545666",
+            "display": "Empagliflozin (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 25
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "1656339": {
+    "resourceType": "Medication",
+    "id": "1656339",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "1656339",
+          "display": "Sacubitril / Valsartan"
+        }
+      ]
+    },
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": "1656328",
+              "display": "Sacubitril"
+            }
+          ]
+        }
+      },
+      {
+        "itemCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": "69749",
+              "display": "Valsartan"
+            }
+          ]
+        }
+      }
+    ],
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/5",
+          "display": "Angiotensin Receptor/Neprilysin Inhibitors (ARNI)"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/1656339/drugs/1656340",
+            "display": "Sacubitril/Valsartan (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 48
+                },
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 52
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 2,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/1656339/drugs/1656354",
+            "display": "Sacubitril/Valsartan (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 194
+                },
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 206
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 2,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "1992672": {
+    "resourceType": "Medication",
+    "id": "1992672",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "1992672",
+          "display": "Ertugliflozin"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/1",
+          "display": "SGLT2 Inhibitors"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/1992672/drugs/1992810",
+            "display": "Ertugliflozin (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 5
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/1992672/drugs/1992819",
+            "display": "Ertugliflozin (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 15
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "2627044": {
+    "resourceType": "Medication",
+    "id": "2627044",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "2627044",
+          "display": "Bexagliflozin"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/1",
+          "display": "SGLT2 Inhibitors"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/2627044/drugs/2637859",
+            "display": "Bexagliflozin (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 20
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/2627044/drugs/2637859",
+            "display": "Bexagliflozin (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 20
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "2638675": {
+    "resourceType": "Medication",
+    "id": "2638675",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "2638675",
+          "display": "Sotagliflozin"
+        }
+      ]
+    },
+    "extension": [
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "valueReference": {
+          "reference": "medicationClasses/1",
+          "display": "SGLT2 Inhibitors"
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/2638675/drugs/2638683",
+            "display": "Sotagliflozin (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 200
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "valueMedicationRequest": {
+          "resourceType": "MedicationRequest",
+          "medicationReference": {
+            "reference": "medications/2638675/drugs/2638691",
+            "display": "Sotagliflozin (Oral Pill)"
+          },
+          "extension": [
+            {
+              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "valueQuantities": [
+                {
+                  "unit": "mg",
+                  "code": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "value": 400
+                }
+              ]
+            }
+          ],
+          "dosageInstruction": [
+            {
+              "timing": {
+                "repeat": {
+                  "frequency": 1,
+                  "period": 1,
+                  "periodUnit": "d"
+                }
+              },
+              "doseAndRate": [
+                {
+                  "doseQuantity": {
+                    "unit": "tbl.",
+                    "code": "{tbl}",
+                    "system": "http://unitsofmeasure.org",
+                    "value": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

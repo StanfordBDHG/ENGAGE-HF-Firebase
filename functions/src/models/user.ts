@@ -19,21 +19,20 @@ export enum UserType {
   patient = 'patient',
 }
 
-export interface User {
+export interface UserRegistration {
   type: UserType
-  dateOfBirth?: Date
-  clinician?: string
-  dateOfEnrollment?: Date
-  invitationCode?: string
-  messagesSettings?: UserMessagesSettings
   organization?: string
+
+  dateOfBirth?: string
+  clinician?: string
+
+  messagesSettings?: UserMessagesSettings
+
   language?: string
   timeZone?: string
 }
 
-export interface UserAuth {
-  displayName?: string
-  email?: string
-  phoneNumber?: string
-  photoURL?: string
+export interface User extends UserRegistration {
+  dateOfEnrollment: string
+  invitationCode: string
 }

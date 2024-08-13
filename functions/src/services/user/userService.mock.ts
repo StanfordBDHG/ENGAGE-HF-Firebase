@@ -7,9 +7,9 @@
 //
 
 import { type UserService } from './userService.js'
-import { type Invitation } from '../../models/invitation.js'
+import { type UserAuth, type Invitation } from '../../models/invitation.js'
 import { type Organization } from '../../models/organization.js'
-import { type UserAuth, type User, UserType } from '../../models/user.js'
+import { type User, UserType } from '../../models/user.js'
 import { type Document } from '../database/databaseService.js'
 
 /* eslint-disable @typescript-eslint/require-await */
@@ -45,17 +45,21 @@ export class MockUserService implements UserService {
 
   // Methods - Invitations
 
-  async createInvitation(
-    invitationId: string,
-    content: Invitation,
-  ): Promise<void> {
-    return
+  async createInvitation(content: Invitation): Promise<{ id: string }> {
+    return { id: 'OpEbLvZgsKwqVNnD8FzN' }
   }
 
-  async getInvitation(invitationId: string): Promise<Document<Invitation>> {
+  async getInvitationByCode(
+    invitationCode: string,
+  ): Promise<Document<Invitation>> {
     return {
-      id: invitationId,
+      id: '1',
+      path: 'invitations/1',
       content: {
+        user: {
+          type: UserType.patient,
+        },
+        code: invitationCode,
         userId: 'test',
       },
     }
@@ -66,14 +70,19 @@ export class MockUserService implements UserService {
   ): Promise<Document<Invitation> | undefined> {
     return {
       id: '123',
+      path: 'invitations/123',
       content: {
+        user: {
+          type: UserType.patient,
+        },
+        code: 'test',
         userId: userId,
       },
     }
   }
 
   async setInvitationUserId(
-    invitationId: string,
+    invitationCode: string,
     userId: string,
   ): Promise<void> {
     return
@@ -88,6 +97,12 @@ export class MockUserService implements UserService {
 
   // Methods - Organizations
 
+  async getOrganizationBySsoProviderId(
+    providerId: string,
+  ): Promise<Document<Organization> | undefined> {
+    return undefined
+  }
+
   async getOrganizations(): Promise<Array<Document<Organization>>> {
     return []
   }
@@ -97,6 +112,7 @@ export class MockUserService implements UserService {
   ): Promise<Document<Organization> | undefined> {
     return {
       id: organizationId,
+      path: 'organizations/' + organizationId,
       content: {
         id: 'stanford',
         name: 'Stanford University',
@@ -110,14 +126,19 @@ export class MockUserService implements UserService {
 
   // Methods - User
 
+  async getAllPatients(): Promise<Array<Document<User>>> {
+    return []
+  }
+
   async getUser(userId: string): Promise<Document<User>> {
     return {
       id: userId,
+      path: 'users/' + userId,
       content: {
         type: UserType.clinician,
-        dateOfBirth: new Date('1970-01-02'),
+        dateOfBirth: new Date('1970-01-02').toISOString(),
         clinician: 'mockClinician',
-        dateOfEnrollment: new Date('2024-04-02'),
+        dateOfEnrollment: new Date('2024-04-02').toISOString(),
         invitationCode: '123',
         messagesSettings: {
           dailyRemindersAreActive: true,
@@ -129,16 +150,6 @@ export class MockUserService implements UserService {
   }
 
   async deleteUser(userId: string): Promise<void> {
-    return
-  }
-
-  // Methods - Messages
-
-  async dismissMessage(
-    userId: string,
-    messageId: string,
-    didPerformAction: boolean,
-  ): Promise<void> {
     return
   }
 }

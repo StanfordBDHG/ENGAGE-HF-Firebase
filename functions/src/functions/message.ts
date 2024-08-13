@@ -9,34 +9,37 @@
 import { https } from 'firebase-functions'
 import { z } from 'zod'
 import { validatedOnCall } from './helpers.js'
-import { CacheDatabaseService } from '../services/database/cacheDatabaseService.js'
-import { FirestoreService } from '../services/database/firestoreService.js'
-import { DatabaseUserService } from '../services/user/databaseUserService.js'
+import { UserRole } from '../services/credential/credential.js'
+import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
 const dismissMessageInputSchema = z.object({
+  userId: z.string().or(z.null()).default(null),
   messageId: z.string(),
-  didPerformAction: z.boolean().optional(),
+  didPerformAction: z.boolean().default(false),
 })
 
-export const dismissMessageFunction = validatedOnCall(
+export const dismissMessage = validatedOnCall(
   dismissMessageInputSchema,
   async (request): Promise<void> => {
-    if (!request.auth?.uid)
-      throw new https.HttpsError(
-        'unauthenticated',
-        'User is not properly authenticated.',
-      )
+    const userId = request.data.userId ?? request.auth?.uid
 
-    const userId = request.auth.uid
-    const { messageId, didPerformAction } = request.data
-    if (!messageId)
-      throw new https.HttpsError('invalid-argument', 'Message ID is required')
+    if (!userId)
+      throw new https.HttpsError('not-found', 'User could not be found.')
 
     try {
-      const service = new DatabaseUserService(
-        new CacheDatabaseService(new FirestoreService()),
-      )
-      await service.dismissMessage(userId, messageId, didPerformAction ?? false)
+      const factory = getServiceFactory()
+
+      factory
+        .credential(request.auth)
+        .check(UserRole.admin, UserRole.user(userId))
+
+      await factory
+        .message()
+        .dismissMessage(
+          userId,
+          request.data.messageId,
+          request.data.didPerformAction,
+        )
     } catch (error) {
       console.error(error)
       throw new https.HttpsError('internal', 'Internal server error.')

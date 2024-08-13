@@ -6,6 +6,8 @@
 // SPDX-License-Identifier: MIT
 //
 
+import { type FHIRMedicationRequest } from './medication'
+
 export interface FHIRCodeableConcept extends FHIRElement {
   coding?: FHIRCoding[]
   text?: string
@@ -24,15 +26,20 @@ export interface FHIRElement {
   extension?: FHIRExtension[]
 }
 
+export interface FHIRResource extends FHIRElement {
+  resourceType: string
+}
+
 export interface FHIRExtension {
   url: string
+  valueQuantities?: FHIRSimpleQuantity[]
   valueReference?: FHIRReference<unknown>
-  valueQuantity?: FHIRSimpleQuantity
+  valueMedicationRequest?: FHIRMedicationRequest
 }
 
 export interface FHIRPeriod {
-  start?: Date
-  end?: Date
+  start?: string
+  end?: string
 }
 
 export interface FHIRRatio {
@@ -46,10 +53,10 @@ export interface FHIRRatio {
 //
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export interface FHIRReference<T> {
-  reference?: string
+  reference: string
   type?: string
   identifier?: string
-  display?: string
+  display?: string | null
 }
 
 export interface FHIRSimpleQuantity {

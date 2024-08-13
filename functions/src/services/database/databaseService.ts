@@ -14,6 +14,7 @@ import {
 
 export interface Document<Content> {
   id: string
+  path: string
   content: Content
 }
 
@@ -31,10 +32,7 @@ export interface DatabaseService {
     options?: BulkWriterOptions,
   ): Promise<void>
 
-  runTransaction(
-    run: (
-      firestore: Firestore,
-      transaction: Transaction,
-    ) => Promise<void> | void,
-  ): Promise<void>
+  runTransaction<T>(
+    run: (firestore: Firestore, transaction: Transaction) => Promise<T> | T,
+  ): Promise<T>
 }

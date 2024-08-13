@@ -16,21 +16,24 @@ import {
   onRequest,
   type Request,
 } from 'firebase-functions/v2/https'
-import { z } from 'zod'
+import { type TypeOf, z, type ZodType } from 'zod'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-redundant-type-constituents */
 
-export function validatedOnCall<T = any, Return = any | Promise<any>>(
-  schema: z.ZodType<T>,
-  handler: (request: CallableRequest<T>) => Return,
+export function validatedOnCall<
+  Schema extends ZodType<any, any, any>,
+  Return = any | Promise<any>,
+>(
+  schema: Schema,
+  handler: (request: CallableRequest<TypeOf<Schema>>) => Return,
 ): CallableFunction<
-  T,
+  TypeOf<Schema>,
   Return extends Promise<unknown> ? Return : Promise<Return>
 > {
   return onCall((request) => {
     try {
-      schema.parse(request.data)
+      request.data = schema.parse(request.data) as TypeOf<Schema>
       return handler(request)
     } catch (error) {
       if (error instanceof z.ZodError) {
@@ -46,19 +49,19 @@ export function validatedOnCall<T = any, Return = any | Promise<any>>(
 }
 
 export function validatedOnCallWithOptions<
-  T = any,
+  Schema extends ZodType<any, any, any>,
   Return = any | Promise<any>,
 >(
-  schema: z.ZodType<T>,
+  schema: Schema,
   options: CallableOptions,
-  handler: (request: CallableRequest<T>) => Return,
+  handler: (request: CallableRequest<TypeOf<Schema>>) => Return,
 ): CallableFunction<
-  T,
+  TypeOf<Schema>,
   Return extends Promise<unknown> ? Return : Promise<Return>
 > {
   return onCall(options, (request) => {
     try {
-      schema.parse(request.data)
+      request.data = schema.parse(request.data) as TypeOf<Schema>
       return handler(request)
     } catch (error) {
       if (error instanceof z.ZodError) {
@@ -73,17 +76,17 @@ export function validatedOnCallWithOptions<
   })
 }
 
-export function validatedOnRequest<T>(
-  schema: z.ZodType<T>,
+export function validatedOnRequest<Schema extends ZodType<any, any, any>>(
+  schema: Schema,
   handler: (
     request: Request,
-    data: T,
+    data: TypeOf<Schema>,
     response: Response,
   ) => void | Promise<void>,
 ): https.HttpsFunction {
   return onRequest(async (request, response) => {
     try {
-      const data = schema.parse(request.body)
+      const data = schema.parse(request.body) as TypeOf<Schema>
       await handler(request, data, response)
       return
     } catch (error) {
@@ -100,18 +103,20 @@ export function validatedOnRequest<T>(
   })
 }
 
-export function validatedOnRequestWithOptions<T>(
-  schema: z.ZodType<T>,
+export function validatedOnRequestWithOptions<
+  Schema extends ZodType<any, any, any>,
+>(
+  schema: Schema,
   options: https.HttpsOptions,
   handler: (
     request: Request,
-    data: T,
+    data: TypeOf<Schema>,
     response: Response,
   ) => void | Promise<void>,
 ): https.HttpsFunction {
   return onRequest(options, async (request, response) => {
     try {
-      const data = schema.parse(request.body)
+      const data = schema.parse(request.body) as TypeOf<Schema>
       await handler(request, data, response)
       return
     } catch (error) {

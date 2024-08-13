@@ -7,12 +7,17 @@
 //
 
 import { type PatientService } from './patientService.js'
+import { advanceDateByDays } from '../../extensions/date.js'
+import { localize } from '../../extensions/localizedText.js'
 import { type FHIRAllergyIntolerance } from '../../models/fhir/allergyIntolerance.js'
 import { type FHIRAppointment } from '../../models/fhir/appointment.js'
 import { type FHIRMedicationRequest } from '../../models/fhir/medication.js'
 import { type FHIRObservation } from '../../models/fhir/observation.js'
 import { type FHIRQuestionnaireResponse } from '../../models/fhir/questionnaireResponse.js'
-import { type MedicationRecommendation } from '../../models/medicationRecommendation.js'
+import {
+  MedicationRecommendationType,
+  type MedicationRecommendation,
+} from '../../models/medicationRecommendation.js'
 import { type SymptomScore } from '../../models/symptomScore.js'
 import {
   type Document,
@@ -31,6 +36,24 @@ export class DatabasePatientService implements PatientService {
   }
 
   // Methods - Appointments
+
+  async getEveryAppoinment(
+    fromDate: Date,
+    toDate: Date,
+  ): Promise<Array<Document<FHIRAppointment>>> {
+    const result = await this.databaseService.getQuery<FHIRAppointment>(
+      (firestore) =>
+        firestore
+          .collectionGroup('appointments')
+          .where('start', '>', advanceDateByDays(fromDate, -1).toISOString())
+          .where('start', '<', advanceDateByDays(toDate, 1).toISOString()),
+    )
+
+    return result.filter((appointment) => {
+      const start = new Date(appointment.content.start)
+      return start >= fromDate && start < toDate
+    })
+  }
 
   async getAppointments(
     userId: string,
@@ -54,9 +77,9 @@ export class DatabasePatientService implements PatientService {
     return result.at(0)
   }
 
-  // Methods - AllergyIntolerances
+  // Methods - Contraindications
 
-  async getAllergyIntolerances(
+  async getContraindications(
     userId: string,
   ): Promise<Array<Document<FHIRAllergyIntolerance>>> {
     return this.databaseService.getCollection<FHIRAllergyIntolerance>(
@@ -69,9 +92,21 @@ export class DatabasePatientService implements PatientService {
   async getMedicationRecommendations(
     userId: string,
   ): Promise<Array<Document<MedicationRecommendation>>> {
-    return this.databaseService.getCollection<MedicationRecommendation>(
-      `users/${userId}/medicationRecommendations`,
-    )
+    const result =
+      await this.databaseService.getCollection<MedicationRecommendation>(
+        `users/${userId}/medicationRecommendations`,
+      )
+
+    return result.sort((a, b) => {
+      const priorityDiff =
+        this.priorityForRecommendationType(a.content.displayInformation.type) -
+        this.priorityForRecommendationType(b.content.displayInformation.type)
+      if (priorityDiff !== 0) return priorityDiff
+
+      const medicationClassA = localize(a.content.displayInformation.subtitle)
+      const medicationClassB = localize(b.content.displayInformation.subtitle)
+      return medicationClassA.localeCompare(medicationClassB, 'en')
+    })
   }
 
   async getMedicationRequests(
@@ -82,29 +117,61 @@ export class DatabasePatientService implements PatientService {
     )
   }
 
+  async updateMedicationRecommendations(
+    userId: string,
+    recommendations: MedicationRecommendation[],
+  ): Promise<void> {
+    await this.databaseService.runTransaction(
+      async (firestore, transaction) => {
+        const collection = firestore.collection(
+          `users/${userId}/medicationRecommendations`,
+        )
+        const result = await transaction.get(collection)
+        for (const doc of result.docs) {
+          transaction.delete(doc.ref)
+        }
+        for (const recommendation of recommendations) {
+          transaction.create(collection.doc(), recommendation)
+        }
+      },
+    )
+  }
+
   // Methods - Observations
 
   async getBloodPressureObservations(
     userId: string,
+    cutoffDate: Date,
   ): Promise<Array<Document<FHIRObservation>>> {
-    return this.databaseService.getCollection<FHIRObservation>(
-      `users/${userId}/bloodPressureObservations`,
+    return this.databaseService.getQuery<FHIRObservation>((firestore) =>
+      firestore
+        .collection(`users/${userId}/bloodPressureObservations`)
+        .where('effectiveDateTime', '>', cutoffDate.toISOString())
+        .orderBy('effectiveDateTime', 'desc'),
     )
   }
 
   async getBodyWeightObservations(
     userId: string,
+    cutoffDate: Date,
   ): Promise<Array<Document<FHIRObservation>>> {
-    return this.databaseService.getCollection<FHIRObservation>(
-      `users/${userId}/bodyWeightObservations`,
+    return this.databaseService.getQuery<FHIRObservation>((firestore) =>
+      firestore
+        .collection(`users/${userId}/bodyWeightObservations`)
+        .where('effectiveDateTime', '>', cutoffDate.toISOString())
+        .orderBy('effectiveDateTime', 'desc'),
     )
   }
 
   async getHeartRateObservations(
     userId: string,
+    cutoffDate: Date,
   ): Promise<Array<Document<FHIRObservation>>> {
-    return this.databaseService.getCollection<FHIRObservation>(
-      `users/${userId}/heartRateObservations`,
+    return this.databaseService.getQuery<FHIRObservation>((firestore) =>
+      firestore
+        .collection(`users/${userId}/heartRateObservations`)
+        .where('effectiveDateTime', '>', cutoffDate.toISOString())
+        .orderBy('effectiveDateTime', 'desc'),
     )
   }
 
@@ -172,9 +239,66 @@ export class DatabasePatientService implements PatientService {
 
   async getSymptomScores(
     userId: string,
+    limit: number | null,
   ): Promise<Array<Document<SymptomScore>>> {
-    return this.databaseService.getCollection<SymptomScore>(
-      `users/${userId}/symptomScores`,
+    return this.databaseService.getQuery<SymptomScore>((firestore) => {
+      const query = firestore
+        .collection(`users/${userId}/symptomScores`)
+        .orderBy('date', 'desc')
+      return limit ? query.limit(limit) : query
+    })
+  }
+
+  async getLatestSymptomScore(
+    userId: string,
+  ): Promise<Document<SymptomScore> | undefined> {
+    const result = await this.databaseService.getQuery<SymptomScore>(
+      (firestore) =>
+        firestore
+          .collection(`users/${userId}/symptomScores`)
+          .orderBy('date', 'desc')
+          .limit(1),
     )
+    return result.at(0)
+  }
+
+  async updateSymptomScore(
+    userId: string,
+    symptomScoreId: string,
+    symptomScore: SymptomScore | undefined,
+  ): Promise<void> {
+    return this.databaseService.runTransaction((firestore, transaction) => {
+      const ref = firestore.doc(
+        `users/${userId}/symptomScores/${symptomScoreId}`,
+      )
+      if (symptomScore) {
+        transaction.set(ref, symptomScore)
+      } else {
+        transaction.delete(ref)
+      }
+    })
+  }
+
+  // Helpers
+
+  private priorityForRecommendationType(
+    type: MedicationRecommendationType,
+  ): number {
+    switch (type) {
+      case MedicationRecommendationType.improvementAvailable:
+        return 1
+      case MedicationRecommendationType.morePatientObservationsRequired:
+        return 2
+      case MedicationRecommendationType.moreLabObservationsRequired:
+        return 3
+      case MedicationRecommendationType.personalTargetDoseReached:
+        return 4
+      case MedicationRecommendationType.targetDoseReached:
+        return 5
+      case MedicationRecommendationType.notStarted:
+        return 6
+      case MedicationRecommendationType.noActionRequired:
+        return 7
+    }
   }
 }

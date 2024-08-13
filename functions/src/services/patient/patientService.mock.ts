@@ -31,6 +31,12 @@ import { QuantityUnit } from '../fhir/quantityUnit.js'
 export class MockPatientService implements PatientService {
   // Methods - Appointments
 
+  async getEveryAppoinment(
+    fromDate: Date,
+    toDate: Date,
+  ): Promise<Array<Document<FHIRAppointment>>> {
+    return []
+  }
   async getAppointments(
     userId: string,
   ): Promise<Array<Document<FHIRAppointment>>> {
@@ -41,11 +47,13 @@ export class MockPatientService implements PatientService {
   ): Promise<Document<FHIRAppointment> | undefined> {
     return {
       id: '123',
+      path: 'appointments/123',
       content: {
+        resourceType: 'Appointment',
         status: AppointmentStatus.pending,
-        created: new Date('2024-01-01'),
-        start: new Date('2024-02-03'),
-        end: new Date('2024-02-03'),
+        created: new Date('2024-01-01').toISOString(),
+        start: new Date('2024-02-03').toISOString(),
+        end: new Date('2024-02-03').toISOString(),
         participant: [
           {
             actor: {
@@ -57,9 +65,9 @@ export class MockPatientService implements PatientService {
     }
   }
 
-  // Methods - AllergyIntolerances
+  // Methods - Contraindications
 
-  async getAllergyIntolerances(
+  async getContraindications(
     userId: string,
   ): Promise<Array<Document<FHIRAllergyIntolerance>>> {
     return []
@@ -73,6 +81,7 @@ export class MockPatientService implements PatientService {
     const values: MedicationRecommendation[] = []
     return values.map((value, index) => ({
       id: index.toString(),
+      path: `users/${userId}/medicationRecommendations/${index}`,
       content: value,
     }))
   }
@@ -82,6 +91,7 @@ export class MockPatientService implements PatientService {
   ): Promise<Array<Document<FHIRMedicationRequest>>> {
     const values: FHIRMedicationRequest[] = [
       {
+        resourceType: 'MedicationRequest',
         medicationReference: {
           reference: 'medications/203160/drugs/20352',
         },
@@ -101,8 +111,16 @@ export class MockPatientService implements PatientService {
     ]
     return values.map((value, index) => ({
       id: index.toString(),
+      path: `users/${userId}/medicationRequests/${index}`,
       content: value,
     }))
+  }
+
+  async updateMedicationRecommendations(
+    userId: string,
+    recommendations: MedicationRecommendation[],
+  ): Promise<void> {
+    return
   }
 
   // Methods - Observations
@@ -123,6 +141,7 @@ export class MockPatientService implements PatientService {
     ]
     return values.map((value, index) => ({
       id: index.toString(),
+      path: `users/${userId}/bloodPressureObservations/${index}`,
       content: value,
     }))
   }
@@ -133,6 +152,7 @@ export class MockPatientService implements PatientService {
     date: Date,
   ): FHIRObservation {
     return {
+      resourceType: 'Observation',
       code: {
         coding: [
           {
@@ -184,7 +204,7 @@ export class MockPatientService implements PatientService {
           },
         },
       ],
-      effectiveDateTime: date,
+      effectiveDateTime: date.toISOString(),
       id: 'DDA0F363-2BA3-426F-9F68-1C938FFDF943',
       status: FHIRObservationStatus.final,
     }
@@ -194,53 +214,19 @@ export class MockPatientService implements PatientService {
     userId: string,
   ): Promise<Array<Document<FHIRObservation>>> {
     const values = [
-      this.bodyWeightObservation(
-        269,
-        QuantityUnit.lbs,
-
-        new Date('2024-02-01'),
-      ),
-      this.bodyWeightObservation(
-        267,
-        QuantityUnit.lbs,
-
-        new Date('2024-01-31'),
-      ),
-      this.bodyWeightObservation(
-        267,
-        QuantityUnit.lbs,
-
-        new Date('2024-01-30'),
-      ),
-      this.bodyWeightObservation(
-        265,
-        QuantityUnit.lbs,
-
-        new Date('2024-01-29'),
-      ),
-      this.bodyWeightObservation(
-        268,
-        QuantityUnit.lbs,
-
-        new Date('2024-01-28'),
-      ),
-      this.bodyWeightObservation(
-        268,
-        QuantityUnit.lbs,
-
-        new Date('2024-01-27'),
-      ),
-      this.bodyWeightObservation(
-        266,
-        QuantityUnit.lbs,
-
-        new Date('2024-01-26'),
-      ),
+      this.bodyWeightObservation(269, QuantityUnit.lbs, new Date('2024-02-01')),
+      this.bodyWeightObservation(267, QuantityUnit.lbs, new Date('2024-01-31')),
+      this.bodyWeightObservation(267, QuantityUnit.lbs, new Date('2024-01-30')),
+      this.bodyWeightObservation(265, QuantityUnit.lbs, new Date('2024-01-29')),
+      this.bodyWeightObservation(268, QuantityUnit.lbs, new Date('2024-01-28')),
+      this.bodyWeightObservation(268, QuantityUnit.lbs, new Date('2024-01-27')),
+      this.bodyWeightObservation(266, QuantityUnit.lbs, new Date('2024-01-26')),
       this.bodyWeightObservation(266, QuantityUnit.lbs, new Date('2024-01-25')),
       this.bodyWeightObservation(267, QuantityUnit.lbs, new Date('2024-01-24')),
     ]
     return values.map((value, index) => ({
       id: index.toString(),
+      path: `users/${userId}/bodyWeightObservations/${index}`,
       content: value,
     }))
   }
@@ -251,6 +237,7 @@ export class MockPatientService implements PatientService {
     date: Date,
   ): FHIRObservation {
     return {
+      resourceType: 'Observation',
       code: {
         coding: [
           {
@@ -265,7 +252,7 @@ export class MockPatientService implements PatientService {
           },
         ],
       },
-      effectiveDateTime: date,
+      effectiveDateTime: date.toISOString(),
       status: FHIRObservationStatus.final,
       valueQuantity: {
         ...unit,
@@ -290,12 +277,14 @@ export class MockPatientService implements PatientService {
     ]
     return values.map((value, index) => ({
       id: index.toString(),
+      path: `users/${userId}/heartRateObservations/${index}`,
       content: value,
     }))
   }
 
   private heartRateObservation(value: number, date: Date): FHIRObservation {
     return {
+      resourceType: 'Observation',
       code: {
         coding: [
           {
@@ -310,7 +299,7 @@ export class MockPatientService implements PatientService {
           },
         ],
       },
-      effectiveDateTime: date,
+      effectiveDateTime: date.toISOString(),
       id: 'C38FFD7E-7B86-4C79-9C8A-0B90E2F3DF14',
       status: FHIRObservationStatus.final,
       valueQuantity: {
@@ -325,7 +314,9 @@ export class MockPatientService implements PatientService {
   ): Promise<Document<FHIRObservation> | undefined> {
     return {
       id: '0',
+      path: `users/${userId}/creatinineObservations/0`,
       content: {
+        resourceType: 'Observation',
         code: {
           coding: [
             {
@@ -335,7 +326,7 @@ export class MockPatientService implements PatientService {
             },
           ],
         },
-        effectiveDateTime: new Date('2024-01-29'),
+        effectiveDateTime: new Date('2024-01-29').toISOString(),
         status: FHIRObservationStatus.final,
         valueQuantity: {
           ...QuantityUnit.mg_dL,
@@ -350,7 +341,10 @@ export class MockPatientService implements PatientService {
   ): Promise<Document<FHIRObservation> | undefined> {
     return {
       id: '0',
+      path: `users/${userId}/dryWeightObservations/0`,
+
       content: {
+        resourceType: 'Observation',
         code: {
           coding: [
             {
@@ -360,7 +354,7 @@ export class MockPatientService implements PatientService {
             },
           ],
         },
-        effectiveDateTime: new Date('2024-01-29'),
+        effectiveDateTime: new Date('2024-01-29').toISOString(),
         status: FHIRObservationStatus.final,
         valueQuantity: {
           ...QuantityUnit.lbs,
@@ -375,7 +369,9 @@ export class MockPatientService implements PatientService {
   ): Promise<Document<FHIRObservation> | undefined> {
     return {
       id: '0',
+      path: `users/${userId}/eGfrObservations/0`,
       content: {
+        resourceType: 'Observation',
         code: {
           coding: [
             {
@@ -386,7 +382,7 @@ export class MockPatientService implements PatientService {
             },
           ],
         },
-        effectiveDateTime: new Date('2024-01-29'),
+        effectiveDateTime: new Date('2024-01-29').toISOString(),
         status: FHIRObservationStatus.final,
         valueQuantity: {
           ...QuantityUnit.mL_min_173m2,
@@ -401,7 +397,9 @@ export class MockPatientService implements PatientService {
   ): Promise<Document<FHIRObservation> | undefined> {
     return {
       id: '0',
+      path: `users/${userId}/potassiumObservations/0`,
       content: {
+        resourceType: 'Observation',
         code: {
           coding: [
             {
@@ -411,7 +409,7 @@ export class MockPatientService implements PatientService {
             },
           ],
         },
-        effectiveDateTime: new Date('2024-01-29'),
+        effectiveDateTime: new Date('2024-01-29').toISOString(),
         status: FHIRObservationStatus.final,
         valueQuantity: {
           ...QuantityUnit.mEq_L,
@@ -428,54 +426,75 @@ export class MockPatientService implements PatientService {
   ): Promise<Array<Document<FHIRQuestionnaireResponse>>> {
     return [mockQuestionnaireResponse()].map((value, index) => ({
       id: index.toString(),
+      path: `users/${userId}/questionnaireResponses/${index}`,
       content: value,
     }))
   }
 
   async getSymptomScores(
     userId: string,
+    limit: number | null,
   ): Promise<Array<Document<SymptomScore>>> {
     const values: SymptomScore[] = [
       {
+        questionnaireResponseId: '4',
         overallScore: 40,
         physicalLimitsScore: 50,
         socialLimitsScore: 38,
         qualityOfLifeScore: 20,
         symptomFrequencyScore: 60,
         dizzinessScore: 50,
-        date: new Date('2024-01-24'),
+        date: new Date('2024-01-24').toISOString(),
       },
       {
+        questionnaireResponseId: '3',
         overallScore: 60,
         physicalLimitsScore: 58,
         socialLimitsScore: 75,
         qualityOfLifeScore: 37,
         symptomFrequencyScore: 72,
         dizzinessScore: 70,
-        date: new Date('2024-01-15'),
+        date: new Date('2024-01-15').toISOString(),
       },
       {
+        questionnaireResponseId: '2',
         overallScore: 44,
         physicalLimitsScore: 50,
         socialLimitsScore: 41,
         qualityOfLifeScore: 25,
         symptomFrequencyScore: 60,
         dizzinessScore: 50,
-        date: new Date('2023-12-30'),
+        date: new Date('2023-12-30').toISOString(),
       },
       {
+        questionnaireResponseId: '1',
         overallScore: 75,
         physicalLimitsScore: 58,
         socialLimitsScore: 75,
         qualityOfLifeScore: 60,
         symptomFrequencyScore: 80,
         dizzinessScore: 100,
-        date: new Date('2023-12-15'),
+        date: new Date('2023-12-15').toISOString(),
       },
     ]
     return values.map((value, index) => ({
       id: index.toString(),
+      path: `users/${userId}/symptomScores/${index}`,
       content: value,
     }))
+  }
+
+  async getLatestSymptomScore(
+    userId: string,
+  ): Promise<Document<SymptomScore> | undefined> {
+    return (await this.getSymptomScores(userId, null)).at(0)
+  }
+
+  async updateSymptomScore(
+    userId: string,
+    symptomScoreId: string,
+    symptomScore: SymptomScore | undefined,
+  ): Promise<void> {
+    return
   }
 }

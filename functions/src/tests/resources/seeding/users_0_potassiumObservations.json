@@ -1,0 +1,23 @@
+{
+  "0": {
+    "id": "0",
+    "resourceType": "Observation",
+    "status": "final",
+    "code": {
+      "coding": [
+        {
+          "system": "http://loinc.org",
+          "code": "6298-4",
+          "display": "Potassium [Moles/volume] in Blood"
+        }
+      ]
+    },
+    "valueQuantity": {
+      "value": 4.2,
+      "unit": "mEq/L",
+      "system": "http://unitsofmeasure.org",
+      "code": "meq/L"
+    },
+    "effectiveDateTime": "2024-06-03T00:00:00.000Z"
+  }
+}

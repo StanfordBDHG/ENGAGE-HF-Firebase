@@ -6,24 +6,16 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { type MedicationRecommendationCategory } from './medicationRecommendation.js'
+import { type MedicationRecommendation } from './medicationRecommendation.js'
 import { type SymptomScore } from './symptomScore.js'
 import { type Vitals } from './vitals.js'
 
 export interface HealthSummaryData {
   name: string
-  dateOfBirth?: Date
+  dateOfBirth?: string
   clinicianName: string
-  nextAppointment?: Date
-  medications: MedicationOptimization[]
+  nextAppointment?: string
+  recommendations: MedicationRecommendation[]
   vitals: Vitals
   symptomScores: SymptomScore[]
-}
-
-export interface MedicationOptimization {
-  name: string
-  dose: string
-  targetDose: string
-  potentialPositiveChange: string
-  category: MedicationRecommendationCategory
 }

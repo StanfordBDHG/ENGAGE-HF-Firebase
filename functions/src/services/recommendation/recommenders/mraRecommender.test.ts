@@ -9,22 +9,25 @@
 import { expect } from 'chai'
 import { describe, it } from 'mocha'
 import { MraRecommender } from './mraRecommender.js'
+import { type RecommendationInput } from './recommender.js'
 import { type HealthSummaryData } from '../../../models/healthSummaryData.js'
-import { MedicationRecommendationCategory } from '../../../models/medicationRecommendation.js'
+import { MedicationRecommendationType } from '../../../models/medicationRecommendation.js'
 import { type MedicationRequestContext } from '../../../models/medicationRequestContext.js'
 import { MockContraindicationService } from '../../../tests/mocks/contraindicationService.js'
 import { mockHealthSummaryData } from '../../../tests/mocks/healthSummaryData.js'
-import {
-  CodingSystem,
-  DrugReference,
-  FHIRExtensionUrl,
-  MedicationClassReference,
-  MedicationReference,
-} from '../../codes.js'
+import { cleanupMocks, setupMockFirebase } from '../../../tests/setup.js'
 import { ContraindicationCategory } from '../../contraindication/contraindicationService.js'
+import { getServiceFactory } from '../../factory/getServiceFactory.js'
 import { FhirService } from '../../fhir/fhirService.js'
 import { QuantityUnit } from '../../fhir/quantityUnit.js'
-import { type RecommendationInput } from '../recommendationService.js'
+import { type MedicationService } from '../../medication/medicationService.js'
+import {
+  DrugReference,
+  type MedicationClassReference,
+  MedicationReference,
+} from '../../references.js'
+import { CachingStrategy } from '../../seeding/seedingService.js'
+import { UserDataFactory } from '../../seeding/userData/userDataFactory.js'
 
 describe('MraRecommender', () => {
   let medicationContraindication: (
@@ -42,11 +45,25 @@ describe('MraRecommender', () => {
     new FhirService(),
   )
   let healthSummaryData: HealthSummaryData
+  let medicationService: MedicationService
+
+  before(async () => {
+    setupMockFirebase()
+    const factory = getServiceFactory()
+    const staticDataService = factory.staticData()
+    await staticDataService.updateMedicationClasses(CachingStrategy.expectCache)
+    await staticDataService.updateMedications(CachingStrategy.expectCache)
+    medicationService = factory.medication()
+  })
 
   beforeEach(async () => {
     healthSummaryData = await mockHealthSummaryData(new Date())
     medicationContraindication = (_) => ContraindicationCategory.none
     medicationClassContraindication = (_) => ContraindicationCategory.none
+  })
+
+  after(() => {
+    cleanupMocks()
   })
 
   describe('No treatment', () => {
@@ -79,11 +96,9 @@ describe('MraRecommender', () => {
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: undefined,
-        recommendedMedication: {
-          reference: MedicationReference.spironolactone,
-        },
-        category: MedicationRecommendationCategory.noActionRequired,
+        currentMedication: [],
+        recommendedMedication: MedicationReference.spironolactone,
+        type: MedicationRecommendationType.noActionRequired,
       })
     })
 
@@ -101,11 +116,9 @@ describe('MraRecommender', () => {
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: undefined,
-        recommendedMedication: {
-          reference: MedicationReference.spironolactone,
-        },
-        category: MedicationRecommendationCategory.noActionRequired,
+        currentMedication: [],
+        recommendedMedication: MedicationReference.spironolactone,
+        type: MedicationRecommendationType.noActionRequired,
       })
     })
 
@@ -123,11 +136,9 @@ describe('MraRecommender', () => {
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: undefined,
-        recommendedMedication: {
-          reference: MedicationReference.spironolactone,
-        },
-        category: MedicationRecommendationCategory.noActionRequired,
+        currentMedication: [],
+        recommendedMedication: MedicationReference.spironolactone,
+        type: MedicationRecommendationType.noActionRequired,
       })
     })
 
@@ -140,121 +151,35 @@ describe('MraRecommender', () => {
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: undefined,
-        recommendedMedication: {
-          reference: MedicationReference.spironolactone,
-        },
-        category: MedicationRecommendationCategory.notStarted,
+        currentMedication: [],
+        recommendedMedication: MedicationReference.spironolactone,
+        type: MedicationRecommendationType.notStarted,
       })
     })
   })
 
   describe('Existing treatment: Eplerenone', () => {
-    const contextBelowTarget: MedicationRequestContext = {
-      request: {
-        medicationReference: {
-          reference: DrugReference.eplerenone25,
-        },
-        dosageInstruction: [
-          {
-            timing: {
-              repeat: {
-                timeOfDay: ['08:00'],
-              },
-            },
-            doseAndRate: [
-              {
-                doseQuantity: {
-                  value: 1,
-                  unit: 'tablet',
-                },
-              },
-            ],
-          },
-        ],
-      },
-      requestReference: {
-        reference: '/users/mockUser/medicationRequests/mockMedicationRequest',
-      },
-      drug: {
-        code: {
-          coding: [
-            {
-              system: CodingSystem.rxNorm,
-              code: DrugReference.eplerenone25.split('/').at(-1),
-              display: 'Eplerenone 25 MG Oral Tablet',
-            },
-          ],
-        },
-        ingredient: [
-          {
-            itemCodeableConcept: {
-              coding: [
-                {
-                  system: CodingSystem.rxNorm,
-                  code: MedicationReference.eplerenone.split('/').at(-1),
-                  display: 'Eplerenone',
-                },
-              ],
-            },
-            strength: {
-              numerator: {
-                ...QuantityUnit.mg,
-                value: 25,
-              },
-            },
-          },
-        ],
-      },
-      drugReference: {
-        reference: DrugReference.eplerenone25,
-      },
-      medication: {
-        code: {
-          coding: [
-            {
-              system: CodingSystem.rxNorm,
-              code: MedicationReference.eplerenone.split('/').at(-1),
-              display: 'Eplerenone',
-            },
-          ],
-        },
-        extension: [
-          {
-            url: FHIRExtensionUrl.minimumDailyDose,
-            valueQuantity: {
-              ...QuantityUnit.mg,
-              value: 12.5,
-            },
-          },
-          {
-            url: FHIRExtensionUrl.targetDailyDose,
-            valueQuantity: {
-              ...QuantityUnit.mg,
-              value: 50,
-            },
-          },
-        ],
-      },
-      medicationReference: {
-        reference: MedicationReference.eplerenone,
-      },
-      medicationClass: {
-        name: 'MRA',
-        videoPath: 'videoSections/1/videos/3',
-      },
-      medicationClassReference: {
-        reference:
-          MedicationClassReference.mineralocorticoidReceptorAntagonists,
-      },
-    }
+    let contextBelowTarget: MedicationRequestContext
+    before(async () => {
+      const request = UserDataFactory.medicationRequest({
+        drugReference: DrugReference.eplerenone25,
+        frequencyPerDay: 1,
+        quantity: 1,
+      })
+      contextBelowTarget = await medicationService.getContext(request, {
+        reference: 'users/mockUser/medicationRequests/someMedicationRequest',
+      })
+    })
 
-    const contextAtTarget = structuredClone(contextBelowTarget)
-    contextAtTarget.request.dosageInstruction
-      ?.at(0)
-      ?.timing?.repeat?.timeOfDay?.push('20:00')
-
-    it('states that target dose is reached', () => {
+    it('states that target dose is reached', async () => {
+      const request = UserDataFactory.medicationRequest({
+        drugReference: DrugReference.eplerenone25,
+        frequencyPerDay: 2,
+        quantity: 1,
+      })
+      const contextAtTarget = await medicationService.getContext(request, {
+        reference: 'users/mockUser/medicationRequests/someMedicationRequest',
+      })
       const input: RecommendationInput = {
         requests: [contextAtTarget],
         contraindications: [],
@@ -263,9 +188,9 @@ describe('MraRecommender', () => {
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: contextAtTarget.requestReference,
+        currentMedication: [contextAtTarget],
         recommendedMedication: undefined,
-        category: MedicationRecommendationCategory.targetDoseReached,
+        type: MedicationRecommendationType.targetDoseReached,
       })
     })
 
@@ -283,9 +208,9 @@ describe('MraRecommender', () => {
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: contextAtTarget.requestReference,
+        currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
-        category: MedicationRecommendationCategory.moreLabObservationsRequired,
+        type: MedicationRecommendationType.moreLabObservationsRequired,
       })
     })
 
@@ -303,9 +228,9 @@ describe('MraRecommender', () => {
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: contextAtTarget.requestReference,
+        currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
-        category: MedicationRecommendationCategory.moreLabObservationsRequired,
+        type: MedicationRecommendationType.moreLabObservationsRequired,
       })
     })
 
@@ -323,9 +248,9 @@ describe('MraRecommender', () => {
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: contextAtTarget.requestReference,
+        currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
-        category: MedicationRecommendationCategory.personalTargetDoseReached,
+        type: MedicationRecommendationType.personalTargetDoseReached,
       })
     })
 
@@ -343,9 +268,9 @@ describe('MraRecommender', () => {
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: contextAtTarget.requestReference,
+        currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
-        category: MedicationRecommendationCategory.personalTargetDoseReached,
+        type: MedicationRecommendationType.personalTargetDoseReached,
       })
     })
 
@@ -358,9 +283,9 @@ describe('MraRecommender', () => {
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: contextAtTarget.requestReference,
+        currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
-        category: MedicationRecommendationCategory.improvementAvailable,
+        type: MedicationRecommendationType.improvementAvailable,
       })
     })
   })

@@ -18,11 +18,12 @@ export enum UserMessageType {
 }
 
 export interface UserMessage {
-  dueDate?: Date
-  completionDate?: Date
+  creationDate: string
+  dueDate: string | null
+  completionDate: string | null
   type: UserMessageType
   title: LocalizedText
-  description?: LocalizedText
-  action?: string
+  description: LocalizedText | null
+  action: string | null
   isDismissible: boolean
 }

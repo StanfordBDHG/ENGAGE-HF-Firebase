@@ -11,12 +11,15 @@ export enum UserDevicePlatform {
   iOS = 'iOS',
 }
 
-export interface UserDevice {
-  modifiedDate: Date
+export interface UserDeviceRegistration {
   notificationToken: string
-  platform?: UserDevicePlatform
-  osVersion?: string
-  appVersion?: string
-  appBuild?: string
-  language?: string
+  platform: UserDevicePlatform
+  osVersion: string | null
+  appVersion: string | null
+  appBuild: string | null
+  language: string | null
+}
+
+export interface UserDevice extends UserDeviceRegistration {
+  modifiedDate: string
 }

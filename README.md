@@ -44,6 +44,7 @@ For SSO users (e.g. clinicians,owners), upon the first login using SSO, the rela
 
 |Property|Type|Values|Comments|
 |-|-|-|-|
+|code|string|e.g. 'PAULPAUL'|An 8-digit invitation code or SSO email address.|
 |userId|optional string|-|The userId associated with the invitation. This is set when an anonymous user has entered an invitation code, but has not used a proper account to log in yet.|
 |auth|optional Auth|Authentication information to be set when redeeming invitation. Will no longer be set once invitation has been redeemed.|
 |auth>displayName|optional string|Display name for the user.|
@@ -71,8 +72,8 @@ Based on the [Extension](https://hl7.org/fhir/R4B/extensibility.html#Extension) 
 |Property|Type|Values|Comments|
 |-|-|-|-|
 |medicationClass|string|-|A `medicationClassId` referring to a medicationClass specified in /medicationClasses/$medicationClassId$. One medication object may contain multiple medicationClass extension properties.|
-|minimumDailyDose|[SimpleQuantity](https://www.hl7.org/fhir/r4b/datatypes.html#SimpleQuantity)|-|Unit: mg/day. Occurs exactly once. Multi-ingredient pills contain an array of double rather than a double.|
-|targetDailyDose|[SimpleQuantity](https://www.hl7.org/fhir/r4b/datatypes.html#SimpleQuantity)|-|Unit: mg/day. Occurs exactly once. Multi-ingredient pills contain an array of double rather than a double.|
+|minimumDailyDose|[SimpleQuantity](https://www.hl7.org/fhir/r4b/datatypes.html#SimpleQuantity)|-|Unit: mg/day. Occurs exactly once. Multi-ingredient tablets contain an array of double rather than a double.|
+|targetDailyDose|[SimpleQuantity](https://www.hl7.org/fhir/r4b/datatypes.html#SimpleQuantity)|-|Unit: mg/day. Occurs exactly once. Multi-ingredient tablets contain an array of double rather than a double.|
 
 ### medications/$medicationId$/drugs/$drugId$
 
@@ -251,7 +252,6 @@ Based on [FHIR MedicationRequest](https://hl7.org/fhir/R4B/medicationrequest.htm
 |id|string|-|[Resource](https://hl7.org/fhir/R4B/resource.html): Logical id of this artifact|
 |medication|Reference(Medication) or CodeableConcept|-|CodeableConcept containing one of the codes from /medications/$medicationId$|
 |dosageInstruction|Dosage|-|-|
-|patient|string|e.g. "allergy", "intolerance"|`userId` as used in /users/$userId$ and related collections.|
 
 The `dosageInstruction` property may contain values with the following properties:
 
@@ -269,7 +269,7 @@ The `dosageInstruction` property may contain values with the following propertie
 |maxDosePerAdministration|optional [SimpleQuantity](https://hl7.org/fhir/R4B/datatypes.html#SimpleQuantity)|-|Upper limit on medication per administration|
 |maxDosePerLifetime|optional [SimpleQuantity](https://hl7.org/fhir/R4B/datatypes.html#SimpleQuantity)|-|Upper limit on medication per unit of time|
 
-There may be up to three intakes per day (morning, mid-day and evening) with either 0.5, 1 or 2 pills. The dosages should always be grouped by medication, i.e. there should not be multiple medication elements concerning the same medication but different dosage instructions. Instead, one medication element shall be used for that medication with multiple dosage instructions.
+There may be up to three intakes per day (morning, mid-day and evening) with either 0.5, 1 or 2 tablets. The dosages should always be grouped by medication, i.e. there should not be multiple medication elements concerning the same medication but different dosage instructions. Instead, one medication element shall be used for that medication with multiple dosage instructions.
 
 ### users/$userId$/medicationRecommendations/$medicationRecommendationId$
 
@@ -281,7 +281,7 @@ These are the output values of the recommendation algorithms. Depending on the t
 |-|-|-|-|
 |currentMedication|optional Reference(FHIRMedicationRequest)|e.g. `{"reference":"users/123/medicationRequest/2"}`|Reference to the existing medication request, if applicable.|
 |recommendedMedication|optional Reference(FHIRMedication)|e.g. `{"reference":"medications/2"}`|Reference to the recommended medication, if applicable. This should always direct to a medication, not a drug.|
-|type|MedicationRecommendationType|e.g. "notStarted"|This type describes the outcome of the recommendation algorithm and is described in more detail below.|
+|displayInformation|DisplayInformation|-|The information necessary for the client to display the medication recommendation.|
 
 #### Medication Recommendation Type
 
@@ -296,6 +296,34 @@ These are the output values of the recommendation algorithms. Depending on the t
 |noActionRequired|Gray|undefined|exists|The recommended medication is not eligible, but should still be shown to the user as an option without recommending it to them.|
 
 Diuretics, if currently present as medication request, will be shown as a recommendation with `personalTargetDoseReached`, so that the logic on the client becomes easier.
+
+#### DisplayInformation
+
+|Property|Type|Values|Comments|
+|-|-|-|-|
+|title|LocalizedText|e.g. "Carvedilol"|The name of the medication (not the tablet), e.g. coming from `medications/1998`.|
+|subtitle|LocalizedText|e.g. "Beta Blockers"|The medication class name, e.g. coming from `medicationClasses/0`.|
+|description|LocalizedText|e.g. "Personal target dose reached. No action required."|The explanation of the recommendation, displayed along with a summary of the medication.|
+|type|[Medication Recommendation Type](#Medication-Recommendation-Type)|e.g. "personalTargetDoseReached"|See [Medication Recommendation Type](#Medication-Recommendation-Type) for more information.|
+|videoPath|optional string|e.g. `videoSections/1/videos/3`|This is the video to show when the recommendation is tapped. The clients may want to hide the icon to get to the video when this value is not present.|
+|dosageInformation|DosageInformation|See [Dosage Information](#Dosage-Information)|A description of the current, minimum, and target doses for a given medication. 
+When the patient is not yet taking the medication, its currentSchedule will be an empty list.|
+
+The `DosageInformation` property contains the following information:
+
+|Property|Type|Values|Comments|
+|-|-|-|-|
+|currentSchedule|list of DoseSchedule|e.g. \[25mg twice daily, 10mg daily\]|A list tracking how many times per day the patient currently takes each tablet.|
+|minimumSchedule|list of DoseSchedule|e.g. \[6.25mg daily\]|A list tracking how many times per day the patient would take each tablet on a minimal dose.|
+|targetSchedule|list of DoseSchedule|e.g. \[6.25mg daily\]|A list tracking how many times per day the patient would take each tablet on a maximal dose.|
+|unit|string|e.g. "mg"|The unit by which the ingredients in the medications are measured, as found in `medications/$medicationId$/drugs/$drugId$`.|
+
+The `DoseSchedule` object describes the number of tablets taken per day for a single medication as described in `medications/$medicationId$/drugs/$drugId$`. For example, taking two 5mg tablets in the morning and one 15mg tablet in the afternoon would result in two schedules: 5mg twice daily, and 15mg daily. Compound (multi-ingredient) tablets have multiple quantities per tablet, and will be displayed as e.g. 24/26mg twice daily. `DoseSchedule` has the following properties:
+
+|Property|Type|Values|Comments|
+|-|-|-|-|
+|frequency|number|e.g. 1, 2, or 0.5|The number of tablets per day (as described by `medicationRequests/$medicationRequestId$/dosageInstruction`).|
+|quantity|list of number|e.g. \[24, 26\] or \[6.25\]|The amount of each active ingredient per tablet.|
 
 ### Observations
 

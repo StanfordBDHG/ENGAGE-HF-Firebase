@@ -8,23 +8,26 @@
 
 import { expect } from 'chai'
 import { describe, it } from 'mocha'
+import { type RecommendationInput } from './recommender.js'
 import { Sglt2iRecommender } from './sglt2iRecommender.js'
 import { type HealthSummaryData } from '../../../models/healthSummaryData.js'
-import { MedicationRecommendationCategory } from '../../../models/medicationRecommendation.js'
+import { MedicationRecommendationType } from '../../../models/medicationRecommendation.js'
 import { type MedicationRequestContext } from '../../../models/medicationRequestContext.js'
 import { MockContraindicationService } from '../../../tests/mocks/contraindicationService.js'
 import { mockHealthSummaryData } from '../../../tests/mocks/healthSummaryData.js'
-import {
-  CodingSystem,
-  DrugReference,
-  FHIRExtensionUrl,
-  MedicationClassReference,
-  MedicationReference,
-} from '../../codes.js'
+import { cleanupMocks, setupMockFirebase } from '../../../tests/setup.js'
 import { ContraindicationCategory } from '../../contraindication/contraindicationService.js'
+import { getServiceFactory } from '../../factory/getServiceFactory.js'
 import { FhirService } from '../../fhir/fhirService.js'
 import { QuantityUnit } from '../../fhir/quantityUnit.js'
-import { type RecommendationInput } from '../recommendationService.js'
+import { type MedicationService } from '../../medication/medicationService.js'
+import {
+  DrugReference,
+  type MedicationClassReference,
+  MedicationReference,
+} from '../../references.js'
+import { CachingStrategy } from '../../seeding/seedingService.js'
+import { UserDataFactory } from '../../seeding/userData/userDataFactory.js'
 
 describe('Sglt2iRecommender', () => {
   let medicationContraindication: (
@@ -42,6 +45,16 @@ describe('Sglt2iRecommender', () => {
     new FhirService(),
   )
   let healthSummaryData: HealthSummaryData
+  let medicationService: MedicationService
+
+  before(async () => {
+    setupMockFirebase()
+    const factory = getServiceFactory()
+    const staticDataService = factory.staticData()
+    await staticDataService.updateMedicationClasses(CachingStrategy.expectCache)
+    await staticDataService.updateMedications(CachingStrategy.expectCache)
+    medicationService = factory.medication()
+  })
 
   beforeEach(async () => {
     healthSummaryData = await mockHealthSummaryData(new Date())
@@ -54,6 +67,10 @@ describe('Sglt2iRecommender', () => {
     medicationClassContraindication = (_) => ContraindicationCategory.none
   })
 
+  after(() => {
+    cleanupMocks()
+  })
+
   describe('No treatment', () => {
     it('recommends no treatment when allergies exist', () => {
       medicationContraindication = (_) =>
@@ -63,7 +80,7 @@ describe('Sglt2iRecommender', () => {
       const input: RecommendationInput = {
         requests: [],
         contraindications: [],
-        symptomScores: healthSummaryData.symptomScores.at(-1),
+        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         vitals: healthSummaryData.vitals,
       }
       const result = recommender.compute(input)
@@ -79,7 +96,7 @@ describe('Sglt2iRecommender', () => {
       const input: RecommendationInput = {
         requests: [],
         contraindications: [],
-        symptomScores: healthSummaryData.symptomScores.at(-1),
+        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         vitals: healthSummaryData.vitals,
       }
       const result = recommender.compute(input)
@@ -95,17 +112,15 @@ describe('Sglt2iRecommender', () => {
       const input: RecommendationInput = {
         requests: [],
         contraindications: [],
-        symptomScores: healthSummaryData.symptomScores.at(-1),
+        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         vitals: healthSummaryData.vitals,
       }
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: undefined,
-        recommendedMedication: {
-          reference: MedicationReference.empagliflozin,
-        },
-        category: MedicationRecommendationCategory.noActionRequired,
+        currentMedication: [],
+        recommendedMedication: MedicationReference.empagliflozin,
+        type: MedicationRecommendationType.noActionRequired,
       })
     })
 
@@ -115,18 +130,15 @@ describe('Sglt2iRecommender', () => {
       const input: RecommendationInput = {
         requests: [],
         contraindications: [],
-        symptomScores: healthSummaryData.symptomScores.at(-1),
+        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         vitals: healthSummaryData.vitals,
       }
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: undefined,
-        recommendedMedication: {
-          reference: MedicationReference.empagliflozin,
-        },
-        category:
-          MedicationRecommendationCategory.morePatientObservationsRequired,
+        currentMedication: [],
+        recommendedMedication: MedicationReference.empagliflozin,
+        type: MedicationRecommendationType.morePatientObservationsRequired,
       })
     })
 
@@ -137,17 +149,15 @@ describe('Sglt2iRecommender', () => {
       const input: RecommendationInput = {
         requests: [],
         contraindications: [],
-        symptomScores: healthSummaryData.symptomScores.at(-1),
+        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         vitals: healthSummaryData.vitals,
       }
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: undefined,
-        recommendedMedication: {
-          reference: MedicationReference.empagliflozin,
-        },
-        category: MedicationRecommendationCategory.noActionRequired,
+        currentMedication: [],
+        recommendedMedication: MedicationReference.empagliflozin,
+        type: MedicationRecommendationType.noActionRequired,
       })
     })
 
@@ -155,138 +165,53 @@ describe('Sglt2iRecommender', () => {
       const input: RecommendationInput = {
         requests: [],
         contraindications: [],
-        symptomScores: healthSummaryData.symptomScores.at(-1),
+        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         vitals: healthSummaryData.vitals,
       }
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: undefined,
-        recommendedMedication: {
-          reference: MedicationReference.empagliflozin,
-        },
-        category: MedicationRecommendationCategory.notStarted,
+        currentMedication: [],
+        recommendedMedication: MedicationReference.empagliflozin,
+        type: MedicationRecommendationType.notStarted,
       })
     })
   })
 
   describe('On Sotagliflozin', () => {
-    const contextBelowTarget: MedicationRequestContext = {
-      request: {
-        medicationReference: {
-          reference: DrugReference.sotagliflozin200,
-        },
-        dosageInstruction: [
-          {
-            timing: {
-              repeat: {
-                timeOfDay: ['08:00'],
-              },
-            },
-            doseAndRate: [
-              {
-                doseQuantity: {
-                  value: 1,
-                  unit: 'tablet',
-                },
-              },
-            ],
-          },
-        ],
-      },
-      requestReference: {
-        reference: '/users/mockUser/medicationRequests/mockMedicationRequest',
-      },
-      drug: {
-        code: {
-          coding: [
-            {
-              system: CodingSystem.rxNorm,
-              code: DrugReference.sotagliflozin200.split('/').at(-1),
-              display: 'Sotagliflozin 200 MG Oral Tablet',
-            },
-          ],
-        },
-        ingredient: [
-          {
-            itemCodeableConcept: {
-              coding: [
-                {
-                  system: CodingSystem.rxNorm,
-                  code: MedicationReference.sotagliflozin.split('/').at(-1),
-                  display: 'Sotagliflozin',
-                },
-              ],
-            },
-            strength: {
-              numerator: {
-                ...QuantityUnit.mg,
-                value: 200,
-              },
-            },
-          },
-        ],
-      },
-      drugReference: {
-        reference: DrugReference.sotagliflozin200,
-      },
-      medication: {
-        code: {
-          coding: [
-            {
-              system: CodingSystem.rxNorm,
-              code: MedicationReference.sotagliflozin.split('/').at(-1),
-              display: 'Sotagliflozin',
-            },
-          ],
-        },
-        extension: [
-          {
-            url: FHIRExtensionUrl.minimumDailyDose,
-            valueQuantity: {
-              ...QuantityUnit.mg,
-              value: 200,
-            },
-          },
-          {
-            url: FHIRExtensionUrl.targetDailyDose,
-            valueQuantity: {
-              ...QuantityUnit.mg,
-              value: 400,
-            },
-          },
-        ],
-      },
-      medicationReference: {
-        reference: MedicationReference.eplerenone,
-      },
-      medicationClass: {
-        name: 'SGLT2 Inhibitors',
-        videoPath: 'videoSections/1/videos/4',
-      },
-      medicationClassReference: {
-        reference: MedicationClassReference.sglt2inhibitors,
-      },
-    }
+    let contextBelowTarget: MedicationRequestContext
+    before(async () => {
+      const request = UserDataFactory.medicationRequest({
+        drugReference: DrugReference.sotagliflozin200,
+        frequencyPerDay: 1,
+        quantity: 1,
+      })
+      contextBelowTarget = await medicationService.getContext(request, {
+        reference: 'users/mockUser/medicationRequests/someMedicationRequest',
+      })
+    })
 
-    it('detects target dose', () => {
-      const contextAtTarget = structuredClone(contextBelowTarget)
-      contextAtTarget.request.dosageInstruction
-        ?.at(0)
-        ?.timing?.repeat?.timeOfDay?.push('20:00')
-
+    it('detects target dose', async () => {
+      const request = UserDataFactory.medicationRequest({
+        drugReference: DrugReference.sotagliflozin200,
+        frequencyPerDay: 2,
+        quantity: 1,
+      })
+      const contextAtTarget = await medicationService.getContext(request, {
+        reference: 'users/mockUser/medicationRequests/someMedicationRequest',
+      })
       const input: RecommendationInput = {
         requests: [contextAtTarget],
         contraindications: [],
-        symptomScores: healthSummaryData.symptomScores.at(-1),
+        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         vitals: healthSummaryData.vitals,
       }
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: contextAtTarget.requestReference,
+        currentMedication: [contextAtTarget],
         recommendedMedication: undefined,
-        category: MedicationRecommendationCategory.targetDoseReached,
+        type: MedicationRecommendationType.targetDoseReached,
       })
     })
 
@@ -296,16 +221,15 @@ describe('Sglt2iRecommender', () => {
       const input: RecommendationInput = {
         requests: [contextBelowTarget],
         contraindications: [],
-        symptomScores: healthSummaryData.symptomScores.at(-1),
+        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         vitals: healthSummaryData.vitals,
       }
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: contextBelowTarget.requestReference,
+        currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
-        category:
-          MedicationRecommendationCategory.morePatientObservationsRequired,
+        type: MedicationRecommendationType.morePatientObservationsRequired,
       })
     })
 
@@ -316,15 +240,15 @@ describe('Sglt2iRecommender', () => {
       const input: RecommendationInput = {
         requests: [contextBelowTarget],
         contraindications: [],
-        symptomScores: healthSummaryData.symptomScores.at(-1),
+        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         vitals: healthSummaryData.vitals,
       }
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: contextBelowTarget.requestReference,
+        currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
-        category: MedicationRecommendationCategory.personalTargetDoseReached,
+        type: MedicationRecommendationType.personalTargetDoseReached,
       })
     })
 
@@ -332,15 +256,15 @@ describe('Sglt2iRecommender', () => {
       const input: RecommendationInput = {
         requests: [contextBelowTarget],
         contraindications: [],
-        symptomScores: healthSummaryData.symptomScores.at(-1),
+        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         vitals: healthSummaryData.vitals,
       }
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: contextBelowTarget.requestReference,
+        currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
-        category: MedicationRecommendationCategory.improvementAvailable,
+        type: MedicationRecommendationType.improvementAvailable,
       })
     })
   })

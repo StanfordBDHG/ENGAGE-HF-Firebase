@@ -14,6 +14,14 @@ export function average(values: number[]): number | undefined {
     : values.reduce((a, b) => a + b, 0) / values.length
 }
 
+// Chunks
+
+export function chunks<T>(array: T[], size: number): T[][] {
+  return Array.from({ length: Math.ceil(array.length / size) }, (_, index) =>
+    array.slice(index * size, (index + 1) * size),
+  )
+}
+
 // Median
 
 export function median(values: number[]): number | undefined {

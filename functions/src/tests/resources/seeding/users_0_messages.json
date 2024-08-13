@@ -1,0 +1,114 @@
+{
+  "0": {
+    "creationDate": "2024-06-05T00:00:00.000Z",
+    "completionDate": null,
+    "dueDate": null,
+    "title": {
+      "en": "Medication Change",
+      "de": "Änderung der Medikation"
+    },
+    "description": {
+      "en": "Your medication has been changed. Watch the video for more information.",
+      "de": "Ihre Medikation wurde geändert. Sehen Sie sich das Video für weitere Informationen an."
+    },
+    "action": "videoSections/1/videos/2",
+    "type": "MedicationChange",
+    "isDismissible": true
+  },
+  "1": {
+    "creationDate": "2024-06-05T00:00:00.000Z",
+    "completionDate": null,
+    "dueDate": null,
+    "title": {
+      "en": "Medication Uptitration",
+      "de": "Medikationserhöhung"
+    },
+    "description": {
+      "en": "Your medication is eligible to be increased. Please contact your clinician.",
+      "de": "Ihre Medikation kann erhöht werden. Bitte kontaktieren Sie Ihre:n Ärzt:in."
+    },
+    "action": "medications",
+    "type": "MedicationUptitration",
+    "isDismissible": true
+  },
+  "2": {
+    "creationDate": "2024-06-05T00:00:00.000Z",
+    "completionDate": null,
+    "dueDate": null,
+    "title": {
+      "en": "Appointment Reminder",
+      "de": "Terminerinnerung"
+    },
+    "description": {
+      "en": "Your appointment is coming up.",
+      "de": "Ihr Termin steht bevor."
+    },
+    "action": "healthSummary",
+    "type": "PreAppointment",
+    "isDismissible": false
+  },
+  "3": {
+    "creationDate": "2024-06-05T00:00:00.000Z",
+    "completionDate": null,
+    "dueDate": null,
+    "title": {
+      "en": "Symptom Questionnaire",
+      "de": "Symptomfragebogen"
+    },
+    "description": {
+      "en": "Please complete the symptom questionnaire.",
+      "de": "Bitte füllen Sie den Symptomfragebogen aus."
+    },
+    "action": "questionnaires/0",
+    "type": "SymptomQuestionnaire",
+    "isDismissible": false
+  },
+  "4": {
+    "creationDate": "2024-06-05T00:00:00.000Z",
+    "completionDate": null,
+    "dueDate": null,
+    "title": {
+      "en": "Vitals",
+      "de": "Vitalwerte"
+    },
+    "description": {
+      "en": "Please take blood pressure and weight measurements.",
+      "de": "Bitte nehmen Sie Blutdruck- und Gewichtsmessungen vor."
+    },
+    "action": "observations",
+    "type": "Vitals",
+    "isDismissible": false
+  },
+  "5": {
+    "creationDate": "2024-06-05T00:00:00.000Z",
+    "completionDate": null,
+    "dueDate": null,
+    "title": {
+      "en": "Weight Gain",
+      "de": "Gewichtszunahme"
+    },
+    "description": {
+      "en": "Your weight has increased. Please contact your clinician.",
+      "de": "Ihr Gewicht hat zugenommen. Bitte kontaktieren Sie Ihre:n Ärzt:in."
+    },
+    "action": "medications",
+    "type": "WeightGain",
+    "isDismissible": true
+  },
+  "6": {
+    "creationDate": "2024-06-05T00:00:00.000Z",
+    "completionDate": null,
+    "dueDate": null,
+    "title": {
+      "en": "Welcome",
+      "de": "Willkommen"
+    },
+    "description": {
+      "en": "Welcome to the ENGAGE-HF app.",
+      "de": "Willkommen bei der ENGAGE-HF-App."
+    },
+    "action": "videoSections/0/videos/0",
+    "type": "Welcome",
+    "isDismissible": true
+  }
+}

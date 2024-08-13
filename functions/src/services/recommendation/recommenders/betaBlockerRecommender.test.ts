@@ -9,22 +9,24 @@
 import { expect } from 'chai'
 import { describe, it } from 'mocha'
 import { BetaBlockerRecommender } from './betaBlockerRecommender.js'
+import { type RecommendationInput } from './recommender.js'
 import { type HealthSummaryData } from '../../../models/healthSummaryData.js'
-import { MedicationRecommendationCategory } from '../../../models/medicationRecommendation.js'
+import { MedicationRecommendationType } from '../../../models/medicationRecommendation.js'
 import { type MedicationRequestContext } from '../../../models/medicationRequestContext.js'
 import { MockContraindicationService } from '../../../tests/mocks/contraindicationService.js'
 import { mockHealthSummaryData } from '../../../tests/mocks/healthSummaryData.js'
-import {
-  CodingSystem,
-  DrugReference,
-  FHIRExtensionUrl,
-  MedicationClassReference,
-  MedicationReference,
-} from '../../codes.js'
+import { cleanupMocks, setupMockFirebase } from '../../../tests/setup.js'
 import { ContraindicationCategory } from '../../contraindication/contraindicationService.js'
+import { getServiceFactory } from '../../factory/getServiceFactory.js'
 import { FhirService } from '../../fhir/fhirService.js'
-import { QuantityUnit } from '../../fhir/quantityUnit.js'
-import { type RecommendationInput } from '../recommendationService.js'
+import { type MedicationService } from '../../medication/medicationService.js'
+import {
+  DrugReference,
+  type MedicationClassReference,
+  MedicationReference,
+} from '../../references.js'
+import { CachingStrategy } from '../../seeding/seedingService.js'
+import { UserDataFactory } from '../../seeding/userData/userDataFactory.js'
 
 describe('BetaBlockerRecommender', () => {
   let medicationContraindication: (
@@ -42,11 +44,25 @@ describe('BetaBlockerRecommender', () => {
     new FhirService(),
   )
   let healthSummaryData: HealthSummaryData
+  let medicationService: MedicationService
+
+  before(async () => {
+    setupMockFirebase()
+    const factory = getServiceFactory()
+    const staticDataService = factory.staticData()
+    await staticDataService.updateMedicationClasses(CachingStrategy.expectCache)
+    await staticDataService.updateMedications(CachingStrategy.expectCache)
+    medicationService = factory.medication()
+  })
 
   beforeEach(async () => {
     healthSummaryData = await mockHealthSummaryData(new Date())
     medicationContraindication = (_) => ContraindicationCategory.none
     medicationClassContraindication = (_) => ContraindicationCategory.none
+  })
+
+  after(() => {
+    cleanupMocks()
   })
 
   describe('No treatment', () => {
@@ -59,7 +75,7 @@ describe('BetaBlockerRecommender', () => {
       const input: RecommendationInput = {
         requests: [],
         contraindications: [],
-        symptomScores: healthSummaryData.symptomScores.at(-1),
+        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         vitals: healthSummaryData.vitals,
       }
       const result = recommender.compute(input)
@@ -75,17 +91,15 @@ describe('BetaBlockerRecommender', () => {
       const input: RecommendationInput = {
         requests: [],
         contraindications: [],
-        symptomScores: healthSummaryData.symptomScores.at(-1),
+        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         vitals: healthSummaryData.vitals,
       }
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: undefined,
-        recommendedMedication: {
-          reference: MedicationReference.carvedilol,
-        },
-        category: MedicationRecommendationCategory.noActionRequired,
+        currentMedication: [],
+        recommendedMedication: MedicationReference.carvedilol,
+        type: MedicationRecommendationType.noActionRequired,
       })
     })
 
@@ -95,18 +109,15 @@ describe('BetaBlockerRecommender', () => {
       const input: RecommendationInput = {
         requests: [],
         contraindications: [],
-        symptomScores: healthSummaryData.symptomScores.at(-1),
+        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         vitals: healthSummaryData.vitals,
       }
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: undefined,
-        recommendedMedication: {
-          reference: MedicationReference.carvedilol,
-        },
-        category:
-          MedicationRecommendationCategory.morePatientObservationsRequired,
+        currentMedication: [],
+        recommendedMedication: MedicationReference.carvedilol,
+        type: MedicationRecommendationType.morePatientObservationsRequired,
       })
     })
 
@@ -116,18 +127,15 @@ describe('BetaBlockerRecommender', () => {
       const input: RecommendationInput = {
         requests: [],
         contraindications: [],
-        symptomScores: healthSummaryData.symptomScores.at(-1),
+        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         vitals: healthSummaryData.vitals,
       }
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: undefined,
-        recommendedMedication: {
-          reference: MedicationReference.carvedilol,
-        },
-        category:
-          MedicationRecommendationCategory.morePatientObservationsRequired,
+        currentMedication: [],
+        recommendedMedication: MedicationReference.carvedilol,
+        type: MedicationRecommendationType.morePatientObservationsRequired,
       })
     })
 
@@ -140,17 +148,15 @@ describe('BetaBlockerRecommender', () => {
       const input: RecommendationInput = {
         requests: [],
         contraindications: [],
-        symptomScores: healthSummaryData.symptomScores.at(-1),
+        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         vitals: healthSummaryData.vitals,
       }
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: undefined,
-        recommendedMedication: {
-          reference: MedicationReference.carvedilol,
-        },
-        category: MedicationRecommendationCategory.noActionRequired,
+        currentMedication: [],
+        recommendedMedication: MedicationReference.carvedilol,
+        type: MedicationRecommendationType.noActionRequired,
       })
     })
 
@@ -163,17 +169,15 @@ describe('BetaBlockerRecommender', () => {
       const input: RecommendationInput = {
         requests: [],
         contraindications: [],
-        symptomScores: healthSummaryData.symptomScores.at(-1),
+        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         vitals: healthSummaryData.vitals,
       }
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: undefined,
-        recommendedMedication: {
-          reference: MedicationReference.carvedilol,
-        },
-        category: MedicationRecommendationCategory.noActionRequired,
+        currentMedication: [],
+        recommendedMedication: MedicationReference.carvedilol,
+        type: MedicationRecommendationType.noActionRequired,
       })
     })
 
@@ -181,138 +185,53 @@ describe('BetaBlockerRecommender', () => {
       const input: RecommendationInput = {
         requests: [],
         contraindications: [],
-        symptomScores: healthSummaryData.symptomScores.at(-1),
+        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         vitals: healthSummaryData.vitals,
       }
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: undefined,
-        recommendedMedication: {
-          reference: MedicationReference.carvedilol,
-        },
-        category: MedicationRecommendationCategory.notStarted,
+        currentMedication: [],
+        recommendedMedication: MedicationReference.carvedilol,
+        type: MedicationRecommendationType.notStarted,
       })
     })
   })
 
   describe('Existing treatment: Bisoprolol', () => {
-    const contextBelowTarget: MedicationRequestContext = {
-      request: {
-        medicationReference: {
-          reference: DrugReference.bisoprolol5,
-        },
-        dosageInstruction: [
-          {
-            timing: {
-              repeat: {
-                timeOfDay: ['08:00'],
-              },
-            },
-            doseAndRate: [
-              {
-                doseQuantity: {
-                  value: 1,
-                  unit: 'tablet',
-                },
-              },
-            ],
-          },
-        ],
-      },
-      requestReference: {
-        reference: '/users/mockUser/medicationRequests/mockMedicationRequest',
-      },
-      drug: {
-        code: {
-          coding: [
-            {
-              system: CodingSystem.rxNorm,
-              code: DrugReference.bisoprolol5.split('/').at(-1),
-              display: 'Bisoprolol 5 MG Oral Tablet',
-            },
-          ],
-        },
-        ingredient: [
-          {
-            itemCodeableConcept: {
-              coding: [
-                {
-                  system: CodingSystem.rxNorm,
-                  code: MedicationReference.bisoprolol.split('/').at(-1),
-                  display: 'Bisoprolol',
-                },
-              ],
-            },
-            strength: {
-              numerator: {
-                ...QuantityUnit.mg,
-                value: 5,
-              },
-            },
-          },
-        ],
-      },
-      drugReference: {
-        reference: DrugReference.bisoprolol5,
-      },
-      medication: {
-        code: {
-          coding: [
-            {
-              system: CodingSystem.rxNorm,
-              code: MedicationReference.bisoprolol.split('/').at(-1),
-              display: 'Bisoprolol',
-            },
-          ],
-        },
-        extension: [
-          {
-            url: FHIRExtensionUrl.minimumDailyDose,
-            valueQuantity: {
-              ...QuantityUnit.mg,
-              value: 5,
-            },
-          },
-          {
-            url: FHIRExtensionUrl.targetDailyDose,
-            valueQuantity: {
-              ...QuantityUnit.mg,
-              value: 10,
-            },
-          },
-        ],
-      },
-      medicationReference: {
-        reference: MedicationReference.losartan,
-      },
-      medicationClass: {
-        name: 'Beta Blockers',
-        videoPath: 'videoSections/0/videos/1',
-      },
-      medicationClassReference: {
-        reference: MedicationClassReference.betaBlockers,
-      },
-    }
+    let contextBelowTarget: MedicationRequestContext
+    before(async () => {
+      const request = UserDataFactory.medicationRequest({
+        drugReference: DrugReference.bisoprolol5,
+        frequencyPerDay: 1,
+        quantity: 1,
+      })
+      contextBelowTarget = await medicationService.getContext(request, {
+        reference: 'users/mockUser/medicationRequests/someMedicationRequest',
+      })
+    })
 
-    const contextAtTarget = structuredClone(contextBelowTarget)
-    contextAtTarget.request.dosageInstruction
-      ?.at(0)
-      ?.timing?.repeat?.timeOfDay?.push('20:00')
-
-    it('states that it hit target dose', () => {
+    it('states that it hit target dose', async () => {
+      const request = UserDataFactory.medicationRequest({
+        drugReference: DrugReference.bisoprolol5,
+        frequencyPerDay: 1,
+        quantity: 2,
+      })
+      const contextAtTarget = await medicationService.getContext(request, {
+        reference: 'users/mockUser/medicationRequests/someMedicationRequest',
+      })
       const input: RecommendationInput = {
         requests: [contextAtTarget],
         contraindications: [],
-        symptomScores: healthSummaryData.symptomScores.at(-1),
+        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         vitals: healthSummaryData.vitals,
       }
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: contextAtTarget.requestReference,
+        currentMedication: [contextAtTarget],
         recommendedMedication: undefined,
-        category: MedicationRecommendationCategory.targetDoseReached,
+        type: MedicationRecommendationType.targetDoseReached,
       })
     })
 
@@ -322,16 +241,15 @@ describe('BetaBlockerRecommender', () => {
       const input: RecommendationInput = {
         requests: [contextBelowTarget],
         contraindications: [],
-        symptomScores: healthSummaryData.symptomScores.at(-1),
+        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         vitals: healthSummaryData.vitals,
       }
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: contextAtTarget.requestReference,
+        currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
-        category:
-          MedicationRecommendationCategory.morePatientObservationsRequired,
+        type: MedicationRecommendationType.morePatientObservationsRequired,
       })
     })
 
@@ -341,16 +259,15 @@ describe('BetaBlockerRecommender', () => {
       const input: RecommendationInput = {
         requests: [contextBelowTarget],
         contraindications: [],
-        symptomScores: healthSummaryData.symptomScores.at(-1),
+        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         vitals: healthSummaryData.vitals,
       }
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: contextAtTarget.requestReference,
+        currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
-        category:
-          MedicationRecommendationCategory.morePatientObservationsRequired,
+        type: MedicationRecommendationType.morePatientObservationsRequired,
       })
     })
 
@@ -360,16 +277,15 @@ describe('BetaBlockerRecommender', () => {
       const input: RecommendationInput = {
         requests: [contextBelowTarget],
         contraindications: [],
-        symptomScores: healthSummaryData.symptomScores.at(-1),
+        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         vitals: healthSummaryData.vitals,
       }
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: contextAtTarget.requestReference,
+        currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
-        category:
-          MedicationRecommendationCategory.morePatientObservationsRequired,
+        type: MedicationRecommendationType.morePatientObservationsRequired,
       })
     })
 
@@ -379,16 +295,15 @@ describe('BetaBlockerRecommender', () => {
       const input: RecommendationInput = {
         requests: [contextBelowTarget],
         contraindications: [],
-        symptomScores: healthSummaryData.symptomScores.at(-1),
+        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         vitals: healthSummaryData.vitals,
       }
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: contextAtTarget.requestReference,
+        currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
-        category:
-          MedicationRecommendationCategory.morePatientObservationsRequired,
+        type: MedicationRecommendationType.morePatientObservationsRequired,
       })
     })
 
@@ -399,15 +314,15 @@ describe('BetaBlockerRecommender', () => {
       const input: RecommendationInput = {
         requests: [contextBelowTarget],
         contraindications: [],
-        symptomScores: healthSummaryData.symptomScores.at(-1),
+        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         vitals: healthSummaryData.vitals,
       }
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: contextBelowTarget.requestReference,
+        currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
-        category: MedicationRecommendationCategory.personalTargetDoseReached,
+        type: MedicationRecommendationType.personalTargetDoseReached,
       })
     })
 
@@ -418,15 +333,15 @@ describe('BetaBlockerRecommender', () => {
       const input: RecommendationInput = {
         requests: [contextBelowTarget],
         contraindications: [],
-        symptomScores: healthSummaryData.symptomScores.at(-1),
+        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         vitals: healthSummaryData.vitals,
       }
       const result = recommender.compute(input)
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: contextBelowTarget.requestReference,
+        currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
-        category: MedicationRecommendationCategory.improvementAvailable,
+        type: MedicationRecommendationType.improvementAvailable,
       })
     })
   })

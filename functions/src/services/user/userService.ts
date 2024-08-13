@@ -6,9 +6,9 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { type Invitation } from '../../models/invitation.js'
+import { type UserAuth, type Invitation } from '../../models/invitation.js'
 import { type Organization } from '../../models/organization.js'
-import { type UserAuth, type User } from '../../models/user.js'
+import { type User } from '../../models/user.js'
 import { type Document } from '../database/databaseService.js'
 
 export interface CreateInvitationData {
@@ -25,9 +25,11 @@ export interface UserService {
 
   // Invitations
 
-  createInvitation(invitationId: string, content: Invitation): Promise<void>
-  getInvitation(invitationId: string): Promise<Document<Invitation> | undefined>
-  setInvitationUserId(invitationId: string, userId: string): Promise<void>
+  createInvitation(content: Invitation): Promise<{ id: string }>
+  getInvitationByCode(
+    invitationCode: string,
+  ): Promise<Document<Invitation> | undefined>
+  setInvitationUserId(invitationCode: string, userId: string): Promise<void>
   getInvitationByUserId(
     userId: string,
   ): Promise<Document<Invitation> | undefined>
@@ -35,6 +37,9 @@ export interface UserService {
 
   // Organizations
 
+  getOrganizationBySsoProviderId(
+    providerId: string,
+  ): Promise<Document<Organization> | undefined>
   getOrganizations(): Promise<Array<Document<Organization>>>
   getOrganization(
     organizationId: string,
@@ -42,14 +47,7 @@ export interface UserService {
 
   // Users
 
+  getAllPatients(): Promise<Array<Document<User>>>
   getUser(userId: string): Promise<Document<User> | undefined>
   deleteUser(userId: string): Promise<void>
-
-  // Messages
-
-  dismissMessage(
-    userId: string,
-    messageId: string,
-    didPerformAction: boolean,
-  ): Promise<void>
 }

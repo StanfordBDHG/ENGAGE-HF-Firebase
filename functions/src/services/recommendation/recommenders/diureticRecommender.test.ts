@@ -9,19 +9,18 @@
 import { expect } from 'chai'
 import { describe, it } from 'mocha'
 import { DiureticRecommender } from './diureticRecommender.js'
-import { MedicationRecommendationCategory } from '../../../models/medicationRecommendation.js'
+import { MedicationRecommendationType } from '../../../models/medicationRecommendation.js'
 import { type MedicationRequestContext } from '../../../models/medicationRequestContext.js'
 import { MockContraindicationService } from '../../../tests/mocks/contraindicationService.js'
 import { mockHealthSummaryData } from '../../../tests/mocks/healthSummaryData.js'
-import {
-  CodingSystem,
-  DrugReference,
-  FHIRExtensionUrl,
-  MedicationClassReference,
-  MedicationReference,
-} from '../../codes.js'
+import { CodingSystem, FHIRExtensionUrl } from '../../codes.js'
 import { ContraindicationCategory } from '../../contraindication/contraindicationService.js'
 import { FhirService } from '../../fhir/fhirService.js'
+import {
+  DrugReference,
+  MedicationClassReference,
+  MedicationReference,
+} from '../../references.js'
 
 describe('DiureticRecommender', () => {
   const recommender = new DiureticRecommender(
@@ -39,7 +38,7 @@ describe('DiureticRecommender', () => {
         requests: [],
         contraindications: [],
         vitals: healthSummaryData.vitals,
-        symptomScores: healthSummaryData.symptomScores.at(-1),
+        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
       })
       expect(result).to.have.length(0)
     })
@@ -53,6 +52,7 @@ describe('DiureticRecommender', () => {
             'users/mockPatient/medicationRequests/mockMedicationRequest',
         },
         request: {
+          resourceType: 'MedicationRequest',
           medicationReference: {
             reference: DrugReference.furosemide20,
           },
@@ -74,10 +74,26 @@ describe('DiureticRecommender', () => {
             },
           ],
         },
+        drugReference: {
+          reference: DrugReference.furosemide20,
+        },
+        drug: {
+          resourceType: 'Medication',
+          code: {
+            coding: [
+              {
+                system: CodingSystem.rxNorm,
+                code: DrugReference.furosemide20.split('/').at(-1),
+                display: 'Furosemide 20mg',
+              },
+            ],
+          },
+        },
         medicationReference: {
           reference: MedicationReference.furosemide,
         },
         medication: {
+          resourceType: 'Medication',
           code: {
             coding: [
               {
@@ -109,13 +125,13 @@ describe('DiureticRecommender', () => {
         requests: [existingMedication],
         contraindications: [],
         vitals: healthSummaryData.vitals,
-        symptomScores: healthSummaryData.symptomScores.at(-1),
+        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
-        currentMedication: existingMedication.requestReference,
+        currentMedication: [existingMedication],
         recommendedMedication: undefined,
-        category: MedicationRecommendationCategory.personalTargetDoseReached,
+        type: MedicationRecommendationType.personalTargetDoseReached,
       })
     })
   })

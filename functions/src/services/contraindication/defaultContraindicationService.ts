@@ -15,12 +15,9 @@ import {
   FHIRAllergyIntoleranceCriticality,
   FHIRAllergyIntoleranceType,
 } from '../../models/fhir/allergyIntolerance.js'
-import {
-  CodingSystem,
-  MedicationClassReference,
-  MedicationReference,
-} from '../codes.js'
+import { CodingSystem } from '../codes.js'
 import { type FhirService } from '../fhir/fhirService.js'
+import { MedicationClassReference, MedicationReference } from '../references.js'
 
 export class DefaultContraindicationService implements ContraindicationService {
   // Properties
@@ -168,7 +165,7 @@ export class DefaultContraindicationService implements ContraindicationService {
     check: (system: CodingSystem, code: string) => boolean,
   ): boolean {
     for (const system of systems) {
-      const codes = this.fhirService.extractCodes(contraindication.code, {
+      const codes = this.fhirService.codes(contraindication.code, {
         system: system,
       })
       for (const code of codes) {

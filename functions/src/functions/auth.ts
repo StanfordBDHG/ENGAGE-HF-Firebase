@@ -6,39 +6,16 @@
 // SPDX-License-Identifier: MIT
 //
 
-import admin from 'firebase-admin'
-import { https, logger } from 'firebase-functions/v2'
-import { onDocumentWritten } from 'firebase-functions/v2/firestore'
 import {
   beforeUserCreated,
   beforeUserSignedIn,
 } from 'firebase-functions/v2/identity'
-import { UserType } from '../models/user.js'
-import { CacheDatabaseService } from '../services/database/cacheDatabaseService.js'
-import { FirestoreService } from '../services/database/firestoreService.js'
-import { DatabaseUserService } from '../services/user/databaseUserService.js'
-import { type UserService } from '../services/user/userService.js'
+import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
-export const beforeUserCreatedFunction = beforeUserCreated(async (event) => {
-  console.log('beforeUserCreatedFunction', JSON.stringify(event))
+export const beforeUserCreatedFunction = beforeUserCreated((event) => {
+  console.log(`beforeUserCreated with event: ${JSON.stringify(event)}`)
 })
 
 export const beforeUserSignedInFunction = beforeUserSignedIn(async (event) => {
-  console.log('beforeUserSignedInFunction', JSON.stringify(event))
+  await getServiceFactory().user().updateClaims(event.data.uid)
 })
-
-export const onUserWrittenFunction = onDocumentWritten(
-  'users/{userId}',
-  async (event) => {
-    const userService = new DatabaseUserService(
-      new CacheDatabaseService(new FirestoreService()),
-    )
-    try {
-      await userService.updateClaims(event.params.userId)
-    } catch (error) {
-      logger.error(
-        `Error processing claims update for userId '${event.params.userId}' on change of user: ${String(error)}`,
-      )
-    }
-  },
-)

@@ -7,12 +7,12 @@
 //
 
 export interface SymptomScore {
-  questionnaireResponseId?: string
-  date: Date
+  questionnaireResponseId: string | null
+  date: string
   overallScore: number
-  physicalLimitsScore?: number
-  symptomFrequencyScore?: number
-  socialLimitsScore?: number
-  qualityOfLifeScore?: number
+  physicalLimitsScore: number | null
+  symptomFrequencyScore: number | null
+  socialLimitsScore: number | null
+  qualityOfLifeScore: number | null
   dizzinessScore: number
 }

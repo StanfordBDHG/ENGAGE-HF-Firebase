@@ -9,20 +9,12 @@
 import { assert, expect } from 'chai'
 import admin from 'firebase-admin'
 import { FieldValue, type Firestore } from 'firebase-admin/firestore'
-import { https } from 'firebase-functions'
 import { describe } from 'mocha'
-import { DatabaseUserService } from './databaseUserService.js'
 import { type UserService } from './userService.js'
-import { type Invitation } from '../../models/invitation.js'
-import { type UserMessage, UserMessageType } from '../../models/message.js'
 import { UserType, type User } from '../../models/user.js'
 import { type MockFirestore } from '../../tests/mocks/firestore.js'
-import {
-  cleanupMocks,
-  setupMockAuth,
-  setupMockFirestore,
-} from '../../tests/setup.js'
-import { FirestoreService } from '../database/firestoreService.js'
+import { cleanupMocks, setupMockFirebase } from '../../tests/setup.js'
+import { getServiceFactory } from '../factory/getServiceFactory.js'
 
 describe('DatabaseUserService', () => {
   let mockFirestore: MockFirestore
@@ -30,10 +22,9 @@ describe('DatabaseUserService', () => {
   let firestore: Firestore
 
   beforeEach(() => {
-    setupMockAuth()
-    mockFirestore = setupMockFirestore()
+    mockFirestore = setupMockFirebase().firestore
     firestore = admin.firestore()
-    userService = new DatabaseUserService(new FirestoreService())
+    userService = getServiceFactory().user()
   })
 
   afterEach(() => {
@@ -43,12 +34,13 @@ describe('DatabaseUserService', () => {
   describe('enrollUser', () => {
     it('enrolls an admin', async () => {
       const userId = 'mockAdminUserId'
-      const invitationId = 'mockAdmin'
+      const invitationCode = 'mockAdmin'
       const displayName = 'Mock Admin'
 
-      mockFirestore.collections = {
+      mockFirestore.replaceAll({
         invitations: {
-          mockAdmin: {
+          invitationId: {
+            code: invitationCode,
             user: {
               type: UserType.admin,
               messagesSettings: {
@@ -62,9 +54,9 @@ describe('DatabaseUserService', () => {
             },
           },
         },
-      }
+      })
 
-      const invitation = await userService.getInvitation(invitationId)
+      const invitation = await userService.getInvitationByCode(invitationCode)
       if (!invitation) assert.fail('Invitation not found')
       await userService.enrollUser(invitation, userId)
 
@@ -75,30 +67,23 @@ describe('DatabaseUserService', () => {
         organization: null,
       })
 
-      const invitationSnapshot = await firestore
-        .collection('invitations')
-        .doc(invitationId)
-        .get()
-      expect(invitationSnapshot.exists).to.be.false
-      const invitationData = invitationSnapshot.data() as Invitation | undefined
-      expect(invitationData).to.be.undefined
-
       const userSnapshot = await firestore.collection('users').doc(userId).get()
       expect(userSnapshot.exists).to.be.true
       const userData = userSnapshot.data() as User | undefined
       expect(userData).to.exist
-      expect(userData?.invitationCode).to.equal(invitationId)
+      expect(userData?.invitationCode).to.equal(invitationCode)
       expect(userData?.dateOfEnrollment).to.equal(FieldValue.serverTimestamp())
     })
 
     it('enrolls a clinician', async () => {
       const userId = 'mockClinicianUserId'
-      const invitationId = 'mockClinician'
+      const invitationCode = 'mockClinician'
       const displayName = 'Mock Clinician'
 
-      mockFirestore.collections = {
+      mockFirestore.replaceAll({
         invitations: {
-          mockClinician: {
+          invitationId: {
+            code: invitationCode,
             user: {
               type: UserType.clinician,
               messagesSettings: {
@@ -116,9 +101,9 @@ describe('DatabaseUserService', () => {
         organizations: {
           mockOrganization: {},
         },
-      }
+      })
 
-      const invitation = await userService.getInvitation(invitationId)
+      const invitation = await userService.getInvitationByCode(invitationCode)
       if (!invitation) assert.fail('Invitation not found')
       await userService.enrollUser(invitation, userId)
 
@@ -129,30 +114,23 @@ describe('DatabaseUserService', () => {
         organization: 'mockOrganization',
       })
 
-      const invitationSnapshot = await firestore
-        .collection('invitations')
-        .doc(invitationId)
-        .get()
-      expect(invitationSnapshot.exists).to.be.false
-      const invitationData = invitationSnapshot.data() as Invitation | undefined
-      expect(invitationData).to.be.undefined
-
       const userSnapshot = await firestore.collection('users').doc(userId).get()
       expect(userSnapshot.exists).to.be.true
       const userData = userSnapshot.data() as User | undefined
       expect(userData).to.exist
-      expect(userData?.invitationCode).to.equal(invitationId)
+      expect(userData?.invitationCode).to.equal(invitationCode)
       expect(userData?.dateOfEnrollment).to.equal(FieldValue.serverTimestamp())
     })
 
     it('enrolls a patient', async () => {
       const userId = 'mockPatientUserId'
-      const invitationId = 'mockPatient'
+      const invitationCode = 'mockPatient'
       const displayName = 'Mock Patient'
 
-      mockFirestore.collections = {
+      mockFirestore.replaceAll({
         invitations: {
-          mockPatient: {
+          invitationId: {
+            code: invitationCode,
             user: {
               type: UserType.patient,
               clinician: 'mockClinician',
@@ -172,9 +150,9 @@ describe('DatabaseUserService', () => {
         organizations: {
           mockOrganization: {},
         },
-      }
+      })
 
-      const invitation = await userService.getInvitation(invitationId)
+      const invitation = await userService.getInvitationByCode(invitationCode)
       if (!invitation) assert.fail('Invitation not found')
       await userService.enrollUser(invitation, userId)
 
@@ -185,62 +163,12 @@ describe('DatabaseUserService', () => {
         organization: 'mockOrganization',
       })
 
-      const invitationSnapshot = await firestore
-        .collection('invitations')
-        .doc(invitationId)
-        .get()
-      expect(invitationSnapshot.exists).to.be.false
-      const invitationData = invitationSnapshot.data() as Invitation | undefined
-      expect(invitationData).to.be.undefined
-
       const userSnapshot = await firestore.collection('users').doc(userId).get()
       expect(userSnapshot.exists).to.be.true
       const userData = userSnapshot.data() as User | undefined
       expect(userData).to.exist
-      expect(userData?.invitationCode).to.equal(invitationId)
+      expect(userData?.invitationCode).to.equal(invitationCode)
       expect(userData?.dateOfEnrollment).to.equal(FieldValue.serverTimestamp())
-    })
-  })
-
-  describe('dismissMessage', () => {
-    it('should update the completionDate of messages', async () => {
-      const message: UserMessage = {
-        dueDate: new Date('2024-01-01'),
-        type: UserMessageType.medicationChange,
-        title: 'Medication Change',
-        description: 'You have a new medication!',
-        action: 'medications',
-        isDismissible: true,
-      }
-      await firestore.doc('users/mockUser/messages/0').set(message)
-      await userService.dismissMessage('mockUser', '0', true)
-      const updatedMessage = await firestore
-        .doc('users/mockUser/messages/0')
-        .get()
-      expect(updatedMessage.data()?.completionDate).to.not.be.undefined
-    })
-
-    it('should not update the completionDate of messages', async () => {
-      const message: UserMessage = {
-        dueDate: new Date('2024-01-01'),
-        type: UserMessageType.preAppointment,
-        title: 'Upcoming appointment',
-        description: 'You have an upcoming appointment!',
-        action: 'healthSummary',
-        isDismissible: false,
-      }
-      await firestore.doc('users/mockUser/messages/0').set(message)
-      try {
-        await userService.dismissMessage('mockUser', '0', true)
-        assert.fail('Message should not be dismissible.')
-      } catch (error) {
-        expect(error).to.deep.equal(
-          new https.HttpsError(
-            'invalid-argument',
-            'Message is not dismissible.',
-          ),
-        )
-      }
     })
   })
 })

@@ -8,19 +8,15 @@
 
 import admin from 'firebase-admin'
 import { stub, restore } from 'sinon'
-import { MockAuth } from './mocks/auth.js'
-import { MockFirestore } from './mocks/firestore.js'
+import { MockFirebase } from './mocks/firebase.js'
 
-export function setupMockAuth() {
-  const auth = new MockAuth()
-  stub(admin, 'auth').get(() => () => auth)
-  return auth
-}
-
-export function setupMockFirestore(): MockFirestore {
-  const firestore = new MockFirestore()
-  stub(admin, 'firestore').get(() => () => firestore)
-  return firestore
+export function setupMockFirebase(): MockFirebase {
+  const result = new MockFirebase()
+  stub(admin, 'auth').get(() => () => result.auth)
+  stub(admin, 'firestore').get(() => () => result.firestore)
+  stub(admin, 'messaging').get(() => () => result.messaging)
+  stub(admin, 'storage').get(() => () => result.storage)
+  return result
 }
 
 export function cleanupMocks() {

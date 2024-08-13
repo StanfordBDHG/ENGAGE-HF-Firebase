@@ -6,30 +6,33 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { Recommender } from './recommender.js'
 import {
-  MedicationRecommendationCategory,
-  type MedicationRecommendation,
-} from '../../../models/medicationRecommendation.js'
+  type RecommendationInput,
+  type RecommendationOutput,
+  Recommender,
+} from './recommender.js'
+import { MedicationRecommendationType } from '../../../models/medicationRecommendation.js'
 import { type MedicationRequestContext } from '../../../models/medicationRequestContext.js'
-import { MedicationClassReference, MedicationReference } from '../../codes.js'
 import { ContraindicationCategory } from '../../contraindication/contraindicationService.js'
-import { type RecommendationInput } from '../recommendationService.js'
+import {
+  MedicationClassReference,
+  MedicationReference,
+} from '../../references.js'
 
 export class RasiRecommender extends Recommender {
   // Methods
 
-  compute(input: RecommendationInput): MedicationRecommendation[] {
-    const arni = this.findCurrentMedication(input.requests, [
+  compute(input: RecommendationInput): RecommendationOutput[] {
+    const arni = this.findCurrentRequests(input.requests, [
       MedicationClassReference.angiotensinReceptorNeprilysinInhibitors,
     ])
-    if (arni) return this.computeArni(arni, input)
+    if (arni.length > 0) return this.computeArni(arni, input)
 
-    const aceiAndArb = this.findCurrentMedication(input.requests, [
+    const aceiAndArb = this.findCurrentRequests(input.requests, [
       MedicationClassReference.angiotensinConvertingEnzymeInhibitors,
       MedicationClassReference.angiotensinReceptorBlockers,
     ])
-    if (aceiAndArb) return this.computeAceiAndArb(aceiAndArb, input)
+    if (aceiAndArb.length > 0) return this.computeAceiAndArb(aceiAndArb, input)
 
     return this.computeNew(input)
   }
@@ -37,9 +40,9 @@ export class RasiRecommender extends Recommender {
   // Helpers
 
   private computeAceiAndArb(
-    request: MedicationRequestContext,
+    requests: MedicationRequestContext[],
     input: RecommendationInput,
-  ): MedicationRecommendation[] {
+  ): RecommendationOutput[] {
     const contraindicationToArni =
       this.contraindicationService.checkMedicationClass(
         input.contraindications,
@@ -50,11 +53,11 @@ export class RasiRecommender extends Recommender {
       case ContraindicationCategory.severeAllergyIntolerance:
       case ContraindicationCategory.allergyIntolerance:
       case ContraindicationCategory.clinicianListed:
-        if (this.isTargetDoseReached(request))
+        if (this.isTargetDailyDoseReached(requests))
           return this.createRecommendation(
-            request,
+            requests,
             undefined,
-            MedicationRecommendationCategory.targetDoseReached,
+            MedicationRecommendationType.targetDoseReached,
           )
 
         const systolicValuesInLastTwoWeeks = this.observationsInLastTwoWeeks(
@@ -63,9 +66,9 @@ export class RasiRecommender extends Recommender {
         const medianSystolic = this.medianValue(systolicValuesInLastTwoWeeks)
         if (!medianSystolic)
           return this.createRecommendation(
-            request,
+            requests,
             undefined,
-            MedicationRecommendationCategory.morePatientObservationsRequired,
+            MedicationRecommendationType.morePatientObservationsRequired,
           )
 
         const lowSystolicCount = systolicValuesInLastTwoWeeks.filter(
@@ -74,9 +77,9 @@ export class RasiRecommender extends Recommender {
 
         if (medianSystolic < 100 || lowSystolicCount >= 2)
           return this.createRecommendation(
-            request,
+            requests,
             undefined,
-            MedicationRecommendationCategory.personalTargetDoseReached,
+            MedicationRecommendationType.personalTargetDoseReached,
           )
 
         const creatinineObservation = input.vitals.creatinine
@@ -88,22 +91,25 @@ export class RasiRecommender extends Recommender {
             potassiumObservation.value >= 5)
         )
           return this.createRecommendation(
-            request,
+            requests,
             undefined,
-            MedicationRecommendationCategory.personalTargetDoseReached,
+            MedicationRecommendationType.personalTargetDoseReached,
           )
 
-        if (input.symptomScores && input.symptomScores.dizzinessScore >= 3)
+        if (
+          input.latestSymptomScore &&
+          input.latestSymptomScore.dizzinessScore >= 3
+        )
           return this.createRecommendation(
-            request,
+            requests,
             undefined,
-            MedicationRecommendationCategory.personalTargetDoseReached,
+            MedicationRecommendationType.personalTargetDoseReached,
           )
 
         return this.createRecommendation(
-          request,
+          requests,
           undefined,
-          MedicationRecommendationCategory.improvementAvailable,
+          MedicationRecommendationType.improvementAvailable,
         )
       case ContraindicationCategory.none:
         break
@@ -116,9 +122,9 @@ export class RasiRecommender extends Recommender {
 
     if (!medianSystolic)
       return this.createRecommendation(
-        request,
+        requests,
         undefined,
-        MedicationRecommendationCategory.morePatientObservationsRequired,
+        MedicationRecommendationType.morePatientObservationsRequired,
       )
 
     const lowCount = systolicValuesInLastTwoWeeks.filter(
@@ -127,9 +133,9 @@ export class RasiRecommender extends Recommender {
 
     if (medianSystolic < 100 || lowCount >= 2)
       return this.createRecommendation(
-        request,
+        requests,
         undefined,
-        MedicationRecommendationCategory.personalTargetDoseReached,
+        MedicationRecommendationType.personalTargetDoseReached,
       )
 
     const creatinineObservation = input.vitals.creatinine
@@ -140,34 +146,37 @@ export class RasiRecommender extends Recommender {
       (creatinineObservation.value >= 2.5 || potassiumObservation.value >= 5)
     )
       return this.createRecommendation(
-        request,
+        requests,
         undefined,
-        MedicationRecommendationCategory.personalTargetDoseReached,
+        MedicationRecommendationType.personalTargetDoseReached,
       )
 
-    if (input.symptomScores && input.symptomScores.dizzinessScore >= 3)
+    if (
+      input.latestSymptomScore &&
+      input.latestSymptomScore.dizzinessScore >= 3
+    )
       return this.createRecommendation(
-        request,
+        requests,
         undefined,
-        MedicationRecommendationCategory.personalTargetDoseReached,
+        MedicationRecommendationType.personalTargetDoseReached,
       )
 
     return this.createRecommendation(
-      request,
+      requests,
       MedicationReference.sacubitrilValsartan,
-      MedicationRecommendationCategory.improvementAvailable,
+      MedicationRecommendationType.improvementAvailable,
     )
   }
 
   private computeArni(
-    request: MedicationRequestContext,
+    requests: MedicationRequestContext[],
     input: RecommendationInput,
-  ): MedicationRecommendation[] {
-    if (this.isTargetDoseReached(request))
+  ): RecommendationOutput[] {
+    if (this.isTargetDailyDoseReached(requests))
       return this.createRecommendation(
-        request,
+        requests,
         undefined,
-        MedicationRecommendationCategory.targetDoseReached,
+        MedicationRecommendationType.targetDoseReached,
       )
 
     const medianSystolic = this.medianValue(
@@ -176,16 +185,16 @@ export class RasiRecommender extends Recommender {
 
     if (!medianSystolic)
       return this.createRecommendation(
-        request,
+        requests,
         undefined,
-        MedicationRecommendationCategory.morePatientObservationsRequired,
+        MedicationRecommendationType.morePatientObservationsRequired,
       )
 
     if (medianSystolic < 100)
       return this.createRecommendation(
-        request,
+        requests,
         undefined,
-        MedicationRecommendationCategory.personalTargetDoseReached,
+        MedicationRecommendationType.personalTargetDoseReached,
       )
 
     const creatinineObservation = input.vitals.creatinine
@@ -196,26 +205,29 @@ export class RasiRecommender extends Recommender {
       (creatinineObservation.value >= 2.5 || potassiumObservation.value >= 5)
     )
       return this.createRecommendation(
-        request,
+        requests,
         undefined,
-        MedicationRecommendationCategory.personalTargetDoseReached,
+        MedicationRecommendationType.personalTargetDoseReached,
       )
 
-    if (input.symptomScores && input.symptomScores.dizzinessScore >= 3)
+    if (
+      input.latestSymptomScore &&
+      input.latestSymptomScore.dizzinessScore >= 3
+    )
       return this.createRecommendation(
-        request,
+        requests,
         undefined,
-        MedicationRecommendationCategory.personalTargetDoseReached,
+        MedicationRecommendationType.personalTargetDoseReached,
       )
 
     return this.createRecommendation(
-      request,
+      requests,
       undefined,
-      MedicationRecommendationCategory.improvementAvailable,
+      MedicationRecommendationType.improvementAvailable,
     )
   }
 
-  private computeNew(input: RecommendationInput): MedicationRecommendation[] {
+  private computeNew(input: RecommendationInput): RecommendationOutput[] {
     const contraindicationToArb =
       this.contraindicationService.checkMedicationClass(
         input.contraindications,
@@ -247,9 +259,9 @@ export class RasiRecommender extends Recommender {
       contraindicationToArb !== ContraindicationCategory.none
     )
       return this.createRecommendation(
-        undefined,
+        [],
         MedicationReference.losartan,
-        MedicationRecommendationCategory.noActionRequired,
+        MedicationRecommendationType.noActionRequired,
       )
 
     const systolicObservationsInLastTwoWeeks = this.observationsInLastTwoWeeks(
@@ -259,9 +271,9 @@ export class RasiRecommender extends Recommender {
 
     if (!medianSystolic)
       return this.createRecommendation(
-        undefined,
+        [],
         MedicationReference.losartan,
-        MedicationRecommendationCategory.morePatientObservationsRequired,
+        MedicationRecommendationType.morePatientObservationsRequired,
       )
 
     const lowCount = systolicObservationsInLastTwoWeeks.filter(
@@ -270,9 +282,9 @@ export class RasiRecommender extends Recommender {
 
     if (medianSystolic < 100 || lowCount >= 2)
       return this.createRecommendation(
-        undefined,
+        [],
         MedicationReference.losartan,
-        MedicationRecommendationCategory.noActionRequired,
+        MedicationRecommendationType.noActionRequired,
       )
 
     const creatinineObservation = input.vitals.creatinine
@@ -283,9 +295,9 @@ export class RasiRecommender extends Recommender {
       (creatinineObservation.value >= 2.5 || potassiumObservation.value >= 5)
     )
       return this.createRecommendation(
-        undefined,
+        [],
         MedicationReference.losartan,
-        MedicationRecommendationCategory.noActionRequired,
+        MedicationRecommendationType.noActionRequired,
       )
 
     const contraindicationToArni =
@@ -299,15 +311,15 @@ export class RasiRecommender extends Recommender {
       case ContraindicationCategory.allergyIntolerance:
       case ContraindicationCategory.clinicianListed:
         return this.createRecommendation(
-          undefined,
+          [],
           MedicationReference.losartan,
-          MedicationRecommendationCategory.notStarted,
+          MedicationRecommendationType.notStarted,
         )
       case ContraindicationCategory.none:
         return this.createRecommendation(
-          undefined,
+          [],
           MedicationReference.sacubitrilValsartan,
-          MedicationRecommendationCategory.notStarted,
+          MedicationRecommendationType.notStarted,
         )
     }
   }

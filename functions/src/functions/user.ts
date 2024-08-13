@@ -6,16 +6,15 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { https } from 'firebase-functions'
+import { https, logger } from 'firebase-functions'
+import { onDocumentWritten } from 'firebase-functions/v2/firestore'
 import { z } from 'zod'
 import { validatedOnCall } from './helpers.js'
 import { type Result } from './types.js'
-import { type UserAuth, type User } from '../models/user.js'
-import { Credential, UserRole } from '../services/credential.js'
-import { CacheDatabaseService } from '../services/database/cacheDatabaseService.js'
-import { FirestoreService } from '../services/database/firestoreService.js'
-import { DatabaseUserService } from '../services/user/databaseUserService.js'
-import { type UserService } from '../services/user/userService.js'
+import { type UserAuth } from '../models/invitation.js'
+import { type User } from '../models/user.js'
+import { UserRole } from '../services/credential/credential.js'
+import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
 const getUsersInformationInputSchema = z.object({
   includeUserData: z.boolean().optional(),
@@ -29,32 +28,31 @@ export interface UserInformation {
 
 export type GetUsersInformationOutput = Record<string, Result<UserInformation>>
 
-export const getUsersInformationFunction = validatedOnCall(
+export const getUsersInformation = validatedOnCall(
   getUsersInformationInputSchema,
   async (request): Promise<GetUsersInformationOutput> => {
     if (!request.auth?.uid)
       throw new https.HttpsError('unauthenticated', 'User is not authenticated')
 
-    const userService = new DatabaseUserService(
-      new CacheDatabaseService(new FirestoreService()),
-    )
-    const authenticatedUser = await userService.getUser(request.auth.uid)
-    if (!authenticatedUser)
-      throw new https.HttpsError('not-found', 'User not found')
-    const organization = authenticatedUser.content.organization
-
-    const credential = new Credential(request.auth, userService)
-    await credential.checkAny(
-      UserRole.admin,
-      ...(organization ? [UserRole.clinician(organization)] : []),
-    )
+    const factory = getServiceFactory()
+    const credential = factory.credential(request.auth)
+    const userService = factory.user()
 
     const result: GetUsersInformationOutput = {}
     for (const userId of request.data.userIds) {
       try {
         const userData = await userService.getUser(userId)
-        if (organization && userData?.content.organization !== organization)
-          throw credential.permissionDeniedError()
+
+        credential.check(
+          UserRole.admin,
+          UserRole.user(userId),
+          ...(userData?.content.organization ?
+            [
+              UserRole.owner(userData.content.organization),
+              UserRole.clinician(userData.content.organization),
+            ]
+          : []),
+        )
 
         const user = await userService.getAuth(userId)
         const userInformation: UserInformation = {
@@ -110,25 +108,25 @@ const updateUserInformationInputSchema = z.object({
   }),
 })
 
-export const updateUserInformationFunction = validatedOnCall(
+export const updateUserInformation = validatedOnCall(
   updateUserInformationInputSchema,
   async (request): Promise<void> => {
     if (!request.auth?.uid)
       throw new https.HttpsError('unauthenticated', 'User is not authenticated')
 
-    const userService: UserService = new DatabaseUserService(
-      new CacheDatabaseService(new FirestoreService()),
-    )
-    const user = await userService.getUser(request.data.userId)
-    if (!user) throw new https.HttpsError('not-found', 'User not found')
-    const organization = user.content.organization
-
-    const credential = new Credential(request.auth, userService)
-    await credential.checkAny(
-      UserRole.admin,
-      ...(organization ? [UserRole.clinician(organization)] : []),
-      UserRole.user(request.data.userId),
-    )
+    const factory = getServiceFactory()
+    const credential = factory.credential(request.auth)
+    const userService = factory.user()
+    try {
+      credential.check(UserRole.admin, UserRole.user(request.data.userId))
+    } catch {
+      const user = await userService.getUser(request.auth.uid)
+      if (!user?.content.organization) throw credential.permissionDeniedError()
+      credential.check(
+        UserRole.owner(user.content.organization),
+        UserRole.clinician(user.content.organization),
+      )
+    }
 
     await userService.updateAuth(request.data.userId, request.data.data.auth)
   },
@@ -138,25 +136,38 @@ const deleteUserInputSchema = z.object({
   userId: z.string(),
 })
 
-export const deleteUserFunction = validatedOnCall(
+export const deleteUser = validatedOnCall(
   deleteUserInputSchema,
   async (request): Promise<void> => {
     if (!request.auth?.uid)
       throw new https.HttpsError('unauthenticated', 'User is not authenticated')
 
-    const userService: UserService = new DatabaseUserService(
-      new CacheDatabaseService(new FirestoreService()),
-    )
-    const user = await userService.getUser(request.auth.uid)
-    if (!user) throw new https.HttpsError('not-found', 'User not found')
-
-    const credential = new Credential(request.auth, userService)
-    await credential.checkAny(
-      UserRole.admin,
-      ...(user.content.organization ?
-        [UserRole.clinician(user.content.organization)]
-      : []),
-    )
+    const factory = getServiceFactory()
+    const credential = factory.credential(request.auth)
+    const userService = factory.user()
+    try {
+      credential.check(UserRole.admin)
+    } catch {
+      const user = await userService.getUser(request.auth.uid)
+      if (!user?.content.organization) throw credential.permissionDeniedError()
+      credential.check(
+        UserRole.owner(user.content.organization),
+        UserRole.clinician(user.content.organization),
+      )
+    }
     await userService.deleteUser(request.data.userId)
+  },
+)
+
+export const onUserWritten = onDocumentWritten(
+  'users/{userId}',
+  async (event) => {
+    try {
+      await getServiceFactory().user().updateClaims(event.params.userId)
+    } catch (error) {
+      logger.error(
+        `Error processing claims update for userId '${event.params.userId}' on change of user: ${String(error)}`,
+      )
+    }
   },
 )
