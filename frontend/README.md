@@ -8,68 +8,44 @@ SPDX-License-Identifier: MIT
 
 -->
 
-# Biodesign Digital Health Next.js Template
+# Minimally Reproducible Example
 
-[![Build and Test](https://github.com/StanfordBDHG/NextJSTemplate/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/StanfordBDHG/NextJSTemplate/actions/workflows/build-and-test.yml)
-[![Deployment](https://github.com/StanfordBDHG/NextJSTemplate/actions/workflows/main.yml/badge.svg)](https://github.com/StanfordBDHG/NextJSTemplate/actions/workflows/main.yml)
-[![codecov](https://codecov.io/gh/StanfordBDHG/NextJSTemplate/graph/badge.svg?token=dfQW5eZ2up)](https://codecov.io/gh/StanfordBDHG/NextJSTemplate)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10052055.svg)](https://doi.org/10.5281/zenodo.10052055)
+We set up a small, reproducible example for you to investigate the issue. The function calls you have been seeing are not from first creating an Anonymous account and second then creating an account with a username and password. It is only being called when a user directly creates an account.
 
-## How To Use This Template
+To make this easy for you to reproduce, we went ahead and created a minimal reproducible example only containing a log in the blocking before user create and sign in methods. We even made it simple to reproduce it locally in the Firebase emulator. You can then also deploy it to a Firebase project in the cloud as well.
 
-The template repository contains a template for a Next.js project providing automated GitHub Actions and setups for code linting, testing & test coverage reports, docker deployments, a docker compose setup, local packages for modular deployment, and documentation generation & deployment.
+## Steps to Reproduce:
 
-Follow these steps to customize it to your needs:
+1. Check out Git repo [https://github.com/StanfordBDHG/ENGAGE-HF-Firebase](https://github.com/StanfordBDHG/ENGAGE-HF-Firebase) at branch `before-user-created` (latest commit).
+2. Run `npm run prepare` (in the root directory of the repository) to install dependencies for both frontend and functions.
+3. Run `npm run build` (in the root directory of the repository) to build both frontend and functions.
+4. Run `npm run start` (in the root directory of the repository) to start up emulators and run the website - you will find the website at `localhost:3000` after a few seconds.
 
-1. Rename the Next.js project.
-2. Modify, add, or remove the local packages found at `/packages/*` to separate code into smaller modules.
-3. Add dependencies and edit the project in `/app` and the local Node packages.
+### Blue Button:
 
-The main application is automatically deployed to https://stanfordbdhg.github.io/NextJSTemplate/.
+When tapping the blue button, we sign in anonymously and link to email credentials.  
+- Results in console output of the website stating it successfully logged in and linked credentials.
+- Neither `beforeUserSignedIn` nor `beforeUserCreated` is called, because there is no output on the functions log.
 
-The documentation of the local packages is automatically deployed to https://stanfordbdhg.github.io/NextJSTemplate/docs.
+> [!CAUTION]
+> This is unexpected behavior in our project setup. According to the documentation, this should be the case. In addition, we have this behavior working in other projects in the emulator and in the cloud.
 
-## Getting Started
+### Red Button:
 
-You can run the project using the following command. You will need to install Node.js and npm, e.g., using [homebrew (recommended for macOS)](https://formulae.brew.sh/formula/node) or the official [Node.js installer](https://nodejs.org/en/download).
+When tapping the red button, we sign in using credentials.  
+- Results in console output of the website stating that it successfully logged in.
+- Both `beforeUserCreated` and `beforeUserSignedIn` are called, as there is console output of the functions log.
 
-1. Install All Dependencies
+> [!NOTE]
+> This demonstrates that the logs are generally working and the cloud functions are executed in other use cases.
 
-```bash
-npm install
-```
+### Replicate in Production Setup
 
-1. Start the Next.js Application
+Paste the Firebase Credentials in the [https://github.com/StanfordBDHG/ENGAGE-HF-Firebase/blob/before-user-created/frontend/app/page.tsx#L15](frontend application) and remove the localhost and Firebase Emulator settings.
 
-```bash
-npm run dev
-```
+### Additional Context:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.<!-- markdown-link-check-disable-line -->
-
-You can edit the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-## Docker
-
-1. [Install Docker](https://docs.docker.com/get-docker/) on your machine.
-2. Build the image and run the docker compose setup: `docker compose -f docker-compose-development.yml up`.
-
-You can view your images created with `docker images`.
-
-Open [http://localhost](http://localhost) with your browser to see the result. You can visit [http://localhost:8080](http://localhost:8080) to see the reverse proxy setup before the main application.<!-- markdown-link-check-disable-line -->
-
-The `docker-compose.yml` setup contains a production-ready setup using a reverse proxy.
-
-Every version of the application on the `main` branch is automatically packaged into docker images using the `main` tag. Every release is also published using the `latest` and respective version tags.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+For some additional context: We successfully use the same blocking function setup with an anonymous login first and then linking the username, password, and credentials after that, and it correctly calls all functions in our Pediatric Apple Watch Study Firebase setup ([https://github.com/StanfordBDHG/PediatricAppleWatchStudy](https://github.com/StanfordBDHG/PediatricAppleWatchStudy)) in production, so we can confirm that the general mechanism seems to work. Somehow, this project seems to silently fail on this use case, and we don’t have any idea where this might come from.
 
 ## License
 
