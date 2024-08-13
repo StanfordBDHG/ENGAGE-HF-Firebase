@@ -36,7 +36,7 @@ service cloud.firestore {
       return get(/databases/$(databaseId)/documents/users/$(userId));
     }
 
-    function getInvitations(invitationId) {
+    function getInvitation(invitationId) {
       return get(/databases/$(databaseId)/documents/invitations/$(invitationId));
     }
 
