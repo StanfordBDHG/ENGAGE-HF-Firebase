@@ -7,9 +7,9 @@
 //
 
 import { type UserService } from './userService.js'
-import { type Invitation } from '../../models/invitation.js'
+import { type UserAuth, type Invitation } from '../../models/invitation.js'
 import { type Organization } from '../../models/organization.js'
-import { type UserAuth, type User, UserType } from '../../models/user.js'
+import { type User, UserType } from '../../models/user.js'
 import { type Document } from '../database/databaseService.js'
 
 /* eslint-disable @typescript-eslint/require-await */
@@ -54,6 +54,7 @@ export class MockUserService implements UserService {
   ): Promise<Document<Invitation>> {
     return {
       id: '1',
+      path: 'invitations/1',
       content: {
         user: {
           type: UserType.patient,
@@ -69,6 +70,7 @@ export class MockUserService implements UserService {
   ): Promise<Document<Invitation> | undefined> {
     return {
       id: '123',
+      path: 'invitations/123',
       content: {
         user: {
           type: UserType.patient,
@@ -110,6 +112,7 @@ export class MockUserService implements UserService {
   ): Promise<Document<Organization> | undefined> {
     return {
       id: organizationId,
+      path: 'organizations/' + organizationId,
       content: {
         id: 'stanford',
         name: 'Stanford University',
@@ -130,6 +133,7 @@ export class MockUserService implements UserService {
   async getUser(userId: string): Promise<Document<User>> {
     return {
       id: userId,
+      path: 'users/' + userId,
       content: {
         type: UserType.clinician,
         dateOfBirth: new Date('1970-01-02').toISOString(),
@@ -146,16 +150,6 @@ export class MockUserService implements UserService {
   }
 
   async deleteUser(userId: string): Promise<void> {
-    return
-  }
-
-  // Methods - Messages
-
-  async dismissMessage(
-    userId: string,
-    messageId: string,
-    didPerformAction: boolean,
-  ): Promise<void> {
     return
   }
 }

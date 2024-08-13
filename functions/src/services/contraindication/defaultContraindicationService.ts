@@ -15,12 +15,9 @@ import {
   FHIRAllergyIntoleranceCriticality,
   FHIRAllergyIntoleranceType,
 } from '../../models/fhir/allergyIntolerance.js'
-import {
-  CodingSystem,
-  MedicationClassReference,
-  MedicationReference,
-} from '../codes.js'
+import { CodingSystem } from '../codes.js'
 import { type FhirService } from '../fhir/fhirService.js'
+import { MedicationClassReference, MedicationReference } from '../references.js'
 
 export class DefaultContraindicationService implements ContraindicationService {
   // Properties

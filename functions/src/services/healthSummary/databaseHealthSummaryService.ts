@@ -11,7 +11,7 @@ import { advanceDateByDays } from '../../extensions/date.js'
 import { type HealthSummaryData } from '../../models/healthSummaryData.js'
 import { type MedicationRecommendation } from '../../models/medicationRecommendation.js'
 import { type SymptomScore } from '../../models/symptomScore.js'
-import { type Vitals } from '../../models/vitals.js'
+import { type Observation, type Vitals } from '../../models/vitals.js'
 import { CodingSystem, LoincCode } from '../codes.js'
 import { type FhirService } from '../fhir/fhirService.js'
 import { QuantityUnit } from '../fhir/quantityUnit.js'
@@ -52,7 +52,7 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
       this.userService.getUser(userId),
       this.patientService.getNextAppointment(userId),
       this.getMedicationRecommendations(userId),
-      this.getSymptomScores(userId, new Date(0)),
+      this.getSymptomScores(userId, 5),
       this.getVitals(userId, advanceDateByDays(new Date(), -14)),
     ])
 
@@ -65,10 +65,9 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
     const nextAppointmentStart = nextAppointment?.content.start
     return {
       name: auth.displayName ?? '---',
-      dateOfBirth: dateOfBirth ? new Date(dateOfBirth) : undefined,
+      dateOfBirth: dateOfBirth,
       clinicianName: clinician?.displayName ?? '---',
-      nextAppointment:
-        nextAppointmentStart ? new Date(nextAppointmentStart) : undefined,
+      nextAppointment: nextAppointmentStart,
       recommendations: recommendations,
       vitals: vitals,
       symptomScores: symptomScores,
@@ -79,12 +78,9 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
 
   async getSymptomScores(
     userId: string,
-    cutoffDate: Date,
+    limit: number | null,
   ): Promise<SymptomScore[]> {
-    const result = await this.patientService.getSymptomScores(
-      userId,
-      cutoffDate,
-    )
+    const result = await this.patientService.getSymptomScores(userId, limit)
     return result.map((doc) => doc.content)
   }
 
@@ -112,7 +108,7 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
     ] = await Promise.all([
       this.getBloodPressureObservations(userId, cutoffDate),
       this.getHeartRateObservations(userId, cutoffDate),
-      this.getBodyWeightObservations(userId, cutoffDate),
+      this.getBodyWeightObservations(userId, cutoffDate, QuantityUnit.lbs),
       this.getMostRecentCreatinineObservation(userId),
       this.getMostRecentDryWeightObservation(userId),
       this.getMostRecentEstimatedGlomerularFiltrationRateObservation(userId),
@@ -130,7 +126,10 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
     }
   }
 
-  private async getBloodPressureObservations(userId: string, cutoffDate: Date) {
+  async getBloodPressureObservations(
+    userId: string,
+    cutoffDate: Date,
+  ): Promise<[Observation[], Observation[]]> {
     const observationDocs =
       await this.patientService.getBloodPressureObservations(userId, cutoffDate)
     const observations = observationDocs.map((doc) => doc.content)
@@ -156,7 +155,11 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
     ]
   }
 
-  private async getBodyWeightObservations(userId: string, cutoffDate: Date) {
+  async getBodyWeightObservations(
+    userId: string,
+    cutoffDate: Date,
+    unit: QuantityUnit,
+  ) {
     const observationDocs = await this.patientService.getBodyWeightObservations(
       userId,
       cutoffDate,
@@ -166,12 +169,12 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
       {
         code: LoincCode.bodyWeight,
         system: CodingSystem.loinc,
-        unit: QuantityUnit.lbs,
+        unit: unit,
       },
     )
   }
 
-  private async getHeartRateObservations(userId: string, cutoffDate: Date) {
+  async getHeartRateObservations(userId: string, cutoffDate: Date) {
     const observationDocs = await this.patientService.getHeartRateObservations(
       userId,
       cutoffDate,
@@ -186,7 +189,7 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
     )
   }
 
-  private async getMostRecentCreatinineObservation(userId: string) {
+  async getMostRecentCreatinineObservation(userId: string) {
     const observation =
       await this.patientService.getMostRecentCreatinineObservation(userId)
     return observation ?
@@ -200,7 +203,7 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
       : undefined
   }
 
-  private async getMostRecentDryWeightObservation(userId: string) {
+  async getMostRecentDryWeightObservation(userId: string) {
     const observation =
       await this.patientService.getMostRecentDryWeightObservation(userId)
     return observation ?
@@ -214,7 +217,7 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
       : undefined
   }
 
-  private async getMostRecentEstimatedGlomerularFiltrationRateObservation(
+  async getMostRecentEstimatedGlomerularFiltrationRateObservation(
     userId: string,
   ) {
     const observation =
@@ -232,7 +235,7 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
       : undefined
   }
 
-  private async getMostRecentPotassiumObservation(userId: string) {
+  async getMostRecentPotassiumObservation(userId: string) {
     const observation =
       await this.patientService.getMostRecentPotassiumObservation(userId)
     return observation ?

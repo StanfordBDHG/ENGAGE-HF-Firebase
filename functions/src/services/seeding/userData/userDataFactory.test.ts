@@ -8,13 +8,12 @@
 
 import { expect } from 'chai'
 import { describe } from 'mocha'
-import { UserDebugDataFactory } from './userDebugDataFactory.js'
+import { UserDataFactory } from './userDataFactory.js'
 import { type SymptomQuestionnaireResponse } from '../../../models/symptomQuestionnaireResponse.js'
 import { FhirService } from '../../fhir/fhirService.js'
 
-describe('UserDebugDataFactory', () => {
+describe('UserDataFactory', () => {
   it('decodes an encoded questionnaire response', () => {
-    const debugDataFactory = new UserDebugDataFactory()
     const fhirService = new FhirService()
 
     const questionnaireResponse: SymptomQuestionnaireResponse = {
@@ -37,9 +36,7 @@ describe('UserDebugDataFactory', () => {
       answer9: 3,
     }
 
-    const encoded = debugDataFactory.questionnaireResponse(
-      questionnaireResponse,
-    )
+    const encoded = UserDataFactory.questionnaireResponse(questionnaireResponse)
     const decoded = fhirService.symptomQuestionnaireResponse(encoded)
     expect(decoded).to.deep.equal(questionnaireResponse)
   })

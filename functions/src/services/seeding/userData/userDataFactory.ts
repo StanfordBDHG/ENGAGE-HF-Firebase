@@ -18,14 +18,21 @@ import {
 import { type FHIRQuestionnaireResponse } from '../../../models/fhir/questionnaireResponse.js'
 import { type UserMessage, UserMessageType } from '../../../models/message.js'
 import { type SymptomQuestionnaireResponse } from '../../../models/symptomQuestionnaireResponse.js'
-import { CodingSystem, type DrugReference, LoincCode } from '../../codes.js'
+import { CodingSystem, LoincCode } from '../../codes.js'
 import { QuantityUnit } from '../../fhir/quantityUnit.js'
 import { symptomQuestionnaireLinkIds } from '../../fhir/symptomQuestionnaireLinkIds.js'
+import {
+  type DrugReference,
+  type QuestionnaireReference,
+  type VideoReference,
+} from '../../references.js'
 
-export class UserDebugDataFactory {
+/* eslint-disable @typescript-eslint/no-extraneous-class */
+
+export class UserDataFactory {
   // Properties
 
-  private readonly loincDisplay = new Map<LoincCode, string>([
+  private static readonly loincDisplay = new Map<LoincCode, string>([
     [
       LoincCode.bloodPressure,
       'Blood pressure panel with all children optional',
@@ -42,9 +49,14 @@ export class UserDebugDataFactory {
     [LoincCode.potassium, 'Potassium [Moles/volume] in Blood'],
   ])
 
+  // Constructor
+
+  /* eslint-disable-next-line @typescript-eslint/no-empty-function */
+  private constructor() {}
+
   // Methods - Appointments
 
-  appointment(input: {
+  static appointment(input: {
     userId: string
     created: Date
     status: AppointmentStatus
@@ -71,7 +83,7 @@ export class UserDebugDataFactory {
 
   // Methods - MedicationRequests
 
-  medicationRequest(input: {
+  static medicationRequest(input: {
     drugReference: DrugReference
     frequencyPerDay: number
     quantity: number
@@ -105,8 +117,12 @@ export class UserDebugDataFactory {
 
   // Methods - Messages
 
-  medicationChangeMessage(input: { videoReference: string }): UserMessage {
+  static medicationChangeMessage(input: {
+    creationDate?: Date
+    videoReference: VideoReference
+  }): UserMessage {
     return {
+      creationDate: (input.creationDate ?? new Date()).toISOString(),
       completionDate: null,
       dueDate: null,
       title: {
@@ -123,8 +139,13 @@ export class UserDebugDataFactory {
     }
   }
 
-  weightGainMessage(): UserMessage {
+  static weightGainMessage(
+    input: {
+      creationDate?: Date
+    } = {},
+  ): UserMessage {
     return {
+      creationDate: (input.creationDate ?? new Date()).toISOString(),
       completionDate: null,
       dueDate: null,
       title: {
@@ -141,8 +162,13 @@ export class UserDebugDataFactory {
     }
   }
 
-  medicationUptitrationMessage(): UserMessage {
+  static medicationUptitrationMessage(
+    input: {
+      creationDate?: Date
+    } = {},
+  ): UserMessage {
     return {
+      creationDate: (input.creationDate ?? new Date()).toISOString(),
       completionDate: null,
       dueDate: null,
       title: {
@@ -159,8 +185,12 @@ export class UserDebugDataFactory {
     }
   }
 
-  welcomeMessage(input: { videoReference: string }): UserMessage {
+  static welcomeMessage(input: {
+    creationDate?: Date
+    videoReference: VideoReference
+  }): UserMessage {
     return {
+      creationDate: (input.creationDate ?? new Date()).toISOString(),
       completionDate: null,
       dueDate: null,
       title: {
@@ -177,8 +207,13 @@ export class UserDebugDataFactory {
     }
   }
 
-  vitalsMessage(): UserMessage {
+  static vitalsMessage(
+    input: {
+      creationDate?: Date
+    } = {},
+  ): UserMessage {
     return {
+      creationDate: (input.creationDate ?? new Date()).toISOString(),
       completionDate: null,
       dueDate: null,
       title: {
@@ -195,10 +230,12 @@ export class UserDebugDataFactory {
     }
   }
 
-  symptomQuestionnaireMessage(input: {
-    questionnaireReference: string
+  static symptomQuestionnaireMessage(input: {
+    creationDate?: Date
+    questionnaireReference: QuestionnaireReference
   }): UserMessage {
     return {
+      creationDate: (input.creationDate ?? new Date()).toISOString(),
       completionDate: null,
       dueDate: null,
       title: {
@@ -215,8 +252,13 @@ export class UserDebugDataFactory {
     }
   }
 
-  preAppointmentMessage(): UserMessage {
+  static preAppointmentMessage(
+    input: {
+      creationDate?: Date
+    } = {},
+  ): UserMessage {
     return {
+      creationDate: (input.creationDate ?? new Date()).toISOString(),
       completionDate: null,
       dueDate: null,
       title: {
@@ -235,7 +277,7 @@ export class UserDebugDataFactory {
 
   // Methods - Observations
 
-  bloodPressureObservation(input: {
+  static bloodPressureObservation(input: {
     id: string
     date: Date
     systolic: number
@@ -296,7 +338,7 @@ export class UserDebugDataFactory {
     }
   }
 
-  observation(input: {
+  static observation(input: {
     id: string
     date: Date
     value: number
@@ -328,7 +370,7 @@ export class UserDebugDataFactory {
 
   // Methods - QuestionnaireResponses
 
-  questionnaireResponse(
+  static questionnaireResponse(
     input: SymptomQuestionnaireResponse,
   ): FHIRQuestionnaireResponse {
     const linkIds = symptomQuestionnaireLinkIds(input.questionnaire)

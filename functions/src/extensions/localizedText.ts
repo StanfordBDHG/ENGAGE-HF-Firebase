@@ -8,18 +8,16 @@
 
 import { type LocalizedText } from '../models/helpers.js'
 
-export function localize(text: LocalizedText, language: string): string {
+export function localize(text: LocalizedText, ...languages: string[]): string {
   if (typeof text === 'string') return text
 
-  const exactMatch = text[language]
-  if (exactMatch) return exactMatch
+  for (const language of [...languages, 'en-US']) {
+    const exactMatch = text[language]
+    if (exactMatch) return exactMatch
 
-  const languagePrefix = language.split('-').at(0)
-  if (languagePrefix && text[languagePrefix]) return text[languagePrefix]
-
-  const defaultLanguage = 'en'
-  const defaultText = text[defaultLanguage]
-  if (defaultText) return defaultText
+    const languagePrefix = language.split(/-|_/).at(0)
+    if (languagePrefix && text[languagePrefix]) return text[languagePrefix]
+  }
 
   return Object.values(text).at(0) ?? ''
 }

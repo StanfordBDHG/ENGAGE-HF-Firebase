@@ -7,11 +7,10 @@
 //
 
 import { type FHIRQuestionnaireResponse } from '../../models/fhir/questionnaireResponse.js'
-import { UserDebugDataFactory } from '../../services/seeding/debugData/userDebugDataFactory.js'
+import { UserDataFactory } from '../../services/seeding/userData/userDataFactory.js'
 
 export function mockQuestionnaireResponse(): FHIRQuestionnaireResponse {
-  const factory = new UserDebugDataFactory()
-  return factory.questionnaireResponse({
+  return UserDataFactory.questionnaireResponse({
     questionnaire:
       'http://spezi.health/fhir/questionnaire/9528ccc2-d1be-4c4c-9c3c-19f78e51ec19',
     questionnaireResponse: '60193B69-B0F7-4708-8CCE-F3CB2936628D',

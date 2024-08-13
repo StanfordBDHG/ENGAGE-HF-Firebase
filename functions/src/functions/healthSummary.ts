@@ -19,7 +19,7 @@ const exportHealthSummaryInputSchema = z.object({
 
 export const exportHealthSummary = validatedOnCall(
   exportHealthSummaryInputSchema,
-  async (request): Promise<Buffer> => {
+  async (request): Promise<{ content: string }> => {
     if (!request.data.userId)
       throw new https.HttpsError('invalid-argument', 'User ID is required')
 
@@ -43,8 +43,10 @@ export const exportHealthSummary = validatedOnCall(
     const data = await healthSummaryService.getHealthSummaryData(
       request.data.userId,
     )
-    return generateHealthSummary(data, {
+    const pdf = generateHealthSummary(data, {
       language: user?.content.language ?? 'en',
     })
+
+    return { content: pdf.toString('base64') }
   },
 )

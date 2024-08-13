@@ -18,6 +18,11 @@ import { type Document } from '../database/databaseService.js'
 export interface PatientService {
   // Appointments
 
+  getEveryAppoinment(
+    fromDate: Date,
+    toDate: Date,
+  ): Promise<Array<Document<FHIRAppointment>>>
+
   getAppointments(userId: string): Promise<Array<Document<FHIRAppointment>>>
   getNextAppointment(
     userId: string,
@@ -77,7 +82,7 @@ export interface PatientService {
   ): Promise<Array<Document<FHIRQuestionnaireResponse>>>
   getSymptomScores(
     userId: string,
-    cutoffDate: Date,
+    limit: number | null,
   ): Promise<Array<Document<SymptomScore>>>
   getLatestSymptomScore(
     userId: string,

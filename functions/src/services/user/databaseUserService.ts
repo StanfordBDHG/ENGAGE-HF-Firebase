@@ -10,10 +10,9 @@ import { type Auth } from 'firebase-admin/auth'
 import { FieldValue } from 'firebase-admin/firestore'
 import { https } from 'firebase-functions/v2'
 import { type UserService } from './userService.js'
-import { type Invitation } from '../../models/invitation.js'
-import { type UserMessage } from '../../models/message.js'
+import { type UserAuth, type Invitation } from '../../models/invitation.js'
 import { type Organization } from '../../models/organization.js'
-import { UserType, type UserAuth, type User } from '../../models/user.js'
+import { UserType, type User } from '../../models/user.js'
 import {
   type Document,
   type DatabaseService,
@@ -224,38 +223,5 @@ export class DatabaseUserService implements UserService {
       await firestore.recursiveDelete(firestore.doc(`users/${userId}`), writer)
       await this.auth.deleteUser(userId)
     })
-  }
-
-  // Users - Messages
-
-  async dismissMessage(
-    userId: string,
-    messageId: string,
-    didPerformAction: boolean,
-  ): Promise<void> {
-    console.log(
-      `dismissMessage for user/${userId}/message/${messageId} with didPerformAction ${didPerformAction}`,
-    )
-    await this.databaseService.runTransaction(
-      async (firestore, transaction) => {
-        const messageRef = firestore.doc(
-          `users/${userId}/messages/${messageId}`,
-        )
-        const message = await transaction.get(messageRef)
-        if (!message.exists)
-          throw new https.HttpsError('not-found', 'Message not found.')
-
-        const messageContent = message.data() as UserMessage
-        if (!messageContent.isDismissible)
-          throw new https.HttpsError(
-            'invalid-argument',
-            'Message is not dismissible.',
-          )
-
-        transaction.update(messageRef, {
-          completionDate: FieldValue.serverTimestamp(),
-        })
-      },
-    )
   }
 }

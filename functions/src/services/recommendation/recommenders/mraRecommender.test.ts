@@ -16,18 +16,18 @@ import { type MedicationRequestContext } from '../../../models/medicationRequest
 import { MockContraindicationService } from '../../../tests/mocks/contraindicationService.js'
 import { mockHealthSummaryData } from '../../../tests/mocks/healthSummaryData.js'
 import { cleanupMocks, setupMockFirebase } from '../../../tests/setup.js'
-import {
-  DrugReference,
-  type MedicationClassReference,
-  MedicationReference,
-} from '../../codes.js'
 import { ContraindicationCategory } from '../../contraindication/contraindicationService.js'
 import { getServiceFactory } from '../../factory/getServiceFactory.js'
 import { FhirService } from '../../fhir/fhirService.js'
 import { QuantityUnit } from '../../fhir/quantityUnit.js'
 import { type MedicationService } from '../../medication/medicationService.js'
-import { UserDebugDataFactory } from '../../seeding/debugData/userDebugDataFactory.js'
+import {
+  DrugReference,
+  type MedicationClassReference,
+  MedicationReference,
+} from '../../references.js'
 import { CachingStrategy } from '../../seeding/seedingService.js'
+import { UserDataFactory } from '../../seeding/userData/userDataFactory.js'
 
 describe('MraRecommender', () => {
   let medicationContraindication: (
@@ -161,7 +161,7 @@ describe('MraRecommender', () => {
   describe('Existing treatment: Eplerenone', () => {
     let contextBelowTarget: MedicationRequestContext
     before(async () => {
-      const request = new UserDebugDataFactory().medicationRequest({
+      const request = UserDataFactory.medicationRequest({
         drugReference: DrugReference.eplerenone25,
         frequencyPerDay: 1,
         quantity: 1,
@@ -172,7 +172,7 @@ describe('MraRecommender', () => {
     })
 
     it('states that target dose is reached', async () => {
-      const request = new UserDebugDataFactory().medicationRequest({
+      const request = UserDataFactory.medicationRequest({
         drugReference: DrugReference.eplerenone25,
         frequencyPerDay: 2,
         quantity: 1,

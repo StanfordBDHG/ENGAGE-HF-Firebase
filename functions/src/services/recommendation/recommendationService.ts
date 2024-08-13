@@ -80,13 +80,12 @@ export class RecommendationService {
         await this.medicationService.getReference({
           reference: output.recommendedMedication,
         })
-      : undefined
+      : null
 
     const medication =
       output.currentMedication.at(0)?.medication ??
       recommendedMedication?.content
-    const title =
-      medication ? this.fhirService.displayName(medication) : undefined
+    const title = medication ? this.fhirService.displayName(medication) : null
 
     const currentMedicationClass =
       output.currentMedication.at(0)?.medicationClass
@@ -100,7 +99,7 @@ export class RecommendationService {
           this.fhirService.medicationClassReference(
             recommendedMedicationContent,
           )
-        : undefined
+        : null
       if (
         currentMedicationClass &&
         currentMedicationClassReference &&
@@ -111,7 +110,7 @@ export class RecommendationService {
       }
       return reference ?
           (await this.medicationService.getClassReference(reference))?.content
-        : undefined
+        : null
     })()
 
     const minimumDailyDoseRequest =
@@ -125,7 +124,7 @@ export class RecommendationService {
             minimumDailyDoseRequest.medicationReference,
           )
         )?.content
-      : undefined
+      : null
     const minimumDailyDoseSchedule =
       minimumDailyDoseRequest && minimumDailyDoseDrugReference ?
         this.doseSchedule(
@@ -166,7 +165,7 @@ export class RecommendationService {
             display:
               recommendedMedication?.content ?
                 this.fhirService.displayName(recommendedMedication.content)
-              : undefined,
+              : null,
           }
         : null,
       displayInformation: {

@@ -41,10 +41,14 @@ export const onUserBloodPressureObservationWritten = onDocumentWritten(
 
 export const onUserBodyWeightObservationWritten = onDocumentWritten(
   'users/{userId}/bodyWeightObservations/{observationId}',
-  async (event) =>
-    getServiceFactory()
-      .trigger()
-      .updateRecommendationsForUser(event.params.userId),
+  async (event) => {
+    const triggerService = getServiceFactory().trigger()
+
+    await Promise.all([
+      triggerService.updateRecommendationsForUser(event.params.userId),
+      triggerService.userBodyWeightObservationWritten(event.params.userId),
+    ])
+  },
 )
 
 export const onUserDryWeightObservationWritten = onDocumentWritten(

@@ -7,13 +7,13 @@
 //
 import { type FHIRAllergyIntolerance } from '../../models/fhir/allergyIntolerance.js'
 import {
-  type MedicationClassReference,
-  type MedicationReference,
-} from '../../services/codes.js'
-import {
   type ContraindicationCategory,
   type ContraindicationService,
 } from '../../services/contraindication/contraindicationService.js'
+import {
+  type MedicationClassReference,
+  type MedicationReference,
+} from '../../services/references.js'
 
 export class MockContraindicationService implements ContraindicationService {
   // Properties

@@ -16,17 +16,17 @@ import { type MedicationRequestContext } from '../../../models/medicationRequest
 import { MockContraindicationService } from '../../../tests/mocks/contraindicationService.js'
 import { mockHealthSummaryData } from '../../../tests/mocks/healthSummaryData.js'
 import { cleanupMocks, setupMockFirebase } from '../../../tests/setup.js'
-import {
-  DrugReference,
-  type MedicationClassReference,
-  MedicationReference,
-} from '../../codes.js'
 import { ContraindicationCategory } from '../../contraindication/contraindicationService.js'
 import { getServiceFactory } from '../../factory/getServiceFactory.js'
 import { FhirService } from '../../fhir/fhirService.js'
 import { type MedicationService } from '../../medication/medicationService.js'
-import { UserDebugDataFactory } from '../../seeding/debugData/userDebugDataFactory.js'
+import {
+  DrugReference,
+  type MedicationClassReference,
+  MedicationReference,
+} from '../../references.js'
 import { CachingStrategy } from '../../seeding/seedingService.js'
+import { UserDataFactory } from '../../seeding/userData/userDataFactory.js'
 
 describe('BetaBlockerRecommender', () => {
   let medicationContraindication: (
@@ -201,7 +201,7 @@ describe('BetaBlockerRecommender', () => {
   describe('Existing treatment: Bisoprolol', () => {
     let contextBelowTarget: MedicationRequestContext
     before(async () => {
-      const request = new UserDebugDataFactory().medicationRequest({
+      const request = UserDataFactory.medicationRequest({
         drugReference: DrugReference.bisoprolol5,
         frequencyPerDay: 1,
         quantity: 1,
@@ -212,7 +212,7 @@ describe('BetaBlockerRecommender', () => {
     })
 
     it('states that it hit target dose', async () => {
-      const request = new UserDebugDataFactory().medicationRequest({
+      const request = UserDataFactory.medicationRequest({
         drugReference: DrugReference.bisoprolol5,
         frequencyPerDay: 1,
         quantity: 2,

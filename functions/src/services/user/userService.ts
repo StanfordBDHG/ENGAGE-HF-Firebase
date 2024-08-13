@@ -6,9 +6,9 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { type Invitation } from '../../models/invitation.js'
+import { type UserAuth, type Invitation } from '../../models/invitation.js'
 import { type Organization } from '../../models/organization.js'
-import { type UserAuth, type User } from '../../models/user.js'
+import { type User } from '../../models/user.js'
 import { type Document } from '../database/databaseService.js'
 
 export interface CreateInvitationData {
@@ -50,12 +50,4 @@ export interface UserService {
   getAllPatients(): Promise<Array<Document<User>>>
   getUser(userId: string): Promise<Document<User> | undefined>
   deleteUser(userId: string): Promise<void>
-
-  // Messages
-
-  dismissMessage(
-    userId: string,
-    messageId: string,
-    didPerformAction: boolean,
-  ): Promise<void>
 }

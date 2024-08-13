@@ -33,6 +33,7 @@ export class FirestoreService implements DatabaseService {
     const collection = await query(this.firestore).get()
     return collection.docs.map((doc) => ({
       id: doc.id,
+      path: doc.ref.path,
       content: doc.data() as T,
     }))
   }
@@ -41,13 +42,16 @@ export class FirestoreService implements DatabaseService {
     const collection = await this.firestore.collection(path).get()
     return collection.docs.map((doc) => ({
       id: doc.id,
+      path: doc.ref.path,
       content: doc.data() as T,
     }))
   }
 
   async getDocument<T>(path: string): Promise<Document<T> | undefined> {
     const doc = await this.firestore.doc(path).get()
-    return doc.exists ? { id: doc.id, content: doc.data() as T } : undefined
+    return doc.exists ?
+        { id: doc.id, path: doc.ref.path, content: doc.data() as T }
+      : undefined
   }
 
   async bulkWrite(

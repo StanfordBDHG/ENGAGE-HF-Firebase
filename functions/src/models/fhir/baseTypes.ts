@@ -53,10 +53,10 @@ export interface FHIRRatio {
 //
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export interface FHIRReference<T> {
-  reference?: string
+  reference: string
   type?: string
   identifier?: string
-  display?: string
+  display?: string | null
 }
 
 export interface FHIRSimpleQuantity {

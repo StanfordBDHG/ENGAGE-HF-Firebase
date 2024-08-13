@@ -8,16 +8,21 @@
 
 import { type Auth } from 'firebase-admin/auth'
 import { type Storage } from 'firebase-admin/storage'
-import { UserDebugDataFactory } from './userDebugDataFactory.js'
 import { chunks } from '../../../extensions/array.js'
 import { advanceDateByDays } from '../../../extensions/date.js'
 import { AppointmentStatus } from '../../../models/fhir/appointment.js'
 import { type FHIRQuestionnaire } from '../../../models/fhir/questionnaire.js'
 import { type Invitation } from '../../../models/invitation.js'
-import { DrugReference, LoincCode } from '../../codes.js'
+import { LoincCode } from '../../codes.js'
 import { type DatabaseService } from '../../database/databaseService.js'
 import { QuantityUnit } from '../../fhir/quantityUnit.js'
+import {
+  DrugReference,
+  QuestionnaireReference,
+  VideoReference,
+} from '../../references.js'
 import { SeedingService } from '../seedingService.js'
+import { UserDataFactory } from '../userData/userDataFactory.js'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -42,7 +47,6 @@ export class DebugDataService extends SeedingService {
   private readonly auth: Auth
   private readonly storage: Storage
   private readonly databaseService: DatabaseService
-  private readonly userDataFactory: UserDebugDataFactory
 
   // Constructor
 
@@ -51,7 +55,6 @@ export class DebugDataService extends SeedingService {
     this.auth = auth
     this.databaseService = databaseService
     this.storage = storage
-    this.userDataFactory = new UserDebugDataFactory()
   }
 
   // Methods
@@ -100,7 +103,7 @@ export class DebugDataService extends SeedingService {
 
   async seedUserAppointments(userId: string, date: Date) {
     const values = [
-      this.userDataFactory.appointment({
+      UserDataFactory.appointment({
         userId,
         created: advanceDateByDays(date, -2),
         status: AppointmentStatus.booked,
@@ -114,7 +117,7 @@ export class DebugDataService extends SeedingService {
 
   async seedUserMedicationRequests(userId: string) {
     const values = [
-      this.userDataFactory.medicationRequest({
+      UserDataFactory.medicationRequest({
         frequencyPerDay: 2,
         drugReference: DrugReference.eplerenone25,
         quantity: 2,
@@ -123,20 +126,31 @@ export class DebugDataService extends SeedingService {
     await this.replaceCollection(`users/${userId}/medicationRequests`, values)
   }
 
-  async seedUserMessages(userId: string) {
+  async seedUserMessages(userId: string, date: Date) {
     const values = [
-      this.userDataFactory.medicationChangeMessage({
-        videoReference: 'videoSections/1/videos/2',
+      UserDataFactory.medicationChangeMessage({
+        creationDate: date,
+        videoReference: VideoReference.aceiAndArbs,
       }),
-      this.userDataFactory.medicationUptitrationMessage(),
-      this.userDataFactory.preAppointmentMessage(),
-      this.userDataFactory.symptomQuestionnaireMessage({
-        questionnaireReference: 'questionnaires/0',
+      UserDataFactory.medicationUptitrationMessage({
+        creationDate: date,
       }),
-      this.userDataFactory.vitalsMessage(),
-      this.userDataFactory.weightGainMessage(),
-      this.userDataFactory.welcomeMessage({
-        videoReference: 'videoSections/0/videos/0',
+      UserDataFactory.preAppointmentMessage({
+        creationDate: date,
+      }),
+      UserDataFactory.symptomQuestionnaireMessage({
+        creationDate: date,
+        questionnaireReference: QuestionnaireReference.enUS,
+      }),
+      UserDataFactory.vitalsMessage({
+        creationDate: date,
+      }),
+      UserDataFactory.weightGainMessage({
+        creationDate: date,
+      }),
+      UserDataFactory.welcomeMessage({
+        creationDate: date,
+        videoReference: VideoReference.welcome,
       }),
     ]
     await this.replaceCollection(`users/${userId}/messages`, values)
@@ -160,7 +174,7 @@ export class DebugDataService extends SeedingService {
     ].map((n) => n / 100)
 
     const values = randomNumbers.map((number, index) =>
-      this.userDataFactory.bloodPressureObservation({
+      UserDataFactory.bloodPressureObservation({
         id: index.toString(),
         date: advanceDateByDays(date, -index - 2),
         systolic: 80 + number * 70,
@@ -192,7 +206,7 @@ export class DebugDataService extends SeedingService {
     ].map((n) => n / 100)
 
     const values = [
-      this.userDataFactory.observation({
+      UserDataFactory.observation({
         id: '0',
         date: advanceDateByDays(date, -2),
         value: 70,
@@ -200,7 +214,7 @@ export class DebugDataService extends SeedingService {
         code: LoincCode.bodyWeight,
       }),
       ...randomNumbers.map((number, index) =>
-        this.userDataFactory.observation({
+        UserDataFactory.observation({
           id: (index + 1).toString(),
           date: advanceDateByDays(date, -index - 3),
           value: 150 + number * 20,
@@ -217,7 +231,7 @@ export class DebugDataService extends SeedingService {
 
   async seedUserCreatinineObservations(userId: string, date: Date) {
     const values = [
-      this.userDataFactory.observation({
+      UserDataFactory.observation({
         id: '0',
         date: advanceDateByDays(date, -2),
         value: 1.2,
@@ -234,7 +248,7 @@ export class DebugDataService extends SeedingService {
 
   async seedUserDryWeightObservations(userId: string, date: Date) {
     const values = [
-      this.userDataFactory.observation({
+      UserDataFactory.observation({
         id: '0',
         date: advanceDateByDays(date, -2),
         value: 71.5,
@@ -251,7 +265,7 @@ export class DebugDataService extends SeedingService {
 
   async seedUserEgfrObservations(userId: string, date: Date) {
     const values = [
-      this.userDataFactory.observation({
+      UserDataFactory.observation({
         id: '0',
         date: advanceDateByDays(date, -2),
         value: 60,
@@ -281,7 +295,7 @@ export class DebugDataService extends SeedingService {
     ].map((n) => n / 100)
 
     const values = randomNumbers.map((number, index) =>
-      this.userDataFactory.observation({
+      UserDataFactory.observation({
         id: index.toString(),
         date: advanceDateByDays(date, -index - 2),
         value: 60 + number * 40,
@@ -298,7 +312,7 @@ export class DebugDataService extends SeedingService {
 
   async seedUserPotassiumObservations(userId: string, date: Date) {
     const values = [
-      this.userDataFactory.observation({
+      UserDataFactory.observation({
         id: '0',
         date: advanceDateByDays(date, -2),
         value: 4.2,
@@ -363,10 +377,11 @@ export class DebugDataService extends SeedingService {
       97, 8, 81, 32, 61, 37, 34, 84, 25, 83, 79, 57, 12, 74, 94, 89, 46, 86, 55,
       59, 98, 40, 69, 93, 95, 78, 17, 23, 2, 73, 96, 68, 60, 39, 49, 85, 19, 80,
       35, 0, 75, 14, 10, 31, 4, 13, 30, 62, 56, 18, 21, 72, 3, 63, 92, 6, 99,
+      56, 42, 12,
     ].map((n) => n / 100)
 
     const values = chunks(randomNumbers, 13).map((chunk, index) =>
-      this.userDataFactory.questionnaireResponse({
+      UserDataFactory.questionnaireResponse({
         questionnaire: questionnaire?.url ?? '',
         questionnaireResponse: index.toString(),
         date: advanceDateByDays(date, -(index * 14) - 2).toISOString(),

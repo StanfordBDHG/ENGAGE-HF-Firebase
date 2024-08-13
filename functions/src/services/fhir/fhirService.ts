@@ -62,10 +62,12 @@ export class FhirService {
 
   // Medications
 
-  displayName(medication: FHIRMedication): string | undefined {
-    return medication.code?.coding?.find(
-      (coding) => coding.system === CodingSystem.rxNorm,
-    )?.display
+  displayName(medication: FHIRMedication): string | null {
+    return (
+      medication.code?.coding?.find(
+        (coding) => coding.system === CodingSystem.rxNorm,
+      )?.display ?? null
+    )
   }
 
   medicationClassReference(
