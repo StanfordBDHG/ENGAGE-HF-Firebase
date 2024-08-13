@@ -41,7 +41,7 @@ When tapping the red button, we sign in using credentials.
 
 ### Replicate in Production Setup
 
-Paste the Firebase Credentials in the [https://github.com/StanfordBDHG/ENGAGE-HF-Firebase/blob/before-user-created/frontend/app/page.tsx#L15](frontend application) and remove the localhost and Firebase Emulator settings.
+Paste the Firebase Credentials in the [frontend application](https://github.com/StanfordBDHG/ENGAGE-HF-Firebase/blob/before-user-created/frontend/app/page.tsx#L15) and remove the localhost and Firebase Emulator settings.
 
 ### Additional Context:
 
