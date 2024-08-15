@@ -17,5 +17,11 @@ export const beforeUserCreatedFunction = beforeUserCreated((event) => {
 })
 
 export const beforeUserSignedInFunction = beforeUserSignedIn(async (event) => {
-  await getServiceFactory().user().updateClaims(event.data.uid)
+  try {
+    await getServiceFactory().user().updateClaims(event.data.uid)
+  } catch (error) {
+    console.error(
+      `beforeUserSignedIn finished with error: ${String(error)}. This is expected behavior for the troubleshooting with Firebase Support.`,
+    )
+  }
 })
