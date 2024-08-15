@@ -59,13 +59,18 @@ export class DatabaseUserService implements UserService {
   }
 
   async updateClaims(userId: string): Promise<void> {
-    const user = await this.getUser(userId)
-    if (!user) throw new https.HttpsError('not-found', 'User not found.')
+    try {
+      const user = await this.getUser(userId)
+      if (!user) throw new https.HttpsError('not-found', 'User not found.')
 
-    await this.auth.setCustomUserClaims(userId, {
-      type: user.content.type,
-      organization: user.content.organization ?? null,
-    })
+      await this.auth.setCustomUserClaims(userId, {
+        type: user.content.type,
+        organization: user.content.organization ?? null,
+      })
+    } catch (error) {
+      await this.auth.setCustomUserClaims(userId, {})
+      throw error
+    }
   }
 
   // Invitations
