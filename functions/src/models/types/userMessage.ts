@@ -16,10 +16,6 @@ import {
 import { dateConverter } from '../helpers/dateConverter.js'
 import { optionalish } from '../helpers/optionalish.js'
 import { SchemaConverter } from '../helpers/schemaConverter.js'
-import {
-  FHIRReference,
-  fhirReferenceConverter,
-} from '../fhir/baseTypes/fhirReference.js'
 
 export enum UserMessageType {
   medicationChange = 'MedicationChange',
@@ -44,7 +40,7 @@ export const userMessageConverter = new Lazy(
           description: optionalish(z.lazy(() => localizedTextConverter.schema)),
           action: optionalish(z.string()),
           isDismissible: z.boolean(),
-          appointmentId: optionalish(z.string()),
+          reference: optionalish(z.string()),
         })
         .transform((content) => new UserMessage(content)),
       encode: (object) => ({
@@ -62,7 +58,7 @@ export const userMessageConverter = new Lazy(
           : null,
         action: object.action ?? null,
         isDismissible: object.isDismissible,
-        appointmentId: object.appointmentId ?? null,
+        reference: object.reference ?? null,
       }),
     }),
 )
@@ -111,7 +107,7 @@ export class UserMessage {
   static createPreAppointment(
     input: {
       creationDate?: Date
-      appointmentId?: string
+      reference?: string
     } = {},
   ): UserMessage {
     return new UserMessage({
@@ -125,7 +121,7 @@ export class UserMessage {
       action: 'healthSummary',
       type: UserMessageType.preAppointment,
       isDismissible: false,
-      appointmentId: input.appointmentId,
+      reference: input.reference,
     })
   }
 
@@ -213,7 +209,7 @@ export class UserMessage {
   readonly description?: LocalizedText
   readonly action?: string
   readonly isDismissible: boolean
-  readonly appointmentId?: string
+  readonly reference?: string
 
   // Constructor
 
@@ -226,7 +222,7 @@ export class UserMessage {
     description?: LocalizedText
     action?: string
     isDismissible: boolean
-    appointmentId?: string
+    reference?: string
   }) {
     this.creationDate = input.creationDate
     this.dueDate = input.dueDate
@@ -236,6 +232,6 @@ export class UserMessage {
     this.description = input.description
     this.action = input.action
     this.isDismissible = input.isDismissible
-    this.appointmentId = input.appointmentId
+    this.reference = input.reference
   }
 }

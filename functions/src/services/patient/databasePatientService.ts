@@ -120,7 +120,7 @@ export class DatabasePatientService implements PatientService {
     userId: string,
     recommendations: UserMedicationRecommendation[],
   ): Promise<boolean> {
-    return await this.databaseService.runTransaction(
+    return this.databaseService.runTransaction(
       async (collections, transaction) => {
         const collection = collections.userMedicationRecommendations(userId)
         const result = await transaction.get(collection)

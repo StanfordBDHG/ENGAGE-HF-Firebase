@@ -8,19 +8,18 @@
 
 import { onDocumentWritten } from 'firebase-functions/v2/firestore'
 import { onSchedule } from 'firebase-functions/v2/scheduler'
-import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 import { UserObservationCollection } from '../services/database/collections.js'
+import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
 export const onScheduleUpdateMedicationRecommendations = onSchedule(
   'every 24 hours',
-  async () =>
-    await getServiceFactory().trigger().updateRecommendationsForAllUsers(),
+  async () => getServiceFactory().trigger().updateRecommendationsForAllUsers(),
 )
 
 export const onUserAllergyIntoleranceWritten = onDocumentWritten(
   'users/{userId}/allergyIntolerances/{allergyIntoleranceId}',
   async (event) =>
-    await getServiceFactory()
+    getServiceFactory()
       .trigger()
       .userAllergyIntoleranceWritten(event.params.userId),
 )
@@ -28,7 +27,7 @@ export const onUserAllergyIntoleranceWritten = onDocumentWritten(
 export const onUserCreatinineObservationWritten = onDocumentWritten(
   'users/{userId}/creatinineObservations/{observationId}',
   async (event) =>
-    await getServiceFactory()
+    getServiceFactory()
       .trigger()
       .userObservationWritten(
         event.params.userId,
@@ -39,7 +38,7 @@ export const onUserCreatinineObservationWritten = onDocumentWritten(
 export const onUserBloodPressureObservationWritten = onDocumentWritten(
   'users/{userId}/bodyWeightObservations/{observationId}',
   async (event) =>
-    await getServiceFactory()
+    getServiceFactory()
       .trigger()
       .userObservationWritten(
         event.params.userId,
@@ -50,7 +49,7 @@ export const onUserBloodPressureObservationWritten = onDocumentWritten(
 export const onUserBodyWeightObservationWritten = onDocumentWritten(
   'users/{userId}/bodyWeightObservations/{observationId}',
   async (event) =>
-    await getServiceFactory()
+    getServiceFactory()
       .trigger()
       .userObservationWritten(
         event.params.userId,
@@ -61,7 +60,7 @@ export const onUserBodyWeightObservationWritten = onDocumentWritten(
 export const onUserDryWeightObservationWritten = onDocumentWritten(
   'users/{userId}/dryWeightObservations/{observationId}',
   async (event) =>
-    await getServiceFactory()
+    getServiceFactory()
       .trigger()
       .userObservationWritten(
         event.params.userId,
@@ -72,7 +71,7 @@ export const onUserDryWeightObservationWritten = onDocumentWritten(
 export const onUserEgfrObservationWritten = onDocumentWritten(
   'users/{userId}/eGfrObservations/{observationId}',
   async (event) =>
-    await getServiceFactory()
+    getServiceFactory()
       .trigger()
       .userObservationWritten(
         event.params.userId,
@@ -83,7 +82,7 @@ export const onUserEgfrObservationWritten = onDocumentWritten(
 export const onUserHeartRateObservationWritten = onDocumentWritten(
   'users/{userId}/heartRateObservations/{observationId}',
   async (event) =>
-    await getServiceFactory()
+    getServiceFactory()
       .trigger()
       .userObservationWritten(
         event.params.userId,
@@ -94,7 +93,7 @@ export const onUserHeartRateObservationWritten = onDocumentWritten(
 export const onUserMedicationRequestWritten = onDocumentWritten(
   'users/{userId}/medicationRequests/{medicationRequestId}',
   async (event) =>
-    await getServiceFactory()
+    getServiceFactory()
       .trigger()
       .userMedicationRequestWritten(event.params.userId),
 )
@@ -102,7 +101,7 @@ export const onUserMedicationRequestWritten = onDocumentWritten(
 export const onUserPotassiumObservationWritten = onDocumentWritten(
   'users/{userId}/potassiumObservations/{observationId}',
   async (event) =>
-    await getServiceFactory()
+    getServiceFactory()
       .trigger()
       .userObservationWritten(
         event.params.userId,

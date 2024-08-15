@@ -10,12 +10,11 @@ import { z } from 'zod'
 import { localizedTextConverter } from './localizedText.js'
 import { Lazy } from '../../services/factory/lazy.js'
 import {
-  FHIRReference,
+  type FHIRReference,
   fhirReferenceConverter,
 } from '../fhir/baseTypes/fhirReference.js'
 import { optionalish } from '../helpers/optionalish.js'
 import { SchemaConverter } from '../helpers/schemaConverter.js'
-import { schedule } from 'firebase-functions/v1/pubsub'
 
 export enum UserMedicationRecommendationType {
   improvementAvailable = 'improvementAvailable',

@@ -6,14 +6,17 @@
 // SPDX-License-Identifier: MIT
 //
 
+import { type QueryDocumentSnapshot } from 'firebase-admin/firestore'
 import { type Messaging, type TokenMessage } from 'firebase-admin/messaging'
 import { https } from 'firebase-functions'
 import { type MessageService } from './messageService.js'
 import { advanceDateByDays } from '../../extensions/date.js'
 import { type UserDevice } from '../../models/types/userDevice.js'
 import { UserMessage, UserMessageType } from '../../models/types/userMessage.js'
-import { Document, type DatabaseService } from '../database/databaseService.js'
-import { QueryDocumentSnapshot } from 'firebase-admin/firestore'
+import {
+  type Document,
+  type DatabaseService,
+} from '../database/databaseService.js'
 
 export class DefaultMessageService implements MessageService {
   // Properties
@@ -96,8 +99,8 @@ export class DefaultMessageService implements MessageService {
 
   // Methods - Messages
 
-  async getOpenMessages(userId: string): Promise<Document<UserMessage>[]> {
-    return await this.databaseService.getQuery((collections) =>
+  async getOpenMessages(userId: string): Promise<Array<Document<UserMessage>>> {
+    return this.databaseService.getQuery((collections) =>
       collections
         .userMessages(userId)
         .where('completionDate', '==', null)
@@ -106,7 +109,7 @@ export class DefaultMessageService implements MessageService {
   }
 
   async addMessage(userId: string, message: UserMessage): Promise<boolean> {
-    return await this.databaseService.runTransaction(
+    return this.databaseService.runTransaction(
       async (collections, transaction) => {
         const existingMessage = (
           await collections
@@ -137,7 +140,7 @@ export class DefaultMessageService implements MessageService {
     type: UserMessageType,
     filter?: (message: UserMessage) => boolean,
   ) {
-    return await this.databaseService.runTransaction(
+    await this.databaseService.runTransaction(
       async (collections, transaction) => {
         const messages = await transaction.get(
           collections
@@ -168,7 +171,7 @@ export class DefaultMessageService implements MessageService {
     console.log(
       `dismissMessage for user/${userId}/message/${messageId} with didPerformAction ${didPerformAction}`,
     )
-    return await this.databaseService.runTransaction(
+    await this.databaseService.runTransaction(
       async (collections, transaction) => {
         const messageRef = collections.userMessages(userId).doc(messageId)
         const message = await transaction.get(messageRef)

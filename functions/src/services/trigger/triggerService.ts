@@ -12,19 +12,19 @@ import {
   advanceDateByMinutes,
 } from '../../extensions/date.js'
 import {
-  FHIRQuestionnaireResponse,
+  type FHIRQuestionnaireResponse,
   fhirQuestionnaireResponseConverter,
 } from '../../models/fhir/fhirQuestionnaireResponse.js'
+import {
+  type UserMedicationRecommendation,
+  UserMedicationRecommendationType,
+} from '../../models/types/userMedicationRecommendation.js'
 import { UserMessage, UserMessageType } from '../../models/types/userMessage.js'
+import { UserObservationCollection } from '../database/collections.js'
 import { type ServiceFactory } from '../factory/serviceFactory.js'
 import { QuantityUnit } from '../fhir/quantityUnit.js'
 import { type RecommendationInput } from '../recommendation/recommenders/recommender.js'
 import { QuestionnaireReference, VideoReference } from '../references.js'
-import {
-  UserMedicationRecommendation,
-  UserMedicationRecommendationType,
-} from '../../models/types/userMedicationRecommendation.js'
-import { UserObservationCollection } from '../database/collections.js'
 
 export class TriggerService {
   // Properties
@@ -57,7 +57,7 @@ export class TriggerService {
           messageService.addMessage(
             appointment.path.split('/')[1],
             UserMessage.createPreAppointment({
-              appointmentId: appointment.id,
+              reference: appointment.path,
             }),
           ),
         ),
@@ -73,7 +73,7 @@ export class TriggerService {
           messageService.completeMessages(
             appointment.path.split('/')[1],
             UserMessageType.preAppointment,
-            (message) => message.appointmentId === appointment.id,
+            (message) => message.reference === appointment.path,
           ),
         ),
       )
@@ -153,9 +153,7 @@ export class TriggerService {
         questionnaireResponseId,
         afterData ?
           symptomScoreCalculator.calculate(
-            fhirQuestionnaireResponseConverter.value.schema.parse(
-              afterData,
-            ) as FHIRQuestionnaireResponse,
+            fhirQuestionnaireResponseConverter.value.schema.parse(afterData),
           )
         : undefined,
       )
@@ -366,11 +364,10 @@ export class TriggerService {
       const recommendations =
         await recommendationService.compute(recommendationInput)
 
-      const recommendationsChanged =
-        await patientService.updateMedicationRecommendations(
-          userId,
-          recommendations,
-        )
+      await patientService.updateMedicationRecommendations(
+        userId,
+        recommendations,
+      )
 
       return recommendations
     } catch (error) {

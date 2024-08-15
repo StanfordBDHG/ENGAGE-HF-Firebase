@@ -7,7 +7,7 @@
 //
 
 import {
-  DocumentSnapshot,
+  type DocumentSnapshot,
   type DocumentData,
   type FirestoreDataConverter,
 } from 'firebase-admin/firestore'

@@ -7,8 +7,8 @@
 //
 
 import { onDocumentWritten } from 'firebase-functions/v2/firestore'
-import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 import { fhirQuestionnaireResponseConverter } from '../models/fhir/fhirQuestionnaireResponse.js'
+import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
 export const onUserQuestionnaireResponseWritten = onDocumentWritten(
   'users/{userId}/questionnaireResponses/{questionnaireResponseId}',

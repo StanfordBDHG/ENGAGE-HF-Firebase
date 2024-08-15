@@ -8,10 +8,10 @@
 
 import { type UserDevice } from '../../models/types/userDevice.js'
 import {
-  UserMessageType,
+  type UserMessageType,
   type UserMessage,
 } from '../../models/types/userMessage.js'
-import { Document } from '../database/databaseService.js'
+import { type Document } from '../database/databaseService.js'
 
 export interface MessageService {
   // Notifications
@@ -29,7 +29,7 @@ export interface MessageService {
 
   addMessage(userId: string, message: UserMessage): Promise<boolean>
 
-  getOpenMessages(userId: string): Promise<Document<UserMessage>[]>
+  getOpenMessages(userId: string): Promise<Array<Document<UserMessage>>>
 
   completeMessages(
     userId: string,
