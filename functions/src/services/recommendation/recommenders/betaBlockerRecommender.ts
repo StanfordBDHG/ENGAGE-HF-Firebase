@@ -11,7 +11,7 @@ import {
   type RecommendationOutput,
   Recommender,
 } from './recommender.js'
-import { MedicationRecommendationType } from '../../../models/medicationRecommendation.js'
+import { UserMedicationRecommendationType } from '../../../models/types/userMedicationRecommendation.js'
 import { ContraindicationCategory } from '../../contraindication/contraindicationService.js'
 import {
   MedicationClassReference,
@@ -31,7 +31,7 @@ export class BetaBlockerRecommender extends Recommender {
       return this.createRecommendation(
         currentRequests,
         undefined,
-        MedicationRecommendationType.targetDoseReached,
+        UserMedicationRecommendationType.targetDoseReached,
       )
 
     const medianSystolic = this.medianValue(
@@ -45,14 +45,14 @@ export class BetaBlockerRecommender extends Recommender {
       return this.createRecommendation(
         currentRequests,
         undefined,
-        MedicationRecommendationType.morePatientObservationsRequired,
+        UserMedicationRecommendationType.morePatientObservationsRequired,
       )
 
     if (medianSystolic < 100 || medianHeartRate < 60)
       return this.createRecommendation(
         currentRequests,
         undefined,
-        MedicationRecommendationType.personalTargetDoseReached,
+        UserMedicationRecommendationType.personalTargetDoseReached,
       )
 
     if (
@@ -62,13 +62,13 @@ export class BetaBlockerRecommender extends Recommender {
       return this.createRecommendation(
         currentRequests,
         undefined,
-        MedicationRecommendationType.personalTargetDoseReached,
+        UserMedicationRecommendationType.personalTargetDoseReached,
       )
 
     return this.createRecommendation(
       currentRequests,
       undefined,
-      MedicationRecommendationType.improvementAvailable,
+      UserMedicationRecommendationType.improvementAvailable,
     )
   }
 
@@ -89,7 +89,7 @@ export class BetaBlockerRecommender extends Recommender {
         return this.createRecommendation(
           [],
           MedicationReference.carvedilol,
-          MedicationRecommendationType.noActionRequired,
+          UserMedicationRecommendationType.noActionRequired,
         )
       case ContraindicationCategory.none:
         break
@@ -106,20 +106,20 @@ export class BetaBlockerRecommender extends Recommender {
       return this.createRecommendation(
         [],
         MedicationReference.carvedilol,
-        MedicationRecommendationType.morePatientObservationsRequired,
+        UserMedicationRecommendationType.morePatientObservationsRequired,
       )
 
     if (medianSystolic < 100 || medianHeartRate < 60)
       return this.createRecommendation(
         [],
         MedicationReference.carvedilol,
-        MedicationRecommendationType.noActionRequired,
+        UserMedicationRecommendationType.noActionRequired,
       )
 
     return this.createRecommendation(
       [],
       MedicationReference.carvedilol,
-      MedicationRecommendationType.notStarted,
+      UserMedicationRecommendationType.notStarted,
     )
   }
 }

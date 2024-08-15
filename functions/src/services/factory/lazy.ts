@@ -7,23 +7,23 @@
 //
 
 export class Lazy<T> {
-  private factory: (() => T) | null
-  private value: T | null = null
+  private _factory: (() => T) | null
+  private _value: T | null = null
 
   constructor(factory: () => T) {
-    this.factory = factory
+    this._factory = factory
   }
 
-  get(): T {
-    if (this.value === null) {
-      this.value = this.factory?.() ?? null
-      this.factory = null
+  get value(): T {
+    if (this._value === null) {
+      this._value = this._factory?.() ?? null
+      this._factory = null
     }
-    return this.value! // eslint-disable-line @typescript-eslint/no-non-null-assertion
+    return this._value! // eslint-disable-line @typescript-eslint/no-non-null-assertion
   }
 
-  set(value: T): void {
-    this.value = value
-    this.factory = null
+  set value(value: T) {
+    this._value = value
+    this._factory = null
   }
 }

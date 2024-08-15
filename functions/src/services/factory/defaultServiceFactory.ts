@@ -13,9 +13,7 @@ import { Lazy } from './lazy.js'
 import { type ServiceFactory } from './serviceFactory.js'
 import { DefaultContraindicationService } from '../contraindication/defaultContraindicationService.js'
 import { Credential } from '../credential/credential.js'
-import { CacheDatabaseService } from '../database/cacheDatabaseService.js'
 import { FirestoreService } from '../database/firestoreService.js'
-import { FhirService } from '../fhir/fhirService.js'
 import { DefaultHealthSummaryService } from '../healthSummary/databaseHealthSummaryService.js'
 import { type HealthSummaryService } from '../healthSummary/healthSummaryService.js'
 import { DatabaseMedicationService } from '../medication/databaseMedicationService.js'
@@ -48,13 +46,8 @@ export class DefaultServiceFactory implements ServiceFactory {
 
   // Properties - Database Layer
 
-  private readonly databaseService = new Lazy(() =>
-    this.options.allowCaching ?
-      new CacheDatabaseService(this.uncachedDatabaseService.get())
-    : this.uncachedDatabaseService.get(),
-  )
-  private readonly uncachedDatabaseService = new Lazy(
-    () => new FirestoreService(this.firestore.get()),
+  private readonly databaseService = new Lazy(
+    () => new FirestoreService(this.firestore.value),
   )
 
   // Properties - Services
@@ -62,69 +55,57 @@ export class DefaultServiceFactory implements ServiceFactory {
   private readonly debugDataService = new Lazy(
     () =>
       new DebugDataService(
-        this.auth.get(),
-        this.databaseService.get(),
-        this.storage.get(),
+        this.auth.value,
+        this.databaseService.value,
+        this.storage.value,
       ),
   )
-
-  private readonly fhirService = new Lazy(() => new FhirService())
 
   private readonly healthSummaryService = new Lazy(
     () =>
       new DefaultHealthSummaryService(
-        this.fhirService.get(),
-        this.patientService.get(),
-        this.userService.get(),
+        this.patientService.value,
+        this.userService.value,
       ),
   )
 
   private readonly medicationService = new Lazy(
-    () =>
-      new DatabaseMedicationService(
-        this.databaseService.get(),
-        this.fhirService.get(),
-      ),
+    () => new DatabaseMedicationService(this.databaseService.value),
   )
 
   private readonly messageService = new Lazy(
     () =>
       new DefaultMessageService(
-        this.messaging.get(),
-        this.databaseService.get(),
+        this.messaging.value,
+        this.databaseService.value,
       ),
   )
 
   private readonly patientService = new Lazy(
-    () => new DatabasePatientService(this.databaseService.get()),
+    () => new DatabasePatientService(this.databaseService.value),
   )
 
-  private readonly recommendationService = new Lazy(() => {
-    const fhirService = this.fhirService.get()
-    return new RecommendationService(
-      new DefaultContraindicationService(fhirService),
-      fhirService,
-      this.medicationService.get(),
-    )
-  })
+  private readonly recommendationService = new Lazy(
+    () =>
+      new RecommendationService(
+        new DefaultContraindicationService(),
+        this.medicationService.value,
+      ),
+  )
 
   private readonly staticDataService = new Lazy(
     () =>
-      new StaticDataService(this.databaseService.get(), new RxNormService()),
+      new StaticDataService(this.databaseService.value, new RxNormService()),
   )
 
   private readonly symptomScoreCalculator = new Lazy(
-    () => new DefaultSymptomScoreCalculator(this.fhirService.get()),
+    () => new DefaultSymptomScoreCalculator(),
   )
 
   private readonly triggerService = new Lazy(() => new TriggerService(this))
 
   private readonly userService = new Lazy(
-    () =>
-      new DatabaseUserService(
-        this.auth.get(),
-        this.uncachedDatabaseService.get(),
-      ),
+    () => new DatabaseUserService(this.auth.value, this.databaseService.value),
   )
 
   // Constructor
@@ -140,48 +121,48 @@ export class DefaultServiceFactory implements ServiceFactory {
   }
 
   user(): UserService {
-    return this.userService.get()
+    return this.userService.value
   }
 
   // Methods - Data
 
   medication(): MedicationService {
-    return this.medicationService.get()
+    return this.medicationService.value
   }
 
   debugData(): DebugDataService {
-    return this.debugDataService.get()
+    return this.debugDataService.value
   }
 
   staticData(): StaticDataService {
-    return this.staticDataService.get()
+    return this.staticDataService.value
   }
 
   // Methods - Patient
 
   healthSummary(): HealthSummaryService {
-    return this.healthSummaryService.get()
+    return this.healthSummaryService.value
   }
 
   patient(): PatientService {
-    return this.patientService.get()
+    return this.patientService.value
   }
 
   recommendation(): RecommendationService {
-    return this.recommendationService.get()
+    return this.recommendationService.value
   }
 
   symptomScore(): SymptomScoreCalculator {
-    return this.symptomScoreCalculator.get()
+    return this.symptomScoreCalculator.value
   }
 
   // Methods - Trigger
 
   message(): MessageService {
-    return this.messageService.get()
+    return this.messageService.value
   }
 
   trigger(): TriggerService {
-    return this.triggerService.get()
+    return this.triggerService.value
   }
 }

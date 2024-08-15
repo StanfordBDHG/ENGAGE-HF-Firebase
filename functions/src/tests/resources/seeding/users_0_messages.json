@@ -1,8 +1,9 @@
 {
   "0": {
     "creationDate": "2024-06-05T00:00:00.000Z",
-    "completionDate": null,
     "dueDate": null,
+    "completionDate": null,
+    "type": "MedicationChange",
     "title": {
       "en": "Medication Change",
       "de": "Änderung der Medikation"
@@ -12,13 +13,13 @@
       "de": "Ihre Medikation wurde geändert. Sehen Sie sich das Video für weitere Informationen an."
     },
     "action": "videoSections/1/videos/2",
-    "type": "MedicationChange",
     "isDismissible": true
   },
   "1": {
     "creationDate": "2024-06-05T00:00:00.000Z",
-    "completionDate": null,
     "dueDate": null,
+    "completionDate": null,
+    "type": "MedicationUptitration",
     "title": {
       "en": "Medication Uptitration",
       "de": "Medikationserhöhung"
@@ -28,13 +29,13 @@
       "de": "Ihre Medikation kann erhöht werden. Bitte kontaktieren Sie Ihre:n Ärzt:in."
     },
     "action": "medications",
-    "type": "MedicationUptitration",
     "isDismissible": true
   },
   "2": {
     "creationDate": "2024-06-05T00:00:00.000Z",
-    "completionDate": null,
     "dueDate": null,
+    "completionDate": null,
+    "type": "PreAppointment",
     "title": {
       "en": "Appointment Reminder",
       "de": "Terminerinnerung"
@@ -44,13 +45,13 @@
       "de": "Ihr Termin steht bevor."
     },
     "action": "healthSummary",
-    "type": "PreAppointment",
     "isDismissible": false
   },
   "3": {
     "creationDate": "2024-06-05T00:00:00.000Z",
-    "completionDate": null,
     "dueDate": null,
+    "completionDate": null,
+    "type": "SymptomQuestionnaire",
     "title": {
       "en": "Symptom Questionnaire",
       "de": "Symptomfragebogen"
@@ -60,13 +61,13 @@
       "de": "Bitte füllen Sie den Symptomfragebogen aus."
     },
     "action": "questionnaires/0",
-    "type": "SymptomQuestionnaire",
     "isDismissible": false
   },
   "4": {
     "creationDate": "2024-06-05T00:00:00.000Z",
-    "completionDate": null,
     "dueDate": null,
+    "completionDate": null,
+    "type": "Vitals",
     "title": {
       "en": "Vitals",
       "de": "Vitalwerte"
@@ -76,13 +77,13 @@
       "de": "Bitte nehmen Sie Blutdruck- und Gewichtsmessungen vor."
     },
     "action": "observations",
-    "type": "Vitals",
     "isDismissible": false
   },
   "5": {
     "creationDate": "2024-06-05T00:00:00.000Z",
-    "completionDate": null,
     "dueDate": null,
+    "completionDate": null,
+    "type": "WeightGain",
     "title": {
       "en": "Weight Gain",
       "de": "Gewichtszunahme"
@@ -92,13 +93,13 @@
       "de": "Ihr Gewicht hat zugenommen. Bitte kontaktieren Sie Ihre:n Ärzt:in."
     },
     "action": "medications",
-    "type": "WeightGain",
     "isDismissible": true
   },
   "6": {
     "creationDate": "2024-06-05T00:00:00.000Z",
-    "completionDate": null,
     "dueDate": null,
+    "completionDate": null,
+    "type": "Welcome",
     "title": {
       "en": "Welcome",
       "de": "Willkommen"
@@ -108,7 +109,6 @@
       "de": "Willkommen bei der ENGAGE-HF-App."
     },
     "action": "videoSections/0/videos/0",
-    "type": "Welcome",
     "isDismissible": true
   }
 }

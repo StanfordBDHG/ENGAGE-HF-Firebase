@@ -7,7 +7,8 @@
 //
 
 import fs from 'fs'
-import { type Firestore } from 'firebase-admin/firestore'
+import { type CollectionReference } from 'firebase-admin/firestore'
+import { z } from 'zod'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
@@ -133,11 +134,10 @@ export class SeedingService {
   }
 
   protected async deleteCollection(
-    name: string,
-    firestore: Firestore,
+    reference: CollectionReference,
     transaction: FirebaseFirestore.Transaction,
   ) {
-    const result = await transaction.get(firestore.collection(name))
+    const result = await transaction.get(reference)
     for (const doc of result.docs) {
       transaction.delete(doc.ref)
     }
@@ -150,8 +150,14 @@ export class SeedingService {
     )
   }
 
-  protected readJSON<T = any>(filename: string): T {
-    return JSON.parse(fs.readFileSync(this.path + filename, 'utf8')) as T
+  protected readJSON<Schema extends z.ZodType<any, any, any>>(
+    filename: string,
+    schema: Schema,
+  ): Record<string, z.output<Schema>> | Array<z.output<Schema>> {
+    const listSchema = z.record(z.string(), schema).or(schema.array())
+    return listSchema.parse(
+      JSON.parse(fs.readFileSync(this.path + filename, 'utf8')),
+    ) as Record<string, z.output<Schema>> | Array<z.output<Schema>>
   }
 
   protected writeJSON(filename: string, data: unknown) {

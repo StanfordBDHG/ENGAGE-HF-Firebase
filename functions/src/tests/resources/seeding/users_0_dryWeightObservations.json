@@ -10,14 +10,18 @@
           "code": "29463-7",
           "display": "Body weight"
         }
-      ]
+      ],
+      "text": "Body weight"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 71.5,
-      "unit": "kg",
+      "code": "kg",
       "system": "http://unitsofmeasure.org",
-      "code": "kg"
+      "unit": "kg",
+      "value": 71.5
     },
-    "effectiveDateTime": "2024-06-03T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-06-03T00:00:00.000Z",
+    "effectiveInstant": null
   }
 }

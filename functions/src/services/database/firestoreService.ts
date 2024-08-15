@@ -12,11 +12,16 @@ import {
   type Transaction,
   type Firestore,
 } from 'firebase-admin/firestore'
+import { CollectionsService } from './collections.js'
 import { type Document, type DatabaseService } from './databaseService.js'
+import { Lazy } from '../factory/lazy.js'
 
 export class FirestoreService implements DatabaseService {
   // Properties
 
+  private readonly collectionsService = new Lazy(
+    () => new CollectionsService(this.firestore),
+  )
   private readonly firestore: Firestore
 
   // Constructor
@@ -28,46 +33,51 @@ export class FirestoreService implements DatabaseService {
   // Methods
 
   async getQuery<T>(
-    query: (firestore: Firestore) => FirebaseFirestore.Query,
+    query: (
+      collectionsService: CollectionsService,
+    ) => FirebaseFirestore.Query<T>,
   ): Promise<Array<Document<T>>> {
-    const collection = await query(this.firestore).get()
+    const collection = await query(this.collectionsService.value).get()
     return collection.docs.map((doc) => ({
       id: doc.id,
       path: doc.ref.path,
-      content: doc.data() as T,
+      content: doc.data(),
     }))
   }
 
-  async getCollection<T>(path: string): Promise<Array<Document<T>>> {
-    const collection = await this.firestore.collection(path).get()
-    return collection.docs.map((doc) => ({
-      id: doc.id,
-      path: doc.ref.path,
-      content: doc.data() as T,
-    }))
-  }
-
-  async getDocument<T>(path: string): Promise<Document<T> | undefined> {
-    const doc = await this.firestore.doc(path).get()
-    return doc.exists ?
-        { id: doc.id, path: doc.ref.path, content: doc.data() as T }
+  async getDocument<T>(
+    reference: (
+      collectionsService: CollectionsService,
+    ) => FirebaseFirestore.DocumentReference<T>,
+  ): Promise<Document<T> | undefined> {
+    const ref = reference(this.collectionsService.value)
+    const doc = await ref.get()
+    const data = doc.exists ? doc.data() : undefined
+    return doc.exists && data ?
+        { id: doc.id, path: doc.ref.path, content: data }
       : undefined
   }
 
   async bulkWrite(
-    write: (firestore: Firestore, writer: BulkWriter) => Promise<void>,
+    write: (
+      collectionsService: CollectionsService,
+      writer: BulkWriter,
+    ) => Promise<void>,
     options?: BulkWriterOptions,
   ): Promise<void> {
     const writer = this.firestore.bulkWriter(options)
-    await write(this.firestore, writer)
+    await write(this.collectionsService.value, writer)
     await writer.close()
   }
 
   async runTransaction<T>(
-    run: (firestore: Firestore, transaction: Transaction) => Promise<T> | T,
+    run: (
+      collectionsService: CollectionsService,
+      transaction: Transaction,
+    ) => Promise<T> | T,
   ): Promise<T> {
     return this.firestore.runTransaction(async (transaction) =>
-      run(this.firestore, transaction),
+      run(this.collectionsService.value, transaction),
     )
   }
 }

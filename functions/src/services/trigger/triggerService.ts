@@ -12,12 +12,12 @@ import {
   advanceDateByDays,
   advanceDateByMinutes,
 } from '../../extensions/date.js'
-import { type FHIRQuestionnaireResponse } from '../../models/fhir/questionnaireResponse.js'
+import { type FHIRQuestionnaireResponse } from '../../models/fhir/fhirQuestionnaireResponse.js'
+import { UserMessage } from '../../models/types/userMessage.js'
 import { type ServiceFactory } from '../factory/serviceFactory.js'
 import { QuantityUnit } from '../fhir/quantityUnit.js'
 import { type RecommendationInput } from '../recommendation/recommenders/recommender.js'
 import { QuestionnaireReference, VideoReference } from '../references.js'
-import { UserDataFactory } from '../seeding/userData/userDataFactory.js'
 
 export class TriggerService {
   // Properties
@@ -47,7 +47,7 @@ export class TriggerService {
         appointments.map(async (appointment) =>
           messageService.addMessage(
             appointment.path.split('/')[1],
-            UserDataFactory.preAppointmentMessage(),
+            UserMessage.createPreAppointment(),
           ),
         ),
       )
@@ -61,19 +61,18 @@ export class TriggerService {
       const messageService = this.factory.message()
       const users = await this.factory.user().getAllPatients()
 
-      const symptomReminderMessage =
-        UserDataFactory.symptomQuestionnaireMessage({
-          // TODO: Possibly select different questionnaire depending on localization
-          questionnaireReference: QuestionnaireReference.enUS,
-        })
-      const vitalsMessage = UserDataFactory.vitalsMessage()
+      const symptomReminderMessage = UserMessage.createSymptomQuestionnaire({
+        // TODO: Possibly select different questionnaire depending on localization
+        questionnaireReference: QuestionnaireReference.enUS,
+      })
+      const vitalsMessage = UserMessage.createVitals()
 
       await Promise.all(
         users.map(async (user) => {
           try {
             await messageService.addMessage(user.id, vitalsMessage)
             await messageService.sendNotification(user.id, vitalsMessage, {
-              language: user.content.language,
+              language: user.content.language ?? undefined,
             })
 
             const enrollmentDate = user.content.dateOfEnrollment
@@ -87,7 +86,7 @@ export class TriggerService {
               await messageService.sendNotification(
                 user.id,
                 symptomReminderMessage,
-                { language: user.content.language },
+                { language: user.content.language ?? undefined },
               )
             }
           } catch (error) {
@@ -131,7 +130,7 @@ export class TriggerService {
     try {
       await this.updateRecommendationsForUser(userId)
       const messageService = this.factory.message()
-      const welcomeMessage = UserDataFactory.welcomeMessage({
+      const welcomeMessage = UserMessage.createWelcome({
         videoReference: VideoReference.welcome,
       })
       await messageService.addMessage(userId, welcomeMessage)
@@ -166,7 +165,7 @@ export class TriggerService {
       if (mostRecentBodyWeight - bodyWeightMedian >= 7)
         await this.factory
           .message()
-          .addMessage(userId, UserDataFactory.weightGainMessage())
+          .addMessage(userId, UserMessage.createWeightGain())
     } catch (error) {
       console.error(
         `Error on user body weight observation written: ${String(error)}`,

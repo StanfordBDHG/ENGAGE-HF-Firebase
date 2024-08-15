@@ -15,7 +15,7 @@ import {
 } from '@firebase/rules-unit-testing'
 import type firebase from 'firebase/compat/app'
 import { describe, it } from 'mocha'
-import { UserType } from '../../models/user.js'
+import { UserType } from '../../models/types/userType.js'
 
 describe('firestore.rules: organizations/{organizationId}', () => {
   const organizationId = 'stanford'

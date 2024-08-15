@@ -11,7 +11,7 @@ import {
   type RecommendationOutput,
   Recommender,
 } from './recommender.js'
-import { MedicationRecommendationType } from '../../../models/medicationRecommendation.js'
+import { UserMedicationRecommendationType } from '../../../models/types/userMedicationRecommendation.js'
 import { ContraindicationCategory } from '../../contraindication/contraindicationService.js'
 import {
   MedicationClassReference,
@@ -31,7 +31,7 @@ export class MraRecommender extends Recommender {
       return this.createRecommendation(
         currentRequests,
         undefined,
-        MedicationRecommendationType.targetDoseReached,
+        UserMedicationRecommendationType.targetDoseReached,
       )
 
     const durationOfOneDayInMilliseconds = 1000 * 60 * 60 * 24 * 7
@@ -49,20 +49,20 @@ export class MraRecommender extends Recommender {
       return this.createRecommendation(
         currentRequests,
         undefined,
-        MedicationRecommendationType.moreLabObservationsRequired,
+        UserMedicationRecommendationType.moreLabObservationsRequired,
       )
 
     if (creatinineObservation.value > 2.5 || potassiumObservation.value > 5)
       return this.createRecommendation(
         currentRequests,
         undefined,
-        MedicationRecommendationType.personalTargetDoseReached,
+        UserMedicationRecommendationType.personalTargetDoseReached,
       )
 
     return this.createRecommendation(
       currentRequests,
       undefined,
-      MedicationRecommendationType.improvementAvailable,
+      UserMedicationRecommendationType.improvementAvailable,
     )
   }
 
@@ -81,7 +81,7 @@ export class MraRecommender extends Recommender {
         return this.createRecommendation(
           [],
           MedicationReference.spironolactone,
-          MedicationRecommendationType.noActionRequired,
+          UserMedicationRecommendationType.noActionRequired,
         )
       case ContraindicationCategory.none:
         break
@@ -92,7 +92,7 @@ export class MraRecommender extends Recommender {
       return this.createRecommendation(
         [],
         MedicationReference.spironolactone,
-        MedicationRecommendationType.noActionRequired,
+        UserMedicationRecommendationType.noActionRequired,
       )
 
     const potassium = input.vitals.potassium?.value
@@ -100,13 +100,13 @@ export class MraRecommender extends Recommender {
       return this.createRecommendation(
         [],
         MedicationReference.spironolactone,
-        MedicationRecommendationType.noActionRequired,
+        UserMedicationRecommendationType.noActionRequired,
       )
 
     return this.createRecommendation(
       [],
       MedicationReference.spironolactone,
-      MedicationRecommendationType.notStarted,
+      UserMedicationRecommendationType.notStarted,
     )
   }
 }

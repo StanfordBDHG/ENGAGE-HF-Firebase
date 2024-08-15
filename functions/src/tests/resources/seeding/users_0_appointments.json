@@ -9,7 +9,8 @@
       {
         "actor": {
           "reference": "users/0"
-        }
+        },
+        "type": null
       }
     ]
   }

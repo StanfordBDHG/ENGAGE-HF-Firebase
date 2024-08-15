@@ -6,14 +6,12 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { FieldValue } from 'firebase-admin/firestore'
 import { type Messaging, type TokenMessage } from 'firebase-admin/messaging'
 import { https } from 'firebase-functions'
 import { type MessageService } from './messageService.js'
 import { advanceDateByDays } from '../../extensions/date.js'
-import { localize } from '../../extensions/localizedText.js'
-import { type UserDevice } from '../../models/device.js'
-import { UserMessageType, type UserMessage } from '../../models/message.js'
+import { type UserDevice } from '../../models/types/userDevice.js'
+import { UserMessage, UserMessageType } from '../../models/types/userMessage.js'
 import { type DatabaseService } from '../database/databaseService.js'
 
 export class DefaultMessageService implements MessageService {
@@ -33,27 +31,15 @@ export class DefaultMessageService implements MessageService {
 
   async registerDevice(userId: string, device: UserDevice): Promise<void> {
     await this.databaseService.runTransaction(
-      async (firestore, transaction) => {
-        const devices = await transaction.get(
-          firestore.collection(`users/${userId}/devices`),
-        )
+      async (collections, transaction) => {
+        const devices = await transaction.get(collections.userDevices(userId))
         const existingDevice = devices.docs.find(
           (doc) => doc.data().notificationToken === device.notificationToken,
         )
-        if (existingDevice) {
-          transaction.update(existingDevice.ref, {
-            ...device,
-            modifiedDate: FieldValue.serverTimestamp(),
-          })
-        } else {
-          transaction.set(
-            firestore.collection(`users/${userId}/devices`).doc(),
-            {
-              ...device,
-              modifiedDate: FieldValue.serverTimestamp(),
-            },
-          )
-        }
+        transaction.set(
+          existingDevice?.ref ?? collections.userDevices(userId).doc(),
+          device,
+        )
       },
     )
     return
@@ -66,8 +52,8 @@ export class DefaultMessageService implements MessageService {
       language?: string
     },
   ): Promise<void> {
-    const devices = await this.databaseService.getCollection<UserDevice>(
-      `users/${userId}/devices`,
+    const devices = await this.databaseService.getQuery<UserDevice>(
+      (collections) => collections.userDevices(userId),
     )
 
     const notifications: TokenMessage[] = devices.map((device) =>
@@ -94,12 +80,13 @@ export class DefaultMessageService implements MessageService {
         )
           return
 
-        const deviceId = devices[index].id
-        await this.databaseService.runTransaction((firestore, transaction) => {
-          transaction.delete(
-            firestore.doc(`users/${userId}/devices/${deviceId}`),
-          )
-        })
+        await this.databaseService.runTransaction(
+          (collections, transaction) => {
+            transaction.delete(
+              collections.userDevices(userId).doc(devices[index].id),
+            )
+          },
+        )
       }),
     )
 
@@ -110,10 +97,10 @@ export class DefaultMessageService implements MessageService {
 
   async addMessage(userId: string, message: UserMessage): Promise<boolean> {
     return this.databaseService.runTransaction(
-      async (firestore, transaction) => {
+      async (collections, transaction) => {
         const existingMessage = (
-          await firestore
-            .collection(`users/${userId}/messages`)
+          await collections
+            .userMessages(userId)
             .where('type', '==', message.type)
             .where('completionDate', '==', null)
             .orderBy('creationDate', 'desc')
@@ -125,9 +112,7 @@ export class DefaultMessageService implements MessageService {
           !existingMessage ||
           this.handleOldMessage(existingMessage, message, transaction)
         ) {
-          const newMessageRef = firestore
-            .collection(`users/${userId}/messages`)
-            .doc()
+          const newMessageRef = collections.userMessages(userId).doc()
           transaction.set(newMessageRef, message)
           return true
         }
@@ -146,24 +131,26 @@ export class DefaultMessageService implements MessageService {
       `dismissMessage for user/${userId}/message/${messageId} with didPerformAction ${didPerformAction}`,
     )
     await this.databaseService.runTransaction(
-      async (firestore, transaction) => {
-        const messageRef = firestore.doc(
-          `users/${userId}/messages/${messageId}`,
-        )
+      async (collections, transaction) => {
+        const messageRef = collections.userMessages(userId).doc(messageId)
         const message = await transaction.get(messageRef)
-        if (!message.exists)
+        const messageContent = message.data()
+        if (!message.exists || !messageContent)
           throw new https.HttpsError('not-found', 'Message not found.')
 
-        const messageContent = message.data() as UserMessage
         if (!messageContent.isDismissible)
           throw new https.HttpsError(
             'invalid-argument',
             'Message is not dismissible.',
           )
 
-        transaction.update(messageRef, {
-          completionDate: FieldValue.serverTimestamp(),
-        })
+        transaction.set(
+          messageRef,
+          new UserMessage({
+            ...messageContent,
+            completionDate: new Date(),
+          }),
+        )
       },
     )
   }
@@ -183,7 +170,7 @@ export class DefaultMessageService implements MessageService {
           advanceDateByDays(new Date(), -7)
         if (isOld) {
           transaction.update(oldMessage.ref, {
-            completionDate: FieldValue.serverTimestamp(),
+            completionDate: new Date(),
           })
           return true
         }
@@ -197,7 +184,7 @@ export class DefaultMessageService implements MessageService {
       case UserMessageType.symptomQuestionnaire:
       case UserMessageType.vitals: {
         transaction.update(oldMessage.ref, {
-          completionDate: FieldValue.serverTimestamp(),
+          completionDate: new Date(),
         })
         return true
       }
@@ -221,11 +208,8 @@ export class DefaultMessageService implements MessageService {
     return {
       token: options.device.notificationToken,
       notification: {
-        title: localize(message.title, ...options.languages),
-        body:
-          message.description ?
-            localize(message.description, ...options.languages)
-          : undefined,
+        title: message.title.localize(...options.languages),
+        body: message.description?.localize(...options.languages),
       },
       data: data,
       fcmOptions: {

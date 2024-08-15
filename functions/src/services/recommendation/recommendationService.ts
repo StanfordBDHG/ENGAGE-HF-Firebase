@@ -16,24 +16,20 @@ import {
   type Recommender,
 } from './recommenders/recommender.js'
 import { Sglt2iRecommender } from './recommenders/sglt2iRecommender.js'
+import { type FHIRMedicationRequest } from '../../models/fhir/baseTypes/fhirElement.js'
+import { type FHIRMedication } from '../../models/fhir/fhirMedication.js'
+import { LocalizedText } from '../../models/types/localizedText.js'
 import {
-  type FHIRMedication,
-  type FHIRMedicationRequest,
-} from '../../models/fhir/medication.js'
-import { type LocalizedText } from '../../models/helpers.js'
-import {
-  type MedicationRecommendationDoseSchedule,
-  MedicationRecommendationType,
-  type MedicationRecommendation,
-} from '../../models/medicationRecommendation.js'
+  type UserMedicationRecommendation,
+  type UserMedicationRecommendationDoseSchedule,
+  UserMedicationRecommendationType,
+} from '../../models/types/userMedicationRecommendation.js'
 import { type ContraindicationService } from '../contraindication/contraindicationService.js'
-import { type FhirService } from '../fhir/fhirService.js'
 import { type MedicationService } from '../medication/medicationService.js'
 
 export class RecommendationService {
   // Properties
 
-  private readonly fhirService: FhirService
   private readonly medicationService: MedicationService
   private readonly recommenders: Recommender[]
 
@@ -41,17 +37,15 @@ export class RecommendationService {
 
   constructor(
     contraindicationService: ContraindicationService,
-    fhirService: FhirService,
     medicationService: MedicationService,
   ) {
-    this.fhirService = fhirService
     this.medicationService = medicationService
     this.recommenders = [
-      new BetaBlockerRecommender(contraindicationService, fhirService),
-      new RasiRecommender(contraindicationService, fhirService),
-      new Sglt2iRecommender(contraindicationService, fhirService),
-      new MraRecommender(contraindicationService, fhirService),
-      new DiureticRecommender(contraindicationService, fhirService),
+      new BetaBlockerRecommender(contraindicationService),
+      new RasiRecommender(contraindicationService),
+      new Sglt2iRecommender(contraindicationService),
+      new MraRecommender(contraindicationService),
+      new DiureticRecommender(contraindicationService),
     ]
   }
 
@@ -59,8 +53,8 @@ export class RecommendationService {
 
   async compute(
     input: RecommendationInput,
-  ): Promise<MedicationRecommendation[]> {
-    const result: MedicationRecommendation[] = []
+  ): Promise<UserMedicationRecommendation[]> {
+    const result: UserMedicationRecommendation[] = []
     for (const recommender of this.recommenders) {
       const outputs = recommender.compute(input)
       for (const output of outputs) {
@@ -74,7 +68,7 @@ export class RecommendationService {
 
   private async createRecommendation(
     output: RecommendationOutput,
-  ): Promise<MedicationRecommendation> {
+  ): Promise<UserMedicationRecommendation> {
     const recommendedMedication =
       output.recommendedMedication ?
         await this.medicationService.getReference({
@@ -85,7 +79,7 @@ export class RecommendationService {
     const medication =
       output.currentMedication.at(0)?.medication ??
       recommendedMedication?.content
-    const title = medication ? this.fhirService.displayName(medication) : null
+    const title = medication?.displayName
 
     const currentMedicationClass =
       output.currentMedication.at(0)?.medicationClass
@@ -96,9 +90,7 @@ export class RecommendationService {
       const recommendedMedicationContent = recommendedMedication?.content
       const reference =
         recommendedMedicationContent ?
-          this.fhirService.medicationClassReference(
-            recommendedMedicationContent,
-          )
+          recommendedMedicationContent.medicationClassReference
         : null
       if (
         currentMedicationClass &&
@@ -113,10 +105,7 @@ export class RecommendationService {
         : null
     })()
 
-    const minimumDailyDoseRequest =
-      medication ?
-        this.fhirService.minimumDailyDoseRequest(medication)
-      : undefined
+    const minimumDailyDoseRequest = medication?.minimumDailyDoseRequest
     const minimumDailyDoseDrugReference =
       minimumDailyDoseRequest?.medicationReference ?
         (
@@ -137,10 +126,7 @@ export class RecommendationService {
       (context) => this.doseSchedule(context.request, context.drug),
     )
 
-    const targetDailyDoseRequest =
-      medication ?
-        this.fhirService.targetDailyDoseRequest(medication)
-      : undefined
+    const targetDailyDoseRequest = medication?.targetDailyDoseRequest
     const targetDailyDoseDrugReference =
       targetDailyDoseRequest?.medicationReference ?
         (
@@ -162,18 +148,15 @@ export class RecommendationService {
         output.recommendedMedication ?
           {
             reference: output.recommendedMedication,
-            display:
-              recommendedMedication?.content ?
-                this.fhirService.displayName(recommendedMedication.content)
-              : null,
+            display: recommendedMedication?.content.displayName,
           }
-        : null,
+        : undefined,
       displayInformation: {
-        title: title ?? '',
+        title: new LocalizedText(title ?? ''),
         subtitle:
           currentMedicationClass?.name ??
           recommendedMedicationClass?.name ??
-          '',
+          new LocalizedText(''),
         description: this.recommendationDescription(
           output,
           recommendedMedication?.content ?? null,
@@ -181,8 +164,7 @@ export class RecommendationService {
         type: output.type,
         videoPath:
           recommendedMedicationClass?.videoPath ??
-          currentMedicationClass?.videoPath ??
-          null,
+          currentMedicationClass?.videoPath,
         dosageInformation: {
           minimumSchedule: minimumDailyDoseSchedule,
           currentSchedule: currentDailyDoseSchedule,
@@ -196,7 +178,7 @@ export class RecommendationService {
   private doseSchedule(
     request: FHIRMedicationRequest,
     drug: FHIRMedication,
-  ): MedicationRecommendationDoseSchedule[] {
+  ): UserMedicationRecommendationDoseSchedule[] {
     const ingredients = (drug.ingredient ?? []).map(
       (ingredient) => ingredient.strength?.numerator?.value ?? 0,
     )
@@ -215,43 +197,35 @@ export class RecommendationService {
     recommendedMedication: FHIRMedication | null,
   ): LocalizedText {
     switch (output.type) {
-      case MedicationRecommendationType.improvementAvailable:
+      case UserMedicationRecommendationType.improvementAvailable: {
         if (recommendedMedication) {
-          const displayName = this.fhirService.displayName(
-            recommendedMedication,
+          const displayName = recommendedMedication.displayName
+          return new LocalizedText(
+            `Switch to ${displayName} (More effective medication)`,
           )
-          return {
-            en: `Switch to ${displayName} (More effective medication)`,
-          }
         } else {
-          return {
-            en: 'Uptitrate',
-          }
+          return new LocalizedText('Uptitrate')
         }
-      case MedicationRecommendationType.moreLabObservationsRequired:
-        return {
-          en: 'Wait for appointment',
-        }
-      case MedicationRecommendationType.morePatientObservationsRequired:
-        return {
-          en: 'Measure blood pressure',
-        }
-      case MedicationRecommendationType.noActionRequired:
-        return {
-          en: 'No action required',
-        }
-      case MedicationRecommendationType.notStarted:
-        return {
-          en: 'Start medication',
-        }
-      case MedicationRecommendationType.personalTargetDoseReached:
-        return {
-          en: 'Continue dose (personal goal reached)',
-        }
-      case MedicationRecommendationType.targetDoseReached:
-        return {
-          en: 'Continue dose',
-        }
+      }
+      case UserMedicationRecommendationType.moreLabObservationsRequired: {
+        return new LocalizedText('Wait for appointment')
+      }
+      case UserMedicationRecommendationType.morePatientObservationsRequired: {
+        return new LocalizedText('Measure blood pressure')
+      }
+      case UserMedicationRecommendationType.noActionRequired: {
+        return new LocalizedText('No action required')
+      }
+      case UserMedicationRecommendationType.notStarted: {
+        return new LocalizedText('Start medication')
+      }
+      case UserMedicationRecommendationType.personalTargetDoseReached: {
+        return new LocalizedText('Continue dose (personal goal reached)')
+      }
+      case UserMedicationRecommendationType.targetDoseReached: {
+        return new LocalizedText('Continue dose')
+      }
     }
+    return new LocalizedText('Unknown')
   }
 }

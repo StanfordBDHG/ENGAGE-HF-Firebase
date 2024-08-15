@@ -10,15 +10,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 95.2,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 95.2
     },
-    "effectiveDateTime": "2024-06-03T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-06-03T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "1": {
     "id": "1",
@@ -31,15 +35,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 76.8,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 76.8
     },
-    "effectiveDateTime": "2024-06-02T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-06-02T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "2": {
     "id": "2",
@@ -52,15 +60,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 64.4,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 64.4
     },
-    "effectiveDateTime": "2024-06-01T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-06-01T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "3": {
     "id": "3",
@@ -73,15 +85,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 88.4,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 88.4
     },
-    "effectiveDateTime": "2024-05-31T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-05-31T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "4": {
     "id": "4",
@@ -94,15 +110,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 61.6,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 61.6
     },
-    "effectiveDateTime": "2024-05-30T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-05-30T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "5": {
     "id": "5",
@@ -115,15 +135,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 60,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 60
     },
-    "effectiveDateTime": "2024-05-29T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-05-29T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "6": {
     "id": "6",
@@ -136,15 +160,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 94.4,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 94.4
     },
-    "effectiveDateTime": "2024-05-28T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-05-28T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "7": {
     "id": "7",
@@ -157,15 +185,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 66,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 66
     },
-    "effectiveDateTime": "2024-05-27T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-05-27T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "8": {
     "id": "8",
@@ -178,15 +210,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 76.4,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 76.4
     },
-    "effectiveDateTime": "2024-05-26T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-05-26T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "9": {
     "id": "9",
@@ -199,15 +235,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 60.4,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 60.4
     },
-    "effectiveDateTime": "2024-05-25T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-05-25T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "10": {
     "id": "10",
@@ -220,15 +260,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 99.2,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 99.2
     },
-    "effectiveDateTime": "2024-05-24T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-05-24T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "11": {
     "id": "11",
@@ -241,15 +285,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 94,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 94
     },
-    "effectiveDateTime": "2024-05-23T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-05-23T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "12": {
     "id": "12",
@@ -262,15 +310,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 96,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 96
     },
-    "effectiveDateTime": "2024-05-22T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-05-22T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "13": {
     "id": "13",
@@ -283,15 +335,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 78.8,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 78.8
     },
-    "effectiveDateTime": "2024-05-21T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-05-21T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "14": {
     "id": "14",
@@ -304,15 +360,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 93.6,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 93.6
     },
-    "effectiveDateTime": "2024-05-20T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-05-20T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "15": {
     "id": "15",
@@ -325,15 +385,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 61.2,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 61.2
     },
-    "effectiveDateTime": "2024-05-19T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-05-19T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "16": {
     "id": "16",
@@ -346,15 +410,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 84.4,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 84.4
     },
-    "effectiveDateTime": "2024-05-18T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-05-18T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "17": {
     "id": "17",
@@ -367,15 +435,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 62.4,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 62.4
     },
-    "effectiveDateTime": "2024-05-17T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-05-17T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "18": {
     "id": "18",
@@ -388,15 +460,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 90.8,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 90.8
     },
-    "effectiveDateTime": "2024-05-16T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-05-16T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "19": {
     "id": "19",
@@ -409,15 +485,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 90.4,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 90.4
     },
-    "effectiveDateTime": "2024-05-15T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-05-15T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "20": {
     "id": "20",
@@ -430,15 +510,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 91.6,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 91.6
     },
-    "effectiveDateTime": "2024-05-14T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-05-14T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "21": {
     "id": "21",
@@ -451,15 +535,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 85.2,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 85.2
     },
-    "effectiveDateTime": "2024-05-13T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-05-13T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "22": {
     "id": "22",
@@ -472,15 +560,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 78.4,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 78.4
     },
-    "effectiveDateTime": "2024-05-12T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-05-12T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "23": {
     "id": "23",
@@ -493,15 +585,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 81.2,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 81.2
     },
-    "effectiveDateTime": "2024-05-11T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-05-11T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "24": {
     "id": "24",
@@ -514,15 +610,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 82,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 82
     },
-    "effectiveDateTime": "2024-05-10T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-05-10T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "25": {
     "id": "25",
@@ -535,15 +635,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 91.2,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 91.2
     },
-    "effectiveDateTime": "2024-05-09T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-05-09T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "26": {
     "id": "26",
@@ -556,15 +660,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 65.6,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 65.6
     },
-    "effectiveDateTime": "2024-05-08T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-05-08T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "27": {
     "id": "27",
@@ -577,15 +685,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 73.6,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 73.6
     },
-    "effectiveDateTime": "2024-05-07T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-05-07T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "28": {
     "id": "28",
@@ -598,15 +710,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 84,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 84
     },
-    "effectiveDateTime": "2024-05-06T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-05-06T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "29": {
     "id": "29",
@@ -619,15 +735,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 96.80000000000001,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 96.80000000000001
     },
-    "effectiveDateTime": "2024-05-05T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-05-05T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "30": {
     "id": "30",
@@ -640,15 +760,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 80.8,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 80.8
     },
-    "effectiveDateTime": "2024-05-04T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-05-04T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "31": {
     "id": "31",
@@ -661,15 +785,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 77.2,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 77.2
     },
-    "effectiveDateTime": "2024-05-03T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-05-03T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "32": {
     "id": "32",
@@ -682,15 +810,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 89.6,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 89.6
     },
-    "effectiveDateTime": "2024-05-02T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-05-02T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "33": {
     "id": "33",
@@ -703,15 +835,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 94.8,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 94.8
     },
-    "effectiveDateTime": "2024-05-01T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-05-01T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "34": {
     "id": "34",
@@ -724,15 +860,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 76,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 76
     },
-    "effectiveDateTime": "2024-04-30T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-04-30T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "35": {
     "id": "35",
@@ -745,15 +885,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 64,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 64
     },
-    "effectiveDateTime": "2024-04-29T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-04-29T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "36": {
     "id": "36",
@@ -766,15 +910,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 63.2,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 63.2
     },
-    "effectiveDateTime": "2024-04-28T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-04-28T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "37": {
     "id": "37",
@@ -787,15 +935,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 87.6,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 87.6
     },
-    "effectiveDateTime": "2024-04-27T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-04-27T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "38": {
     "id": "38",
@@ -808,15 +960,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 69.6,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 69.6
     },
-    "effectiveDateTime": "2024-04-26T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-04-26T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "39": {
     "id": "39",
@@ -829,15 +985,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 74.8,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 74.8
     },
-    "effectiveDateTime": "2024-04-25T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-04-25T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "40": {
     "id": "40",
@@ -850,15 +1010,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 98.8,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 98.8
     },
-    "effectiveDateTime": "2024-04-24T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-04-24T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "41": {
     "id": "41",
@@ -871,15 +1035,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 82.8,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 82.8
     },
-    "effectiveDateTime": "2024-04-23T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-04-23T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "42": {
     "id": "42",
@@ -892,15 +1060,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 93.19999999999999,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 93.19999999999999
     },
-    "effectiveDateTime": "2024-04-22T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-04-22T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "43": {
     "id": "43",
@@ -913,15 +1085,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 79.6,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 79.6
     },
-    "effectiveDateTime": "2024-04-21T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-04-21T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "44": {
     "id": "44",
@@ -934,15 +1110,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 68.8,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 68.8
     },
-    "effectiveDateTime": "2024-04-20T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-04-20T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "45": {
     "id": "45",
@@ -955,15 +1135,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 98,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 98
     },
-    "effectiveDateTime": "2024-04-19T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-04-19T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "46": {
     "id": "46",
@@ -976,15 +1160,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 66.8,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 66.8
     },
-    "effectiveDateTime": "2024-04-18T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-04-18T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "47": {
     "id": "47",
@@ -997,15 +1185,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 67.2,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 67.2
     },
-    "effectiveDateTime": "2024-04-17T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-04-17T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "48": {
     "id": "48",
@@ -1018,15 +1210,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 77.6,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 77.6
     },
-    "effectiveDateTime": "2024-04-16T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-04-16T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "49": {
     "id": "49",
@@ -1039,15 +1235,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 62,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 62
     },
-    "effectiveDateTime": "2024-04-15T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-04-15T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "50": {
     "id": "50",
@@ -1060,15 +1260,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 92,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 92
     },
-    "effectiveDateTime": "2024-04-14T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-04-14T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "51": {
     "id": "51",
@@ -1081,15 +1285,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 80,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 80
     },
-    "effectiveDateTime": "2024-04-13T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-04-13T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "52": {
     "id": "52",
@@ -1102,15 +1310,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 71.6,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 71.6
     },
-    "effectiveDateTime": "2024-04-12T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-04-12T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "53": {
     "id": "53",
@@ -1123,15 +1335,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 83.2,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 83.2
     },
-    "effectiveDateTime": "2024-04-11T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-04-11T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "54": {
     "id": "54",
@@ -1144,15 +1360,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 75.6,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 75.6
     },
-    "effectiveDateTime": "2024-04-10T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-04-10T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "55": {
     "id": "55",
@@ -1165,15 +1385,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 60.8,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 60.8
     },
-    "effectiveDateTime": "2024-04-09T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-04-09T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "56": {
     "id": "56",
@@ -1186,15 +1410,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 88,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 88
     },
-    "effectiveDateTime": "2024-04-08T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-04-08T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "57": {
     "id": "57",
@@ -1207,15 +1435,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 66.4,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 66.4
     },
-    "effectiveDateTime": "2024-04-07T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-04-07T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "58": {
     "id": "58",
@@ -1228,15 +1460,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 85.6,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 85.6
     },
-    "effectiveDateTime": "2024-04-06T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-04-06T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "59": {
     "id": "59",
@@ -1249,15 +1485,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 82.4,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 82.4
     },
-    "effectiveDateTime": "2024-04-05T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-04-05T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "60": {
     "id": "60",
@@ -1270,15 +1510,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 83.6,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 83.6
     },
-    "effectiveDateTime": "2024-04-04T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-04-04T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "61": {
     "id": "61",
@@ -1291,15 +1535,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 67.6,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 67.6
     },
-    "effectiveDateTime": "2024-04-03T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-04-03T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "62": {
     "id": "62",
@@ -1312,15 +1560,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 73.2,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 73.2
     },
-    "effectiveDateTime": "2024-04-02T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-04-02T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "63": {
     "id": "63",
@@ -1333,15 +1585,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 99.6,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 99.6
     },
-    "effectiveDateTime": "2024-04-01T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-04-01T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "64": {
     "id": "64",
@@ -1354,15 +1610,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 65.2,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 65.2
     },
-    "effectiveDateTime": "2024-03-31T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-03-31T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "65": {
     "id": "65",
@@ -1375,15 +1635,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 69.2,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 69.2
     },
-    "effectiveDateTime": "2024-03-30T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-03-30T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "66": {
     "id": "66",
@@ -1396,15 +1660,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 92.4,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 92.4
     },
-    "effectiveDateTime": "2024-03-29T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-03-29T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "67": {
     "id": "67",
@@ -1417,15 +1685,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 70.8,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 70.8
     },
-    "effectiveDateTime": "2024-03-28T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-03-28T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "68": {
     "id": "68",
@@ -1438,15 +1710,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 75.2,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 75.2
     },
-    "effectiveDateTime": "2024-03-27T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-03-27T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "69": {
     "id": "69",
@@ -1459,15 +1735,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 86,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 86
     },
-    "effectiveDateTime": "2024-03-26T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-03-26T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "70": {
     "id": "70",
@@ -1480,15 +1760,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 70.4,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 70.4
     },
-    "effectiveDateTime": "2024-03-25T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-03-25T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "71": {
     "id": "71",
@@ -1501,15 +1785,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 78,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 78
     },
-    "effectiveDateTime": "2024-03-24T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-03-24T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "72": {
     "id": "72",
@@ -1522,15 +1810,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 62.8,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 62.8
     },
-    "effectiveDateTime": "2024-03-23T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-03-23T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "73": {
     "id": "73",
@@ -1543,15 +1835,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 88.8,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 88.8
     },
-    "effectiveDateTime": "2024-03-22T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-03-22T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "74": {
     "id": "74",
@@ -1564,15 +1860,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 72,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 72
     },
-    "effectiveDateTime": "2024-03-21T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-03-21T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "75": {
     "id": "75",
@@ -1585,15 +1885,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 71.2,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 71.2
     },
-    "effectiveDateTime": "2024-03-20T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-03-20T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "76": {
     "id": "76",
@@ -1606,15 +1910,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 64.8,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 64.8
     },
-    "effectiveDateTime": "2024-03-19T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-03-19T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "77": {
     "id": "77",
@@ -1627,15 +1935,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 89.2,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 89.2
     },
-    "effectiveDateTime": "2024-03-18T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-03-18T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "78": {
     "id": "78",
@@ -1648,15 +1960,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 72.4,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 72.4
     },
-    "effectiveDateTime": "2024-03-17T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-03-17T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "79": {
     "id": "79",
@@ -1669,15 +1985,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 95.6,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 95.6
     },
-    "effectiveDateTime": "2024-03-16T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-03-16T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "80": {
     "id": "80",
@@ -1690,15 +2010,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 70,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 70
     },
-    "effectiveDateTime": "2024-03-15T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-03-15T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "81": {
     "id": "81",
@@ -1711,15 +2035,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 74.4,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 74.4
     },
-    "effectiveDateTime": "2024-03-14T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-03-14T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "82": {
     "id": "82",
@@ -1732,15 +2060,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 98.4,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 98.4
     },
-    "effectiveDateTime": "2024-03-13T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-03-13T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "83": {
     "id": "83",
@@ -1753,15 +2085,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 96.4,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 96.4
     },
-    "effectiveDateTime": "2024-03-12T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-03-12T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "84": {
     "id": "84",
@@ -1774,15 +2110,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 74,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 74
     },
-    "effectiveDateTime": "2024-03-11T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-03-11T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "85": {
     "id": "85",
@@ -1795,15 +2135,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 79.2,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 79.2
     },
-    "effectiveDateTime": "2024-03-10T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-03-10T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "86": {
     "id": "86",
@@ -1816,15 +2160,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 68.4,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 68.4
     },
-    "effectiveDateTime": "2024-03-09T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-03-09T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "87": {
     "id": "87",
@@ -1837,15 +2185,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 84.8,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 84.8
     },
-    "effectiveDateTime": "2024-03-08T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-03-08T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "88": {
     "id": "88",
@@ -1858,15 +2210,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 80.4,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 80.4
     },
-    "effectiveDateTime": "2024-03-07T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-03-07T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "89": {
     "id": "89",
@@ -1879,15 +2235,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 63.6,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 63.6
     },
-    "effectiveDateTime": "2024-03-06T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-03-06T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "90": {
     "id": "90",
@@ -1900,15 +2260,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 87.2,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 87.2
     },
-    "effectiveDateTime": "2024-03-05T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-03-05T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "91": {
     "id": "91",
@@ -1921,15 +2285,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 92.8,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 92.8
     },
-    "effectiveDateTime": "2024-03-04T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-03-04T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "92": {
     "id": "92",
@@ -1942,15 +2310,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 97.2,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 97.2
     },
-    "effectiveDateTime": "2024-03-03T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-03-03T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "93": {
     "id": "93",
@@ -1963,15 +2335,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 97.6,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 97.6
     },
-    "effectiveDateTime": "2024-03-02T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-03-02T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "94": {
     "id": "94",
@@ -1984,15 +2360,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 81.6,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 81.6
     },
-    "effectiveDateTime": "2024-03-01T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-03-01T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "95": {
     "id": "95",
@@ -2005,15 +2385,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 72.8,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 72.8
     },
-    "effectiveDateTime": "2024-02-29T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-02-29T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "96": {
     "id": "96",
@@ -2026,15 +2410,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 86.4,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 86.4
     },
-    "effectiveDateTime": "2024-02-28T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-02-28T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "97": {
     "id": "97",
@@ -2047,15 +2435,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 68,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 68
     },
-    "effectiveDateTime": "2024-02-27T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-02-27T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "98": {
     "id": "98",
@@ -2068,15 +2460,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 90,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 90
     },
-    "effectiveDateTime": "2024-02-26T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-02-26T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "99": {
     "id": "99",
@@ -2089,15 +2485,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 86.8,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 86.8
     },
-    "effectiveDateTime": "2024-02-25T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-02-25T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "100": {
     "id": "100",
@@ -2110,15 +2510,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 95.2,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 95.2
     },
-    "effectiveDateTime": "2024-02-24T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-02-24T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "101": {
     "id": "101",
@@ -2131,15 +2535,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 76.8,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 76.8
     },
-    "effectiveDateTime": "2024-02-23T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-02-23T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "102": {
     "id": "102",
@@ -2152,15 +2560,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 64.4,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 64.4
     },
-    "effectiveDateTime": "2024-02-22T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-02-22T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "103": {
     "id": "103",
@@ -2173,15 +2585,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 88.4,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 88.4
     },
-    "effectiveDateTime": "2024-02-21T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-02-21T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "104": {
     "id": "104",
@@ -2194,15 +2610,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 61.6,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 61.6
     },
-    "effectiveDateTime": "2024-02-20T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-02-20T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "105": {
     "id": "105",
@@ -2215,15 +2635,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 60,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 60
     },
-    "effectiveDateTime": "2024-02-19T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-02-19T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "106": {
     "id": "106",
@@ -2236,15 +2660,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 94.4,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 94.4
     },
-    "effectiveDateTime": "2024-02-18T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-02-18T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "107": {
     "id": "107",
@@ -2257,15 +2685,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 66,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 66
     },
-    "effectiveDateTime": "2024-02-17T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-02-17T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "108": {
     "id": "108",
@@ -2278,15 +2710,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 76.4,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 76.4
     },
-    "effectiveDateTime": "2024-02-16T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-02-16T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "109": {
     "id": "109",
@@ -2299,15 +2735,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 60.4,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 60.4
     },
-    "effectiveDateTime": "2024-02-15T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-02-15T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "110": {
     "id": "110",
@@ -2320,15 +2760,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 99.2,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 99.2
     },
-    "effectiveDateTime": "2024-02-14T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-02-14T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "111": {
     "id": "111",
@@ -2341,15 +2785,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 94,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 94
     },
-    "effectiveDateTime": "2024-02-13T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-02-13T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "112": {
     "id": "112",
@@ -2362,15 +2810,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 96,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 96
     },
-    "effectiveDateTime": "2024-02-12T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-02-12T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "113": {
     "id": "113",
@@ -2383,15 +2835,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 78.8,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 78.8
     },
-    "effectiveDateTime": "2024-02-11T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-02-11T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "114": {
     "id": "114",
@@ -2404,15 +2860,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 93.6,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 93.6
     },
-    "effectiveDateTime": "2024-02-10T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-02-10T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "115": {
     "id": "115",
@@ -2425,15 +2885,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 61.2,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 61.2
     },
-    "effectiveDateTime": "2024-02-09T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-02-09T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "116": {
     "id": "116",
@@ -2446,15 +2910,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 84.4,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 84.4
     },
-    "effectiveDateTime": "2024-02-08T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-02-08T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "117": {
     "id": "117",
@@ -2467,15 +2935,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 62.4,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 62.4
     },
-    "effectiveDateTime": "2024-02-07T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-02-07T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "118": {
     "id": "118",
@@ -2488,15 +2960,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 90.8,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 90.8
     },
-    "effectiveDateTime": "2024-02-06T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-02-06T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "119": {
     "id": "119",
@@ -2509,15 +2985,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 90.4,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 90.4
     },
-    "effectiveDateTime": "2024-02-05T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-02-05T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "120": {
     "id": "120",
@@ -2530,15 +3010,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 91.6,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 91.6
     },
-    "effectiveDateTime": "2024-02-04T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-02-04T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "121": {
     "id": "121",
@@ -2551,15 +3035,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 85.2,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 85.2
     },
-    "effectiveDateTime": "2024-02-03T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-02-03T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "122": {
     "id": "122",
@@ -2572,15 +3060,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 78.4,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 78.4
     },
-    "effectiveDateTime": "2024-02-02T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-02-02T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "123": {
     "id": "123",
@@ -2593,15 +3085,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 81.2,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 81.2
     },
-    "effectiveDateTime": "2024-02-01T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-02-01T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "124": {
     "id": "124",
@@ -2614,15 +3110,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 82,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 82
     },
-    "effectiveDateTime": "2024-01-31T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-01-31T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "125": {
     "id": "125",
@@ -2635,15 +3135,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 91.2,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 91.2
     },
-    "effectiveDateTime": "2024-01-30T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-01-30T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "126": {
     "id": "126",
@@ -2656,15 +3160,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 65.6,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 65.6
     },
-    "effectiveDateTime": "2024-01-29T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-01-29T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "127": {
     "id": "127",
@@ -2677,15 +3185,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 73.6,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 73.6
     },
-    "effectiveDateTime": "2024-01-28T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-01-28T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "128": {
     "id": "128",
@@ -2698,15 +3210,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 84,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 84
     },
-    "effectiveDateTime": "2024-01-27T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-01-27T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "129": {
     "id": "129",
@@ -2719,15 +3235,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 96.80000000000001,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 96.80000000000001
     },
-    "effectiveDateTime": "2024-01-26T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-01-26T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "130": {
     "id": "130",
@@ -2740,15 +3260,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 80.8,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 80.8
     },
-    "effectiveDateTime": "2024-01-25T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-01-25T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "131": {
     "id": "131",
@@ -2761,15 +3285,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 77.2,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 77.2
     },
-    "effectiveDateTime": "2024-01-24T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-01-24T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "132": {
     "id": "132",
@@ -2782,15 +3310,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 89.6,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 89.6
     },
-    "effectiveDateTime": "2024-01-23T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-01-23T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "133": {
     "id": "133",
@@ -2803,15 +3335,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 94.8,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 94.8
     },
-    "effectiveDateTime": "2024-01-22T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-01-22T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "134": {
     "id": "134",
@@ -2824,15 +3360,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 76,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 76
     },
-    "effectiveDateTime": "2024-01-21T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-01-21T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "135": {
     "id": "135",
@@ -2845,15 +3385,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 64,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 64
     },
-    "effectiveDateTime": "2024-01-20T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-01-20T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "136": {
     "id": "136",
@@ -2866,15 +3410,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 63.2,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 63.2
     },
-    "effectiveDateTime": "2024-01-19T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-01-19T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "137": {
     "id": "137",
@@ -2887,15 +3435,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 87.6,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 87.6
     },
-    "effectiveDateTime": "2024-01-18T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-01-18T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "138": {
     "id": "138",
@@ -2908,15 +3460,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 69.6,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 69.6
     },
-    "effectiveDateTime": "2024-01-17T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-01-17T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "139": {
     "id": "139",
@@ -2929,15 +3485,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 74.8,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 74.8
     },
-    "effectiveDateTime": "2024-01-16T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-01-16T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "140": {
     "id": "140",
@@ -2950,15 +3510,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 98.8,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 98.8
     },
-    "effectiveDateTime": "2024-01-15T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-01-15T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "141": {
     "id": "141",
@@ -2971,15 +3535,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 82.8,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 82.8
     },
-    "effectiveDateTime": "2024-01-14T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-01-14T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "142": {
     "id": "142",
@@ -2992,15 +3560,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 93.19999999999999,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 93.19999999999999
     },
-    "effectiveDateTime": "2024-01-13T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-01-13T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "143": {
     "id": "143",
@@ -3013,15 +3585,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 79.6,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 79.6
     },
-    "effectiveDateTime": "2024-01-12T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-01-12T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "144": {
     "id": "144",
@@ -3034,15 +3610,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 68.8,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 68.8
     },
-    "effectiveDateTime": "2024-01-11T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-01-11T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "145": {
     "id": "145",
@@ -3055,15 +3635,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 98,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 98
     },
-    "effectiveDateTime": "2024-01-10T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-01-10T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "146": {
     "id": "146",
@@ -3076,15 +3660,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 66.8,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 66.8
     },
-    "effectiveDateTime": "2024-01-09T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-01-09T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "147": {
     "id": "147",
@@ -3097,15 +3685,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 67.2,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 67.2
     },
-    "effectiveDateTime": "2024-01-08T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-01-08T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "148": {
     "id": "148",
@@ -3118,15 +3710,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 77.6,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 77.6
     },
-    "effectiveDateTime": "2024-01-07T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-01-07T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "149": {
     "id": "149",
@@ -3139,15 +3735,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 62,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 62
     },
-    "effectiveDateTime": "2024-01-06T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-01-06T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "150": {
     "id": "150",
@@ -3160,15 +3760,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 92,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 92
     },
-    "effectiveDateTime": "2024-01-05T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-01-05T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "151": {
     "id": "151",
@@ -3181,15 +3785,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 80,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 80
     },
-    "effectiveDateTime": "2024-01-04T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-01-04T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "152": {
     "id": "152",
@@ -3202,15 +3810,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 71.6,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 71.6
     },
-    "effectiveDateTime": "2024-01-03T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-01-03T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "153": {
     "id": "153",
@@ -3223,15 +3835,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 83.2,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 83.2
     },
-    "effectiveDateTime": "2024-01-02T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-01-02T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "154": {
     "id": "154",
@@ -3244,15 +3860,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 75.6,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 75.6
     },
-    "effectiveDateTime": "2024-01-01T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-01-01T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "155": {
     "id": "155",
@@ -3265,15 +3885,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 60.8,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 60.8
     },
-    "effectiveDateTime": "2023-12-31T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2023-12-31T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "156": {
     "id": "156",
@@ -3286,15 +3910,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 88,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 88
     },
-    "effectiveDateTime": "2023-12-30T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2023-12-30T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "157": {
     "id": "157",
@@ -3307,15 +3935,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 66.4,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 66.4
     },
-    "effectiveDateTime": "2023-12-29T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2023-12-29T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "158": {
     "id": "158",
@@ -3328,15 +3960,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 85.6,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 85.6
     },
-    "effectiveDateTime": "2023-12-28T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2023-12-28T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "159": {
     "id": "159",
@@ -3349,15 +3985,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 82.4,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 82.4
     },
-    "effectiveDateTime": "2023-12-27T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2023-12-27T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "160": {
     "id": "160",
@@ -3370,15 +4010,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 83.6,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 83.6
     },
-    "effectiveDateTime": "2023-12-26T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2023-12-26T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "161": {
     "id": "161",
@@ -3391,15 +4035,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 67.6,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 67.6
     },
-    "effectiveDateTime": "2023-12-25T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2023-12-25T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "162": {
     "id": "162",
@@ -3412,15 +4060,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 73.2,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 73.2
     },
-    "effectiveDateTime": "2023-12-24T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2023-12-24T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "163": {
     "id": "163",
@@ -3433,15 +4085,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 99.6,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 99.6
     },
-    "effectiveDateTime": "2023-12-23T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2023-12-23T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "164": {
     "id": "164",
@@ -3454,15 +4110,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 65.2,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 65.2
     },
-    "effectiveDateTime": "2023-12-22T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2023-12-22T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "165": {
     "id": "165",
@@ -3475,15 +4135,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 69.2,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 69.2
     },
-    "effectiveDateTime": "2023-12-21T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2023-12-21T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "166": {
     "id": "166",
@@ -3496,15 +4160,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 92.4,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 92.4
     },
-    "effectiveDateTime": "2023-12-20T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2023-12-20T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "167": {
     "id": "167",
@@ -3517,15 +4185,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 70.8,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 70.8
     },
-    "effectiveDateTime": "2023-12-19T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2023-12-19T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "168": {
     "id": "168",
@@ -3538,15 +4210,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 75.2,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 75.2
     },
-    "effectiveDateTime": "2023-12-18T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2023-12-18T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "169": {
     "id": "169",
@@ -3559,15 +4235,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 86,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 86
     },
-    "effectiveDateTime": "2023-12-17T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2023-12-17T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "170": {
     "id": "170",
@@ -3580,15 +4260,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 70.4,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 70.4
     },
-    "effectiveDateTime": "2023-12-16T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2023-12-16T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "171": {
     "id": "171",
@@ -3601,15 +4285,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 78,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 78
     },
-    "effectiveDateTime": "2023-12-15T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2023-12-15T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "172": {
     "id": "172",
@@ -3622,15 +4310,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 62.8,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 62.8
     },
-    "effectiveDateTime": "2023-12-14T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2023-12-14T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "173": {
     "id": "173",
@@ -3643,15 +4335,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 88.8,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 88.8
     },
-    "effectiveDateTime": "2023-12-13T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2023-12-13T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "174": {
     "id": "174",
@@ -3664,15 +4360,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 72,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 72
     },
-    "effectiveDateTime": "2023-12-12T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2023-12-12T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "175": {
     "id": "175",
@@ -3685,15 +4385,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 71.2,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 71.2
     },
-    "effectiveDateTime": "2023-12-11T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2023-12-11T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "176": {
     "id": "176",
@@ -3706,15 +4410,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 64.8,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 64.8
     },
-    "effectiveDateTime": "2023-12-10T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2023-12-10T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "177": {
     "id": "177",
@@ -3727,15 +4435,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 89.2,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 89.2
     },
-    "effectiveDateTime": "2023-12-09T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2023-12-09T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "178": {
     "id": "178",
@@ -3748,15 +4460,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 72.4,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 72.4
     },
-    "effectiveDateTime": "2023-12-08T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2023-12-08T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "179": {
     "id": "179",
@@ -3769,15 +4485,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 95.6,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 95.6
     },
-    "effectiveDateTime": "2023-12-07T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2023-12-07T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "180": {
     "id": "180",
@@ -3790,15 +4510,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 70,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 70
     },
-    "effectiveDateTime": "2023-12-06T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2023-12-06T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "181": {
     "id": "181",
@@ -3811,15 +4535,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 74.4,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 74.4
     },
-    "effectiveDateTime": "2023-12-05T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2023-12-05T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "182": {
     "id": "182",
@@ -3832,15 +4560,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 98.4,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 98.4
     },
-    "effectiveDateTime": "2023-12-04T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2023-12-04T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "183": {
     "id": "183",
@@ -3853,15 +4585,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 96.4,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 96.4
     },
-    "effectiveDateTime": "2023-12-03T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2023-12-03T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "184": {
     "id": "184",
@@ -3874,15 +4610,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 74,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 74
     },
-    "effectiveDateTime": "2023-12-02T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2023-12-02T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "185": {
     "id": "185",
@@ -3895,15 +4635,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 79.2,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 79.2
     },
-    "effectiveDateTime": "2023-12-01T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2023-12-01T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "186": {
     "id": "186",
@@ -3916,15 +4660,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 68.4,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 68.4
     },
-    "effectiveDateTime": "2023-11-30T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2023-11-30T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "187": {
     "id": "187",
@@ -3937,15 +4685,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 84.8,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 84.8
     },
-    "effectiveDateTime": "2023-11-29T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2023-11-29T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "188": {
     "id": "188",
@@ -3958,15 +4710,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 80.4,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 80.4
     },
-    "effectiveDateTime": "2023-11-28T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2023-11-28T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "189": {
     "id": "189",
@@ -3979,15 +4735,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 63.6,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 63.6
     },
-    "effectiveDateTime": "2023-11-27T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2023-11-27T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "190": {
     "id": "190",
@@ -4000,15 +4760,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 87.2,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 87.2
     },
-    "effectiveDateTime": "2023-11-26T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2023-11-26T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "191": {
     "id": "191",
@@ -4021,15 +4785,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 92.8,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 92.8
     },
-    "effectiveDateTime": "2023-11-25T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2023-11-25T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "192": {
     "id": "192",
@@ -4042,15 +4810,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 97.2,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 97.2
     },
-    "effectiveDateTime": "2023-11-24T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2023-11-24T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "193": {
     "id": "193",
@@ -4063,15 +4835,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 97.6,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 97.6
     },
-    "effectiveDateTime": "2023-11-23T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2023-11-23T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "194": {
     "id": "194",
@@ -4084,15 +4860,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 81.6,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 81.6
     },
-    "effectiveDateTime": "2023-11-22T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2023-11-22T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "195": {
     "id": "195",
@@ -4105,15 +4885,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 72.8,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 72.8
     },
-    "effectiveDateTime": "2023-11-21T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2023-11-21T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "196": {
     "id": "196",
@@ -4126,15 +4910,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 86.4,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 86.4
     },
-    "effectiveDateTime": "2023-11-20T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2023-11-20T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "197": {
     "id": "197",
@@ -4147,15 +4935,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 68,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 68
     },
-    "effectiveDateTime": "2023-11-19T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2023-11-19T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "198": {
     "id": "198",
@@ -4168,15 +4960,19 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 90,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 90
     },
-    "effectiveDateTime": "2023-11-18T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2023-11-18T00:00:00.000Z",
+    "effectiveInstant": null
   },
   "199": {
     "id": "199",
@@ -4189,14 +4985,18 @@
           "code": "8867-4",
           "display": "Heart rate"
         }
-      ]
+      ],
+      "text": "Heart rate"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 86.8,
-      "unit": "beats/minute",
+      "code": "/min",
       "system": "http://unitsofmeasure.org",
-      "code": "/min"
+      "unit": "beats/minute",
+      "value": 86.8
     },
-    "effectiveDateTime": "2023-11-17T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2023-11-17T00:00:00.000Z",
+    "effectiveInstant": null
   }
 }

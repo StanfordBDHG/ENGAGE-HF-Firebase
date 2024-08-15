@@ -7,12 +7,13 @@
 //
 
 import { type Auth } from 'firebase-admin/auth'
-import { FieldValue } from 'firebase-admin/firestore'
 import { https } from 'firebase-functions/v2'
 import { type UserService } from './userService.js'
-import { type UserAuth, type Invitation } from '../../models/invitation.js'
-import { type Organization } from '../../models/organization.js'
-import { UserType, type User } from '../../models/user.js'
+import { type Invitation } from '../../models/types/invitation.js'
+import { type Organization } from '../../models/types/organization.js'
+import { type User } from '../../models/types/user.js'
+import { type UserAuth } from '../../models/types/userAuth.js'
+import { UserType } from '../../models/types/userType.js'
 import {
   type Document,
   type DatabaseService,
@@ -50,10 +51,10 @@ export class DatabaseUserService implements UserService {
 
   async updateAuth(userId: string, auth: UserAuth): Promise<void> {
     await this.auth.updateUser(userId, {
-      displayName: auth.displayName,
-      email: auth.email,
-      phoneNumber: auth.phoneNumber,
-      photoURL: auth.photoURL,
+      displayName: auth.displayName ?? undefined,
+      email: auth.email ?? undefined,
+      phoneNumber: auth.phoneNumber ?? undefined,
+      photoURL: auth.photoURL ?? undefined,
     })
   }
 
@@ -71,19 +72,16 @@ export class DatabaseUserService implements UserService {
 
   async createInvitation(content: Invitation): Promise<{ id: string }> {
     const id = await this.databaseService.runTransaction(
-      async (firestore, transaction) => {
+      async (collections, transaction) => {
         const invitations = await transaction.get(
-          firestore
-            .collection('invitations')
-            .where('code', '==', content.code)
-            .limit(1),
+          collections.invitations.where('code', '==', content.code).limit(1),
         )
         if (!invitations.empty)
           throw new https.HttpsError(
             'invalid-argument',
             'Invitation code is not unique.',
           )
-        const invitationDoc = firestore.collection(`invitations`).doc()
+        const invitationDoc = collections.invitations.doc()
         transaction.create(invitationDoc, content)
         return invitationDoc.id
       },
@@ -95,11 +93,8 @@ export class DatabaseUserService implements UserService {
     invitationCode: string,
   ): Promise<Document<Invitation> | undefined> {
     const result = await this.databaseService.getQuery<Invitation>(
-      (firestore) =>
-        firestore
-          .collection('invitations')
-          .where('code', '==', invitationCode)
-          .limit(1),
+      (collections) =>
+        collections.invitations.where('code', '==', invitationCode).limit(1),
     )
     return result.at(0)
   }
@@ -109,10 +104,9 @@ export class DatabaseUserService implements UserService {
     userId: string,
   ): Promise<void> {
     await this.databaseService.runTransaction(
-      async (firestore, transaction) => {
+      async (collections, transaction) => {
         const invitation = (
-          await firestore
-            .collection(`invitations`)
+          await collections.invitations
             .where('code', '==', invitationCode)
             .limit(1)
             .get()
@@ -127,11 +121,8 @@ export class DatabaseUserService implements UserService {
     userId: string,
   ): Promise<Document<Invitation> | undefined> {
     const result = await this.databaseService.getQuery<Invitation>(
-      (firestore) =>
-        firestore
-          .collection('invitations')
-          .where('userId', '==', userId)
-          .limit(1),
+      (collections) =>
+        collections.invitations.where('userId', '==', userId).limit(1),
     )
     return result.at(0)
   }
@@ -140,7 +131,9 @@ export class DatabaseUserService implements UserService {
     invitation: Document<Invitation>,
     userId: string,
   ): Promise<void> {
-    const user = await this.databaseService.getDocument(`users/${userId}`)
+    const user = await this.databaseService.getDocument((collections) =>
+      collections.users.doc(userId),
+    )
     if (user?.content)
       throw new https.HttpsError(
         'already-exists',
@@ -148,23 +141,23 @@ export class DatabaseUserService implements UserService {
       )
 
     await this.auth.updateUser(userId, {
-      displayName: invitation.content.auth?.displayName,
-      email: invitation.content.auth?.email,
-      phoneNumber: invitation.content.auth?.phoneNumber,
-      photoURL: invitation.content.auth?.photoURL,
+      displayName: invitation.content.auth?.displayName ?? undefined,
+      email: invitation.content.auth?.email ?? undefined,
+      phoneNumber: invitation.content.auth?.phoneNumber ?? undefined,
+      photoURL: invitation.content.auth?.photoURL ?? undefined,
     })
 
     await this.databaseService.runTransaction(
-      async (firestore, transaction) => {
-        transaction.create(firestore.doc(`users/${userId}`), {
+      async (collections, transaction) => {
+        transaction.create(collections.users.doc(userId), {
           ...invitation.content.user,
           invitationCode: invitation.content.code,
-          dateOfEnrollment: FieldValue.serverTimestamp(),
+          dateOfEnrollment: new Date(),
         })
 
-        const invitationRef = firestore.doc(`invitations/${invitation.id}`)
-        const collections = await invitationRef.listCollections()
-        for (const collection of collections) {
+        const invitationRef = collections.invitations.doc(invitation.id)
+        const invitationCollections = await invitationRef.listCollections()
+        for (const collection of invitationCollections) {
           const items = await transaction.get(collection)
           for (const item of items.docs) {
             transaction.create(collection.doc(item.id), item.data())
@@ -185,9 +178,8 @@ export class DatabaseUserService implements UserService {
     providerId: string,
   ): Promise<Document<Organization> | undefined> {
     const result = await this.databaseService.getQuery<Organization>(
-      (firestore) =>
-        firestore
-          .collection('organizations')
+      (collections) =>
+        collections.organizations
           .where('ssoProviderId', '==', providerId)
           .limit(1),
     )
@@ -195,32 +187,39 @@ export class DatabaseUserService implements UserService {
   }
 
   async getOrganizations(): Promise<Array<Document<Organization>>> {
-    return this.databaseService.getCollection<Organization>('organizations')
+    return this.databaseService.getQuery<Organization>(
+      (collections) => collections.organizations,
+    )
   }
 
   async getOrganization(
     organizationId: string,
   ): Promise<Document<Organization> | undefined> {
-    return this.databaseService.getDocument<Organization>(
-      `organizations/${organizationId}`,
+    return this.databaseService.getDocument<Organization>((collections) =>
+      collections.organizations.doc(organizationId),
     )
   }
 
   // Users
 
   async getAllPatients(): Promise<Array<Document<User>>> {
-    return this.databaseService.getQuery<User>((firestore) =>
-      firestore.collection('users').where('type', '==', UserType.patient),
+    return this.databaseService.getQuery<User>((collections) =>
+      collections.users.where('type', '==', UserType.patient),
     )
   }
 
   async getUser(userId: string): Promise<Document<User> | undefined> {
-    return this.databaseService.getDocument<User>(`users/${userId}`)
+    return this.databaseService.getDocument<User>((collections) =>
+      collections.users.doc(userId),
+    )
   }
 
   async deleteUser(userId: string): Promise<void> {
-    await this.databaseService.bulkWrite(async (firestore, writer) => {
-      await firestore.recursiveDelete(firestore.doc(`users/${userId}`), writer)
+    await this.databaseService.bulkWrite(async (collections, writer) => {
+      await collections.firestore.recursiveDelete(
+        collections.users.doc(userId),
+        writer,
+      )
       await this.auth.deleteUser(userId)
     })
   }

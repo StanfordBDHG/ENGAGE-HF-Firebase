@@ -7,51 +7,46 @@
 //
 
 import { type MedicationService } from './medicationService.js'
-import { type FHIRReference } from '../../models/fhir/baseTypes.js'
-import {
-  type FHIRMedicationRequest,
-  type FHIRMedication,
-} from '../../models/fhir/medication.js'
-import { type MedicationClass } from '../../models/medicationClass.js'
+import { type FHIRMedicationRequest } from '../../models/fhir/baseTypes/fhirElement.js'
+import { type FHIRReference } from '../../models/fhir/baseTypes/fhirReference.js'
+import { type FHIRMedication } from '../../models/fhir/fhirMedication.js'
 import { type MedicationRequestContext } from '../../models/medicationRequestContext.js'
+import { type MedicationClass } from '../../models/types/medicationClass.js'
 import {
   type Document,
   type DatabaseService,
 } from '../database/databaseService.js'
-import { type FhirService } from '../fhir/fhirService.js'
 
 export class DatabaseMedicationService implements MedicationService {
   // Properties
 
   private readonly databaseService: DatabaseService
-  private readonly fhirService: FhirService
 
   // Constructor
 
-  constructor(databaseService: DatabaseService, fhirService: FhirService) {
+  constructor(databaseService: DatabaseService) {
     this.databaseService = databaseService
-    this.fhirService = fhirService
   }
 
   // Methods - Medication Request Context
 
   async getContext(
     request: FHIRMedicationRequest,
-    reference: FHIRReference<FHIRMedicationRequest>,
+    reference: FHIRReference,
   ): Promise<MedicationRequestContext> {
     const drugReference = request.medicationReference
     if (!drugReference) throw new Error('Drug reference not found')
     const drug = (await this.getReference(drugReference))?.content
     if (!drug) throw new Error('Drug not found')
-    const medicationReference: FHIRReference<FHIRMedication> = {
+    const medicationReference: FHIRReference = {
       reference: drugReference.reference.split('/').slice(0, 2).join('/'),
     }
     const medication = (await this.getReference(medicationReference))?.content
-    medicationReference.display =
-      medication ? this.fhirService.displayName(medication) : undefined
+    medicationReference.display = medication?.displayName
     if (!medication) throw new Error('Medication not found')
-    const medicationClassReference =
-      this.fhirService.medicationClassReference(medication)
+    console.log('medication', medication)
+    const medicationClassReference = medication.medicationClassReference
+    console.log('medicationClassReference', medicationClassReference)
     if (!medicationClassReference)
       throw new Error('Medication class reference not found')
     const medicationClass = (
@@ -73,27 +68,33 @@ export class DatabaseMedicationService implements MedicationService {
   // Methods - Medication Classes
 
   async getMedicationClasses(): Promise<Array<Document<MedicationClass>>> {
-    return this.databaseService.getCollection('medicationClasses')
+    return this.databaseService.getQuery(
+      (collections) => collections.medicationClasses,
+    )
   }
 
   async getMedicationClass(
     medicationClassId: string,
   ): Promise<Document<MedicationClass> | undefined> {
-    return this.databaseService.getDocument(
-      `medicationClasses/${medicationClassId}`,
+    return this.databaseService.getDocument((collections) =>
+      collections.medicationClasses.doc(medicationClassId),
     )
   }
 
   // Methods - Medications
 
   async getMedications(): Promise<Array<Document<FHIRMedication>>> {
-    return this.databaseService.getCollection('medications')
+    return this.databaseService.getQuery(
+      (collections) => collections.medications,
+    )
   }
 
   async getMedication(
     medicationId: string,
   ): Promise<Document<FHIRMedication> | undefined> {
-    return this.databaseService.getDocument(`medications/${medicationId}`)
+    return this.databaseService.getDocument((collections) =>
+      collections.medications.doc(medicationId),
+    )
   }
 
   // Methods - Drugs
@@ -101,8 +102,8 @@ export class DatabaseMedicationService implements MedicationService {
   async getDrugs(
     medicationId: string,
   ): Promise<Array<Document<FHIRMedication>>> {
-    return this.databaseService.getCollection(
-      `medications/${medicationId}/drugs`,
+    return this.databaseService.getQuery((collections) =>
+      collections.drugs(medicationId),
     )
   }
 
@@ -110,26 +111,28 @@ export class DatabaseMedicationService implements MedicationService {
     medicationId: string,
     drugId: string,
   ): Promise<Document<FHIRMedication> | undefined> {
-    return this.databaseService.getDocument(
-      `medications/${medicationId}/drugs/${drugId}`,
+    return this.databaseService.getDocument((collections) =>
+      collections.drugs(medicationId).doc(drugId),
     )
   }
 
   // References
 
   async getClassReference(
-    reference: FHIRReference<MedicationClass> | undefined,
+    reference: FHIRReference | undefined,
   ): Promise<Document<MedicationClass> | undefined> {
     if (!reference?.reference) return undefined
-    return this.databaseService.getDocument<MedicationClass>(
-      reference.reference,
+    return this.databaseService.getDocument<MedicationClass>((collections) =>
+      collections.medicationClassReference(reference.reference),
     )
   }
 
   async getReference(
-    reference: FHIRReference<FHIRMedication> | undefined,
+    reference: FHIRReference | undefined,
   ): Promise<Document<FHIRMedication> | undefined> {
     if (!reference?.reference) return undefined
-    return this.databaseService.getDocument<FHIRMedication>(reference.reference)
+    return this.databaseService.getDocument<FHIRMedication>((collections) =>
+      collections.medicationReference(reference.reference),
+    )
   }
 }

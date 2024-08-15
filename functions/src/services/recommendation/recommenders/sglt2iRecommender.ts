@@ -11,7 +11,7 @@ import {
   type RecommendationOutput,
   Recommender,
 } from './recommender.js'
-import { MedicationRecommendationType } from '../../../models/medicationRecommendation.js'
+import { UserMedicationRecommendationType } from '../../../models/types/userMedicationRecommendation.js'
 import { ContraindicationCategory } from '../../contraindication/contraindicationService.js'
 import {
   MedicationClassReference,
@@ -31,7 +31,7 @@ export class Sglt2iRecommender extends Recommender {
       return this.createRecommendation(
         currentRequests,
         undefined,
-        MedicationRecommendationType.targetDoseReached,
+        UserMedicationRecommendationType.targetDoseReached,
       )
 
     const medianSystolic = this.medianValue(
@@ -42,20 +42,20 @@ export class Sglt2iRecommender extends Recommender {
       return this.createRecommendation(
         currentRequests,
         undefined,
-        MedicationRecommendationType.morePatientObservationsRequired,
+        UserMedicationRecommendationType.morePatientObservationsRequired,
       )
 
     if (medianSystolic < 100)
       return this.createRecommendation(
         currentRequests,
         undefined,
-        MedicationRecommendationType.personalTargetDoseReached,
+        UserMedicationRecommendationType.personalTargetDoseReached,
       )
 
     return this.createRecommendation(
       currentRequests,
       undefined,
-      MedicationRecommendationType.improvementAvailable,
+      UserMedicationRecommendationType.improvementAvailable,
     )
   }
 
@@ -79,7 +79,7 @@ export class Sglt2iRecommender extends Recommender {
         return this.createRecommendation(
           [],
           MedicationReference.empagliflozin,
-          MedicationRecommendationType.noActionRequired,
+          UserMedicationRecommendationType.noActionRequired,
         )
       case ContraindicationCategory.none:
         break
@@ -93,20 +93,20 @@ export class Sglt2iRecommender extends Recommender {
       return this.createRecommendation(
         [],
         MedicationReference.empagliflozin,
-        MedicationRecommendationType.morePatientObservationsRequired,
+        UserMedicationRecommendationType.morePatientObservationsRequired,
       )
 
     if (medianSystolic < 100)
       return this.createRecommendation(
         [],
         MedicationReference.empagliflozin,
-        MedicationRecommendationType.noActionRequired,
+        UserMedicationRecommendationType.noActionRequired,
       )
 
     return this.createRecommendation(
       [],
       MedicationReference.empagliflozin,
-      MedicationRecommendationType.notStarted,
+      UserMedicationRecommendationType.notStarted,
     )
   }
 }

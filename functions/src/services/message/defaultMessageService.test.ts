@@ -8,20 +8,21 @@
 
 import { expect } from 'chai'
 import admin from 'firebase-admin'
-import { type Firestore } from 'firebase-admin/firestore'
 import { https } from 'firebase-functions'
 import { type MessageService } from './messageService.js'
-import { type UserMessage, UserMessageType } from '../../models/message.js'
+import { LocalizedText } from '../../models/types/localizedText.js'
+import { UserMessage, UserMessageType } from '../../models/types/userMessage.js'
 import { cleanupMocks, setupMockFirebase } from '../../tests/setup.js'
+import { CollectionsService } from '../database/collections.js'
 import { getServiceFactory } from '../factory/getServiceFactory.js'
 
 describe('DefaultMessageService', () => {
+  let collectionsService: CollectionsService
   let messageService: MessageService
-  let firestore: Firestore
 
   beforeEach(() => {
     setupMockFirebase()
-    firestore = admin.firestore()
+    collectionsService = new CollectionsService(admin.firestore())
     messageService = getServiceFactory().message()
   })
 
@@ -31,36 +32,35 @@ describe('DefaultMessageService', () => {
 
   describe('dismissMessage', () => {
     it('should update the completionDate of messages', async () => {
-      const message: UserMessage = {
-        creationDate: new Date('2024-01-01').toISOString(),
-        dueDate: new Date('2024-01-01').toISOString(),
-        completionDate: null,
+      const message = new UserMessage({
+        creationDate: new Date('2024-01-01'),
+        dueDate: new Date('2024-01-01'),
         type: UserMessageType.medicationChange,
-        title: 'Medication Change',
-        description: 'You have a new medication!',
+        title: new LocalizedText('Medication Change'),
+        description: new LocalizedText('You have a new medication!'),
         action: 'medications',
         isDismissible: true,
-      }
-      await firestore.doc('users/mockUser/messages/0').set(message)
+      })
+      await collectionsService.userMessages('mockUser').doc('0').set(message)
       await messageService.dismissMessage('mockUser', '0', true)
-      const updatedMessage = await firestore
-        .doc('users/mockUser/messages/0')
+      const updatedMessage = await collectionsService
+        .userMessages('mockUser')
+        .doc('0')
         .get()
       expect(updatedMessage.data()?.completionDate).to.not.be.undefined
     })
 
     it('should not update the completionDate of messages', async () => {
-      const message: UserMessage = {
-        creationDate: new Date('2024-01-01').toISOString(),
-        dueDate: new Date('2024-01-01').toISOString(),
-        completionDate: null,
+      const message = new UserMessage({
+        creationDate: new Date('2024-01-01'),
+        dueDate: new Date('2024-01-01'),
         type: UserMessageType.preAppointment,
-        title: 'Upcoming appointment',
-        description: 'You have an upcoming appointment!',
+        title: new LocalizedText('Upcoming appointment'),
+        description: new LocalizedText('You have an upcoming appointment!'),
         action: 'healthSummary',
         isDismissible: false,
-      }
-      await firestore.doc('users/mockUser/messages/0').set(message)
+      })
+      await collectionsService.userMessages('mockUser').doc('0').set(message)
       try {
         await messageService.dismissMessage('mockUser', '0', true)
         expect.fail('Message should not be dismissible.')

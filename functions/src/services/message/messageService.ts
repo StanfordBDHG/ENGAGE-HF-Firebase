@@ -6,13 +6,13 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { type UserDeviceRegistration } from '../../models/device.js'
-import { type UserMessage } from '../../models/message.js'
+import { type UserDevice } from '../../models/types/userDevice.js'
+import { type UserMessage } from '../../models/types/userMessage.js'
 
 export interface MessageService {
   // Notifications
 
-  registerDevice(userId: string, device: UserDeviceRegistration): Promise<void>
+  registerDevice(userId: string, device: UserDevice): Promise<void>
   sendNotification(
     userId: string,
     message: UserMessage,

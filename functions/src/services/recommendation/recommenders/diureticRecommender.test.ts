@@ -9,13 +9,16 @@
 import { expect } from 'chai'
 import { describe, it } from 'mocha'
 import { DiureticRecommender } from './diureticRecommender.js'
-import { MedicationRecommendationType } from '../../../models/medicationRecommendation.js'
+import { FHIRMedicationRequest } from '../../../models/fhir/baseTypes/fhirElement.js'
+import { FHIRMedication } from '../../../models/fhir/fhirMedication.js'
 import { type MedicationRequestContext } from '../../../models/medicationRequestContext.js'
+import { LocalizedText } from '../../../models/types/localizedText.js'
+import { MedicationClass } from '../../../models/types/medicationClass.js'
+import { UserMedicationRecommendationType } from '../../../models/types/userMedicationRecommendation.js'
 import { MockContraindicationService } from '../../../tests/mocks/contraindicationService.js'
 import { mockHealthSummaryData } from '../../../tests/mocks/healthSummaryData.js'
 import { CodingSystem, FHIRExtensionUrl } from '../../codes.js'
 import { ContraindicationCategory } from '../../contraindication/contraindicationService.js'
-import { FhirService } from '../../fhir/fhirService.js'
 import {
   DrugReference,
   MedicationClassReference,
@@ -28,7 +31,6 @@ describe('DiureticRecommender', () => {
       () => ContraindicationCategory.none,
       () => ContraindicationCategory.none,
     ),
-    new FhirService(),
   )
 
   describe('No treatment', () => {
@@ -51,7 +53,7 @@ describe('DiureticRecommender', () => {
           reference:
             'users/mockPatient/medicationRequests/mockMedicationRequest',
         },
-        request: {
+        request: new FHIRMedicationRequest({
           resourceType: 'MedicationRequest',
           medicationReference: {
             reference: DrugReference.furosemide20,
@@ -73,11 +75,11 @@ describe('DiureticRecommender', () => {
               ],
             },
           ],
-        },
+        }),
         drugReference: {
           reference: DrugReference.furosemide20,
         },
-        drug: {
+        drug: new FHIRMedication({
           resourceType: 'Medication',
           code: {
             coding: [
@@ -88,11 +90,11 @@ describe('DiureticRecommender', () => {
               },
             ],
           },
-        },
+        }),
         medicationReference: {
           reference: MedicationReference.furosemide,
         },
-        medication: {
+        medication: new FHIRMedication({
           resourceType: 'Medication',
           code: {
             coding: [
@@ -111,11 +113,11 @@ describe('DiureticRecommender', () => {
               },
             },
           ],
-        },
-        medicationClass: {
-          name: 'Diuretics',
+        }),
+        medicationClass: new MedicationClass({
+          name: new LocalizedText('Diuretics'),
           videoPath: 'videoSections/1/videos/5',
-        },
+        }),
         medicationClassReference: {
           reference: MedicationClassReference.diuretics,
         },
@@ -131,7 +133,7 @@ describe('DiureticRecommender', () => {
       expect(result.at(0)).to.deep.equal({
         currentMedication: [existingMedication],
         recommendedMedication: undefined,
-        type: MedicationRecommendationType.personalTargetDoseReached,
+        type: UserMedicationRecommendationType.personalTargetDoseReached,
       })
     })
   })

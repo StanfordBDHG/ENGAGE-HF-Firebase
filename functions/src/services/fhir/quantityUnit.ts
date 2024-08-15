@@ -5,7 +5,8 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import { type FHIRSimpleQuantity } from '../../models/fhir/baseTypes.js'
+
+import { type FHIRQuantity } from '../../models/fhir/baseTypes/fhirQuantity.js'
 
 export class QuantityUnit {
   // Static Properties
@@ -55,7 +56,7 @@ export class QuantityUnit {
 
   // Methods
 
-  isUsedIn(other: FHIRSimpleQuantity): boolean {
+  isUsedIn(other: FHIRQuantity): boolean {
     return (
       this.code === other.code &&
       this.system === other.system &&
@@ -81,7 +82,7 @@ export class QuantityUnit {
       ?.convert(value)
   }
 
-  fhirQuantity(value: number): FHIRSimpleQuantity {
+  fhirQuantity(value: number): FHIRQuantity {
     return {
       system: this.system,
       code: this.code,
@@ -90,7 +91,7 @@ export class QuantityUnit {
     }
   }
 
-  valueOf(quantity: FHIRSimpleQuantity | undefined): number | undefined {
+  valueOf(quantity: FHIRQuantity | undefined): number | undefined {
     if (!quantity?.value) return undefined
     if (this.isUsedIn(quantity)) return quantity.value
 

@@ -11,7 +11,7 @@ import {
   type RecommendationOutput,
   Recommender,
 } from './recommender.js'
-import { MedicationRecommendationType } from '../../../models/medicationRecommendation.js'
+import { UserMedicationRecommendationType } from '../../../models/types/userMedicationRecommendation.js'
 import { MedicationClassReference } from '../../references.js'
 
 export class DiureticRecommender extends Recommender {
@@ -25,7 +25,7 @@ export class DiureticRecommender extends Recommender {
     return this.createRecommendation(
       currentRequests,
       undefined,
-      MedicationRecommendationType.personalTargetDoseReached,
+      UserMedicationRecommendationType.personalTargetDoseReached,
     )
   }
 }

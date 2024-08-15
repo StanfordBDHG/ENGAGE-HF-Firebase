@@ -7,13 +7,13 @@
 //
 
 import { median } from '../../../extensions/array.js'
-import { type FHIRAllergyIntolerance } from '../../../models/fhir/allergyIntolerance.js'
-import { type MedicationRecommendationType } from '../../../models/medicationRecommendation.js'
+import { FHIRMedicationRequest } from '../../../models/fhir/baseTypes/fhirElement.js'
+import { type FHIRAllergyIntolerance } from '../../../models/fhir/fhirAllergyIntolerance.js'
 import { type MedicationRequestContext } from '../../../models/medicationRequestContext.js'
-import { type SymptomScore } from '../../../models/symptomScore.js'
+import { type SymptomScore } from '../../../models/types/symptomScore.js'
+import { type UserMedicationRecommendationType } from '../../../models/types/userMedicationRecommendation.js'
 import { type Vitals, type Observation } from '../../../models/vitals.js'
 import { type ContraindicationService } from '../../contraindication/contraindicationService.js'
-import { type FhirService } from '../../fhir/fhirService.js'
 import {
   type MedicationClassReference,
   type MedicationReference,
@@ -29,23 +29,18 @@ export interface RecommendationInput {
 export interface RecommendationOutput {
   currentMedication: MedicationRequestContext[]
   recommendedMedication?: MedicationReference
-  type: MedicationRecommendationType
+  type: UserMedicationRecommendationType
 }
 
 export abstract class Recommender {
   // Properties
 
   protected readonly contraindicationService: ContraindicationService
-  protected readonly fhirService: FhirService
 
   // Constructor
 
-  constructor(
-    contraindicationService: ContraindicationService,
-    fhirService: FhirService,
-  ) {
+  constructor(contraindicationService: ContraindicationService) {
     this.contraindicationService = contraindicationService
-    this.fhirService = fhirService
   }
 
   // Methods
@@ -57,7 +52,7 @@ export abstract class Recommender {
   protected createRecommendation(
     currentMedication: MedicationRequestContext[],
     recommendedMedication: MedicationReference | undefined,
-    type: MedicationRecommendationType,
+    type: UserMedicationRecommendationType,
   ): RecommendationOutput[] {
     return [
       {
@@ -74,14 +69,15 @@ export abstract class Recommender {
     const medication = currentMedication.at(0)?.medication
     if (!medication) throw new Error('Medication is missing')
 
-    const targetDailyDose = this.fhirService
-      .targetDailyDose(medication)
-      ?.reduce((acc, dose) => acc + dose, 0)
+    const targetDailyDose = medication.targetDailyDose?.reduce(
+      (acc, dose) => acc + dose,
+      0,
+    )
     if (!targetDailyDose) throw new Error('Target daily dose is missing')
 
-    const currentDailyDose = this.fhirService
-      .currentDailyDose(currentMedication)
-      .reduce((acc, dose) => acc + dose, 0)
+    const currentDailyDose = FHIRMedicationRequest.currentDailyDose(
+      currentMedication,
+    ).reduce((acc, dose) => acc + dose, 0)
 
     return currentDailyDose >= targetDailyDose
   }

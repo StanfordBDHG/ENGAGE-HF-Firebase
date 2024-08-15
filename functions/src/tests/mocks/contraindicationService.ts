@@ -5,7 +5,7 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import { type FHIRAllergyIntolerance } from '../../models/fhir/allergyIntolerance.js'
+import { type FHIRAllergyIntolerance } from '../../models/fhir/fhirAllergyIntolerance.js'
 import {
   type ContraindicationCategory,
   type ContraindicationService,

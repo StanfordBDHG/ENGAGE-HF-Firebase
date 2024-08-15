@@ -11,8 +11,9 @@ import { onDocumentWritten } from 'firebase-functions/v2/firestore'
 import { z } from 'zod'
 import { validatedOnCall } from './helpers.js'
 import { type Result } from './types.js'
-import { type UserAuth } from '../models/invitation.js'
-import { type User } from '../models/user.js'
+import { optionalish } from '../models/helpers/optionalish.js'
+import { type User } from '../models/types/user.js'
+import { type UserAuth } from '../models/types/userAuth.js'
 import { UserRole } from '../services/credential/credential.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
@@ -100,10 +101,10 @@ const updateUserInformationInputSchema = z.object({
   userId: z.string(),
   data: z.object({
     auth: z.object({
-      displayName: z.string().optional(),
-      email: z.string().email().optional(),
-      phoneNumber: z.string().optional(),
-      photoURL: z.string().optional(),
+      displayName: optionalish(z.string()),
+      email: optionalish(z.string().email()),
+      phoneNumber: optionalish(z.string()),
+      photoURL: optionalish(z.string()),
     }),
   }),
 })

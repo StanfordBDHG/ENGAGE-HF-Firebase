@@ -6,13 +6,11 @@
 // SPDX-License-Identifier: MIT
 //
 
-import {
-  type FHIRQuestionnaire,
-  FHIRQuestionnaireItemType,
-} from '../../models/fhir/questionnaire.js'
+import { FHIRQuestionnaireItemType } from '../../models/fhir/baseTypes/fhirQuestionnaireItem.js'
+import { FHIRQuestionnaire } from '../../models/fhir/fhirQuestionnaire.js'
 
 export function mockQuestionnaire(): FHIRQuestionnaire {
-  return {
+  return new FHIRQuestionnaire({
     resourceType: 'Questionnaire',
     title: 'KCCQ-12',
     language: 'en-US',
@@ -757,5 +755,5 @@ export function mockQuestionnaire(): FHIRQuestionnaire {
         ],
       },
     ],
-  }
+  })
 }

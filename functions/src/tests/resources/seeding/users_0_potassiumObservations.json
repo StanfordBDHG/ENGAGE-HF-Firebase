@@ -10,14 +10,18 @@
           "code": "6298-4",
           "display": "Potassium [Moles/volume] in Blood"
         }
-      ]
+      ],
+      "text": "Potassium [Moles/volume] in Blood"
     },
+    "component": null,
     "valueQuantity": {
-      "value": 4.2,
-      "unit": "mEq/L",
+      "code": "meq/L",
       "system": "http://unitsofmeasure.org",
-      "code": "meq/L"
+      "unit": "mEq/L",
+      "value": 4.2
     },
-    "effectiveDateTime": "2024-06-03T00:00:00.000Z"
+    "effectivePeriod": null,
+    "effectiveDateTime": "2024-06-03T00:00:00.000Z",
+    "effectiveInstant": null
   }
 }

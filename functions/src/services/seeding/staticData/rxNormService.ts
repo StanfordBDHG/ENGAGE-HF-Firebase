@@ -6,11 +6,15 @@
 // SPDX-License-Identifier: MIT
 //
 import * as https from 'https'
-import { localize } from '../../../extensions/localizedText.js'
+import { z } from 'zod'
 import { capitalize } from '../../../extensions/string.js'
-import { type FHIRExtension } from '../../../models/fhir/baseTypes.js'
-import { type FHIRMedication } from '../../../models/fhir/medication.js'
-import { type MedicationClass } from '../../../models/medicationClass.js'
+import {
+  type FHIRExtension,
+  FHIRMedicationRequest,
+} from '../../../models/fhir/baseTypes/fhirElement.js'
+import { FHIRMedication } from '../../../models/fhir/fhirMedication.js'
+import { optionalish } from '../../../models/helpers/optionalish.js'
+import { type MedicationClass } from '../../../models/types/medicationClass.js'
 import { CodingSystem, FHIRExtensionUrl } from '../../codes.js'
 import { QuantityUnit } from '../../fhir/quantityUnit.js'
 
@@ -21,32 +25,48 @@ import { QuantityUnit } from '../../fhir/quantityUnit.js'
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
-export interface MedicationClassSpecification {
-  key: string
-  medications: MedicationSpecification[]
-}
+export const medicationDailyDoseSpecificationSchema = z.object({
+  drug: z.string(),
+  frequency: z.number(),
+  quantity: z.number(),
+})
 
-export interface MedicationDailyDoseSpecification {
-  drug: string
-  frequency: number
-  quantity: number
-}
+export type MedicationDailyDoseSpecification = z.output<
+  typeof medicationDailyDoseSpecificationSchema
+>
 
-export interface MedicationSpecification {
-  code: string
-  minimumDailyDose?: MedicationDailyDoseSpecification
-  targetDailyDose?: MedicationDailyDoseSpecification
-  ingredients?: string[]
-  drugs?: string[]
-  fallbackTerms?: Record<string, RxTermInfo>
-}
+export const rxTermInfoSpecificationSchema = z.object({
+  displayName: optionalish(z.string()),
+  fullName: optionalish(z.string()),
+  rxnormDoseForm: optionalish(z.string()),
+  strength: optionalish(z.string()),
+})
 
-export interface RxTermInfo {
-  displayName?: string
-  fullName?: string
-  rxnormDoseForm?: string
-  strength?: string
-}
+export type RxTermInfo = z.output<typeof rxTermInfoSpecificationSchema>
+
+export const medicationSpecificationSchema = z.object({
+  code: z.string(),
+  minimumDailyDose: optionalish(medicationDailyDoseSpecificationSchema),
+  targetDailyDose: optionalish(medicationDailyDoseSpecificationSchema),
+  ingredients: optionalish(z.string().array()),
+  drugs: optionalish(z.string().array()),
+  fallbackTerms: optionalish(
+    z.record(z.string(), rxTermInfoSpecificationSchema),
+  ),
+})
+
+export type MedicationSpecification = z.output<
+  typeof medicationSpecificationSchema
+>
+
+export const medicationClassSpecificationSchema = z.object({
+  key: z.string(),
+  medications: medicationSpecificationSchema.array(),
+})
+
+export type MedicationClassSpecification = z.output<
+  typeof medicationClassSpecificationSchema
+>
 
 export class RxNormService {
   // Methods
@@ -173,7 +193,7 @@ export class RxNormService {
     targetDailyDose: MedicationDailyDoseSpecification | undefined,
     drugs: Record<string, FHIRMedication>,
   ): FHIRMedication {
-    const result: FHIRMedication = {
+    const result = {
       resourceType: 'Medication',
       id: rxcui,
       code: {
@@ -203,18 +223,19 @@ export class RxNormService {
     }
     if (medicationClassId) {
       const localizedName = medicationClasses.get(medicationClassId)?.name
-      result.extension?.push({
+      result.extension.push({
         url: FHIRExtensionUrl.medicationClass,
         valueReference: {
           reference: `medicationClasses/${medicationClassId}`,
-          display: localizedName ? localize(localizedName, 'en-US') : undefined, // TODO: What to do about localization here? Ignore?
+          display: localizedName?.localize('en-US'), // TODO: What to do about localization here? Ignore?
         },
       })
     }
     if (minimumDailyDose) {
-      result.extension?.push({
+      result.extension.push({
         url: FHIRExtensionUrl.minimumDailyDose,
-        valueMedicationRequest: {
+        /*
+        valueMedicationRequest: new FHIRMedicationRequest({
           resourceType: 'MedicationRequest',
           medicationReference: {
             reference: `medications/${rxcui}/drugs/${minimumDailyDose.drug}`,
@@ -257,13 +278,14 @@ export class RxNormService {
               ],
             },
           ],
-        },
+        }),
+        */
       })
     }
     if (targetDailyDose) {
-      result.extension?.push({
+      result.extension.push({
         url: FHIRExtensionUrl.targetDailyDose,
-        valueMedicationRequest: {
+        valueMedicationRequest: new FHIRMedicationRequest({
           resourceType: 'MedicationRequest',
           medicationReference: {
             reference: `medications/${rxcui}/drugs/${targetDailyDose.drug}`,
@@ -306,10 +328,10 @@ export class RxNormService {
               ],
             },
           ],
-        },
+        }),
       })
     }
-    return result
+    return new FHIRMedication(result)
   }
 
   async buildFHIRDrug(
@@ -330,7 +352,7 @@ export class RxNormService {
     )
       .split('-')
       .map(parseFloat)
-    return {
+    return new FHIRMedication({
       resourceType: 'Medication',
       id: rxcui,
       code: {
@@ -373,7 +395,7 @@ export class RxNormService {
           },
         },
       })),
-    }
+    })
   }
 
   // Methods - API

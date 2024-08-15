@@ -11,14 +11,16 @@
             "frequency": 2,
             "period": 1,
             "periodUnit": "d"
-          }
+          },
+          "code": null
         },
         "doseAndRate": [
           {
+            "type": null,
             "doseQuantity": {
-              "unit": "tbl.",
               "code": "{tbl}",
               "system": "http://unitsofmeasure.org",
+              "unit": "tbl.",
               "value": 2
             }
           }

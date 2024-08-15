@@ -8,19 +8,16 @@
 
 import { expect } from 'chai'
 import { describe } from 'mocha'
-import { UserDataFactory } from './userDataFactory.js'
-import { type SymptomQuestionnaireResponse } from '../../../models/symptomQuestionnaireResponse.js'
-import { FhirService } from '../../fhir/fhirService.js'
+import { FHIRQuestionnaireResponse } from './fhirQuestionnaireResponse.js'
+import { type SymptomQuestionnaireResponse } from '../symptomQuestionnaireResponse.js'
 
-describe('UserDataFactory', () => {
+describe('FHIRQuestionnaireResponse', () => {
   it('decodes an encoded questionnaire response', () => {
-    const fhirService = new FhirService()
-
     const questionnaireResponse: SymptomQuestionnaireResponse = {
       questionnaire:
         'http://spezi.health/fhir/questionnaire/9528ccc2-d1be-4c4c-9c3c-19f78e51ec19',
       questionnaireResponse: 'questionnaireResponse',
-      date: new Date().toISOString(),
+      date: new Date(),
       answer1a: 1,
       answer1b: 2,
       answer1c: 4,
@@ -36,8 +33,9 @@ describe('UserDataFactory', () => {
       answer9: 3,
     }
 
-    const encoded = UserDataFactory.questionnaireResponse(questionnaireResponse)
-    const decoded = fhirService.symptomQuestionnaireResponse(encoded)
-    expect(decoded).to.deep.equal(questionnaireResponse)
+    const encoded = FHIRQuestionnaireResponse.create(questionnaireResponse)
+    expect(encoded.symptomQuestionnaireResponse).to.deep.equal(
+      questionnaireResponse,
+    )
   })
 })

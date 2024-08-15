@@ -6,10 +6,10 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { type TypeOf, z } from 'zod'
+import { z } from 'zod'
 import { validatedOnCall, validatedOnRequest } from './helpers.js'
 import { Flags } from '../flags.js'
-import { UserType } from '../models/user.js'
+import { UserType } from '../models/types/userType.js'
 import { UserRole } from '../services/credential/credential.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 import { type ServiceFactory } from '../services/factory/serviceFactory.js'
@@ -34,7 +34,7 @@ const updateStaticDataInputSchema = z.object({
 
 async function _updateStaticData(
   factory: ServiceFactory,
-  input: TypeOf<typeof updateStaticDataInputSchema>,
+  input: z.output<typeof updateStaticDataInputSchema>,
 ) {
   const service = factory.staticData()
   const promises: Array<Promise<void>> = []
@@ -113,7 +113,7 @@ const defaultSeedInputSchema = z.object({
     .default([]),
 })
 
-async function _defaultSeed(data: TypeOf<typeof defaultSeedInputSchema>) {
+async function _defaultSeed(data: z.output<typeof defaultSeedInputSchema>) {
   console.log(JSON.stringify(data))
   const factory = getServiceFactory()
 
