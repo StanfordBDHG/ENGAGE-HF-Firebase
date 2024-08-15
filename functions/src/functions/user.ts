@@ -19,7 +19,7 @@ import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
 const getUsersInformationInputSchema = z.object({
   includeUserData: z.boolean().optional(),
-  userIds: z.array(z.string()).max(100),
+  userIds: z.string().array().max(100),
 })
 
 export interface UserInformation {

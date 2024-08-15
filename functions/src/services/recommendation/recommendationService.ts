@@ -159,7 +159,7 @@ export class RecommendationService {
           new LocalizedText(''),
         description: this.recommendationDescription(
           output,
-          recommendedMedication?.content ?? null,
+          recommendedMedication?.content ?? undefined,
         ),
         type: output.type,
         videoPath:
@@ -194,7 +194,7 @@ export class RecommendationService {
 
   private recommendationDescription(
     output: RecommendationOutput,
-    recommendedMedication: FHIRMedication | null,
+    recommendedMedication: FHIRMedication | undefined,
   ): LocalizedText {
     switch (output.type) {
       case UserMedicationRecommendationType.improvementAvailable: {

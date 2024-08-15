@@ -28,7 +28,7 @@ export const userMedicationRecommendationDoseScheduleConverter = new Lazy(
     new SchemaConverter({
       schema: z.object({
         frequency: z.number(),
-        quantity: z.array(z.number()),
+        quantity: z.number().array(),
       }),
       encode: (object) => ({
         frequency: object.frequency,

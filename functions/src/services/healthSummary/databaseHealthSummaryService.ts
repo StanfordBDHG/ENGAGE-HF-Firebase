@@ -45,7 +45,7 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
       this.userService.getUser(userId),
       this.patientService.getNextAppointment(userId),
       this.getMedicationRecommendations(userId),
-      this.getSymptomScores(userId, 5),
+      this.getSymptomScores(userId, { limit: 5 }),
       this.getVitals(userId, advanceDateByDays(new Date(), -14)),
     ])
 
@@ -71,9 +71,9 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
 
   async getSymptomScores(
     userId: string,
-    limit: number | null,
+    options: { limit?: number } = {},
   ): Promise<SymptomScore[]> {
-    const result = await this.patientService.getSymptomScores(userId, limit)
+    const result = await this.patientService.getSymptomScores(userId, options)
     return result.map((doc) => doc.content)
   }
 

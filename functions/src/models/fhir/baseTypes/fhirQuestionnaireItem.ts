@@ -27,13 +27,13 @@ const fhirQuestionnaireItemBaseConverter = new Lazy(
         text: optionalish(z.string()),
         required: optionalish(z.boolean()),
         answerOption: optionalish(
-          z.array(
-            z.object({
+          z
+            .object({
               valueCoding: optionalish(
                 z.lazy(() => fhirCodingConverter.value.schema),
               ),
-            }),
-          ),
+            })
+            .array(),
         ),
       }),
       encode: (object) => ({

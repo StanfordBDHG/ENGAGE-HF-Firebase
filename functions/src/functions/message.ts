@@ -9,11 +9,12 @@
 import { https } from 'firebase-functions'
 import { z } from 'zod'
 import { validatedOnCall } from './helpers.js'
+import { optionalish } from '../models/helpers/optionalish.js'
 import { UserRole } from '../services/credential/credential.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
 const dismissMessageInputSchema = z.object({
-  userId: z.string().or(z.null()).default(null),
+  userId: optionalish(z.string()),
   messageId: z.string(),
   didPerformAction: z.boolean().default(false),
 })

@@ -294,7 +294,7 @@ export class MockPatientService implements PatientService {
 
   async getSymptomScores(
     userId: string,
-    limit: number | null,
+    options?: { limit?: number },
   ): Promise<Array<Document<SymptomScore>>> {
     const values: SymptomScore[] = [
       new SymptomScore({
@@ -348,7 +348,7 @@ export class MockPatientService implements PatientService {
   async getLatestSymptomScore(
     userId: string,
   ): Promise<Document<SymptomScore> | undefined> {
-    return (await this.getSymptomScores(userId, null)).at(0)
+    return (await this.getSymptomScores(userId, { limit: 1 })).at(0)
   }
 
   async updateSymptomScore(

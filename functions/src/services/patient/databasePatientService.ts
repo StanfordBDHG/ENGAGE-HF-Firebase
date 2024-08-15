@@ -236,13 +236,13 @@ export class DatabasePatientService implements PatientService {
 
   async getSymptomScores(
     userId: string,
-    limit: number | null,
+    options?: { limit?: number },
   ): Promise<Array<Document<SymptomScore>>> {
     return this.databaseService.getQuery<SymptomScore>((collections) => {
       const query = collections
         .userSymptomScores(userId)
         .orderBy('date', 'desc')
-      return limit ? query.limit(limit) : query
+      return options?.limit ? query.limit(options.limit) : query
     })
   }
 

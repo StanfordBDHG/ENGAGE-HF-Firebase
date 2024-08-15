@@ -21,7 +21,7 @@ import {
 
 export interface UserClaims {
   type: UserType
-  organization: string | null
+  organization?: string
 }
 
 export class DatabaseUserService implements UserService {

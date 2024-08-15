@@ -82,7 +82,7 @@ export interface PatientService {
   ): Promise<Array<Document<FHIRQuestionnaireResponse>>>
   getSymptomScores(
     userId: string,
-    limit: number | null,
+    options?: { limit?: number },
   ): Promise<Array<Document<SymptomScore>>>
   getLatestSymptomScore(
     userId: string,

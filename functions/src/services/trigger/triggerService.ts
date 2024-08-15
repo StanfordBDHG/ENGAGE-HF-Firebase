@@ -178,7 +178,7 @@ export class TriggerService {
   async updateAllSymptomScores(userId: string) {
     try {
       const patientService = this.factory.patient()
-      const symptomScores = await patientService.getSymptomScores(userId, null)
+      const symptomScores = await patientService.getSymptomScores(userId)
       for (const symptomScore of symptomScores) {
         await patientService.updateSymptomScore(
           userId,
