@@ -8,15 +8,24 @@
 
 import { onDocumentWritten } from 'firebase-functions/v2/firestore'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
+import { fhirQuestionnaireResponseConverter } from '../models/fhir/fhirQuestionnaireResponse.js'
 
 export const onUserQuestionnaireResponseWritten = onDocumentWritten(
   'users/{userId}/questionnaireResponses/{questionnaireResponseId}',
-  async (event) =>
-    getServiceFactory()
+  async (event) => {
+    const beforeData = event.data?.before
+    const afterData = event.data?.after
+    await getServiceFactory()
       .trigger()
       .questionnaireResponseWritten(
         event.params.userId,
         event.params.questionnaireResponseId,
-        event.data?.after.data(),
-      ),
+        beforeData ?
+          fhirQuestionnaireResponseConverter.value.fromFirestore(beforeData)
+        : undefined,
+        afterData ?
+          fhirQuestionnaireResponseConverter.value.fromFirestore(afterData)
+        : undefined,
+      )
+  },
 )

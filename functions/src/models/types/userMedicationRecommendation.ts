@@ -9,9 +9,13 @@
 import { z } from 'zod'
 import { localizedTextConverter } from './localizedText.js'
 import { Lazy } from '../../services/factory/lazy.js'
-import { fhirReferenceConverter } from '../fhir/baseTypes/fhirReference.js'
+import {
+  FHIRReference,
+  fhirReferenceConverter,
+} from '../fhir/baseTypes/fhirReference.js'
 import { optionalish } from '../helpers/optionalish.js'
 import { SchemaConverter } from '../helpers/schemaConverter.js'
+import { schedule } from 'firebase-functions/v1/pubsub'
 
 export enum UserMedicationRecommendationType {
   improvementAvailable = 'improvementAvailable',
@@ -108,22 +112,28 @@ export const userMedicationRecommendationDisplayInformationConverter = new Lazy(
     }),
 )
 
+export type UserMedicationRecommendationDisplayInformation = z.output<
+  typeof userMedicationRecommendationDisplayInformationConverter.value.schema
+>
+
 export const userMedicationRecommendationConverter = new Lazy(
   () =>
     new SchemaConverter({
-      schema: z.object({
-        currentMedication: z
-          .lazy(() => fhirReferenceConverter.value.schema)
-          .array(),
-        recommendedMedication: optionalish(
-          z.lazy(() => fhirReferenceConverter.value.schema),
-        ),
-        displayInformation: z.lazy(
-          () =>
-            userMedicationRecommendationDisplayInformationConverter.value
-              .schema,
-        ),
-      }),
+      schema: z
+        .object({
+          currentMedication: z
+            .lazy(() => fhirReferenceConverter.value.schema)
+            .array(),
+          recommendedMedication: optionalish(
+            z.lazy(() => fhirReferenceConverter.value.schema),
+          ),
+          displayInformation: z.lazy(
+            () =>
+              userMedicationRecommendationDisplayInformationConverter.value
+                .schema,
+          ),
+        })
+        .transform((values) => new UserMedicationRecommendation(values)),
       encode: (object) => ({
         currentMedication: object.currentMedication.map(
           fhirReferenceConverter.value.encode,
@@ -140,8 +150,22 @@ export const userMedicationRecommendationConverter = new Lazy(
     }),
 )
 
-export type UserMedicationRecommendation = z.output<
-  typeof userMedicationRecommendationConverter.value.schema
->
+export class UserMedicationRecommendation {
+  // Properties
 
-// TODO: Make class rather than type alias
+  readonly currentMedication: FHIRReference[]
+  readonly recommendedMedication?: FHIRReference
+  readonly displayInformation: UserMedicationRecommendationDisplayInformation
+
+  // Constructor
+
+  constructor(input: {
+    currentMedication: FHIRReference[]
+    recommendedMedication?: FHIRReference
+    displayInformation: UserMedicationRecommendationDisplayInformation
+  }) {
+    this.currentMedication = input.currentMedication
+    this.recommendedMedication = input.recommendedMedication
+    this.displayInformation = input.displayInformation
+  }
+}

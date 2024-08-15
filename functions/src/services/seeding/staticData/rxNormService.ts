@@ -228,7 +228,7 @@ export class RxNormService {
         url: FHIRExtensionUrl.medicationClass,
         valueReference: {
           reference: `medicationClasses/${medicationClassId}`,
-          display: localizedName?.localize('en-US'), // TODO: What to do about localization here? Ignore?
+          display: localizedName?.localize(), // TODO: What to do about localization here? Ignore?
         },
       })
     }

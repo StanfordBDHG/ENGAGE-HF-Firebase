@@ -12,7 +12,8 @@ import { type MessageService } from './messageService.js'
 import { advanceDateByDays } from '../../extensions/date.js'
 import { type UserDevice } from '../../models/types/userDevice.js'
 import { UserMessage, UserMessageType } from '../../models/types/userMessage.js'
-import { type DatabaseService } from '../database/databaseService.js'
+import { Document, type DatabaseService } from '../database/databaseService.js'
+import { QueryDocumentSnapshot } from 'firebase-admin/firestore'
 
 export class DefaultMessageService implements MessageService {
   // Properties
@@ -95,8 +96,17 @@ export class DefaultMessageService implements MessageService {
 
   // Methods - Messages
 
+  async getOpenMessages(userId: string): Promise<Document<UserMessage>[]> {
+    return await this.databaseService.getQuery((collections) =>
+      collections
+        .userMessages(userId)
+        .where('completionDate', '==', null)
+        .orderBy('creationDate', 'desc'),
+    )
+  }
+
   async addMessage(userId: string, message: UserMessage): Promise<boolean> {
-    return this.databaseService.runTransaction(
+    return await this.databaseService.runTransaction(
       async (collections, transaction) => {
         const existingMessage = (
           await collections
@@ -122,6 +132,34 @@ export class DefaultMessageService implements MessageService {
     )
   }
 
+  async completeMessages(
+    userId: string,
+    type: UserMessageType,
+    filter?: (message: UserMessage) => boolean,
+  ) {
+    return await this.databaseService.runTransaction(
+      async (collections, transaction) => {
+        const messages = await transaction.get(
+          collections
+            .userMessages(userId)
+            .where('type', '==', type)
+            .where('completionDate', '==', null),
+        )
+        for (const message of messages.docs.filter(
+          (doc) => filter?.(doc.data()) ?? true,
+        )) {
+          transaction.set(
+            message.ref,
+            new UserMessage({
+              ...message.data(),
+              completionDate: new Date(),
+            }),
+          )
+        }
+      },
+    )
+  }
+
   async dismissMessage(
     userId: string,
     messageId: string,
@@ -130,7 +168,7 @@ export class DefaultMessageService implements MessageService {
     console.log(
       `dismissMessage for user/${userId}/message/${messageId} with didPerformAction ${didPerformAction}`,
     )
-    await this.databaseService.runTransaction(
+    return await this.databaseService.runTransaction(
       async (collections, transaction) => {
         const messageRef = collections.userMessages(userId).doc(messageId)
         const message = await transaction.get(messageRef)
@@ -159,19 +197,22 @@ export class DefaultMessageService implements MessageService {
 
   /// returns whether to save the new message or throw it away
   private handleOldMessage(
-    oldMessage: FirebaseFirestore.QueryDocumentSnapshot,
+    oldMessage: QueryDocumentSnapshot<UserMessage>,
     newMessage: UserMessage,
     transaction: FirebaseFirestore.Transaction,
   ): boolean {
     switch (newMessage.type) {
       case UserMessageType.weightGain: {
         const isOld =
-          new Date(oldMessage.data().creationDate as string) >=
-          advanceDateByDays(new Date(), -7)
+          oldMessage.data().creationDate >= advanceDateByDays(new Date(), -7)
         if (isOld) {
-          transaction.update(oldMessage.ref, {
-            completionDate: new Date(),
-          })
+          transaction.set(
+            oldMessage.ref,
+            new UserMessage({
+              ...oldMessage.data(),
+              completionDate: new Date(),
+            }),
+          )
           return true
         }
         return false
@@ -183,9 +224,13 @@ export class DefaultMessageService implements MessageService {
       }
       case UserMessageType.symptomQuestionnaire:
       case UserMessageType.vitals: {
-        transaction.update(oldMessage.ref, {
-          completionDate: new Date(),
-        })
+        transaction.set(
+          oldMessage.ref,
+          new UserMessage({
+            ...oldMessage.data(),
+            completionDate: new Date(),
+          }),
+        )
         return true
       }
       case UserMessageType.preAppointment: {

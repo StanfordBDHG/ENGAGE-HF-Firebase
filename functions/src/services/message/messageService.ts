@@ -7,7 +7,11 @@
 //
 
 import { type UserDevice } from '../../models/types/userDevice.js'
-import { type UserMessage } from '../../models/types/userMessage.js'
+import {
+  UserMessageType,
+  type UserMessage,
+} from '../../models/types/userMessage.js'
+import { Document } from '../database/databaseService.js'
 
 export interface MessageService {
   // Notifications
@@ -24,6 +28,14 @@ export interface MessageService {
   // Messages
 
   addMessage(userId: string, message: UserMessage): Promise<boolean>
+
+  getOpenMessages(userId: string): Promise<Document<UserMessage>[]>
+
+  completeMessages(
+    userId: string,
+    type: UserMessageType,
+    filter?: (message: UserMessage) => boolean,
+  ): Promise<void>
 
   dismissMessage(
     userId: string,

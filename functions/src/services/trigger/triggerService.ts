@@ -6,18 +6,25 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { type DocumentData } from 'firebase-admin/firestore'
 import { median } from '../../extensions/array.js'
 import {
   advanceDateByDays,
   advanceDateByMinutes,
 } from '../../extensions/date.js'
-import { type FHIRQuestionnaireResponse } from '../../models/fhir/fhirQuestionnaireResponse.js'
-import { UserMessage } from '../../models/types/userMessage.js'
+import {
+  FHIRQuestionnaireResponse,
+  fhirQuestionnaireResponseConverter,
+} from '../../models/fhir/fhirQuestionnaireResponse.js'
+import { UserMessage, UserMessageType } from '../../models/types/userMessage.js'
 import { type ServiceFactory } from '../factory/serviceFactory.js'
 import { QuantityUnit } from '../fhir/quantityUnit.js'
 import { type RecommendationInput } from '../recommendation/recommenders/recommender.js'
 import { QuestionnaireReference, VideoReference } from '../references.js'
+import {
+  UserMedicationRecommendation,
+  UserMedicationRecommendationType,
+} from '../../models/types/userMedicationRecommendation.js'
+import { UserObservationCollection } from '../database/collections.js'
 
 export class TriggerService {
   // Properties
@@ -34,20 +41,39 @@ export class TriggerService {
 
   async every15Minutes() {
     try {
-      const tomorrow = advanceDateByDays(new Date(), 1)
+      const now = new Date()
+      const tomorrow = advanceDateByDays(now, 1)
+      const yesterday = advanceDateByDays(now, -1)
       const patientService = this.factory.patient()
       const messageService = this.factory.message()
 
-      const appointments = await patientService.getEveryAppoinment(
+      const upcomingAppointments = await patientService.getEveryAppoinment(
         advanceDateByMinutes(tomorrow, -15),
         advanceDateByMinutes(tomorrow, 15),
       )
 
       await Promise.all(
-        appointments.map(async (appointment) =>
+        upcomingAppointments.map(async (appointment) =>
           messageService.addMessage(
             appointment.path.split('/')[1],
-            UserMessage.createPreAppointment(),
+            UserMessage.createPreAppointment({
+              appointmentId: appointment.id,
+            }),
+          ),
+        ),
+      )
+
+      const pastAppointments = await patientService.getEveryAppoinment(
+        advanceDateByMinutes(yesterday, -15),
+        advanceDateByMinutes(yesterday, 15),
+      )
+
+      await Promise.all(
+        pastAppointments.map(async (appointment) =>
+          messageService.completeMessages(
+            appointment.path.split('/')[1],
+            UserMessageType.preAppointment,
+            (message) => message.appointmentId === appointment.id,
           ),
         ),
       )
@@ -62,7 +88,6 @@ export class TriggerService {
       const users = await this.factory.user().getAllPatients()
 
       const symptomReminderMessage = UserMessage.createSymptomQuestionnaire({
-        // TODO: Possibly select different questionnaire depending on localization
         questionnaireReference: QuestionnaireReference.enUS,
       })
       const vitalsMessage = UserMessage.createVitals()
@@ -88,6 +113,17 @@ export class TriggerService {
                 { language: user.content.language ?? undefined },
               )
             }
+
+            if (
+              advanceDateByDays(enrollmentDate, -2).getTime() %
+                (durationOfOneDayInMilliseconds * 14) <
+              durationOfOneDayInMilliseconds
+            ) {
+              await this.addMedicationUptitrationMessageIfNeeded({
+                userId: user.id,
+                recommendations: undefined, // Probably need to get recommendations, right?
+              })
+            }
           } catch (error) {
             console.error(
               `Error running every morning trigger for user ${user.id}: ${String(error)}`,
@@ -105,7 +141,8 @@ export class TriggerService {
   async questionnaireResponseWritten(
     userId: string,
     questionnaireResponseId: string,
-    data: DocumentData | undefined,
+    beforeData: FHIRQuestionnaireResponse | undefined,
+    afterData: FHIRQuestionnaireResponse | undefined,
   ) {
     try {
       const patientService = this.factory.patient()
@@ -114,10 +151,43 @@ export class TriggerService {
       await patientService.updateSymptomScore(
         userId,
         questionnaireResponseId,
-        data ?
-          symptomScoreCalculator.calculate(data as FHIRQuestionnaireResponse)
+        afterData ?
+          symptomScoreCalculator.calculate(
+            fhirQuestionnaireResponseConverter.value.schema.parse(
+              afterData,
+            ) as FHIRQuestionnaireResponse,
+          )
         : undefined,
       )
+
+      const messageService = this.factory.message()
+      if (beforeData === undefined && afterData !== undefined) {
+        await messageService.completeMessages(
+          userId,
+          UserMessageType.symptomQuestionnaire,
+        )
+      }
+
+      const recommendations = await this.updateRecommendationsForUser(userId)
+
+      const hasImprovementAvailable =
+        recommendations?.some((recommendation) =>
+          [
+            UserMedicationRecommendationType.improvementAvailable,
+            UserMedicationRecommendationType.notStarted,
+          ].includes(recommendation.displayInformation.type),
+        ) ?? false
+
+      if (hasImprovementAvailable) {
+        const message = UserMessage.createMedicationUptitration()
+        const didAddMessage = await messageService.addMessage(userId, message)
+        if (didAddMessage) {
+          const user = await this.factory.user().getUser(userId)
+          await messageService.sendNotification(userId, message, {
+            language: user?.content.language,
+          })
+        }
+      }
     } catch (error) {
       console.error(
         `Error updating symptom scores for questionnaire response ${questionnaireResponseId} for user ${userId}: ${String(error)}`,
@@ -144,32 +214,70 @@ export class TriggerService {
     }
   }
 
-  async userBodyWeightObservationWritten(userId: string): Promise<void> {
-    try {
-      const date = new Date()
-      const healthSummaryService = this.factory.healthSummary()
-      const bodyWeightObservations =
-        await healthSummaryService.getBodyWeightObservations(
-          userId,
-          advanceDateByDays(date, -7),
-          QuantityUnit.lbs,
-        )
+  async userAllergyIntoleranceWritten(userId: string): Promise<void> {
+    await this.updateRecommendationsForUser(userId)
+  }
 
-      const bodyWeightMedian = median(
-        bodyWeightObservations.map((observation) => observation.value),
-      )
-      if (!bodyWeightMedian) return
-      const mostRecentBodyWeight = bodyWeightObservations[0].value
+  async userObservationWritten(
+    userId: string,
+    collection: UserObservationCollection,
+  ): Promise<void> {
+    await this.updateRecommendationsForUser(userId)
 
-      if (mostRecentBodyWeight - bodyWeightMedian >= 7)
-        await this.factory
-          .message()
-          .addMessage(userId, UserMessage.createWeightGain())
-    } catch (error) {
-      console.error(
-        `Error on user body weight observation written: ${String(error)}`,
-      )
+    switch (collection) {
+      case UserObservationCollection.bodyWeight: {
+        try {
+          const date = new Date()
+          const healthSummaryService = this.factory.healthSummary()
+          const bodyWeightObservations =
+            await healthSummaryService.getBodyWeightObservations(
+              userId,
+              advanceDateByDays(date, -7),
+              QuantityUnit.lbs,
+            )
+
+          const bodyWeightMedian = median(
+            bodyWeightObservations.map((observation) => observation.value),
+          )
+          if (!bodyWeightMedian) return
+          const mostRecentBodyWeight = bodyWeightObservations[0].value
+
+          if (mostRecentBodyWeight - bodyWeightMedian >= 7)
+            await this.factory
+              .message()
+              .addMessage(userId, UserMessage.createWeightGain())
+        } catch (error) {
+          console.error(
+            `Error on user body weight observation written: ${String(error)}`,
+          )
+        }
+      }
+      case UserObservationCollection.bloodPressure:
+      case UserObservationCollection.bodyWeight:
+      case UserObservationCollection.heartRate: {
+        const patientService = this.factory.patient()
+        const yesterday = advanceDateByDays(new Date(), -1)
+        const [bloodPressure, bodyWeight, heartRate] = await Promise.all([
+          patientService.getBloodPressureObservations(userId, yesterday),
+          patientService.getBodyWeightObservations(userId, yesterday),
+          patientService.getHeartRateObservations(userId, yesterday),
+        ])
+
+        if (
+          bloodPressure.length > 0 &&
+          bodyWeight.length > 0 &&
+          heartRate.length > 0
+        ) {
+          await this.factory
+            .message()
+            .completeMessages(userId, UserMessageType.vitals)
+        }
+      }
     }
+  }
+
+  async userMedicationRequestWritten(userId: string): Promise<void> {
+    await this.updateRecommendationsForUser(userId)
   }
 
   // Methods - Actions
@@ -192,6 +300,7 @@ export class TriggerService {
         await this.questionnaireResponseWritten(
           userId,
           questionnaireResponse.id,
+          questionnaireResponse.content,
           questionnaireResponse.content,
         )
       }
@@ -217,7 +326,9 @@ export class TriggerService {
     }
   }
 
-  async updateRecommendationsForUser(userId: string) {
+  async updateRecommendationsForUser(
+    userId: string,
+  ): Promise<UserMedicationRecommendation[] | undefined> {
     try {
       const healthSummaryService = this.factory.healthSummary()
       const medicationService = this.factory.medication()
@@ -255,14 +366,44 @@ export class TriggerService {
       const recommendations =
         await recommendationService.compute(recommendationInput)
 
-      await patientService.updateMedicationRecommendations(
-        userId,
-        recommendations,
-      )
+      const recommendationsChanged =
+        await patientService.updateMedicationRecommendations(
+          userId,
+          recommendations,
+        )
+
+      return recommendations
     } catch (error) {
       console.error(
         `Error updating medication recommendations for user ${userId}: ${String(error)}`,
       )
+      return undefined
     }
+  }
+
+  // Helpers
+
+  private async addMedicationUptitrationMessageIfNeeded(input: {
+    userId: string
+    recommendations?: UserMedicationRecommendation[]
+  }): Promise<boolean> {
+    const hasImprovementAvailable =
+      input.recommendations?.some((recommendation) =>
+        [
+          UserMedicationRecommendationType.improvementAvailable,
+          UserMedicationRecommendationType.notStarted,
+        ].includes(recommendation.displayInformation.type),
+      ) ?? false
+
+    if (!hasImprovementAvailable) return false
+    const message = UserMessage.createMedicationUptitration()
+    const messageService = this.factory.message()
+    const didAddMessage = await messageService.addMessage(input.userId, message)
+    if (!didAddMessage) return false
+    const user = await this.factory.user().getUser(input.userId)
+    await messageService.sendNotification(input.userId, message, {
+      language: user?.content.language,
+    })
+    return true
   }
 }

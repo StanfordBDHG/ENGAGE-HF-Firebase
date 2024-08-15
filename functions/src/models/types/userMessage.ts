@@ -16,6 +16,10 @@ import {
 import { dateConverter } from '../helpers/dateConverter.js'
 import { optionalish } from '../helpers/optionalish.js'
 import { SchemaConverter } from '../helpers/schemaConverter.js'
+import {
+  FHIRReference,
+  fhirReferenceConverter,
+} from '../fhir/baseTypes/fhirReference.js'
 
 export enum UserMessageType {
   medicationChange = 'MedicationChange',
@@ -40,6 +44,7 @@ export const userMessageConverter = new Lazy(
           description: optionalish(z.lazy(() => localizedTextConverter.schema)),
           action: optionalish(z.string()),
           isDismissible: z.boolean(),
+          appointmentId: optionalish(z.string()),
         })
         .transform((content) => new UserMessage(content)),
       encode: (object) => ({
@@ -57,6 +62,7 @@ export const userMessageConverter = new Lazy(
           : null,
         action: object.action ?? null,
         isDismissible: object.isDismissible,
+        appointmentId: object.appointmentId ?? null,
       }),
     }),
 )
@@ -66,17 +72,16 @@ export class UserMessage {
 
   static createMedicationChange(input: {
     creationDate?: Date
+    medicationName: string
     videoReference: VideoReference
   }): UserMessage {
     return new UserMessage({
       creationDate: input.creationDate ?? new Date(),
       title: new LocalizedText({
         en: 'Medication Change',
-        de: 'Änderung der Medikation',
       }),
       description: new LocalizedText({
-        en: 'Your medication has been changed. Watch the video for more information.',
-        de: 'Ihre Medikation wurde geändert. Sehen Sie sich das Video für weitere Informationen an.',
+        en: `Your dose of ${input.medicationName} was changed. You can review medication information on the Education Page.`,
       }),
       action: input.videoReference,
       type: UserMessageType.medicationChange,
@@ -92,12 +97,10 @@ export class UserMessage {
     return new UserMessage({
       creationDate: input.creationDate ?? new Date(),
       title: new LocalizedText({
-        en: 'Medication Uptitration',
-        de: 'Medikationserhöhung',
+        en: 'Eligible Medication Change',
       }),
       description: new LocalizedText({
-        en: 'Your medication is eligible to be increased. Please contact your clinician.',
-        de: 'Ihre Medikation kann erhöht werden. Bitte kontaktieren Sie Ihre:n Ärzt:in.',
+        en: 'You may be eligible for med changes that may help your heart. Your care team will be sent this information. You can review med information on the Education Page.',
       }),
       action: 'medications',
       type: UserMessageType.medicationUptitration,
@@ -108,21 +111,21 @@ export class UserMessage {
   static createPreAppointment(
     input: {
       creationDate?: Date
+      appointmentId?: string
     } = {},
   ): UserMessage {
     return new UserMessage({
       creationDate: input.creationDate ?? new Date(),
       title: new LocalizedText({
         en: 'Appointment Reminder',
-        de: 'Terminerinnerung',
       }),
       description: new LocalizedText({
-        en: 'Your appointment is coming up.',
-        de: 'Ihr Termin steht bevor.',
+        en: 'Your appointment is coming up. Review your Health Summary before your visit.',
       }),
       action: 'healthSummary',
       type: UserMessageType.preAppointment,
       isDismissible: false,
+      appointmentId: input.appointmentId,
     })
   }
 
@@ -134,11 +137,9 @@ export class UserMessage {
       creationDate: input.creationDate ?? new Date(),
       title: new LocalizedText({
         en: 'Symptom Questionnaire',
-        de: 'Symptomfragebogen',
       }),
       description: new LocalizedText({
-        en: 'Please complete the symptom questionnaire.',
-        de: 'Bitte füllen Sie den Symptomfragebogen aus.',
+        en: 'Complete your Symptom Survey for your care team.',
       }),
       action: input.questionnaireReference,
       type: UserMessageType.symptomQuestionnaire,
@@ -155,11 +156,9 @@ export class UserMessage {
       creationDate: input.creationDate ?? new Date(),
       title: new LocalizedText({
         en: 'Vitals',
-        de: 'Vitalwerte',
       }),
       description: new LocalizedText({
-        en: 'Please take blood pressure and weight measurements.',
-        de: 'Bitte nehmen Sie Blutdruck- und Gewichtsmessungen vor.',
+        en: 'Check your blood pressure and weight daily.',
       }),
       action: 'observations',
       type: UserMessageType.vitals,
@@ -175,12 +174,10 @@ export class UserMessage {
     return new UserMessage({
       creationDate: input.creationDate ?? new Date(),
       title: new LocalizedText({
-        en: 'Weight Gain',
-        de: 'Gewichtszunahme',
+        en: 'Weight increase since last week',
       }),
       description: new LocalizedText({
-        en: 'Your weight has increased. Please contact your clinician.',
-        de: 'Ihr Gewicht hat zugenommen. Bitte kontaktieren Sie Ihre:n Ärzt:in.',
+        en: 'Your weight increased over 3 lbs. Your care team will be informed. Please follow any instructions about diuretic changes after weight increase on the Medication page.',
       }),
       action: 'medications',
       type: UserMessageType.weightGain,
@@ -196,11 +193,9 @@ export class UserMessage {
       creationDate: input.creationDate ?? new Date(),
       title: new LocalizedText({
         en: 'Welcome',
-        de: 'Willkommen',
       }),
       description: new LocalizedText({
-        en: 'Welcome to the ENGAGE-HF app.',
-        de: 'Willkommen bei der ENGAGE-HF-App.',
+        en: 'Watch Welcome Video on the Education Page.',
       }),
       action: input.videoReference,
       type: UserMessageType.welcome,
@@ -218,6 +213,7 @@ export class UserMessage {
   readonly description?: LocalizedText
   readonly action?: string
   readonly isDismissible: boolean
+  readonly appointmentId?: string
 
   // Constructor
 
@@ -230,6 +226,7 @@ export class UserMessage {
     description?: LocalizedText
     action?: string
     isDismissible: boolean
+    appointmentId?: string
   }) {
     this.creationDate = input.creationDate
     this.dueDate = input.dueDate
@@ -239,5 +236,6 @@ export class UserMessage {
     this.description = input.description
     this.action = input.action
     this.isDismissible = input.isDismissible
+    this.appointmentId = input.appointmentId
   }
 }

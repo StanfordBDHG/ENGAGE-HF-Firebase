@@ -160,6 +160,7 @@ export class DebugDataService extends SeedingService {
     const values = [
       UserMessage.createMedicationChange({
         creationDate: date,
+        medicationName: 'Losartan Potassium',
         videoReference: VideoReference.aceiAndArbs,
       }),
       UserMessage.createMedicationUptitration({
