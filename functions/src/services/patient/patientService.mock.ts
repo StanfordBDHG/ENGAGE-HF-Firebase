@@ -110,8 +110,8 @@ export class MockPatientService implements PatientService {
   async updateMedicationRecommendations(
     userId: string,
     recommendations: UserMedicationRecommendation[],
-  ): Promise<void> {
-    return
+  ): Promise<boolean> {
+    return false
   }
 
   // Methods - Observations

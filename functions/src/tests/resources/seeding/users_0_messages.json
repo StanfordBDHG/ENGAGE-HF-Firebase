@@ -5,15 +5,14 @@
     "completionDate": null,
     "type": "MedicationChange",
     "title": {
-      "en": "Medication Change",
-      "de": "Änderung der Medikation"
+      "en": "Medication Change"
     },
     "description": {
-      "en": "Your medication has been changed. Watch the video for more information.",
-      "de": "Ihre Medikation wurde geändert. Sehen Sie sich das Video für weitere Informationen an."
+      "en": "Your dose of Losartan Potassium was changed. You can review medication information on the Education Page."
     },
     "action": "videoSections/1/videos/2",
-    "isDismissible": true
+    "isDismissible": true,
+    "reference": "medications/203160"
   },
   "1": {
     "creationDate": "2024-06-05T00:00:00.000Z",
@@ -21,15 +20,14 @@
     "completionDate": null,
     "type": "MedicationUptitration",
     "title": {
-      "en": "Medication Uptitration",
-      "de": "Medikationserhöhung"
+      "en": "Eligible Medication Change"
     },
     "description": {
-      "en": "Your medication is eligible to be increased. Please contact your clinician.",
-      "de": "Ihre Medikation kann erhöht werden. Bitte kontaktieren Sie Ihre:n Ärzt:in."
+      "en": "You may be eligible for med changes that may help your heart. Your care team will be sent this information. You can review med information on the Education Page."
     },
     "action": "medications",
-    "isDismissible": true
+    "isDismissible": true,
+    "reference": null
   },
   "2": {
     "creationDate": "2024-06-05T00:00:00.000Z",
@@ -37,15 +35,14 @@
     "completionDate": null,
     "type": "PreAppointment",
     "title": {
-      "en": "Appointment Reminder",
-      "de": "Terminerinnerung"
+      "en": "Appointment Reminder"
     },
     "description": {
-      "en": "Your appointment is coming up.",
-      "de": "Ihr Termin steht bevor."
+      "en": "Your appointment is coming up. Review your Health Summary before your visit."
     },
     "action": "healthSummary",
-    "isDismissible": false
+    "isDismissible": false,
+    "reference": null
   },
   "3": {
     "creationDate": "2024-06-05T00:00:00.000Z",
@@ -53,31 +50,29 @@
     "completionDate": null,
     "type": "SymptomQuestionnaire",
     "title": {
-      "en": "Symptom Questionnaire",
-      "de": "Symptomfragebogen"
+      "en": "Symptom Questionnaire"
     },
     "description": {
-      "en": "Please complete the symptom questionnaire.",
-      "de": "Bitte füllen Sie den Symptomfragebogen aus."
+      "en": "Complete your Symptom Survey for your care team."
     },
     "action": "questionnaires/0",
-    "isDismissible": false
+    "isDismissible": false,
+    "reference": null
   },
   "4": {
     "creationDate": "2024-06-05T00:00:00.000Z",
-    "dueDate": null,
+    "dueDate": "2024-06-06T00:00:00.000Z",
     "completionDate": null,
     "type": "Vitals",
     "title": {
-      "en": "Vitals",
-      "de": "Vitalwerte"
+      "en": "Vitals"
     },
     "description": {
-      "en": "Please take blood pressure and weight measurements.",
-      "de": "Bitte nehmen Sie Blutdruck- und Gewichtsmessungen vor."
+      "en": "Check your blood pressure and weight daily."
     },
     "action": "observations",
-    "isDismissible": false
+    "isDismissible": false,
+    "reference": null
   },
   "5": {
     "creationDate": "2024-06-05T00:00:00.000Z",
@@ -85,15 +80,14 @@
     "completionDate": null,
     "type": "WeightGain",
     "title": {
-      "en": "Weight Gain",
-      "de": "Gewichtszunahme"
+      "en": "Weight increase since last week"
     },
     "description": {
-      "en": "Your weight has increased. Please contact your clinician.",
-      "de": "Ihr Gewicht hat zugenommen. Bitte kontaktieren Sie Ihre:n Ärzt:in."
+      "en": "Your weight increased over 3 lbs. Your care team will be informed. Please follow any instructions about diuretic changes after weight increase on the Medication page."
     },
     "action": "medications",
-    "isDismissible": true
+    "isDismissible": true,
+    "reference": null
   },
   "6": {
     "creationDate": "2024-06-05T00:00:00.000Z",
@@ -101,14 +95,13 @@
     "completionDate": null,
     "type": "Welcome",
     "title": {
-      "en": "Welcome",
-      "de": "Willkommen"
+      "en": "Welcome"
     },
     "description": {
-      "en": "Welcome to the ENGAGE-HF app.",
-      "de": "Willkommen bei der ENGAGE-HF-App."
+      "en": "Watch Welcome Video on the Education Page."
     },
     "action": "videoSections/0/videos/0",
-    "isDismissible": true
+    "isDismissible": true,
+    "reference": null
   }
 }

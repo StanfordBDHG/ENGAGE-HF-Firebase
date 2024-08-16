@@ -119,8 +119,8 @@ export class DatabasePatientService implements PatientService {
   async updateMedicationRecommendations(
     userId: string,
     recommendations: UserMedicationRecommendation[],
-  ): Promise<void> {
-    await this.databaseService.runTransaction(
+  ): Promise<boolean> {
+    return this.databaseService.runTransaction(
       async (collections, transaction) => {
         const collection = collections.userMedicationRecommendations(userId)
         const result = await transaction.get(collection)
@@ -130,6 +130,7 @@ export class DatabasePatientService implements PatientService {
         for (const recommendation of recommendations) {
           transaction.create(collection.doc(), recommendation)
         }
+        return true // TODO: Check if recommendations actually changed and only return true, if they changed
       },
     )
   }

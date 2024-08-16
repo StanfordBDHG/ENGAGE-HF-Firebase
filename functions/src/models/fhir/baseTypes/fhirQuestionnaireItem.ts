@@ -47,7 +47,7 @@ const fhirQuestionnaireItemBaseConverter = new Lazy(
               option.valueCoding ?
                 fhirCodingConverter.value.encode(option.valueCoding)
               : null,
-          })) ?? null, // TODO: Encoding missing
+          })) ?? null,
       }),
     }),
 )

@@ -29,10 +29,5 @@ export const dateConverter = new SchemaConverter({
       return z.NEVER
     }
   }),
-  encode: (object) => {
-    if (object instanceof Date) {
-      return object.toISOString()
-    }
-    throw new Error(`Trying to encode a date from: ${JSON.stringify(object)}`)
-  },
+  encode: (object) => object.toISOString(),
 })
