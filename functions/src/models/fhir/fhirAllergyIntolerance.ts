@@ -50,7 +50,7 @@ export const fhirAllergyIntoleranceConverter = new Lazy(
       encode: (object) => ({
         ...fhirResourceConverter.value.encode(object),
         type: object.type,
-        criticality: object.criticality,
+        criticality: object.criticality ?? null,
         code:
           object.code ?
             fhirCodeableConceptConverter.value.encode(object.code)

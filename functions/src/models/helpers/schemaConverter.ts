@@ -39,11 +39,24 @@ export class SchemaConverter<Schema extends z.ZodType<any, any, any>>
   // Methods - FirestoreDataConverter
 
   fromFirestore(snapshot: QueryDocumentSnapshot): z.output<Schema> {
-    /* eslint-disable-next-line @typescript-eslint/no-unsafe-return */
-    return this.schema.parse(snapshot.data()) as z.output<Schema>
+    try {
+      /* eslint-disable-next-line @typescript-eslint/no-unsafe-return */
+      return this.schema.parse(snapshot.data()) as z.output<Schema>
+    } catch (error) {
+      console.trace()
+      console.error(`Failing to decode object due to ${error}`)
+      throw error
+    }
   }
 
   toFirestore(modelObject: z.output<Schema>): DocumentData {
-    return this.encode(modelObject) as DocumentData
+    try {
+      return this.encode(modelObject) as DocumentData
+    } catch (error) {
+      console.error(
+        `Failing to encode object of type ${typeof modelObject} due to ${error}`,
+      )
+      throw error
+    }
   }
 }

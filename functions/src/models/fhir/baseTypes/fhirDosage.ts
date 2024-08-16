@@ -50,8 +50,8 @@ export const fhirDosageConverter = new Lazy(
         ),
       }),
       encode: (object) => ({
-        text: object.text,
-        patientInstruction: object.patientInstruction,
+        text: object.text ?? null,
+        patientInstruction: object.patientInstruction ?? null,
         timing:
           object.timing ?
             fhirTimingConverter.value.encode(object.timing)

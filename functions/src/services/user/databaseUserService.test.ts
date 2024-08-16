@@ -57,7 +57,6 @@ describe('DatabaseUserService', () => {
       })
 
       const invitation = await userService.getInvitationByCode(invitationCode)
-      console.log(invitation)
       if (!invitation) assert.fail('Invitation not found')
       await userService.enrollUser(invitation, userId)
 

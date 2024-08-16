@@ -22,9 +22,16 @@ import {
   type MedicationClass,
 } from '../../../models/types/medicationClass.js'
 import { organizationConverter } from '../../../models/types/organization.js'
-import { videoSectionConverter } from '../../../models/types/videoSection.js'
+import {
+  VideoSection,
+  videoSectionConverter,
+} from '../../../models/types/videoSection.js'
 import { type DatabaseService } from '../../database/databaseService.js'
 import { type CachingStrategy, SeedingService } from '../seedingService.js'
+import { Video, videoConverter } from '../../../models/types/video.js'
+import {
+  localizedTextConverter,
+} from '../../../models/types/localizedText.js'
 
 export class StaticDataService extends SeedingService {
   // Properties
@@ -48,13 +55,13 @@ export class StaticDataService extends SeedingService {
     await this.databaseService.runTransaction(
       async (collections, transaction) => {
         await this.deleteCollection(collections.medications, transaction)
-        this.setUnstructuredCollection(
+        this.setCollection(
           collections.medications,
           medications,
           transaction,
         )
         for (const medicationId in drugs) {
-          this.setUnstructuredCollection(
+          this.setCollection(
             collections.drugs(medicationId),
             drugs[medicationId],
             transaction,
@@ -69,9 +76,9 @@ export class StaticDataService extends SeedingService {
     await this.databaseService.runTransaction(
       async (collections, transaction) => {
         await this.deleteCollection(collections.medicationClasses, transaction)
-        this.setStructuredCollection(
+        this.setCollection(
           collections.medicationClasses,
-          this.readJSON(
+          this.readJSONArray(
             'medicationClasses.json',
             medicationClassConverter.value.schema,
           ),
@@ -86,9 +93,9 @@ export class StaticDataService extends SeedingService {
     await this.databaseService.runTransaction(
       async (collections, transaction) => {
         await this.deleteCollection(collections.organizations, transaction)
-        this.setUnstructuredCollection(
+        this.setCollection(
           collections.organizations,
-          this.readJSON(
+          this.readJSONRecord(
             'organizations.json',
             organizationConverter.value.schema,
           ),
@@ -103,9 +110,9 @@ export class StaticDataService extends SeedingService {
     await this.databaseService.runTransaction(
       async (collections, transaction) => {
         await this.deleteCollection(collections.questionnaires, transaction)
-        this.setUnstructuredCollection(
+        this.setCollection(
           collections.questionnaires,
-          this.readJSON(
+          this.readJSONArray(
             'questionnaires.json',
             fhirQuestionnaireConverter.value.schema,
           ),
@@ -120,14 +127,42 @@ export class StaticDataService extends SeedingService {
     await this.databaseService.runTransaction(
       async (collections, transaction) => {
         await this.deleteCollection(collections.videoSections, transaction)
-        this.setStructuredCollection(
-          collections.videoSections,
-          this.readJSON(
-            'videoSections.json',
-            videoSectionConverter.value.schema,
-          ),
-          transaction,
+        const videoSections = this.readJSONArray(
+          'videoSections.json',
+          z.object({
+            title: localizedTextConverter.schema,
+            description: localizedTextConverter.schema,
+            orderIndex: z.number(),
+            videos: z
+              .object({
+                title: localizedTextConverter.schema,
+                youtubeId: localizedTextConverter.schema,
+                orderIndex: z.number(),
+                description: z.string(),
+              })
+              .array(),
+          }),
         )
+
+        let videoSectionIndex = 0
+        for (const videoSection of videoSections) {
+          const videoSectionId = videoSectionIndex.toString()
+          transaction.set(
+            collections.videoSections.doc(videoSectionId),
+            new VideoSection(videoSection),
+          )
+
+          let videoIndex = 0
+          for (const video of videoSection.videos) {
+            const videoId = videoIndex.toString()
+            transaction.set(
+              collections.videos(videoSectionId).doc(videoId),
+              new Video(video),
+            )
+            videoIndex++
+          }
+          videoSectionIndex++
+        }
       },
     )
   }
@@ -146,28 +181,28 @@ export class StaticDataService extends SeedingService {
     return this.cache(
       strategy,
       () => ({
-        medications: this.readJSON(
+        medications: this.readJSONRecord(
           medicationsFile,
           fhirMedicationConverter.value.schema,
-        ) as Record<string, FHIRMedication>,
-        drugs: this.readJSON(
+        ),
+        drugs: this.readJSONRecord(
           drugsFile,
           z.record(z.string(), fhirMedicationConverter.value.schema),
-        ) as Record<string, Record<string, FHIRMedication>>,
+        ),
       }),
       async () => {
-        const medicationClasses = this.readJSON(
+        const medicationClasses = this.readJSONArray(
           'medicationClasses.json',
           medicationClassConverter.value.schema,
-        ) as MedicationClass[]
+        )
         const medicationClassMap = new Map<string, MedicationClass>()
         medicationClasses.forEach((medicationClass, index) => {
           medicationClassMap.set(index.toString(), medicationClass)
         })
-        const specification = this.readJSON(
+        const specification = this.readJSONArray(
           'medicationCodes.json',
           medicationClassSpecificationSchema,
-        ) as MedicationClassSpecification[]
+        )
         return this.rxNormService.buildFHIRCollections(
           medicationClassMap,
           specification,

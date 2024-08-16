@@ -22,10 +22,10 @@ export const fhirTimingRepeatConverter = new Lazy(
         timeOfDay: optionalish(z.string().array()),
       }),
       encode: (object) => ({
-        frequency: object.frequency,
-        period: object.period,
-        periodUnit: object.periodUnit,
-        timeOfDay: object.timeOfDay,
+        frequency: object.frequency ?? null,
+        period: object.period ?? null,
+        periodUnit: object.periodUnit ?? null,
+        timeOfDay: object.timeOfDay ?? null,
       }),
     }),
 )

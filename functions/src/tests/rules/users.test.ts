@@ -252,7 +252,6 @@ describe('firestore.rules: users/{userId}', () => {
           { merge: true },
         ),
     )
-    console.log('patient')
     await assertSucceeds(
       ownerFirestore
         .doc(`users/${patientId}`)

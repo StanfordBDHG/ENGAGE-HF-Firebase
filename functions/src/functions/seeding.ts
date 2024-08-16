@@ -14,6 +14,10 @@ import { UserRole } from '../services/credential/credential.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 import { type ServiceFactory } from '../services/factory/serviceFactory.js'
 import { CachingStrategy } from '../services/seeding/seedingService.js'
+import { userConverter } from '../models/types/user.js'
+import { optionalish } from '../models/helpers/optionalish.js'
+import { customSeedingOptionsSchema } from '../services/seeding/debugData/debugDataService.js'
+import { dateConverter } from '../models/helpers/dateConverter.js'
 
 enum StaticDataComponent {
   medicationClasses = 'medicationClasses',
@@ -91,7 +95,7 @@ enum UserDebugDataComponent {
 }
 
 const defaultSeedInputSchema = z.object({
-  date: z.date().default(new Date()),
+  date: dateConverter.schema.default(new Date().toISOString()),
   only: z
     .nativeEnum(DebugDataComponent)
     .array()
@@ -326,24 +330,8 @@ export const defaultSeed =
       return 'Success'
     })
 
-const customSeedInputSchema = z.object({
-  users: z
-    .object({
-      auth: z.object({
-        uid: z.string().optional(),
-        email: z.string(),
-        password: z.string(),
-      }),
-      user: z.any().optional(),
-      collections: z.record(z.string(), z.any().array()).default({}),
-    })
-    .array()
-    .default([]),
-  firestore: z.record(z.string(), z.any()).default({}),
-})
-
 export const customSeed = validatedOnRequest(
-  customSeedInputSchema,
+  customSeedingOptionsSchema,
   async (_, data, response) => {
     const factory = getServiceFactory()
 

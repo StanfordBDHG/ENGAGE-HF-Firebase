@@ -28,7 +28,7 @@ export const invitationConverter = new Lazy(
         })
         .transform((values) => new Invitation(values)),
       encode: (object) => ({
-        userId: object.userId,
+        userId: object.userId ?? null,
         code: object.code,
         auth: object.auth ? userAuthConverter.value.encode(object.auth) : null,
         user: userRegistrationConverter.value.encode(object.user),

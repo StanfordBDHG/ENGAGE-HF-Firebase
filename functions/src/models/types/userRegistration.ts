@@ -33,16 +33,16 @@ export const userRegistrationInputConverter = new Lazy(
       }),
       encode: (object) => ({
         type: object.type,
-        organization: object.organization,
+        organization: object.organization ?? null,
         dateOfBirth:
           object.dateOfBirth ? dateConverter.encode(object.dateOfBirth) : null,
-        clinician: object.clinician,
+        clinician: object.clinician ?? null,
         messagesSettings:
           object.messagesSettings ?
             userMessagesSettingsConverter.value.encode(object.messagesSettings)
           : null,
-        language: object.language,
-        timeZone: object.timeZone,
+        language: object.language ?? null,
+        timeZone: object.timeZone ?? null,
       }),
     }),
 )

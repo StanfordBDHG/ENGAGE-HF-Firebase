@@ -44,9 +44,7 @@ export class DatabaseMedicationService implements MedicationService {
     const medication = (await this.getReference(medicationReference))?.content
     medicationReference.display = medication?.displayName
     if (!medication) throw new Error('Medication not found')
-    console.log('medication', medication)
     const medicationClassReference = medication.medicationClassReference
-    console.log('medicationClassReference', medicationClassReference)
     if (!medicationClassReference)
       throw new Error('Medication class reference not found')
     const medicationClass = (

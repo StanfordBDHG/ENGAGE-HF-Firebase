@@ -28,13 +28,13 @@ export const symptomScoreConverter = new Lazy(
         })
         .transform((values) => new SymptomScore(values)),
       encode: (object) => ({
-        questionnaireResponseId: object.questionnaireResponseId,
+        questionnaireResponseId: object.questionnaireResponseId ?? null,
         date: dateConverter.encode(object.date),
         overallScore: object.overallScore,
-        physicalLimitsScore: object.physicalLimitsScore,
-        symptomFrequencyScore: object.symptomFrequencyScore,
-        socialLimitsScore: object.socialLimitsScore,
-        qualityOfLifeScore: object.qualityOfLifeScore,
+        physicalLimitsScore: object.physicalLimitsScore ?? null,
+        symptomFrequencyScore: object.symptomFrequencyScore ?? null,
+        socialLimitsScore: object.socialLimitsScore ?? null,
+        qualityOfLifeScore: object.qualityOfLifeScore ?? null,
         dizzinessScore: object.dizzinessScore,
       }),
     }),

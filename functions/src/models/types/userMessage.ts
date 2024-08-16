@@ -55,7 +55,7 @@ export const userMessageConverter = new Lazy(
           object.description ?
             localizedTextConverter.encode(object.description)
           : null,
-        action: object.action,
+        action: object.action ?? null,
         isDismissible: object.isDismissible,
       }),
     }),

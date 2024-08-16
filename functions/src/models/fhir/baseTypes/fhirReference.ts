@@ -22,9 +22,9 @@ export const fhirReferenceConverter = new Lazy(
       }),
       encode: (object) => ({
         reference: object.reference,
-        type: object.type,
-        display: object.display,
-        identifier: object.identifier,
+        type: object.type ?? null,
+        display: object.display ?? null,
+        identifier: object.identifier ?? null,
       }),
     }),
 )

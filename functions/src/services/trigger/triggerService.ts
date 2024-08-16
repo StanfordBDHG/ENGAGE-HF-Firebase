@@ -78,8 +78,7 @@ export class TriggerService {
             const enrollmentDate = user.content.dateOfEnrollment
             const durationOfOneDayInMilliseconds = 24 * 60 * 60 * 1000
             if (
-              new Date(enrollmentDate).getTime() %
-                (durationOfOneDayInMilliseconds * 14) <
+              enrollmentDate.getTime() % (durationOfOneDayInMilliseconds * 14) <
               durationOfOneDayInMilliseconds
             ) {
               await messageService.addMessage(user.id, symptomReminderMessage)

@@ -82,8 +82,8 @@ export const fhirAppointmentConverter = new Lazy(
         created: dateConverter.encode(object.created),
         start: dateConverter.encode(object.start),
         end: dateConverter.encode(object.end),
-        comment: object.comment,
-        patientInstruction: object.patientInstruction,
+        comment: object.comment ?? null,
+        patientInstruction: object.patientInstruction ?? null,
         participant:
           object.participant?.map(
             fhirAppointmentParticipantConverter.value.encode,

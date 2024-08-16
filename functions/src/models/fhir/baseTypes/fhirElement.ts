@@ -94,8 +94,9 @@ export const fhirElementConverter = new SchemaConverter({
     ),
   }),
   encode: (object) => ({
-    id: object.id,
-    extension: object.extension?.map(fhirExtensionConverter.value.encode),
+    id: object.id ?? null,
+    extension:
+      object.extension?.map(fhirExtensionConverter.value.encode) ?? null,
   }),
 })
 
@@ -115,7 +116,6 @@ export abstract class FHIRElement {
   // Methods
 
   extensionsWithUrl(url: FHIRExtensionUrl): FHIRExtension[] {
-    console.log('url', url)
     return (
       this.extension?.filter((extension) => extension.url === url.toString()) ??
       []

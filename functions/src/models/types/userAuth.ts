@@ -23,10 +23,10 @@ export const userAuthConverter = new Lazy(
         })
         .transform((values) => new UserAuth(values)),
       encode: (object) => ({
-        email: object.email,
-        displayName: object.displayName,
-        phoneNumber: object.phoneNumber,
-        photoURL: object.photoURL,
+        email: object.email ?? null,
+        displayName: object.displayName ?? null,
+        phoneNumber: object.phoneNumber ?? null,
+        photoURL: object.photoURL ?? null,
       }),
     }),
 )

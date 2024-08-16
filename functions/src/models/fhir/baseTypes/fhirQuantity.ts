@@ -21,10 +21,10 @@ export const fhirQuantityConverter = new Lazy(
         value: optionalish(z.number()),
       }),
       encode: (object) => ({
-        code: object.code,
-        system: object.system,
-        unit: object.unit,
-        value: object.value,
+        code: object.code ?? null,
+        system: object.system ?? null,
+        unit: object.unit ?? null,
+        value: object.value ?? null,
       }),
     }),
 )

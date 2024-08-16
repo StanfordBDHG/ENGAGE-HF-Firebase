@@ -5,6 +5,7 @@
 //
 // SPDX-License-Identifier: MIT
 //
+
 import * as https from 'https'
 import { z } from 'zod'
 import { capitalize } from '../../../extensions/string.js'

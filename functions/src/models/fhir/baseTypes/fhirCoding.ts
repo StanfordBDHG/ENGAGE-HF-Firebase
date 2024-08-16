@@ -24,11 +24,11 @@ export const fhirCodingConverter = new Lazy(
       }),
       encode: (object) => ({
         ...fhirElementConverter.value.encode(object),
-        system: object.system,
-        version: object.version,
-        code: object.code,
-        display: object.display,
-        userSelected: object.userSelected,
+        system: object.system ?? null,
+        version: object.version ?? null,
+        code: object.code ?? null,
+        display: object.display ?? null,
+        userSelected: object.userSelected ?? null,
       }),
     }),
 )

@@ -20,11 +20,19 @@ import { Lazy } from '../../services/factory/lazy.js'
 import { optionalish } from '../helpers/optionalish.js'
 import { SchemaConverter } from '../helpers/schemaConverter.js'
 
+export enum FHIRQuestionnairePublicationStatus {
+  draft = 'draft',
+  active = 'active',
+  retired = 'retired',
+  unknown = 'unknown',
+}
+
 export const fhirQuestionnaireConverter = new Lazy(
   () =>
     new SchemaConverter({
       schema: fhirResourceConverter.value.schema
         .extend({
+          status: z.nativeEnum(FHIRQuestionnairePublicationStatus),
           title: optionalish(z.string()),
           language: optionalish(z.string()),
           publisher: optionalish(z.string()),
@@ -36,10 +44,11 @@ export const fhirQuestionnaireConverter = new Lazy(
         .transform((values) => new FHIRQuestionnaire(values)),
       encode: (object) => ({
         ...fhirResourceConverter.value.encode(object),
-        title: object.title,
-        language: object.language,
-        publisher: object.publisher,
-        url: object.url,
+        title: object.title ?? null,
+        status: object.status,
+        language: object.language ?? null,
+        publisher: object.publisher ?? null,
+        url: object.url ?? null,
         item:
           object.item?.map(fhirQuestionnaireItemConverter.value.encode) ?? null,
       }),
@@ -51,6 +60,7 @@ export class FHIRQuestionnaire extends FHIRResource {
 
   readonly resourceType: string = 'Questionnaire'
   readonly title?: string
+  readonly status: FHIRQuestionnairePublicationStatus
   readonly language?: string
   readonly publisher?: string
   readonly url?: string
@@ -61,6 +71,7 @@ export class FHIRQuestionnaire extends FHIRResource {
   constructor(
     input: FHIRResourceInput & {
       title?: string
+      status: FHIRQuestionnairePublicationStatus
       language?: string
       publisher?: string
       url?: string
@@ -69,6 +80,7 @@ export class FHIRQuestionnaire extends FHIRResource {
   ) {
     super(input)
     this.title = input.title
+    this.status = input.status
     this.language = input.language
     this.publisher = input.publisher
     this.url = input.url

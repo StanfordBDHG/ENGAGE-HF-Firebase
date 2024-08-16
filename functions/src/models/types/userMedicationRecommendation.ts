@@ -99,7 +99,7 @@ export const userMedicationRecommendationDisplayInformationConverter = new Lazy(
         subtitle: localizedTextConverter.encode(object.subtitle),
         description: localizedTextConverter.encode(object.description),
         type: object.type,
-        videoPath: object.videoPath,
+        videoPath: object.videoPath ?? null,
         dosageInformation:
           userMedicationRecommendationDosageInformationConverter.value.encode(
             object.dosageInformation,
@@ -125,8 +125,13 @@ export const userMedicationRecommendationConverter = new Lazy(
         ),
       }),
       encode: (object) => ({
-        currentMedication: object.currentMedication,
-        recommendedMedication: object.recommendedMedication,
+        currentMedication: object.currentMedication.map(
+          fhirReferenceConverter.value.encode,
+        ),
+        recommendedMedication:
+          object.recommendedMedication ?
+            fhirReferenceConverter.value.encode(object.recommendedMedication)
+          : null,
         displayInformation:
           userMedicationRecommendationDisplayInformationConverter.value.encode(
             object.displayInformation,

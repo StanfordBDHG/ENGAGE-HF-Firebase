@@ -22,9 +22,10 @@ export const userMessagesSettingsConverter = new Lazy(
         })
         .transform((values) => new UserMessagesSettings(values)),
       encode: (object) => ({
-        dailyRemindersAreActive: object.dailyRemindersAreActive,
-        textNotificationsAreActive: object.textNotificationsAreActive,
-        medicationRemindersAreActive: object.medicationRemindersAreActive,
+        dailyRemindersAreActive: object.dailyRemindersAreActive ?? null,
+        textNotificationsAreActive: object.textNotificationsAreActive ?? null,
+        medicationRemindersAreActive:
+          object.medicationRemindersAreActive ?? null,
       }),
     }),
 )

@@ -17,14 +17,16 @@ export const videoConverter = new Lazy(
       schema: z
         .object({
           title: localizedTextConverter.schema,
-          youtubeId: z.string(),
+          youtubeId: localizedTextConverter.schema,
           orderIndex: z.number(),
+          description: z.string(),
         })
         .transform((content) => new Video(content)),
       encode: (object) => ({
         title: localizedTextConverter.encode(object.title),
-        youtubeId: object.youtubeId,
+        youtubeId: localizedTextConverter.encode(object.youtubeId),
         orderIndex: object.orderIndex,
+        description: object.description,
       }),
     }),
 )
@@ -33,18 +35,21 @@ export class Video {
   // Properties
 
   readonly title: LocalizedText
-  readonly youtubeId: string
+  readonly youtubeId: LocalizedText
   readonly orderIndex: number
+  readonly description: string
 
   // Constructor
 
   constructor(input: {
     title: LocalizedText
-    youtubeId: string
+    youtubeId: LocalizedText
     orderIndex: number
+    description: string
   }) {
     this.title = input.title
     this.youtubeId = input.youtubeId
     this.orderIndex = input.orderIndex
+    this.description = input.description
   }
 }

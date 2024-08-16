@@ -43,7 +43,7 @@ export const fhirQuestionnaireResponseItemConverter = new Lazy(
                 fhirCodingConverter.value.encode(value.valueCoding)
               : null,
           })) ?? null,
-        linkId: object.linkId,
+        linkId: object.linkId ?? null,
       }),
     }),
 )

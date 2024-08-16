@@ -37,10 +37,10 @@ const fhirQuestionnaireItemBaseConverter = new Lazy(
         ),
       }),
       encode: (object) => ({
-        linkId: object.linkId,
-        type: object.type,
-        text: object.text,
-        required: object.required,
+        linkId: object.linkId ?? null,
+        type: object.type ?? null,
+        text: object.text ?? null,
+        required: object.required ?? null,
         answerOption:
           object.answerOption?.map((option) => ({
             valueCoding:

@@ -38,23 +38,27 @@ import {
   VideoReference,
 } from '../../references.js'
 import { SeedingService } from '../seedingService.js'
+import { optionalish } from '../../../models/helpers/optionalish.js'
+import { userConverter } from '../../../models/types/user.js'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-export interface UserSeedingOptions {
-  auth: {
-    uid?: string
-    email: string
-    password: string
-  }
-  user?: any
-  collections?: Record<string, Record<string, any>>
-}
+export const userSeedingOptionsSchema = z.object({
+  auth: z.object({
+    uid: optionalish(z.string()),
+    email: z.string(),
+    password: z.string(),
+  }),
+  user: optionalish(userConverter.value.schema),
+  collections: optionalish(z.record(z.string(), z.record(z.string(), z.any()))),
+})
+export type UserSeedingOptions = z.output<typeof userSeedingOptionsSchema>
 
-export interface CustomSeedingOptions {
-  users: UserSeedingOptions[]
-  firestore: Record<string, Record<string, any>>
-}
+export const customSeedingOptionsSchema = z.object({
+  users: userSeedingOptionsSchema.array(),
+  firestore: optionalish(z.record(z.string(), z.record(z.string(), z.any()))),
+})
+export type CustomSeedingOptions = z.output<typeof customSeedingOptionsSchema>
 
 export class DebugDataService extends SeedingService {
   // Properties
@@ -85,7 +89,7 @@ export class DebugDataService extends SeedingService {
     }
     await this.databaseService.runTransaction((collections, transaction) => {
       for (const collectionName in input.firestore) {
-        this.setUnstructuredCollection(
+        this.setCollection(
           collections.firestore.collection(collectionName),
           input.firestore[collectionName],
           transaction,
@@ -96,7 +100,7 @@ export class DebugDataService extends SeedingService {
   }
 
   async seedInvitations() {
-    const invitations = this.readJSON(
+    const invitations = this.readJSONRecord(
       'invitations.json',
       invitationConverter.value.schema,
     )
@@ -107,7 +111,7 @@ export class DebugDataService extends SeedingService {
   }
 
   async seedUsers() {
-    const users = this.readJSON('users.json', z.any()) as UserSeedingOptions[]
+    const users = this.readJSONArray('users.json', userSeedingOptionsSchema)
     const userIds = await Promise.all(
       users.map((user) => this.createUser(user)),
     )
@@ -385,11 +389,9 @@ export class DebugDataService extends SeedingService {
   }
 
   async seedUserQuestionnaireResponses(userId: string, date: Date) {
-    const questionnaire = (
-      this.readJSON(
-        '../questionnaires.json',
-        fhirQuestionnaireConverter.value.schema,
-      ) as FHIRQuestionnaire[]
+    const questionnaire = this.readJSONArray(
+      '../questionnaires.json',
+      fhirQuestionnaireConverter.value.schema,
     ).at(0)
 
     // This is just a list of pseudo-random numbers that is used to generate
@@ -473,7 +475,7 @@ export class DebugDataService extends SeedingService {
     await this.databaseService.runTransaction((collections, transaction) => {
       transaction.set(collections.users.doc(authUser.uid), user.user)
       for (const collectionName in user.collections ?? {}) {
-        this.setUnstructuredCollection(
+        this.setCollection(
           collections.firestore.collection(collectionName),
           user.collections?.[collectionName] ?? [],
           transaction,
@@ -484,17 +486,13 @@ export class DebugDataService extends SeedingService {
   }
 
   private async replaceCollection<T>(
-    collection: (collections: CollectionsService) => CollectionReference,
+    collection: (collections: CollectionsService) => CollectionReference<T>,
     data: T[] | Record<string, T>,
   ) {
     await this.databaseService.runTransaction(
       async (collections, transaction) => {
         await this.deleteCollection(collection(collections), transaction)
-        this.setUnstructuredCollection(
-          collection(collections),
-          data,
-          transaction,
-        )
+        this.setCollection(collection(collections), data, transaction)
       },
     )
   }
