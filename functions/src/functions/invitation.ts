@@ -9,26 +9,16 @@
 import { https, logger } from 'firebase-functions/v2'
 import { z } from 'zod'
 import { validatedOnCall } from './helpers.js'
-import { type Invitation } from '../models/invitation.js'
-import { UserType } from '../models/user.js'
+import { Invitation } from '../models/types/invitation.js'
+import { userAuthConverter } from '../models/types/userAuth.js'
+import { userRegistrationConverter } from '../models/types/userRegistration.js'
+import { UserType } from '../models/types/userType.js'
 import { UserRole } from '../services/credential/credential.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
 const createInvitationInputSchema = z.object({
-  auth: z.object({
-    displayName: z.string().optional(),
-    email: z.string().email().optional(),
-    phoneNumber: z.string().optional(),
-    photoURL: z.string().optional(),
-  }),
-  user: z.object({
-    type: z.nativeEnum(UserType),
-    organization: z.string().optional(),
-    clinician: z.string().optional(),
-    language: z.string().optional(),
-    timeZone: z.string().optional(),
-    dateOfBirth: z.string().datetime().optional(),
-  }),
+  auth: z.lazy(() => userAuthConverter.value.schema),
+  user: z.lazy(() => userRegistrationConverter.value.schema),
 })
 
 export interface CreateInvitationOutput {
@@ -68,10 +58,10 @@ export const createInvitation = validatedOnCall(
         )
 
       try {
-        const invitation: Invitation = {
+        const invitation = new Invitation({
           ...request.data,
           code: invitationCode,
-        }
+        })
         const { id } = await userService.createInvitation(invitation)
         return { id }
       } catch (error) {

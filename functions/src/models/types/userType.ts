@@ -5,9 +5,10 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import { type LocalizedText } from './helpers.js'
 
-export interface MedicationClass {
-  name: LocalizedText
-  videoPath: string
+export enum UserType {
+  admin = 'admin',
+  owner = 'owner',
+  clinician = 'clinician',
+  patient = 'patient',
 }

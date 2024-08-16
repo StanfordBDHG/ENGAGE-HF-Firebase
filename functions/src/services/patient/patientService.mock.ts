@@ -7,21 +7,18 @@
 //
 
 import { type PatientService } from './patientService.js'
-import { type FHIRAllergyIntolerance } from '../../models/fhir/allergyIntolerance.js'
+import { FHIRMedicationRequest } from '../../models/fhir/baseTypes/fhirElement.js'
+import { type FHIRAllergyIntolerance } from '../../models/fhir/fhirAllergyIntolerance.js'
 import {
-  AppointmentStatus,
-  type FHIRAppointment,
-} from '../../models/fhir/appointment.js'
-import { type FHIRMedicationRequest } from '../../models/fhir/medication.js'
-import {
-  type FHIRObservation,
-  FHIRObservationStatus,
-} from '../../models/fhir/observation.js'
-import { type FHIRQuestionnaireResponse } from '../../models/fhir/questionnaireResponse.js'
-import { type MedicationRecommendation } from '../../models/medicationRecommendation.js'
-import { type SymptomScore } from '../../models/symptomScore.js'
+  FHIRAppointmentStatus,
+  FHIRAppointment,
+} from '../../models/fhir/fhirAppointment.js'
+import { FHIRObservation } from '../../models/fhir/fhirObservation.js'
+import { type FHIRQuestionnaireResponse } from '../../models/fhir/fhirQuestionnaireResponse.js'
+import { SymptomScore } from '../../models/types/symptomScore.js'
+import { type UserMedicationRecommendation } from '../../models/types/userMedicationRecommendation.js'
 import { mockQuestionnaireResponse } from '../../tests/mocks/questionnaireResponse.js'
-import { CodingSystem, LoincCode } from '../codes.js'
+import { LoincCode } from '../codes.js'
 import { type Document } from '../database/databaseService.js'
 import { QuantityUnit } from '../fhir/quantityUnit.js'
 
@@ -48,20 +45,14 @@ export class MockPatientService implements PatientService {
     return {
       id: '123',
       path: 'appointments/123',
-      content: {
+      content: new FHIRAppointment({
         resourceType: 'Appointment',
-        status: AppointmentStatus.pending,
-        created: new Date('2024-01-01').toISOString(),
-        start: new Date('2024-02-03').toISOString(),
-        end: new Date('2024-02-03').toISOString(),
-        participant: [
-          {
-            actor: {
-              reference: `users/${userId}`,
-            },
-          },
-        ],
-      },
+        status: FHIRAppointmentStatus.pending,
+        created: new Date('2024-01-01'),
+        start: new Date('2024-02-03'),
+        end: new Date('2024-02-03'),
+        participant: [],
+      }),
     }
   }
 
@@ -77,8 +68,8 @@ export class MockPatientService implements PatientService {
 
   async getMedicationRecommendations(
     userId: string,
-  ): Promise<Array<Document<MedicationRecommendation>>> {
-    const values: MedicationRecommendation[] = []
+  ): Promise<Array<Document<UserMedicationRecommendation>>> {
+    const values: UserMedicationRecommendation[] = []
     return values.map((value, index) => ({
       id: index.toString(),
       path: `users/${userId}/medicationRecommendations/${index}`,
@@ -90,7 +81,7 @@ export class MockPatientService implements PatientService {
     userId: string,
   ): Promise<Array<Document<FHIRMedicationRequest>>> {
     const values: FHIRMedicationRequest[] = [
-      {
+      new FHIRMedicationRequest({
         resourceType: 'MedicationRequest',
         medicationReference: {
           reference: 'medications/203160/drugs/20352',
@@ -107,7 +98,7 @@ export class MockPatientService implements PatientService {
             ],
           },
         ],
-      },
+      }),
     ]
     return values.map((value, index) => ({
       id: index.toString(),
@@ -118,9 +109,9 @@ export class MockPatientService implements PatientService {
 
   async updateMedicationRecommendations(
     userId: string,
-    recommendations: MedicationRecommendation[],
-  ): Promise<void> {
-    return
+    recommendations: UserMedicationRecommendation[],
+  ): Promise<boolean> {
+    return false
   }
 
   // Methods - Observations
@@ -151,63 +142,12 @@ export class MockPatientService implements PatientService {
     diastolicBloodPressure: number,
     date: Date,
   ): FHIRObservation {
-    return {
-      resourceType: 'Observation',
-      code: {
-        coding: [
-          {
-            code: '85354-9',
-            display: 'Blood pressure panel',
-            system: 'http://loinc.org',
-          },
-        ],
-      },
-      component: [
-        {
-          code: {
-            coding: [
-              {
-                code: '8480-6',
-                display: 'Systolic blood pressure',
-                system: 'http://loinc.org',
-              },
-              {
-                code: 'HKQuantityTypeIdentifierBloodPressureSystolic',
-                display: 'Blood Pressure Systolic',
-                system: 'http://developer.apple.com/documentation/healthkit',
-              },
-            ],
-          },
-          valueQuantity: {
-            ...QuantityUnit.mmHg,
-            value: systolicBloodPressure,
-          },
-        },
-        {
-          code: {
-            coding: [
-              {
-                code: '8462-4',
-                display: 'Diastolic blood pressure',
-                system: 'http://loinc.org',
-              },
-              {
-                code: 'HKQuantityTypeIdentifierBloodPressureDiastolic',
-                display: 'Blood Pressure Diastolic',
-                system: 'http://developer.apple.com/documentation/healthkit',
-              },
-            ],
-          },
-          valueQuantity: {
-            ...QuantityUnit.mmHg,
-            value: diastolicBloodPressure,
-          },
-        },
-      ],
-      effectiveDateTime: date.toISOString(),
+    return FHIRObservation.createBloodPressure({
       id: 'DDA0F363-2BA3-426F-9F68-1C938FFDF943',
-      status: FHIRObservationStatus.final,
-    }
+      systolic: systolicBloodPressure,
+      diastolic: diastolicBloodPressure,
+      date,
+    })
   }
 
   async getBodyWeightObservations(
@@ -236,29 +176,13 @@ export class MockPatientService implements PatientService {
     unit: QuantityUnit,
     date: Date,
   ): FHIRObservation {
-    return {
-      resourceType: 'Observation',
-      code: {
-        coding: [
-          {
-            code: '29463-7',
-            display: 'Body weight',
-            system: 'http://loinc.org',
-          },
-          {
-            code: 'HKQuantityTypeIdentifierBodyMass',
-            display: 'Body Mass',
-            system: 'http://developer.apple.com/documentation/healthkit',
-          },
-        ],
-      },
-      effectiveDateTime: date.toISOString(),
-      status: FHIRObservationStatus.final,
-      valueQuantity: {
-        ...unit,
-        value,
-      },
-    }
+    return FHIRObservation.createSimple({
+      id: 'C38FFD7E-7B86-4C79-9C8A-0B90E2F3DF14',
+      date: date,
+      value: value,
+      unit: unit,
+      code: LoincCode.bodyWeight,
+    })
   }
 
   async getHeartRateObservations(
@@ -283,30 +207,13 @@ export class MockPatientService implements PatientService {
   }
 
   private heartRateObservation(value: number, date: Date): FHIRObservation {
-    return {
-      resourceType: 'Observation',
-      code: {
-        coding: [
-          {
-            code: '8867-4',
-            display: 'Heart rate',
-            system: 'http://loinc.org',
-          },
-          {
-            code: 'HKQuantityTypeIdentifierHeartRate',
-            display: 'Heart Rate',
-            system: 'http://developer.apple.com/documentation/healthkit',
-          },
-        ],
-      },
-      effectiveDateTime: date.toISOString(),
+    return FHIRObservation.createSimple({
       id: 'C38FFD7E-7B86-4C79-9C8A-0B90E2F3DF14',
-      status: FHIRObservationStatus.final,
-      valueQuantity: {
-        ...QuantityUnit.bpm,
-        value: value,
-      },
-    }
+      date: date,
+      value: value,
+      unit: QuantityUnit.bpm,
+      code: LoincCode.heartRate,
+    })
   }
 
   async getMostRecentCreatinineObservation(
@@ -315,24 +222,13 @@ export class MockPatientService implements PatientService {
     return {
       id: '0',
       path: `users/${userId}/creatinineObservations/0`,
-      content: {
-        resourceType: 'Observation',
-        code: {
-          coding: [
-            {
-              code: LoincCode.creatinine,
-              display: 'Creatinine [Mass/volume] in Serum or Plasma',
-              system: CodingSystem.loinc,
-            },
-          ],
-        },
-        effectiveDateTime: new Date('2024-01-29').toISOString(),
-        status: FHIRObservationStatus.final,
-        valueQuantity: {
-          ...QuantityUnit.mg_dL,
-          value: 1.1,
-        },
-      },
+      content: FHIRObservation.createSimple({
+        id: '0',
+        date: new Date('2024-01-29'),
+        value: 1.1,
+        unit: QuantityUnit.mg_dL,
+        code: LoincCode.creatinine,
+      }),
     }
   }
 
@@ -342,25 +238,13 @@ export class MockPatientService implements PatientService {
     return {
       id: '0',
       path: `users/${userId}/dryWeightObservations/0`,
-
-      content: {
-        resourceType: 'Observation',
-        code: {
-          coding: [
-            {
-              code: LoincCode.bodyWeight,
-              display: 'Body weight',
-              system: CodingSystem.loinc,
-            },
-          ],
-        },
-        effectiveDateTime: new Date('2024-01-29').toISOString(),
-        status: FHIRObservationStatus.final,
-        valueQuantity: {
-          ...QuantityUnit.lbs,
-          value: 267.5,
-        },
-      },
+      content: FHIRObservation.createSimple({
+        id: '0',
+        date: new Date('2024-01-29'),
+        value: 267.5,
+        unit: QuantityUnit.lbs,
+        code: LoincCode.bodyWeight,
+      }),
     }
   }
 
@@ -370,25 +254,13 @@ export class MockPatientService implements PatientService {
     return {
       id: '0',
       path: `users/${userId}/eGfrObservations/0`,
-      content: {
-        resourceType: 'Observation',
-        code: {
-          coding: [
-            {
-              code: LoincCode.estimatedGlomerularFiltrationRate,
-              display:
-                'Glomerular filtration rate/1.73 sq M.predicted [Volume Rate/Area] in Serum, Plasma or Blood by Creatinine-based formula (CKD-EPI 2021)',
-              system: CodingSystem.loinc,
-            },
-          ],
-        },
-        effectiveDateTime: new Date('2024-01-29').toISOString(),
-        status: FHIRObservationStatus.final,
-        valueQuantity: {
-          ...QuantityUnit.mL_min_173m2,
-          value: 60,
-        },
-      },
+      content: FHIRObservation.createSimple({
+        id: '0',
+        date: new Date('2024-01-29'),
+        value: 60,
+        unit: QuantityUnit.mL_min_173m2,
+        code: LoincCode.estimatedGlomerularFiltrationRate,
+      }),
     }
   }
 
@@ -398,24 +270,13 @@ export class MockPatientService implements PatientService {
     return {
       id: '0',
       path: `users/${userId}/potassiumObservations/0`,
-      content: {
-        resourceType: 'Observation',
-        code: {
-          coding: [
-            {
-              code: LoincCode.potassium,
-              display: 'Potassium [Moles/volume] in Blood',
-              system: CodingSystem.loinc,
-            },
-          ],
-        },
-        effectiveDateTime: new Date('2024-01-29').toISOString(),
-        status: FHIRObservationStatus.final,
-        valueQuantity: {
-          ...QuantityUnit.mEq_L,
-          value: 4.2,
-        },
-      },
+      content: FHIRObservation.createSimple({
+        id: '0',
+        date: new Date('2024-01-29'),
+        value: 4.2,
+        unit: QuantityUnit.mEq_L,
+        code: LoincCode.potassium,
+      }),
     }
   }
 
@@ -433,10 +294,10 @@ export class MockPatientService implements PatientService {
 
   async getSymptomScores(
     userId: string,
-    limit: number | null,
+    options?: { limit?: number },
   ): Promise<Array<Document<SymptomScore>>> {
     const values: SymptomScore[] = [
-      {
+      new SymptomScore({
         questionnaireResponseId: '4',
         overallScore: 40,
         physicalLimitsScore: 50,
@@ -444,9 +305,9 @@ export class MockPatientService implements PatientService {
         qualityOfLifeScore: 20,
         symptomFrequencyScore: 60,
         dizzinessScore: 50,
-        date: new Date('2024-01-24').toISOString(),
-      },
-      {
+        date: new Date('2024-01-24'),
+      }),
+      new SymptomScore({
         questionnaireResponseId: '3',
         overallScore: 60,
         physicalLimitsScore: 58,
@@ -454,9 +315,9 @@ export class MockPatientService implements PatientService {
         qualityOfLifeScore: 37,
         symptomFrequencyScore: 72,
         dizzinessScore: 70,
-        date: new Date('2024-01-15').toISOString(),
-      },
-      {
+        date: new Date('2024-01-15'),
+      }),
+      new SymptomScore({
         questionnaireResponseId: '2',
         overallScore: 44,
         physicalLimitsScore: 50,
@@ -464,9 +325,9 @@ export class MockPatientService implements PatientService {
         qualityOfLifeScore: 25,
         symptomFrequencyScore: 60,
         dizzinessScore: 50,
-        date: new Date('2023-12-30').toISOString(),
-      },
-      {
+        date: new Date('2023-12-30'),
+      }),
+      new SymptomScore({
         questionnaireResponseId: '1',
         overallScore: 75,
         physicalLimitsScore: 58,
@@ -474,8 +335,8 @@ export class MockPatientService implements PatientService {
         qualityOfLifeScore: 60,
         symptomFrequencyScore: 80,
         dizzinessScore: 100,
-        date: new Date('2023-12-15').toISOString(),
-      },
+        date: new Date('2023-12-15'),
+      }),
     ]
     return values.map((value, index) => ({
       id: index.toString(),
@@ -487,7 +348,7 @@ export class MockPatientService implements PatientService {
   async getLatestSymptomScore(
     userId: string,
   ): Promise<Document<SymptomScore> | undefined> {
-    return (await this.getSymptomScores(userId, null)).at(0)
+    return (await this.getSymptomScores(userId, { limit: 1 })).at(0)
   }
 
   async updateSymptomScore(

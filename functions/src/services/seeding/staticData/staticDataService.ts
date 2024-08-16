@@ -6,12 +6,24 @@
 // SPDX-License-Identifier: MIT
 //
 
+import { z } from 'zod'
 import {
-  type MedicationClassSpecification,
+  medicationClassSpecificationSchema,
   type RxNormService,
 } from './rxNormService.js'
-import { type FHIRMedication } from '../../../models/fhir/medication.js'
-import { type MedicationClass } from '../../../models/medicationClass.js'
+import {
+  fhirMedicationConverter,
+  type FHIRMedication,
+} from '../../../models/fhir/fhirMedication.js'
+import { fhirQuestionnaireConverter } from '../../../models/fhir/fhirQuestionnaire.js'
+import { localizedTextConverter } from '../../../models/types/localizedText.js'
+import {
+  medicationClassConverter,
+  type MedicationClass,
+} from '../../../models/types/medicationClass.js'
+import { organizationConverter } from '../../../models/types/organization.js'
+import { Video } from '../../../models/types/video.js'
+import { VideoSection } from '../../../models/types/videoSection.js'
 import { type DatabaseService } from '../../database/databaseService.js'
 import { type CachingStrategy, SeedingService } from '../seedingService.js'
 
@@ -35,19 +47,12 @@ export class StaticDataService extends SeedingService {
     const { medications, drugs } =
       await this.retrieveMedicationsInformation(strategy)
     await this.databaseService.runTransaction(
-      async (firestore, transaction) => {
-        await this.deleteCollection('medications', firestore, transaction)
-        this.setUnstructuredCollection(
-          firestore.collection('medications'),
-          medications,
-          transaction,
-        )
+      async (collections, transaction) => {
+        await this.deleteCollection(collections.medications, transaction)
+        this.setCollection(collections.medications, medications, transaction)
         for (const medicationId in drugs) {
-          this.setUnstructuredCollection(
-            firestore
-              .collection('medications')
-              .doc(medicationId)
-              .collection('drugs'),
+          this.setCollection(
+            collections.drugs(medicationId),
             drugs[medicationId],
             transaction,
           )
@@ -59,11 +64,14 @@ export class StaticDataService extends SeedingService {
   /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
   async updateMedicationClasses(strategy: CachingStrategy) {
     await this.databaseService.runTransaction(
-      async (firestore, transaction) => {
-        await this.deleteCollection('medicationClasses', firestore, transaction)
-        this.setStructuredCollection(
-          firestore.collection('medicationClasses'),
-          this.readJSON('medicationClasses.json'),
+      async (collections, transaction) => {
+        await this.deleteCollection(collections.medicationClasses, transaction)
+        this.setCollection(
+          collections.medicationClasses,
+          this.readJSONArray(
+            'medicationClasses.json',
+            medicationClassConverter.value.schema,
+          ),
           transaction,
         )
       },
@@ -73,11 +81,14 @@ export class StaticDataService extends SeedingService {
   /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
   async updateOrganizations(strategy: CachingStrategy) {
     await this.databaseService.runTransaction(
-      async (firestore, transaction) => {
-        await this.deleteCollection('organizations', firestore, transaction)
-        this.setUnstructuredCollection(
-          firestore.collection('organizations'),
-          this.readJSON('organizations.json'),
+      async (collections, transaction) => {
+        await this.deleteCollection(collections.organizations, transaction)
+        this.setCollection(
+          collections.organizations,
+          this.readJSONRecord(
+            'organizations.json',
+            organizationConverter.value.schema,
+          ),
           transaction,
         )
       },
@@ -87,11 +98,14 @@ export class StaticDataService extends SeedingService {
   /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
   async updateQuestionnaires(strategy: CachingStrategy) {
     await this.databaseService.runTransaction(
-      async (firestore, transaction) => {
-        await this.deleteCollection('questionnaires', firestore, transaction)
-        this.setUnstructuredCollection(
-          firestore.collection('questionnaires'),
-          this.readJSON('questionnaires.json'),
+      async (collections, transaction) => {
+        await this.deleteCollection(collections.questionnaires, transaction)
+        this.setCollection(
+          collections.questionnaires,
+          this.readJSONArray(
+            'questionnaires.json',
+            fhirQuestionnaireConverter.value.schema,
+          ),
           transaction,
         )
       },
@@ -101,13 +115,44 @@ export class StaticDataService extends SeedingService {
   /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
   async updateVideoSections(strategy: CachingStrategy) {
     await this.databaseService.runTransaction(
-      async (firestore, transaction) => {
-        await this.deleteCollection('videoSections', firestore, transaction)
-        this.setStructuredCollection(
-          firestore.collection('videoSections'),
-          this.readJSON('videoSections.json'),
-          transaction,
+      async (collections, transaction) => {
+        await this.deleteCollection(collections.videoSections, transaction)
+        const videoSections = this.readJSONArray(
+          'videoSections.json',
+          z.object({
+            title: localizedTextConverter.schema,
+            description: localizedTextConverter.schema,
+            orderIndex: z.number(),
+            videos: z
+              .object({
+                title: localizedTextConverter.schema,
+                youtubeId: localizedTextConverter.schema,
+                orderIndex: z.number(),
+                description: z.string(),
+              })
+              .array(),
+          }),
         )
+
+        let videoSectionIndex = 0
+        for (const videoSection of videoSections) {
+          const videoSectionId = videoSectionIndex.toString()
+          transaction.set(
+            collections.videoSections.doc(videoSectionId),
+            new VideoSection(videoSection),
+          )
+
+          let videoIndex = 0
+          for (const video of videoSection.videos) {
+            const videoId = videoIndex.toString()
+            transaction.set(
+              collections.videos(videoSectionId).doc(videoId),
+              new Video(video),
+            )
+            videoIndex++
+          }
+          videoSectionIndex++
+        }
       },
     )
   }
@@ -126,19 +171,28 @@ export class StaticDataService extends SeedingService {
     return this.cache(
       strategy,
       () => ({
-        medications: this.readJSON(medicationsFile),
-        drugs: this.readJSON(drugsFile),
+        medications: this.readJSONRecord(
+          medicationsFile,
+          fhirMedicationConverter.value.schema,
+        ),
+        drugs: this.readJSONRecord(
+          drugsFile,
+          z.record(z.string(), fhirMedicationConverter.value.schema),
+        ),
       }),
       async () => {
-        const medicationClasses: MedicationClass[] = await this.readJSON(
+        const medicationClasses = this.readJSONArray(
           'medicationClasses.json',
+          medicationClassConverter.value.schema,
         )
         const medicationClassMap = new Map<string, MedicationClass>()
         medicationClasses.forEach((medicationClass, index) => {
           medicationClassMap.set(index.toString(), medicationClass)
         })
-        const specification: MedicationClassSpecification[] =
-          await this.readJSON('medicationCodes.json')
+        const specification = this.readJSONArray(
+          'medicationCodes.json',
+          medicationClassSpecificationSchema,
+        )
         return this.rxNormService.buildFHIRCollections(
           medicationClassMap,
           specification,

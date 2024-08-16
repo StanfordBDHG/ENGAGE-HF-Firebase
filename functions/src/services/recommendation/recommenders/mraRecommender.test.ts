@@ -10,15 +10,15 @@ import { expect } from 'chai'
 import { describe, it } from 'mocha'
 import { MraRecommender } from './mraRecommender.js'
 import { type RecommendationInput } from './recommender.js'
+import { FHIRMedicationRequest } from '../../../models/fhir/baseTypes/fhirElement.js'
 import { type HealthSummaryData } from '../../../models/healthSummaryData.js'
-import { MedicationRecommendationType } from '../../../models/medicationRecommendation.js'
 import { type MedicationRequestContext } from '../../../models/medicationRequestContext.js'
+import { UserMedicationRecommendationType } from '../../../models/types/userMedicationRecommendation.js'
 import { MockContraindicationService } from '../../../tests/mocks/contraindicationService.js'
 import { mockHealthSummaryData } from '../../../tests/mocks/healthSummaryData.js'
 import { cleanupMocks, setupMockFirebase } from '../../../tests/setup.js'
 import { ContraindicationCategory } from '../../contraindication/contraindicationService.js'
 import { getServiceFactory } from '../../factory/getServiceFactory.js'
-import { FhirService } from '../../fhir/fhirService.js'
 import { QuantityUnit } from '../../fhir/quantityUnit.js'
 import { type MedicationService } from '../../medication/medicationService.js'
 import {
@@ -27,7 +27,6 @@ import {
   MedicationReference,
 } from '../../references.js'
 import { CachingStrategy } from '../../seeding/seedingService.js'
-import { UserDataFactory } from '../../seeding/userData/userDataFactory.js'
 
 describe('MraRecommender', () => {
   let medicationContraindication: (
@@ -42,7 +41,6 @@ describe('MraRecommender', () => {
       (_, reference) => medicationContraindication(reference),
       (_, reference) => medicationClassContraindication(reference),
     ),
-    new FhirService(),
   )
   let healthSummaryData: HealthSummaryData
   let medicationService: MedicationService
@@ -98,7 +96,7 @@ describe('MraRecommender', () => {
       expect(result.at(0)).to.deep.equal({
         currentMedication: [],
         recommendedMedication: MedicationReference.spironolactone,
-        type: MedicationRecommendationType.noActionRequired,
+        type: UserMedicationRecommendationType.noActionRequired,
       })
     })
 
@@ -118,7 +116,7 @@ describe('MraRecommender', () => {
       expect(result.at(0)).to.deep.equal({
         currentMedication: [],
         recommendedMedication: MedicationReference.spironolactone,
-        type: MedicationRecommendationType.noActionRequired,
+        type: UserMedicationRecommendationType.noActionRequired,
       })
     })
 
@@ -138,7 +136,7 @@ describe('MraRecommender', () => {
       expect(result.at(0)).to.deep.equal({
         currentMedication: [],
         recommendedMedication: MedicationReference.spironolactone,
-        type: MedicationRecommendationType.noActionRequired,
+        type: UserMedicationRecommendationType.noActionRequired,
       })
     })
 
@@ -153,7 +151,7 @@ describe('MraRecommender', () => {
       expect(result.at(0)).to.deep.equal({
         currentMedication: [],
         recommendedMedication: MedicationReference.spironolactone,
-        type: MedicationRecommendationType.notStarted,
+        type: UserMedicationRecommendationType.notStarted,
       })
     })
   })
@@ -161,7 +159,7 @@ describe('MraRecommender', () => {
   describe('Existing treatment: Eplerenone', () => {
     let contextBelowTarget: MedicationRequestContext
     before(async () => {
-      const request = UserDataFactory.medicationRequest({
+      const request = FHIRMedicationRequest.create({
         drugReference: DrugReference.eplerenone25,
         frequencyPerDay: 1,
         quantity: 1,
@@ -172,7 +170,7 @@ describe('MraRecommender', () => {
     })
 
     it('states that target dose is reached', async () => {
-      const request = UserDataFactory.medicationRequest({
+      const request = FHIRMedicationRequest.create({
         drugReference: DrugReference.eplerenone25,
         frequencyPerDay: 2,
         quantity: 1,
@@ -190,7 +188,7 @@ describe('MraRecommender', () => {
       expect(result.at(0)).to.deep.equal({
         currentMedication: [contextAtTarget],
         recommendedMedication: undefined,
-        type: MedicationRecommendationType.targetDoseReached,
+        type: UserMedicationRecommendationType.targetDoseReached,
       })
     })
 
@@ -210,7 +208,7 @@ describe('MraRecommender', () => {
       expect(result.at(0)).to.deep.equal({
         currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
-        type: MedicationRecommendationType.moreLabObservationsRequired,
+        type: UserMedicationRecommendationType.moreLabObservationsRequired,
       })
     })
 
@@ -230,7 +228,7 @@ describe('MraRecommender', () => {
       expect(result.at(0)).to.deep.equal({
         currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
-        type: MedicationRecommendationType.moreLabObservationsRequired,
+        type: UserMedicationRecommendationType.moreLabObservationsRequired,
       })
     })
 
@@ -250,7 +248,7 @@ describe('MraRecommender', () => {
       expect(result.at(0)).to.deep.equal({
         currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
-        type: MedicationRecommendationType.personalTargetDoseReached,
+        type: UserMedicationRecommendationType.personalTargetDoseReached,
       })
     })
 
@@ -270,7 +268,7 @@ describe('MraRecommender', () => {
       expect(result.at(0)).to.deep.equal({
         currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
-        type: MedicationRecommendationType.personalTargetDoseReached,
+        type: UserMedicationRecommendationType.personalTargetDoseReached,
       })
     })
 
@@ -285,7 +283,7 @@ describe('MraRecommender', () => {
       expect(result.at(0)).to.deep.equal({
         currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
-        type: MedicationRecommendationType.improvementAvailable,
+        type: UserMedicationRecommendationType.improvementAvailable,
       })
     })
   })

@@ -8,17 +8,18 @@
 
 import { z } from 'zod'
 import { validatedOnCall } from './helpers.js'
-import { UserDevicePlatform } from '../models/device.js'
+import { optionalish } from '../models/helpers/optionalish.js'
+import { UserDevice, UserDevicePlatform } from '../models/types/userDevice.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
 const registerDeviceInputSchema = z.object({
   notificationToken: z.string(),
   platform: z.nativeEnum(UserDevicePlatform),
-  osVersion: z.string().or(z.null()).default(null),
-  appVersion: z.string().or(z.null()).default(null),
-  appBuild: z.string().or(z.null()).default(null),
-  language: z.string().or(z.null()).default(null),
-  timeZone: z.string().or(z.null()).default(null),
+  osVersion: optionalish(z.string()),
+  appVersion: optionalish(z.string()),
+  appBuild: optionalish(z.string()),
+  language: optionalish(z.string()),
+  timeZone: optionalish(z.string()),
 })
 
 export const registerDevice = validatedOnCall(
@@ -26,6 +27,8 @@ export const registerDevice = validatedOnCall(
   async (request) => {
     const userId = request.auth?.uid
     if (!userId) throw new Error('User is not authenticated')
-    await getServiceFactory().message().registerDevice(userId, request.data)
+    await getServiceFactory()
+      .message()
+      .registerDevice(userId, new UserDevice(request.data))
   },
 )

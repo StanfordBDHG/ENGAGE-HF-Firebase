@@ -6,16 +6,18 @@
 // SPDX-License-Identifier: MIT
 //
 
+import { FHIRQuestionnaireItemType } from '../../models/fhir/baseTypes/fhirQuestionnaireItem.js'
 import {
-  type FHIRQuestionnaire,
-  FHIRQuestionnaireItemType,
-} from '../../models/fhir/questionnaire.js'
+  FHIRQuestionnaire,
+  FHIRQuestionnairePublicationStatus,
+} from '../../models/fhir/fhirQuestionnaire.js'
 
 export function mockQuestionnaire(): FHIRQuestionnaire {
-  return {
+  return new FHIRQuestionnaire({
     resourceType: 'Questionnaire',
     title: 'KCCQ-12',
     language: 'en-US',
+    status: FHIRQuestionnairePublicationStatus.draft,
     publisher: 'Stanford Biodesign Digital Health',
     url: 'http://spezi.health/fhir/questionnaire/9528ccc2-d1be-4c4c-9c3c-19f78e51ec19',
     item: [
@@ -757,5 +759,5 @@ export function mockQuestionnaire(): FHIRQuestionnaire {
         ],
       },
     ],
-  }
+  })
 }

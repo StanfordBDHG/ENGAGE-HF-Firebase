@@ -26,9 +26,9 @@ export function validatedOnCall<
   Return = any | Promise<any>,
 >(
   schema: Schema,
-  handler: (request: CallableRequest<TypeOf<Schema>>) => Return,
+  handler: (request: CallableRequest<z.output<Schema>>) => Return,
 ): CallableFunction<
-  TypeOf<Schema>,
+  z.output<Schema>,
   Return extends Promise<unknown> ? Return : Promise<Return>
 > {
   return onCall((request) => {
@@ -54,14 +54,14 @@ export function validatedOnCallWithOptions<
 >(
   schema: Schema,
   options: CallableOptions,
-  handler: (request: CallableRequest<TypeOf<Schema>>) => Return,
+  handler: (request: CallableRequest<z.output<Schema>>) => Return,
 ): CallableFunction<
-  TypeOf<Schema>,
+  z.output<Schema>,
   Return extends Promise<unknown> ? Return : Promise<Return>
 > {
   return onCall(options, (request) => {
     try {
-      request.data = schema.parse(request.data) as TypeOf<Schema>
+      request.data = schema.parse(request.data) as z.output<Schema>
       return handler(request)
     } catch (error) {
       if (error instanceof z.ZodError) {
@@ -80,13 +80,13 @@ export function validatedOnRequest<Schema extends ZodType<any, any, any>>(
   schema: Schema,
   handler: (
     request: Request,
-    data: TypeOf<Schema>,
+    data: z.output<Schema>,
     response: Response,
   ) => void | Promise<void>,
 ): https.HttpsFunction {
   return onRequest(async (request, response) => {
     try {
-      const data = schema.parse(request.body) as TypeOf<Schema>
+      const data = schema.parse(request.body) as z.output<Schema>
       await handler(request, data, response)
       return
     } catch (error) {
@@ -110,13 +110,13 @@ export function validatedOnRequestWithOptions<
   options: https.HttpsOptions,
   handler: (
     request: Request,
-    data: TypeOf<Schema>,
+    data: z.output<Schema>,
     response: Response,
   ) => void | Promise<void>,
 ): https.HttpsFunction {
   return onRequest(options, async (request, response) => {
     try {
-      const data = schema.parse(request.body) as TypeOf<Schema>
+      const data = schema.parse(request.body) as z.output<Schema>
       await handler(request, data, response)
       return
     } catch (error) {

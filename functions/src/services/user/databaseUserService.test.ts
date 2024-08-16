@@ -8,22 +8,22 @@
 
 import { assert, expect } from 'chai'
 import admin from 'firebase-admin'
-import { FieldValue, type Firestore } from 'firebase-admin/firestore'
 import { describe } from 'mocha'
 import { type UserService } from './userService.js'
-import { UserType, type User } from '../../models/user.js'
+import { UserType } from '../../models/types/userType.js'
 import { type MockFirestore } from '../../tests/mocks/firestore.js'
 import { cleanupMocks, setupMockFirebase } from '../../tests/setup.js'
+import { CollectionsService } from '../database/collections.js'
 import { getServiceFactory } from '../factory/getServiceFactory.js'
 
 describe('DatabaseUserService', () => {
   let mockFirestore: MockFirestore
   let userService: UserService
-  let firestore: Firestore
+  let collectionsService: CollectionsService
 
   beforeEach(() => {
     mockFirestore = setupMockFirebase().firestore
-    firestore = admin.firestore()
+    collectionsService = new CollectionsService(admin.firestore())
     userService = getServiceFactory().user()
   })
 
@@ -67,12 +67,12 @@ describe('DatabaseUserService', () => {
         organization: null,
       })
 
-      const userSnapshot = await firestore.collection('users').doc(userId).get()
+      const userSnapshot = await collectionsService.users.doc(userId).get()
       expect(userSnapshot.exists).to.be.true
-      const userData = userSnapshot.data() as User | undefined
+      const userData = userSnapshot.data()
       expect(userData).to.exist
       expect(userData?.invitationCode).to.equal(invitationCode)
-      expect(userData?.dateOfEnrollment).to.equal(FieldValue.serverTimestamp())
+      expect(userData?.dateOfEnrollment).to.exist
     })
 
     it('enrolls a clinician', async () => {
@@ -114,12 +114,12 @@ describe('DatabaseUserService', () => {
         organization: 'mockOrganization',
       })
 
-      const userSnapshot = await firestore.collection('users').doc(userId).get()
+      const userSnapshot = await collectionsService.users.doc(userId).get()
       expect(userSnapshot.exists).to.be.true
-      const userData = userSnapshot.data() as User | undefined
+      const userData = userSnapshot.data()
       expect(userData).to.exist
       expect(userData?.invitationCode).to.equal(invitationCode)
-      expect(userData?.dateOfEnrollment).to.equal(FieldValue.serverTimestamp())
+      expect(userData?.dateOfEnrollment).to.exist
     })
 
     it('enrolls a patient', async () => {
@@ -134,7 +134,7 @@ describe('DatabaseUserService', () => {
             user: {
               type: UserType.patient,
               clinician: 'mockClinician',
-              dateOfBirth: new Date(),
+              dateOfBirth: new Date().toISOString(),
               messagesSettings: {
                 dailyRemindersAreActive: true,
                 textNotificationsAreActive: true,
@@ -163,12 +163,12 @@ describe('DatabaseUserService', () => {
         organization: 'mockOrganization',
       })
 
-      const userSnapshot = await firestore.collection('users').doc(userId).get()
+      const userSnapshot = await collectionsService.users.doc(userId).get()
       expect(userSnapshot.exists).to.be.true
-      const userData = userSnapshot.data() as User | undefined
+      const userData = userSnapshot.data()
       expect(userData).to.exist
       expect(userData?.invitationCode).to.equal(invitationCode)
-      expect(userData?.dateOfEnrollment).to.equal(FieldValue.serverTimestamp())
+      expect(userData?.dateOfEnrollment).to.exist
     })
   })
 })

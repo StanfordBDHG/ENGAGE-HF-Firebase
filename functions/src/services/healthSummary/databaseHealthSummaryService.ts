@@ -9,11 +9,10 @@
 import { type HealthSummaryService } from './healthSummaryService.js'
 import { advanceDateByDays } from '../../extensions/date.js'
 import { type HealthSummaryData } from '../../models/healthSummaryData.js'
-import { type MedicationRecommendation } from '../../models/medicationRecommendation.js'
-import { type SymptomScore } from '../../models/symptomScore.js'
+import { type SymptomScore } from '../../models/types/symptomScore.js'
+import { type UserMedicationRecommendation } from '../../models/types/userMedicationRecommendation.js'
 import { type Observation, type Vitals } from '../../models/vitals.js'
 import { CodingSystem, LoincCode } from '../codes.js'
-import { type FhirService } from '../fhir/fhirService.js'
 import { QuantityUnit } from '../fhir/quantityUnit.js'
 import { type PatientService } from '../patient/patientService.js'
 import { type UserService } from '../user/userService.js'
@@ -21,18 +20,12 @@ import { type UserService } from '../user/userService.js'
 export class DefaultHealthSummaryService implements HealthSummaryService {
   // Properties
 
-  private readonly fhirService: FhirService
   private readonly patientService: PatientService
   private readonly userService: UserService
 
   // Constructor
 
-  constructor(
-    fhirService: FhirService,
-    patientService: PatientService,
-    userService: UserService,
-  ) {
-    this.fhirService = fhirService
+  constructor(patientService: PatientService, userService: UserService) {
     this.patientService = patientService
     this.userService = userService
   }
@@ -52,7 +45,7 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
       this.userService.getUser(userId),
       this.patientService.getNextAppointment(userId),
       this.getMedicationRecommendations(userId),
-      this.getSymptomScores(userId, 5),
+      this.getSymptomScores(userId, { limit: 5 }),
       this.getVitals(userId, advanceDateByDays(new Date(), -14)),
     ])
 
@@ -65,9 +58,9 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
     const nextAppointmentStart = nextAppointment?.content.start
     return {
       name: auth.displayName ?? '---',
-      dateOfBirth: dateOfBirth,
+      dateOfBirth: dateOfBirth ?? undefined,
       clinicianName: clinician?.displayName ?? '---',
-      nextAppointment: nextAppointmentStart,
+      nextAppointment: nextAppointmentStart ?? undefined,
       recommendations: recommendations,
       vitals: vitals,
       symptomScores: symptomScores,
@@ -78,9 +71,9 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
 
   async getSymptomScores(
     userId: string,
-    limit: number | null,
+    options: { limit?: number } = {},
   ): Promise<SymptomScore[]> {
-    const result = await this.patientService.getSymptomScores(userId, limit)
+    const result = await this.patientService.getSymptomScores(userId, options)
     return result.map((doc) => doc.content)
   }
 
@@ -88,7 +81,7 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
 
   async getMedicationRecommendations(
     userId: string,
-  ): Promise<MedicationRecommendation[]> {
+  ): Promise<UserMedicationRecommendation[]> {
     const result =
       await this.patientService.getMedicationRecommendations(userId)
     return result.map((doc) => doc.content)
@@ -134,24 +127,28 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
       await this.patientService.getBloodPressureObservations(userId, cutoffDate)
     const observations = observationDocs.map((doc) => doc.content)
     return [
-      this.fhirService.observationValues(observations, {
-        code: LoincCode.bloodPressure,
-        system: CodingSystem.loinc,
-        unit: QuantityUnit.mmHg,
-        component: {
-          code: LoincCode.systolicBloodPressure,
+      observations.flatMap((observation) =>
+        observation.observations({
+          code: LoincCode.bloodPressure,
           system: CodingSystem.loinc,
-        },
-      }),
-      this.fhirService.observationValues(observations, {
-        code: LoincCode.bloodPressure,
-        system: CodingSystem.loinc,
-        unit: QuantityUnit.mmHg,
-        component: {
-          code: LoincCode.diastolicBloodPressure,
+          unit: QuantityUnit.mmHg,
+          component: {
+            code: LoincCode.systolicBloodPressure,
+            system: CodingSystem.loinc,
+          },
+        }),
+      ),
+      observations.flatMap((observation) =>
+        observation.observations({
+          code: LoincCode.bloodPressure,
           system: CodingSystem.loinc,
-        },
-      }),
+          unit: QuantityUnit.mmHg,
+          component: {
+            code: LoincCode.diastolicBloodPressure,
+            system: CodingSystem.loinc,
+          },
+        }),
+      ),
     ]
   }
 
@@ -160,61 +157,55 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
     cutoffDate: Date,
     unit: QuantityUnit,
   ) {
-    const observationDocs = await this.patientService.getBodyWeightObservations(
+    const docs = await this.patientService.getBodyWeightObservations(
       userId,
       cutoffDate,
     )
-    return this.fhirService.observationValues(
-      observationDocs.map((doc) => doc.content),
-      {
+    return docs.flatMap((doc) =>
+      doc.content.observations({
         code: LoincCode.bodyWeight,
         system: CodingSystem.loinc,
         unit: unit,
-      },
+      }),
     )
   }
 
   async getHeartRateObservations(userId: string, cutoffDate: Date) {
-    const observationDocs = await this.patientService.getHeartRateObservations(
+    const docs = await this.patientService.getHeartRateObservations(
       userId,
       cutoffDate,
     )
-    return this.fhirService.observationValues(
-      observationDocs.map((doc) => doc.content),
-      {
+    return docs.flatMap((doc) =>
+      doc.content.observations({
         code: LoincCode.heartRate,
         system: CodingSystem.loinc,
         unit: QuantityUnit.bpm,
-      },
+      }),
     )
   }
 
   async getMostRecentCreatinineObservation(userId: string) {
     const observation =
       await this.patientService.getMostRecentCreatinineObservation(userId)
-    return observation ?
-        this.fhirService
-          .observationValues([observation.content], {
-            code: LoincCode.creatinine,
-            system: CodingSystem.loinc,
-            unit: QuantityUnit.mg_dL,
-          })
-          .at(0)
-      : undefined
+    return observation?.content
+      .observations({
+        code: LoincCode.creatinine,
+        system: CodingSystem.loinc,
+        unit: QuantityUnit.mg_dL,
+      })
+      .at(0)
   }
 
   async getMostRecentDryWeightObservation(userId: string) {
     const observation =
       await this.patientService.getMostRecentDryWeightObservation(userId)
-    return observation ?
-        this.fhirService
-          .observationValues([observation.content], {
-            code: LoincCode.bodyWeight,
-            system: CodingSystem.loinc,
-            unit: QuantityUnit.lbs,
-          })
-          .at(0)
-      : undefined
+    return observation?.content
+      .observations({
+        code: LoincCode.bodyWeight,
+        system: CodingSystem.loinc,
+        unit: QuantityUnit.lbs,
+      })
+      .at(0)
   }
 
   async getMostRecentEstimatedGlomerularFiltrationRateObservation(
@@ -224,28 +215,24 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
       await this.patientService.getMostRecentEstimatedGlomerularFiltrationRateObservation(
         userId,
       )
-    return observation ?
-        this.fhirService
-          .observationValues([observation.content], {
-            code: LoincCode.estimatedGlomerularFiltrationRate,
-            system: CodingSystem.loinc,
-            unit: QuantityUnit.mL_min_173m2,
-          })
-          .at(0)
-      : undefined
+    return observation?.content
+      .observations({
+        code: LoincCode.estimatedGlomerularFiltrationRate,
+        system: CodingSystem.loinc,
+        unit: QuantityUnit.mL_min_173m2,
+      })
+      .at(0)
   }
 
   async getMostRecentPotassiumObservation(userId: string) {
     const observation =
       await this.patientService.getMostRecentPotassiumObservation(userId)
-    return observation ?
-        this.fhirService
-          .observationValues([observation.content], {
-            code: LoincCode.potassium,
-            system: CodingSystem.loinc,
-            unit: QuantityUnit.mEq_L,
-          })
-          .at(0)
-      : undefined
+    return observation?.content
+      .observations({
+        code: LoincCode.potassium,
+        system: CodingSystem.loinc,
+        unit: QuantityUnit.mEq_L,
+      })
+      .at(0)
   }
 }

@@ -11,19 +11,15 @@ import { describe } from 'mocha'
 import { ContraindicationCategory } from './contraindicationService.js'
 import { DefaultContraindicationService } from './defaultContraindicationService.js'
 import {
-  type FHIRAllergyIntolerance,
+  FHIRAllergyIntolerance,
   FHIRAllergyIntoleranceCriticality,
   FHIRAllergyIntoleranceType,
-} from '../../models/fhir/allergyIntolerance.js'
+} from '../../models/fhir/fhirAllergyIntolerance.js'
 import { CodingSystem } from '../codes.js'
-import { FhirService } from '../fhir/fhirService.js'
 import { MedicationClassReference, MedicationReference } from '../references.js'
 
 describe('DefaultContraindicationService', () => {
-  const fhirService = new FhirService()
-  const contraindicationService = new DefaultContraindicationService(
-    fhirService,
-  )
+  const contraindicationService = new DefaultContraindicationService()
 
   it('correctly checks for a simple medication class contraindication', () => {
     const contraindication = createFHIRAllergyIntolerance(
@@ -60,7 +56,8 @@ function createFHIRAllergyIntolerance(
   code: string,
   system: CodingSystem,
 ): FHIRAllergyIntolerance {
-  return {
+  return new FHIRAllergyIntolerance({
+    resourceType: 'AllergyIntolerance',
     type,
     criticality,
     code: {
@@ -71,5 +68,5 @@ function createFHIRAllergyIntolerance(
         },
       ],
     },
-  }
+  })
 }

@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { type QuantityUnit } from '../services/fhir/quantityUnit'
+import { type QuantityUnit } from '../services/fhir/quantityUnit.js'
 
 export interface Vitals {
   systolicBloodPressure: Observation[]

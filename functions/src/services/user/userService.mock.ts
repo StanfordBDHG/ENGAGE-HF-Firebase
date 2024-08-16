@@ -7,9 +7,12 @@
 //
 
 import { type UserService } from './userService.js'
-import { type UserAuth, type Invitation } from '../../models/invitation.js'
-import { type Organization } from '../../models/organization.js'
-import { type User, UserType } from '../../models/user.js'
+import { Invitation } from '../../models/types/invitation.js'
+import { Organization } from '../../models/types/organization.js'
+import { User } from '../../models/types/user.js'
+import { type UserAuth } from '../../models/types/userAuth.js'
+import { UserRegistration } from '../../models/types/userRegistration.js'
+import { UserType } from '../../models/types/userType.js'
 import { type Document } from '../database/databaseService.js'
 
 /* eslint-disable @typescript-eslint/require-await */
@@ -55,13 +58,22 @@ export class MockUserService implements UserService {
     return {
       id: '1',
       path: 'invitations/1',
-      content: {
-        user: {
+      content: new Invitation({
+        user: new UserRegistration({
           type: UserType.patient,
-        },
+          dateOfBirth: new Date('1970-01-02'),
+          clinician: 'mockPatient',
+          organization: 'stanford',
+          messagesSettings: {
+            dailyRemindersAreActive: true,
+            textNotificationsAreActive: true,
+            medicationRemindersAreActive: true,
+          },
+          timeZone: 'America/Los_Angeles',
+        }),
         code: invitationCode,
         userId: 'test',
-      },
+      }),
     }
   }
 
@@ -71,13 +83,22 @@ export class MockUserService implements UserService {
     return {
       id: '123',
       path: 'invitations/123',
-      content: {
-        user: {
+      content: new Invitation({
+        user: new UserRegistration({
           type: UserType.patient,
-        },
+          dateOfBirth: new Date('1970-01-02'),
+          clinician: 'mockPatient',
+          organization: 'stanford',
+          messagesSettings: {
+            dailyRemindersAreActive: true,
+            textNotificationsAreActive: true,
+            medicationRemindersAreActive: true,
+          },
+          timeZone: 'America/Los_Angeles',
+        }),
         code: 'test',
         userId: userId,
-      },
+      }),
     }
   }
 
@@ -113,14 +134,13 @@ export class MockUserService implements UserService {
     return {
       id: organizationId,
       path: 'organizations/' + organizationId,
-      content: {
-        id: 'stanford',
+      content: new Organization({
         name: 'Stanford University',
         contactName: 'Alex Sandhu, MD',
         phoneNumber: '+1 (650) 493-5000',
         emailAddress: 'dothfteam@stanford.edu',
         ssoProviderId: 'oidc.stanford',
-      },
+      }),
     }
   }
 
@@ -134,18 +154,20 @@ export class MockUserService implements UserService {
     return {
       id: userId,
       path: 'users/' + userId,
-      content: {
+      content: new User({
         type: UserType.clinician,
-        dateOfBirth: new Date('1970-01-02').toISOString(),
+        dateOfBirth: new Date('1970-01-02'),
         clinician: 'mockClinician',
-        dateOfEnrollment: new Date('2024-04-02').toISOString(),
+        organization: 'stanford',
+        dateOfEnrollment: new Date('2024-04-02'),
         invitationCode: '123',
         messagesSettings: {
           dailyRemindersAreActive: true,
           textNotificationsAreActive: true,
           medicationRemindersAreActive: true,
         },
-      },
+        timeZone: 'America/Los_Angeles',
+      }),
     }
   }
 

@@ -16,7 +16,7 @@ import {
 } from '@firebase/rules-unit-testing'
 import type firebase from 'firebase/compat/app'
 import { describe, it } from 'mocha'
-import { UserType } from '../../models/user.js'
+import { UserType } from '../../models/types/userType.js'
 
 describe('firestore.rules: users/{userId}', () => {
   const organizationId = 'stanford'
@@ -252,7 +252,6 @@ describe('firestore.rules: users/{userId}', () => {
           { merge: true },
         ),
     )
-    console.log('patient')
     await assertSucceeds(
       ownerFirestore
         .doc(`users/${patientId}`)

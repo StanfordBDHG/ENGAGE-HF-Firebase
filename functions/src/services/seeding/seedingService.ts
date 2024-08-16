@@ -7,7 +7,8 @@
 //
 
 import fs from 'fs'
-import { type Firestore } from 'firebase-admin/firestore'
+import { type CollectionReference } from 'firebase-admin/firestore'
+import { z } from 'zod'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
@@ -67,9 +68,9 @@ export class SeedingService {
     return result
   }
 
-  protected setUnstructuredCollection(
-    collection: any,
-    data: any,
+  protected setCollection<T>(
+    collection: CollectionReference<T>,
+    data: T[] | Record<string, T>,
     transaction: FirebaseFirestore.Transaction,
   ) {
     if (Array.isArray(data)) {
@@ -87,57 +88,11 @@ export class SeedingService {
     }
   }
 
-  protected setStructuredCollection(
-    collection: any,
-    data: any,
+  protected async deleteCollection<T>(
+    reference: CollectionReference<T>,
     transaction: FirebaseFirestore.Transaction,
   ) {
-    if (Array.isArray(data)) {
-      for (let index = 0; index < data.length; index++) {
-        const document =
-          this.useIndicesAsKeys ?
-            collection.doc(String(index))
-          : collection.doc()
-        this.setStructuredDocument(document, data[index], transaction)
-      }
-    } else {
-      for (const key of Object.keys(data)) {
-        this.setStructuredDocument(collection.doc(key), data[key], transaction)
-      }
-    }
-  }
-
-  protected setStructuredDocument(
-    document: any,
-    data: any,
-    transaction: FirebaseFirestore.Transaction,
-  ) {
-    if (typeof data !== 'object') {
-      transaction.set(document, data)
-    } else {
-      const dataWithoutSubcollections: Record<string, any> = {}
-      for (const key of Object.keys(data)) {
-        const value = data[key]
-        if (Array.isArray(value)) {
-          this.setStructuredCollection(
-            document.collection(key),
-            value,
-            transaction,
-          )
-        } else {
-          dataWithoutSubcollections[key] = value
-        }
-      }
-      transaction.set(document, dataWithoutSubcollections)
-    }
-  }
-
-  protected async deleteCollection(
-    name: string,
-    firestore: Firestore,
-    transaction: FirebaseFirestore.Transaction,
-  ) {
-    const result = await transaction.get(firestore.collection(name))
+    const result = await transaction.get(reference)
     for (const doc of result.docs) {
       transaction.delete(doc.ref)
     }
@@ -150,8 +105,26 @@ export class SeedingService {
     )
   }
 
-  protected readJSON<T = any>(filename: string): T {
-    return JSON.parse(fs.readFileSync(this.path + filename, 'utf8')) as T
+  protected readJSONArray<Schema extends z.ZodType<any, any, any>>(
+    filename: string,
+    schema: Schema,
+  ): Array<z.output<Schema>> {
+    return schema
+      .array()
+      .parse(
+        JSON.parse(fs.readFileSync(this.path + filename, 'utf8')),
+      ) as Array<z.output<Schema>>
+  }
+
+  protected readJSONRecord<Schema extends z.ZodType<any, any, any>>(
+    filename: string,
+    schema: Schema,
+  ): Record<string, z.output<Schema>> {
+    return z
+      .record(z.string(), schema)
+      .parse(
+        JSON.parse(fs.readFileSync(this.path + filename, 'utf8')),
+      ) as Record<string, z.output<Schema>>
   }
 
   protected writeJSON(filename: string, data: unknown) {

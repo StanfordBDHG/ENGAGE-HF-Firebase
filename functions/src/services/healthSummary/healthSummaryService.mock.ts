@@ -9,7 +9,8 @@
 import { type HealthSummaryService } from './healthSummaryService.js'
 import { advanceDateByDays } from '../../extensions/date.js'
 import { type HealthSummaryData } from '../../models/healthSummaryData.js'
-import { MedicationRecommendationType } from '../../models/medicationRecommendation.js'
+import { LocalizedText } from '../../models/types/localizedText.js'
+import { UserMedicationRecommendationType } from '../../models/types/userMedicationRecommendation.js'
 import { type Observation, type Vitals } from '../../models/vitals.js'
 import { QuantityUnit } from '../fhir/quantityUnit.js'
 
@@ -32,20 +33,19 @@ export class MockHealthSummaryService implements HealthSummaryService {
   async getHealthSummaryData(userId: string): Promise<HealthSummaryData> {
     return {
       name: 'John Doe',
-      dateOfBirth: new Date('1970-01-02').toISOString(),
+      dateOfBirth: new Date('1970-01-02'),
       clinicianName: 'Dr. XXX',
-      nextAppointment: this.startDateAdvancedByDays(1).toISOString(),
+      nextAppointment: this.startDateAdvancedByDays(1),
       recommendations: [
         {
           currentMedication: [],
-          recommendedMedication: null,
           displayInformation: {
-            title: 'Losartan (Cozaar)',
-            subtitle: '',
-            description:
+            title: new LocalizedText('Losartan (Cozaar)'),
+            subtitle: new LocalizedText(''),
+            description: new LocalizedText(
               'Switch to Sacubitril-Valsartan (More Effective Medication)',
-            type: MedicationRecommendationType.improvementAvailable,
-            videoPath: null,
+            ),
+            type: UserMedicationRecommendationType.improvementAvailable,
             dosageInformation: {
               minimumSchedule: [{ frequency: 1, quantity: [25] }],
               currentSchedule: [{ frequency: 1, quantity: [25] }],
@@ -56,13 +56,11 @@ export class MockHealthSummaryService implements HealthSummaryService {
         },
         {
           currentMedication: [],
-          recommendedMedication: null,
           displayInformation: {
-            title: 'Dapagliflozin (Farxiga)',
-            subtitle: '',
-            description: 'Continue Dose',
-            type: MedicationRecommendationType.targetDoseReached,
-            videoPath: null,
+            title: new LocalizedText('Dapagliflozin (Farxiga)'),
+            subtitle: new LocalizedText(''),
+            description: new LocalizedText('Continue Dose'),
+            type: UserMedicationRecommendationType.targetDoseReached,
             dosageInformation: {
               minimumSchedule: [{ frequency: 1, quantity: [5] }],
               currentSchedule: [{ frequency: 1, quantity: [10] }],
@@ -73,13 +71,11 @@ export class MockHealthSummaryService implements HealthSummaryService {
         },
         {
           currentMedication: [],
-          recommendedMedication: null,
           displayInformation: {
-            title: 'Carvedilol (Coreg)',
-            subtitle: '',
-            description: 'Start Medication',
-            type: MedicationRecommendationType.notStarted,
-            videoPath: null,
+            title: new LocalizedText('Carvedilol (Coreg)'),
+            subtitle: new LocalizedText(''),
+            description: new LocalizedText('Start Medication'),
+            type: UserMedicationRecommendationType.notStarted,
             dosageInformation: {
               minimumSchedule: [{ frequency: 1, quantity: [5] }],
               currentSchedule: [],
@@ -99,7 +95,7 @@ export class MockHealthSummaryService implements HealthSummaryService {
           qualityOfLifeScore: 20,
           symptomFrequencyScore: 60,
           dizzinessScore: 50,
-          date: this.startDateAdvancedByDays(-9).toISOString(),
+          date: this.startDateAdvancedByDays(-9),
         },
         {
           questionnaireResponseId: '3',
@@ -109,7 +105,7 @@ export class MockHealthSummaryService implements HealthSummaryService {
           qualityOfLifeScore: 37,
           symptomFrequencyScore: 72,
           dizzinessScore: 70,
-          date: this.startDateAdvancedByDays(-18).toISOString(),
+          date: this.startDateAdvancedByDays(-18),
         },
         {
           questionnaireResponseId: '2',
@@ -119,7 +115,7 @@ export class MockHealthSummaryService implements HealthSummaryService {
           qualityOfLifeScore: 25,
           symptomFrequencyScore: 60,
           dizzinessScore: 50,
-          date: this.startDateAdvancedByDays(-34).toISOString(),
+          date: this.startDateAdvancedByDays(-34),
         },
         {
           questionnaireResponseId: '1',
@@ -129,7 +125,7 @@ export class MockHealthSummaryService implements HealthSummaryService {
           qualityOfLifeScore: 60,
           symptomFrequencyScore: 80,
           dizzinessScore: 100,
-          date: this.startDateAdvancedByDays(-49).toISOString(),
+          date: this.startDateAdvancedByDays(-49),
         },
       ],
     }

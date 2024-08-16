@@ -10,15 +10,15 @@ import { expect } from 'chai'
 import { describe, it } from 'mocha'
 import { type RecommendationInput } from './recommender.js'
 import { Sglt2iRecommender } from './sglt2iRecommender.js'
+import { FHIRMedicationRequest } from '../../../models/fhir/baseTypes/fhirElement.js'
 import { type HealthSummaryData } from '../../../models/healthSummaryData.js'
-import { MedicationRecommendationType } from '../../../models/medicationRecommendation.js'
 import { type MedicationRequestContext } from '../../../models/medicationRequestContext.js'
+import { UserMedicationRecommendationType } from '../../../models/types/userMedicationRecommendation.js'
 import { MockContraindicationService } from '../../../tests/mocks/contraindicationService.js'
 import { mockHealthSummaryData } from '../../../tests/mocks/healthSummaryData.js'
 import { cleanupMocks, setupMockFirebase } from '../../../tests/setup.js'
 import { ContraindicationCategory } from '../../contraindication/contraindicationService.js'
 import { getServiceFactory } from '../../factory/getServiceFactory.js'
-import { FhirService } from '../../fhir/fhirService.js'
 import { QuantityUnit } from '../../fhir/quantityUnit.js'
 import { type MedicationService } from '../../medication/medicationService.js'
 import {
@@ -27,7 +27,6 @@ import {
   MedicationReference,
 } from '../../references.js'
 import { CachingStrategy } from '../../seeding/seedingService.js'
-import { UserDataFactory } from '../../seeding/userData/userDataFactory.js'
 
 describe('Sglt2iRecommender', () => {
   let medicationContraindication: (
@@ -42,7 +41,6 @@ describe('Sglt2iRecommender', () => {
       (_, reference) => medicationContraindication(reference),
       (_, reference) => medicationClassContraindication(reference),
     ),
-    new FhirService(),
   )
   let healthSummaryData: HealthSummaryData
   let medicationService: MedicationService
@@ -120,7 +118,7 @@ describe('Sglt2iRecommender', () => {
       expect(result.at(0)).to.deep.equal({
         currentMedication: [],
         recommendedMedication: MedicationReference.empagliflozin,
-        type: MedicationRecommendationType.noActionRequired,
+        type: UserMedicationRecommendationType.noActionRequired,
       })
     })
 
@@ -138,7 +136,7 @@ describe('Sglt2iRecommender', () => {
       expect(result.at(0)).to.deep.equal({
         currentMedication: [],
         recommendedMedication: MedicationReference.empagliflozin,
-        type: MedicationRecommendationType.morePatientObservationsRequired,
+        type: UserMedicationRecommendationType.morePatientObservationsRequired,
       })
     })
 
@@ -157,7 +155,7 @@ describe('Sglt2iRecommender', () => {
       expect(result.at(0)).to.deep.equal({
         currentMedication: [],
         recommendedMedication: MedicationReference.empagliflozin,
-        type: MedicationRecommendationType.noActionRequired,
+        type: UserMedicationRecommendationType.noActionRequired,
       })
     })
 
@@ -173,7 +171,7 @@ describe('Sglt2iRecommender', () => {
       expect(result.at(0)).to.deep.equal({
         currentMedication: [],
         recommendedMedication: MedicationReference.empagliflozin,
-        type: MedicationRecommendationType.notStarted,
+        type: UserMedicationRecommendationType.notStarted,
       })
     })
   })
@@ -181,7 +179,7 @@ describe('Sglt2iRecommender', () => {
   describe('On Sotagliflozin', () => {
     let contextBelowTarget: MedicationRequestContext
     before(async () => {
-      const request = UserDataFactory.medicationRequest({
+      const request = FHIRMedicationRequest.create({
         drugReference: DrugReference.sotagliflozin200,
         frequencyPerDay: 1,
         quantity: 1,
@@ -192,7 +190,7 @@ describe('Sglt2iRecommender', () => {
     })
 
     it('detects target dose', async () => {
-      const request = UserDataFactory.medicationRequest({
+      const request = FHIRMedicationRequest.create({
         drugReference: DrugReference.sotagliflozin200,
         frequencyPerDay: 2,
         quantity: 1,
@@ -211,7 +209,7 @@ describe('Sglt2iRecommender', () => {
       expect(result.at(0)).to.deep.equal({
         currentMedication: [contextAtTarget],
         recommendedMedication: undefined,
-        type: MedicationRecommendationType.targetDoseReached,
+        type: UserMedicationRecommendationType.targetDoseReached,
       })
     })
 
@@ -229,7 +227,7 @@ describe('Sglt2iRecommender', () => {
       expect(result.at(0)).to.deep.equal({
         currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
-        type: MedicationRecommendationType.morePatientObservationsRequired,
+        type: UserMedicationRecommendationType.morePatientObservationsRequired,
       })
     })
 
@@ -248,7 +246,7 @@ describe('Sglt2iRecommender', () => {
       expect(result.at(0)).to.deep.equal({
         currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
-        type: MedicationRecommendationType.personalTargetDoseReached,
+        type: UserMedicationRecommendationType.personalTargetDoseReached,
       })
     })
 
@@ -264,7 +262,7 @@ describe('Sglt2iRecommender', () => {
       expect(result.at(0)).to.deep.equal({
         currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
-        type: MedicationRecommendationType.improvementAvailable,
+        type: UserMedicationRecommendationType.improvementAvailable,
       })
     })
   })

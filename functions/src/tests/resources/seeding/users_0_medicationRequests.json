@@ -1,24 +1,34 @@
 {
   "0": {
+    "id": null,
+    "extension": null,
     "resourceType": "MedicationRequest",
     "medicationReference": {
-      "reference": "medications/298869/drugs/351256"
+      "reference": "medications/298869/drugs/351256",
+      "type": null,
+      "display": null,
+      "identifier": null
     },
     "dosageInstruction": [
       {
+        "text": null,
+        "patientInstruction": null,
         "timing": {
           "repeat": {
             "frequency": 2,
             "period": 1,
-            "periodUnit": "d"
-          }
+            "periodUnit": "d",
+            "timeOfDay": null
+          },
+          "code": null
         },
         "doseAndRate": [
           {
+            "type": null,
             "doseQuantity": {
-              "unit": "tbl.",
               "code": "{tbl}",
               "system": "http://unitsofmeasure.org",
+              "unit": "tbl.",
               "value": 2
             }
           }

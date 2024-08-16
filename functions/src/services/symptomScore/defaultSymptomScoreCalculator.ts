@@ -8,36 +8,23 @@
 
 import { type SymptomScoreCalculator } from './symptomScoreCalculator.js'
 import { average } from '../../extensions/array.js'
-import { type FHIRQuestionnaireResponse } from '../../models/fhir/questionnaireResponse.js'
-import { type SymptomScore } from '../../models/symptomScore.js'
-import { type FhirService } from '../fhir/fhirService.js'
+import { type FHIRQuestionnaireResponse } from '../../models/fhir/fhirQuestionnaireResponse.js'
+import { SymptomScore } from '../../models/types/symptomScore.js'
 
 export class DefaultSymptomScoreCalculator implements SymptomScoreCalculator {
-  // Properties
-
-  private readonly fhirService: FhirService
-
-  // Constructor
-
-  constructor(fhirService: FhirService) {
-    this.fhirService = fhirService
-  }
-
   // Methods
 
   calculate(questionnaireResponse: FHIRQuestionnaireResponse): SymptomScore {
-    const response = this.fhirService.symptomQuestionnaireResponse(
-      questionnaireResponse,
-    )
+    const response = questionnaireResponse.symptomQuestionnaireResponse
 
-    const result: SymptomScore = {
-      questionnaireResponseId: questionnaireResponse.id ?? null,
+    const result = {
+      questionnaireResponseId: questionnaireResponse.id,
       date: questionnaireResponse.authored,
       overallScore: 0,
-      socialLimitsScore: null,
-      physicalLimitsScore: null,
-      qualityOfLifeScore: null,
-      symptomFrequencyScore: null,
+      socialLimitsScore: undefined as number | undefined,
+      physicalLimitsScore: undefined as number | undefined,
+      qualityOfLifeScore: undefined as number | undefined,
+      symptomFrequencyScore: undefined as number | undefined,
       dizzinessScore: response.answer9,
     }
 
@@ -90,6 +77,6 @@ export class DefaultSymptomScoreCalculator implements SymptomScoreCalculator {
       result.qualityOfLifeScore = Math.round(result.qualityOfLifeScore)
     if (result.socialLimitsScore)
       result.socialLimitsScore = Math.round(result.socialLimitsScore)
-    return result
+    return new SymptomScore(result)
   }
 }

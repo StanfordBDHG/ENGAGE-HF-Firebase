@@ -29,7 +29,3 @@ export enum LoincCode {
   estimatedGlomerularFiltrationRate = '98979-8',
   potassium = '6298-4',
 }
-
-export enum RxNormCode {}
-
-export enum SnomedCtCode {}

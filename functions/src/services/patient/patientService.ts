@@ -6,13 +6,13 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { type FHIRAllergyIntolerance } from '../../models/fhir/allergyIntolerance.js'
-import { type FHIRAppointment } from '../../models/fhir/appointment.js'
-import { type FHIRMedicationRequest } from '../../models/fhir/medication.js'
-import { type FHIRObservation } from '../../models/fhir/observation.js'
-import { type FHIRQuestionnaireResponse } from '../../models/fhir/questionnaireResponse.js'
-import { type MedicationRecommendation } from '../../models/medicationRecommendation.js'
-import { type SymptomScore } from '../../models/symptomScore.js'
+import { type FHIRMedicationRequest } from '../../models/fhir/baseTypes/fhirElement.js'
+import { type FHIRAllergyIntolerance } from '../../models/fhir/fhirAllergyIntolerance.js'
+import { type FHIRAppointment } from '../../models/fhir/fhirAppointment.js'
+import { type FHIRObservation } from '../../models/fhir/fhirObservation.js'
+import { type FHIRQuestionnaireResponse } from '../../models/fhir/fhirQuestionnaireResponse.js'
+import { type SymptomScore } from '../../models/types/symptomScore.js'
+import { type UserMedicationRecommendation } from '../../models/types/userMedicationRecommendation.js'
 import { type Document } from '../database/databaseService.js'
 
 export interface PatientService {
@@ -38,14 +38,14 @@ export interface PatientService {
 
   getMedicationRecommendations(
     userId: string,
-  ): Promise<Array<Document<MedicationRecommendation>>>
+  ): Promise<Array<Document<UserMedicationRecommendation>>>
   getMedicationRequests(
     userId: string,
   ): Promise<Array<Document<FHIRMedicationRequest>>>
   updateMedicationRecommendations(
     userId: string,
-    recommendations: MedicationRecommendation[],
-  ): Promise<void>
+    recommendations: UserMedicationRecommendation[],
+  ): Promise<boolean>
 
   // Observations
 
@@ -82,7 +82,7 @@ export interface PatientService {
   ): Promise<Array<Document<FHIRQuestionnaireResponse>>>
   getSymptomScores(
     userId: string,
-    limit: number | null,
+    options?: { limit?: number },
   ): Promise<Array<Document<SymptomScore>>>
   getLatestSymptomScore(
     userId: string,

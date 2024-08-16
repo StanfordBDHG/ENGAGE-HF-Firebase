@@ -14,15 +14,12 @@ import {
   type FHIRAllergyIntolerance,
   FHIRAllergyIntoleranceCriticality,
   FHIRAllergyIntoleranceType,
-} from '../../models/fhir/allergyIntolerance.js'
+} from '../../models/fhir/fhirAllergyIntolerance.js'
 import { CodingSystem } from '../codes.js'
-import { type FhirService } from '../fhir/fhirService.js'
 import { MedicationClassReference, MedicationReference } from '../references.js'
 
 export class DefaultContraindicationService implements ContraindicationService {
   // Properties
-
-  private readonly fhirService: FhirService
 
   /// Medication class contraindications
   /// - Key: SNOMED CT code used in FHIRAllergyIntolerance
@@ -83,12 +80,6 @@ export class DefaultContraindicationService implements ContraindicationService {
       [MedicationClassReference.angiotensinConvertingEnzymeInhibitors],
     ],
   ])
-
-  // Constructor
-
-  constructor(fhirService: FhirService) {
-    this.fhirService = fhirService
-  }
 
   // Methods
 
@@ -165,7 +156,7 @@ export class DefaultContraindicationService implements ContraindicationService {
     check: (system: CodingSystem, code: string) => boolean,
   ): boolean {
     for (const system of systems) {
-      const codes = this.fhirService.codes(contraindication.code, {
+      const codes = contraindication.codes(contraindication.code, {
         system: system,
       })
       for (const code of codes) {

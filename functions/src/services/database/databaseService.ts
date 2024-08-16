@@ -5,12 +5,13 @@
 //
 // SPDX-License-Identifier: MIT
 //
+
 import {
   type Transaction,
-  type Firestore,
   type BulkWriter,
   type BulkWriterOptions,
 } from 'firebase-admin/firestore'
+import { type CollectionsService } from './collections'
 
 export interface Document<Content> {
   id: string
@@ -20,19 +21,29 @@ export interface Document<Content> {
 
 export interface DatabaseService {
   getQuery<T>(
-    query: (firestore: Firestore) => FirebaseFirestore.Query,
+    query: (
+      collectionsService: CollectionsService,
+    ) => FirebaseFirestore.Query<T>,
   ): Promise<Array<Document<T>>>
 
-  getCollection<T>(path: string): Promise<Array<Document<T>>>
-
-  getDocument<T>(path: string): Promise<Document<T> | undefined>
+  getDocument<T>(
+    reference: (
+      collectionsService: CollectionsService,
+    ) => FirebaseFirestore.DocumentReference<T>,
+  ): Promise<Document<T> | undefined>
 
   bulkWrite(
-    write: (firestore: Firestore, writer: BulkWriter) => Promise<void>,
+    write: (
+      collectionsService: CollectionsService,
+      writer: BulkWriter,
+    ) => Promise<void>,
     options?: BulkWriterOptions,
   ): Promise<void>
 
   runTransaction<T>(
-    run: (firestore: Firestore, transaction: Transaction) => Promise<T> | T,
+    run: (
+      collectionsService: CollectionsService,
+      transaction: Transaction,
+    ) => Promise<T> | T,
   ): Promise<T>
 }

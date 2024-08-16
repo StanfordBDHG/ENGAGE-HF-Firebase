@@ -8,7 +8,7 @@
 
 import { https } from 'firebase-functions/v2'
 import { type AuthData } from 'firebase-functions/v2/tasks'
-import { UserType } from '../../models/user.js'
+import { UserType } from '../../models/types/userType.js'
 
 enum UserRoleType {
   admin = 'admin',

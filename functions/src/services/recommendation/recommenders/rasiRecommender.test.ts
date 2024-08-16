@@ -12,15 +12,16 @@
 import { expect } from 'chai'
 import { describe, it } from 'mocha'
 import { RasiRecommender } from './rasiRecommender.js'
+import { FHIRMedicationRequest } from '../../../models/fhir/baseTypes/fhirElement.js'
 import { type HealthSummaryData } from '../../../models/healthSummaryData.js'
-import { MedicationRecommendationType } from '../../../models/medicationRecommendation.js'
 import { type MedicationRequestContext } from '../../../models/medicationRequestContext.js'
+import { SymptomScore } from '../../../models/types/symptomScore.js'
+import { UserMedicationRecommendationType } from '../../../models/types/userMedicationRecommendation.js'
 import { MockContraindicationService } from '../../../tests/mocks/contraindicationService.js'
 import { mockHealthSummaryData } from '../../../tests/mocks/healthSummaryData.js'
 import { cleanupMocks, setupMockFirebase } from '../../../tests/setup.js'
 import { ContraindicationCategory } from '../../contraindication/contraindicationService.js'
 import { getServiceFactory } from '../../factory/getServiceFactory.js'
-import { FhirService } from '../../fhir/fhirService.js'
 import { QuantityUnit } from '../../fhir/quantityUnit.js'
 import { type MedicationService } from '../../medication/medicationService.js'
 import {
@@ -29,7 +30,6 @@ import {
   MedicationReference,
 } from '../../references.js'
 import { CachingStrategy } from '../../seeding/seedingService.js'
-import { UserDataFactory } from '../../seeding/userData/userDataFactory.js'
 
 describe('RasiRecommender', () => {
   let medicationContraindication: (
@@ -44,7 +44,6 @@ describe('RasiRecommender', () => {
       (_, reference) => medicationContraindication(reference),
       (_, reference) => medicationClassContraindication(reference),
     ),
-    new FhirService(),
   )
   let healthSummaryData: HealthSummaryData
   let medicationService: MedicationService
@@ -60,9 +59,13 @@ describe('RasiRecommender', () => {
 
   beforeEach(async () => {
     healthSummaryData = await mockHealthSummaryData(new Date())
-    healthSummaryData.symptomScores.forEach((score) => {
-      score.dizzinessScore = 0
-    })
+    healthSummaryData.symptomScores = healthSummaryData.symptomScores.map(
+      (score) =>
+        new SymptomScore({
+          ...score,
+          dizzinessScore: 0,
+        }),
+    )
     medicationContraindication = (_) => ContraindicationCategory.none
     medicationClassContraindication = (_) => ContraindicationCategory.none
   })
@@ -126,7 +129,7 @@ describe('RasiRecommender', () => {
       expect(result.at(0)).to.deep.equal({
         currentMedication: [],
         recommendedMedication: MedicationReference.losartan,
-        type: MedicationRecommendationType.noActionRequired,
+        type: UserMedicationRecommendationType.noActionRequired,
       })
     })
 
@@ -143,7 +146,7 @@ describe('RasiRecommender', () => {
       expect(result.at(0)).to.deep.equal({
         currentMedication: [],
         recommendedMedication: MedicationReference.losartan,
-        type: MedicationRecommendationType.morePatientObservationsRequired,
+        type: UserMedicationRecommendationType.morePatientObservationsRequired,
       })
     })
 
@@ -161,7 +164,7 @@ describe('RasiRecommender', () => {
       expect(result.at(0)).to.deep.equal({
         currentMedication: [],
         recommendedMedication: MedicationReference.losartan,
-        type: MedicationRecommendationType.noActionRequired,
+        type: UserMedicationRecommendationType.noActionRequired,
       })
     })
 
@@ -181,7 +184,7 @@ describe('RasiRecommender', () => {
       expect(result.at(0)).to.deep.equal({
         currentMedication: [],
         recommendedMedication: MedicationReference.losartan,
-        type: MedicationRecommendationType.noActionRequired,
+        type: UserMedicationRecommendationType.noActionRequired,
       })
     })
 
@@ -201,7 +204,7 @@ describe('RasiRecommender', () => {
       expect(result.at(0)).to.deep.equal({
         currentMedication: [],
         recommendedMedication: MedicationReference.losartan,
-        type: MedicationRecommendationType.noActionRequired,
+        type: UserMedicationRecommendationType.noActionRequired,
       })
     })
 
@@ -223,7 +226,7 @@ describe('RasiRecommender', () => {
       expect(result.at(0)).to.deep.equal({
         currentMedication: [],
         recommendedMedication: MedicationReference.losartan,
-        type: MedicationRecommendationType.notStarted,
+        type: UserMedicationRecommendationType.notStarted,
       })
     })
 
@@ -238,7 +241,7 @@ describe('RasiRecommender', () => {
       expect(result.at(0)).to.deep.equal({
         currentMedication: [],
         recommendedMedication: MedicationReference.sacubitrilValsartan,
-        type: MedicationRecommendationType.notStarted,
+        type: UserMedicationRecommendationType.notStarted,
       })
     })
   })
@@ -246,7 +249,7 @@ describe('RasiRecommender', () => {
   describe('On perindopril (ACEI/ARB)', () => {
     let contextBelowTarget: MedicationRequestContext
     before(async () => {
-      const request = UserDataFactory.medicationRequest({
+      const request = FHIRMedicationRequest.create({
         drugReference: DrugReference.perindopril4,
         frequencyPerDay: 1,
         quantity: 1,
@@ -268,7 +271,7 @@ describe('RasiRecommender', () => {
       })
 
       it('detects target dose reached', async () => {
-        const request = UserDataFactory.medicationRequest({
+        const request = FHIRMedicationRequest.create({
           drugReference: DrugReference.perindopril4,
           frequencyPerDay: 2,
           quantity: 2,
@@ -286,7 +289,7 @@ describe('RasiRecommender', () => {
         expect(result.at(0)).to.deep.equal({
           currentMedication: [contextAtTarget],
           recommendedMedication: undefined,
-          type: MedicationRecommendationType.targetDoseReached,
+          type: UserMedicationRecommendationType.targetDoseReached,
         })
       })
 
@@ -303,7 +306,7 @@ describe('RasiRecommender', () => {
         expect(result.at(0)).to.deep.equal({
           currentMedication: [contextBelowTarget],
           recommendedMedication: undefined,
-          type: MedicationRecommendationType.morePatientObservationsRequired,
+          type: UserMedicationRecommendationType.morePatientObservationsRequired,
         })
       })
 
@@ -323,7 +326,7 @@ describe('RasiRecommender', () => {
         expect(result.at(0)).to.deep.equal({
           currentMedication: [contextBelowTarget],
           recommendedMedication: undefined,
-          type: MedicationRecommendationType.personalTargetDoseReached,
+          type: UserMedicationRecommendationType.personalTargetDoseReached,
         })
       })
 
@@ -343,7 +346,7 @@ describe('RasiRecommender', () => {
         expect(result.at(0)).to.deep.equal({
           currentMedication: [contextBelowTarget],
           recommendedMedication: undefined,
-          type: MedicationRecommendationType.personalTargetDoseReached,
+          type: UserMedicationRecommendationType.personalTargetDoseReached,
         })
       })
 
@@ -363,14 +366,18 @@ describe('RasiRecommender', () => {
         expect(result.at(0)).to.deep.equal({
           currentMedication: [contextBelowTarget],
           recommendedMedication: undefined,
-          type: MedicationRecommendationType.personalTargetDoseReached,
+          type: UserMedicationRecommendationType.personalTargetDoseReached,
         })
       })
 
       it('detects personal target reached with dizziness score too high', () => {
-        healthSummaryData.symptomScores.forEach((score) => {
-          score.dizzinessScore = 3
-        })
+        healthSummaryData.symptomScores = healthSummaryData.symptomScores.map(
+          (score) =>
+            new SymptomScore({
+              ...score,
+              dizzinessScore: 3,
+            }),
+        )
         const result = recommender.compute({
           requests: [contextBelowTarget],
           contraindications: [],
@@ -381,7 +388,7 @@ describe('RasiRecommender', () => {
         expect(result.at(0)).to.deep.equal({
           currentMedication: [contextBelowTarget],
           recommendedMedication: undefined,
-          type: MedicationRecommendationType.personalTargetDoseReached,
+          type: UserMedicationRecommendationType.personalTargetDoseReached,
         })
       })
 
@@ -396,7 +403,7 @@ describe('RasiRecommender', () => {
         expect(result.at(0)).to.deep.equal({
           currentMedication: [contextBelowTarget],
           recommendedMedication: undefined,
-          type: MedicationRecommendationType.improvementAvailable,
+          type: UserMedicationRecommendationType.improvementAvailable,
         })
       })
     })
@@ -415,7 +422,7 @@ describe('RasiRecommender', () => {
         expect(result.at(0)).to.deep.equal({
           currentMedication: [contextBelowTarget],
           recommendedMedication: undefined,
-          type: MedicationRecommendationType.morePatientObservationsRequired,
+          type: UserMedicationRecommendationType.morePatientObservationsRequired,
         })
       })
 
@@ -435,7 +442,7 @@ describe('RasiRecommender', () => {
         expect(result.at(0)).to.deep.equal({
           currentMedication: [contextBelowTarget],
           recommendedMedication: undefined,
-          type: MedicationRecommendationType.personalTargetDoseReached,
+          type: UserMedicationRecommendationType.personalTargetDoseReached,
         })
       })
 
@@ -455,7 +462,7 @@ describe('RasiRecommender', () => {
         expect(result.at(0)).to.deep.equal({
           currentMedication: [contextBelowTarget],
           recommendedMedication: undefined,
-          type: MedicationRecommendationType.personalTargetDoseReached,
+          type: UserMedicationRecommendationType.personalTargetDoseReached,
         })
       })
 
@@ -475,14 +482,18 @@ describe('RasiRecommender', () => {
         expect(result.at(0)).to.deep.equal({
           currentMedication: [contextBelowTarget],
           recommendedMedication: undefined,
-          type: MedicationRecommendationType.personalTargetDoseReached,
+          type: UserMedicationRecommendationType.personalTargetDoseReached,
         })
       })
 
       it('detects personal target reached with dizziness score too high', () => {
-        healthSummaryData.symptomScores.forEach((score) => {
-          score.dizzinessScore = 3
-        })
+        healthSummaryData.symptomScores = healthSummaryData.symptomScores.map(
+          (score) =>
+            new SymptomScore({
+              ...score,
+              dizzinessScore: 3,
+            }),
+        )
         const result = recommender.compute({
           requests: [contextBelowTarget],
           contraindications: [],
@@ -493,7 +504,7 @@ describe('RasiRecommender', () => {
         expect(result.at(0)).to.deep.equal({
           currentMedication: [contextBelowTarget],
           recommendedMedication: undefined,
-          type: MedicationRecommendationType.personalTargetDoseReached,
+          type: UserMedicationRecommendationType.personalTargetDoseReached,
         })
       })
 
@@ -508,7 +519,7 @@ describe('RasiRecommender', () => {
         expect(result.at(0)).to.deep.equal({
           currentMedication: [contextBelowTarget],
           recommendedMedication: MedicationReference.sacubitrilValsartan,
-          type: MedicationRecommendationType.improvementAvailable,
+          type: UserMedicationRecommendationType.improvementAvailable,
         })
       })
     })
@@ -517,7 +528,7 @@ describe('RasiRecommender', () => {
   describe('On sacubitril/valsartan', () => {
     let contextBelowTarget: MedicationRequestContext
     before(async () => {
-      const request = UserDataFactory.medicationRequest({
+      const request = FHIRMedicationRequest.create({
         drugReference: DrugReference.sacubitrilValsartan49_51,
         frequencyPerDay: 1,
         quantity: 1,
@@ -528,8 +539,7 @@ describe('RasiRecommender', () => {
     })
 
     it('detects target dose reached', async () => {
-      // TODO: What should happen if target dose for one ingredient is reached but not another?
-      const request = UserDataFactory.medicationRequest({
+      const request = FHIRMedicationRequest.create({
         drugReference: DrugReference.sacubitrilValsartan49_51,
         frequencyPerDay: 2,
         quantity: 2,
@@ -547,7 +557,7 @@ describe('RasiRecommender', () => {
       expect(result.at(0)).to.deep.equal({
         currentMedication: [contextAtTarget],
         recommendedMedication: undefined,
-        type: MedicationRecommendationType.targetDoseReached,
+        type: UserMedicationRecommendationType.targetDoseReached,
       })
     })
 
@@ -564,7 +574,7 @@ describe('RasiRecommender', () => {
       expect(result.at(0)).to.deep.equal({
         currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
-        type: MedicationRecommendationType.morePatientObservationsRequired,
+        type: UserMedicationRecommendationType.morePatientObservationsRequired,
       })
     })
 
@@ -582,7 +592,7 @@ describe('RasiRecommender', () => {
       expect(result.at(0)).to.deep.equal({
         currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
-        type: MedicationRecommendationType.personalTargetDoseReached,
+        type: UserMedicationRecommendationType.personalTargetDoseReached,
       })
     })
 
@@ -602,7 +612,7 @@ describe('RasiRecommender', () => {
       expect(result.at(0)).to.deep.equal({
         currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
-        type: MedicationRecommendationType.personalTargetDoseReached,
+        type: UserMedicationRecommendationType.personalTargetDoseReached,
       })
     })
 
@@ -622,14 +632,18 @@ describe('RasiRecommender', () => {
       expect(result.at(0)).to.deep.equal({
         currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
-        type: MedicationRecommendationType.personalTargetDoseReached,
+        type: UserMedicationRecommendationType.personalTargetDoseReached,
       })
     })
 
     it('detects personal target dose when dizziness is too high', () => {
-      healthSummaryData.symptomScores.forEach((score) => {
-        score.dizzinessScore = 3
-      })
+      healthSummaryData.symptomScores = healthSummaryData.symptomScores.map(
+        (score) =>
+          new SymptomScore({
+            ...score,
+            dizzinessScore: 3,
+          }),
+      )
       const result = recommender.compute({
         requests: [contextBelowTarget],
         contraindications: [],
@@ -640,7 +654,7 @@ describe('RasiRecommender', () => {
       expect(result.at(0)).to.deep.equal({
         currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
-        type: MedicationRecommendationType.personalTargetDoseReached,
+        type: UserMedicationRecommendationType.personalTargetDoseReached,
       })
     })
 
@@ -655,7 +669,7 @@ describe('RasiRecommender', () => {
       expect(result.at(0)).to.deep.equal({
         currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
-        type: MedicationRecommendationType.improvementAvailable,
+        type: UserMedicationRecommendationType.improvementAvailable,
       })
     })
   })

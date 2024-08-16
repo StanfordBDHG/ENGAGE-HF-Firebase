@@ -6,13 +6,15 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { type TypeOf, z } from 'zod'
+import { z } from 'zod'
 import { validatedOnCall, validatedOnRequest } from './helpers.js'
 import { Flags } from '../flags.js'
-import { UserType } from '../models/user.js'
+import { dateConverter } from '../models/helpers/dateConverter.js'
+import { UserType } from '../models/types/userType.js'
 import { UserRole } from '../services/credential/credential.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 import { type ServiceFactory } from '../services/factory/serviceFactory.js'
+import { customSeedingOptionsSchema } from '../services/seeding/debugData/debugDataService.js'
 import { CachingStrategy } from '../services/seeding/seedingService.js'
 
 enum StaticDataComponent {
@@ -34,7 +36,7 @@ const updateStaticDataInputSchema = z.object({
 
 async function _updateStaticData(
   factory: ServiceFactory,
-  input: TypeOf<typeof updateStaticDataInputSchema>,
+  input: z.output<typeof updateStaticDataInputSchema>,
 ) {
   const service = factory.staticData()
   const promises: Array<Promise<void>> = []
@@ -91,7 +93,7 @@ enum UserDebugDataComponent {
 }
 
 const defaultSeedInputSchema = z.object({
-  date: z.date().default(new Date()),
+  date: dateConverter.schema.default(new Date().toISOString()),
   only: z
     .nativeEnum(DebugDataComponent)
     .array()
@@ -113,7 +115,7 @@ const defaultSeedInputSchema = z.object({
     .default([]),
 })
 
-async function _defaultSeed(data: TypeOf<typeof defaultSeedInputSchema>) {
+async function _defaultSeed(data: z.output<typeof defaultSeedInputSchema>) {
   console.log(JSON.stringify(data))
   const factory = getServiceFactory()
 
@@ -326,24 +328,8 @@ export const defaultSeed =
       return 'Success'
     })
 
-const customSeedInputSchema = z.object({
-  users: z
-    .object({
-      auth: z.object({
-        uid: z.string().optional(),
-        email: z.string(),
-        password: z.string(),
-      }),
-      user: z.any().optional(),
-      collections: z.record(z.string(), z.any().array()).default({}),
-    })
-    .array()
-    .default([]),
-  firestore: z.record(z.string(), z.any()).default({}),
-})
-
 export const customSeed = validatedOnRequest(
-  customSeedInputSchema,
+  customSeedingOptionsSchema,
   async (_, data, response) => {
     const factory = getServiceFactory()
 

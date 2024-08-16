@@ -23,13 +23,12 @@ import {
   presortedMedian,
   presortedPercentile,
 } from '../extensions/array.js'
-import { localize } from '../extensions/localizedText.js'
 import { type HealthSummaryData } from '../models/healthSummaryData.js'
-import { type LocalizedText } from '../models/helpers.js'
+import { type LocalizedText } from '../models/types/localizedText.js'
 import {
-  type MedicationRecommendationDoseSchedule,
-  MedicationRecommendationType,
-} from '../models/medicationRecommendation.js'
+  type UserMedicationRecommendationDoseSchedule,
+  UserMedicationRecommendationType,
+} from '../models/types/userMedicationRecommendation.js'
 import { type Observation } from '../models/vitals.js'
 
 export interface HealthSummaryOptions {
@@ -192,14 +191,14 @@ class HealthSummaryPDFGenerator {
     )
 
     function colorForRecommendationType(
-      category: MedicationRecommendationType,
+      category: UserMedicationRecommendationType,
     ): string | undefined {
       switch (category) {
-        case MedicationRecommendationType.targetDoseReached:
+        case UserMedicationRecommendationType.targetDoseReached:
           return 'rgb(0,255,0)'
-        case MedicationRecommendationType.improvementAvailable:
+        case UserMedicationRecommendationType.improvementAvailable:
           return 'rgb(255,255,0)'
-        case MedicationRecommendationType.notStarted:
+        case UserMedicationRecommendationType.notStarted:
           return 'rgb(211,211,211)'
       }
     }
@@ -408,7 +407,7 @@ class HealthSummaryPDFGenerator {
       ],
       ...this.data.symptomScores.map((score, index) => [
         {
-          title: this.formatDate(new Date(score.date)),
+          title: this.formatDate(score.date),
           styles: {
             fontStyle:
               index == this.data.symptomScores.length - 1 ? 'bold' : 'normal',
@@ -763,7 +762,7 @@ class HealthSummaryPDFGenerator {
   }
 
   formatDoseSchedule(
-    schedule: MedicationRecommendationDoseSchedule,
+    schedule: UserMedicationRecommendationDoseSchedule,
     unit: string,
   ): string {
     const prefix =
@@ -782,6 +781,6 @@ class HealthSummaryPDFGenerator {
   }
 
   localize(text: LocalizedText): string {
-    return localize(text, this.options.language)
+    return text.localize(this.options.language)
   }
 }

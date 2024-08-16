@@ -6,20 +6,18 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { type FHIRReference } from './fhir/baseTypes'
-import {
-  type FHIRMedication,
-  type FHIRMedicationRequest,
-} from './fhir/medication'
-import { type MedicationClass } from './medicationClass'
+import { type FHIRMedicationRequest } from './fhir/baseTypes/fhirElement.js'
+import { type FHIRReference } from './fhir/baseTypes/fhirReference.js'
+import { type FHIRMedication } from './fhir/fhirMedication.js'
+import { type MedicationClass } from './types/medicationClass.js'
 
 export interface MedicationRequestContext {
   request: FHIRMedicationRequest
-  requestReference: FHIRReference<FHIRMedicationRequest>
+  requestReference: FHIRReference
   drug: FHIRMedication
-  drugReference: FHIRReference<FHIRMedication>
+  drugReference: FHIRReference
   medication: FHIRMedication
-  medicationReference: FHIRReference<FHIRMedication>
+  medicationReference: FHIRReference
   medicationClass: MedicationClass
-  medicationClassReference: FHIRReference<MedicationClass>
+  medicationClassReference: FHIRReference
 }
