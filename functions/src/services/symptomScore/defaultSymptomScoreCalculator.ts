@@ -34,21 +34,22 @@ export class DefaultSymptomScoreCalculator implements SymptomScoreCalculator {
       response.answer1c,
     ].filter((x) => x !== 6)
     const q1Average = average(q1NonMissing)
-    if (q1Average && q1NonMissing.length >= 2) {
+    if (q1Average !== undefined && q1NonMissing.length >= 2)
       result.physicalLimitsScore = (100 * (q1Average - 1)) / 4
-    }
 
-    const symptomFrequencyAverage = average([
-      (response.answer2 - 1) / 4,
-      (response.answer3 - 1) / 6,
-      (response.answer4 - 1) / 6,
-      (response.answer5 - 1) / 4,
-    ])
-    if (symptomFrequencyAverage)
-      result.symptomFrequencyScore = 100 * symptomFrequencyAverage
+    const symptomFrequencyAverage = average(
+      [
+        (response.answer2 - 1) / 4,
+        (response.answer3 - 1) / 6,
+        (response.answer4 - 1) / 6,
+        (response.answer5 - 1) / 4,
+      ].map((x) => x * 100),
+    )
+    if (symptomFrequencyAverage !== undefined)
+      result.symptomFrequencyScore = symptomFrequencyAverage
 
     const qualityOfLifeAverage = average([response.answer6, response.answer7])
-    if (qualityOfLifeAverage)
+    if (qualityOfLifeAverage !== undefined)
       result.qualityOfLifeScore = (100 * (qualityOfLifeAverage - 1)) / 4
 
     const q8NonMissing = [
@@ -57,7 +58,7 @@ export class DefaultSymptomScoreCalculator implements SymptomScoreCalculator {
       response.answer8c,
     ].filter((x) => x !== 6)
     const q8Average = average(q8NonMissing)
-    if (q8Average && q8NonMissing.length >= 1)
+    if (q8Average !== undefined && q8NonMissing.length >= 2)
       result.socialLimitsScore = (100 * (q8Average - 1)) / 4
 
     const nonMissingScores = [
@@ -65,18 +66,10 @@ export class DefaultSymptomScoreCalculator implements SymptomScoreCalculator {
       result.symptomFrequencyScore,
       result.qualityOfLifeScore,
       result.socialLimitsScore,
-    ].flatMap((score) => (score ? [score] : []))
+    ].flatMap((score) => (score !== undefined ? [score] : []))
     const totalScore = average(nonMissingScores)
-    if (totalScore) result.overallScore = Math.round(totalScore)
+    if (totalScore !== undefined) result.overallScore = totalScore
 
-    if (result.physicalLimitsScore)
-      result.physicalLimitsScore = Math.round(result.physicalLimitsScore)
-    if (result.symptomFrequencyScore)
-      result.symptomFrequencyScore = Math.round(result.symptomFrequencyScore)
-    if (result.qualityOfLifeScore)
-      result.qualityOfLifeScore = Math.round(result.qualityOfLifeScore)
-    if (result.socialLimitsScore)
-      result.socialLimitsScore = Math.round(result.socialLimitsScore)
     return new SymptomScore(result)
   }
 }
