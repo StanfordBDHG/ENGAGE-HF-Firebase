@@ -18,12 +18,11 @@ import {
   FHIRAppointmentStatus,
 } from '../../../models/fhir/fhirAppointment.js'
 import { FHIRObservation } from '../../../models/fhir/fhirObservation.js'
-import {
-  fhirQuestionnaireConverter,
-  type FHIRQuestionnaire,
-} from '../../../models/fhir/fhirQuestionnaire.js'
+import { fhirQuestionnaireConverter } from '../../../models/fhir/fhirQuestionnaire.js'
 import { FHIRQuestionnaireResponse } from '../../../models/fhir/fhirQuestionnaireResponse.js'
+import { optionalish } from '../../../models/helpers/optionalish.js'
 import { invitationConverter } from '../../../models/types/invitation.js'
+import { userConverter } from '../../../models/types/user.js'
 import { UserMessage } from '../../../models/types/userMessage.js'
 import { LoincCode } from '../../codes.js'
 import {
@@ -34,12 +33,11 @@ import { type DatabaseService } from '../../database/databaseService.js'
 import { QuantityUnit } from '../../fhir/quantityUnit.js'
 import {
   DrugReference,
+  MedicationReference,
   QuestionnaireReference,
   VideoReference,
 } from '../../references.js'
 import { SeedingService } from '../seedingService.js'
-import { optionalish } from '../../../models/helpers/optionalish.js'
-import { userConverter } from '../../../models/types/user.js'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -161,6 +159,7 @@ export class DebugDataService extends SeedingService {
       UserMessage.createMedicationChange({
         creationDate: date,
         medicationName: 'Losartan Potassium',
+        reference: MedicationReference.losartan,
         videoReference: VideoReference.aceiAndArbs,
       }),
       UserMessage.createMedicationUptitration({

@@ -48,7 +48,7 @@ export class SchemaConverter<Schema extends z.ZodType<any, any, any>>
       return this.encode(modelObject) as DocumentData
     } catch (error) {
       console.error(
-        `Failing to encode object of type ${typeof modelObject} due to ${error}`,
+        `Failing to encode object of type ${typeof modelObject} due to ${String(error)}`,
       )
       throw error
     }

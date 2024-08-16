@@ -113,7 +113,7 @@ export class SeedingService {
       .array()
       .parse(
         JSON.parse(fs.readFileSync(this.path + filename, 'utf8')),
-      ) as z.output<Schema>[]
+      ) as Array<z.output<Schema>>
   }
 
   protected readJSONRecord<Schema extends z.ZodType<any, any, any>>(

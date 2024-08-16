@@ -8,6 +8,7 @@
 
 import { onDocumentWritten } from 'firebase-functions/v2/firestore'
 import { onSchedule } from 'firebase-functions/v2/scheduler'
+import { fhirMedicationRequestConverter } from '../models/fhir/baseTypes/fhirElement.js'
 import { UserObservationCollection } from '../services/database/collections.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
@@ -36,7 +37,7 @@ export const onUserCreatinineObservationWritten = onDocumentWritten(
 )
 
 export const onUserBloodPressureObservationWritten = onDocumentWritten(
-  'users/{userId}/bodyWeightObservations/{observationId}',
+  'users/{userId}/bloodPressureObservations/{observationId}',
   async (event) =>
     getServiceFactory()
       .trigger()
@@ -92,10 +93,22 @@ export const onUserHeartRateObservationWritten = onDocumentWritten(
 
 export const onUserMedicationRequestWritten = onDocumentWritten(
   'users/{userId}/medicationRequests/{medicationRequestId}',
-  async (event) =>
-    getServiceFactory()
+  async (event) => {
+    const beforeData = event.data?.before
+    const afterData = event.data?.after
+    await getServiceFactory()
       .trigger()
-      .userMedicationRequestWritten(event.params.userId),
+      .userMedicationRequestWritten(
+        event.params.userId,
+        event.params.medicationRequestId,
+        beforeData?.exists ?
+          fhirMedicationRequestConverter.value.fromFirestore(beforeData)
+        : undefined,
+        afterData?.exists ?
+          fhirMedicationRequestConverter.value.fromFirestore(afterData)
+        : undefined,
+      )
+  },
 )
 
 export const onUserPotassiumObservationWritten = onDocumentWritten(

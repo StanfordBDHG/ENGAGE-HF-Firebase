@@ -17,21 +17,28 @@ import {
   type Document,
   type DatabaseService,
 } from '../database/databaseService.js'
+import { type UserService } from '../user/userService.js'
 
 export class DefaultMessageService implements MessageService {
   // Properties
 
   private readonly databaseService: DatabaseService
   private readonly messaging: Messaging
+  private readonly userService: UserService
 
   // Constructor
 
-  constructor(messaging: Messaging, databaseService: DatabaseService) {
+  constructor(
+    messaging: Messaging,
+    databaseService: DatabaseService,
+    userService: UserService,
+  ) {
     this.databaseService = databaseService
     this.messaging = messaging
+    this.userService = userService
   }
 
-  // Methods
+  // Methods - Devices
 
   async registerDevice(userId: string, device: UserDevice): Promise<void> {
     await this.databaseService.runTransaction(
@@ -49,54 +56,6 @@ export class DefaultMessageService implements MessageService {
     return
   }
 
-  async sendNotification(
-    userId: string,
-    message: UserMessage,
-    options: {
-      language?: string
-    },
-  ): Promise<void> {
-    const devices = await this.databaseService.getQuery<UserDevice>(
-      (collections) => collections.userDevices(userId),
-    )
-
-    const notifications: TokenMessage[] = devices.map((device) =>
-      this.tokenMessage(message, {
-        device: device.content,
-        languages: [device.content.language, options.language].flatMap(
-          (language) => (language ? [language] : []),
-        ),
-      }),
-    )
-
-    const batchResponse = await this.messaging.sendEach(notifications)
-
-    await Promise.all(
-      batchResponse.responses.map(async (individualResponse, index) => {
-        if (!individualResponse.success) {
-          console.error(
-            `Tried sending message to ${devices[index].content.notificationToken} but failed: ${String(individualResponse.error)}`,
-          )
-        }
-        if (
-          individualResponse.error?.code !==
-          'messaging/registration-token-not-registered'
-        )
-          return
-
-        await this.databaseService.runTransaction(
-          (collections, transaction) => {
-            transaction.delete(
-              collections.userDevices(userId).doc(devices[index].id),
-            )
-          },
-        )
-      }),
-    )
-
-    return
-  }
-
   // Methods - Messages
 
   async getOpenMessages(userId: string): Promise<Array<Document<UserMessage>>> {
@@ -108,22 +67,28 @@ export class DefaultMessageService implements MessageService {
     )
   }
 
-  async addMessage(userId: string, message: UserMessage): Promise<boolean> {
-    return this.databaseService.runTransaction(
+  async addMessage(
+    userId: string,
+    message: UserMessage,
+    options: {
+      notify: boolean
+      language?: string | null
+    },
+  ): Promise<void> {
+    const didAddMessage = await this.databaseService.runTransaction(
       async (collections, transaction) => {
-        const existingMessage = (
+        const existingMessages = (
           await collections
             .userMessages(userId)
             .where('type', '==', message.type)
             .where('completionDate', '==', null)
             .orderBy('creationDate', 'desc')
-            .limit(1)
             .get()
-        ).docs.at(0)
+        ).docs
 
         if (
-          !existingMessage ||
-          this.handleOldMessage(existingMessage, message, transaction)
+          existingMessages.length === 0 ||
+          this.handleOldMessages(existingMessages, message, transaction)
         ) {
           const newMessageRef = collections.userMessages(userId).doc()
           transaction.set(newMessageRef, message)
@@ -133,6 +98,15 @@ export class DefaultMessageService implements MessageService {
         return false
       },
     )
+
+    if (didAddMessage && options.notify) {
+      let language = options.language
+      if (language === undefined)
+        language = (await this.userService.getUser(userId))?.content.language
+      await this.sendNotification(userId, message, {
+        language: language ?? undefined,
+      })
+    }
   }
 
   async completeMessages(
@@ -196,19 +170,42 @@ export class DefaultMessageService implements MessageService {
     )
   }
 
-  // Helpers
+  // Helpers - Messages
 
   /// returns whether to save the new message or throw it away
-  private handleOldMessage(
-    oldMessage: QueryDocumentSnapshot<UserMessage>,
+  private handleOldMessages(
+    oldMessages: Array<QueryDocumentSnapshot<UserMessage>>,
     newMessage: UserMessage,
     transaction: FirebaseFirestore.Transaction,
   ): boolean {
     switch (newMessage.type) {
-      case UserMessageType.weightGain: {
-        const isOld =
-          oldMessage.data().creationDate >= advanceDateByDays(new Date(), -7)
-        if (isOld) {
+      case UserMessageType.weightGain:
+        // Keep message from the last week, replace if older
+        let containsNewishMessage = false
+        for (const oldMessage of oldMessages) {
+          const isOld =
+            oldMessage.data().creationDate < advanceDateByDays(new Date(), -7)
+          if (isOld) {
+            transaction.set(
+              oldMessage.ref,
+              new UserMessage({
+                ...oldMessage.data(),
+                completionDate: new Date(),
+              }),
+            )
+          } else {
+            containsNewishMessage = true
+          }
+        }
+        return !containsNewishMessage
+      case UserMessageType.welcome:
+      case UserMessageType.medicationUptitration:
+        // Keep only the most recent message
+        return false
+      case UserMessageType.symptomQuestionnaire:
+      case UserMessageType.vitals:
+        // Mark old messages as completed and create new ones instead
+        for (const oldMessage of oldMessages) {
           transaction.set(
             oldMessage.ref,
             new UserMessage({
@@ -216,30 +213,66 @@ export class DefaultMessageService implements MessageService {
               completionDate: new Date(),
             }),
           )
-          return true
         }
-        return false
-      }
-      case UserMessageType.welcome:
+        return true
       case UserMessageType.medicationChange:
-      case UserMessageType.medicationUptitration: {
-        return false
-      }
-      case UserMessageType.symptomQuestionnaire:
-      case UserMessageType.vitals: {
-        transaction.set(
-          oldMessage.ref,
-          new UserMessage({
-            ...oldMessage.data(),
-            completionDate: new Date(),
-          }),
-        )
+      case UserMessageType.preAppointment:
+        // Keep old message, if it references the same entity
+        for (const oldMessage of oldMessages) {
+          if (oldMessage.data().reference === newMessage.reference) {
+            return false
+          }
+        }
         return true
-      }
-      case UserMessageType.preAppointment: {
-        return true
-      }
     }
+  }
+
+  // Helpers - Notifications
+
+  private async sendNotification(
+    userId: string,
+    message: UserMessage,
+    options: {
+      language?: string
+    },
+  ): Promise<void> {
+    const devices = await this.databaseService.getQuery<UserDevice>(
+      (collections) => collections.userDevices(userId),
+    )
+
+    const notifications: TokenMessage[] = devices.map((device) =>
+      this.tokenMessage(message, {
+        device: device.content,
+        languages: [device.content.language, options.language].flatMap(
+          (language) => (language ? [language] : []),
+        ),
+      }),
+    )
+
+    const batchResponse = await this.messaging.sendEach(notifications)
+
+    await Promise.all(
+      batchResponse.responses.map(async (individualResponse, index) => {
+        if (!individualResponse.success) {
+          console.error(
+            `Tried sending message to ${devices[index].content.notificationToken} but failed: ${String(individualResponse.error)}`,
+          )
+        }
+        if (
+          individualResponse.error?.code !==
+          'messaging/registration-token-not-registered'
+        )
+          return
+
+        await this.databaseService.runTransaction(
+          (collections, transaction) => {
+            transaction.delete(
+              collections.userDevices(userId).doc(devices[index].id),
+            )
+          },
+        )
+      }),
+    )
   }
 
   private tokenMessage(

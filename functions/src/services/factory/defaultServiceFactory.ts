@@ -78,6 +78,7 @@ export class DefaultServiceFactory implements ServiceFactory {
       new DefaultMessageService(
         this.messaging.value,
         this.databaseService.value,
+        this.userService.value,
       ),
   )
 

@@ -20,10 +20,10 @@ export const onUserQuestionnaireResponseWritten = onDocumentWritten(
       .questionnaireResponseWritten(
         event.params.userId,
         event.params.questionnaireResponseId,
-        beforeData ?
+        beforeData?.exists ?
           fhirQuestionnaireResponseConverter.value.fromFirestore(beforeData)
         : undefined,
-        afterData ?
+        afterData?.exists ?
           fhirQuestionnaireResponseConverter.value.fromFirestore(afterData)
         : undefined,
       )

@@ -1,14 +1,19 @@
 {
   "0": {
     "id": "0",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"

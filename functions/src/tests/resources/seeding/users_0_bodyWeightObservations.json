@@ -1,14 +1,19 @@
 {
   "0": {
     "id": "0",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -26,14 +31,19 @@
   },
   "1": {
     "id": "1",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -51,14 +61,19 @@
   },
   "2": {
     "id": "2",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -76,14 +91,19 @@
   },
   "3": {
     "id": "3",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -101,14 +121,19 @@
   },
   "4": {
     "id": "4",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -126,14 +151,19 @@
   },
   "5": {
     "id": "5",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -151,14 +181,19 @@
   },
   "6": {
     "id": "6",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -176,14 +211,19 @@
   },
   "7": {
     "id": "7",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -201,14 +241,19 @@
   },
   "8": {
     "id": "8",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -226,14 +271,19 @@
   },
   "9": {
     "id": "9",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -251,14 +301,19 @@
   },
   "10": {
     "id": "10",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -276,14 +331,19 @@
   },
   "11": {
     "id": "11",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -301,14 +361,19 @@
   },
   "12": {
     "id": "12",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -326,14 +391,19 @@
   },
   "13": {
     "id": "13",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -351,14 +421,19 @@
   },
   "14": {
     "id": "14",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -376,14 +451,19 @@
   },
   "15": {
     "id": "15",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -401,14 +481,19 @@
   },
   "16": {
     "id": "16",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -426,14 +511,19 @@
   },
   "17": {
     "id": "17",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -451,14 +541,19 @@
   },
   "18": {
     "id": "18",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -476,14 +571,19 @@
   },
   "19": {
     "id": "19",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -501,14 +601,19 @@
   },
   "20": {
     "id": "20",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -526,14 +631,19 @@
   },
   "21": {
     "id": "21",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -551,14 +661,19 @@
   },
   "22": {
     "id": "22",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -576,14 +691,19 @@
   },
   "23": {
     "id": "23",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -601,14 +721,19 @@
   },
   "24": {
     "id": "24",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -626,14 +751,19 @@
   },
   "25": {
     "id": "25",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -651,14 +781,19 @@
   },
   "26": {
     "id": "26",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -676,14 +811,19 @@
   },
   "27": {
     "id": "27",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -701,14 +841,19 @@
   },
   "28": {
     "id": "28",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -726,14 +871,19 @@
   },
   "29": {
     "id": "29",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -751,14 +901,19 @@
   },
   "30": {
     "id": "30",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -776,14 +931,19 @@
   },
   "31": {
     "id": "31",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -801,14 +961,19 @@
   },
   "32": {
     "id": "32",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -826,14 +991,19 @@
   },
   "33": {
     "id": "33",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -851,14 +1021,19 @@
   },
   "34": {
     "id": "34",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -876,14 +1051,19 @@
   },
   "35": {
     "id": "35",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -901,14 +1081,19 @@
   },
   "36": {
     "id": "36",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -926,14 +1111,19 @@
   },
   "37": {
     "id": "37",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -951,14 +1141,19 @@
   },
   "38": {
     "id": "38",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -976,14 +1171,19 @@
   },
   "39": {
     "id": "39",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -1001,14 +1201,19 @@
   },
   "40": {
     "id": "40",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -1026,14 +1231,19 @@
   },
   "41": {
     "id": "41",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -1051,14 +1261,19 @@
   },
   "42": {
     "id": "42",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -1076,14 +1291,19 @@
   },
   "43": {
     "id": "43",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -1101,14 +1321,19 @@
   },
   "44": {
     "id": "44",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -1126,14 +1351,19 @@
   },
   "45": {
     "id": "45",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -1151,14 +1381,19 @@
   },
   "46": {
     "id": "46",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -1176,14 +1411,19 @@
   },
   "47": {
     "id": "47",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -1201,14 +1441,19 @@
   },
   "48": {
     "id": "48",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -1226,14 +1471,19 @@
   },
   "49": {
     "id": "49",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -1251,14 +1501,19 @@
   },
   "50": {
     "id": "50",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -1276,14 +1531,19 @@
   },
   "51": {
     "id": "51",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -1301,14 +1561,19 @@
   },
   "52": {
     "id": "52",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -1326,14 +1591,19 @@
   },
   "53": {
     "id": "53",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -1351,14 +1621,19 @@
   },
   "54": {
     "id": "54",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -1376,14 +1651,19 @@
   },
   "55": {
     "id": "55",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -1401,14 +1681,19 @@
   },
   "56": {
     "id": "56",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -1426,14 +1711,19 @@
   },
   "57": {
     "id": "57",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -1451,14 +1741,19 @@
   },
   "58": {
     "id": "58",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -1476,14 +1771,19 @@
   },
   "59": {
     "id": "59",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -1501,14 +1801,19 @@
   },
   "60": {
     "id": "60",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -1526,14 +1831,19 @@
   },
   "61": {
     "id": "61",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -1551,14 +1861,19 @@
   },
   "62": {
     "id": "62",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -1576,14 +1891,19 @@
   },
   "63": {
     "id": "63",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -1601,14 +1921,19 @@
   },
   "64": {
     "id": "64",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -1626,14 +1951,19 @@
   },
   "65": {
     "id": "65",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -1651,14 +1981,19 @@
   },
   "66": {
     "id": "66",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -1676,14 +2011,19 @@
   },
   "67": {
     "id": "67",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -1701,14 +2041,19 @@
   },
   "68": {
     "id": "68",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -1726,14 +2071,19 @@
   },
   "69": {
     "id": "69",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -1751,14 +2101,19 @@
   },
   "70": {
     "id": "70",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -1776,14 +2131,19 @@
   },
   "71": {
     "id": "71",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -1801,14 +2161,19 @@
   },
   "72": {
     "id": "72",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -1826,14 +2191,19 @@
   },
   "73": {
     "id": "73",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -1851,14 +2221,19 @@
   },
   "74": {
     "id": "74",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -1876,14 +2251,19 @@
   },
   "75": {
     "id": "75",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -1901,14 +2281,19 @@
   },
   "76": {
     "id": "76",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -1926,14 +2311,19 @@
   },
   "77": {
     "id": "77",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -1951,14 +2341,19 @@
   },
   "78": {
     "id": "78",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -1976,14 +2371,19 @@
   },
   "79": {
     "id": "79",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -2001,14 +2401,19 @@
   },
   "80": {
     "id": "80",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -2026,14 +2431,19 @@
   },
   "81": {
     "id": "81",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -2051,14 +2461,19 @@
   },
   "82": {
     "id": "82",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -2076,14 +2491,19 @@
   },
   "83": {
     "id": "83",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -2101,14 +2521,19 @@
   },
   "84": {
     "id": "84",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -2126,14 +2551,19 @@
   },
   "85": {
     "id": "85",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -2151,14 +2581,19 @@
   },
   "86": {
     "id": "86",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -2176,14 +2611,19 @@
   },
   "87": {
     "id": "87",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -2201,14 +2641,19 @@
   },
   "88": {
     "id": "88",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -2226,14 +2671,19 @@
   },
   "89": {
     "id": "89",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -2251,14 +2701,19 @@
   },
   "90": {
     "id": "90",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -2276,14 +2731,19 @@
   },
   "91": {
     "id": "91",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -2301,14 +2761,19 @@
   },
   "92": {
     "id": "92",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -2326,14 +2791,19 @@
   },
   "93": {
     "id": "93",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -2351,14 +2821,19 @@
   },
   "94": {
     "id": "94",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -2376,14 +2851,19 @@
   },
   "95": {
     "id": "95",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -2401,14 +2881,19 @@
   },
   "96": {
     "id": "96",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -2426,14 +2911,19 @@
   },
   "97": {
     "id": "97",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -2451,14 +2941,19 @@
   },
   "98": {
     "id": "98",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -2476,14 +2971,19 @@
   },
   "99": {
     "id": "99",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -2501,14 +3001,19 @@
   },
   "100": {
     "id": "100",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -2526,14 +3031,19 @@
   },
   "101": {
     "id": "101",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -2551,14 +3061,19 @@
   },
   "102": {
     "id": "102",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -2576,14 +3091,19 @@
   },
   "103": {
     "id": "103",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -2601,14 +3121,19 @@
   },
   "104": {
     "id": "104",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -2626,14 +3151,19 @@
   },
   "105": {
     "id": "105",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -2651,14 +3181,19 @@
   },
   "106": {
     "id": "106",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -2676,14 +3211,19 @@
   },
   "107": {
     "id": "107",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -2701,14 +3241,19 @@
   },
   "108": {
     "id": "108",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -2726,14 +3271,19 @@
   },
   "109": {
     "id": "109",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -2751,14 +3301,19 @@
   },
   "110": {
     "id": "110",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -2776,14 +3331,19 @@
   },
   "111": {
     "id": "111",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -2801,14 +3361,19 @@
   },
   "112": {
     "id": "112",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -2826,14 +3391,19 @@
   },
   "113": {
     "id": "113",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -2851,14 +3421,19 @@
   },
   "114": {
     "id": "114",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -2876,14 +3451,19 @@
   },
   "115": {
     "id": "115",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -2901,14 +3481,19 @@
   },
   "116": {
     "id": "116",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -2926,14 +3511,19 @@
   },
   "117": {
     "id": "117",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -2951,14 +3541,19 @@
   },
   "118": {
     "id": "118",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -2976,14 +3571,19 @@
   },
   "119": {
     "id": "119",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -3001,14 +3601,19 @@
   },
   "120": {
     "id": "120",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -3026,14 +3631,19 @@
   },
   "121": {
     "id": "121",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -3051,14 +3661,19 @@
   },
   "122": {
     "id": "122",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -3076,14 +3691,19 @@
   },
   "123": {
     "id": "123",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -3101,14 +3721,19 @@
   },
   "124": {
     "id": "124",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -3126,14 +3751,19 @@
   },
   "125": {
     "id": "125",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -3151,14 +3781,19 @@
   },
   "126": {
     "id": "126",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -3176,14 +3811,19 @@
   },
   "127": {
     "id": "127",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -3201,14 +3841,19 @@
   },
   "128": {
     "id": "128",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -3226,14 +3871,19 @@
   },
   "129": {
     "id": "129",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -3251,14 +3901,19 @@
   },
   "130": {
     "id": "130",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -3276,14 +3931,19 @@
   },
   "131": {
     "id": "131",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -3301,14 +3961,19 @@
   },
   "132": {
     "id": "132",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -3326,14 +3991,19 @@
   },
   "133": {
     "id": "133",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -3351,14 +4021,19 @@
   },
   "134": {
     "id": "134",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -3376,14 +4051,19 @@
   },
   "135": {
     "id": "135",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -3401,14 +4081,19 @@
   },
   "136": {
     "id": "136",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -3426,14 +4111,19 @@
   },
   "137": {
     "id": "137",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -3451,14 +4141,19 @@
   },
   "138": {
     "id": "138",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -3476,14 +4171,19 @@
   },
   "139": {
     "id": "139",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -3501,14 +4201,19 @@
   },
   "140": {
     "id": "140",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -3526,14 +4231,19 @@
   },
   "141": {
     "id": "141",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -3551,14 +4261,19 @@
   },
   "142": {
     "id": "142",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -3576,14 +4291,19 @@
   },
   "143": {
     "id": "143",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -3601,14 +4321,19 @@
   },
   "144": {
     "id": "144",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -3626,14 +4351,19 @@
   },
   "145": {
     "id": "145",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -3651,14 +4381,19 @@
   },
   "146": {
     "id": "146",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -3676,14 +4411,19 @@
   },
   "147": {
     "id": "147",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -3701,14 +4441,19 @@
   },
   "148": {
     "id": "148",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -3726,14 +4471,19 @@
   },
   "149": {
     "id": "149",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -3751,14 +4501,19 @@
   },
   "150": {
     "id": "150",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -3776,14 +4531,19 @@
   },
   "151": {
     "id": "151",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -3801,14 +4561,19 @@
   },
   "152": {
     "id": "152",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -3826,14 +4591,19 @@
   },
   "153": {
     "id": "153",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -3851,14 +4621,19 @@
   },
   "154": {
     "id": "154",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -3876,14 +4651,19 @@
   },
   "155": {
     "id": "155",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -3901,14 +4681,19 @@
   },
   "156": {
     "id": "156",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -3926,14 +4711,19 @@
   },
   "157": {
     "id": "157",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -3951,14 +4741,19 @@
   },
   "158": {
     "id": "158",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -3976,14 +4771,19 @@
   },
   "159": {
     "id": "159",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -4001,14 +4801,19 @@
   },
   "160": {
     "id": "160",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -4026,14 +4831,19 @@
   },
   "161": {
     "id": "161",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -4051,14 +4861,19 @@
   },
   "162": {
     "id": "162",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -4076,14 +4891,19 @@
   },
   "163": {
     "id": "163",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -4101,14 +4921,19 @@
   },
   "164": {
     "id": "164",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -4126,14 +4951,19 @@
   },
   "165": {
     "id": "165",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -4151,14 +4981,19 @@
   },
   "166": {
     "id": "166",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -4176,14 +5011,19 @@
   },
   "167": {
     "id": "167",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -4201,14 +5041,19 @@
   },
   "168": {
     "id": "168",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -4226,14 +5071,19 @@
   },
   "169": {
     "id": "169",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -4251,14 +5101,19 @@
   },
   "170": {
     "id": "170",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -4276,14 +5131,19 @@
   },
   "171": {
     "id": "171",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -4301,14 +5161,19 @@
   },
   "172": {
     "id": "172",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -4326,14 +5191,19 @@
   },
   "173": {
     "id": "173",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -4351,14 +5221,19 @@
   },
   "174": {
     "id": "174",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -4376,14 +5251,19 @@
   },
   "175": {
     "id": "175",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -4401,14 +5281,19 @@
   },
   "176": {
     "id": "176",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -4426,14 +5311,19 @@
   },
   "177": {
     "id": "177",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -4451,14 +5341,19 @@
   },
   "178": {
     "id": "178",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -4476,14 +5371,19 @@
   },
   "179": {
     "id": "179",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -4501,14 +5401,19 @@
   },
   "180": {
     "id": "180",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -4526,14 +5431,19 @@
   },
   "181": {
     "id": "181",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -4551,14 +5461,19 @@
   },
   "182": {
     "id": "182",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -4576,14 +5491,19 @@
   },
   "183": {
     "id": "183",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -4601,14 +5521,19 @@
   },
   "184": {
     "id": "184",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -4626,14 +5551,19 @@
   },
   "185": {
     "id": "185",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -4651,14 +5581,19 @@
   },
   "186": {
     "id": "186",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -4676,14 +5611,19 @@
   },
   "187": {
     "id": "187",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -4701,14 +5641,19 @@
   },
   "188": {
     "id": "188",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -4726,14 +5671,19 @@
   },
   "189": {
     "id": "189",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -4751,14 +5701,19 @@
   },
   "190": {
     "id": "190",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -4776,14 +5731,19 @@
   },
   "191": {
     "id": "191",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -4801,14 +5761,19 @@
   },
   "192": {
     "id": "192",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -4826,14 +5791,19 @@
   },
   "193": {
     "id": "193",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -4851,14 +5821,19 @@
   },
   "194": {
     "id": "194",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -4876,14 +5851,19 @@
   },
   "195": {
     "id": "195",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -4901,14 +5881,19 @@
   },
   "196": {
     "id": "196",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -4926,14 +5911,19 @@
   },
   "197": {
     "id": "197",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -4951,14 +5941,19 @@
   },
   "198": {
     "id": "198",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -4976,14 +5971,19 @@
   },
   "199": {
     "id": "199",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"
@@ -5001,14 +6001,19 @@
   },
   "200": {
     "id": "200",
+    "extension": null,
     "resourceType": "Observation",
     "status": "final",
     "code": {
       "coding": [
         {
+          "id": null,
+          "extension": null,
           "system": "http://loinc.org",
+          "version": null,
           "code": "29463-7",
-          "display": "Body weight"
+          "display": "Body weight",
+          "userSelected": null
         }
       ],
       "text": "Body weight"

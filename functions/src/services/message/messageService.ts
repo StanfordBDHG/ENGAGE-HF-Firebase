@@ -17,17 +17,17 @@ export interface MessageService {
   // Notifications
 
   registerDevice(userId: string, device: UserDevice): Promise<void>
-  sendNotification(
-    userId: string,
-    message: UserMessage,
-    options: {
-      language?: string
-    },
-  ): Promise<void>
 
   // Messages
 
-  addMessage(userId: string, message: UserMessage): Promise<boolean>
+  addMessage(
+    userId: string,
+    message: UserMessage,
+    options: {
+      notify: boolean
+      language?: string | null
+    },
+  ): Promise<void>
 
   getOpenMessages(userId: string): Promise<Array<Document<UserMessage>>>
 

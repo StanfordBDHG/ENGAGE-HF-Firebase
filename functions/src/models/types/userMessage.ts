@@ -8,6 +8,7 @@
 
 import { z } from 'zod'
 import { LocalizedText, localizedTextConverter } from './localizedText.js'
+import { advanceDateByDays } from '../../extensions/date.js'
 import { Lazy } from '../../services/factory/lazy.js'
 import {
   type QuestionnaireReference,
@@ -68,8 +69,9 @@ export class UserMessage {
 
   static createMedicationChange(input: {
     creationDate?: Date
+    reference: string
     medicationName: string
-    videoReference: VideoReference
+    videoReference?: string
   }): UserMessage {
     return new UserMessage({
       creationDate: input.creationDate ?? new Date(),
@@ -82,6 +84,7 @@ export class UserMessage {
       action: input.videoReference,
       type: UserMessageType.medicationChange,
       isDismissible: true,
+      reference: input.reference,
     })
   }
 
@@ -148,8 +151,10 @@ export class UserMessage {
       creationDate?: Date
     } = {},
   ): UserMessage {
+    const creationDate = input.creationDate ?? new Date()
     return new UserMessage({
-      creationDate: input.creationDate ?? new Date(),
+      creationDate: creationDate,
+      dueDate: advanceDateByDays(creationDate, 1),
       title: new LocalizedText({
         en: 'Vitals',
       }),

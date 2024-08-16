@@ -9,7 +9,6 @@
 import { z } from 'zod'
 import {
   medicationClassSpecificationSchema,
-  type MedicationClassSpecification,
   type RxNormService,
 } from './rxNormService.js'
 import {
@@ -17,21 +16,16 @@ import {
   type FHIRMedication,
 } from '../../../models/fhir/fhirMedication.js'
 import { fhirQuestionnaireConverter } from '../../../models/fhir/fhirQuestionnaire.js'
+import { localizedTextConverter } from '../../../models/types/localizedText.js'
 import {
   medicationClassConverter,
   type MedicationClass,
 } from '../../../models/types/medicationClass.js'
 import { organizationConverter } from '../../../models/types/organization.js'
-import {
-  VideoSection,
-  videoSectionConverter,
-} from '../../../models/types/videoSection.js'
+import { Video } from '../../../models/types/video.js'
+import { VideoSection } from '../../../models/types/videoSection.js'
 import { type DatabaseService } from '../../database/databaseService.js'
 import { type CachingStrategy, SeedingService } from '../seedingService.js'
-import { Video, videoConverter } from '../../../models/types/video.js'
-import {
-  localizedTextConverter,
-} from '../../../models/types/localizedText.js'
 
 export class StaticDataService extends SeedingService {
   // Properties
@@ -55,11 +49,7 @@ export class StaticDataService extends SeedingService {
     await this.databaseService.runTransaction(
       async (collections, transaction) => {
         await this.deleteCollection(collections.medications, transaction)
-        this.setCollection(
-          collections.medications,
-          medications,
-          transaction,
-        )
+        this.setCollection(collections.medications, medications, transaction)
         for (const medicationId in drugs) {
           this.setCollection(
             collections.drugs(medicationId),
