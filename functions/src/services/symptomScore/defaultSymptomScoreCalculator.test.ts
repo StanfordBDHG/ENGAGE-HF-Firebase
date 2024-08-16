@@ -19,11 +19,11 @@ describe('DefaultSymptomScoreCalculator', () => {
       'src/tests/resources/symptomScores.csv',
       'utf8',
     )
-    const lines = fileContent.split('\n')
-    expect(lines.length).to.equal(2268)
+    const lines = fileContent.split('\n').slice(0, -1)
+    expect(lines.length).to.equal(2267)
 
     let lineIndex = -1
-    for (const line of lines.slice(0, -1)) {
+    for (const line of lines) {
       lineIndex++
       const values = line.split(',')
       expect(values.length).to.equal(18)
