@@ -30,8 +30,5 @@ export type HistoryChangeItem = z.output<
 >
 
 export interface HistoryService {
-  recordChange(input: {
-    path: string
-    change: Change<DocumentSnapshot>
-  }): Promise<void>
+  recordChange(change: Change<DocumentSnapshot>): Promise<void>
 }

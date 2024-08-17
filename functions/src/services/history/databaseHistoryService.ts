@@ -24,14 +24,12 @@ export class DatabaseHistoryService implements HistoryService {
 
   // Methods
 
-  async recordChange(input: {
-    path: string
-    change: Change<DocumentSnapshot>
-  }): Promise<void> {
+  async recordChange(change: Change<DocumentSnapshot>): Promise<void> {
+    const path = change.after.ref.path
     await this.databaseService.runTransaction((collections, transaction) => {
-      transaction.set(collections.history.doc(), {
-        path: input.path,
-        data: input.change.after.data(),
+      transaction.create(collections.history.doc(), {
+        path: path,
+        data: change.after.data(),
         date: new Date(),
       })
     })
