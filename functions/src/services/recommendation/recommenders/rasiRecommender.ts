@@ -64,7 +64,7 @@ export class RasiRecommender extends Recommender {
           input.vitals.systolicBloodPressure,
         )
         const medianSystolic = this.medianValue(systolicValuesInLastTwoWeeks)
-        if (!medianSystolic)
+        if (medianSystolic === undefined)
           return this.createRecommendation(
             requests,
             undefined,
@@ -82,13 +82,12 @@ export class RasiRecommender extends Recommender {
             UserMedicationRecommendationType.personalTargetDoseReached,
           )
 
-        const creatinineObservation = input.vitals.creatinine
-        const potassiumObservation = input.vitals.potassium
+        const creatinine = input.vitals.creatinine
+        const potassium = input.vitals.potassium
         if (
-          creatinineObservation &&
-          potassiumObservation &&
-          (creatinineObservation.value >= 2.5 ||
-            potassiumObservation.value >= 5)
+          creatinine !== undefined &&
+          potassium !== undefined &&
+          (creatinine.value >= 2.5 || potassium.value >= 5)
         )
           return this.createRecommendation(
             requests,
@@ -97,7 +96,7 @@ export class RasiRecommender extends Recommender {
           )
 
         if (
-          input.latestSymptomScore &&
+          input.latestSymptomScore !== undefined &&
           input.latestSymptomScore.dizzinessScore >= 3
         )
           return this.createRecommendation(
@@ -120,7 +119,7 @@ export class RasiRecommender extends Recommender {
     )
     const medianSystolic = this.medianValue(systolicValuesInLastTwoWeeks)
 
-    if (!medianSystolic)
+    if (medianSystolic === undefined)
       return this.createRecommendation(
         requests,
         undefined,
@@ -138,12 +137,12 @@ export class RasiRecommender extends Recommender {
         UserMedicationRecommendationType.personalTargetDoseReached,
       )
 
-    const creatinineObservation = input.vitals.creatinine
-    const potassiumObservation = input.vitals.potassium
+    const creatinine = input.vitals.creatinine
+    const potassium = input.vitals.potassium
     if (
-      creatinineObservation &&
-      potassiumObservation &&
-      (creatinineObservation.value >= 2.5 || potassiumObservation.value >= 5)
+      creatinine !== undefined &&
+      potassium !== undefined &&
+      (creatinine.value >= 2.5 || potassium.value >= 5)
     )
       return this.createRecommendation(
         requests,
@@ -152,7 +151,7 @@ export class RasiRecommender extends Recommender {
       )
 
     if (
-      input.latestSymptomScore &&
+      input.latestSymptomScore !== undefined &&
       input.latestSymptomScore.dizzinessScore >= 3
     )
       return this.createRecommendation(
@@ -183,7 +182,7 @@ export class RasiRecommender extends Recommender {
       this.observationsInLastTwoWeeks(input.vitals.systolicBloodPressure),
     )
 
-    if (!medianSystolic)
+    if (medianSystolic === undefined)
       return this.createRecommendation(
         requests,
         undefined,
@@ -197,12 +196,12 @@ export class RasiRecommender extends Recommender {
         UserMedicationRecommendationType.personalTargetDoseReached,
       )
 
-    const creatinineObservation = input.vitals.creatinine
-    const potassiumObservation = input.vitals.potassium
+    const creatinine = input.vitals.creatinine
+    const potassium = input.vitals.potassium
     if (
-      creatinineObservation &&
-      potassiumObservation &&
-      (creatinineObservation.value >= 2.5 || potassiumObservation.value >= 5)
+      creatinine !== undefined &&
+      potassium !== undefined &&
+      (creatinine.value >= 2.5 || potassium.value >= 5)
     )
       return this.createRecommendation(
         requests,
@@ -211,7 +210,7 @@ export class RasiRecommender extends Recommender {
       )
 
     if (
-      input.latestSymptomScore &&
+      input.latestSymptomScore !== undefined &&
       input.latestSymptomScore.dizzinessScore >= 3
     )
       return this.createRecommendation(
@@ -269,7 +268,7 @@ export class RasiRecommender extends Recommender {
     )
     const medianSystolic = this.medianValue(systolicObservationsInLastTwoWeeks)
 
-    if (!medianSystolic)
+    if (medianSystolic === undefined)
       return this.createRecommendation(
         [],
         MedicationReference.losartan,
@@ -287,12 +286,12 @@ export class RasiRecommender extends Recommender {
         UserMedicationRecommendationType.noActionRequired,
       )
 
-    const creatinineObservation = input.vitals.creatinine
-    const potassiumObservation = input.vitals.potassium
+    const creatinine = input.vitals.creatinine
+    const potassium = input.vitals.potassium
     if (
-      creatinineObservation &&
-      potassiumObservation &&
-      (creatinineObservation.value >= 2.5 || potassiumObservation.value >= 5)
+      creatinine !== undefined &&
+      potassium !== undefined &&
+      (creatinine.value >= 2.5 || potassium.value >= 5)
     )
       return this.createRecommendation(
         [],

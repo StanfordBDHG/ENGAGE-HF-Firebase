@@ -38,7 +38,7 @@ export class Sglt2iRecommender extends Recommender {
       this.observationsInLastTwoWeeks(input.vitals.systolicBloodPressure),
     )
 
-    if (!medianSystolic)
+    if (medianSystolic === undefined)
       return this.createRecommendation(
         currentRequests,
         undefined,
@@ -63,7 +63,7 @@ export class Sglt2iRecommender extends Recommender {
 
   private computeNew(input: RecommendationInput): RecommendationOutput[] {
     const eGFR = input.vitals.estimatedGlomerularFiltrationRate?.value
-    if (eGFR && eGFR < 20) return []
+    if (eGFR !== undefined && eGFR < 20) return []
 
     const contraindicationCategory =
       this.contraindicationService.checkMedicationClass(
@@ -89,7 +89,7 @@ export class Sglt2iRecommender extends Recommender {
       this.observationsInLastTwoWeeks(input.vitals.systolicBloodPressure),
     )
 
-    if (!medianSystolic)
+    if (medianSystolic === undefined)
       return this.createRecommendation(
         [],
         MedicationReference.empagliflozin,

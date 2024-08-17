@@ -41,7 +41,7 @@ export class BetaBlockerRecommender extends Recommender {
       this.observationsInLastTwoWeeks(input.vitals.heartRate),
     )
 
-    if (!medianSystolic || !medianHeartRate)
+    if (medianSystolic === undefined || medianHeartRate === undefined)
       return this.createRecommendation(
         currentRequests,
         undefined,
@@ -56,7 +56,7 @@ export class BetaBlockerRecommender extends Recommender {
       )
 
     if (
-      input.latestSymptomScore &&
+      input.latestSymptomScore !== undefined &&
       input.latestSymptomScore.dizzinessScore >= 3
     )
       return this.createRecommendation(
@@ -102,7 +102,7 @@ export class BetaBlockerRecommender extends Recommender {
       this.observationsInLastTwoWeeks(input.vitals.heartRate),
     )
 
-    if (!medianSystolic || !medianHeartRate)
+    if (medianSystolic === undefined || medianHeartRate === undefined)
       return this.createRecommendation(
         [],
         MedicationReference.carvedilol,

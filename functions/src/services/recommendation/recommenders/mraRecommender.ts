@@ -17,6 +17,7 @@ import {
   MedicationClassReference,
   MedicationReference,
 } from '../../references.js'
+import { advanceDateByDays } from '../../../extensions/date.js'
 
 export class MraRecommender extends Recommender {
   // Methods
@@ -34,17 +35,15 @@ export class MraRecommender extends Recommender {
         UserMedicationRecommendationType.targetDoseReached,
       )
 
-    const durationOfOneDayInMilliseconds = 1000 * 60 * 60 * 24 * 7
-    const lastMonth = new Date().getTime() - durationOfOneDayInMilliseconds * 30
-
-    const creatinineObservation = input.vitals.creatinine
-    const potassiumObservation = input.vitals.potassium
+    const lastMonth = advanceDateByDays(new Date(), -30)
+    const creatinine = input.vitals.creatinine
+    const potassium = input.vitals.potassium
 
     if (
-      !creatinineObservation ||
-      !potassiumObservation ||
-      creatinineObservation.date.getTime() < lastMonth ||
-      potassiumObservation.date.getTime() < lastMonth
+      creatinine === undefined ||
+      potassium === undefined ||
+      creatinine.date < lastMonth ||
+      potassium.date < lastMonth
     )
       return this.createRecommendation(
         currentRequests,
@@ -52,7 +51,7 @@ export class MraRecommender extends Recommender {
         UserMedicationRecommendationType.moreLabObservationsRequired,
       )
 
-    if (creatinineObservation.value > 2.5 || potassiumObservation.value > 5)
+    if (creatinine.value > 2.5 || potassium.value > 5)
       return this.createRecommendation(
         currentRequests,
         undefined,
@@ -88,7 +87,7 @@ export class MraRecommender extends Recommender {
     }
 
     const creatinine = input.vitals.creatinine?.value
-    if (creatinine && creatinine >= 2.5)
+    if (creatinine !== undefined && creatinine >= 2.5)
       return this.createRecommendation(
         [],
         MedicationReference.spironolactone,
@@ -96,7 +95,7 @@ export class MraRecommender extends Recommender {
       )
 
     const potassium = input.vitals.potassium?.value
-    if (potassium && potassium >= 5)
+    if (potassium !== undefined && potassium >= 5)
       return this.createRecommendation(
         [],
         MedicationReference.spironolactone,
