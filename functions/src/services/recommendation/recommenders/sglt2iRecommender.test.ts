@@ -56,11 +56,6 @@ describe('Sglt2iRecommender', () => {
 
   beforeEach(async () => {
     healthSummaryData = await mockHealthSummaryData(new Date())
-    healthSummaryData.vitals.estimatedGlomerularFiltrationRate = {
-      date: new Date(),
-      unit: QuantityUnit.mL_min_173m2,
-      value: 19,
-    }
     medicationContraindication = (_) => ContraindicationCategory.none
     medicationClassContraindication = (_) => ContraindicationCategory.none
   })
@@ -85,11 +80,11 @@ describe('Sglt2iRecommender', () => {
       expect(result).to.have.length(0)
     })
 
-    it('recommends no treatment when eGFR is too high', () => {
+    it('recommends no treatment when eGFR is too low', () => {
       healthSummaryData.vitals.estimatedGlomerularFiltrationRate = {
         date: new Date(),
         unit: QuantityUnit.mL_min_173m2,
-        value: 21,
+        value: 19,
       }
       const input: RecommendationInput = {
         requests: [],

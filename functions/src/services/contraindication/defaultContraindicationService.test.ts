@@ -57,7 +57,6 @@ function createFHIRAllergyIntolerance(
   system: CodingSystem,
 ): FHIRAllergyIntolerance {
   return new FHIRAllergyIntolerance({
-    resourceType: 'AllergyIntolerance',
     type,
     criticality,
     code: {

@@ -63,7 +63,7 @@ export class Sglt2iRecommender extends Recommender {
 
   private computeNew(input: RecommendationInput): RecommendationOutput[] {
     const eGFR = input.vitals.estimatedGlomerularFiltrationRate?.value
-    if (eGFR && eGFR >= 20) return []
+    if (eGFR && eGFR < 20) return []
 
     const contraindicationCategory =
       this.contraindicationService.checkMedicationClass(

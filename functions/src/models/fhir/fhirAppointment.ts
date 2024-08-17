@@ -103,7 +103,6 @@ export class FHIRAppointment extends FHIRResource {
     durationInMinutes: number
   }): FHIRAppointment {
     return new FHIRAppointment({
-      resourceType: 'Appointment',
       status: input.status,
       created: input.created,
       start: input.start,

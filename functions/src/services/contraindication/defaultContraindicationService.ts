@@ -171,7 +171,8 @@ export class DefaultContraindicationService implements ContraindicationService {
       case FHIRAllergyIntoleranceType.allergy:
       case FHIRAllergyIntoleranceType.intolerance:
         return ContraindicationCategory.allergyIntolerance
-      default:
+      case FHIRAllergyIntoleranceType.financial:
+      case FHIRAllergyIntoleranceType.preference:
         return ContraindicationCategory.clinicianListed
     }
   }
