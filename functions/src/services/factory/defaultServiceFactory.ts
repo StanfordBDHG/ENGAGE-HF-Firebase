@@ -16,6 +16,8 @@ import { Credential } from '../credential/credential.js'
 import { FirestoreService } from '../database/firestoreService.js'
 import { DefaultHealthSummaryService } from '../healthSummary/databaseHealthSummaryService.js'
 import { type HealthSummaryService } from '../healthSummary/healthSummaryService.js'
+import { DatabaseHistoryService } from '../history/databaseHistoryService.js'
+import { type HistoryService } from '../history/historyService.js'
 import { DatabaseMedicationService } from '../medication/databaseMedicationService.js'
 import { type MedicationService } from '../medication/medicationService.js'
 import { DefaultMessageService } from '../message/defaultMessageService.js'
@@ -67,6 +69,10 @@ export class DefaultServiceFactory implements ServiceFactory {
         this.patientService.value,
         this.userService.value,
       ),
+  )
+
+  private readonly historyService = new Lazy(
+    () => new DatabaseHistoryService(this.databaseService.value),
   )
 
   private readonly medicationService = new Lazy(
@@ -137,6 +143,10 @@ export class DefaultServiceFactory implements ServiceFactory {
 
   staticData(): StaticDataService {
     return this.staticDataService.value
+  }
+
+  history(): HistoryService {
+    return this.historyService.value
   }
 
   // Methods - Patient

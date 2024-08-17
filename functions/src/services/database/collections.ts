@@ -24,6 +24,7 @@ import { userMedicationRecommendationConverter } from '../../models/types/userMe
 import { userMessageConverter } from '../../models/types/userMessage.js'
 import { videoConverter } from '../../models/types/video.js'
 import { videoSectionConverter } from '../../models/types/videoSection.js'
+import { historyChangeItemConverter } from '../history/historyService.js'
 
 export enum UserObservationCollection {
   bodyWeight = 'bodyWeightObservations',
@@ -52,6 +53,12 @@ export class CollectionsService {
     return this.firestore
       .collectionGroup('appointments')
       .withConverter(fhirAppointmentConverter.value)
+  }
+
+  get history() {
+    return this.firestore
+      .collection('history')
+      .withConverter(historyChangeItemConverter)
   }
 
   get invitations() {

@@ -19,6 +19,7 @@ export {
 } from './functions/auth.js'
 export * from './functions/device.js'
 export * from './functions/healthSummary.js'
+export * from './functions/history.js'
 export * from './functions/invitation.js'
 export * from './functions/message.js'
 export * from './functions/recommendation.js'
