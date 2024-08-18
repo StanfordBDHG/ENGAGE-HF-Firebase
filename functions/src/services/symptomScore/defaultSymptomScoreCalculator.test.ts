@@ -11,6 +11,7 @@ import { expect } from 'chai'
 import { describe } from 'mocha'
 import { DefaultSymptomScoreCalculator } from './defaultSymptomScoreCalculator.js'
 import { FHIRQuestionnaireResponse } from '../../models/fhir/fhirQuestionnaireResponse.js'
+import { average } from '../../extensions/array.js'
 
 describe('DefaultSymptomScoreCalculator', () => {
   it('correctly computes symptom scores as described in the resource file', () => {
@@ -89,14 +90,19 @@ describe('DefaultSymptomScoreCalculator', () => {
         expect(values[15]).to.equal('')
       }
 
-      if (
-        score.physicalLimitsScore !== undefined &&
-        score.symptomFrequencyScore !== undefined
-      ) {
+      const clinicalSummaryScore = average(
+        [score.physicalLimitsScore, score.symptomFrequencyScore].flatMap((x) =>
+          x !== undefined ? [x] : [],
+        ),
+      )
+
+      if (clinicalSummaryScore !== undefined) {
         expect(
-          (score.physicalLimitsScore + score.symptomFrequencyScore) / 2,
+          Math.round(clinicalSummaryScore),
           `${lineIndex} - Clinical Summary: ${line}`,
-        ).to.approximately(parseFloat(values[16]), 0.55)
+        ).to.approximately(parseFloat(values[16]), 1)
+      } else {
+        expect(values[16]).to.equal('')
       }
 
       expect(
