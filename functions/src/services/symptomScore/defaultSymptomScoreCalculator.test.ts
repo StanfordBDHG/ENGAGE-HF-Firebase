@@ -10,8 +10,8 @@ import fs from 'fs'
 import { expect } from 'chai'
 import { describe } from 'mocha'
 import { DefaultSymptomScoreCalculator } from './defaultSymptomScoreCalculator.js'
-import { FHIRQuestionnaireResponse } from '../../models/fhir/fhirQuestionnaireResponse.js'
 import { average } from '../../extensions/array.js'
+import { FHIRQuestionnaireResponse } from '../../models/fhir/fhirQuestionnaireResponse.js'
 
 describe('DefaultSymptomScoreCalculator', () => {
   it('correctly computes symptom scores as described in the resource file', () => {
