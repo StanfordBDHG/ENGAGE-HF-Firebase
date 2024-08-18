@@ -9,6 +9,7 @@
 import fs from 'fs'
 import { expect } from 'chai'
 import { describe } from 'mocha'
+import { ContraindicationCategory } from './contraindicationService.js'
 import { DefaultContraindicationService } from './defaultContraindicationService.js'
 import {
   FHIRAllergyIntolerance,
@@ -16,7 +17,6 @@ import {
   FHIRAllergyIntoleranceType,
 } from '../../models/fhir/fhirAllergyIntolerance.js'
 import { MedicationClassReference, MedicationReference } from '../references.js'
-import { ContraindicationCategory } from './contraindicationService.js'
 
 describe('DefaultContraindicationService', () => {
   const contraindicationService = new DefaultContraindicationService()
@@ -70,7 +70,7 @@ describe('DefaultContraindicationService', () => {
       expect(fields).to.have.length(15)
 
       const medicationReference = Object.values(MedicationReference).find(
-        (value) => value === 'medications/' + fields[0],
+        (value) => value.toString() === 'medications/' + fields[0],
       )
 
       expect(medicationReference).to.not.be.undefined
