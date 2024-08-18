@@ -21,7 +21,7 @@ export const historyChangeItemConverter = new SchemaConverter({
   encode: (object) => ({
     path: object.path,
     date: dateConverter.encode(object.date),
-    data: object.data,
+    data: object.data === undefined ? null : object.data,
   }),
 })
 
