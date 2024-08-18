@@ -57,7 +57,7 @@ describe('DefaultSymptomScoreCalculator', () => {
         expect(
           score.physicalLimitsScore,
           `${lineIndex} - Physical Limits: ${line}`,
-        ).to.approximately(parseFloat(values[12]), 0.167)
+        ).to.approximately(parseFloat(values[12]), 0.16667)
       } else {
         expect(values[12]).to.equal('')
       }
@@ -75,7 +75,7 @@ describe('DefaultSymptomScoreCalculator', () => {
         expect(
           score.qualityOfLifeScore,
           `${lineIndex} - Quality of Life: ${line}`,
-        ).to.approximately(parseFloat(values[14]), 0.0001)
+        ).to.approximately(parseFloat(values[14]), 0.00001)
       } else {
         expect(values[14]).to.equal('')
       }
@@ -84,7 +84,7 @@ describe('DefaultSymptomScoreCalculator', () => {
         expect(
           score.socialLimitsScore,
           `${lineIndex} - Social Limits: ${line}`,
-        ).to.approximately(parseFloat(values[15]), 0.167)
+        ).to.approximately(parseFloat(values[15]), 0.166667)
       } else {
         expect(values[15]).to.equal('')
       }
