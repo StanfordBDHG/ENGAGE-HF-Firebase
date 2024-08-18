@@ -8,8 +8,8 @@
 
 import * as d3 from 'd3'
 import { JSDOM } from 'jsdom'
-import { type SymptomScore } from '../models/types/symptomScore.js'
 import { symptomScoreSpeedometerLocalizations } from './generateSpeedometer+localizations.js'
+import { type SymptomScore } from '../models/types/symptomScore.js'
 
 interface SpeedometerMarker {
   percentage: number
