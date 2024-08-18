@@ -69,39 +69,49 @@ export class Sglt2iRecommender extends Recommender {
         MedicationClassReference.sglt2inhibitors,
       )
 
+    const eligibleMedication =
+      this.contraindicationService.findEligibleMedication(
+        input.contraindications,
+        [MedicationReference.empagliflozin, MedicationReference.dapagliflozin],
+      )
+
     switch (contraindicationCategory) {
       case ContraindicationCategory.severeAllergyIntolerance:
       case ContraindicationCategory.allergyIntolerance:
         return []
       case ContraindicationCategory.clinicianListed:
-        return this.createRecommendation(
-          [],
-          MedicationReference.empagliflozin,
-          UserMedicationRecommendationType.noActionRequired,
-        )
+        return eligibleMedication ?
+            this.createRecommendation(
+              [],
+              eligibleMedication,
+              UserMedicationRecommendationType.noActionRequired,
+            )
+          : []
       case ContraindicationCategory.none:
         break
     }
+
+    if (!eligibleMedication) return []
 
     const medianSystolic = this.medianValue(input.vitals.systolicBloodPressure)
 
     if (medianSystolic === undefined)
       return this.createRecommendation(
         [],
-        MedicationReference.empagliflozin,
+        eligibleMedication,
         UserMedicationRecommendationType.morePatientObservationsRequired,
       )
 
     if (medianSystolic < 100)
       return this.createRecommendation(
         [],
-        MedicationReference.empagliflozin,
+        eligibleMedication,
         UserMedicationRecommendationType.noActionRequired,
       )
 
     return this.createRecommendation(
       [],
-      MedicationReference.empagliflozin,
+      eligibleMedication,
       UserMedicationRecommendationType.notStarted,
     )
   }

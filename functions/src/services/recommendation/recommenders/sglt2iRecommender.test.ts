@@ -39,6 +39,7 @@ describe('Sglt2iRecommender', () => {
     new MockContraindicationService(
       (_, reference) => medicationContraindication(reference),
       (_, reference) => medicationClassContraindication(reference),
+      (_, medicationReferences) => medicationReferences.at(0),
     ),
   )
   let healthSummaryData: HealthSummaryData

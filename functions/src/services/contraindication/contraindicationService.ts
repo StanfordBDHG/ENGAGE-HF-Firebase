@@ -31,4 +31,9 @@ export interface ContraindicationService {
     contraindications: FHIRAllergyIntolerance[],
     medicationClassReference: MedicationClassReference,
   ): ContraindicationCategory
+
+  findEligibleMedication(
+    contraindications: FHIRAllergyIntolerance[],
+    medicationReferences: MedicationReference[],
+  ): MedicationReference | undefined
 }

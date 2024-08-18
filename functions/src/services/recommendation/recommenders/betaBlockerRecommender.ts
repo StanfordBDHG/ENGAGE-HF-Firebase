@@ -91,26 +91,37 @@ export class BetaBlockerRecommender extends Recommender {
         break
     }
 
+    const eligibleMedication =
+      this.contraindicationService.findEligibleMedication(
+        input.contraindications,
+        [
+          MedicationReference.carvedilol,
+          MedicationReference.metoprololSuccinate,
+        ],
+      )
+
+    if (!eligibleMedication) return []
+
     const medianSystolic = this.medianValue(input.vitals.systolicBloodPressure)
     const medianHeartRate = this.medianValue(input.vitals.heartRate)
 
     if (medianSystolic === undefined || medianHeartRate === undefined)
       return this.createRecommendation(
         [],
-        MedicationReference.carvedilol,
+        eligibleMedication,
         UserMedicationRecommendationType.morePatientObservationsRequired,
       )
 
     if (medianSystolic < 100 || medianHeartRate < 60)
       return this.createRecommendation(
         [],
-        MedicationReference.carvedilol,
+        eligibleMedication,
         UserMedicationRecommendationType.noActionRequired,
       )
 
     return this.createRecommendation(
       [],
-      MedicationReference.carvedilol,
+      eligibleMedication,
       UserMedicationRecommendationType.notStarted,
     )
   }

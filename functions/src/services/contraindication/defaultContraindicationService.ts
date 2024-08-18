@@ -31,6 +31,11 @@ export class DefaultContraindicationService implements ContraindicationService {
     MedicationClassReference.angiotensinReceptorBlockers,
   ]
 
+  readonly arbArniMedicationClasses = [
+    MedicationClassReference.angiotensinReceptorBlockers,
+    MedicationClassReference.angiotensinReceptorNeprilysinInhibitors,
+  ]
+
   readonly rasiMedicationClasses = [
     MedicationClassReference.angiotensinConvertingEnzymeInhibitors,
     MedicationClassReference.angiotensinReceptorBlockers,
@@ -60,6 +65,26 @@ export class DefaultContraindicationService implements ContraindicationService {
     return this.checkAll(contraindications, (record) =>
       record.medicationClasses.has(medicationClassReference),
     )
+  }
+
+  findEligibleMedication(
+    contraindications: FHIRAllergyIntolerance[],
+    medicationReferences: MedicationReference[],
+  ): MedicationReference | undefined {
+    let availableMedications = medicationReferences
+
+    this.checkAll(contraindications, (record) => {
+      availableMedications = availableMedications.filter(
+        (medication) =>
+          record.medications.has(medication) ||
+          record.medicationClasses.has(
+            this.medicationClassReference(medication),
+          ),
+      )
+      return false
+    })
+
+    return availableMedications.at(0)
   }
 
   // Helpers
@@ -101,12 +126,15 @@ export class DefaultContraindicationService implements ContraindicationService {
     const medicationClass = this.medicationClassReference(
       input.medicationReference,
     )
+    const medicationReferences = this.medicationReferenceIncludingDerivatives(
+      input.medicationReference,
+    )
     switch (input.type) {
       case FHIRAllergyIntoleranceType.allergy:
         if (input.criticality === FHIRAllergyIntoleranceCriticality.high) {
           return {
             category: ContraindicationCategory.severeAllergyIntolerance,
-            medications: new Set([input.medicationReference]),
+            medications: medicationReferences,
             medicationClasses: new Set(
               this.rasiMedicationClasses.includes(medicationClass) ?
                 this.rasiMedicationClasses
@@ -116,10 +144,10 @@ export class DefaultContraindicationService implements ContraindicationService {
         } else {
           return {
             category: ContraindicationCategory.allergyIntolerance,
-            medications: new Set([input.medicationReference]),
+            medications: medicationReferences,
             medicationClasses: new Set(
-              this.aceiArbMedicationClasses.includes(medicationClass) ?
-                this.aceiArbMedicationClasses
+              this.arbArniMedicationClasses.includes(medicationClass) ?
+                this.arbArniMedicationClasses
               : [medicationClass],
             ),
           }
@@ -130,22 +158,19 @@ export class DefaultContraindicationService implements ContraindicationService {
           case MedicationClassReference.angiotensinReceptorNeprilysinInhibitors:
             return {
               category: ContraindicationCategory.clinicianListed,
-              medications: new Set([input.medicationReference]),
+              medications: medicationReferences,
               medicationClasses: new Set([medicationClass]),
             }
           case MedicationClassReference.angiotensinReceptorBlockers:
             return {
               category: ContraindicationCategory.clinicianListed,
-              medications: new Set([input.medicationReference]),
-              medicationClasses: new Set([
-                medicationClass,
-                MedicationClassReference.angiotensinReceptorNeprilysinInhibitors,
-              ]),
+              medications: medicationReferences,
+              medicationClasses: new Set(this.arbArniMedicationClasses),
             }
           default:
             return {
               category: ContraindicationCategory.clinicianListed,
-              medications: new Set([input.medicationReference]),
+              medications: medicationReferences,
               medicationClasses: new Set(),
             }
         }
@@ -153,13 +178,28 @@ export class DefaultContraindicationService implements ContraindicationService {
       case FHIRAllergyIntoleranceType.preference:
         return {
           category: ContraindicationCategory.clinicianListed,
-          medications: new Set([input.medicationReference]),
+          medications: medicationReferences,
           medicationClasses: new Set(
             this.aceiArbMedicationClasses.includes(medicationClass) ?
               this.rasiMedicationClasses
             : [medicationClass],
           ),
         }
+    }
+  }
+
+  private medicationReferenceIncludingDerivatives(
+    reference: MedicationReference,
+  ): Set<MedicationReference> {
+    switch (reference) {
+      case MedicationReference.carvedilol:
+      case MedicationReference.carvedilolPhosphate:
+        return new Set([
+          MedicationReference.carvedilol,
+          MedicationReference.carvedilolPhosphate,
+        ])
+      default:
+        return new Set([reference])
     }
   }
 

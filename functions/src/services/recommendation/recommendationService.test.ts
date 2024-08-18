@@ -318,7 +318,7 @@ function getVitals(options: {
 }): Vitals {
   const regularBloodPressureCount =
     options.medianSystolicBloodPressure ?
-      Math.min(options.countBloodPressureBelow85 + 3, 10)
+      Math.min(options.countBloodPressureBelow85 + 5, 10)
     : 0
   return {
     systolicBloodPressure: [

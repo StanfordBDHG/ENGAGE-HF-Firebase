@@ -55,6 +55,7 @@ export abstract class Recommender {
   protected isTargetDailyDoseReached(
     currentMedication: MedicationRequestContext[],
   ): boolean {
+    // TODO: Make sure that there is only one medication involved!
     const medication = currentMedication.at(0)?.medication
     if (!medication) throw new Error('Medication is missing')
 
@@ -68,6 +69,7 @@ export abstract class Recommender {
       currentMedication,
     ).reduce((acc, dose) => acc + dose, 0)
 
+    console.log('currentDailyDose', currentDailyDose)
     return currentDailyDose >= targetDailyDose
   }
 

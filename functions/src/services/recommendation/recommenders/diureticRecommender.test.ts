@@ -30,6 +30,7 @@ describe('DiureticRecommender', () => {
     new MockContraindicationService(
       () => ContraindicationCategory.none,
       () => ContraindicationCategory.none,
+      (_, medicationReferences) => medicationReferences.at(0),
     ),
   )
 

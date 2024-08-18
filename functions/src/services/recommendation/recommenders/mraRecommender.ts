@@ -86,11 +86,19 @@ export class MraRecommender extends Recommender {
         break
     }
 
+    const eligibleMedication =
+      this.contraindicationService.findEligibleMedication(
+        input.contraindications,
+        [MedicationReference.spironolactone, MedicationReference.eplerenone],
+      )
+
+    if (!eligibleMedication) return []
+
     const creatinine = input.vitals.creatinine?.value
     if (creatinine !== undefined && creatinine >= 2.5)
       return this.createRecommendation(
         [],
-        MedicationReference.spironolactone,
+        eligibleMedication,
         UserMedicationRecommendationType.noActionRequired,
       )
 
@@ -98,13 +106,13 @@ export class MraRecommender extends Recommender {
     if (potassium !== undefined && potassium >= 5)
       return this.createRecommendation(
         [],
-        MedicationReference.spironolactone,
+        eligibleMedication,
         UserMedicationRecommendationType.noActionRequired,
       )
 
     return this.createRecommendation(
       [],
-      MedicationReference.spironolactone,
+      eligibleMedication,
       UserMedicationRecommendationType.notStarted,
     )
   }
