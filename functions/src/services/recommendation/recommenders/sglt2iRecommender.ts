@@ -34,9 +34,7 @@ export class Sglt2iRecommender extends Recommender {
         UserMedicationRecommendationType.targetDoseReached,
       )
 
-    const medianSystolic = this.medianValue(
-      this.observationsInLastTwoWeeks(input.vitals.systolicBloodPressure),
-    )
+    const medianSystolic = this.medianValue(input.vitals.systolicBloodPressure)
 
     if (medianSystolic === undefined)
       return this.createRecommendation(
@@ -85,9 +83,7 @@ export class Sglt2iRecommender extends Recommender {
         break
     }
 
-    const medianSystolic = this.medianValue(
-      this.observationsInLastTwoWeeks(input.vitals.systolicBloodPressure),
-    )
+    const medianSystolic = this.medianValue(input.vitals.systolicBloodPressure)
 
     if (medianSystolic === undefined)
       return this.createRecommendation(

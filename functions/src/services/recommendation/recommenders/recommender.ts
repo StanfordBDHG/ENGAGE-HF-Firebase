@@ -87,13 +87,4 @@ export abstract class Recommender {
     if (observations.length < 3) return undefined
     return median(observations.map((observation) => observation.value)) ?? 0
   }
-
-  protected observationsInLastTwoWeeks(
-    observations: Observation[],
-  ): Observation[] {
-    const twoWeeksAgo = new Date().getTime() - 1000 * 60 * 60 * 24 * 14
-    return observations.filter(
-      (observation) => observation.date.getTime() >= twoWeeksAgo,
-    )
-  }
 }

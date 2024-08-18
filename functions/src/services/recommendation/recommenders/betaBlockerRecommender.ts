@@ -34,12 +34,8 @@ export class BetaBlockerRecommender extends Recommender {
         UserMedicationRecommendationType.targetDoseReached,
       )
 
-    const medianSystolic = this.medianValue(
-      this.observationsInLastTwoWeeks(input.vitals.systolicBloodPressure),
-    )
-    const medianHeartRate = this.medianValue(
-      this.observationsInLastTwoWeeks(input.vitals.heartRate),
-    )
+    const medianSystolic = this.medianValue(input.vitals.systolicBloodPressure)
+    const medianHeartRate = this.medianValue(input.vitals.heartRate)
 
     if (medianSystolic === undefined || medianHeartRate === undefined)
       return this.createRecommendation(
@@ -95,12 +91,8 @@ export class BetaBlockerRecommender extends Recommender {
         break
     }
 
-    const medianSystolic = this.medianValue(
-      this.observationsInLastTwoWeeks(input.vitals.systolicBloodPressure),
-    )
-    const medianHeartRate = this.medianValue(
-      this.observationsInLastTwoWeeks(input.vitals.heartRate),
-    )
+    const medianSystolic = this.medianValue(input.vitals.systolicBloodPressure)
+    const medianHeartRate = this.medianValue(input.vitals.heartRate)
 
     if (medianSystolic === undefined || medianHeartRate === undefined)
       return this.createRecommendation(

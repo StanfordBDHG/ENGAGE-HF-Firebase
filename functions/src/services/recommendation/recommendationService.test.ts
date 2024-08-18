@@ -40,7 +40,7 @@ describe('RecommendationService', () => {
     recommendationService = factory.recommendation()
   })
 
-  it('should return the right value', async () => {
+  describe('should return the right value', async () => {
     const fileContents = fs.readFileSync(
       'src/tests/resources/medtitrationtest.csv',
       'utf8',
@@ -51,128 +51,128 @@ describe('RecommendationService', () => {
     let lineIndex = -1
     for (const line of lines) {
       lineIndex++
-      console.log('Line:', lineIndex)
 
-      const fields = line.split(',')
-      expect(fields).to.have.length(24)
+      it(`line ${lineIndex}: ${line}`, async () => {
+        const fields = line.split(',')
+        expect(fields).to.have.length(24)
 
-      const medicationRequests = fields
-        .slice(0, 4)
-        .map(getMedicationRequest)
-        .flatMap((x) => (x ? [x] : []))
+        const medicationRequests = fields
+          .slice(0, 4)
+          .map(getMedicationRequest)
+          .flatMap((x) => (x ? [x] : []))
 
-      const vitals = getVitals({
-        countBloodPressureBelow85: parseInt(fields[4]),
-        medianSystolicBloodPressure:
-          fields[5] !== 'NA' ? parseInt(fields[5]) : null,
-        medianHeartRate: parseInt(fields[6]),
-        potassium: parseFloat(fields[7]),
-        creatinine: parseFloat(fields[8]),
-        eGfr: parseFloat(fields[9]),
-      })
-      const dizziness = parseInt(fields[10])
+        const vitals = getVitals({
+          countBloodPressureBelow85: parseInt(fields[4]),
+          medianSystolicBloodPressure:
+            fields[5] !== 'NA' ? parseInt(fields[5]) : null,
+          medianHeartRate: fields[6] !== 'NA' ? parseInt(fields[6]) : null,
+          potassium: parseFloat(fields[7]),
+          creatinine: parseFloat(fields[8]),
+          eGfr: parseFloat(fields[9]),
+        })
+        console.log('systolic:', vitals.systolicBloodPressure.length)
+        const dizziness = parseInt(fields[10])
 
-      const contraindications = fields
-        .slice(11, 20)
-        .map((field, index) =>
-          getContraindication(
-            field,
-            [0, 1, 2, 3].includes(index) ? FHIRAllergyIntoleranceType.allergy
-            : [4, 5, 6, 7].includes(index) ?
-              FHIRAllergyIntoleranceType.intolerance
-            : FHIRAllergyIntoleranceType.financial,
+        const contraindications = fields
+          .slice(11, 20)
+          .map((field, index) =>
+            getContraindication(
+              field,
+              [0, 1, 2, 3].includes(index) ? FHIRAllergyIntoleranceType.allergy
+              : [4, 5, 6, 7].includes(index) ?
+                FHIRAllergyIntoleranceType.intolerance
+              : FHIRAllergyIntoleranceType.financial,
+            ),
+          )
+          .flatMap((x) => (x ? [x] : []))
+
+        const expectedRecommendations = [
+          getExpectedRecommendation(fields[20]),
+          getExpectedRecommendation(fields[21]),
+          getExpectedRecommendation(fields[22]),
+          getExpectedRecommendation(fields[23]),
+        ]
+          .flatMap((x) => (x ? [x] : []))
+          .filter(
+            // TODO: Make a difference between not showing medication vs no action required
+            (x) => x.type !== UserMedicationRecommendationType.noActionRequired,
+          )
+
+        const requestContexts = await Promise.all(
+          medicationRequests.map(async (medicationRequest) =>
+            medicationService.getContext(medicationRequest, {
+              reference: '',
+            }),
           ),
         )
-        .flatMap((x) => (x ? [x] : []))
 
-      const expectedRecommendations = [
-        getExpectedRecommendation(fields[20]),
-        getExpectedRecommendation(fields[21]),
-        getExpectedRecommendation(fields[22]),
-        getExpectedRecommendation(fields[23]),
-      ]
-        .flatMap((x) => (x ? [x] : []))
-        .filter(
-          // TODO: Make a difference between not showing medication vs no action required
-          (x) => x.type !== UserMedicationRecommendationType.noActionRequired,
-        )
-
-      const requestContexts = await Promise.all(
-        medicationRequests.map(async (medicationRequest) =>
-          medicationService.getContext(medicationRequest, {
-            reference: '',
+        const result = await recommendationService.compute({
+          requests: requestContexts,
+          contraindications,
+          vitals,
+          latestSymptomScore: new SymptomScore({
+            questionnaireResponseId: 'string',
+            date: new Date(),
+            overallScore: 5,
+            physicalLimitsScore: 17,
+            symptomFrequencyScore: 15,
+            socialLimitsScore: 86,
+            qualityOfLifeScore: 12,
+            dizzinessScore: dizziness,
           }),
-        ),
-      )
+        })
 
-      const result = await recommendationService.compute({
-        requests: requestContexts,
-        contraindications,
-        vitals,
-        latestSymptomScore: new SymptomScore({
-          questionnaireResponseId: 'string',
-          date: new Date(),
-          overallScore: 5,
-          physicalLimitsScore: 17,
-          symptomFrequencyScore: 15,
-          socialLimitsScore: 86,
-          qualityOfLifeScore: 12,
-          dizzinessScore: dizziness,
-        }),
-      })
-
-      const actualRecommendations = result
-        .map(
-          (x): ExpectedRecommendation => ({
-            type: x.displayInformation.type,
-            recommendedMedication: x.recommendedMedication?.reference as
-              | MedicationReference
-              | undefined,
-          }),
-        )
-        .filter(
-          // TODO: Make a difference between not showing medication vs no action required
-          (x) => x.type !== UserMedicationRecommendationType.noActionRequired,
-        )
-
-      actualRecommendations.sort((a, b) => {
-        const typeDiff = a.type.localeCompare(b.type)
-        if (typeDiff !== 0) return typeDiff
-        return (a.recommendedMedication ?? '').localeCompare(
-          b.recommendedMedication ?? '',
-        )
-      })
-
-      expectedRecommendations.sort((a, b) => {
-        const typeDiff = a.type.localeCompare(b.type)
-        if (typeDiff !== 0) return typeDiff
-        return (a.recommendedMedication ?? '').localeCompare(
-          b.recommendedMedication ?? '',
-        )
-      })
-
-      console.log('Actual recommendations:', actualRecommendations)
-      console.log('Expected recommendations:', expectedRecommendations)
-
-      /*
-      expect(actualRecommendations).to.have.length(
-        expectedRecommendations.length,
-      )
-      */
-
-      for (let i = 0; i < actualRecommendations.length; i++) {
-        const actual = actualRecommendations[i]
-        const expected = expectedRecommendations[i]
-        expect(actual.type).to.equal(expected.type)
-        if (expected.recommendedMedication) {
-          expect(actual.recommendedMedication).to.exist
-          expect(actual.recommendedMedication).to.equal(
-            expected.recommendedMedication,
+        const actualRecommendations = result
+          .map(
+            (x): ExpectedRecommendation => ({
+              type: x.displayInformation.type,
+              recommendedMedication: x.recommendedMedication?.reference as
+                | MedicationReference
+                | undefined,
+            }),
           )
-        }
-      }
+          .filter(
+            // TODO: Make a difference between not showing medication vs no action required
+            (x) => x.type !== UserMedicationRecommendationType.noActionRequired,
+          )
 
-      // console.log(medicationRequests, vitals, contraindications)
+        actualRecommendations.sort((a, b) => {
+          const typeDiff = a.type.localeCompare(b.type)
+          if (typeDiff !== 0) return typeDiff
+          return (a.recommendedMedication ?? '').localeCompare(
+            b.recommendedMedication ?? '',
+          )
+        })
+
+        expectedRecommendations.sort((a, b) => {
+          const typeDiff = a.type.localeCompare(b.type)
+          if (typeDiff !== 0) return typeDiff
+          return (a.recommendedMedication ?? '').localeCompare(
+            b.recommendedMedication ?? '',
+          )
+        })
+
+        console.log('Actual recommendations:', actualRecommendations)
+        console.log('Expected recommendations:', expectedRecommendations)
+
+        expect(actualRecommendations).to.have.length(
+          expectedRecommendations.length,
+        )
+
+        for (let i = 0; i < actualRecommendations.length; i++) {
+          const actual = actualRecommendations[i]
+          const expected = expectedRecommendations[i]
+          expect(actual.type).to.equal(expected.type)
+          if (expected.recommendedMedication) {
+            expect(actual.recommendedMedication).to.exist
+            expect(actual.recommendedMedication).to.equal(
+              expected.recommendedMedication,
+            )
+          }
+        }
+
+        // console.log(medicationRequests, vitals, contraindications)
+      })
     }
   })
 })
@@ -311,7 +311,7 @@ function getMedicationRequest(
 function getVitals(options: {
   countBloodPressureBelow85: number
   medianSystolicBloodPressure: number | null
-  medianHeartRate: number
+  medianHeartRate: number | null
   potassium: number
   creatinine: number
   eGfr: number
@@ -344,11 +344,14 @@ function getVitals(options: {
         unit: QuantityUnit.mmHg,
       }),
     ),
-    heartRate: Array.from({ length: 10 }, (_) => ({
-      date: new Date(),
-      value: options.medianHeartRate,
-      unit: QuantityUnit.bpm,
-    })),
+    heartRate: Array.from(
+      { length: options.medianHeartRate !== null ? 10 : 0 },
+      (_) => ({
+        date: new Date(),
+        value: options.medianHeartRate ?? 0,
+        unit: QuantityUnit.bpm,
+      }),
+    ),
     bodyWeight: Array.from({ length: 10 }, (_) => ({
       date: new Date(),
       value: 70,

@@ -60,10 +60,9 @@ export class RasiRecommender extends Recommender {
             UserMedicationRecommendationType.targetDoseReached,
           )
 
-        const systolicValuesInLastTwoWeeks = this.observationsInLastTwoWeeks(
+        const medianSystolic = this.medianValue(
           input.vitals.systolicBloodPressure,
         )
-        const medianSystolic = this.medianValue(systolicValuesInLastTwoWeeks)
         if (medianSystolic === undefined)
           return this.createRecommendation(
             requests,
@@ -71,7 +70,7 @@ export class RasiRecommender extends Recommender {
             UserMedicationRecommendationType.morePatientObservationsRequired,
           )
 
-        const lowSystolicCount = systolicValuesInLastTwoWeeks.filter(
+        const lowSystolicCount = input.vitals.systolicBloodPressure.filter(
           (observation) => observation.value < 85,
         ).length
 
@@ -114,10 +113,7 @@ export class RasiRecommender extends Recommender {
         break
     }
 
-    const systolicValuesInLastTwoWeeks = this.observationsInLastTwoWeeks(
-      input.vitals.systolicBloodPressure,
-    )
-    const medianSystolic = this.medianValue(systolicValuesInLastTwoWeeks)
+    const medianSystolic = this.medianValue(input.vitals.systolicBloodPressure)
 
     if (medianSystolic === undefined)
       return this.createRecommendation(
@@ -126,7 +122,7 @@ export class RasiRecommender extends Recommender {
         UserMedicationRecommendationType.morePatientObservationsRequired,
       )
 
-    const lowCount = systolicValuesInLastTwoWeeks.filter(
+    const lowCount = input.vitals.systolicBloodPressure.filter(
       (observation) => observation.value < 85,
     ).length
 
@@ -178,9 +174,7 @@ export class RasiRecommender extends Recommender {
         UserMedicationRecommendationType.targetDoseReached,
       )
 
-    const medianSystolic = this.medianValue(
-      this.observationsInLastTwoWeeks(input.vitals.systolicBloodPressure),
-    )
+    const medianSystolic = this.medianValue(input.vitals.systolicBloodPressure)
 
     if (medianSystolic === undefined)
       return this.createRecommendation(
@@ -263,10 +257,7 @@ export class RasiRecommender extends Recommender {
         UserMedicationRecommendationType.noActionRequired,
       )
 
-    const systolicObservationsInLastTwoWeeks = this.observationsInLastTwoWeeks(
-      input.vitals.systolicBloodPressure,
-    )
-    const medianSystolic = this.medianValue(systolicObservationsInLastTwoWeeks)
+    const medianSystolic = this.medianValue(input.vitals.systolicBloodPressure)
 
     if (medianSystolic === undefined)
       return this.createRecommendation(
@@ -275,7 +266,7 @@ export class RasiRecommender extends Recommender {
         UserMedicationRecommendationType.morePatientObservationsRequired,
       )
 
-    const lowCount = systolicObservationsInLastTwoWeeks.filter(
+    const lowCount = input.vitals.systolicBloodPressure.filter(
       (observation) => observation.value < 85,
     ).length
 
