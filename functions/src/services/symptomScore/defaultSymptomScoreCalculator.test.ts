@@ -64,9 +64,9 @@ describe('DefaultSymptomScoreCalculator', () => {
 
       if (score.symptomFrequencyScore !== undefined) {
         expect(
-          score.symptomFrequencyScore,
+          Math.round(score.symptomFrequencyScore),
           `${lineIndex} - Symptom Frequency: ${line}`,
-        ).to.approximately(parseFloat(values[13]), 1.1)
+        ).to.approximately(parseFloat(values[13]), 1)
       } else {
         expect(values[13]).to.equal('')
       }
@@ -89,14 +89,20 @@ describe('DefaultSymptomScoreCalculator', () => {
         expect(values[15]).to.equal('')
       }
 
-      if (score.overallScore) {
+      if (
+        score.physicalLimitsScore !== undefined &&
+        score.symptomFrequencyScore !== undefined
+      ) {
         expect(
-          score.overallScore,
-          `${lineIndex} - Overall score: ${line} ${JSON.stringify(score)}`,
-        ).to.approximately(parseFloat(values[17]), 0.55)
-      } else {
-        expect(values[17]).to.equal('')
+          (score.physicalLimitsScore + score.symptomFrequencyScore) / 2,
+          `${lineIndex} - Clinical Summary: ${line}`,
+        ).to.approximately(parseFloat(values[16]), 0.55)
       }
+
+      expect(
+        score.overallScore,
+        `${lineIndex} - Overall score: ${line} ${JSON.stringify(score)}`,
+      ).to.approximately(parseFloat(values[17]), 0.4)
 
       expect(score.dizzinessScore, `Dizziness: ${line}`).to.equal(answer9)
     }

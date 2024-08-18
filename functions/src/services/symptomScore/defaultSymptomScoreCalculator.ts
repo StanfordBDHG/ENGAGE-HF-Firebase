@@ -28,47 +28,51 @@ export class DefaultSymptomScoreCalculator implements SymptomScoreCalculator {
       dizzinessScore: response.answer9,
     }
 
-    const q1NonMissing = [
+    const physicalLimitsAnswers = [
       response.answer1a,
       response.answer1b,
       response.answer1c,
-    ].filter((x) => x !== 6)
-    const q1Average = average(q1NonMissing)
-    if (q1Average !== undefined && q1NonMissing.length >= 2)
-      result.physicalLimitsScore = (100 * (q1Average - 1)) / 4
+    ]
+      .filter((x) => x !== 6)
+      .map((x) => (100 * (x - 1)) / 4)
 
-    const symptomFrequencyAverage = average(
-      [
-        (response.answer2 - 1) / 4,
-        (response.answer3 - 1) / 6,
-        (response.answer4 - 1) / 6,
-        (response.answer5 - 1) / 4,
-      ].map((x) => x * 100),
+    result.physicalLimitsScore =
+      physicalLimitsAnswers.length >= 2 ?
+        average(physicalLimitsAnswers)
+      : undefined
+
+    const symptomFrequencyAnswers = [
+      (response.answer2 - 1) / 4,
+      (response.answer3 - 1) / 6,
+      (response.answer4 - 1) / 6,
+      (response.answer5 - 1) / 4,
+    ].map((x) => Math.floor(x * 100))
+
+    result.symptomFrequencyScore = average(symptomFrequencyAnswers)
+
+    const qualityOfLifeAnswers = [response.answer6, response.answer7].map(
+      (x) => (100 * (x - 1)) / 4,
     )
-    if (symptomFrequencyAverage !== undefined)
-      result.symptomFrequencyScore = symptomFrequencyAverage
+    result.qualityOfLifeScore = average(qualityOfLifeAnswers)
 
-    const qualityOfLifeAverage = average([response.answer6, response.answer7])
-    if (qualityOfLifeAverage !== undefined)
-      result.qualityOfLifeScore = (100 * (qualityOfLifeAverage - 1)) / 4
-
-    const q8NonMissing = [
+    const socialLimitsAnswers = [
       response.answer8a,
       response.answer8b,
       response.answer8c,
-    ].filter((x) => x !== 6)
-    const q8Average = average(q8NonMissing)
-    if (q8Average !== undefined && q8NonMissing.length >= 2)
-      result.socialLimitsScore = (100 * (q8Average - 1)) / 4
+    ]
+      .filter((x) => x !== 6)
+      .map((x) => (100 * (x - 1)) / 4)
 
-    const nonMissingScores = [
+    result.socialLimitsScore =
+      socialLimitsAnswers.length >= 2 ? average(socialLimitsAnswers) : undefined
+
+    const domainScores = [
       result.physicalLimitsScore,
       result.symptomFrequencyScore,
       result.qualityOfLifeScore,
       result.socialLimitsScore,
     ].flatMap((score) => (score !== undefined ? [score] : []))
-    const totalScore = average(nonMissingScores)
-    if (totalScore !== undefined) result.overallScore = totalScore
+    result.overallScore = average(domainScores) ?? 0
 
     return new SymptomScore(result)
   }
