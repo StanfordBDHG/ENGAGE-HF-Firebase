@@ -40,7 +40,7 @@ describe('RecommendationService', () => {
     recommendationService = factory.recommendation()
   })
 
-  describe('should return the right value', async () => {
+  describe('should return the right value', () => {
     const fileContents = fs.readFileSync(
       'src/tests/resources/medtitrationtest.csv',
       'utf8',
