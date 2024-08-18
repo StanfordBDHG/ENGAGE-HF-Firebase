@@ -77,7 +77,6 @@ describe('DefaultContraindicationService', () => {
       if (medicationReference === undefined)
         throw new Error('Medication reference not found')
 
-      console.log('Checking allergies for', medicationReference)
       check(fields[10], {
         reference: medicationReference,
         type: FHIRAllergyIntoleranceType.allergy,
@@ -85,7 +84,6 @@ describe('DefaultContraindicationService', () => {
         category: ContraindicationCategory.allergyIntolerance,
       })
 
-      console.log('Checking severe allergies for', medicationReference)
       check(fields[11], {
         reference: medicationReference,
         type: FHIRAllergyIntoleranceType.allergy,
@@ -93,7 +91,6 @@ describe('DefaultContraindicationService', () => {
         category: ContraindicationCategory.severeAllergyIntolerance,
       })
 
-      console.log('Checking intolerances for', medicationReference)
       check(fields[12], {
         reference: medicationReference,
         type: FHIRAllergyIntoleranceType.intolerance,
@@ -101,10 +98,6 @@ describe('DefaultContraindicationService', () => {
         category: ContraindicationCategory.clinicianListed,
       })
 
-      console.log(
-        'Checking financial contraindications for',
-        medicationReference,
-      )
       check(fields[14], {
         reference: medicationReference,
         type: FHIRAllergyIntoleranceType.financial,
