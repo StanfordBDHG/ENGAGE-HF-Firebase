@@ -32,7 +32,10 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
 
   // Methods
 
-  async getHealthSummaryData(userId: string): Promise<HealthSummaryData> {
+  async getHealthSummaryData(
+    userId: string,
+    weightUnit: QuantityUnit,
+  ): Promise<HealthSummaryData> {
     const [
       auth,
       patient,
@@ -46,7 +49,7 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
       this.patientService.getNextAppointment(userId),
       this.getMedicationRecommendations(userId),
       this.getSymptomScores(userId, { limit: 5 }),
-      this.getVitals(userId, advanceDateByDays(new Date(), -14)),
+      this.getVitals(userId, advanceDateByDays(new Date(), -14), weightUnit),
     ])
 
     const clinician =
@@ -57,9 +60,9 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
     const dateOfBirth = patient?.content.dateOfBirth
     const nextAppointmentStart = nextAppointment?.content.start
     return {
-      name: auth.displayName ?? '---',
+      name: auth.displayName,
       dateOfBirth: dateOfBirth ?? undefined,
-      clinicianName: clinician?.displayName ?? '---',
+      clinicianName: clinician?.displayName,
       nextAppointment: nextAppointmentStart ?? undefined,
       recommendations: recommendations,
       vitals: vitals,
@@ -89,7 +92,11 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
 
   // Methods - Vitals
 
-  async getVitals(userId: string, cutoffDate: Date): Promise<Vitals> {
+  async getVitals(
+    userId: string,
+    cutoffDate: Date,
+    weightUnit: QuantityUnit,
+  ): Promise<Vitals> {
     const [
       [systolicBloodPressure, diastolicBloodPressure],
       heartRate,
@@ -101,7 +108,7 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
     ] = await Promise.all([
       this.getBloodPressureObservations(userId, cutoffDate),
       this.getHeartRateObservations(userId, cutoffDate),
-      this.getBodyWeightObservations(userId, cutoffDate, QuantityUnit.lbs),
+      this.getBodyWeightObservations(userId, cutoffDate, weightUnit),
       this.getMostRecentCreatinineObservation(userId),
       this.getMostRecentDryWeightObservation(userId),
       this.getMostRecentEstimatedGlomerularFiltrationRateObservation(userId),
