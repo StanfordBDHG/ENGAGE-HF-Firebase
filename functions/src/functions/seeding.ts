@@ -27,12 +27,8 @@ enum StaticDataComponent {
 }
 
 const updateStaticDataInputSchema = z.object({
-  only: z
-    .array(z.nativeEnum(StaticDataComponent))
-    .default(Object.values(StaticDataComponent)),
-  cachingStrategy: z
-    .nativeEnum(CachingStrategy)
-    .default(CachingStrategy.updateCacheIfNeeded),
+  only: optionalish(z.array(z.nativeEnum(StaticDataComponent))),
+  cachingStrategy: optionalish(z.nativeEnum(CachingStrategy)),
 })
 
 async function _updateStaticData(
@@ -41,16 +37,19 @@ async function _updateStaticData(
 ) {
   const service = factory.staticData()
   const promises: Array<Promise<void>> = []
-  if (input.only.includes(StaticDataComponent.medicationClasses))
-    promises.push(service.updateMedicationClasses(input.cachingStrategy))
-  if (input.only.includes(StaticDataComponent.medications))
-    promises.push(service.updateMedications(input.cachingStrategy))
-  if (input.only.includes(StaticDataComponent.organizations))
-    promises.push(service.updateOrganizations(input.cachingStrategy))
-  if (input.only.includes(StaticDataComponent.questionnaires))
-    promises.push(service.updateQuestionnaires(input.cachingStrategy))
-  if (input.only.includes(StaticDataComponent.videoSections))
-    promises.push(service.updateVideoSections(input.cachingStrategy))
+  const only = input.only ?? Object.values(StaticDataComponent)
+  const cachingStrategy =
+    input.cachingStrategy ?? CachingStrategy.updateCacheIfNeeded
+  if (only.includes(StaticDataComponent.medicationClasses))
+    promises.push(service.updateMedicationClasses(cachingStrategy))
+  if (only.includes(StaticDataComponent.medications))
+    promises.push(service.updateMedications(cachingStrategy))
+  if (only.includes(StaticDataComponent.organizations))
+    promises.push(service.updateOrganizations(cachingStrategy))
+  if (only.includes(StaticDataComponent.questionnaires))
+    promises.push(service.updateQuestionnaires(cachingStrategy))
+  if (only.includes(StaticDataComponent.videoSections))
+    promises.push(service.updateVideoSections(cachingStrategy))
   await Promise.all(promises)
 }
 
