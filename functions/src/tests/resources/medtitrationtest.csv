@@ -1,4 +1,5 @@
-﻿None,None,None,None,0,110,80,4,1,60,0,None,None,None,None,None,None,None,None,None,Discuss starting carvedilol,Discuss Starting Sacubitril-Valsartan,Discuss Starting Spironolactone,Discuss Starting Empagliflozin
+﻿Baseline BB,Baseline RASI,Baseline MRA,Baseline SGLT2i,BP Readings <85,Median SBP in last 2 weeks,HR,Potassium,Cr,eGFR,Dizziness,Allergy BB,Allergy RASI,Allergy MRA,Allergy SGLT2i,Intol BB,Intol RASI,Intol MRA,Intol SGLT,Financial Contraindication,Output BB,Output RASI,Output MRA,Output SGLT
+None,None,None,None,0,110,80,4,1,60,0,None,None,None,None,None,None,None,None,None,Discuss starting carvedilol,Discuss Starting Sacubitril-Valsartan,Discuss Starting Spironolactone,Discuss Starting Empagliflozin
 None,None,None,None,0,NA,NA,4,1,60,0,None,None,None,None,None,None,None,None,None,Measure BB/HR,Measure BP,Discuss Starting Spironolactone,Measure BP
 None,None,None,None,0,110,NA,4,1,60,0,None,None,None,None,None,None,None,None,None,Measure BB/HR,Discuss Starting Sacubitril-Valsartan,Discuss Starting Spironolactone,Discuss Starting Empagliflozin
 None,None,None,None,0,NA,80,4,1,60,0,None,None,None,None,None,None,None,None,None,Measure BB/HR,Measure BP,Discuss Starting Spironolactone,Measure BP

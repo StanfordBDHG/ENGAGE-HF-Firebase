@@ -45,7 +45,7 @@ describe('RecommendationService', () => {
       'src/tests/resources/medtitrationtest.csv',
       'utf8',
     )
-    const lines = fileContents.split('\n')
+    const lines = fileContents.split('\n').slice(1)
     expect(lines).to.have.length(56)
 
     let lineIndex = -1
