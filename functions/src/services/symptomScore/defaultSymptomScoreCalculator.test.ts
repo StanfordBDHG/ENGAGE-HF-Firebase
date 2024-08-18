@@ -19,7 +19,7 @@ describe('DefaultSymptomScoreCalculator', () => {
       'src/tests/resources/symptomScores.csv',
       'utf8',
     )
-    const lines = fileContent.split('\n').slice(0, -1)
+    const lines = fileContent.split('\n').slice(1)
     expect(lines.length).to.equal(2267)
 
     let lineIndex = -1
