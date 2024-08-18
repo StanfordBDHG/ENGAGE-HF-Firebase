@@ -4,6 +4,7 @@
     "medications": [
       {
         "code": "221124",
+        "brandNames": ["Toprol XL", "Kapspargo Sprinkle"],
         "minimumDailyDose": {
           "drug": "1999035",
           "frequency": 1,
@@ -27,6 +28,7 @@
       },
       {
         "code": "20352",
+        "brandNames": ["Coreg"],
         "minimumDailyDose": {
           "drug": "200031",
           "frequency": 1,
@@ -41,6 +43,7 @@
       },
       {
         "code": "668310",
+        "brandNames": ["Coreg CR"],
         "minimumDailyDose": {
           "drug": "860510",
           "frequency": 1,
@@ -55,6 +58,7 @@
       },
       {
         "code": "19484",
+        "brandNames": ["Cardicor", "Congescor"],
         "minimumDailyDose": {
           "drug": "854905",
           "frequency": 1,
@@ -74,6 +78,7 @@
     "medications": [
       {
         "code": "1488564",
+        "brandNames": ["Farxiga"],
         "minimumDailyDose": {
           "drug": "1488574",
           "frequency": 1,
@@ -88,6 +93,7 @@
       },
       {
         "code": "1545653",
+        "brandNames": ["Jardiance"],
         "minimumDailyDose": {
           "drug": "1545658",
           "frequency": 1,
@@ -102,6 +108,7 @@
       },
       {
         "code": "2638675",
+        "brandNames": ["Inpefa"],
         "minimumDailyDose": {
           "drug": "2638683",
           "frequency": 1,
@@ -116,6 +123,7 @@
       },
       {
         "code": "2627044",
+        "brandNames": ["Brenzavvy"],
         "minimumDailyDose": {
           "drug": "2637859",
           "frequency": 1,
@@ -130,6 +138,7 @@
       },
       {
         "code": "1373458",
+        "brandNames": ["Invokana"],
         "minimumDailyDose": {
           "drug": "1373463",
           "frequency": 1,
@@ -144,6 +153,7 @@
       },
       {
         "code": "1992672",
+        "brandNames": ["Steglatro"],
         "minimumDailyDose": {
           "drug": "1992810",
           "frequency": 1,
@@ -163,6 +173,7 @@
     "medications": [
       {
         "code": "9997",
+        "brandNames": ["Aldactone"],
         "minimumDailyDose": {
           "drug": "313096",
           "frequency": 1,
@@ -177,6 +188,7 @@
       },
       {
         "code": "298869",
+        "brandNames": ["Inspra"],
         "minimumDailyDose": {
           "drug": "351256",
           "frequency": 1,
@@ -196,6 +208,7 @@
     "medications": [
       {
         "code": "35208",
+        "brandNames": ["Accupril"],
         "minimumDailyDose": {
           "drug": "312748",
           "frequency": 1,
@@ -210,6 +223,7 @@
       },
       {
         "code": "54552",
+        "brandNames": ["Aceon"],
         "minimumDailyDose": {
           "drug": "854984",
           "frequency": 1,
@@ -224,6 +238,7 @@
       },
       {
         "code": "35296",
+        "brandNames": ["Altace"],
         "minimumDailyDose": {
           "drug": "401965",
           "frequency": 1,
@@ -248,6 +263,7 @@
       },
       {
         "code": "18867",
+        "brandNames": ["Lotensin"],
         "minimumDailyDose": {
           "drug": "898723",
           "frequency": 1,
@@ -262,6 +278,7 @@
       },
       {
         "code": "1998",
+        "brandNames": ["Capoten"],
         "minimumDailyDose": {
           "drug": "308963",
           "frequency": 1,
@@ -276,6 +293,7 @@
       },
       {
         "code": "3827",
+        "brandNames": ["Vasotec"],
         "minimumDailyDose": {
           "drug": "858813",
           "frequency": 1,
@@ -290,6 +308,7 @@
       },
       {
         "code": "29046",
+        "brandNames": ["Prinivil", "Zestril"],
         "minimumDailyDose": {
           "drug": "311353",
           "frequency": 1,
@@ -304,6 +323,7 @@
       },
       {
         "code": "227278",
+        "brandNames": ["Monopril"],
         "minimumDailyDose": {
           "drug": "857169",
           "frequency": 1,
@@ -318,6 +338,7 @@
       },
       {
         "code": "38454",
+        "brandNames": ["Mavik"],
         "minimumDailyDose": {
           "drug": "199353",
           "frequency": 1,
@@ -332,6 +353,7 @@
       },
       {
         "code": "30131",
+        "brandNames": ["Univasc"],
         "minimumDailyDose": {
           "drug": "1299897",
           "frequency": 1,
@@ -351,6 +373,7 @@
     "medications": [
       {
         "code": "203160",
+        "brandNames": ["Cozaar"],
         "minimumDailyDose": {
           "drug": "979485",
           "frequency": 1,
@@ -365,6 +388,7 @@
       },
       {
         "code": "69749",
+        "brandNames": ["Diovan"],
         "minimumDailyDose": {
           "drug": "349483",
           "frequency": 1,
@@ -379,6 +403,7 @@
       },
       {
         "code": "214354",
+        "brandNames": ["Atacand"],
         "minimumDailyDose": {
           "drug": "153822",
           "frequency": 1,
@@ -393,6 +418,7 @@
       },
       {
         "code": "83818",
+        "brandNames": ["Avapro"],
         "minimumDailyDose": {
           "drug": "200094",
           "frequency": 1,
@@ -407,6 +433,7 @@
       },
       {
         "code": "73494",
+        "brandNames": ["Micardis"],
         "minimumDailyDose": {
           "drug": "205304",
           "frequency": 1,
@@ -421,6 +448,7 @@
       },
       {
         "code": "118463",
+        "brandNames": ["Benicar"],
         "minimumDailyDose": {
           "drug": "349373",
           "frequency": 1,
@@ -435,6 +463,7 @@
       },
       {
         "code": "1091642",
+        "brandNames": ["Edarbi"],
         "minimumDailyDose": {
           "drug": "1091646",
           "frequency": 1,
@@ -449,6 +478,7 @@
       },
       {
         "code": "83515",
+        "brandNames": ["Teveten"],
         "minimumDailyDose": {
           "drug": "310139",
           "frequency": 1,
@@ -476,6 +506,7 @@
     "medications": [
       {
         "code": "1656339",
+        "brandNames": ["Entresto"],
         "minimumDailyDose": {
           "drug": "1656340",
           "frequency": 2,
@@ -496,18 +527,22 @@
     "medications": [
       {
         "code": "4603",
+        "brandNames": ["Lasix"],
         "drugs": ["310429", "313988", "197732"]
       },
       {
         "code": "1808",
+        "brandNames": ["Bumex"],
         "drugs": ["197417", "197418", "197419"]
       },
       {
         "code": "38413",
+        "brandNames": ["Soaanz"],
         "drugs": ["198372", "198369", "198371", "2589881", "2589885", "198370"]
       },
       {
         "code": "4109",
+        "brandNames": ["Edecrin"],
         "drugs": ["1251903", "1251907"],
         "fallbackTerms": {
           "1251907": {

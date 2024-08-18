@@ -8,6 +8,10 @@
           "reference": "medicationClasses/6",
           "display": "Diuretics"
         }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "valueString": "Bumex"
       }
     ],
     "resourceType": "Medication",
@@ -77,6 +81,10 @@
             }
           ]
         }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "valueString": "Capoten"
       }
     ],
     "resourceType": "Medication",
@@ -146,6 +154,10 @@
             }
           ]
         }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "valueString": "Vasotec"
       }
     ],
     "resourceType": "Medication",
@@ -168,6 +180,10 @@
           "reference": "medicationClasses/6",
           "display": "Diuretics"
         }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "valueString": "Edecrin"
       }
     ],
     "resourceType": "Medication",
@@ -190,6 +206,10 @@
           "reference": "medicationClasses/6",
           "display": "Diuretics"
         }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "valueString": "Lasix"
       }
     ],
     "resourceType": "Medication",
@@ -259,6 +279,10 @@
             }
           ]
         }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "valueString": "Aldactone"
       }
     ],
     "resourceType": "Medication",
@@ -328,6 +352,10 @@
             }
           ]
         }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "valueString": "Lotensin"
       }
     ],
     "resourceType": "Medication",
@@ -397,6 +425,14 @@
             }
           ]
         }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "valueString": "Cardicor"
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "valueString": "Congescor"
       }
     ],
     "resourceType": "Medication",
@@ -466,6 +502,10 @@
             }
           ]
         }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "valueString": "Coreg"
       }
     ],
     "resourceType": "Medication",
@@ -535,6 +575,14 @@
             }
           ]
         }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "valueString": "Prinivil"
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "valueString": "Zestril"
       }
     ],
     "resourceType": "Medication",
@@ -604,6 +652,10 @@
             }
           ]
         }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "valueString": "Univasc"
       }
     ],
     "resourceType": "Medication",
@@ -673,6 +725,10 @@
             }
           ]
         }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "valueString": "Accupril"
       }
     ],
     "resourceType": "Medication",
@@ -742,6 +798,10 @@
             }
           ]
         }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "valueString": "Altace"
       }
     ],
     "resourceType": "Medication",
@@ -764,6 +824,10 @@
           "reference": "medicationClasses/6",
           "display": "Diuretics"
         }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "valueString": "Soaanz"
       }
     ],
     "resourceType": "Medication",
@@ -833,6 +897,10 @@
             }
           ]
         }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "valueString": "Mavik"
       }
     ],
     "resourceType": "Medication",
@@ -902,6 +970,10 @@
             }
           ]
         }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "valueString": "Aceon"
       }
     ],
     "resourceType": "Medication",
@@ -971,6 +1043,10 @@
             }
           ]
         }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "valueString": "Diovan"
       }
     ],
     "resourceType": "Medication",
@@ -1040,6 +1116,10 @@
             }
           ]
         }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "valueString": "Micardis"
       }
     ],
     "resourceType": "Medication",
@@ -1109,6 +1189,10 @@
             }
           ]
         }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "valueString": "Teveten"
       }
     ],
     "resourceType": "Medication",
@@ -1178,6 +1262,10 @@
             }
           ]
         }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "valueString": "Avapro"
       }
     ],
     "resourceType": "Medication",
@@ -1247,6 +1335,10 @@
             }
           ]
         }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "valueString": "Benicar"
       }
     ],
     "resourceType": "Medication",
@@ -1316,6 +1408,10 @@
             }
           ]
         }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "valueString": "Cozaar"
       }
     ],
     "resourceType": "Medication",
@@ -1385,6 +1481,10 @@
             }
           ]
         }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "valueString": "Atacand"
       }
     ],
     "resourceType": "Medication",
@@ -1454,6 +1554,14 @@
             }
           ]
         }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "valueString": "Toprol XL"
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "valueString": "Kapspargo Sprinkle"
       }
     ],
     "resourceType": "Medication",
@@ -1523,6 +1631,10 @@
             }
           ]
         }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "valueString": "Monopril"
       }
     ],
     "resourceType": "Medication",
@@ -1592,6 +1704,10 @@
             }
           ]
         }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "valueString": "Inspra"
       }
     ],
     "resourceType": "Medication",
@@ -1661,6 +1777,10 @@
             }
           ]
         }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "valueString": "Coreg CR"
       }
     ],
     "resourceType": "Medication",
@@ -1730,6 +1850,10 @@
             }
           ]
         }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "valueString": "Edarbi"
       }
     ],
     "resourceType": "Medication",
@@ -1799,6 +1923,10 @@
             }
           ]
         }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "valueString": "Invokana"
       }
     ],
     "resourceType": "Medication",
@@ -1868,6 +1996,10 @@
             }
           ]
         }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "valueString": "Farxiga"
       }
     ],
     "resourceType": "Medication",
@@ -1937,6 +2069,10 @@
             }
           ]
         }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "valueString": "Jardiance"
       }
     ],
     "resourceType": "Medication",
@@ -2012,6 +2148,10 @@
             }
           ]
         }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "valueString": "Entresto"
       }
     ],
     "resourceType": "Medication",
@@ -2105,6 +2245,10 @@
             }
           ]
         }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "valueString": "Steglatro"
       }
     ],
     "resourceType": "Medication",
@@ -2174,6 +2318,10 @@
             }
           ]
         }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "valueString": "Brenzavvy"
       }
     ],
     "resourceType": "Medication",
@@ -2243,6 +2391,10 @@
             }
           ]
         }
+      },
+      {
+        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "valueString": "Inpefa"
       }
     ],
     "resourceType": "Medication",
