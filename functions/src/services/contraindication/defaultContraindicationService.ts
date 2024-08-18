@@ -15,71 +15,27 @@ import {
   FHIRAllergyIntoleranceCriticality,
   FHIRAllergyIntoleranceType,
 } from '../../models/fhir/fhirAllergyIntolerance.js'
-import { CodingSystem } from '../codes.js'
 import { MedicationClassReference, MedicationReference } from '../references.js'
+
+interface ContraindicationRecord {
+  category: ContraindicationCategory
+  medications: Set<MedicationReference>
+  medicationClasses: Set<MedicationClassReference>
+}
 
 export class DefaultContraindicationService implements ContraindicationService {
   // Properties
 
-  /// Medication class contraindications
-  /// - Key: SNOMED CT code used in FHIRAllergyIntolerance
-  /// - Value: List of Medication references
-  private readonly snomedMedicationContraindications = new Map<
-    string,
-    MedicationReference[]
-  >([
-    ['293472002', [MedicationReference.spironolactone]],
-    ['470681000124105', [MedicationReference.eplerenone]],
-    ['471761000124104', [MedicationReference.dapagliflozin]],
-    ['471811000124106', [MedicationReference.empagliflozin]],
-  ])
+  readonly aceiArbMedicationClasses = [
+    MedicationClassReference.angiotensinConvertingEnzymeInhibitors,
+    MedicationClassReference.angiotensinReceptorBlockers,
+  ]
 
-  /// Medication class contraindications
-  /// - Key: SNOMED CT code used in FHIRAllergyIntolerance
-  /// - Value: List of MedicationClass references
-  private readonly snomedMedicationClassContraindications = new Map<
-    string,
-    MedicationClassReference[]
-  >([
-    ['293963004', [MedicationClassReference.betaBlockers]],
-    ['293962009', [MedicationClassReference.betaBlockers]],
-    ['292419005', [MedicationClassReference.betaBlockers]],
-    ['292420004', [MedicationClassReference.betaBlockers]],
-    [
-      '295009002',
-      [MedicationClassReference.mineralocorticoidReceptorAntagonists],
-    ],
-    [
-      '470181000124100',
-      [MedicationClassReference.mineralocorticoidReceptorAntagonists],
-    ],
-    [
-      '295007000',
-      [MedicationClassReference.mineralocorticoidReceptorAntagonists],
-    ],
-    ['470691000124108', [MedicationClassReference.sglt2inhibitors]],
-    ['1208353007', [MedicationClassReference.sglt2inhibitors]],
-    ['471811000124106', [MedicationClassReference.sglt2inhibitors]],
-    [
-      '371627004',
-      [
-        MedicationClassReference.angiotensinConvertingEnzymeInhibitors,
-        MedicationClassReference.angiotensinReceptorBlockers,
-        MedicationClassReference.angiotensinReceptorNeprilysinInhibitors,
-      ],
-    ],
-    [
-      '407590002',
-      [
-        MedicationClassReference.angiotensinReceptorBlockers,
-        MedicationClassReference.angiotensinReceptorNeprilysinInhibitors,
-      ],
-    ],
-    [
-      '293500009',
-      [MedicationClassReference.angiotensinConvertingEnzymeInhibitors],
-    ],
-  ])
+  readonly rasiMedicationClasses = [
+    MedicationClassReference.angiotensinConvertingEnzymeInhibitors,
+    MedicationClassReference.angiotensinReceptorBlockers,
+    MedicationClassReference.angiotensinReceptorNeprilysinInhibitors,
+  ]
 
   // Methods
 
@@ -87,24 +43,13 @@ export class DefaultContraindicationService implements ContraindicationService {
     contraindications: FHIRAllergyIntolerance[],
     medicationReference: MedicationReference,
   ): ContraindicationCategory {
-    const rxNormCode = medicationReference.split('/').at(-1)
+    const medicationClassReference =
+      this.medicationClassReference(medicationReference)
     return this.checkAll(
       contraindications,
-      [CodingSystem.snomedCt, CodingSystem.rxNorm],
-      (system, code) => {
-        switch (system) {
-          case CodingSystem.snomedCt:
-            return (
-              this.snomedMedicationContraindications
-                .get(code)
-                ?.includes(medicationReference) ?? false
-            )
-          case CodingSystem.rxNorm:
-            return code === rxNormCode
-          default:
-            return false
-        }
-      },
+      (record) =>
+        record.medications.has(medicationReference) ||
+        record.medicationClasses.has(medicationClassReference),
     )
   }
 
@@ -112,16 +57,8 @@ export class DefaultContraindicationService implements ContraindicationService {
     contraindications: FHIRAllergyIntolerance[],
     medicationClassReference: MedicationClassReference,
   ): ContraindicationCategory {
-    return this.checkAll(
-      contraindications,
-      [CodingSystem.snomedCt],
-      (_, code) => {
-        return (
-          this.snomedMedicationClassContraindications
-            .get(code)
-            ?.includes(medicationClassReference) ?? false
-        )
-      },
+    return this.checkAll(contraindications, (record) =>
+      record.medicationClasses.has(medicationClassReference),
     )
   }
 
@@ -129,51 +66,155 @@ export class DefaultContraindicationService implements ContraindicationService {
 
   private checkAll(
     contraindications: FHIRAllergyIntolerance[],
-    systems: CodingSystem[],
-    check: (system: CodingSystem, code: string) => boolean,
+    isRelevant: (record: ContraindicationRecord) => boolean,
   ): ContraindicationCategory {
-    const categories = contraindications.map((contraindication) => {
-      if (!this.check(contraindication, systems, check))
-        return ContraindicationCategory.none
-      if (
-        contraindication.criticality === FHIRAllergyIntoleranceCriticality.high
+    let category = ContraindicationCategory.none
+    for (const contraindication of contraindications) {
+      const medicationReferences = contraindication.rxNormCodes.flatMap(
+        (code) => {
+          const reference = Object.values(MedicationReference).find(
+            (value) => value.toString() === 'medications/' + code,
+          )
+          if (reference === undefined)
+            console.error(`Unknown RxNorm code in contraindication: ${code}`)
+          return reference !== undefined ? [reference] : []
+        },
       )
-        return ContraindicationCategory.severeAllergyIntolerance
-      return this.category(contraindication.type)
-    })
-    if (categories.includes(ContraindicationCategory.severeAllergyIntolerance))
-      return ContraindicationCategory.severeAllergyIntolerance
-    if (categories.includes(ContraindicationCategory.allergyIntolerance))
-      return ContraindicationCategory.allergyIntolerance
-    if (categories.includes(ContraindicationCategory.clinicianListed))
-      return ContraindicationCategory.clinicianListed
-    return ContraindicationCategory.none
-  }
 
-  private check(
-    contraindication: FHIRAllergyIntolerance,
-    systems: CodingSystem[],
-    check: (system: CodingSystem, code: string) => boolean,
-  ): boolean {
-    for (const system of systems) {
-      const codes = contraindication.codes(contraindication.code, {
-        system: system,
-      })
-      for (const code of codes) {
-        if (check(system, code)) return true
+      for (const medicationReference of medicationReferences) {
+        const record = this.record({
+          medicationReference: medicationReference,
+          type: contraindication.type,
+          criticality: contraindication.criticality,
+        })
+        if (isRelevant(record)) category = Math.max(category, record.category)
       }
     }
-    return false
+    return category
   }
 
-  private category(type: FHIRAllergyIntoleranceType): ContraindicationCategory {
-    switch (type) {
+  private record(input: {
+    medicationReference: MedicationReference
+    type: FHIRAllergyIntoleranceType
+    criticality?: FHIRAllergyIntoleranceCriticality
+  }): ContraindicationRecord {
+    const medicationClass = this.medicationClassReference(
+      input.medicationReference,
+    )
+    switch (input.type) {
       case FHIRAllergyIntoleranceType.allergy:
+        if (input.criticality === FHIRAllergyIntoleranceCriticality.high) {
+          return {
+            category: ContraindicationCategory.severeAllergyIntolerance,
+            medications: new Set([input.medicationReference]),
+            medicationClasses: new Set(
+              this.rasiMedicationClasses.includes(medicationClass) ?
+                this.rasiMedicationClasses
+              : [medicationClass],
+            ),
+          }
+        } else {
+          return {
+            category: ContraindicationCategory.allergyIntolerance,
+            medications: new Set([input.medicationReference]),
+            medicationClasses: new Set(
+              this.aceiArbMedicationClasses.includes(medicationClass) ?
+                this.aceiArbMedicationClasses
+              : [medicationClass],
+            ),
+          }
+        }
       case FHIRAllergyIntoleranceType.intolerance:
-        return ContraindicationCategory.allergyIntolerance
+        switch (medicationClass) {
+          case MedicationClassReference.angiotensinConvertingEnzymeInhibitors:
+          case MedicationClassReference.angiotensinReceptorNeprilysinInhibitors:
+            return {
+              category: ContraindicationCategory.clinicianListed,
+              medications: new Set([input.medicationReference]),
+              medicationClasses: new Set([medicationClass]),
+            }
+          case MedicationClassReference.angiotensinReceptorBlockers:
+            return {
+              category: ContraindicationCategory.clinicianListed,
+              medications: new Set([input.medicationReference]),
+              medicationClasses: new Set([
+                medicationClass,
+                MedicationClassReference.angiotensinReceptorNeprilysinInhibitors,
+              ]),
+            }
+          default:
+            return {
+              category: ContraindicationCategory.clinicianListed,
+              medications: new Set([input.medicationReference]),
+              medicationClasses: new Set(),
+            }
+        }
       case FHIRAllergyIntoleranceType.financial:
       case FHIRAllergyIntoleranceType.preference:
-        return ContraindicationCategory.clinicianListed
+        return {
+          category: ContraindicationCategory.clinicianListed,
+          medications: new Set([input.medicationReference]),
+          medicationClasses: new Set(
+            this.aceiArbMedicationClasses.includes(medicationClass) ?
+              this.rasiMedicationClasses
+            : [medicationClass],
+          ),
+        }
+    }
+  }
+
+  private medicationClassReference(
+    medicationReference: MedicationReference,
+  ): MedicationClassReference {
+    switch (medicationReference) {
+      case MedicationReference.metoprololSuccinate:
+      case MedicationReference.carvedilol:
+      case MedicationReference.carvedilolPhosphate:
+      case MedicationReference.bisoprolol:
+        return MedicationClassReference.betaBlockers
+
+      case MedicationReference.dapagliflozin:
+      case MedicationReference.empagliflozin:
+      case MedicationReference.sotagliflozin:
+      case MedicationReference.bexagliflozin:
+      case MedicationReference.canagliflozin:
+      case MedicationReference.ertugliflozin:
+        return MedicationClassReference.sglt2inhibitors
+
+      case MedicationReference.spironolactone:
+      case MedicationReference.eplerenone:
+        return MedicationClassReference.mineralocorticoidReceptorAntagonists
+
+      case MedicationReference.quinapril:
+      case MedicationReference.perindopril:
+      case MedicationReference.ramipril:
+      case MedicationReference.benazepril:
+      case MedicationReference.captopril:
+      case MedicationReference.enalapril:
+      case MedicationReference.lisinopril:
+      case MedicationReference.fosinopril:
+      case MedicationReference.trandolapril:
+      case MedicationReference.moexepril:
+        return MedicationClassReference.angiotensinConvertingEnzymeInhibitors
+
+      case MedicationReference.losartan:
+      case MedicationReference.valsartan:
+      case MedicationReference.candesartan:
+      case MedicationReference.irbesartan:
+      case MedicationReference.telmisartan:
+      case MedicationReference.olmesartan:
+      case MedicationReference.azilsartan:
+      case MedicationReference.eprosartan:
+        return MedicationClassReference.angiotensinReceptorBlockers
+
+      case MedicationReference.sacubitrilValsartan:
+        return MedicationClassReference.angiotensinReceptorNeprilysinInhibitors
+
+      case MedicationReference.furosemide:
+      case MedicationReference.bumetanide:
+      case MedicationReference.torsemide:
+      case MedicationReference.ethacrynicAcid:
+        return MedicationClassReference.diuretics
     }
   }
 }

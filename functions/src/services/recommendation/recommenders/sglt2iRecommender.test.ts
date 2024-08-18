@@ -8,7 +8,6 @@
 
 import { expect } from 'chai'
 import { describe, it } from 'mocha'
-import { type RecommendationInput } from './recommender.js'
 import { Sglt2iRecommender } from './sglt2iRecommender.js'
 import { FHIRMedicationRequest } from '../../../models/fhir/baseTypes/fhirElement.js'
 import { type HealthSummaryData } from '../../../models/healthSummaryData.js'
@@ -70,13 +69,12 @@ describe('Sglt2iRecommender', () => {
         ContraindicationCategory.allergyIntolerance
       medicationClassContraindication = (_) =>
         ContraindicationCategory.allergyIntolerance
-      const input: RecommendationInput = {
+      const result = recommender.compute({
         requests: [],
         contraindications: [],
         latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         vitals: healthSummaryData.vitals,
-      }
-      const result = recommender.compute(input)
+      })
       expect(result).to.have.length(0)
     })
 
@@ -86,13 +84,12 @@ describe('Sglt2iRecommender', () => {
         unit: QuantityUnit.mL_min_173m2,
         value: 19,
       }
-      const input: RecommendationInput = {
+      const result = recommender.compute({
         requests: [],
         contraindications: [],
         latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         vitals: healthSummaryData.vitals,
-      }
-      const result = recommender.compute(input)
+      })
       expect(result).to.have.length(0)
     })
 
@@ -102,13 +99,12 @@ describe('Sglt2iRecommender', () => {
       medicationClassContraindication = (_) =>
         ContraindicationCategory.clinicianListed
 
-      const input: RecommendationInput = {
+      const result = recommender.compute({
         requests: [],
         contraindications: [],
         latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         vitals: healthSummaryData.vitals,
-      }
-      const result = recommender.compute(input)
+      })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
         currentMedication: [],
@@ -120,13 +116,12 @@ describe('Sglt2iRecommender', () => {
     it('requests more blood pressure observations', () => {
       healthSummaryData.vitals.systolicBloodPressure =
         healthSummaryData.vitals.systolicBloodPressure.slice(0, 2)
-      const input: RecommendationInput = {
+      const result = recommender.compute({
         requests: [],
         contraindications: [],
         latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         vitals: healthSummaryData.vitals,
-      }
-      const result = recommender.compute(input)
+      })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
         currentMedication: [],
@@ -139,13 +134,12 @@ describe('Sglt2iRecommender', () => {
       healthSummaryData.vitals.systolicBloodPressure.forEach((observation) => {
         observation.value = 99
       })
-      const input: RecommendationInput = {
+      const result = recommender.compute({
         requests: [],
         contraindications: [],
         latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         vitals: healthSummaryData.vitals,
-      }
-      const result = recommender.compute(input)
+      })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
         currentMedication: [],
@@ -155,13 +149,12 @@ describe('Sglt2iRecommender', () => {
     })
 
     it('recommends empagliflozin', () => {
-      const input: RecommendationInput = {
+      const result = recommender.compute({
         requests: [],
         contraindications: [],
         latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         vitals: healthSummaryData.vitals,
-      }
-      const result = recommender.compute(input)
+      })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
         currentMedication: [],
@@ -193,13 +186,12 @@ describe('Sglt2iRecommender', () => {
       const contextAtTarget = await medicationService.getContext(request, {
         reference: 'users/mockUser/medicationRequests/someMedicationRequest',
       })
-      const input: RecommendationInput = {
+      const result = recommender.compute({
         requests: [contextAtTarget],
         contraindications: [],
         latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         vitals: healthSummaryData.vitals,
-      }
-      const result = recommender.compute(input)
+      })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
         currentMedication: [contextAtTarget],
@@ -211,13 +203,12 @@ describe('Sglt2iRecommender', () => {
     it('requests more blood pressure observations', () => {
       healthSummaryData.vitals.systolicBloodPressure =
         healthSummaryData.vitals.systolicBloodPressure.slice(0, 2)
-      const input: RecommendationInput = {
+      const result = recommender.compute({
         requests: [contextBelowTarget],
         contraindications: [],
         latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         vitals: healthSummaryData.vitals,
-      }
-      const result = recommender.compute(input)
+      })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
         currentMedication: [contextBelowTarget],
@@ -230,13 +221,12 @@ describe('Sglt2iRecommender', () => {
       healthSummaryData.vitals.systolicBloodPressure.forEach((observation) => {
         observation.value = 99
       })
-      const input: RecommendationInput = {
+      const result = recommender.compute({
         requests: [contextBelowTarget],
         contraindications: [],
         latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         vitals: healthSummaryData.vitals,
-      }
-      const result = recommender.compute(input)
+      })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
         currentMedication: [contextBelowTarget],
@@ -246,13 +236,12 @@ describe('Sglt2iRecommender', () => {
     })
 
     it('recommends increase', () => {
-      const input: RecommendationInput = {
+      const result = recommender.compute({
         requests: [contextBelowTarget],
         contraindications: [],
         latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         vitals: healthSummaryData.vitals,
-      }
-      const result = recommender.compute(input)
+      })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
         currentMedication: [contextBelowTarget],

@@ -8,29 +8,18 @@
 
 import { median } from '../../../extensions/array.js'
 import { FHIRMedicationRequest } from '../../../models/fhir/baseTypes/fhirElement.js'
-import { type FHIRAllergyIntolerance } from '../../../models/fhir/fhirAllergyIntolerance.js'
 import { type MedicationRequestContext } from '../../../models/medicationRequestContext.js'
-import { type SymptomScore } from '../../../models/types/symptomScore.js'
 import { type UserMedicationRecommendationType } from '../../../models/types/userMedicationRecommendation.js'
-import { type Vitals, type Observation } from '../../../models/vitals.js'
+import { type Observation } from '../../../models/vitals.js'
 import { type ContraindicationService } from '../../contraindication/contraindicationService.js'
 import {
   type MedicationClassReference,
   type MedicationReference,
 } from '../../references.js'
-
-export interface RecommendationInput {
-  requests: MedicationRequestContext[]
-  contraindications: FHIRAllergyIntolerance[]
-  vitals: Vitals
-  latestSymptomScore?: SymptomScore
-}
-
-export interface RecommendationOutput {
-  currentMedication: MedicationRequestContext[]
-  recommendedMedication?: MedicationReference
-  type: UserMedicationRecommendationType
-}
+import {
+  type RecommendationInput,
+  type RecommendationOutput,
+} from '../recommendationService.js'
 
 export abstract class Recommender {
   // Properties

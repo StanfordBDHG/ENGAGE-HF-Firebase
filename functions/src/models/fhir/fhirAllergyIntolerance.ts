@@ -83,12 +83,18 @@ export class FHIRAllergyIntolerance extends FHIRResource {
     })
   }
 
-  // Properties
+  // Stored Properties
 
   readonly resourceType: string = 'AllergyIntolerance'
   readonly type: FHIRAllergyIntoleranceType
   readonly criticality?: FHIRAllergyIntoleranceCriticality
   readonly code?: FHIRCodeableConcept
+
+  // Computed Properties
+
+  get rxNormCodes(): string[] {
+    return this.codes(this.code, { system: CodingSystem.rxNorm })
+  }
 
   // Constructor
 

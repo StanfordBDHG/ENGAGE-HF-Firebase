@@ -10,22 +10,36 @@ import { BetaBlockerRecommender } from './recommenders/betaBlockerRecommender.js
 import { DiureticRecommender } from './recommenders/diureticRecommender.js'
 import { MraRecommender } from './recommenders/mraRecommender.js'
 import { RasiRecommender } from './recommenders/rasiRecommender.js'
-import {
-  type RecommendationInput,
-  type RecommendationOutput,
-  type Recommender,
-} from './recommenders/recommender.js'
+import { type Recommender } from './recommenders/recommender.js'
 import { Sglt2iRecommender } from './recommenders/sglt2iRecommender.js'
 import { type FHIRMedicationRequest } from '../../models/fhir/baseTypes/fhirElement.js'
+import { type FHIRAllergyIntolerance } from '../../models/fhir/fhirAllergyIntolerance.js'
 import { type FHIRMedication } from '../../models/fhir/fhirMedication.js'
+import { type MedicationRequestContext } from '../../models/medicationRequestContext.js'
 import { LocalizedText } from '../../models/types/localizedText.js'
+import { type SymptomScore } from '../../models/types/symptomScore.js'
 import {
   type UserMedicationRecommendation,
   type UserMedicationRecommendationDoseSchedule,
   UserMedicationRecommendationType,
 } from '../../models/types/userMedicationRecommendation.js'
+import { type Vitals } from '../../models/vitals.js'
 import { type ContraindicationService } from '../contraindication/contraindicationService.js'
 import { type MedicationService } from '../medication/medicationService.js'
+import { type MedicationReference } from '../references.js'
+
+export interface RecommendationInput {
+  requests: MedicationRequestContext[]
+  contraindications: FHIRAllergyIntolerance[]
+  vitals: Vitals
+  latestSymptomScore?: SymptomScore
+}
+
+export interface RecommendationOutput {
+  currentMedication: MedicationRequestContext[]
+  recommendedMedication?: MedicationReference
+  type: UserMedicationRecommendationType
+}
 
 export class RecommendationService {
   // Properties

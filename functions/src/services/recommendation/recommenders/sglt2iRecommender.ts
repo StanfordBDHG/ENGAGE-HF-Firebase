@@ -6,17 +6,17 @@
 // SPDX-License-Identifier: MIT
 //
 
-import {
-  type RecommendationInput,
-  type RecommendationOutput,
-  Recommender,
-} from './recommender.js'
+import { Recommender } from './recommender.js'
 import { UserMedicationRecommendationType } from '../../../models/types/userMedicationRecommendation.js'
 import { ContraindicationCategory } from '../../contraindication/contraindicationService.js'
 import {
   MedicationClassReference,
   MedicationReference,
 } from '../../references.js'
+import {
+  type RecommendationInput,
+  type RecommendationOutput,
+} from '../recommendationService.js'
 
 export class Sglt2iRecommender extends Recommender {
   // Methods
