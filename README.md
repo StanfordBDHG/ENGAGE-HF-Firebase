@@ -496,6 +496,121 @@ Embed links for YouTube: `https://youtube.com/embed/${youtubeId}`.
 Short links for YouTube: `https://youtu.be/${youtubeId}`. 
 Watch links for YouTube: `https://youtube.com/watch?v=${youtubeId}`. 
 
+# Functions
+
+## checkInvitationCode
+
+Use `checkInvitationCode` to check if an invitation code is still available and connect the currently (anonymously) authenticated userId with the invitation.
+
+- Note: Currently, due to an issue with Firebase Authentication, the user is already enrolled after calling this function with a full user account and an invitation code may be used infinitely often. This should not be the case in the production system.
+
+### Security
+
+Any authenticated user may use this function, but it should only occur before that user has linked credentials or the user object has been created.
+
+### Input
+
+|Property|Type|Values|Comments|
+|-|-|-|-|
+|invitationCode|string|-|The invitation code provided to the user by the organization. It needs to be between 6-12 characters long and only use uppercase latin characters and arabic digits.|
+
+### Output
+
+None.
+
+## createInvitation
+
+Use `createInvitation` to create invitations to be sent out to new patients, clinicians or owners.
+
+### Security
+
+An admin may create invitations for any user, an owner or clinician may only create invitations within their own organization and below or equal their own rank (i.e. clinicians cannot create owners, owners cannot create admins). Patients may not call this function.
+
+### Input
+
+|Property|Type|Values|Comments|
+|-|-|-|-|
+|auth|object|-|Authentication information about the user to be invited.|
+|auth>displayName|optional string|-|A display name to use for the user.|
+|auth>email|optional string|-|An email address to use for the user. This is non-optional for invitations for owners and clinicians, since this email address is used as the invitation code for SSO.|
+|auth>phoneNumber|optional string|-|A phone number to use for the user.|
+|auth>photoURL|optional string|-|A photo URL to use for the user.|
+|user|object|-|A prepared user object to use for the enrollment of the user when using the invitation. It may contain the same properties as in the [`users`](#users) collection, except for `dateOfEnrollment` and `invitationCode`.|
+
+### Output
+
+|Property|Type|Values|Comments|
+|-|-|-|-|
+|id|string|-|The Firestore document id of the created invitation.|
+
+## dismissMessage
+
+Use `dismissMessage` to dismiss messages that are marked with `isDismissible` equals `true`. Using this function on non-dismissible functions results in an error. Clients may call this function either on deletion of the user (by displaying an x-mark tapped by the user to specifically remove this message) or on perform of the message (i.e. on tap of the message, if the action could successfully be decoded and performed).
+
+### Security
+
+Admins may dismiss messages for any user, otherwise users may only dismiss their own messages.
+
+### Input
+
+|Property|Type|Values|Comments|
+|-|-|-|-|
+|userId|optional string|-|The userId of the user whose message you are dismissing. May be omitted for users dismissing their own messages.|
+|messageId|string|-|The id of the message to dismiss. This message needs to have `isDismissible` set to `true`.|
+|didPerformAction|optional boolean|-|Whether the message action has actually been performed. Depending on this value, the server may decide to actually dismiss the message or not.|
+
+### Output
+
+None.
+
+## exportHealthSummary
+
+`exportHealthSummary` creates a health summary PDF and returns its data.
+
+### Security
+
+This function may be called by admins (for any patient), owners/clinicians (for patients of the same organization), or patients (for themselves).
+
+### Input
+
+|Property|Type|Values|Comments|
+|-|-|-|-|
+|userId|string|-|The patient's user id. Needs to be specified, even if a patient is requesting the health summary for themselves.|
+|language|optional string|e.g. 'en-US'|See [`LocalizedText`](#localizedtext) for specification.|
+|weightUnit|optional string|e.g. '[lb_av]'|A loinc code for the weight unit to be used during generation of the health summary PDF|
+
+### Output
+
+|Property|Type|Values|Comments|
+|-|-|-|-|
+|content|string|-|Base64-encoded string of the PDF data.|
+
+## registerDevice
+
+Use `registerDevice` to register different client devices for receival of push notifications. Call this function on each fresh start of the app or whenever the push notification token (or any of the remaining data, including language/region settings) may have changed.
+
+### Security
+
+Any user can register devices for their own account. In the foreseeable future, the function is only relevant for patients though.
+
+### Input
+
+If a notification token could not be generated on the device (e.g. due to missing permissions), simply do not call this function rather than creating a device without token. For the remaining inputs, please provide all values that are available.
+
+|Property|Type|Values|Comments|
+|-|-|-|-|
+|notificationToken|string|-|The notification token to be used for sending push notifications. This may either be an APNS token for iOS devices or a FCM registration token for Android.|
+|platform|string|'iOS' or 'Android'|The platform of the device.|
+|osVersion|optional string|'15.4.3'|The OS version of the device using semantic versioning separated by dots. Minor and patch version may be omitted.|
+|appVersion|optional string|'1.0.1'|The app version as shown in the App Store or Play Store using semantic versioning. Minor and patch version may be omitted.|
+|appBuild|optional string|'43'|The app build version as used internally to identify individual builds within the same marketing version (i.e. the one shown in App Store / Play Store).|
+|language|optional string|'en-US'|The language and region setting as specified for [`LocalizedText`](#localizedtext).|
+|timeZone|optional string|e.g. "America/Los_Angeles"|The value needs to correspond to an identifier from [TZDB](https://nodatime.org/TimeZones). It must not be an offset to UTC/GMT, since that wouldn't work well with daylight-savings (even if there is no daylight-savings time at that location). Also, don't use common abbreviations like PST, PDT, CEST, etc (they may be ambiguous, e.g. CST). If the timeZone is unknown, then "America/Los_Angeles" should be used.|
+
+### Output
+
+None.
+
 # Resources
 
 - See [resources/algorithms](resources/algorithms) for diagrams describing the different algorithms for medication recommendations.
