@@ -136,7 +136,18 @@ describe('RecommendationService', () => {
           const actual = actualRecommendations[i]
           const expected = expectedRecommendations[i]
           expect(actual.type).to.equal(expected.type)
-          if (expected.recommendedMedication) {
+          if (
+            expected.type ===
+            UserMedicationRecommendationType.improvementAvailable
+          ) {
+            expect(expected.recommendedMedication).to.exist
+            expect(result[i].currentMedication).to.have.length.greaterThan(0)
+            result[i].currentMedication.every((medication) =>
+              medication.reference.startsWith(
+                expected.recommendedMedication + '/drugs/',
+              ),
+            )
+          } else if (expected.recommendedMedication) {
             expect(actual.recommendedMedication).to.exist
             expect(actual.recommendedMedication).to.equal(
               expected.recommendedMedication,
@@ -444,17 +455,54 @@ function getExpectedRecommendation(
         recommendedMedication: MedicationReference.spironolactone,
       }
     case 'discuss increasing bisoprolol':
+      return {
+        type: UserMedicationRecommendationType.improvementAvailable,
+        recommendedMedication: MedicationReference.bisoprolol,
+      }
     case 'discuss increasing carvedilol':
+      return {
+        type: UserMedicationRecommendationType.improvementAvailable,
+        recommendedMedication: MedicationReference.carvedilol,
+      }
     case 'discuss increasing dapagliflozin':
+      return {
+        type: UserMedicationRecommendationType.improvementAvailable,
+        recommendedMedication: MedicationReference.dapagliflozin,
+      }
     case 'discuss increasing empagliflozin':
+      return {
+        type: UserMedicationRecommendationType.improvementAvailable,
+        recommendedMedication: MedicationReference.empagliflozin,
+      }
     case 'discuss increasing eplerenone':
+      return {
+        type: UserMedicationRecommendationType.improvementAvailable,
+        recommendedMedication: MedicationReference.eplerenone,
+      }
     case 'discuss increasing lisinopril':
+      return {
+        type: UserMedicationRecommendationType.improvementAvailable,
+        recommendedMedication: MedicationReference.lisinopril,
+      }
     case 'discuss increasing losartan':
+      return {
+        type: UserMedicationRecommendationType.improvementAvailable,
+        recommendedMedication: MedicationReference.losartan,
+      }
     case 'discuss increasing metoprolol':
+      return {
+        type: UserMedicationRecommendationType.improvementAvailable,
+        recommendedMedication: MedicationReference.metoprololSuccinate,
+      }
     case 'discuss increasing sacubitril-valsartan':
+      return {
+        type: UserMedicationRecommendationType.improvementAvailable,
+        recommendedMedication: MedicationReference.sacubitrilValsartan,
+      }
     case 'discuss increasing spironolactone':
       return {
         type: UserMedicationRecommendationType.improvementAvailable,
+        recommendedMedication: MedicationReference.spironolactone,
       }
     case 'discuss starting carvedilol':
       return {
