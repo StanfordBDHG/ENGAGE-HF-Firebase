@@ -18,7 +18,6 @@ import {
   type RecommendationInput,
   type RecommendationOutput,
 } from '../recommendationService.js'
-import { median } from 'd3'
 
 export class RasiRecommender extends Recommender {
   // Methods
