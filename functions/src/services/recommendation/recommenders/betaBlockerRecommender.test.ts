@@ -9,7 +9,6 @@
 import { expect } from 'chai'
 import { describe, it } from 'mocha'
 import { BetaBlockerRecommender } from './betaBlockerRecommender.js'
-import { type RecommendationInput } from './recommender.js'
 import { FHIRMedicationRequest } from '../../../models/fhir/baseTypes/fhirElement.js'
 import { type HealthSummaryData } from '../../../models/healthSummaryData.js'
 import { type MedicationRequestContext } from '../../../models/medicationRequestContext.js'
@@ -40,6 +39,7 @@ describe('BetaBlockerRecommender', () => {
     new MockContraindicationService(
       (_, reference) => medicationContraindication(reference),
       (_, reference) => medicationClassContraindication(reference),
+      (_, medicationReferences) => medicationReferences.at(0),
     ),
   )
   let healthSummaryData: HealthSummaryData
@@ -71,13 +71,12 @@ describe('BetaBlockerRecommender', () => {
       medicationClassContraindication = (_) =>
         ContraindicationCategory.allergyIntolerance
 
-      const input: RecommendationInput = {
+      const result = recommender.compute({
         requests: [],
         contraindications: [],
         latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         vitals: healthSummaryData.vitals,
-      }
-      const result = recommender.compute(input)
+      })
       expect(result).to.be.empty
     })
 
@@ -87,13 +86,12 @@ describe('BetaBlockerRecommender', () => {
       medicationClassContraindication = (_) =>
         ContraindicationCategory.clinicianListed
 
-      const input: RecommendationInput = {
+      const result = recommender.compute({
         requests: [],
         contraindications: [],
         latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         vitals: healthSummaryData.vitals,
-      }
-      const result = recommender.compute(input)
+      })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
         currentMedication: [],
@@ -105,13 +103,12 @@ describe('BetaBlockerRecommender', () => {
     it('requests more patient observations when only 2 heart rate observations exist', () => {
       healthSummaryData.vitals.heartRate =
         healthSummaryData.vitals.heartRate.slice(0, 2)
-      const input: RecommendationInput = {
+      const result = recommender.compute({
         requests: [],
         contraindications: [],
         latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         vitals: healthSummaryData.vitals,
-      }
-      const result = recommender.compute(input)
+      })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
         currentMedication: [],
@@ -123,13 +120,12 @@ describe('BetaBlockerRecommender', () => {
     it('requests more patient observations when only 2 blood pressure observations exist', () => {
       healthSummaryData.vitals.systolicBloodPressure =
         healthSummaryData.vitals.systolicBloodPressure.slice(0, 2)
-      const input: RecommendationInput = {
+      const result = recommender.compute({
         requests: [],
         contraindications: [],
         latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         vitals: healthSummaryData.vitals,
-      }
-      const result = recommender.compute(input)
+      })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
         currentMedication: [],
@@ -144,13 +140,12 @@ describe('BetaBlockerRecommender', () => {
           ...observation,
           value: 99,
         }))
-      const input: RecommendationInput = {
+      const result = recommender.compute({
         requests: [],
         contraindications: [],
         latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         vitals: healthSummaryData.vitals,
-      }
-      const result = recommender.compute(input)
+      })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
         currentMedication: [],
@@ -165,13 +160,12 @@ describe('BetaBlockerRecommender', () => {
           ...observation,
           value: 59,
         }))
-      const input: RecommendationInput = {
+      const result = recommender.compute({
         requests: [],
         contraindications: [],
         latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         vitals: healthSummaryData.vitals,
-      }
-      const result = recommender.compute(input)
+      })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
         currentMedication: [],
@@ -181,13 +175,12 @@ describe('BetaBlockerRecommender', () => {
     })
 
     it('recommends starting carvedilol', () => {
-      const input: RecommendationInput = {
+      const result = recommender.compute({
         requests: [],
         contraindications: [],
         latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         vitals: healthSummaryData.vitals,
-      }
-      const result = recommender.compute(input)
+      })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
         currentMedication: [],
@@ -219,13 +212,12 @@ describe('BetaBlockerRecommender', () => {
       const contextAtTarget = await medicationService.getContext(request, {
         reference: 'users/mockUser/medicationRequests/someMedicationRequest',
       })
-      const input: RecommendationInput = {
+      const result = recommender.compute({
         requests: [contextAtTarget],
         contraindications: [],
         latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         vitals: healthSummaryData.vitals,
-      }
-      const result = recommender.compute(input)
+      })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
         currentMedication: [contextAtTarget],
@@ -237,13 +229,12 @@ describe('BetaBlockerRecommender', () => {
     it('requests more blood pressure observations before recommending improvements to existing medication', () => {
       healthSummaryData.vitals.systolicBloodPressure =
         healthSummaryData.vitals.systolicBloodPressure.slice(0, 2)
-      const input: RecommendationInput = {
+      const result = recommender.compute({
         requests: [contextBelowTarget],
         contraindications: [],
         latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         vitals: healthSummaryData.vitals,
-      }
-      const result = recommender.compute(input)
+      })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
         currentMedication: [contextBelowTarget],
@@ -255,13 +246,12 @@ describe('BetaBlockerRecommender', () => {
     it('requests more heart rate observations before recommending improvements to existing medication', () => {
       healthSummaryData.vitals.heartRate =
         healthSummaryData.vitals.heartRate.slice(0, 2)
-      const input: RecommendationInput = {
+      const result = recommender.compute({
         requests: [contextBelowTarget],
         contraindications: [],
         latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         vitals: healthSummaryData.vitals,
-      }
-      const result = recommender.compute(input)
+      })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
         currentMedication: [contextBelowTarget],
@@ -273,13 +263,12 @@ describe('BetaBlockerRecommender', () => {
     it('points out a possible personal target reached when blood pressure observations before recommending improvements to existing medication', () => {
       healthSummaryData.vitals.systolicBloodPressure =
         healthSummaryData.vitals.systolicBloodPressure.slice(0, 2)
-      const input: RecommendationInput = {
+      const result = recommender.compute({
         requests: [contextBelowTarget],
         contraindications: [],
         latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         vitals: healthSummaryData.vitals,
-      }
-      const result = recommender.compute(input)
+      })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
         currentMedication: [contextBelowTarget],
@@ -291,13 +280,12 @@ describe('BetaBlockerRecommender', () => {
     it('requests more heart rate observations before recommending improvements to existing medication', () => {
       healthSummaryData.vitals.heartRate =
         healthSummaryData.vitals.heartRate.slice(0, 2)
-      const input: RecommendationInput = {
+      const result = recommender.compute({
         requests: [contextBelowTarget],
         contraindications: [],
         latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         vitals: healthSummaryData.vitals,
-      }
-      const result = recommender.compute(input)
+      })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
         currentMedication: [contextBelowTarget],
@@ -314,13 +302,12 @@ describe('BetaBlockerRecommender', () => {
             dizzinessScore: 4,
           }),
       )
-      const input: RecommendationInput = {
+      const result = recommender.compute({
         requests: [contextBelowTarget],
         contraindications: [],
         latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         vitals: healthSummaryData.vitals,
-      }
-      const result = recommender.compute(input)
+      })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
         currentMedication: [contextBelowTarget],
@@ -337,13 +324,12 @@ describe('BetaBlockerRecommender', () => {
             dizzinessScore: 2,
           }),
       )
-      const input: RecommendationInput = {
+      const result = recommender.compute({
         requests: [contextBelowTarget],
         contraindications: [],
         latestSymptomScore: healthSummaryData.symptomScores.at(-1),
         vitals: healthSummaryData.vitals,
-      }
-      const result = recommender.compute(input)
+      })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
         currentMedication: [contextBelowTarget],

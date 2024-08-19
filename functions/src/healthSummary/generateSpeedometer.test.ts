@@ -16,7 +16,9 @@ import { TestFlags } from '../tests/testFlags.js'
 describe('generateSpeedometer', () => {
   it('should generate the same chart on mock data', async () => {
     const inputData = await mockHealthSummaryData()
-    const actualData = generateSpeedometerSvg(inputData.symptomScores, 258)
+    const actualData = generateSpeedometerSvg(inputData.symptomScores, 258, {
+      languages: ['en_US'],
+    })
     const expectedPath = 'src/tests/resources/mockSpeedometer.svg'
     if (TestFlags.regenerateValues) {
       fs.writeFileSync(expectedPath, actualData)
@@ -27,7 +29,7 @@ describe('generateSpeedometer', () => {
   })
 
   it('should generate an empty chart the same way', () => {
-    const actualData = generateSpeedometerSvg([], 258)
+    const actualData = generateSpeedometerSvg([], 258, { languages: ['en-US'] })
     const expectedPath = 'src/tests/resources/emptySpeedometer.svg'
     if (TestFlags.regenerateValues) {
       fs.writeFileSync(expectedPath, actualData)

@@ -14,7 +14,6 @@ import {
 
 export function mockQuestionnaire(): FHIRQuestionnaire {
   return new FHIRQuestionnaire({
-    resourceType: 'Questionnaire',
     title: 'KCCQ-12',
     language: 'en-US',
     status: FHIRQuestionnairePublicationStatus.draft,

@@ -15,6 +15,7 @@ import {
   type RowInput,
   type UserOptions,
 } from 'jspdf-autotable' /* eslint-disable-line */
+import { healthSummaryLocalizations } from './generate+localizations.js'
 import { generateChartSvg } from './generateChart.js'
 import { generateSpeedometerSvg } from './generateSpeedometer.js'
 import {
@@ -24,7 +25,6 @@ import {
   presortedPercentile,
 } from '../extensions/array.js'
 import { type HealthSummaryData } from '../models/healthSummaryData.js'
-import { type LocalizedText } from '../models/types/localizedText.js'
 import {
   type UserMedicationRecommendationDoseSchedule,
   UserMedicationRecommendationType,
@@ -32,7 +32,7 @@ import {
 import { type Observation } from '../models/vitals.js'
 
 export interface HealthSummaryOptions {
-  language: string
+  languages: string[]
 }
 
 export function generateHealthSummary(
@@ -73,6 +73,8 @@ class HealthSummaryPDFGenerator {
     primary: [0, 117, 116] as [number, number, number],
     lightGray: [211, 211, 211] as [number, number, number],
   }
+
+  texts: ReturnType<typeof healthSummaryLocalizations>
 
   fontName = 'Open Sans'
   textStyles = {
@@ -119,7 +121,7 @@ class HealthSummaryPDFGenerator {
   constructor(data: HealthSummaryData, options: HealthSummaryOptions) {
     this.data = data
     this.options = options
-
+    this.texts = healthSummaryLocalizations(options.languages)
     this.doc = new jsPDF('p', 'pt', [this.pageWidth, this.pageHeight])
     this.addFont(
       'resources/fonts/OpenSans-Regular.ttf',
@@ -137,7 +139,7 @@ class HealthSummaryPDFGenerator {
     this.addPageHeader()
     this.addMedicationSection()
     this.addVitalsSection()
-    this.addSymptomsSurveySection()
+    this.addSymptomScoresSection()
   }
 
   addSecondPage() {
@@ -150,19 +152,19 @@ class HealthSummaryPDFGenerator {
   }
 
   addMedicationSection() {
-    this.addSectionTitle('MEDICATIONS')
+    this.addSectionTitle(this.texts.medicationsSection.title)
     this.moveDown(4)
 
     this.splitTwoColumns(
       (columnWidth) => {
         this.addText(
-          'Current Medications',
+          this.texts.medicationsSection.currentTitle,
           this.textStyles.bodyBold,
           columnWidth,
         )
         this.moveDown(this.textStyles.body.fontSize + 4)
         this.addText(
-          'Before your next clinic appointment, check off which medications you have been taking below:',
+          this.texts.medicationsSection.currentText,
           this.textStyles.body,
           columnWidth,
         )
@@ -170,19 +172,19 @@ class HealthSummaryPDFGenerator {
       },
       (columnWidth) => {
         this.addText(
-          'Potential Positive Changes',
+          this.texts.medicationsSection.recommendationsTitle,
           this.textStyles.bodyBold,
           columnWidth,
         )
         this.moveDown(this.textStyles.body.fontSize + 4)
         this.addText(
-          'Please discuss optimizing these medications with your care them at your next clinic appointment.',
+          this.texts.medicationsSection.recommendationsText,
           this.textStyles.body,
           columnWidth,
         )
         this.moveDown(4)
         this.addText(
-          'Aim to make one positive change!',
+          this.texts.medicationsSection.recommendationsHint,
           this.textStyles.bodyColoredBold,
           columnWidth,
         )
@@ -205,26 +207,19 @@ class HealthSummaryPDFGenerator {
 
     const tableContent: CellDef[][] = [
       [
-        {
-          title: 'My medications',
-        },
-        {
-          title: 'Dose',
-        },
-        {
-          title: 'Target dose',
-        },
-        {
-          title: 'Potential Positive Change',
-        },
-        {
-          title: 'Questions/Comments',
-        },
-      ],
+        this.texts.medicationsTable.nameHeader,
+        this.texts.medicationsTable.doseHeader,
+        this.texts.medicationsTable.targetDoseHeader,
+        this.texts.medicationsTable.recommendationHeader,
+        this.texts.medicationsTable.commentsHeader,
+      ].map((title) => ({ title: title })),
       ...this.data.recommendations.map((recommendation, index) => [
         {
           title:
-            '[ ] ' + this.localize(recommendation.displayInformation.title),
+            '[ ] ' +
+            recommendation.displayInformation.title.localize(
+              ...this.options.languages,
+            ),
         },
         {
           styles: {
@@ -259,7 +254,9 @@ class HealthSummaryPDFGenerator {
               .join('\n'),
         },
         {
-          title: this.localize(recommendation.displayInformation.description),
+          title: recommendation.displayInformation.description.localize(
+            ...this.options.languages,
+          ),
         },
         {
           styles: {
@@ -280,7 +277,7 @@ class HealthSummaryPDFGenerator {
   }
 
   addVitalsSection() {
-    this.addSectionTitle('VITALS OVER LAST 2 WEEKS')
+    this.addSectionTitle(this.texts.vitalsSection.title)
     this.moveDown(4)
     this.splitTwoColumns(
       (columnWidth) => {
@@ -290,7 +287,7 @@ class HealthSummaryPDFGenerator {
           ),
         )
         this.addText(
-          `Average Systolic Blood Pressure: ${avgSystolic?.toFixed(0) ?? '---'}`,
+          this.texts.vitalsSection.averageSystolicText(avgSystolic ?? null),
           this.textStyles.body,
           columnWidth,
         )
@@ -301,7 +298,7 @@ class HealthSummaryPDFGenerator {
           ),
         )
         this.addText(
-          `Average Diastolic Blood Pressure: ${avgDiastolic?.toFixed(0) ?? '---'}`,
+          this.texts.vitalsSection.averageDiastolicText(avgDiastolic ?? null),
           this.textStyles.body,
           columnWidth,
         )
@@ -310,7 +307,7 @@ class HealthSummaryPDFGenerator {
           this.data.vitals.heartRate.map((observation) => observation.value),
         )
         this.addText(
-          `Average Heart Rate: ${avgHeartRate?.toFixed(0) ?? '---'}`,
+          this.texts.vitalsSection.averageHeartRateText(avgHeartRate ?? null),
           this.textStyles.body,
           columnWidth,
         )
@@ -318,9 +315,8 @@ class HealthSummaryPDFGenerator {
       },
       (columnWidth) => {
         const currentWeight = this.data.vitals.bodyWeight.at(0)
-        const weightUnit = currentWeight?.unit.unit ?? ''
         this.addText(
-          `Current Weight: ${currentWeight?.value.toFixed(0) ?? '---'} ${weightUnit}`,
+          this.texts.vitalsSection.currentBodyWeightText(currentWeight ?? null),
           this.textStyles.body,
           columnWidth,
         )
@@ -329,13 +325,19 @@ class HealthSummaryPDFGenerator {
           this.data.vitals.bodyWeight.map((observation) => observation.value),
         )
         this.addText(
-          `Last Week Average Weight: ${avgWeight?.toFixed(0) ?? '---'} ${weightUnit}`,
+          this.texts.vitalsSection.averageBodyWeightText(
+            avgWeight !== undefined && currentWeight !== undefined ?
+              { value: avgWeight, unit: currentWeight.unit }
+            : null,
+          ),
           this.textStyles.body,
           columnWidth,
         )
         this.moveDown(4)
         this.addText(
-          `Prior Dry Weight: ${this.data.vitals.dryWeight?.value.toFixed(0) ?? '---'} ${weightUnit}`,
+          this.texts.vitalsSection.dryWeightText(
+            this.data.vitals.dryWeight ?? null,
+          ),
           this.textStyles.body,
           columnWidth,
         )
@@ -344,8 +346,8 @@ class HealthSummaryPDFGenerator {
     )
   }
 
-  addSymptomsSurveySection() {
-    this.addSectionTitle('SYMPTOM SURVEY [KCCQ-12] REPORT')
+  addSymptomScoresSection() {
+    this.addSectionTitle(this.texts.symptomScoresSection.title)
     this.moveDown(4)
 
     this.splitTwoColumns(
@@ -354,91 +356,81 @@ class HealthSummaryPDFGenerator {
       },
       (columnWidth) => {
         this.moveDown(this.textStyles.body.fontSize)
-        this.addText(
-          'These symptom scores range from 0-100.',
-          this.textStyles.body,
-          columnWidth,
-        )
-        this.moveDown(4)
-        this.addText(
-          'A score of 0 indicates severe symptoms.',
-          this.textStyles.body,
-          columnWidth,
-        )
-        this.moveDown(4)
-        this.addText(
-          'A score of 100 indicates you are doing extremely well.',
-          this.textStyles.body,
-          columnWidth,
-        )
-        this.moveDown(this.textStyles.body.fontSize)
-        this.addText(
-          'Personal Summary: Your symptom scores have decreased. This means you are feeling worse. This is helpful to document to make sure you are on the right medical therapy.',
-          this.textStyles.bodyColored,
-          columnWidth,
-        )
-        this.moveDown(this.textStyles.body.fontSize)
+        this.texts.symptomScoresSection.description
+          .split('\n')
+          .forEach((line) => {
+            this.addText(line, this.textStyles.body, columnWidth)
+            this.moveDown(4)
+          })
+
+        const currentScore = this.data.symptomScores.at(-1)
+        const previousScore = this.data.symptomScores.at(-2)
+        if (
+          this.data.symptomScores.length >= 2 &&
+          currentScore !== undefined &&
+          previousScore !== undefined
+        ) {
+          let personalSummaryText =
+            this.texts.symptomScoresSection.personalSummary.title + ' '
+
+          if (currentScore.overallScore >= 90) {
+            if (currentScore.overallScore - previousScore.overallScore >= 10) {
+              personalSummaryText +=
+                this.texts.symptomScoresSection.personalSummary.above90Improving
+            } else {
+              personalSummaryText =
+                this.texts.symptomScoresSection.personalSummary
+                  .above90NotImproving
+            }
+          } else {
+            const improvement =
+              currentScore.overallScore - previousScore.overallScore
+            if (improvement >= 10) {
+              personalSummaryText +=
+                this.texts.symptomScoresSection.personalSummary.below90Improving
+            } else if (improvement > -10) {
+              personalSummaryText +=
+                this.texts.symptomScoresSection.personalSummary.below90Stable
+            } else {
+              personalSummaryText +=
+                this.texts.symptomScoresSection.personalSummary.below90Worsening
+            }
+          }
+
+          this.addText(
+            personalSummaryText,
+            this.textStyles.bodyColored,
+            columnWidth,
+          )
+          this.moveDown(this.textStyles.body.fontSize)
+        }
       },
     )
 
     const tableContent: CellDef[][] = [
       [
-        {
-          title: ' ',
-        },
-        {
-          title: 'Overall Score',
-        },
-        {
-          title: 'Physical Limits',
-        },
-        {
-          title: 'Social Limits',
-        },
-        {
-          title: 'Quality of Life',
-        },
-        {
-          title: 'Heart Failure Symptoms',
-        },
-        {
-          title: 'Dizziness',
-        },
-      ],
+        this.texts.symptomScoresTable.dateHeader,
+        this.texts.symptomScoresTable.overallScoreHeader,
+        this.texts.symptomScoresTable.physicalLimitsScoreHeader,
+        this.texts.symptomScoresTable.socialLimitsScoreHeader,
+        this.texts.symptomScoresTable.qualityOfLifeScoreHeader,
+        this.texts.symptomScoresTable.symptomFrequencyScoreHeader,
+        this.texts.symptomScoresTable.dizzinessScoreHeader,
+      ].map((title) => ({ title: title })),
       ...this.data.symptomScores.map((score, index) => [
         {
-          title: this.formatDate(score.date),
+          title: this.texts.symptomScoresTable.formatDate(score.date),
           styles: {
             fontStyle:
               index == this.data.symptomScores.length - 1 ? 'bold' : 'normal',
           },
         } as CellDef,
-        {
-          title: String(score.overallScore),
-        },
-        {
-          title:
-            score.physicalLimitsScore ?
-              String(score.physicalLimitsScore)
-            : '---',
-        },
-        {
-          title:
-            score.socialLimitsScore ? String(score.socialLimitsScore) : '---',
-        },
-        {
-          title:
-            score.qualityOfLifeScore ? String(score.qualityOfLifeScore) : '---',
-        },
-        {
-          title:
-            score.symptomFrequencyScore ?
-              String(score.symptomFrequencyScore)
-            : '---',
-        },
-        {
-          title: String(score.dizzinessScore),
-        },
+        { title: score.overallScore.toFixed(0) },
+        { title: score.physicalLimitsScore?.toFixed(0) ?? '---' },
+        { title: score.socialLimitsScore?.toFixed(0) ?? '---' },
+        { title: score.qualityOfLifeScore?.toFixed(0) ?? '---' },
+        { title: score.symptomFrequencyScore?.toFixed(0) ?? '---' },
+        { title: score.dizzinessScore.toFixed(0) },
       ]),
     ]
     this.addTable(tableContent)
@@ -446,11 +438,15 @@ class HealthSummaryPDFGenerator {
   }
 
   addVitalsChartsSection() {
-    this.addSectionTitle('DETAILS OF VITALS')
+    this.addSectionTitle(this.texts.detailedVitalsSection.title)
 
     this.splitTwoColumns(
       (columnWidth) => {
-        this.addText('Weight', this.textStyles.bodyBold, columnWidth)
+        this.addText(
+          this.texts.detailedVitalsSection.bodyWeightTitle,
+          this.textStyles.bodyBold,
+          columnWidth,
+        )
         this.addChart(
           this.data.vitals.bodyWeight,
           columnWidth,
@@ -465,9 +461,16 @@ class HealthSummaryPDFGenerator {
 
         this.addTable(
           [
-            [' ', 'Current', '7-Day Average', 'Last Visit', 'Range'],
             [
-              'Weight',
+              this.texts.detailedVitalsSection.bodyWeightTable.titleHeader,
+              this.texts.detailedVitalsSection.bodyWeightTable.currentHeader,
+              this.texts.detailedVitalsSection.bodyWeightTable
+                .sevenDayAverageHeader,
+              this.texts.detailedVitalsSection.bodyWeightTable.lastVisitHeader,
+              this.texts.detailedVitalsSection.bodyWeightTable.rangeHeader,
+            ],
+            [
+              this.texts.detailedVitalsSection.bodyWeightTable.rowTitle,
               this.data.vitals.bodyWeight.at(0)?.value.toFixed(0) ?? '---',
               avgWeight?.toFixed(0) ?? '---',
               '-',
@@ -481,7 +484,11 @@ class HealthSummaryPDFGenerator {
         this.moveDown(this.textStyles.body.fontSize * 2)
       },
       (columnWidth) => {
-        this.addText('Heart Rate', this.textStyles.bodyBold, columnWidth)
+        this.addText(
+          this.texts.detailedVitalsSection.heartRateTitle,
+          this.textStyles.bodyBold,
+          columnWidth,
+        )
         this.addChart(this.data.vitals.heartRate, columnWidth)
         const values = [
           ...this.data.vitals.heartRate.map((observation) => observation.value),
@@ -490,9 +497,17 @@ class HealthSummaryPDFGenerator {
         const lowerMedian = presortedPercentile(values, 0.25)
         this.addTable(
           [
-            [' ', 'Median', 'IQR', '% Under 50', '% Over 120'],
             [
-              'Heart Rate',
+              this.texts.detailedVitalsSection.heartRateTable.titleHeader,
+              this.texts.detailedVitalsSection.heartRateTable.medianHeader,
+              this.texts.detailedVitalsSection.heartRateTable.iqrHeader,
+              this.texts.detailedVitalsSection.heartRateTable
+                .percentageUnder50Header,
+              this.texts.detailedVitalsSection.heartRateTable
+                .percentageOver120Header,
+            ],
+            [
+              this.texts.detailedVitalsSection.heartRateTable.rowTitle,
               presortedMedian(values)?.toFixed(0) ?? '---',
               upperMedian && lowerMedian ?
                 (upperMedian - lowerMedian).toFixed(0)
@@ -510,7 +525,7 @@ class HealthSummaryPDFGenerator {
     this.splitTwoColumns(
       (columnWidth) => {
         this.addText(
-          'Systolic Blood Pressure',
+          this.texts.detailedVitalsSection.systolicBloodPressureTitle,
           this.textStyles.bodyBold,
           columnWidth,
         )
@@ -518,7 +533,7 @@ class HealthSummaryPDFGenerator {
       },
       (columnWidth) => {
         this.addText(
-          'Diastolic Blood Pressure',
+          this.texts.detailedVitalsSection.diastolicBloodPressureTitle,
           this.textStyles.bodyBold,
           columnWidth,
         )
@@ -543,9 +558,17 @@ class HealthSummaryPDFGenerator {
     const diastolicLowerMedian = presortedPercentile(diastolicValues, 0.25)
 
     this.addTable([
-      [' ', 'Median', 'IQR', '% Under 90 mmHg', '% Over 180 mmHg'],
       [
-        'Systolic',
+        this.texts.detailedVitalsSection.bloodPressureTable.titleHeader,
+        this.texts.detailedVitalsSection.bloodPressureTable.medianHeader,
+        this.texts.detailedVitalsSection.bloodPressureTable.iqrHeader,
+        this.texts.detailedVitalsSection.bloodPressureTable
+          .percentageUnder90Header,
+        this.texts.detailedVitalsSection.bloodPressureTable
+          .percentageOver180Header,
+      ],
+      [
+        this.texts.detailedVitalsSection.bloodPressureTable.systolicRowTitle,
         presortedMedian(systolicValues)?.toFixed(0) ?? '---',
         systolicUpperMedian && systolicLowerMedian ?
           (systolicUpperMedian - systolicLowerMedian).toFixed(0)
@@ -554,7 +577,7 @@ class HealthSummaryPDFGenerator {
         percentage(systolicValues, (value) => value > 180)?.toFixed(0) ?? '---',
       ],
       [
-        'Diastolic',
+        this.texts.detailedVitalsSection.bloodPressureTable.diastolicRowTitle,
         presortedMedian(diastolicValues)?.toFixed(0) ?? '---',
         diastolicUpperMedian && diastolicLowerMedian ?
           (diastolicUpperMedian - diastolicLowerMedian).toFixed(0)
@@ -573,22 +596,26 @@ class HealthSummaryPDFGenerator {
   }
 
   addPageHeader() {
-    this.addText('ENGAGE-HF Mobile App Health Summary', this.textStyles.h2)
+    this.addText(this.texts.header.title, this.textStyles.h2)
     this.moveDown(4)
-    this.addText(this.data.name, this.textStyles.h1)
+    this.addText(this.data.name ?? '---', this.textStyles.h1)
     this.moveDown(4)
     this.addText(
-      `DOB: ${this.data.dateOfBirth ? this.formatDate(new Date(this.data.dateOfBirth)) : '---'}`,
+      this.texts.header.dateOfBirthLine(this.data.dateOfBirth ?? null),
     )
     this.moveDown(4)
-    this.addText(`Provider: ${this.data.clinicianName}`)
+    this.addText(
+      this.texts.header.clinicianLine(this.data.clinicianName ?? null),
+    )
     this.moveDown(4)
     this.addText(
-      `Next Appointment: ${this.data.nextAppointment ? this.formatDate(new Date(this.data.nextAppointment)) : '---'}`,
+      this.texts.header.nextAppointmentLine(this.data.nextAppointment ?? null),
     )
 
     const innerWidth = this.pageWidth - this.margins.left - this.margins.right
-    const pageNumberText = `Page ${this.doc.getNumberOfPages()}`
+    const pageNumberText = this.texts.header.pageNumberTitle(
+      this.doc.getNumberOfPages(),
+    )
     const pageNumberWidth = this.doc.getTextWidth(pageNumberText)
     this.cursor.x = this.margins.left + innerWidth - pageNumberWidth
     this.cursor.y -= this.textStyles.body.fontSize
@@ -628,7 +655,9 @@ class HealthSummaryPDFGenerator {
   addSpeedometer(maxWidth?: number) {
     const width =
       maxWidth ?? this.pageWidth - this.cursor.x - this.margins.right
-    const svg = generateSpeedometerSvg(this.data.symptomScores, width)
+    const svg = generateSpeedometerSvg(this.data.symptomScores, width, {
+      languages: this.options.languages,
+    })
     const img = this.convertSvgToPng(svg)
     this.addPNG(img, width)
   }
@@ -746,14 +775,6 @@ class HealthSummaryPDFGenerator {
     this.cursor.y += deltaY
   }
 
-  formatDate(date: Date): string {
-    return date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-    })
-  }
-
   addFont(file: string, name: string, style: FontStyle) {
     const fontFileContent = fs.readFileSync(file).toString('base64')
     const fileName = file.split('/').at(-1) ?? file
@@ -778,9 +799,5 @@ class HealthSummaryPDFGenerator {
       default:
         return prefix + `${schedule.frequency}x daily`
     }
-  }
-
-  localize(text: LocalizedText): string {
-    return text.localize(this.options.language)
   }
 }

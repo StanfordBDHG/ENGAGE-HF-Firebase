@@ -6,13 +6,13 @@
 // SPDX-License-Identifier: MIT
 //
 
+import { Recommender } from './recommender.js'
+import { UserMedicationRecommendationType } from '../../../models/types/userMedicationRecommendation.js'
+import { MedicationClassReference } from '../../references.js'
 import {
   type RecommendationInput,
   type RecommendationOutput,
-  Recommender,
-} from './recommender.js'
-import { UserMedicationRecommendationType } from '../../../models/types/userMedicationRecommendation.js'
-import { MedicationClassReference } from '../../references.js'
+} from '../recommendationService.js'
 
 export class DiureticRecommender extends Recommender {
   // Methods
