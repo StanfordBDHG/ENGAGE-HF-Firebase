@@ -27,10 +27,17 @@ Health Summary PDFs contain four sections:
 
 ENGAGE-HF uses four different algorithms to recommend medication changes based on existing medication, vitals and symptom scores. Each recommendation algorithm corresponds to a medication class (Beta blockers, MRA, SGLT2i) or a group of medication classes (RASI including ACEI, ARB and ARNI).
 
+- Note 1: This codebase contains five different recommender types, including one for diuretics. The diurectics recommender simply recommends staying on the existing medication and assumes that medication to already be at the personal target dose.
+- Note 2: The algorithms are only expected to be run with one medication per class, not multiple different medications in one class.
+
 ### Beta Blockers
 
-![Beta Blockers](resources/algorithms/BetaBlockers-0.png)
-![Beta Blockers](resources/algorithms/BetaBlockers-1.png)
+![Beta Blockers](resources/algorithms/BetaBlockers.png)
+
+Depending on contraindications entered on the Web Dashboard, a different medication is listed in the following order:
+- Carvedilol
+- Metoprolol Succinate
+- Bisoprolol
 
 ### RASI
 
@@ -42,9 +49,18 @@ ENGAGE-HF uses four different algorithms to recommend medication changes based o
 
 ![MRA](resources/algorithms/MRA.png)
 
+Depending on contraindications entered on the Web Dashboard, a different medication is listed in the following order:
+- Spironolactone
+- Eplerenone
+
 ### SGLT2i
 
 ![SGLT2i](resources/algorithms/SGLT2i.png)
+
+Depending on contraindications entered on the Web Dashboard, a different medication is listed in the following order:
+- Empagliflozin
+- Dapagliflozin
+- Sotagliflozin
 
 ## Symptom Score Calculation
 
