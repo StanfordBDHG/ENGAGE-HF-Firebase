@@ -72,7 +72,11 @@ export class Sglt2iRecommender extends Recommender {
     const eligibleMedication =
       this.contraindicationService.findEligibleMedication(
         input.contraindications,
-        [MedicationReference.empagliflozin, MedicationReference.dapagliflozin],
+        [
+          MedicationReference.empagliflozin,
+          MedicationReference.dapagliflozin,
+          MedicationReference.sotagliflozin,
+        ],
       )
 
     switch (contraindicationCategory) {

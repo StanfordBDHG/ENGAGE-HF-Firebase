@@ -254,10 +254,23 @@ export class RasiRecommender extends Recommender {
       case ContraindicationCategory.none:
         break
     }
+
+    const eligibleMedication =
+      this.contraindicationService.findEligibleMedication(
+        input.contraindications,
+        [
+          MedicationReference.sacubitrilValsartan,
+          MedicationReference.losartan,
+          MedicationReference.lisinopril,
+        ],
+      )
+
+    if (eligibleMedication === undefined) return []
+
     if (contraindicationToArb !== ContraindicationCategory.none)
       return this.createRecommendation(
         [],
-        MedicationReference.sacubitrilValsartan,
+        eligibleMedication,
         UserMedicationRecommendationType.noActionRequired,
       )
 
@@ -266,7 +279,7 @@ export class RasiRecommender extends Recommender {
     if (medianSystolic === undefined)
       return this.createRecommendation(
         [],
-        MedicationReference.sacubitrilValsartan,
+        eligibleMedication,
         UserMedicationRecommendationType.morePatientObservationsRequired,
       )
 
@@ -277,7 +290,7 @@ export class RasiRecommender extends Recommender {
     if (medianSystolic < 100 || lowCount >= 2)
       return this.createRecommendation(
         [],
-        MedicationReference.sacubitrilValsartan,
+        eligibleMedication,
         UserMedicationRecommendationType.noActionRequired,
       )
 
@@ -290,7 +303,7 @@ export class RasiRecommender extends Recommender {
     )
       return this.createRecommendation(
         [],
-        MedicationReference.sacubitrilValsartan,
+        eligibleMedication,
         UserMedicationRecommendationType.noActionRequired,
       )
 
@@ -306,7 +319,10 @@ export class RasiRecommender extends Recommender {
       case ContraindicationCategory.clinicianListed:
         return this.createRecommendation(
           [],
-          MedicationReference.losartan,
+          this.contraindicationService.findEligibleMedication(
+            input.contraindications,
+            [MedicationReference.losartan, MedicationReference.lisinopril],
+          ) ?? eligibleMedication,
           UserMedicationRecommendationType.notStarted,
         )
       case ContraindicationCategory.none:

@@ -83,6 +83,7 @@ export class BetaBlockerRecommender extends Recommender {
         [
           MedicationReference.carvedilol,
           MedicationReference.metoprololSuccinate,
+          MedicationReference.bisoprolol,
         ],
       )
 
