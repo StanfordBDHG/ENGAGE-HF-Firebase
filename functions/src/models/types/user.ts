@@ -47,6 +47,12 @@ export class User extends UserRegistration {
     organization?: string
     dateOfBirth?: Date
     clinician?: string
+    receivesAppointmentReminders?: boolean
+    receivesMedicationUpdates?: boolean
+    receivesQuestionnaireReminders?: boolean
+    receivesRecommendationUpdates?: boolean
+    receivesVitalsReminders?: boolean
+    receivesWeightAlerts?: boolean
     language?: string
     timeZone?: string
     dateOfEnrollment: Date
