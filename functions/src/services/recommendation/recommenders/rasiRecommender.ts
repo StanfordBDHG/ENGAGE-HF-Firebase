@@ -258,7 +258,7 @@ export class RasiRecommender extends Recommender {
     if (contraindicationToArb !== ContraindicationCategory.none)
       return this.createRecommendation(
         [],
-        MedicationReference.losartan,
+        MedicationReference.sacubitrilValsartan,
         UserMedicationRecommendationType.noActionRequired,
       )
 
@@ -267,7 +267,7 @@ export class RasiRecommender extends Recommender {
     if (medianSystolic === undefined)
       return this.createRecommendation(
         [],
-        MedicationReference.losartan,
+        MedicationReference.sacubitrilValsartan,
         UserMedicationRecommendationType.morePatientObservationsRequired,
       )
 
@@ -278,7 +278,7 @@ export class RasiRecommender extends Recommender {
     if (medianSystolic < 100 || lowCount >= 2)
       return this.createRecommendation(
         [],
-        MedicationReference.losartan,
+        MedicationReference.sacubitrilValsartan,
         UserMedicationRecommendationType.noActionRequired,
       )
 
@@ -291,7 +291,7 @@ export class RasiRecommender extends Recommender {
     )
       return this.createRecommendation(
         [],
-        MedicationReference.losartan,
+        MedicationReference.sacubitrilValsartan,
         UserMedicationRecommendationType.noActionRequired,
       )
 

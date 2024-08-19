@@ -46,7 +46,7 @@ describe('RecommendationService', () => {
       'utf8',
     )
     const lines = fileContents.split('\n').slice(1)
-    expect(lines).to.have.length(56)
+    expect(lines).to.have.length(57)
 
     let lineIndex = -1
     for (const line of lines) {
@@ -90,12 +90,7 @@ describe('RecommendationService', () => {
           getExpectedRecommendation(fields[21]),
           getExpectedRecommendation(fields[22]),
           getExpectedRecommendation(fields[23]),
-        ]
-          .flatMap((x) => (x ? [x] : []))
-          .filter(
-            // TODO: Make a difference between not showing medication vs no action required
-            (x) => x.type !== UserMedicationRecommendationType.noActionRequired,
-          )
+        ].flatMap((x) => (x ? [x] : []))
 
         const requestContexts = await Promise.all(
           medicationRequests.map(async (medicationRequest) =>
@@ -121,19 +116,17 @@ describe('RecommendationService', () => {
           }),
         })
 
-        const actualRecommendations = result
-          .map(
-            (x): ExpectedRecommendation => ({
-              type: x.displayInformation.type,
-              recommendedMedication: x.recommendedMedication?.reference as
-                | MedicationReference
-                | undefined,
-            }),
-          )
-          .filter(
-            // TODO: Make a difference between not showing medication vs no action required
-            (x) => x.type !== UserMedicationRecommendationType.noActionRequired,
-          )
+        const actualRecommendations = result.map(
+          (x): ExpectedRecommendation => ({
+            type: x.displayInformation.type,
+            recommendedMedication: x.recommendedMedication?.reference as
+              | MedicationReference
+              | undefined,
+          }),
+        )
+
+        console.log('actualRecommendations', actualRecommendations)
+        console.log('expectedRecommendations', expectedRecommendations)
 
         expect(actualRecommendations).to.have.length(
           expectedRecommendations.length,
@@ -428,8 +421,28 @@ function getExpectedRecommendation(
   field: string,
 ): ExpectedRecommendation | undefined {
   switch (field.trim().toLowerCase()) {
-    case 'no message':
+    case 'no med listed':
       return undefined
+    case 'no message - carvedilol listed':
+      return {
+        type: UserMedicationRecommendationType.noActionRequired,
+        recommendedMedication: MedicationReference.carvedilol,
+      }
+    case 'no message - empagliflozin listed':
+      return {
+        type: UserMedicationRecommendationType.noActionRequired,
+        recommendedMedication: MedicationReference.empagliflozin,
+      }
+    case 'no message - sacubitril-valsartan listed':
+      return {
+        type: UserMedicationRecommendationType.noActionRequired,
+        recommendedMedication: MedicationReference.sacubitrilValsartan,
+      }
+    case 'no message - spironolactone listed':
+      return {
+        type: UserMedicationRecommendationType.noActionRequired,
+        recommendedMedication: MedicationReference.spironolactone,
+      }
     case 'discuss increasing bisoprolol':
     case 'discuss increasing carvedilol':
     case 'discuss increasing dapagliflozin':
