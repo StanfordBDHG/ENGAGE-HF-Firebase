@@ -8,6 +8,46 @@ SPDX-License-Identifier: MIT
 
 Firebase cloud hosting infrastructure for the ENGAGE-HF project.
 
+# Behavior
+
+The base functionality of the ENGAGE-HF Firebase Functions revolve around three parts:
+- recommending medication changes to patients based on existing medication, vitals and symptom scores
+- calculating symptom scores from questionnaire responses of patients
+- generating Health Summary PDFs containing recommendations, vitals and symptom scores
+
+## Health Summary Generation
+
+Health Summary PDFs contain four sections:
+- Medications & Recommendations
+- Vital Summary containing only the most important vitals
+- Symptom Score Report including a speedometer displaying the current score in relation to the previous one and a baseline, a table with the most recent symptom score results and a small personal summary
+- Detailed Vitals Page with graphs displaying body weight, heart rate and blood pressure measurements and important key figures
+
+## Recommendation Algorithms
+
+ENGAGE-HF uses four different algorithms to recommend medication changes based on existing medication, vitals and symptom scores. Each recommendation algorithm corresponds to a medication class (Beta blockers, MRA, SGLT2i) or a group of medication classes (RASI including ACEI, ARB and ARNI).
+
+### Beta Blockers
+
+![Beta Blockers](resources/algorithms/BetaBlockers-0.png)
+![Beta Blockers](resources/algorithms/BetaBlockers-1.png)
+
+### RASI
+
+![RASI](resources/algorithms/RASI-0.png)
+![RASI](resources/algorithms/RASI-1.png)
+![RASI](resources/algorithms/RASI-2.png)
+
+### MRA
+
+![MRA](resources/algorithms/MRA.png)
+
+### SGLT2i
+
+![SGLT2i](resources/algorithms/SGLT2i.png)
+
+## Symptom Score Calculation
+
 # Data Scheme
 
 This document describes how data is stored in Firestore for the Engage-HF app.
