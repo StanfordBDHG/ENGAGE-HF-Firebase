@@ -143,9 +143,12 @@ In this section, we describe all user-related data to be stored. The security ru
 |invitationCode|string|-|The invitationCode to be used when logging in to the app for the first time.|
 |language|optional string|e.g. "en"|Following IETF BCP-47 / [FHIR ValueSet languages](https://hl7.org/fhir/R4B/valueset-languages.html).|
 |messagesSettings|optional|-|See properties below. If null, then no messages are sent.|
-|messagesSettings>dailyRemindersAreActive|boolean|true, false|Decides whether to send out daily reminder messages for this user.|
-|messagesSettings>textNotificationsAreActive|boolean|true, false|Decides whether to send text notifications for this user.|
-|messagesSettings>medicationRemindersAreActive|boolean|true, false|Decides whether to send medication reminder messages for this user.|
+|messagesSettings>appointmentReminders|boolean|true, false|Decides whether to send out appointment reminders one day before each appointment.|
+|messagesSettings>medicationUpdates|boolean|true, false|Decides whether to send updates about current medication changes.|
+|messagesSettings>questionnaireReminders|boolean|true, false|Decides whether to send reminders about filling out their questionnaire every 14 days.|
+|messagesSettings>recommendationUpdates|boolean|true, false|Decides whether to send updates about recommended medication changes.|
+|messagesSettings>vitalsReminders|boolean|true, false|Decides whether to send reminders about measuring vitals.|
+|messagesSettings>weightAlerts|boolean|true, false|Decides whether to send out alerts when drastic weight changes are observed.|
 |timeZone|string|e.g. "America/Los_Angeles"|The value needs to correspond to an identifier from [TZDB](https://nodatime.org/TimeZones). It must not be an offset to UTC/GMT, since that wouldn't work well with daylight-savings (even if there is no daylight-savings time at that location). Also, don't use common abbreviations like PST, PDT, CEST, etc (they may be ambiguous, e.g. CST). If the timeZone is unknown, then "America/Los_Angeles" should be used.|
 
 ### users/$userId$/devices/$deviceId$
