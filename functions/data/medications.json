@@ -2037,14 +2037,14 @@
                   "unit": "mg",
                   "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 25
+                  "value": 10
                 }
               ]
             }
           ],
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/1545653/drugs/1545666",
+            "reference": "medications/1545653/drugs/1545658",
             "display": "Empagliflozin (Oral Pill)"
           },
           "dosageInstruction": [

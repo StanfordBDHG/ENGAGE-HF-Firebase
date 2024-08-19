@@ -290,7 +290,6 @@ export class RxNormService {
       result.extension.push({
         url: FHIRExtensionUrl.targetDailyDose,
         valueMedicationRequest: new FHIRMedicationRequest({
-          resourceType: 'MedicationRequest',
           medicationReference: {
             reference: `medications/${rxcui}/drugs/${targetDailyDose.drug}`,
             display: drugs[targetDailyDose.drug].code?.coding?.at(0)?.display,
@@ -364,7 +363,6 @@ export class RxNormService {
       .split('-')
       .map(parseFloat)
     return new FHIRMedication({
-      resourceType: 'Medication',
       id: rxcui,
       code: {
         coding: [

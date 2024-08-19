@@ -8,6 +8,7 @@
 
 import * as d3 from 'd3'
 import { JSDOM } from 'jsdom'
+import { symptomScoreSpeedometerLocalizations } from './generateSpeedometer+localizations.js'
 import { type SymptomScore } from '../models/types/symptomScore.js'
 
 interface SpeedometerMarker {
@@ -25,12 +26,13 @@ interface SpeedometerMarker {
 export function generateSpeedometerSvg(
   scores: SymptomScore[],
   width: number,
+  options: { languages: string[] },
 ): string {
   const baselineScore = scores.length >= 1 ? scores[0] : undefined
   const recentScore = scores.length >= 1 ? scores[scores.length - 1] : undefined
   const previousScore =
     scores.length >= 2 ? scores[scores.length - 2] : undefined
-  const generator = new SpeedometerSvgGenerator(width)
+  const generator = new SpeedometerSvgGenerator(width, options)
   const markers: SpeedometerMarker[] = []
   if (baselineScore) {
     markers.push({
@@ -70,6 +72,8 @@ class SpeedometerSvgGenerator {
   negativeColor = 'rgb(255,0,31)'
   trendFontSize = 10
 
+  texts: ReturnType<typeof symptomScoreSpeedometerLocalizations>
+
   dom = new JSDOM('<!DOCTYPE html><html><body></body></html>')
   body = d3.select(this.dom.window.document).select('body')
   svg: d3.Selection<SVGGElement, unknown, null, undefined>
@@ -84,7 +88,9 @@ class SpeedometerSvgGenerator {
   outerArcRadius: number
   markerLineWidth: number
 
-  constructor(width: number) {
+  constructor(width: number, options: { languages: string[] }) {
+    this.texts = symptomScoreSpeedometerLocalizations(options.languages)
+
     this.margins = {
       top: width * 0.025,
       right: width * 0.1,
@@ -211,7 +217,7 @@ class SpeedometerSvgGenerator {
       .append('tspan')
       .style('fill', trend >= 0 ? this.positiveColor : this.negativeColor)
       .text((trend >= 0 ? '+' : '-') + Math.abs(trend).toFixed(0) + '%')
-    trendText.append('tspan').text(' from previous')
+    trendText.append('tspan').text(' ' + this.texts.trendSuffix)
   }
 
   addZeroLabel() {
@@ -227,9 +233,15 @@ class SpeedometerSvgGenerator {
   }
 
   addLegend() {
-    this.addLegendItem(0, 3, 'Baseline', this.secondaryColor, true)
-    this.addLegendItem(1, 3, 'Previous', this.secondaryColor)
-    this.addLegendItem(2, 3, 'Current', this.primaryColor)
+    this.addLegendItem(
+      0,
+      3,
+      this.texts.legend.baseline,
+      this.secondaryColor,
+      true,
+    )
+    this.addLegendItem(1, 3, this.texts.legend.previous, this.secondaryColor)
+    this.addLegendItem(2, 3, this.texts.legend.current, this.primaryColor)
   }
 
   addLegendItem(

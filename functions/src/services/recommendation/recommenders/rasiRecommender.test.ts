@@ -43,6 +43,7 @@ describe('RasiRecommender', () => {
     new MockContraindicationService(
       (_, reference) => medicationContraindication(reference),
       (_, reference) => medicationClassContraindication(reference),
+      (_, medicationReferences) => medicationReferences.at(0),
     ),
   )
   let healthSummaryData: HealthSummaryData
@@ -113,7 +114,7 @@ describe('RasiRecommender', () => {
       expect(result).to.have.length(0)
     })
 
-    it('shows losartan when clinician-listed contraindications are present', () => {
+    it('shows sacubitril-valsartan when clinician-listed contraindications are present', () => {
       medicationContraindication = (_) =>
         ContraindicationCategory.clinicianListed
       medicationClassContraindication = (_) =>
@@ -128,7 +129,7 @@ describe('RasiRecommender', () => {
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
         currentMedication: [],
-        recommendedMedication: MedicationReference.losartan,
+        recommendedMedication: MedicationReference.sacubitrilValsartan,
         type: UserMedicationRecommendationType.noActionRequired,
       })
     })
@@ -145,12 +146,12 @@ describe('RasiRecommender', () => {
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
         currentMedication: [],
-        recommendedMedication: MedicationReference.losartan,
+        recommendedMedication: MedicationReference.sacubitrilValsartan,
         type: UserMedicationRecommendationType.morePatientObservationsRequired,
       })
     })
 
-    it('shows losartan when median systolic is below 100', () => {
+    it('shows sacubitril-valsartan when median systolic is below 100', () => {
       healthSummaryData.vitals.systolicBloodPressure.forEach((observation) => {
         observation.value = 99
       })
@@ -163,12 +164,12 @@ describe('RasiRecommender', () => {
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
         currentMedication: [],
-        recommendedMedication: MedicationReference.losartan,
+        recommendedMedication: MedicationReference.sacubitrilValsartan,
         type: UserMedicationRecommendationType.noActionRequired,
       })
     })
 
-    it('shows losartan when creatinine is too high', () => {
+    it('shows sacubitril-valsartan when creatinine is too high', () => {
       healthSummaryData.vitals.creatinine = {
         date: new Date(),
         value: 2.5,
@@ -183,12 +184,12 @@ describe('RasiRecommender', () => {
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
         currentMedication: [],
-        recommendedMedication: MedicationReference.losartan,
+        recommendedMedication: MedicationReference.sacubitrilValsartan,
         type: UserMedicationRecommendationType.noActionRequired,
       })
     })
 
-    it('shows losartan when potassium is too high', () => {
+    it('shows sacubitril-valsartan when potassium is too high', () => {
       healthSummaryData.vitals.potassium = {
         date: new Date(),
         value: 6,
@@ -203,7 +204,7 @@ describe('RasiRecommender', () => {
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
         currentMedication: [],
-        recommendedMedication: MedicationReference.losartan,
+        recommendedMedication: MedicationReference.sacubitrilValsartan,
         type: UserMedicationRecommendationType.noActionRequired,
       })
     })
