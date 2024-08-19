@@ -144,7 +144,7 @@ describe('RecommendationService', () => {
             expect(result[i].currentMedication).to.have.length.greaterThan(0)
             result[i].currentMedication.every((medication) =>
               medication.reference.startsWith(
-                expected.recommendedMedication + '/drugs/',
+                (expected.recommendedMedication ?? '') + '/drugs/',
               ),
             )
           } else if (expected.recommendedMedication) {
