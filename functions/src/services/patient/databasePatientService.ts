@@ -6,6 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
+import { isDeepStrictEqual } from 'util'
 import { type PatientService } from './patientService.js'
 import { advanceDateByDays } from '../../extensions/date.js'
 import { type FHIRMedicationRequest } from '../../models/fhir/baseTypes/fhirElement.js'
@@ -23,8 +24,6 @@ import {
   type Document,
   type DatabaseService,
 } from '../database/databaseService.js'
-import assert from 'assert'
-import { isDeepStrictEqual } from 'util'
 
 export class DatabasePatientService implements PatientService {
   // Properties
