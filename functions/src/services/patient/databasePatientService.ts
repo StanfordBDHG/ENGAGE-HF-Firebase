@@ -140,7 +140,7 @@ export class DatabasePatientService implements PatientService {
 
           if (newRecommendationIndex < 0) {
             transaction.delete(existing.ref)
-            return
+            continue
           }
           const newRecommendation = newRecommendations[newRecommendationIndex]
           indicesToBeInserted.delete(newRecommendationIndex)
