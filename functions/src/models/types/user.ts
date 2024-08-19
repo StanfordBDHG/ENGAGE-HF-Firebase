@@ -7,7 +7,6 @@
 //
 
 import { z } from 'zod'
-import { type UserMessagesSettings } from './userMessagesSettings.js'
 import {
   userRegistrationConverter,
   userRegistrationInputConverter,
@@ -48,7 +47,6 @@ export class User extends UserRegistration {
     organization?: string
     dateOfBirth?: Date
     clinician?: string
-    messagesSettings?: UserMessagesSettings
     language?: string
     timeZone?: string
     dateOfEnrollment: Date
