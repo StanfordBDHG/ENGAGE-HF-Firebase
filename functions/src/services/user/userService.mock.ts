@@ -64,11 +64,6 @@ export class MockUserService implements UserService {
           dateOfBirth: new Date('1970-01-02'),
           clinician: 'mockPatient',
           organization: 'stanford',
-          messagesSettings: {
-            dailyRemindersAreActive: true,
-            textNotificationsAreActive: true,
-            medicationRemindersAreActive: true,
-          },
           timeZone: 'America/Los_Angeles',
         }),
         code: invitationCode,
@@ -89,11 +84,6 @@ export class MockUserService implements UserService {
           dateOfBirth: new Date('1970-01-02'),
           clinician: 'mockPatient',
           organization: 'stanford',
-          messagesSettings: {
-            dailyRemindersAreActive: true,
-            textNotificationsAreActive: true,
-            medicationRemindersAreActive: true,
-          },
           timeZone: 'America/Los_Angeles',
         }),
         code: 'test',
@@ -161,11 +151,6 @@ export class MockUserService implements UserService {
         organization: 'stanford',
         dateOfEnrollment: new Date('2024-04-02'),
         invitationCode: '123',
-        messagesSettings: {
-          dailyRemindersAreActive: true,
-          textNotificationsAreActive: true,
-          medicationRemindersAreActive: true,
-        },
         timeZone: 'America/Los_Angeles',
       }),
     }
