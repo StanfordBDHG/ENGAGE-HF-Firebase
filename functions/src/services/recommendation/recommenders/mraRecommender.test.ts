@@ -9,7 +9,6 @@
 import { expect } from 'chai'
 import { describe, it } from 'mocha'
 import { MraRecommender } from './mraRecommender.js'
-import { type RecommendationInput } from './recommender.js'
 import { FHIRMedicationRequest } from '../../../models/fhir/baseTypes/fhirElement.js'
 import { type HealthSummaryData } from '../../../models/healthSummaryData.js'
 import { type MedicationRequestContext } from '../../../models/medicationRequestContext.js'
@@ -40,6 +39,7 @@ describe('MraRecommender', () => {
     new MockContraindicationService(
       (_, reference) => medicationContraindication(reference),
       (_, reference) => medicationClassContraindication(reference),
+      (_, medicationReferences) => medicationReferences.at(0),
     ),
   )
   let healthSummaryData: HealthSummaryData
@@ -71,12 +71,11 @@ describe('MraRecommender', () => {
       medicationClassContraindication = (_) =>
         ContraindicationCategory.severeAllergyIntolerance
 
-      const input: RecommendationInput = {
+      const result = recommender.compute({
         requests: [],
         contraindications: [],
         vitals: healthSummaryData.vitals,
-      }
-      const result = recommender.compute(input)
+      })
       expect(result).to.have.length(0)
     })
 
@@ -86,12 +85,11 @@ describe('MraRecommender', () => {
       medicationClassContraindication = (_) =>
         ContraindicationCategory.clinicianListed
 
-      const input: RecommendationInput = {
+      const result = recommender.compute({
         requests: [],
         contraindications: [],
         vitals: healthSummaryData.vitals,
-      }
-      const result = recommender.compute(input)
+      })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
         currentMedication: [],
@@ -106,12 +104,11 @@ describe('MraRecommender', () => {
         value: 3,
         unit: QuantityUnit.mg_dL,
       }
-      const input: RecommendationInput = {
+      const result = recommender.compute({
         requests: [],
         contraindications: [],
         vitals: healthSummaryData.vitals,
-      }
-      const result = recommender.compute(input)
+      })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
         currentMedication: [],
@@ -126,12 +123,11 @@ describe('MraRecommender', () => {
         value: 6,
         unit: QuantityUnit.mEq_L,
       }
-      const input: RecommendationInput = {
+      const result = recommender.compute({
         requests: [],
         contraindications: [],
         vitals: healthSummaryData.vitals,
-      }
-      const result = recommender.compute(input)
+      })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
         currentMedication: [],
@@ -141,12 +137,11 @@ describe('MraRecommender', () => {
     })
 
     it('recommends spironolactone correctly', () => {
-      const input: RecommendationInput = {
+      const result = recommender.compute({
         requests: [],
         contraindications: [],
         vitals: healthSummaryData.vitals,
-      }
-      const result = recommender.compute(input)
+      })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
         currentMedication: [],
@@ -178,12 +173,11 @@ describe('MraRecommender', () => {
       const contextAtTarget = await medicationService.getContext(request, {
         reference: 'users/mockUser/medicationRequests/someMedicationRequest',
       })
-      const input: RecommendationInput = {
+      const result = recommender.compute({
         requests: [contextAtTarget],
         contraindications: [],
         vitals: healthSummaryData.vitals,
-      }
-      const result = recommender.compute(input)
+      })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
         currentMedication: [contextAtTarget],
@@ -198,12 +192,11 @@ describe('MraRecommender', () => {
         value: 4,
         date: new Date('2021-01-01'),
       }
-      const input: RecommendationInput = {
+      const result = recommender.compute({
         requests: [contextBelowTarget],
         contraindications: [],
         vitals: healthSummaryData.vitals,
-      }
-      const result = recommender.compute(input)
+      })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
         currentMedication: [contextBelowTarget],
@@ -218,12 +211,11 @@ describe('MraRecommender', () => {
         value: 2,
         date: new Date('2021-01-01'),
       }
-      const input: RecommendationInput = {
+      const result = recommender.compute({
         requests: [contextBelowTarget],
         contraindications: [],
         vitals: healthSummaryData.vitals,
-      }
-      const result = recommender.compute(input)
+      })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
         currentMedication: [contextBelowTarget],
@@ -238,12 +230,11 @@ describe('MraRecommender', () => {
         value: 3,
         date: new Date(),
       }
-      const input: RecommendationInput = {
+      const result = recommender.compute({
         requests: [contextBelowTarget],
         contraindications: [],
         vitals: healthSummaryData.vitals,
-      }
-      const result = recommender.compute(input)
+      })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
         currentMedication: [contextBelowTarget],
@@ -258,12 +249,11 @@ describe('MraRecommender', () => {
         value: 6,
         date: new Date(),
       }
-      const input: RecommendationInput = {
+      const result = recommender.compute({
         requests: [contextBelowTarget],
         contraindications: [],
         vitals: healthSummaryData.vitals,
-      }
-      const result = recommender.compute(input)
+      })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
         currentMedication: [contextBelowTarget],
@@ -273,12 +263,11 @@ describe('MraRecommender', () => {
     })
 
     it('recommends increase', () => {
-      const input: RecommendationInput = {
+      const result = recommender.compute({
         requests: [contextBelowTarget],
         contraindications: [],
         vitals: healthSummaryData.vitals,
-      }
-      const result = recommender.compute(input)
+      })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
         currentMedication: [contextBelowTarget],
