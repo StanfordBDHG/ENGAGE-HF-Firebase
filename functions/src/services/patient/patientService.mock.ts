@@ -21,6 +21,7 @@ import { mockQuestionnaireResponse } from '../../tests/mocks/questionnaireRespon
 import { LoincCode } from '../codes.js'
 import { type Document } from '../database/databaseService.js'
 import { QuantityUnit } from '../fhir/quantityUnit.js'
+import { DrugReference } from '../references.js'
 
 /* eslint-disable @typescript-eslint/require-await */
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -46,7 +47,6 @@ export class MockPatientService implements PatientService {
       id: '123',
       path: 'appointments/123',
       content: new FHIRAppointment({
-        resourceType: 'Appointment',
         status: FHIRAppointmentStatus.pending,
         created: new Date('2024-01-01'),
         start: new Date('2024-02-03'),
@@ -81,23 +81,10 @@ export class MockPatientService implements PatientService {
     userId: string,
   ): Promise<Array<Document<FHIRMedicationRequest>>> {
     const values: FHIRMedicationRequest[] = [
-      new FHIRMedicationRequest({
-        resourceType: 'MedicationRequest',
-        medicationReference: {
-          reference: 'medications/203160/drugs/20352',
-        },
-        dosageInstruction: [
-          {
-            doseAndRate: [
-              {
-                doseQuantity: {
-                  ...QuantityUnit.mg,
-                  value: 6.25,
-                },
-              },
-            ],
-          },
-        ],
+      FHIRMedicationRequest.create({
+        drugReference: DrugReference.carvedilol3_125,
+        frequencyPerDay: 1,
+        quantity: 2,
       }),
     ]
     return values.map((value, index) => ({

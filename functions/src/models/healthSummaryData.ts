@@ -11,9 +11,9 @@ import { type UserMedicationRecommendation } from './types/userMedicationRecomme
 import { type Vitals } from './vitals.js'
 
 export interface HealthSummaryData {
-  name: string
+  name?: string
   dateOfBirth?: Date
-  clinicianName: string
+  clinicianName?: string
   nextAppointment?: Date
   recommendations: UserMedicationRecommendation[]
   vitals: Vitals

@@ -13,10 +13,10 @@ import {
 } from '../references.js'
 
 export enum ContraindicationCategory {
-  none,
-  clinicianListed,
-  allergyIntolerance,
-  severeAllergyIntolerance,
+  none = 0,
+  clinicianListed = 1,
+  allergyIntolerance = 2,
+  severeAllergyIntolerance = 3,
 }
 
 export interface ContraindicationService {
@@ -31,4 +31,9 @@ export interface ContraindicationService {
     contraindications: FHIRAllergyIntolerance[],
     medicationClassReference: MedicationClassReference,
   ): ContraindicationCategory
+
+  findEligibleMedication(
+    contraindications: FHIRAllergyIntolerance[],
+    medicationReferences: MedicationReference[],
+  ): MedicationReference | undefined
 }

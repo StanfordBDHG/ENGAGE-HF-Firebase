@@ -142,7 +142,6 @@ export class FHIRObservation extends FHIRResource {
   }): FHIRObservation {
     return new FHIRObservation({
       id: input.id,
-      resourceType: 'Observation',
       status: FHIRObservationStatus.final,
       code: {
         text: this.loincDisplay.get(LoincCode.bloodPressure),
@@ -207,7 +206,6 @@ export class FHIRObservation extends FHIRResource {
   }): FHIRObservation {
     return new FHIRObservation({
       id: input.id,
-      resourceType: 'Observation',
       status: FHIRObservationStatus.final,
       code: {
         text: this.loincDisplay.get(input.code) ?? undefined,

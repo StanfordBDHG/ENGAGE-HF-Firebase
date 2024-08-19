@@ -26,6 +26,10 @@ export class MockContraindicationService implements ContraindicationService {
     allergies: FHIRAllergyIntolerance[],
     medicationClass: MedicationClassReference,
   ) => ContraindicationCategory
+  private readonly _findEligibleMedication: (
+    allergies: FHIRAllergyIntolerance[],
+    medicationReferences: MedicationReference[],
+  ) => MedicationReference | undefined
 
   // Constructor
 
@@ -38,9 +42,14 @@ export class MockContraindicationService implements ContraindicationService {
       allergies: FHIRAllergyIntolerance[],
       medicationClass: MedicationClassReference,
     ) => ContraindicationCategory,
+    findEligibleMedication: (
+      allergies: FHIRAllergyIntolerance[],
+      medicationReferences: MedicationReference[],
+    ) => MedicationReference | undefined,
   ) {
     this._checkMedication = checkMedication
     this._checkMedicationClass = checkMedicationClass
+    this._findEligibleMedication = findEligibleMedication
   }
 
   // Methods
@@ -60,5 +69,12 @@ export class MockContraindicationService implements ContraindicationService {
       contraindications,
       medicationClassReference,
     )
+  }
+
+  findEligibleMedication(
+    contraindications: FHIRAllergyIntolerance[],
+    medicationReferences: MedicationReference[],
+  ): MedicationReference | undefined {
+    return this._findEligibleMedication(contraindications, medicationReferences)
   }
 }

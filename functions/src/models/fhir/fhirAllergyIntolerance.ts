@@ -16,7 +16,9 @@ import {
   fhirResourceConverter,
   type FHIRResourceInput,
 } from './baseTypes/fhirElement.js'
+import { CodingSystem } from '../../services/codes.js'
 import { Lazy } from '../../services/factory/lazy.js'
+import { type MedicationReference } from '../../services/references.js'
 import { optionalish } from '../helpers/optionalish.js'
 import { SchemaConverter } from '../helpers/schemaConverter.js'
 
@@ -60,12 +62,39 @@ export const fhirAllergyIntoleranceConverter = new Lazy(
 )
 
 export class FHIRAllergyIntolerance extends FHIRResource {
-  // Properties
+  // Static Functions
+
+  static create(input: {
+    type: FHIRAllergyIntoleranceType
+    criticality?: FHIRAllergyIntoleranceCriticality
+    reference: MedicationReference
+  }): FHIRAllergyIntolerance {
+    return new FHIRAllergyIntolerance({
+      type: input.type,
+      criticality: input.criticality,
+      code: {
+        coding: [
+          {
+            system: CodingSystem.rxNorm,
+            code: input.reference.split('/')[1],
+          },
+        ],
+      },
+    })
+  }
+
+  // Stored Properties
 
   readonly resourceType: string = 'AllergyIntolerance'
   readonly type: FHIRAllergyIntoleranceType
   readonly criticality?: FHIRAllergyIntoleranceCriticality
   readonly code?: FHIRCodeableConcept
+
+  // Computed Properties
+
+  get rxNormCodes(): string[] {
+    return this.codes(this.code, { system: CodingSystem.rxNorm })
+  }
 
   // Constructor
 

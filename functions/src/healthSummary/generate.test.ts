@@ -14,8 +14,9 @@ import { mockHealthSummaryData } from '../tests/mocks/healthSummaryData.js'
 import { TestFlags } from '../tests/testFlags.js'
 
 describe('generateHealthSummary', () => {
-  function comparePdf(actual: Buffer, expected: Buffer) {
-    assert.equal(actual.length, expected.length)
+  function comparePdf(actual: Buffer, expected: Buffer): boolean {
+    if (!TestFlags.regenerateValues)
+      assert.equal(actual.length, expected.length)
     function removeUniqueValues(pdf: string): string {
       return pdf
         .split('\n')
@@ -25,9 +26,11 @@ describe('generateHealthSummary', () => {
         )
         .join('\n')
     }
-    expect(removeUniqueValues(actual.toString('utf8'))).to.equal(
-      removeUniqueValues(expected.toString('utf8')),
-    )
+    const reducedActual = removeUniqueValues(actual.toString('utf8'))
+    const reducedExpected = removeUniqueValues(expected.toString('utf8'))
+    if (!TestFlags.regenerateValues)
+      expect(reducedActual).to.equal(reducedExpected)
+    return reducedActual === reducedExpected
   }
 
   let inputData: HealthSummaryData
@@ -37,10 +40,13 @@ describe('generateHealthSummary', () => {
   })
 
   it('should still create as nice of a PDF as before', () => {
-    const actualData = generateHealthSummary(inputData, { language: 'en' })
+    const actualData = generateHealthSummary(inputData, {
+      languages: ['en_US'],
+    })
     const expectedPath = 'src/tests/resources/mockHealthSummary.pdf'
     if (TestFlags.regenerateValues) {
-      fs.writeFileSync(expectedPath, actualData)
+      if (!comparePdf(actualData, fs.readFileSync(expectedPath)))
+        fs.writeFileSync(expectedPath, actualData)
     } else {
       const expectedData = fs.readFileSync(expectedPath)
       comparePdf(actualData, expectedData)
@@ -57,10 +63,13 @@ describe('generateHealthSummary', () => {
     inputData.vitals.heartRate = []
     inputData.vitals.bodyWeight = []
     inputData.vitals.dryWeight = undefined
-    const actualData = generateHealthSummary(inputData, { language: 'en' })
+    const actualData = generateHealthSummary(inputData, {
+      languages: ['en-US'],
+    })
     const expectedPath = 'src/tests/resources/emptyHealthSummary.pdf'
     if (TestFlags.regenerateValues) {
-      fs.writeFileSync(expectedPath, actualData)
+      if (!comparePdf(actualData, fs.readFileSync(expectedPath)))
+        fs.writeFileSync(expectedPath, actualData)
     } else {
       const expectedData = fs.readFileSync(expectedPath)
       comparePdf(actualData, expectedData)

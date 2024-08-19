@@ -6,17 +6,17 @@
 // SPDX-License-Identifier: MIT
 //
 
-import {
-  type RecommendationInput,
-  type RecommendationOutput,
-  Recommender,
-} from './recommender.js'
+import { Recommender } from './recommender.js'
 import { UserMedicationRecommendationType } from '../../../models/types/userMedicationRecommendation.js'
 import { ContraindicationCategory } from '../../contraindication/contraindicationService.js'
 import {
   MedicationClassReference,
   MedicationReference,
 } from '../../references.js'
+import {
+  type RecommendationInput,
+  type RecommendationOutput,
+} from '../recommendationService.js'
 
 export class Sglt2iRecommender extends Recommender {
   // Methods
@@ -34,11 +34,9 @@ export class Sglt2iRecommender extends Recommender {
         UserMedicationRecommendationType.targetDoseReached,
       )
 
-    const medianSystolic = this.medianValue(
-      this.observationsInLastTwoWeeks(input.vitals.systolicBloodPressure),
-    )
+    const medianSystolic = this.medianValue(input.vitals.systolicBloodPressure)
 
-    if (!medianSystolic)
+    if (medianSystolic === undefined)
       return this.createRecommendation(
         currentRequests,
         undefined,
@@ -63,7 +61,7 @@ export class Sglt2iRecommender extends Recommender {
 
   private computeNew(input: RecommendationInput): RecommendationOutput[] {
     const eGFR = input.vitals.estimatedGlomerularFiltrationRate?.value
-    if (eGFR && eGFR >= 20) return []
+    if (eGFR !== undefined && eGFR < 20) return []
 
     const contraindicationCategory =
       this.contraindicationService.checkMedicationClass(
@@ -71,41 +69,53 @@ export class Sglt2iRecommender extends Recommender {
         MedicationClassReference.sglt2inhibitors,
       )
 
+    const eligibleMedication =
+      this.contraindicationService.findEligibleMedication(
+        input.contraindications,
+        [
+          MedicationReference.empagliflozin,
+          MedicationReference.dapagliflozin,
+          MedicationReference.sotagliflozin,
+        ],
+      )
+
     switch (contraindicationCategory) {
       case ContraindicationCategory.severeAllergyIntolerance:
       case ContraindicationCategory.allergyIntolerance:
         return []
       case ContraindicationCategory.clinicianListed:
-        return this.createRecommendation(
-          [],
-          MedicationReference.empagliflozin,
-          UserMedicationRecommendationType.noActionRequired,
-        )
+        return eligibleMedication !== undefined ?
+            this.createRecommendation(
+              [],
+              eligibleMedication,
+              UserMedicationRecommendationType.noActionRequired,
+            )
+          : []
       case ContraindicationCategory.none:
         break
     }
 
-    const medianSystolic = this.medianValue(
-      this.observationsInLastTwoWeeks(input.vitals.systolicBloodPressure),
-    )
+    if (eligibleMedication === undefined) return []
 
-    if (!medianSystolic)
+    const medianSystolic = this.medianValue(input.vitals.systolicBloodPressure)
+
+    if (medianSystolic === undefined)
       return this.createRecommendation(
         [],
-        MedicationReference.empagliflozin,
+        eligibleMedication,
         UserMedicationRecommendationType.morePatientObservationsRequired,
       )
 
     if (medianSystolic < 100)
       return this.createRecommendation(
         [],
-        MedicationReference.empagliflozin,
+        eligibleMedication,
         UserMedicationRecommendationType.noActionRequired,
       )
 
     return this.createRecommendation(
       [],
-      MedicationReference.empagliflozin,
+      eligibleMedication,
       UserMedicationRecommendationType.notStarted,
     )
   }
