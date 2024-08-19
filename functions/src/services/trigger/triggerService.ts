@@ -390,6 +390,7 @@ export class TriggerService {
       const vitals = await healthSummaryService.getVitals(
         userId,
         advanceDateByDays(new Date(), -14),
+        QuantityUnit.lbs,
       )
 
       const latestSymptomScore =
