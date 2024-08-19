@@ -57,8 +57,8 @@ export class RecommendationService {
     this.recommenders = [
       new BetaBlockerRecommender(contraindicationService),
       new RasiRecommender(contraindicationService),
-      new Sglt2iRecommender(contraindicationService),
       new MraRecommender(contraindicationService),
+      new Sglt2iRecommender(contraindicationService),
       new DiureticRecommender(contraindicationService),
     ]
   }

@@ -51,7 +51,7 @@ export class MraRecommender extends Recommender {
         UserMedicationRecommendationType.moreLabObservationsRequired,
       )
 
-    if (creatinine.value > 2.5 || potassium.value > 5)
+    if (creatinine.value >= 2.5 || potassium.value >= 5)
       return this.createRecommendation(
         currentRequests,
         undefined,
@@ -72,19 +72,6 @@ export class MraRecommender extends Recommender {
       input.contraindications,
       MedicationClassReference.mineralocorticoidReceptorAntagonists,
     )
-    switch (contraindication) {
-      case ContraindicationCategory.severeAllergyIntolerance:
-      case ContraindicationCategory.allergyIntolerance:
-        return []
-      case ContraindicationCategory.clinicianListed:
-        return this.createRecommendation(
-          [],
-          MedicationReference.spironolactone,
-          UserMedicationRecommendationType.noActionRequired,
-        )
-      case ContraindicationCategory.none:
-        break
-    }
 
     const eligibleMedication =
       this.contraindicationService.findEligibleMedication(
@@ -92,7 +79,23 @@ export class MraRecommender extends Recommender {
         [MedicationReference.spironolactone, MedicationReference.eplerenone],
       )
 
-    if (!eligibleMedication) return []
+    switch (contraindication) {
+      case ContraindicationCategory.severeAllergyIntolerance:
+      case ContraindicationCategory.allergyIntolerance:
+        return []
+      case ContraindicationCategory.clinicianListed:
+        return eligibleMedication !== undefined ?
+            this.createRecommendation(
+              [],
+              eligibleMedication,
+              UserMedicationRecommendationType.noActionRequired,
+            )
+          : []
+      case ContraindicationCategory.none:
+        break
+    }
+
+    if (eligibleMedication === undefined) return []
 
     const creatinine = input.vitals.creatinine?.value
     if (creatinine !== undefined && creatinine >= 2.5)

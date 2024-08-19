@@ -70,7 +70,6 @@ describe('RecommendationService', () => {
           creatinine: parseFloat(fields[8]),
           eGfr: parseFloat(fields[9]),
         })
-        console.log('systolic:', vitals.systolicBloodPressure.length)
         const dizziness = parseInt(fields[10])
 
         const contraindications = fields
@@ -136,25 +135,6 @@ describe('RecommendationService', () => {
             (x) => x.type !== UserMedicationRecommendationType.noActionRequired,
           )
 
-        actualRecommendations.sort((a, b) => {
-          const typeDiff = a.type.localeCompare(b.type)
-          if (typeDiff !== 0) return typeDiff
-          return (a.recommendedMedication ?? '').localeCompare(
-            b.recommendedMedication ?? '',
-          )
-        })
-
-        expectedRecommendations.sort((a, b) => {
-          const typeDiff = a.type.localeCompare(b.type)
-          if (typeDiff !== 0) return typeDiff
-          return (a.recommendedMedication ?? '').localeCompare(
-            b.recommendedMedication ?? '',
-          )
-        })
-
-        console.log('Actual recommendations:', actualRecommendations)
-        console.log('Expected recommendations:', expectedRecommendations)
-
         expect(actualRecommendations).to.have.length(
           expectedRecommendations.length,
         )
@@ -170,8 +150,6 @@ describe('RecommendationService', () => {
             )
           }
         }
-
-        // console.log(medicationRequests, vitals, contraindications)
       })
     }
   })

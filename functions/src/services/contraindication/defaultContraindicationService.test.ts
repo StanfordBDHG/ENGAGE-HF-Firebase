@@ -149,6 +149,9 @@ function references(field: string): {
       case 'Bexagliflozin':
         result.medications.add(MedicationReference.bexagliflozin)
         break
+      case 'Bisoprolol':
+        result.medications.add(MedicationReference.bisoprolol)
+        break
       case 'Canagliflozin':
         result.medications.add(MedicationReference.canagliflozin)
         break
@@ -179,6 +182,8 @@ function references(field: string): {
         break
       case 'Spironolactone':
         result.medications.add(MedicationReference.spironolactone)
+        break
+      case '':
         break
       default:
         console.error(

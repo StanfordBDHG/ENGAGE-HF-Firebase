@@ -69,7 +69,6 @@ export abstract class Recommender {
       currentMedication,
     ).reduce((acc, dose) => acc + dose, 0)
 
-    console.log('currentDailyDose', currentDailyDose)
     return currentDailyDose >= targetDailyDose
   }
 

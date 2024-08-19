@@ -76,8 +76,8 @@ export class DefaultContraindicationService implements ContraindicationService {
     this.checkAll(contraindications, (record) => {
       availableMedications = availableMedications.filter(
         (medication) =>
-          record.medications.has(medication) ||
-          record.medicationClasses.has(
+          !record.medications.has(medication) &&
+          !record.medicationClasses.has(
             this.medicationClassReference(medication),
           ),
       )

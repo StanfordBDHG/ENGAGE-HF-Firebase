@@ -77,20 +77,6 @@ export class BetaBlockerRecommender extends Recommender {
         MedicationClassReference.betaBlockers,
       )
 
-    switch (contraindicationCategory) {
-      case ContraindicationCategory.severeAllergyIntolerance:
-      case ContraindicationCategory.allergyIntolerance:
-        return []
-      case ContraindicationCategory.clinicianListed:
-        return this.createRecommendation(
-          [],
-          MedicationReference.carvedilol,
-          UserMedicationRecommendationType.noActionRequired,
-        )
-      case ContraindicationCategory.none:
-        break
-    }
-
     const eligibleMedication =
       this.contraindicationService.findEligibleMedication(
         input.contraindications,
@@ -100,7 +86,23 @@ export class BetaBlockerRecommender extends Recommender {
         ],
       )
 
-    if (!eligibleMedication) return []
+    switch (contraindicationCategory) {
+      case ContraindicationCategory.severeAllergyIntolerance:
+      case ContraindicationCategory.allergyIntolerance:
+        return []
+      case ContraindicationCategory.clinicianListed:
+        return eligibleMedication !== undefined ?
+            this.createRecommendation(
+              [],
+              eligibleMedication,
+              UserMedicationRecommendationType.noActionRequired,
+            )
+          : []
+      case ContraindicationCategory.none:
+        break
+    }
+
+    if (eligibleMedication === undefined) return []
 
     const medianSystolic = this.medianValue(input.vitals.systolicBloodPressure)
     const medianHeartRate = this.medianValue(input.vitals.heartRate)

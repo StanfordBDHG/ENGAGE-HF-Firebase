@@ -80,7 +80,7 @@ export class Sglt2iRecommender extends Recommender {
       case ContraindicationCategory.allergyIntolerance:
         return []
       case ContraindicationCategory.clinicianListed:
-        return eligibleMedication ?
+        return eligibleMedication !== undefined ?
             this.createRecommendation(
               [],
               eligibleMedication,
@@ -91,7 +91,7 @@ export class Sglt2iRecommender extends Recommender {
         break
     }
 
-    if (!eligibleMedication) return []
+    if (eligibleMedication === undefined) return []
 
     const medianSystolic = this.medianValue(input.vitals.systolicBloodPressure)
 

@@ -18,6 +18,7 @@ import {
   type RecommendationInput,
   type RecommendationOutput,
 } from '../recommendationService.js'
+import { median } from 'd3'
 
 export class RasiRecommender extends Recommender {
   // Methods
@@ -70,11 +71,11 @@ export class RasiRecommender extends Recommender {
             UserMedicationRecommendationType.morePatientObservationsRequired,
           )
 
-        const lowSystolicCount = input.vitals.systolicBloodPressure.filter(
+        const lowCount = input.vitals.systolicBloodPressure.filter(
           (observation) => observation.value < 85,
         ).length
 
-        if (medianSystolic < 100 || lowSystolicCount >= 2)
+        if (medianSystolic < 100 || lowCount >= 2)
           return this.createRecommendation(
             requests,
             undefined,
@@ -176,6 +177,10 @@ export class RasiRecommender extends Recommender {
 
     const medianSystolic = this.medianValue(input.vitals.systolicBloodPressure)
 
+    const lowCount = input.vitals.systolicBloodPressure.filter(
+      (observation) => observation.value < 85,
+    ).length
+
     if (medianSystolic === undefined)
       return this.createRecommendation(
         requests,
@@ -183,7 +188,7 @@ export class RasiRecommender extends Recommender {
         UserMedicationRecommendationType.morePatientObservationsRequired,
       )
 
-    if (medianSystolic < 100)
+    if (medianSystolic < 100 || lowCount >= 2)
       return this.createRecommendation(
         requests,
         undefined,
@@ -226,6 +231,7 @@ export class RasiRecommender extends Recommender {
         input.contraindications,
         MedicationClassReference.angiotensinReceptorBlockers,
       )
+
     switch (contraindicationToArb) {
       case ContraindicationCategory.severeAllergyIntolerance:
       case ContraindicationCategory.allergyIntolerance:
@@ -234,11 +240,13 @@ export class RasiRecommender extends Recommender {
       case ContraindicationCategory.none:
         break
     }
+
     const contraindicationToAcei =
       this.contraindicationService.checkMedicationClass(
         input.contraindications,
         MedicationClassReference.angiotensinConvertingEnzymeInhibitors,
       )
+
     switch (contraindicationToAcei) {
       case ContraindicationCategory.severeAllergyIntolerance:
         return []
@@ -247,10 +255,7 @@ export class RasiRecommender extends Recommender {
       case ContraindicationCategory.none:
         break
     }
-    if (
-      contraindicationToAcei !== ContraindicationCategory.none ||
-      contraindicationToArb !== ContraindicationCategory.none
-    )
+    if (contraindicationToArb !== ContraindicationCategory.none)
       return this.createRecommendation(
         [],
         MedicationReference.losartan,
