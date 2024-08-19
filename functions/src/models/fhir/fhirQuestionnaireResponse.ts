@@ -87,7 +87,6 @@ export class FHIRQuestionnaireResponse extends FHIRResource {
     const linkIds = symptomQuestionnaireLinkIds(input.questionnaire)
 
     return new FHIRQuestionnaireResponse({
-      resourceType: 'QuestionnaireResponse',
       id: input.questionnaireResponse,
       questionnaire: input.questionnaire,
       authored: input.date,

@@ -134,7 +134,7 @@ export const fhirResourceConverter = new SchemaConverter({
 })
 
 export type FHIRResourceInput = z.output<
-  typeof fhirResourceConverter.value.schema
+  typeof fhirElementConverter.value.schema
 >
 
 export abstract class FHIRResource extends FHIRElement {
@@ -209,7 +209,6 @@ export class FHIRMedicationRequest extends FHIRResource {
     quantity: number
   }): FHIRMedicationRequest {
     return new FHIRMedicationRequest({
-      resourceType: 'MedicationRequest',
       medicationReference: {
         reference: input.drugReference,
       },
