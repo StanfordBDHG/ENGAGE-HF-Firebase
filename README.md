@@ -69,6 +69,17 @@ Depending on contraindications entered on the Web Dashboard, a different medicat
 - Dapagliflozin
 - Sotagliflozin
 
+### Contraindications
+
+Contraindications are handled using FHIR AllergyIntolerance resources found in the users/$userId$/allergyIntolerances collections. In the `code` property, we use RxNorm codes as described in [functions/src/tests/resources/contraindications.csv](functions/src/tests/resources/contraindications.csv) for the different medications. Depending on the `type` and `criticality` properties, we identify each allergy as one of the following:
+
+- Severe Allergy (for type `allergy` and criticality `high`)
+- Allergy (for type `allergy` and criticality not `high`)
+- Intolerance (for type `intolerance`)
+- Financial (for non-standard type `financial`)
+
+In [the file](functions/src/tests/resources/contraindications.csv), we also describe how each of these cases relate to which medications are taken out of the recommendable options.
+
 ## Symptom Score Calculation
 
 The Kansas City Cardiomyopathy Questionnaire-12 (KCCQ-12) score assesses a patient’s physical limitations, symptom frequency, quality of life, and social limitations. Scores are normalized to a 0-100 scale, where higher values indicate better health status. ENGAGE-HF further adds one additional question about dizziness to the questionnaire used in the application.
