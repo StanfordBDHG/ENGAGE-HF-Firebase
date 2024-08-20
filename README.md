@@ -102,6 +102,10 @@ Questions 8a, 8b, and 8c address social limitations, scored similarly to the Phy
 
 The Clinical Summary Score is the average of the Physical Limitations and Symptom Frequency scores, whereas the Overall Total Score is calculated as the average of all four above-mentioned domain scores.
 
+### Dizziness
+
+In addition to the KCCQ-12 questions, ENGAGE-HF uses question 9 to ask the patient about dizziness. Its responses are encoded as integers between 1 and 5.
+
 # Data Scheme
 
 This document describes how data is stored in Firestore for the Engage-HF app.
