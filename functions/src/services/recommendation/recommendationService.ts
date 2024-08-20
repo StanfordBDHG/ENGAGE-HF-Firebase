@@ -93,7 +93,10 @@ export class RecommendationService {
     const medication =
       output.currentMedication.at(0)?.medication ??
       recommendedMedication?.content
-    const title = medication?.displayName
+    let title = medication?.displayName ?? ''
+
+    const brandNames = medication?.brandNames ?? []
+    if (brandNames.length > 0) title += ` (${brandNames.join(', ')})`
 
     const currentMedicationClass =
       output.currentMedication.at(0)?.medicationClass
@@ -166,7 +169,7 @@ export class RecommendationService {
           }
         : undefined,
       displayInformation: {
-        title: new LocalizedText(title ?? ''),
+        title: new LocalizedText(title),
         subtitle:
           currentMedicationClass?.name ??
           recommendedMedicationClass?.name ??
