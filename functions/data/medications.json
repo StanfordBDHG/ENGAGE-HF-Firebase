@@ -428,11 +428,7 @@
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
-        "valueString": "Cardicor"
-      },
-      {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
-        "valueString": "Congescor"
+        "valueString": "Zebeta"
       }
     ],
     "resourceType": "Medication",
@@ -575,10 +571,6 @@
             }
           ]
         }
-      },
-      {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
-        "valueString": "Prinivil"
       },
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
@@ -1558,10 +1550,6 @@
       {
         "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
         "valueString": "Toprol XL"
-      },
-      {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
-        "valueString": "Kapspargo Sprinkle"
       }
     ],
     "resourceType": "Medication",
