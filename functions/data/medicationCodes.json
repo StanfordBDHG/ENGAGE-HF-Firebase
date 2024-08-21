@@ -4,7 +4,7 @@
     "medications": [
       {
         "code": "221124",
-        "brandNames": ["Toprol XL", "Kapspargo Sprinkle"],
+        "brandNames": ["Toprol XL"],
         "minimumDailyDose": {
           "drug": "1999035",
           "frequency": 1,
@@ -58,7 +58,7 @@
       },
       {
         "code": "19484",
-        "brandNames": ["Cardicor", "Congescor"],
+        "brandNames": ["Zebeta"],
         "minimumDailyDose": {
           "drug": "854905",
           "frequency": 1,
@@ -308,7 +308,7 @@
       },
       {
         "code": "29046",
-        "brandNames": ["Prinivil", "Zestril"],
+        "brandNames": ["Zestril"],
         "minimumDailyDose": {
           "drug": "311353",
           "frequency": 1,
