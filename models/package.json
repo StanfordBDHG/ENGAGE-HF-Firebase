@@ -1,0 +1,33 @@
+{
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "type": "module",
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "npm run lint -- --fix",
+    "lint:strict": "npm run lint -- --max-warnings=0",
+    "build": "tsc",
+    "clean": "if [ -f 'tsconfig.tsbuildinfo' ]; then rm tsconfig.tsbuildinfo; fi && if [ -d 'lib' ]; then rm -r lib; fi"
+  },
+  "engines": {
+    "node": "22"
+  },
+  "main": "lib/index.js",
+  "dependencies": {
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@typescript-eslint/eslint-plugin": "^7",
+    "@typescript-eslint/parser": "^7",
+    
+    "eslint": "^8.57",
+    "eslint-config-google": "^0.14",
+    "eslint-config-prettier": "^9",
+    "eslint-plugin-import": "^2",
+    "eslint-plugin-prettier": "^5",
+    "prettier": "^3",
+    "typescript": "^5"
+  },
+  "private": true
+}
