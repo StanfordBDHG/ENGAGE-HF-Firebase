@@ -6,22 +6,22 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { median } from '../../extensions/array.js'
 import {
   advanceDateByDays,
   advanceDateByMinutes,
-} from '../../extensions/date.js'
-import { type FHIRMedicationRequest } from '../../models/fhir/baseTypes/fhirElement.js'
-import { type FHIRQuestionnaireResponse } from '../../models/fhir/fhirQuestionnaireResponse.js'
-import {
+  type FHIRMedicationRequest,
+  type FHIRQuestionnaireResponse,
+  QuantityUnit,
+  QuestionnaireReference,
   type UserMedicationRecommendation,
   UserMedicationRecommendationType,
-} from '../../models/types/userMedicationRecommendation.js'
-import { UserMessage, UserMessageType } from '../../models/types/userMessage.js'
+  UserMessage,
+  UserMessageType,
+  VideoReference,
+} from '@stanfordbdhg/engagehf-models'
+import { median } from '../../extensions/array.js'
 import { UserObservationCollection } from '../database/collections.js'
 import { type ServiceFactory } from '../factory/serviceFactory.js'
-import { QuantityUnit } from '../fhir/quantityUnit.js'
-import { QuestionnaireReference, VideoReference } from '../references.js'
 
 export class TriggerService {
   // Properties

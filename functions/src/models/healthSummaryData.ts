@@ -6,8 +6,10 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { type SymptomScore } from './types/symptomScore.js'
-import { type UserMedicationRecommendation } from './types/userMedicationRecommendation.js'
+import {
+  type SymptomScore,
+  type UserMedicationRecommendation,
+} from '@stanfordbdhg/engagehf-models'
 import { type Vitals } from './vitals.js'
 
 export interface HealthSummaryData {

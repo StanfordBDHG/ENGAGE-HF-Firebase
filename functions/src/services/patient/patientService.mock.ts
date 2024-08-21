@@ -6,22 +6,22 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { type PatientService } from './patientService.js'
-import { FHIRMedicationRequest } from '../../models/fhir/baseTypes/fhirElement.js'
-import { type FHIRAllergyIntolerance } from '../../models/fhir/fhirAllergyIntolerance.js'
 import {
-  FHIRAppointmentStatus,
+  DrugReference,
+  type FHIRAllergyIntolerance,
   FHIRAppointment,
-} from '../../models/fhir/fhirAppointment.js'
-import { FHIRObservation } from '../../models/fhir/fhirObservation.js'
-import { type FHIRQuestionnaireResponse } from '../../models/fhir/fhirQuestionnaireResponse.js'
-import { SymptomScore } from '../../models/types/symptomScore.js'
-import { type UserMedicationRecommendation } from '../../models/types/userMedicationRecommendation.js'
+  FHIRAppointmentStatus,
+  FHIRMedicationRequest,
+  FHIRObservation,
+  type FHIRQuestionnaireResponse,
+  LoincCode,
+  QuantityUnit,
+  SymptomScore,
+  type UserMedicationRecommendation,
+} from '@stanfordbdhg/engagehf-models'
+import { type PatientService } from './patientService.js'
 import { mockQuestionnaireResponse } from '../../tests/mocks/questionnaireResponse.js'
-import { LoincCode } from '../codes.js'
 import { type Document } from '../database/databaseService.js'
-import { QuantityUnit } from '../fhir/quantityUnit.js'
-import { DrugReference } from '../references.js'
 
 /* eslint-disable @typescript-eslint/require-await */
 /* eslint-disable @typescript-eslint/no-unused-vars */

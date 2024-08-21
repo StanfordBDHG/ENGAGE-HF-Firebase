@@ -6,11 +6,11 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { type UserDevice } from '../../models/types/userDevice.js'
 import {
-  type UserMessageType,
+  type UserDevice,
   type UserMessage,
-} from '../../models/types/userMessage.js'
+  type UserMessageType,
+} from '@stanfordbdhg/engagehf-models'
 import { type Document } from '../database/databaseService.js'
 
 export interface MessageService {

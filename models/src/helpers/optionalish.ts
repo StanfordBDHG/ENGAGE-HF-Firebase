@@ -12,3 +12,13 @@ import { z } from 'zod'
 export function optionalish<T extends z.ZodType<any, any, any>>(type: T) {
   return type.or(z.null().transform(() => undefined)).optional()
 }
+
+export function optionalishDefault<T extends z.ZodType<any, any, any>>(
+  type: T,
+  defaultValue: z.output<T>,
+) {
+  return type
+    .or(z.null().transform(() => defaultValue))
+    .optional()
+    .transform((value) => value ?? defaultValue)
+}

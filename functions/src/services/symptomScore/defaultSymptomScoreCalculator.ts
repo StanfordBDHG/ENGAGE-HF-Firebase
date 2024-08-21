@@ -6,10 +6,12 @@
 // SPDX-License-Identifier: MIT
 //
 
+import {
+  type FHIRQuestionnaireResponse,
+  SymptomScore,
+} from '@stanfordbdhg/engagehf-models'
 import { type SymptomScoreCalculator } from './symptomScoreCalculator.js'
 import { average } from '../../extensions/array.js'
-import { type FHIRQuestionnaireResponse } from '../../models/fhir/fhirQuestionnaireResponse.js'
-import { SymptomScore } from '../../models/types/symptomScore.js'
 
 export class DefaultSymptomScoreCalculator implements SymptomScoreCalculator {
   // Methods

@@ -6,11 +6,11 @@
 // SPDX-License-Identifier: MIT
 //
 
+import { UserType } from '@stanfordbdhg/engagehf-models'
 import { assert, expect } from 'chai'
 import admin from 'firebase-admin'
 import { describe } from 'mocha'
 import { type UserService } from './userService.js'
-import { UserType } from '../../models/types/userType.js'
 import { type MockFirestore } from '../../tests/mocks/firestore.js'
 import { cleanupMocks, setupMockFirebase } from '../../tests/setup.js'
 import { CollectionsService } from '../database/collections.js'

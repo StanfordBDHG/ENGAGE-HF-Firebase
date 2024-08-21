@@ -6,10 +6,10 @@
 // SPDX-License-Identifier: MIT
 //
 
+import { Lazy } from '@stanfordbdhg/engagehf-models'
 import admin from 'firebase-admin'
 import { type AuthData } from 'firebase-functions/v2/tasks'
 import { type ServiceFactoryOptions } from './getServiceFactory.js'
-import { Lazy } from './lazy.js'
 import { type ServiceFactory } from './serviceFactory.js'
 import { DefaultContraindicationService } from '../contraindication/defaultContraindicationService.js'
 import { Credential } from '../credential/credential.js'

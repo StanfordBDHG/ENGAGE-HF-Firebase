@@ -9,27 +9,27 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
+import {
+  CachingStrategy,
+  DrugReference,
+  FHIRMedicationRequest,
+  MedicationClassReference,
+  MedicationReference,
+  QuantityUnit,
+  SymptomScore,
+  UserMedicationRecommendationType,
+} from '@stanfordbdhg/engagehf-models'
 import { expect } from 'chai'
 import { describe, it } from 'mocha'
 import { RasiRecommender } from './rasiRecommender.js'
-import { FHIRMedicationRequest } from '../../../models/fhir/baseTypes/fhirElement.js'
 import { type HealthSummaryData } from '../../../models/healthSummaryData.js'
 import { type MedicationRequestContext } from '../../../models/medicationRequestContext.js'
-import { SymptomScore } from '../../../models/types/symptomScore.js'
-import { UserMedicationRecommendationType } from '../../../models/types/userMedicationRecommendation.js'
 import { MockContraindicationService } from '../../../tests/mocks/contraindicationService.js'
 import { mockHealthSummaryData } from '../../../tests/mocks/healthSummaryData.js'
 import { cleanupMocks, setupMockFirebase } from '../../../tests/setup.js'
 import { ContraindicationCategory } from '../../contraindication/contraindicationService.js'
 import { getServiceFactory } from '../../factory/getServiceFactory.js'
-import { QuantityUnit } from '../../fhir/quantityUnit.js'
 import { type MedicationService } from '../../medication/medicationService.js'
-import {
-  DrugReference,
-  MedicationClassReference,
-  MedicationReference,
-} from '../../references.js'
-import { CachingStrategy } from '../../seeding/seedingService.js'
 
 describe('RasiRecommender', () => {
   let medicationContraindication: (

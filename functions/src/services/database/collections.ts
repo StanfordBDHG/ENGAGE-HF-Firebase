@@ -6,24 +6,26 @@
 // SPDX-License-Identifier: MIT
 //
 
+import {
+  fhirAllergyIntoleranceConverter,
+  fhirAppointmentConverter,
+  fhirMedicationConverter,
+  fhirMedicationRequestConverter,
+  fhirObservationConverter,
+  fhirQuestionnaireConverter,
+  fhirQuestionnaireResponseConverter,
+  invitationConverter,
+  medicationClassConverter,
+  organizationConverter,
+  symptomScoreConverter,
+  userConverter,
+  userDeviceConverter,
+  userMedicationRecommendationConverter,
+  userMessageConverter,
+  videoConverter,
+  videoSectionConverter,
+} from '@stanfordbdhg/engagehf-models'
 import { type Firestore } from 'firebase-admin/firestore'
-import { fhirMedicationRequestConverter } from '../../models/fhir/baseTypes/fhirElement.js'
-import { fhirAllergyIntoleranceConverter } from '../../models/fhir/fhirAllergyIntolerance.js'
-import { fhirAppointmentConverter } from '../../models/fhir/fhirAppointment.js'
-import { fhirMedicationConverter } from '../../models/fhir/fhirMedication.js'
-import { fhirObservationConverter } from '../../models/fhir/fhirObservation.js'
-import { fhirQuestionnaireConverter } from '../../models/fhir/fhirQuestionnaire.js'
-import { fhirQuestionnaireResponseConverter } from '../../models/fhir/fhirQuestionnaireResponse.js'
-import { invitationConverter } from '../../models/types/invitation.js'
-import { medicationClassConverter } from '../../models/types/medicationClass.js'
-import { organizationConverter } from '../../models/types/organization.js'
-import { symptomScoreConverter } from '../../models/types/symptomScore.js'
-import { userConverter } from '../../models/types/user.js'
-import { userDeviceConverter } from '../../models/types/userDevice.js'
-import { userMedicationRecommendationConverter } from '../../models/types/userMedicationRecommendation.js'
-import { userMessageConverter } from '../../models/types/userMessage.js'
-import { videoConverter } from '../../models/types/video.js'
-import { videoSectionConverter } from '../../models/types/videoSection.js'
 
 export enum UserObservationCollection {
   bodyWeight = 'bodyWeightObservations',

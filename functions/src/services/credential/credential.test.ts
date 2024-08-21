@@ -6,12 +6,12 @@
 // SPDX-License-Identifier: MIT
 //
 
+import { UserType } from '@stanfordbdhg/engagehf-models'
 import { expect } from 'chai'
 import { type DecodedIdToken } from 'firebase-admin/auth'
 import { type AuthData } from 'firebase-functions/v2/tasks'
 import { describe } from 'mocha'
 import { Credential, UserRole } from './credential.js'
-import { UserType } from '../../models/types/userType.js'
 
 describe('Credential', () => {
   function createAuthData(

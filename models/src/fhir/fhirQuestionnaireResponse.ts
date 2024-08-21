@@ -18,7 +18,7 @@ import { symptomQuestionnaireLinkIds } from '../codes/symptomQuestionnaireLinkId
 import { dateConverter } from '../helpers/dateConverter.js'
 import { optionalish } from '../helpers/optionalish.js'
 import { SchemaConverter } from '../helpers/schemaConverter.js'
-import { type SymptomQuestionnaireResponse } from '../symptomQuestionnaireResponse.js'
+import { type SymptomQuestionnaireResponse } from '../types/symptomQuestionnaireResponse.js'
 
 export const fhirQuestionnaireResponseItemConverter = new Lazy(
   () =>

@@ -6,16 +6,16 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { median } from '../../../extensions/array.js'
-import { FHIRMedicationRequest } from '../../../models/fhir/baseTypes/fhirElement.js'
-import { type MedicationRequestContext } from '../../../models/medicationRequestContext.js'
-import { type UserMedicationRecommendationType } from '../../../models/types/userMedicationRecommendation.js'
-import { type Observation } from '../../../models/vitals.js'
-import { type ContraindicationService } from '../../contraindication/contraindicationService.js'
 import {
   type MedicationClassReference,
   type MedicationReference,
-} from '../../references.js'
+  type Observation,
+  QuantityUnit,
+  type UserMedicationRecommendationType,
+} from '@stanfordbdhg/engagehf-models'
+import { median } from '../../../extensions/array.js'
+import { type MedicationRequestContext } from '../../../models/medicationRequestContext.js'
+import { type ContraindicationService } from '../../contraindication/contraindicationService.js'
 import {
   type RecommendationInput,
   type RecommendationOutput,
@@ -65,9 +65,10 @@ export abstract class Recommender {
     )
     if (!targetDailyDose) throw new Error('Target daily dose is missing')
 
-    const currentDailyDose = FHIRMedicationRequest.currentDailyDose(
-      currentMedication,
-    ).reduce((acc, dose) => acc + dose, 0)
+    const currentDailyDose = this.currentDailyDose(currentMedication).reduce(
+      (acc, dose) => acc + dose,
+      0,
+    )
 
     return currentDailyDose >= targetDailyDose
   }
@@ -87,5 +88,34 @@ export abstract class Recommender {
   protected medianValue(observations: Observation[]): number | undefined {
     if (observations.length < 3) return undefined
     return median(observations.map((observation) => observation.value)) ?? 0
+  }
+
+  private currentDailyDose(contexts: MedicationRequestContext[]): number[] {
+    const dailyDoses: number[] = []
+    for (const context of contexts) {
+      let numberOfTabletsPerDay = 0
+      for (const instruction of context.request.dosageInstruction ?? []) {
+        const intakesPerDay = instruction.timing?.repeat?.frequency ?? 0
+        for (const dose of instruction.doseAndRate ?? []) {
+          const numberOfPills = dose.doseQuantity?.value
+          if (!numberOfPills)
+            throw new Error('Invalid dose quantity encountered.')
+          numberOfTabletsPerDay += numberOfPills * intakesPerDay
+        }
+      }
+
+      const ingredients = context.drug.ingredient ?? []
+
+      while (dailyDoses.length < ingredients.length) {
+        dailyDoses.push(0)
+      }
+
+      ingredients.forEach((ingredient, index) => {
+        const strength =
+          QuantityUnit.mg.valueOf(ingredient.strength?.numerator) ?? 0
+        dailyDoses[index] += numberOfTabletsPerDay * strength
+      })
+    }
+    return dailyDoses
   }
 }

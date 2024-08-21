@@ -7,15 +7,16 @@
 //
 
 import {
-  ContraindicationCategory,
-  type ContraindicationService,
-} from './contraindicationService.js'
-import {
   type FHIRAllergyIntolerance,
   FHIRAllergyIntoleranceCriticality,
   FHIRAllergyIntoleranceType,
-} from '../../models/fhir/fhirAllergyIntolerance.js'
-import { MedicationClassReference, MedicationReference } from '../references.js'
+  MedicationClassReference,
+  MedicationReference,
+} from '@stanfordbdhg/engagehf-models'
+import {
+  ContraindicationCategory,
+  type ContraindicationService,
+} from './contraindicationService.js'
 
 interface ContraindicationRecord {
   category: ContraindicationCategory
