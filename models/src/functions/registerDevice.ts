@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { z } from 'zod'
+import { type z } from 'zod'
 import { userDeviceConverter } from '../types/userDevice.js'
 
 export const registerDeviceInputSchema = userDeviceConverter.value.schema

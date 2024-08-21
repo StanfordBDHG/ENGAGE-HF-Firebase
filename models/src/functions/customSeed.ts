@@ -7,8 +7,8 @@
 //
 
 import { z } from 'zod'
-import { optionalish } from '../helpers/optionalish'
-import { userConverter } from '../types/user'
+import { optionalish } from '../helpers/optionalish.js'
+import { userConverter } from '../types/user.js'
 
 export const userSeedingOptionsSchema = z.object({
   auth: z.object({

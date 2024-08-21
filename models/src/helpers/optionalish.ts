@@ -13,12 +13,13 @@ export function optionalish<T extends z.ZodType<any, any, any>>(type: T) {
   return type.or(z.null().transform(() => undefined)).optional()
 }
 
+/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
 export function optionalishDefault<T extends z.ZodType<any, any, any>>(
   type: T,
   defaultValue: z.output<T>,
 ) {
   return type
-    .or(z.null().transform(() => defaultValue))
+    .or(z.null().transform(() => undefined))
     .optional()
     .transform((value) => value ?? defaultValue)
 }

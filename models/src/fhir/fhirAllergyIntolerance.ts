@@ -17,8 +17,8 @@ import {
   type FHIRResourceInput,
 } from './baseTypes/fhirElement.js'
 import { CodingSystem } from '../codes/codes.js'
-import { Lazy } from '../helpers/lazy.js'
 import { type MedicationReference } from '../codes/references.js'
+import { Lazy } from '../helpers/lazy.js'
 import { optionalish } from '../helpers/optionalish.js'
 import { SchemaConverter } from '../helpers/schemaConverter.js'
 

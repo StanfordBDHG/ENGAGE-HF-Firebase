@@ -8,11 +8,11 @@
 
 import { z } from 'zod'
 import { localizedTextConverter } from './localizedText.js'
-import { Lazy } from '../helpers/lazy.js'
 import {
   type FHIRReference,
   fhirReferenceConverter,
 } from '../fhir/baseTypes/fhirReference.js'
+import { Lazy } from '../helpers/lazy.js'
 import { optionalish } from '../helpers/optionalish.js'
 import { SchemaConverter } from '../helpers/schemaConverter.js'
 

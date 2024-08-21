@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { QuantityUnit } from '../codes/quantityUnit.js'
+import { type QuantityUnit } from '../codes/quantityUnit.js'
 
 export interface Observation {
   date: Date

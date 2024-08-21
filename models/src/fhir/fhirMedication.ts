@@ -20,8 +20,8 @@ import {
 import { fhirRatioConverter } from './baseTypes/fhirRatio.js'
 import { type FHIRReference } from './baseTypes/fhirReference.js'
 import { CodingSystem, FHIRExtensionUrl } from '../codes/codes.js'
-import { Lazy } from '../helpers/lazy.js'
 import { QuantityUnit } from '../codes/quantityUnit.js'
+import { Lazy } from '../helpers/lazy.js'
 import { optionalish } from '../helpers/optionalish.js'
 import { SchemaConverter } from '../helpers/schemaConverter.js'
 

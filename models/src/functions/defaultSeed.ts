@@ -7,9 +7,9 @@
 //
 
 import { z } from 'zod'
-import { dateConverter } from '../helpers/dateConverter'
-import { updateStaticDataInputSchema } from './updateStaticData'
-import { optionalish, optionalishDefault } from '../helpers/optionalish'
+import { updateStaticDataInputSchema } from './updateStaticData.js'
+import { dateConverter } from '../helpers/dateConverter.js'
+import { optionalish, optionalishDefault } from '../helpers/optionalish.js'
 
 export enum DebugDataComponent {
   invitations = 'invitations',

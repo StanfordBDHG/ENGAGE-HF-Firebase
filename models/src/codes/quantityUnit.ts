@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { FHIRQuantity } from '../fhir/baseTypes/fhirQuantity.js'
+import { type FHIRQuantity } from '../fhir/baseTypes/fhirQuantity.js'
 
 export class QuantityUnit {
   // Static Properties

@@ -23,12 +23,12 @@ import {
   fhirQuantityConverter,
 } from './baseTypes/fhirQuantity.js'
 import { CodingSystem, LoincCode } from '../codes/codes.js'
-import { Lazy } from '../helpers/lazy.js'
-import { Observation } from '../types/observation.js'
 import { QuantityUnit } from '../codes/quantityUnit.js'
 import { dateConverter } from '../helpers/dateConverter.js'
+import { Lazy } from '../helpers/lazy.js'
 import { optionalish } from '../helpers/optionalish.js'
 import { SchemaConverter } from '../helpers/schemaConverter.js'
+import { type Observation } from '../types/observation.js'
 
 export enum FHIRObservationStatus {
   registered = 'registered',

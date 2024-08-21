@@ -8,8 +8,8 @@
 
 import { z } from 'zod'
 import { optionalish, optionalishDefault } from '../helpers/optionalish.js'
-import { userAuthConverter } from '../types/userAuth.js'
 import { userConverter } from '../types/user.js'
+import { userAuthConverter } from '../types/userAuth.js'
 
 export const getUsersInformationInputSchema = z.object({
   includeUserData: optionalishDefault(z.boolean(), false),

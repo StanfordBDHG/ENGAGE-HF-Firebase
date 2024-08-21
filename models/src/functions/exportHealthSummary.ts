@@ -7,7 +7,7 @@
 //
 
 import { z } from 'zod'
-import { optionalish } from '../helpers/optionalish'
+import { optionalish } from '../helpers/optionalish.js'
 
 export const exportHealthSummaryInputSchema = z.object({
   userId: z.string(),
