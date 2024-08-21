@@ -107,6 +107,12 @@ export class FHIRMedication extends FHIRResource {
     )
   }
 
+  get brandNames(): string[] {
+    return this.extensionsWithUrl(FHIRExtensionUrl.brandName).flatMap(
+      (extension) => (extension.valueString ? [extension.valueString] : []),
+    )
+  }
+
   get medicationClassReference(): FHIRReference | undefined {
     return this.extensionsWithUrl(FHIRExtensionUrl.medicationClass).at(0)
       ?.valueReference
