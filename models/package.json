@@ -1,5 +1,6 @@
 {
-  "name": "@stanfordbdhg/engagehf-models",
+  "name": "engagehf-models",
+  "scope": "@stanfordbdhg",
   "description": "Model types for ENGAGE-HF",
   "repository": {
     "type": "git",
@@ -33,7 +34,6 @@
     "typescript": "^5"
   },
   "publishConfig": {
-    "scope": "@stanfordbdhg",
     "registry": "https://npm.pkg.github.com"
   },
   "version": "0.0.1"
