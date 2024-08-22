@@ -9,9 +9,6 @@
 name: Release Models Package
 
 on:
-  push:
-    branches:
-      - models-package
   release:
     types: [published]
 
@@ -35,7 +32,11 @@ jobs:
           registry-url: https://npm.pkg.github.com/
           always-auth: true
           scope: '@stanfordbdhg'
-      - run: npm ci
-      - run: npm publish
+      - name: Clean Install
+        run: npm ci
+      - name: Set version
+        run: npm version ${{ github.event.release.tag_name }}
+      - name: Publish
+        run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
