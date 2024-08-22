@@ -8,29 +8,18 @@
 
 import { median } from '../../../extensions/array.js'
 import { FHIRMedicationRequest } from '../../../models/fhir/baseTypes/fhirElement.js'
-import { type FHIRAllergyIntolerance } from '../../../models/fhir/fhirAllergyIntolerance.js'
 import { type MedicationRequestContext } from '../../../models/medicationRequestContext.js'
-import { type SymptomScore } from '../../../models/types/symptomScore.js'
 import { type UserMedicationRecommendationType } from '../../../models/types/userMedicationRecommendation.js'
-import { type Vitals, type Observation } from '../../../models/vitals.js'
+import { type Observation } from '../../../models/vitals.js'
 import { type ContraindicationService } from '../../contraindication/contraindicationService.js'
 import {
   type MedicationClassReference,
   type MedicationReference,
 } from '../../references.js'
-
-export interface RecommendationInput {
-  requests: MedicationRequestContext[]
-  contraindications: FHIRAllergyIntolerance[]
-  vitals: Vitals
-  latestSymptomScore?: SymptomScore
-}
-
-export interface RecommendationOutput {
-  currentMedication: MedicationRequestContext[]
-  recommendedMedication?: MedicationReference
-  type: UserMedicationRecommendationType
-}
+import {
+  type RecommendationInput,
+  type RecommendationOutput,
+} from '../recommendationService.js'
 
 export abstract class Recommender {
   // Properties
@@ -66,6 +55,7 @@ export abstract class Recommender {
   protected isTargetDailyDoseReached(
     currentMedication: MedicationRequestContext[],
   ): boolean {
+    // TODO: Make sure that there is only one medication involved!
     const medication = currentMedication.at(0)?.medication
     if (!medication) throw new Error('Medication is missing')
 
@@ -97,14 +87,5 @@ export abstract class Recommender {
   protected medianValue(observations: Observation[]): number | undefined {
     if (observations.length < 3) return undefined
     return median(observations.map((observation) => observation.value)) ?? 0
-  }
-
-  protected observationsInLastTwoWeeks(
-    observations: Observation[],
-  ): Observation[] {
-    const twoWeeksAgo = new Date().getTime() - 1000 * 60 * 60 * 24 * 14
-    return observations.filter(
-      (observation) => observation.date.getTime() >= twoWeeksAgo,
-    )
   }
 }

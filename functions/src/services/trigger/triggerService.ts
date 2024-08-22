@@ -21,7 +21,6 @@ import { UserMessage, UserMessageType } from '../../models/types/userMessage.js'
 import { UserObservationCollection } from '../database/collections.js'
 import { type ServiceFactory } from '../factory/serviceFactory.js'
 import { QuantityUnit } from '../fhir/quantityUnit.js'
-import { type RecommendationInput } from '../recommendation/recommenders/recommender.js'
 import { QuestionnaireReference, VideoReference } from '../references.js'
 
 export class TriggerService {
@@ -391,6 +390,7 @@ export class TriggerService {
       const vitals = await healthSummaryService.getVitals(
         userId,
         advanceDateByDays(new Date(), -14),
+        QuantityUnit.lbs,
       )
 
       const latestSymptomScore =
@@ -403,17 +403,15 @@ export class TriggerService {
           }),
         ),
       )
-      const recommendationInput: RecommendationInput = {
+
+      const recommendations = await recommendationService.compute({
         requests: requestContexts,
         contraindications: contraindications.map(
           (document) => document.content,
         ),
         vitals: vitals,
         latestSymptomScore: latestSymptomScore?.content,
-      }
-
-      const recommendations =
-        await recommendationService.compute(recommendationInput)
+      })
 
       await patientService.updateMedicationRecommendations(
         userId,

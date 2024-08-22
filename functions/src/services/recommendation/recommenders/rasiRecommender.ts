@@ -6,11 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import {
-  type RecommendationInput,
-  type RecommendationOutput,
-  Recommender,
-} from './recommender.js'
+import { Recommender } from './recommender.js'
 import { type MedicationRequestContext } from '../../../models/medicationRequestContext.js'
 import { UserMedicationRecommendationType } from '../../../models/types/userMedicationRecommendation.js'
 import { ContraindicationCategory } from '../../contraindication/contraindicationService.js'
@@ -18,6 +14,10 @@ import {
   MedicationClassReference,
   MedicationReference,
 } from '../../references.js'
+import {
+  type RecommendationInput,
+  type RecommendationOutput,
+} from '../recommendationService.js'
 
 export class RasiRecommender extends Recommender {
   // Methods
@@ -60,35 +60,33 @@ export class RasiRecommender extends Recommender {
             UserMedicationRecommendationType.targetDoseReached,
           )
 
-        const systolicValuesInLastTwoWeeks = this.observationsInLastTwoWeeks(
+        const medianSystolic = this.medianValue(
           input.vitals.systolicBloodPressure,
         )
-        const medianSystolic = this.medianValue(systolicValuesInLastTwoWeeks)
-        if (!medianSystolic)
+        if (medianSystolic === undefined)
           return this.createRecommendation(
             requests,
             undefined,
             UserMedicationRecommendationType.morePatientObservationsRequired,
           )
 
-        const lowSystolicCount = systolicValuesInLastTwoWeeks.filter(
+        const lowCount = input.vitals.systolicBloodPressure.filter(
           (observation) => observation.value < 85,
         ).length
 
-        if (medianSystolic < 100 || lowSystolicCount >= 2)
+        if (medianSystolic < 100 || lowCount >= 2)
           return this.createRecommendation(
             requests,
             undefined,
             UserMedicationRecommendationType.personalTargetDoseReached,
           )
 
-        const creatinineObservation = input.vitals.creatinine
-        const potassiumObservation = input.vitals.potassium
+        const creatinine = input.vitals.creatinine
+        const potassium = input.vitals.potassium
         if (
-          creatinineObservation &&
-          potassiumObservation &&
-          (creatinineObservation.value >= 2.5 ||
-            potassiumObservation.value >= 5)
+          creatinine !== undefined &&
+          potassium !== undefined &&
+          (creatinine.value >= 2.5 || potassium.value >= 5)
         )
           return this.createRecommendation(
             requests,
@@ -97,7 +95,7 @@ export class RasiRecommender extends Recommender {
           )
 
         if (
-          input.latestSymptomScore &&
+          input.latestSymptomScore !== undefined &&
           input.latestSymptomScore.dizzinessScore >= 3
         )
           return this.createRecommendation(
@@ -115,19 +113,16 @@ export class RasiRecommender extends Recommender {
         break
     }
 
-    const systolicValuesInLastTwoWeeks = this.observationsInLastTwoWeeks(
-      input.vitals.systolicBloodPressure,
-    )
-    const medianSystolic = this.medianValue(systolicValuesInLastTwoWeeks)
+    const medianSystolic = this.medianValue(input.vitals.systolicBloodPressure)
 
-    if (!medianSystolic)
+    if (medianSystolic === undefined)
       return this.createRecommendation(
         requests,
         undefined,
         UserMedicationRecommendationType.morePatientObservationsRequired,
       )
 
-    const lowCount = systolicValuesInLastTwoWeeks.filter(
+    const lowCount = input.vitals.systolicBloodPressure.filter(
       (observation) => observation.value < 85,
     ).length
 
@@ -138,12 +133,12 @@ export class RasiRecommender extends Recommender {
         UserMedicationRecommendationType.personalTargetDoseReached,
       )
 
-    const creatinineObservation = input.vitals.creatinine
-    const potassiumObservation = input.vitals.potassium
+    const creatinine = input.vitals.creatinine
+    const potassium = input.vitals.potassium
     if (
-      creatinineObservation &&
-      potassiumObservation &&
-      (creatinineObservation.value >= 2.5 || potassiumObservation.value >= 5)
+      creatinine !== undefined &&
+      potassium !== undefined &&
+      (creatinine.value >= 2.5 || potassium.value >= 5)
     )
       return this.createRecommendation(
         requests,
@@ -152,7 +147,7 @@ export class RasiRecommender extends Recommender {
       )
 
     if (
-      input.latestSymptomScore &&
+      input.latestSymptomScore !== undefined &&
       input.latestSymptomScore.dizzinessScore >= 3
     )
       return this.createRecommendation(
@@ -179,30 +174,32 @@ export class RasiRecommender extends Recommender {
         UserMedicationRecommendationType.targetDoseReached,
       )
 
-    const medianSystolic = this.medianValue(
-      this.observationsInLastTwoWeeks(input.vitals.systolicBloodPressure),
-    )
+    const medianSystolic = this.medianValue(input.vitals.systolicBloodPressure)
 
-    if (!medianSystolic)
+    const lowCount = input.vitals.systolicBloodPressure.filter(
+      (observation) => observation.value < 85,
+    ).length
+
+    if (medianSystolic === undefined)
       return this.createRecommendation(
         requests,
         undefined,
         UserMedicationRecommendationType.morePatientObservationsRequired,
       )
 
-    if (medianSystolic < 100)
+    if (medianSystolic < 100 || lowCount >= 2)
       return this.createRecommendation(
         requests,
         undefined,
         UserMedicationRecommendationType.personalTargetDoseReached,
       )
 
-    const creatinineObservation = input.vitals.creatinine
-    const potassiumObservation = input.vitals.potassium
+    const creatinine = input.vitals.creatinine
+    const potassium = input.vitals.potassium
     if (
-      creatinineObservation &&
-      potassiumObservation &&
-      (creatinineObservation.value >= 2.5 || potassiumObservation.value >= 5)
+      creatinine !== undefined &&
+      potassium !== undefined &&
+      (creatinine.value >= 2.5 || potassium.value >= 5)
     )
       return this.createRecommendation(
         requests,
@@ -211,7 +208,7 @@ export class RasiRecommender extends Recommender {
       )
 
     if (
-      input.latestSymptomScore &&
+      input.latestSymptomScore !== undefined &&
       input.latestSymptomScore.dizzinessScore >= 3
     )
       return this.createRecommendation(
@@ -233,6 +230,7 @@ export class RasiRecommender extends Recommender {
         input.contraindications,
         MedicationClassReference.angiotensinReceptorBlockers,
       )
+
     switch (contraindicationToArb) {
       case ContraindicationCategory.severeAllergyIntolerance:
       case ContraindicationCategory.allergyIntolerance:
@@ -241,11 +239,13 @@ export class RasiRecommender extends Recommender {
       case ContraindicationCategory.none:
         break
     }
+
     const contraindicationToAcei =
       this.contraindicationService.checkMedicationClass(
         input.contraindications,
         MedicationClassReference.angiotensinConvertingEnzymeInhibitors,
       )
+
     switch (contraindicationToAcei) {
       case ContraindicationCategory.severeAllergyIntolerance:
         return []
@@ -254,49 +254,56 @@ export class RasiRecommender extends Recommender {
       case ContraindicationCategory.none:
         break
     }
-    if (
-      contraindicationToAcei !== ContraindicationCategory.none ||
-      contraindicationToArb !== ContraindicationCategory.none
-    )
+
+    const eligibleMedication =
+      this.contraindicationService.findEligibleMedication(
+        input.contraindications,
+        [
+          MedicationReference.sacubitrilValsartan,
+          MedicationReference.losartan,
+          MedicationReference.lisinopril,
+        ],
+      )
+
+    if (eligibleMedication === undefined) return []
+
+    if (contraindicationToArb !== ContraindicationCategory.none)
       return this.createRecommendation(
         [],
-        MedicationReference.losartan,
+        eligibleMedication,
         UserMedicationRecommendationType.noActionRequired,
       )
 
-    const systolicObservationsInLastTwoWeeks = this.observationsInLastTwoWeeks(
-      input.vitals.systolicBloodPressure,
-    )
-    const medianSystolic = this.medianValue(systolicObservationsInLastTwoWeeks)
+    const medianSystolic = this.medianValue(input.vitals.systolicBloodPressure)
 
-    if (!medianSystolic)
+    if (medianSystolic === undefined)
       return this.createRecommendation(
         [],
-        MedicationReference.losartan,
+        eligibleMedication,
         UserMedicationRecommendationType.morePatientObservationsRequired,
       )
 
-    const lowCount = systolicObservationsInLastTwoWeeks.filter(
+    const lowCount = input.vitals.systolicBloodPressure.filter(
       (observation) => observation.value < 85,
     ).length
 
     if (medianSystolic < 100 || lowCount >= 2)
       return this.createRecommendation(
         [],
-        MedicationReference.losartan,
+        eligibleMedication,
         UserMedicationRecommendationType.noActionRequired,
       )
 
-    const creatinineObservation = input.vitals.creatinine
-    const potassiumObservation = input.vitals.potassium
+    const creatinine = input.vitals.creatinine
+    const potassium = input.vitals.potassium
     if (
-      creatinineObservation &&
-      potassiumObservation &&
-      (creatinineObservation.value >= 2.5 || potassiumObservation.value >= 5)
+      creatinine !== undefined &&
+      potassium !== undefined &&
+      (creatinine.value >= 2.5 || potassium.value >= 5)
     )
       return this.createRecommendation(
         [],
-        MedicationReference.losartan,
+        eligibleMedication,
         UserMedicationRecommendationType.noActionRequired,
       )
 
@@ -312,7 +319,10 @@ export class RasiRecommender extends Recommender {
       case ContraindicationCategory.clinicianListed:
         return this.createRecommendation(
           [],
-          MedicationReference.losartan,
+          this.contraindicationService.findEligibleMedication(
+            input.contraindications,
+            [MedicationReference.losartan, MedicationReference.lisinopril],
+          ) ?? eligibleMedication,
           UserMedicationRecommendationType.notStarted,
         )
       case ContraindicationCategory.none:

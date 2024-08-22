@@ -160,7 +160,7 @@ export class DebugDataService extends SeedingService {
         creationDate: date,
         medicationName: 'Losartan Potassium',
         reference: MedicationReference.losartan,
-        videoReference: VideoReference.aceiAndArbs,
+        videoReference: VideoReference.acei_arbs,
       }),
       UserMessage.createMedicationUptitration({
         creationDate: date,
