@@ -26,6 +26,7 @@ import {
   videoSectionConverter,
 } from '@stanfordbdhg/engagehf-models'
 import { type Firestore } from 'firebase-admin/firestore'
+import { DatabaseConverter } from './databaseConverter'
 
 export enum UserObservationCollection {
   bodyWeight = 'bodyWeightObservations',
@@ -53,37 +54,37 @@ export class CollectionsService {
   get appointments() {
     return this.firestore
       .collectionGroup('appointments')
-      .withConverter(fhirAppointmentConverter.value)
+      .withConverter(new DatabaseConverter(fhirAppointmentConverter.value))
   }
 
   get invitations() {
     return this.firestore
       .collection('invitations')
-      .withConverter(invitationConverter.value)
+      .withConverter(new DatabaseConverter(invitationConverter.value))
   }
 
   get medicationClasses() {
     return this.firestore
       .collection('medicationClasses')
-      .withConverter(medicationClassConverter.value)
+      .withConverter(new DatabaseConverter(medicationClassConverter.value))
   }
 
   medicationClassReference(reference: string) {
     return this.firestore
       .doc(reference)
-      .withConverter(medicationClassConverter.value)
+      .withConverter(new DatabaseConverter(medicationClassConverter.value))
   }
 
   get medications() {
     return this.firestore
       .collection('medications')
-      .withConverter(fhirMedicationConverter.value)
+      .withConverter(new DatabaseConverter(fhirMedicationConverter.value))
   }
 
   medicationReference(reference: string) {
     return this.firestore
       .doc(reference)
-      .withConverter(fhirMedicationConverter.value)
+      .withConverter(new DatabaseConverter(fhirMedicationConverter.value))
   }
 
   drugs(medicationId: string) {
@@ -91,23 +92,25 @@ export class CollectionsService {
       .collection('medications')
       .doc(medicationId)
       .collection('drugs')
-      .withConverter(fhirMedicationConverter.value)
+      .withConverter(new DatabaseConverter(fhirMedicationConverter.value))
   }
 
   get organizations() {
     return this.firestore
       .collection('organizations')
-      .withConverter(organizationConverter.value)
+      .withConverter(new DatabaseConverter(organizationConverter.value))
   }
 
   get questionnaires() {
     return this.firestore
       .collection('questionnaires')
-      .withConverter(fhirQuestionnaireConverter.value)
+      .withConverter(new DatabaseConverter(fhirQuestionnaireConverter.value))
   }
 
   get users() {
-    return this.firestore.collection('users').withConverter(userConverter.value)
+    return this.firestore
+      .collection('users')
+      .withConverter(new DatabaseConverter(userConverter.value))
   }
 
   userAllergyIntolerances(userId: string) {
@@ -115,7 +118,9 @@ export class CollectionsService {
       .collection('users')
       .doc(userId)
       .collection('allergyIntolerances')
-      .withConverter(fhirAllergyIntoleranceConverter.value)
+      .withConverter(
+        new DatabaseConverter(fhirAllergyIntoleranceConverter.value),
+      )
   }
 
   userAppointments(userId: string) {
@@ -123,7 +128,7 @@ export class CollectionsService {
       .collection('users')
       .doc(userId)
       .collection('appointments')
-      .withConverter(fhirAppointmentConverter.value)
+      .withConverter(new DatabaseConverter(fhirAppointmentConverter.value))
   }
 
   userDevices(userId: string) {
@@ -131,7 +136,7 @@ export class CollectionsService {
       .collection('users')
       .doc(userId)
       .collection('devices')
-      .withConverter(userDeviceConverter.value)
+      .withConverter(new DatabaseConverter(userDeviceConverter.value))
   }
 
   userMedicationRecommendations(userId: string) {
@@ -139,7 +144,9 @@ export class CollectionsService {
       .collection('users')
       .doc(userId)
       .collection('medicationRecommendations')
-      .withConverter(userMedicationRecommendationConverter.value)
+      .withConverter(
+        new DatabaseConverter(userMedicationRecommendationConverter.value),
+      )
   }
 
   userMedicationRequests(userId: string) {
@@ -147,7 +154,9 @@ export class CollectionsService {
       .collection('users')
       .doc(userId)
       .collection('medicationRequests')
-      .withConverter(fhirMedicationRequestConverter.value)
+      .withConverter(
+        new DatabaseConverter(fhirMedicationRequestConverter.value),
+      )
   }
 
   userMessages(userId: string) {
@@ -155,7 +164,7 @@ export class CollectionsService {
       .collection('users')
       .doc(userId)
       .collection('messages')
-      .withConverter(userMessageConverter.value)
+      .withConverter(new DatabaseConverter(userMessageConverter.value))
   }
 
   userObservations(userId: string, collection: UserObservationCollection) {
@@ -163,7 +172,7 @@ export class CollectionsService {
       .collection('users')
       .doc(userId)
       .collection(collection)
-      .withConverter(fhirObservationConverter.value)
+      .withConverter(new DatabaseConverter(fhirObservationConverter.value))
   }
 
   userQuestionnaireResponses(userId: string) {
@@ -171,7 +180,9 @@ export class CollectionsService {
       .collection('users')
       .doc(userId)
       .collection('questionnaireResponses')
-      .withConverter(fhirQuestionnaireResponseConverter.value)
+      .withConverter(
+        new DatabaseConverter(fhirQuestionnaireResponseConverter.value),
+      )
   }
 
   userSymptomScores(userId: string) {
@@ -179,13 +190,13 @@ export class CollectionsService {
       .collection('users')
       .doc(userId)
       .collection('symptomScores')
-      .withConverter(symptomScoreConverter.value)
+      .withConverter(new DatabaseConverter(symptomScoreConverter.value))
   }
 
   get videoSections() {
     return this.firestore
       .collection('videoSections')
-      .withConverter(videoSectionConverter.value)
+      .withConverter(new DatabaseConverter(videoSectionConverter.value))
   }
 
   videos(videoSectionId: string) {
@@ -193,6 +204,6 @@ export class CollectionsService {
       .collection('videoSections')
       .doc(videoSectionId)
       .collection('videos')
-      .withConverter(videoConverter.value)
+      .withConverter(new DatabaseConverter(videoConverter.value))
   }
 }

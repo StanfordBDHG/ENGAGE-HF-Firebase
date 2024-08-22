@@ -12,6 +12,7 @@ import {
 } from '@stanfordbdhg/engagehf-models'
 import { onDocumentWritten } from 'firebase-functions/v2/firestore'
 import { UserObservationCollection } from '../services/database/collections.js'
+import { DatabaseConverter } from '../services/database/databaseConverter.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
 export const onUserAllergyIntoleranceWritten = onDocumentWritten(
@@ -93,17 +94,16 @@ export const onUserMedicationRequestWritten = onDocumentWritten(
   async (event) => {
     const beforeData = event.data?.before
     const afterData = event.data?.after
+    const converter = new DatabaseConverter(
+      fhirMedicationRequestConverter.value,
+    )
     await getServiceFactory()
       .trigger()
       .userMedicationRequestWritten(
         event.params.userId,
         event.params.medicationRequestId,
-        beforeData?.exists ?
-          fhirMedicationRequestConverter.value.fromFirestore(beforeData)
-        : undefined,
-        afterData?.exists ?
-          fhirMedicationRequestConverter.value.fromFirestore(afterData)
-        : undefined,
+        beforeData?.exists ? converter.fromFirestore(beforeData) : undefined,
+        afterData?.exists ? converter.fromFirestore(afterData) : undefined,
       )
   },
 )
@@ -124,17 +124,16 @@ export const onUserQuestionnaireResponseWritten = onDocumentWritten(
   async (event) => {
     const beforeData = event.data?.before
     const afterData = event.data?.after
+    const converter = new DatabaseConverter(
+      fhirQuestionnaireResponseConverter.value,
+    )
     await getServiceFactory()
       .trigger()
       .questionnaireResponseWritten(
         event.params.userId,
         event.params.questionnaireResponseId,
-        beforeData?.exists ?
-          fhirQuestionnaireResponseConverter.value.fromFirestore(beforeData)
-        : undefined,
-        afterData?.exists ?
-          fhirQuestionnaireResponseConverter.value.fromFirestore(afterData)
-        : undefined,
+        beforeData?.exists ? converter.fromFirestore(beforeData) : undefined,
+        afterData?.exists ? converter.fromFirestore(afterData) : undefined,
       )
   },
 )
