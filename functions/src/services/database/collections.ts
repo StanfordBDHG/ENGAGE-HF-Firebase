@@ -26,7 +26,7 @@ import {
   videoSectionConverter,
 } from '@stanfordbdhg/engagehf-models'
 import { type Firestore } from 'firebase-admin/firestore'
-import { DatabaseConverter } from './databaseConverter'
+import { DatabaseConverter } from './databaseConverter.js'
 
 export enum UserObservationCollection {
   bodyWeight = 'bodyWeightObservations',
