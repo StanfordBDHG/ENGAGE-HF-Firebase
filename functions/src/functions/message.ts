@@ -16,7 +16,7 @@ import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 const dismissMessageInputSchema = z.object({
   userId: optionalish(z.string()),
   messageId: z.string(),
-  didPerformAction: z.boolean().default(false),
+  didPerformAction: optionalish(z.boolean()),
 })
 
 export const dismissMessage = validatedOnCall(
@@ -39,7 +39,7 @@ export const dismissMessage = validatedOnCall(
         .dismissMessage(
           userId,
           request.data.messageId,
-          request.data.didPerformAction,
+          request.data.didPerformAction ?? false,
         )
     } catch (error) {
       console.error(error)

@@ -18,7 +18,7 @@ import { UserRole } from '../services/credential/credential.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
 const getUsersInformationInputSchema = z.object({
-  includeUserData: z.boolean().optional(),
+  includeUserData: optionalish(z.boolean()),
   userIds: z.string().array().max(100),
 })
 
