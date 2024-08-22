@@ -26,7 +26,7 @@ jobs:
         with:
           node-version: 22.4.x
       - name: Install Dependencies
-        run: npm install --prefix functions --save-dev
+        run: npm install --prefix models --save-dev && npm install --prefix functions --save-dev
       - name: Install Firebase CLI
         run: npm install -g firebase-tools
       - name: Lint
