@@ -19,7 +19,7 @@ jobs:
     name: Deploy Firebase Project
     uses: StanfordBDHG/.github/.github/workflows/firebase-deploy.yml@v2
     with:
-        customcommand: "npm install --prefix functions --save-dev"
+        customcommand: "npm run install"
     permissions:
       contents: read
     secrets:
