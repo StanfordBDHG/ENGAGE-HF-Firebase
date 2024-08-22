@@ -6,13 +6,16 @@
 // SPDX-License-Identifier: MIT
 //
 
+import {
+  advanceDateByDays,
+  type UserDevice,
+  UserMessage,
+  UserMessageType,
+} from '@stanfordbdhg/engagehf-models'
 import { type QueryDocumentSnapshot } from 'firebase-admin/firestore'
 import { type Messaging, type TokenMessage } from 'firebase-admin/messaging'
 import { https } from 'firebase-functions'
 import { type MessageService } from './messageService.js'
-import { advanceDateByDays } from '../../extensions/date.js'
-import { type UserDevice } from '../../models/types/userDevice.js'
-import { UserMessage, UserMessageType } from '../../models/types/userMessage.js'
 import {
   type Document,
   type DatabaseService,

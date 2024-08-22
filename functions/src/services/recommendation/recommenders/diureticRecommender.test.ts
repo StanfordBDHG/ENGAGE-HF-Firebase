@@ -6,24 +6,25 @@
 // SPDX-License-Identifier: MIT
 //
 
+import {
+  CodingSystem,
+  DrugReference,
+  FHIRExtensionUrl,
+  FHIRMedication,
+  FHIRMedicationRequest,
+  LocalizedText,
+  MedicationClass,
+  MedicationClassReference,
+  MedicationReference,
+  UserMedicationRecommendationType,
+} from '@stanfordbdhg/engagehf-models'
 import { expect } from 'chai'
 import { describe, it } from 'mocha'
 import { DiureticRecommender } from './diureticRecommender.js'
-import { FHIRMedicationRequest } from '../../../models/fhir/baseTypes/fhirElement.js'
-import { FHIRMedication } from '../../../models/fhir/fhirMedication.js'
 import { type MedicationRequestContext } from '../../../models/medicationRequestContext.js'
-import { LocalizedText } from '../../../models/types/localizedText.js'
-import { MedicationClass } from '../../../models/types/medicationClass.js'
-import { UserMedicationRecommendationType } from '../../../models/types/userMedicationRecommendation.js'
 import { MockContraindicationService } from '../../../tests/mocks/contraindicationService.js'
 import { mockHealthSummaryData } from '../../../tests/mocks/healthSummaryData.js'
-import { CodingSystem, FHIRExtensionUrl } from '../../codes.js'
 import { ContraindicationCategory } from '../../contraindication/contraindicationService.js'
-import {
-  DrugReference,
-  MedicationClassReference,
-  MedicationReference,
-} from '../../references.js'
 
 describe('DiureticRecommender', () => {
   const recommender = new DiureticRecommender(

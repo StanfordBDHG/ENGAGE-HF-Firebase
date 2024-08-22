@@ -6,14 +6,18 @@
 // SPDX-License-Identifier: MIT
 //
 
+import {
+  advanceDateByDays,
+  CodingSystem,
+  LoincCode,
+  type Observation,
+  QuantityUnit,
+  type SymptomScore,
+  type UserMedicationRecommendation,
+} from '@stanfordbdhg/engagehf-models'
 import { type HealthSummaryService } from './healthSummaryService.js'
-import { advanceDateByDays } from '../../extensions/date.js'
 import { type HealthSummaryData } from '../../models/healthSummaryData.js'
-import { type SymptomScore } from '../../models/types/symptomScore.js'
-import { type UserMedicationRecommendation } from '../../models/types/userMedicationRecommendation.js'
-import { type Observation, type Vitals } from '../../models/vitals.js'
-import { CodingSystem, LoincCode } from '../codes.js'
-import { QuantityUnit } from '../fhir/quantityUnit.js'
+import { type Vitals } from '../../models/vitals.js'
 import { type PatientService } from '../patient/patientService.js'
 import { type UserService } from '../user/userService.js'
 

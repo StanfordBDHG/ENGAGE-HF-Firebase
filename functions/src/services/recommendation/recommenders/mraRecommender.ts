@@ -6,14 +6,14 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { Recommender } from './recommender.js'
-import { advanceDateByDays } from '../../../extensions/date.js'
-import { UserMedicationRecommendationType } from '../../../models/types/userMedicationRecommendation.js'
-import { ContraindicationCategory } from '../../contraindication/contraindicationService.js'
 import {
+  advanceDateByDays,
   MedicationClassReference,
   MedicationReference,
-} from '../../references.js'
+  UserMedicationRecommendationType,
+} from '@stanfordbdhg/engagehf-models'
+import { Recommender } from './recommender.js'
+import { ContraindicationCategory } from '../../contraindication/contraindicationService.js'
 import {
   type RecommendationInput,
   type RecommendationOutput,

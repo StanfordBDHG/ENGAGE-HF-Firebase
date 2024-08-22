@@ -6,10 +6,12 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { type Invitation } from '../../models/types/invitation.js'
-import { type Organization } from '../../models/types/organization.js'
-import { type User } from '../../models/types/user.js'
-import { type UserAuth } from '../../models/types/userAuth.js'
+import {
+  type Invitation,
+  type Organization,
+  type User,
+  type UserAuth,
+} from '@stanfordbdhg/engagehf-models'
 import { type Document } from '../database/databaseService.js'
 
 export interface CreateInvitationData {

@@ -6,9 +6,6 @@
 // SPDX-License-Identifier: MIT
 //
 
-// Based on:
-// https://github.com/StanfordBDHG/PediatricAppleWatchStudy/pull/54/files
-
 import admin from 'firebase-admin'
 
 admin.initializeApp()
@@ -16,13 +13,16 @@ admin.initializeApp()
 export {
   beforeUserCreatedFunction as beforeUserCreated,
   beforeUserSignedInFunction as beforeUserSignedIn,
-} from './functions/auth.js'
-export * from './functions/device.js'
-export * from './functions/healthSummary.js'
-export * from './functions/invitation.js'
-export * from './functions/message.js'
-export * from './functions/recommendation.js'
-export * from './functions/seeding.js'
-export * from './functions/symptomScore.js'
-export * from './functions/trigger.js'
-export * from './functions/user.js'
+} from './functions/blocking.js'
+export * from './functions/checkInvitationCode.js'
+export * from './functions/createInvitation.js'
+export * from './functions/customSeed.js'
+export * from './functions/defaultSeed.js'
+export * from './functions/dismissMessage.js'
+export * from './functions/exportHealthSummary.js'
+export * from './functions/getUsersInformation.js'
+export * from './functions/onSchedule.js'
+export * from './functions/onUserDocumentWritten.js'
+export * from './functions/onUserWritten.js'
+export * from './functions/registerDevice.js'
+export * from './functions/updateStaticData.js'

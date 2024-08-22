@@ -6,26 +6,26 @@
 // SPDX-License-Identifier: MIT
 //
 
+import {
+  CachingStrategy,
+  DrugReference,
+  FHIRMedicationRequest,
+  type MedicationClassReference,
+  MedicationReference,
+  QuantityUnit,
+  UserMedicationRecommendationType,
+} from '@stanfordbdhg/engagehf-models'
 import { expect } from 'chai'
 import { describe, it } from 'mocha'
 import { MraRecommender } from './mraRecommender.js'
-import { FHIRMedicationRequest } from '../../../models/fhir/baseTypes/fhirElement.js'
 import { type HealthSummaryData } from '../../../models/healthSummaryData.js'
 import { type MedicationRequestContext } from '../../../models/medicationRequestContext.js'
-import { UserMedicationRecommendationType } from '../../../models/types/userMedicationRecommendation.js'
 import { MockContraindicationService } from '../../../tests/mocks/contraindicationService.js'
 import { mockHealthSummaryData } from '../../../tests/mocks/healthSummaryData.js'
 import { cleanupMocks, setupMockFirebase } from '../../../tests/setup.js'
 import { ContraindicationCategory } from '../../contraindication/contraindicationService.js'
 import { getServiceFactory } from '../../factory/getServiceFactory.js'
-import { QuantityUnit } from '../../fhir/quantityUnit.js'
 import { type MedicationService } from '../../medication/medicationService.js'
-import {
-  DrugReference,
-  type MedicationClassReference,
-  MedicationReference,
-} from '../../references.js'
-import { CachingStrategy } from '../../seeding/seedingService.js'
 
 describe('MraRecommender', () => {
   let medicationContraindication: (

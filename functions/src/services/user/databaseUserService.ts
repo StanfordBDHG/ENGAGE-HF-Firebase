@@ -6,14 +6,16 @@
 // SPDX-License-Identifier: MIT
 //
 
+import {
+  type Invitation,
+  type Organization,
+  type User,
+  type UserAuth,
+  UserType,
+} from '@stanfordbdhg/engagehf-models'
 import { type Auth } from 'firebase-admin/auth'
 import { https } from 'firebase-functions/v2'
 import { type UserService } from './userService.js'
-import { type Invitation } from '../../models/types/invitation.js'
-import { type Organization } from '../../models/types/organization.js'
-import { type User } from '../../models/types/user.js'
-import { type UserAuth } from '../../models/types/userAuth.js'
-import { UserType } from '../../models/types/userType.js'
 import {
   type Document,
   type DatabaseService,

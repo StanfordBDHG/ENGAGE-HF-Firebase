@@ -6,13 +6,15 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { type FHIRMedicationRequest } from '../../models/fhir/baseTypes/fhirElement.js'
-import { type FHIRAllergyIntolerance } from '../../models/fhir/fhirAllergyIntolerance.js'
-import { type FHIRAppointment } from '../../models/fhir/fhirAppointment.js'
-import { type FHIRObservation } from '../../models/fhir/fhirObservation.js'
-import { type FHIRQuestionnaireResponse } from '../../models/fhir/fhirQuestionnaireResponse.js'
-import { type SymptomScore } from '../../models/types/symptomScore.js'
-import { type UserMedicationRecommendation } from '../../models/types/userMedicationRecommendation.js'
+import {
+  type FHIRAllergyIntolerance,
+  type FHIRAppointment,
+  type FHIRMedicationRequest,
+  type FHIRObservation,
+  type FHIRQuestionnaireResponse,
+  type SymptomScore,
+  type UserMedicationRecommendation,
+} from '@stanfordbdhg/engagehf-models'
 import { type Document } from '../database/databaseService.js'
 
 export interface PatientService {

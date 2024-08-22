@@ -6,11 +6,11 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { type FHIRAllergyIntolerance } from '../../models/fhir/fhirAllergyIntolerance.js'
 import {
+  type FHIRAllergyIntolerance,
   type MedicationClassReference,
   type MedicationReference,
-} from '../references.js'
+} from '@stanfordbdhg/engagehf-models'
 
 export enum ContraindicationCategory {
   none = 0,

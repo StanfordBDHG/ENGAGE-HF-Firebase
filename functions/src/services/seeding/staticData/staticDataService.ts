@@ -6,26 +6,25 @@
 // SPDX-License-Identifier: MIT
 //
 
+import {
+  type CachingStrategy,
+  type FHIRMedication,
+  fhirMedicationConverter,
+  fhirQuestionnaireConverter,
+  localizedTextConverter,
+  type MedicationClass,
+  medicationClassConverter,
+  organizationConverter,
+  Video,
+  VideoSection,
+} from '@stanfordbdhg/engagehf-models'
 import { z } from 'zod'
 import {
   medicationClassSpecificationSchema,
   type RxNormService,
 } from './rxNormService.js'
-import {
-  fhirMedicationConverter,
-  type FHIRMedication,
-} from '../../../models/fhir/fhirMedication.js'
-import { fhirQuestionnaireConverter } from '../../../models/fhir/fhirQuestionnaire.js'
-import { localizedTextConverter } from '../../../models/types/localizedText.js'
-import {
-  medicationClassConverter,
-  type MedicationClass,
-} from '../../../models/types/medicationClass.js'
-import { organizationConverter } from '../../../models/types/organization.js'
-import { Video } from '../../../models/types/video.js'
-import { VideoSection } from '../../../models/types/videoSection.js'
 import { type DatabaseService } from '../../database/databaseService.js'
-import { type CachingStrategy, SeedingService } from '../seedingService.js'
+import { SeedingService } from '../seedingService.js'
 
 export class StaticDataService extends SeedingService {
   // Properties
@@ -177,7 +176,7 @@ export class StaticDataService extends SeedingService {
         ),
         drugs: this.readJSONRecord(
           drugsFile,
-          z.record(z.string(), fhirMedicationConverter.value.schema),
+          z.record(fhirMedicationConverter.value.schema),
         ),
       }),
       async () => {

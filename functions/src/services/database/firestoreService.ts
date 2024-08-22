@@ -6,6 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
+import { Lazy } from '@stanfordbdhg/engagehf-models'
 import {
   type BulkWriter,
   type BulkWriterOptions,
@@ -14,7 +15,6 @@ import {
 } from 'firebase-admin/firestore'
 import { CollectionsService } from './collections.js'
 import { type Document, type DatabaseService } from './databaseService.js'
-import { Lazy } from '../factory/lazy.js'
 
 export class FirestoreService implements DatabaseService {
   // Properties

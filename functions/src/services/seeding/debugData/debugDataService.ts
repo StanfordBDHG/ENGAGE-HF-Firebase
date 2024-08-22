@@ -6,57 +6,38 @@
 // SPDX-License-Identifier: MIT
 //
 
+import {
+  advanceDateByDays,
+  type CustomSeedingOptions,
+  DrugReference,
+  FHIRAppointment,
+  FHIRAppointmentStatus,
+  FHIRMedicationRequest,
+  FHIRObservation,
+  fhirQuestionnaireConverter,
+  FHIRQuestionnaireResponse,
+  invitationConverter,
+  LoincCode,
+  MedicationReference,
+  QuantityUnit,
+  QuestionnaireReference,
+  UserMessage,
+  type UserSeedingOptions,
+  userSeedingOptionsSchema,
+  VideoReference,
+} from '@stanfordbdhg/engagehf-models'
 import { type Auth } from 'firebase-admin/auth'
 import { type CollectionReference } from 'firebase-admin/firestore'
 import { type Storage } from 'firebase-admin/storage'
-import { z } from 'zod'
 import { chunks } from '../../../extensions/array.js'
-import { advanceDateByDays } from '../../../extensions/date.js'
-import { FHIRMedicationRequest } from '../../../models/fhir/baseTypes/fhirElement.js'
-import {
-  FHIRAppointment,
-  FHIRAppointmentStatus,
-} from '../../../models/fhir/fhirAppointment.js'
-import { FHIRObservation } from '../../../models/fhir/fhirObservation.js'
-import { fhirQuestionnaireConverter } from '../../../models/fhir/fhirQuestionnaire.js'
-import { FHIRQuestionnaireResponse } from '../../../models/fhir/fhirQuestionnaireResponse.js'
-import { optionalish } from '../../../models/helpers/optionalish.js'
-import { invitationConverter } from '../../../models/types/invitation.js'
-import { userConverter } from '../../../models/types/user.js'
-import { UserMessage } from '../../../models/types/userMessage.js'
-import { LoincCode } from '../../codes.js'
 import {
   type CollectionsService,
   UserObservationCollection,
 } from '../../database/collections.js'
 import { type DatabaseService } from '../../database/databaseService.js'
-import { QuantityUnit } from '../../fhir/quantityUnit.js'
-import {
-  DrugReference,
-  MedicationReference,
-  QuestionnaireReference,
-  VideoReference,
-} from '../../references.js'
 import { SeedingService } from '../seedingService.js'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
-export const userSeedingOptionsSchema = z.object({
-  auth: z.object({
-    uid: optionalish(z.string()),
-    email: z.string(),
-    password: z.string(),
-  }),
-  user: optionalish(userConverter.value.schema),
-  collections: optionalish(z.record(z.string(), z.record(z.string(), z.any()))),
-})
-export type UserSeedingOptions = z.output<typeof userSeedingOptionsSchema>
-
-export const customSeedingOptionsSchema = z.object({
-  users: userSeedingOptionsSchema.array(),
-  firestore: optionalish(z.record(z.string(), z.record(z.string(), z.any()))),
-})
-export type CustomSeedingOptions = z.output<typeof customSeedingOptionsSchema>
 
 export class DebugDataService extends SeedingService {
   // Properties
