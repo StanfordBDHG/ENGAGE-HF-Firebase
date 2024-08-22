@@ -8,6 +8,115 @@ SPDX-License-Identifier: MIT
 
 Firebase cloud hosting infrastructure for the ENGAGE-HF project.
 
+# Behavior
+
+The base functionality of the ENGAGE-HF Firebase Functions revolve around three parts:
+- recommending medication changes to patients based on existing medication, vitals and symptom scores
+- calculating symptom scores from questionnaire responses of patients
+- generating Health Summary PDFs containing recommendations, vitals and symptom scores
+
+## Health Summary Generation
+
+Health Summary PDFs contain four sections:
+- Medications & Recommendations
+- Vital Summary containing only the most important vitals
+- Symptom Score Report including a speedometer displaying the current score in relation to the previous one and a baseline, a table with the most recent symptom score results and a small personal summary
+- Detailed Vitals Page with graphs displaying body weight, heart rate and blood pressure measurements and important key figures
+
+## Recommendation Algorithms
+
+ENGAGE-HF uses four different algorithms to recommend medication changes based on existing medication, vitals and symptom scores. Each recommendation algorithm corresponds to a medication class (Beta blockers, MRA, SGLT2i) or a group of medication classes (RASI including ACEI, ARB and ARNI).
+
+- Note 1: This codebase contains five different recommender types, including one for diuretics. The diurectics recommender simply recommends staying on the existing medication and assumes that medication to already be at the personal target dose.
+- Note 2: The algorithms are only expected to be run with one medication per class, not multiple different medications in one class.
+
+ENGAGE-HF utilizes four algorithms to recommend medication adjustments based on a patient's current medications, vital signs, and symptom scores. Each algorithm is tailored to a specific medication class — Beta-blockers, MRAs, and SGLT2 inhibitors — or a combination of classes, such as RASI (including ACEIs, ARBs, and ARNIs).
+
+Notes:
+
+- The codebase includes an additional recommender for diuretics, making a total of five recommenders. The diuretics recommender simply advises maintaining the current medication, assuming it is already at the patient’s personal target dose.
+- The algorithms are designed to handle one medication per class, not multiple medications within the same class.
+
+### Beta Blockers
+
+![Beta Blockers](resources/algorithms/BetaBlockers.png)
+
+Depending on contraindications entered on the Web Dashboard, a different medication is listed in the following order:
+- Carvedilol
+- Metoprolol Succinate
+- Bisoprolol
+
+### RASI
+
+![RASI](resources/algorithms/RASI-0.png)
+![RASI](resources/algorithms/RASI-1.png)
+![RASI](resources/algorithms/RASI-2.png)
+
+### MRA
+
+![MRA](resources/algorithms/MRA.png)
+
+Depending on contraindications entered on the Web Dashboard, a different medication is listed in the following order:
+- Spironolactone
+- Eplerenone
+
+### SGLT2i
+
+![SGLT2i](resources/algorithms/SGLT2i.png)
+
+Depending on contraindications entered on the Web Dashboard, a different medication is listed in the following order:
+- Empagliflozin
+- Dapagliflozin
+- Sotagliflozin
+
+### Contraindications
+
+Contraindications are handled using FHIR AllergyIntolerance resources found in the users/$userId$/allergyIntolerances collections. In the `code` property, we use RxNorm codes as described in [functions/src/tests/resources/contraindications.csv](functions/src/tests/resources/contraindications.csv) for the different medications. Depending on the `type` and `criticality` properties, we identify each allergy as one of the following:
+
+- Severe Allergy (for type `allergy` and criticality `high`)
+- Allergy (for type `allergy` and criticality not `high`)
+- Intolerance (for type `intolerance`)
+- Financial (for non-standard type `financial`)
+
+In [the file](functions/src/tests/resources/contraindications.csv), we also describe how each of these cases relate to which medications are taken out of the recommendable options.
+
+## Symptom Score Calculation
+
+The Kansas City Cardiomyopathy Questionnaire-12 (KCCQ-12) score assesses a patient’s physical limitations, symptom frequency, quality of life, and social limitations. Scores are normalized to a 0-100 scale, where higher values indicate better health status. ENGAGE-HF further adds one additional question about dizziness to the questionnaire used in the application.
+
+### Physical Limitations
+
+Questions 1a, 1b, and 1c assess physical limitations. Responses are scored from 1 to 6, where:
+- 1 indicates severe limitations.
+- 5 indicates minimal limitations.
+- 6 indicates "Does not apply" (excluded from scoring).
+
+The Physical Limitations score is the average of the applicable responses, normalized to a 0-100 scale. If fewer than two responses are valid, the score cannot be calculated.
+
+### Symptom Frequency
+
+Questions 2, 3, 4, and 5 evaluate symptom frequency, with responses scored from:
+- 1 to 4 for Questions 2 and 5.
+- 1 to 7 for Questions 3 and 4.
+
+Each response is normalized to a 0-100 scale. The Symptom Frequency score is the average of these normalized values.
+
+### Quality of Life
+
+Questions 6 and 7 measure quality of life, with responses scored from 1 to 4, where lower scores indicate worse quality of life. These scores are normalized to a 0-100 scale, and their average forms the Quality of Life score.
+
+### Social Limitations
+
+Questions 8a, 8b, and 8c address social limitations, scored similarly to the Physical Limitations questions (1 to 6 scale, excluding "Does not apply"). The Social Limitations score is the average of the applicable responses, normalized to 0-100, provided at least two valid responses are available.
+
+### Clinical Summary & Overall
+
+The Clinical Summary Score is the average of the Physical Limitations and Symptom Frequency scores, whereas the Overall Total Score is calculated as the average of all four above-mentioned domain scores.
+
+### Dizziness
+
+In addition to the KCCQ-12 questions, ENGAGE-HF uses question 9 to ask the patient about dizziness. Its responses are encoded as integers between 1 and 5.
+
 # Data Scheme
 
 This document describes how data is stored in Firestore for the Engage-HF app.

@@ -7,6 +7,7 @@
 //
 
 export enum FHIRExtensionUrl {
+  brandName = 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName',
   medicationClass = 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass',
   minimumDailyDose = 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose',
   targetDailyDose = 'http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose',
