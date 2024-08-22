@@ -48,6 +48,7 @@ export type RxTermInfo = z.output<typeof rxTermInfoSpecificationSchema>
 
 export const medicationSpecificationSchema = z.object({
   code: z.string(),
+  brandNames: z.string().array(),
   minimumDailyDose: optionalish(medicationDailyDoseSpecificationSchema),
   targetDailyDose: optionalish(medicationDailyDoseSpecificationSchema),
   ingredients: optionalish(z.string().array()),
@@ -157,6 +158,7 @@ export class RxNormService {
         const fhirMedication = this.buildFHIRMedication(
           medication.code,
           medicationName,
+          medication.brandNames,
           medicationClass.key,
           medicationClasses,
           ingredients,
@@ -188,6 +190,7 @@ export class RxNormService {
   buildFHIRMedication(
     rxcui: string,
     name: string,
+    brandNames: string[],
     medicationClassId: string,
     medicationClasses: Map<string, MedicationClass>,
     ingredients: Array<{ rxcui: string; name: string }>,
@@ -330,6 +333,13 @@ export class RxNormService {
             },
           ],
         }),
+      })
+    }
+
+    for (const brandName of brandNames) {
+      result.extension.push({
+        url: FHIRExtensionUrl.brandName,
+        valueString: brandName,
       })
     }
     return new FHIRMedication(result)

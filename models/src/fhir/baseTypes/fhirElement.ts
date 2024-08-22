@@ -27,6 +27,7 @@ const fhirExtensionBaseConverter = new SchemaConverter({
     valueReference: optionalish(
       z.lazy(() => fhirReferenceConverter.value.schema),
     ),
+    valueString: optionalish(z.string()),
   }),
   encode: (object) => ({
     url: object.url,
@@ -38,6 +39,7 @@ const fhirExtensionBaseConverter = new SchemaConverter({
       object.valueReference ?
         fhirReferenceConverter.value.encode(object.valueReference)
       : null,
+    valueString: object.valueString ?? null,
   }),
 })
 
