@@ -28,7 +28,9 @@ jobs:
         with:
           node-version: '22.x'
           registry-url: 'https://npm.pkg.github.com'
-      - run: npm --prefix models ci
-      - run: npm --prefix models publish --provenance --access public
+      - run: npm ci
+        working-directory: ./models
+      - run: npm publish --provenance --access private
+        working-directory: ./models
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
