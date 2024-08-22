@@ -32,6 +32,9 @@
     "prettier": "^3",
     "typescript": "^5"
   },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "private": true,
   "version": "0.0.1"
 }
