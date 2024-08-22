@@ -1,5 +1,13 @@
 {
   "dependencies": {
     "firebase-admin": "^12.1.1"
+  },
+  "scripts": {
+    "install": "npm --prefix models install && npm --prefix functions install",
+    "lint": "npm --prefix models run lint && npm --prefix functions run lint", 
+    "lint:fix": "npm --prefix models run lint:fix && npm --prefix functions run lint:fix",
+    "lint:strict": "npm --prefix models run lint:strict && npm --prefix functions run lint:strict",
+    "build": "npm --prefix models run build && npm --prefix functions run build",
+    "clean": "npm --prefix models run clean && npm --prefix functions run clean"
   }
 }
