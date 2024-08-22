@@ -21,6 +21,9 @@ jobs:
     permissions:
       contents: read
       id-token: write
+    defaults:
+        run:
+            working-directory: ./models
     steps:
       - uses: actions/checkout@v4
         # Setup .npmrc file to publish to npm
@@ -30,8 +33,6 @@ jobs:
           registry-url: 'https://npm.pkg.github.com'
           cache-dependency-path: ./models/package-lock.json
       - run: npm ci
-        working-directory: ./models
       - run: npm publish
-        working-directory: ./models
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
