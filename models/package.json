@@ -1,5 +1,5 @@
 {
-  "name": "engagehf-models",
+  "name": "@stanfordbdhg/engagehf-models",
   "description": "Model types for ENGAGE-HF",
   "repository": {
     "type": "git",
