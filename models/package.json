@@ -3,7 +3,7 @@
   "description": "Model types for ENGAGE-HF",
   "repository": {
     "type": "git",
-    "url": "https://github.com/StanfordBDHG/ENGAGE-HF-Firebase.git"
+    "url": "git+https://github.com/StanfordBDHG/ENGAGE-HF-Firebase.git"
   },
   "type": "module",
   "scripts": {
