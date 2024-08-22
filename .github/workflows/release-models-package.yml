@@ -30,7 +30,7 @@ jobs:
           registry-url: 'https://npm.pkg.github.com'
       - run: npm ci
         working-directory: ./models
-      - run: npm publish --provenance --access private
+      - run: npm publish --provenance --access public
         working-directory: ./models
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
