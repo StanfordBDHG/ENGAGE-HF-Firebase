@@ -30,14 +30,10 @@ async function _defaultSeed(data: z.output<typeof defaultSeedInputSchema>) {
   const debugDataService = factory.debugData()
   const triggerService = factory.trigger()
 
-  const only = data.only ?? Object.values(DebugDataComponent)
-
-  if (only.includes(DebugDataComponent.invitations))
+  if (data.only.includes(DebugDataComponent.invitations))
     await debugDataService.seedInvitations()
 
-  if (only.includes(DebugDataComponent.users)) {
-    const onlyUserCollections =
-      data.onlyUserCollections ?? Object.values(UserDebugDataComponent)
+  if (data.only.includes(DebugDataComponent.users)) {
     const userIds = await debugDataService.seedUsers()
     const userService = factory.user()
 
@@ -45,10 +41,12 @@ async function _defaultSeed(data: z.output<typeof defaultSeedInputSchema>) {
       try {
         const user = await userService.getUser(userId)
         if (user?.content.type !== UserType.patient) continue
-        if (onlyUserCollections.includes(UserDebugDataComponent.appointments))
+        if (
+          data.onlyUserCollections.includes(UserDebugDataComponent.appointments)
+        )
           await debugDataService.seedUserAppointments(userId, data.date)
         if (
-          onlyUserCollections.includes(
+          data.onlyUserCollections.includes(
             UserDebugDataComponent.bloodPressureObservations,
           )
         )
@@ -58,7 +56,7 @@ async function _defaultSeed(data: z.output<typeof defaultSeedInputSchema>) {
           )
 
         if (
-          onlyUserCollections.includes(
+          data.onlyUserCollections.includes(
             UserDebugDataComponent.bodyWeightObservations,
           )
         )
@@ -68,7 +66,7 @@ async function _defaultSeed(data: z.output<typeof defaultSeedInputSchema>) {
           )
 
         if (
-          onlyUserCollections.includes(
+          data.onlyUserCollections.includes(
             UserDebugDataComponent.creatinineObservations,
           )
         )
@@ -78,7 +76,7 @@ async function _defaultSeed(data: z.output<typeof defaultSeedInputSchema>) {
           )
 
         if (
-          onlyUserCollections.includes(
+          data.onlyUserCollections.includes(
             UserDebugDataComponent.dryWeightObservations,
           )
         )
@@ -88,12 +86,14 @@ async function _defaultSeed(data: z.output<typeof defaultSeedInputSchema>) {
           )
 
         if (
-          onlyUserCollections.includes(UserDebugDataComponent.eGfrObservations)
+          data.onlyUserCollections.includes(
+            UserDebugDataComponent.eGfrObservations,
+          )
         )
           await debugDataService.seedUserEgfrObservations(userId, data.date)
 
         if (
-          onlyUserCollections.includes(
+          data.onlyUserCollections.includes(
             UserDebugDataComponent.heartRateObservations,
           )
         )
@@ -103,7 +103,7 @@ async function _defaultSeed(data: z.output<typeof defaultSeedInputSchema>) {
           )
 
         if (
-          onlyUserCollections.includes(
+          data.onlyUserCollections.includes(
             UserDebugDataComponent.potassiumObservations,
           )
         )
@@ -113,25 +113,25 @@ async function _defaultSeed(data: z.output<typeof defaultSeedInputSchema>) {
           )
 
         if (
-          onlyUserCollections.includes(
+          data.onlyUserCollections.includes(
             UserDebugDataComponent.medicationRequests,
           )
         )
           await debugDataService.seedUserMedicationRequests(userId)
 
-        if (onlyUserCollections.includes(UserDebugDataComponent.messages))
+        if (data.onlyUserCollections.includes(UserDebugDataComponent.messages))
           await debugDataService.seedUserMessages(userId, data.date)
-        if (onlyUserCollections.includes(UserDebugDataComponent.consent))
+        if (data.onlyUserCollections.includes(UserDebugDataComponent.consent))
           await debugDataService.seedUserConsent(userId)
         if (
-          onlyUserCollections.includes(
+          data.onlyUserCollections.includes(
             UserDebugDataComponent.medicationRecommendations,
           )
         )
           await triggerService.updateRecommendationsForUser(userId)
 
         if (
-          onlyUserCollections.includes(
+          data.onlyUserCollections.includes(
             UserDebugDataComponent.questionnaireResponses,
           )
         )
@@ -140,7 +140,11 @@ async function _defaultSeed(data: z.output<typeof defaultSeedInputSchema>) {
             data.date,
           )
 
-        if (onlyUserCollections.includes(UserDebugDataComponent.symptomScores))
+        if (
+          data.onlyUserCollections.includes(
+            UserDebugDataComponent.symptomScores,
+          )
+        )
           await triggerService.updateAllSymptomScores(userId)
       } catch (error) {
         console.error(`Failed to seed user ${userId}: ${String(error)}`)
@@ -148,61 +152,64 @@ async function _defaultSeed(data: z.output<typeof defaultSeedInputSchema>) {
     }
   }
 
-  for (const userData of data.userData ?? []) {
+  for (const userData of data.userData) {
     try {
-      const userOnly = userData.only ?? Object.values(UserDebugDataComponent)
-      if (userOnly.includes(UserDebugDataComponent.appointments))
+      if (userData.only.includes(UserDebugDataComponent.appointments))
         await debugDataService.seedUserAppointments(userData.userId, data.date)
-      if (userOnly.includes(UserDebugDataComponent.medicationRequests))
+      if (userData.only.includes(UserDebugDataComponent.medicationRequests))
         await debugDataService.seedUserMedicationRequests(userData.userId)
-      if (userOnly.includes(UserDebugDataComponent.messages))
+      if (userData.only.includes(UserDebugDataComponent.messages))
         await debugDataService.seedUserMessages(userData.userId, data.date)
-      if (userOnly.includes(UserDebugDataComponent.bloodPressureObservations))
+      if (
+        userData.only.includes(UserDebugDataComponent.bloodPressureObservations)
+      )
         await debugDataService.seedUserBloodPressureObservations(
           userData.userId,
           data.date,
         )
-      if (userOnly.includes(UserDebugDataComponent.bodyWeightObservations))
+      if (userData.only.includes(UserDebugDataComponent.bodyWeightObservations))
         await debugDataService.seedUserBodyWeightObservations(
           userData.userId,
           data.date,
         )
-      if (userOnly.includes(UserDebugDataComponent.creatinineObservations))
+      if (userData.only.includes(UserDebugDataComponent.creatinineObservations))
         await debugDataService.seedUserCreatinineObservations(
           userData.userId,
           data.date,
         )
-      if (userOnly.includes(UserDebugDataComponent.dryWeightObservations))
+      if (userData.only.includes(UserDebugDataComponent.dryWeightObservations))
         await debugDataService.seedUserDryWeightObservations(
           userData.userId,
           data.date,
         )
-      if (userOnly.includes(UserDebugDataComponent.eGfrObservations))
+      if (userData.only.includes(UserDebugDataComponent.eGfrObservations))
         await debugDataService.seedUserEgfrObservations(
           userData.userId,
           data.date,
         )
-      if (userOnly.includes(UserDebugDataComponent.heartRateObservations))
+      if (userData.only.includes(UserDebugDataComponent.heartRateObservations))
         await debugDataService.seedUserHeartRateObservations(
           userData.userId,
           data.date,
         )
-      if (userOnly.includes(UserDebugDataComponent.potassiumObservations))
+      if (userData.only.includes(UserDebugDataComponent.potassiumObservations))
         await debugDataService.seedUserPotassiumObservations(
           userData.userId,
           data.date,
         )
-      if (userOnly.includes(UserDebugDataComponent.consent))
+      if (userData.only.includes(UserDebugDataComponent.consent))
         await debugDataService.seedUserConsent(userData.userId)
-      if (userOnly.includes(UserDebugDataComponent.medicationRecommendations))
+      if (
+        userData.only.includes(UserDebugDataComponent.medicationRecommendations)
+      )
         await triggerService.updateRecommendationsForUser(userData.userId)
-      if (userOnly.includes(UserDebugDataComponent.questionnaireResponses))
+      if (userData.only.includes(UserDebugDataComponent.questionnaireResponses))
         await debugDataService.seedUserQuestionnaireResponses(
           userData.userId,
           data.date,
         )
 
-      if (userOnly.includes(UserDebugDataComponent.symptomScores))
+      if (userData.only.includes(UserDebugDataComponent.symptomScores))
         await triggerService.updateAllSymptomScores(userData.userId)
     } catch (error) {
       console.error(

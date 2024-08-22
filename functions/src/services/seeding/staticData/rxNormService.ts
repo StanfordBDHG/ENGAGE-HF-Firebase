@@ -53,9 +53,7 @@ export const medicationSpecificationSchema = z.object({
   targetDailyDose: optionalish(medicationDailyDoseSpecificationSchema),
   ingredients: optionalish(z.string().array()),
   drugs: optionalish(z.string().array()),
-  fallbackTerms: optionalish(
-    z.record(z.string(), rxTermInfoSpecificationSchema),
-  ),
+  fallbackTerms: optionalish(z.record(rxTermInfoSpecificationSchema)),
 })
 
 export type MedicationSpecification = z.output<

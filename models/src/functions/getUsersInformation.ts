@@ -26,7 +26,6 @@ export const userInformationSchema = z.object({
 export type UserInformation = z.output<typeof userInformationSchema>
 
 export const getUsersInformationOutputSchema = z.record(
-  z.string(),
   z
     .object({
       data: userInformationSchema,

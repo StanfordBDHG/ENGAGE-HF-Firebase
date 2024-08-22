@@ -32,7 +32,7 @@ export const dismissMessage = validatedOnCall(
         .dismissMessage(
           userId,
           request.data.messageId,
-          request.data.didPerformAction ?? false,
+          request.data.didPerformAction,
         )
     } catch (error) {
       console.error(error)

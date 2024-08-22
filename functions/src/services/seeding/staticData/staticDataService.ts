@@ -176,7 +176,7 @@ export class StaticDataService extends SeedingService {
         ),
         drugs: this.readJSONRecord(
           drugsFile,
-          z.record(z.string(), fhirMedicationConverter.value.schema),
+          z.record(fhirMedicationConverter.value.schema),
         ),
       }),
       async () => {
