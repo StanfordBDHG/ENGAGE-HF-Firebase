@@ -33,6 +33,7 @@ jobs:
           cache-dependency-path: ./models/
           registry-url: https://npm.pkg.github.com/
           always-auth: true
+          scope: '@stanfordbdhg'
       - run: npm ci
       - run: npm publish
         env:
