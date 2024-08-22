@@ -33,6 +33,7 @@
     "typescript": "^5"
   },
   "publishConfig": {
+    "scope": "@stanfordbdhg",
     "registry": "https://npm.pkg.github.com"
   },
   "version": "0.0.1"
