@@ -37,7 +37,7 @@ jobs:
         run: npm --prefix functions run build:excludeModels
       - name: Test
         id: test
-        run: firebase emulators:exec --only auth,firestore 'npm --prefix functions run test:coverage'
+        run: firebase emulators:exec --only auth,firestore 'npm --prefix functions run test:ci'
       - name: Regenerate Test Results
         id: test-regenerate
         run: npm --prefix functions run test:regenerate
