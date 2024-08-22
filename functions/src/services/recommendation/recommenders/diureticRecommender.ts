@@ -6,9 +6,11 @@
 // SPDX-License-Identifier: MIT
 //
 
+import {
+  MedicationClassReference,
+  UserMedicationRecommendationType,
+} from '@stanfordbdhg/engagehf-models'
 import { Recommender } from './recommender.js'
-import { UserMedicationRecommendationType } from '../../../models/types/userMedicationRecommendation.js'
-import { MedicationClassReference } from '../../references.js'
 import {
   type RecommendationInput,
   type RecommendationOutput,

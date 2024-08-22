@@ -7,24 +7,26 @@
 //
 
 import fs from 'fs'
-import { expect } from 'chai'
-import { describe, it } from 'mocha'
-import { type RecommendationService } from './recommendationService.js'
-import { FHIRMedicationRequest } from '../../models/fhir/baseTypes/fhirElement.js'
 import {
+  CachingStrategy,
+  DrugReference,
   FHIRAllergyIntolerance,
   FHIRAllergyIntoleranceCriticality,
   FHIRAllergyIntoleranceType,
-} from '../../models/fhir/fhirAllergyIntolerance.js'
-import { SymptomScore } from '../../models/types/symptomScore.js'
-import { UserMedicationRecommendationType } from '../../models/types/userMedicationRecommendation.js'
-import { type Observation, type Vitals } from '../../models/vitals.js'
+  FHIRMedicationRequest,
+  MedicationReference,
+  type Observation,
+  QuantityUnit,
+  SymptomScore,
+  UserMedicationRecommendationType,
+} from '@stanfordbdhg/engagehf-models'
+import { expect } from 'chai'
+import { describe, it } from 'mocha'
+import { type RecommendationService } from './recommendationService.js'
+import { type Vitals } from '../../models/vitals.js'
 import { setupMockFirebase } from '../../tests/setup.js'
 import { getServiceFactory } from '../factory/getServiceFactory.js'
-import { QuantityUnit } from '../fhir/quantityUnit.js'
 import { type MedicationService } from '../medication/medicationService.js'
-import { DrugReference, MedicationReference } from '../references.js'
-import { CachingStrategy } from '../seeding/seedingService.js'
 
 describe('RecommendationService', () => {
   let medicationService: MedicationService

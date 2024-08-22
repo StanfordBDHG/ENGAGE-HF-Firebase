@@ -6,10 +6,10 @@
 // SPDX-License-Identifier: MIT
 //
 
+import { type SymptomScore } from '@stanfordbdhg/engagehf-models'
 import * as d3 from 'd3'
 import { JSDOM } from 'jsdom'
 import { symptomScoreSpeedometerLocalizations } from './generateSpeedometer+localizations.js'
-import { type SymptomScore } from '../models/types/symptomScore.js'
 
 interface SpeedometerMarker {
   percentage: number

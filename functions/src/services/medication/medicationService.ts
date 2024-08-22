@@ -6,11 +6,13 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { type FHIRMedicationRequest } from '../../models/fhir/baseTypes/fhirElement.js'
-import { type FHIRReference } from '../../models/fhir/baseTypes/fhirReference.js'
-import { type FHIRMedication } from '../../models/fhir/fhirMedication.js'
+import {
+  type FHIRMedication,
+  type FHIRMedicationRequest,
+  type FHIRReference,
+  type MedicationClass,
+} from '@stanfordbdhg/engagehf-models'
 import { type MedicationRequestContext } from '../../models/medicationRequestContext.js'
-import { type MedicationClass } from '../../models/types/medicationClass.js'
 import { type Document } from '../database/databaseService.js'
 
 export interface MedicationService {

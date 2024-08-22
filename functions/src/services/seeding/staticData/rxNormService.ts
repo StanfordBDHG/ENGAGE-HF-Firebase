@@ -7,17 +7,18 @@
 //
 
 import * as https from 'https'
+import {
+  CodingSystem,
+  type FHIRExtension,
+  FHIRExtensionUrl,
+  FHIRMedication,
+  FHIRMedicationRequest,
+  type MedicationClass,
+  optionalish,
+  QuantityUnit,
+} from '@stanfordbdhg/engagehf-models'
 import { z } from 'zod'
 import { capitalize } from '../../../extensions/string.js'
-import {
-  type FHIRExtension,
-  FHIRMedicationRequest,
-} from '../../../models/fhir/baseTypes/fhirElement.js'
-import { FHIRMedication } from '../../../models/fhir/fhirMedication.js'
-import { optionalish } from '../../../models/helpers/optionalish.js'
-import { type MedicationClass } from '../../../models/types/medicationClass.js'
-import { CodingSystem, FHIRExtensionUrl } from '../../codes.js'
-import { QuantityUnit } from '../../fhir/quantityUnit.js'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
@@ -52,9 +53,7 @@ export const medicationSpecificationSchema = z.object({
   targetDailyDose: optionalish(medicationDailyDoseSpecificationSchema),
   ingredients: optionalish(z.string().array()),
   drugs: optionalish(z.string().array()),
-  fallbackTerms: optionalish(
-    z.record(z.string(), rxTermInfoSpecificationSchema),
-  ),
+  fallbackTerms: optionalish(z.record(rxTermInfoSpecificationSchema)),
 })
 
 export type MedicationSpecification = z.output<

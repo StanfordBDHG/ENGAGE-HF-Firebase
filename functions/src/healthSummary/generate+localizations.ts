@@ -6,8 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { LocalizedText } from '../models/types/localizedText.js'
-import { type QuantityUnit } from '../services/fhir/quantityUnit.js'
+import { LocalizedText, type QuantityUnit } from '@stanfordbdhg/engagehf-models'
 
 export function healthSummaryLocalizations(languages: string[]) {
   return {
