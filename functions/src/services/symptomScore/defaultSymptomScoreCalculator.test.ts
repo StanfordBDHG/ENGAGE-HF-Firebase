@@ -54,6 +54,13 @@ describe('DefaultSymptomScoreCalculator', () => {
       expect(score.questionnaireResponseId).to.equal(response.id)
       expect(score.date).to.equal(response.authored)
 
+      // In this test, we use approximations to compare the expected and actual values.
+      // This is due to an issue that the expected values originate from various reference
+      // implementations using different rounding strategies.
+      //
+      // With the current implementation, we can only ensure that the actual values are within
+      // the given ranges of the expected values.
+
       if (score.physicalLimitsScore !== undefined) {
         expect(
           score.physicalLimitsScore,
