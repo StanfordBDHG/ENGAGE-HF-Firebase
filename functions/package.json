@@ -3,7 +3,7 @@
   "description": "Cloud Functions for Firebase",
   "type": "module",
   "scripts": {
-    "lint": "eslint .",
+    "lint": "eslint src",
     "lint:fix": "npm run lint -- --fix",
     "lint:strict": "npm run lint -- --max-warnings=0",
     "build": "tsc",

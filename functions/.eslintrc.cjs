@@ -7,6 +7,7 @@
 //
 
 module.exports = {
+  root: true,
   plugins: ['prettier', 'eslint-plugin-import', '@typescript-eslint', 'import'],
   parserOptions: {
     project: './tsconfig.json',
