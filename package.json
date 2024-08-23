@@ -9,6 +9,6 @@
     "lint:strict": "npm --prefix functions/models run lint:strict && npm --prefix functions run lint:strict",
     "build": "npm --prefix functions/models run build && npm --prefix functions run build",
     "clean": "npm --prefix functions/models run clean && npm --prefix functions run clean",
-    "test:ci": "firebase emulators:exec --only auth,firestore 'npm --prefix functions run test:ci'"
+    "test:ci": "firebase --version && firebase emulators:exec --only auth,firestore 'npm --prefix functions run test:ci'"
   }
 }
