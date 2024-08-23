@@ -11,6 +11,7 @@ import {
   User,
   type UserDevice,
   UserMessage,
+  userMessageConverter,
   UserMessageType,
 } from '@stanfordbdhg/engagehf-models'
 import { type QueryDocumentSnapshot } from 'firebase-admin/firestore'
@@ -79,7 +80,7 @@ export class DefaultMessageService implements MessageService {
       user?: User | null
     },
   ): Promise<void> {
-    const didAddMessage = await this.databaseService.runTransaction(
+    const newMessage = await this.databaseService.runTransaction(
       async (collections, transaction) => {
         const existingMessages = (
           await collections
@@ -96,14 +97,19 @@ export class DefaultMessageService implements MessageService {
         ) {
           const newMessageRef = collections.userMessages(userId).doc()
           transaction.set(newMessageRef, message)
-          return true
+          const document: Document<UserMessage> = {
+            id: newMessageRef.id,
+            path: newMessageRef.path,
+            content: message,
+          }
+          return document
         }
 
-        return false
+        return undefined
       },
     )
 
-    if (didAddMessage && options.notify) {
+    if (newMessage !== undefined && options.notify) {
       const user =
         options.user ?? (await this.userService.getUser(userId))?.content
       if (!user) return
@@ -125,7 +131,7 @@ export class DefaultMessageService implements MessageService {
           if (!user.receivesAppointmentReminders) return
       }
 
-      await this.sendNotification(userId, message, {
+      await this.sendNotification(userId, newMessage, {
         language: user.language,
       })
     }
@@ -253,7 +259,7 @@ export class DefaultMessageService implements MessageService {
 
   private async sendNotification(
     userId: string,
-    message: UserMessage,
+    message: Document<UserMessage>,
     options: {
       language?: string
     },
@@ -298,25 +304,48 @@ export class DefaultMessageService implements MessageService {
   }
 
   private tokenMessage(
-    message: UserMessage,
+    message: Document<UserMessage>,
     options: {
       device: UserDevice
       languages: string[]
     },
   ): TokenMessage {
     const data: Record<string, string> = {}
-    if (message.action) data.action = message.action
-    data.type = message.type
+    if (message.content.action !== undefined)
+      data.action = message.content.action
+    data.type = message.content.type
+    data.messageId = message.id
 
+    const title = message.content.title.localize(...options.languages)
+    const body = message.content.description?.localize(...options.languages)
     return {
       token: options.device.notificationToken,
       notification: {
-        title: message.title.localize(...options.languages),
-        body: message.description?.localize(...options.languages),
+        title: title,
+        body: body,
+      },
+      android: {
+        notification: {
+          title: title,
+          body: body,
+        },
+        data: data,
+      },
+      apns: {
+        payload: {
+          ...userMessageConverter.value.encode(message.content),
+          messageId: message.id,
+          aps: {
+            alert: {
+              title: title,
+              body: body,
+            },
+          },
+        },
       },
       data: data,
       fcmOptions: {
-        analyticsLabel: message.type,
+        analyticsLabel: message.content.type,
       },
     }
   }
