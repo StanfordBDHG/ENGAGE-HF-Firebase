@@ -8,7 +8,7 @@
 
 import {
   LocalizedText,
-  UserMedicationRecommendationDoseSchedule,
+  type UserMedicationRecommendationDoseSchedule,
   type QuantityUnit,
 } from '@stanfordbdhg/engagehf-models'
 

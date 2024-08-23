@@ -10,7 +10,6 @@ import fs from 'fs'
 import { Resvg, type ResvgRenderOptions } from '@resvg/resvg-js'
 import {
   type Observation,
-  type UserMedicationRecommendationDoseSchedule,
   UserMedicationRecommendationType,
 } from '@stanfordbdhg/engagehf-models'
 import { jsPDF } from 'jspdf'
