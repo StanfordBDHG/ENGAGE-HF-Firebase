@@ -122,7 +122,7 @@ class HealthSummaryPDFGenerator {
     this.data = data
     this.options = options
     this.texts = healthSummaryLocalizations(options.languages)
-    this.doc = new jsPDF('p', 'pt', [this.pageWidth, this.pageHeight])
+    this.doc = new jsPDF('p', 'pt', [this.pageWidth, this.pageHeight], true)
     this.addFont(
       'resources/fonts/OpenSans-Regular.ttf',
       this.fontName,
