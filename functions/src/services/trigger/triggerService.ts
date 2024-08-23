@@ -255,6 +255,10 @@ export class TriggerService {
           patientService.getHeartRateObservations(userId, yesterday),
         ])
 
+        console.log(
+          `Checked whether to complete vitals message due to ${bloodPressure.length} blood pressure observations, ${bodyWeight.length} body weight observations, and ${heartRate.length} heart rate observations.`,
+        )
+
         if (
           bloodPressure.length > 0 &&
           bodyWeight.length > 0 &&
