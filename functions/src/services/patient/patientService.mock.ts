@@ -291,7 +291,7 @@ export class MockPatientService implements PatientService {
         socialLimitsScore: 38,
         qualityOfLifeScore: 20,
         symptomFrequencyScore: 60,
-        dizzinessScore: 50,
+        dizzinessScore: 3,
         date: new Date('2024-01-24'),
       }),
       new SymptomScore({
@@ -301,7 +301,7 @@ export class MockPatientService implements PatientService {
         socialLimitsScore: 75,
         qualityOfLifeScore: 37,
         symptomFrequencyScore: 72,
-        dizzinessScore: 70,
+        dizzinessScore: 2,
         date: new Date('2024-01-15'),
       }),
       new SymptomScore({
@@ -311,7 +311,7 @@ export class MockPatientService implements PatientService {
         socialLimitsScore: 41,
         qualityOfLifeScore: 25,
         symptomFrequencyScore: 60,
-        dizzinessScore: 50,
+        dizzinessScore: 1,
         date: new Date('2023-12-30'),
       }),
       new SymptomScore({
@@ -321,7 +321,7 @@ export class MockPatientService implements PatientService {
         socialLimitsScore: 75,
         qualityOfLifeScore: 60,
         symptomFrequencyScore: 80,
-        dizzinessScore: 100,
+        dizzinessScore: 1,
         date: new Date('2023-12-15'),
       }),
     ]
