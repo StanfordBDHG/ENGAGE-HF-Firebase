@@ -7,6 +7,7 @@
 //
 
 import {
+  type User,
   type UserDevice,
   type UserMessage,
   type UserMessageType,
@@ -25,7 +26,7 @@ export interface MessageService {
     message: UserMessage,
     options: {
       notify: boolean
-      language?: string | null
+      user?: User | null
     },
   ): Promise<void>
 

@@ -95,7 +95,7 @@ export class TriggerService {
           try {
             await messageService.addMessage(user.id, vitalsMessage, {
               notify: true,
-              language: user.content.language ?? null,
+              user: user.content,
             })
 
             const enrollmentDate = user.content.dateOfEnrollment
@@ -106,7 +106,7 @@ export class TriggerService {
             ) {
               await messageService.addMessage(user.id, symptomReminderMessage, {
                 notify: true,
-                language: user.content.language ?? null,
+                user: user.content,
               })
             }
 
