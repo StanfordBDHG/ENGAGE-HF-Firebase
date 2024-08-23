@@ -677,7 +677,7 @@ class HealthSummaryPDFGenerator {
       shapeRendering: 2,
       textRendering: 1,
       imageRendering: 0,
-      fitTo: { mode: 'zoom', value: 3 },
+      fitTo: { mode: 'zoom', value: 2 },
     }
     return new Resvg(svg, options).render().asPng()
   }
@@ -688,7 +688,15 @@ class HealthSummaryPDFGenerator {
     const imgData = 'data:image/png;base64,' + data.toString('base64')
     const imgProperties = this.doc.getImageProperties(imgData)
     const height = width / (imgProperties.width / imgProperties.height)
-    this.doc.addImage(imgData, this.cursor.x, this.cursor.y, width, height)
+    this.doc.addImage(
+      imgData,
+      this.cursor.x,
+      this.cursor.y,
+      width,
+      height,
+      undefined,
+      'FAST',
+    )
     this.moveDown(height)
   }
 
