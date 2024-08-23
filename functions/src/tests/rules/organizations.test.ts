@@ -16,11 +16,8 @@ import {
 import { UserType } from '@stanfordbdhg/engagehf-models'
 import type firebase from 'firebase/compat/app'
 import { describe, it } from 'mocha'
-import { TestFlags } from '../testFlags.js'
 
 describe('firestore.rules: organizations/{organizationId}', () => {
-  if (!TestFlags.includeRules) return
-
   const organizationId = 'stanford'
   const otherOrganizationId = 'jhu'
   const nonExistingOrganizationId = 'ucb'

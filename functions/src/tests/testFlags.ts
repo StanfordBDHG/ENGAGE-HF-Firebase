@@ -15,5 +15,4 @@ export namespace TestFlags {
     process.env.FORCE_RUN_EXPENSIVE_TESTS === 'true'
   export const isEmulator = process.env.FUNCTIONS_EMULATOR === 'true'
   export const regenerateValues = process.env.REGENERATE_VALUES === 'true'
-  export const includeRules = process.env.INCLUDE_RULES === 'true'
 }
