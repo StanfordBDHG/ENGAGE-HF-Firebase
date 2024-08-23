@@ -6,11 +6,11 @@
 // SPDX-License-Identifier: MIT
 //
 
+import { isDeepStrictEqual } from 'util'
 import { type DocumentSnapshot } from 'firebase-admin/firestore'
 import { type Change } from 'firebase-functions'
 import { type HistoryService } from './historyService.js'
 import { type DatabaseService } from '../database/databaseService.js'
-import { isDeepStrictEqual } from 'util'
 
 export class DatabaseHistoryService implements HistoryService {
   // Properties
