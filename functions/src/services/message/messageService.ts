@@ -7,7 +7,7 @@
 //
 
 import {
-  User,
+  type User,
   type UserDevice,
   type UserMessage,
   type UserMessageType,
