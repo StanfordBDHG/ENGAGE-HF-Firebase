@@ -17,6 +17,7 @@ describe('generateHealthSummary', () => {
   function comparePdf(actual: Buffer, expected: Buffer): boolean {
     if (!TestFlags.regenerateValues)
       assert.equal(actual.length, expected.length)
+    expect(actual.length).to.be.lessThan(1_000_000)
     function removeUniqueValues(pdf: string): string {
       return pdf
         .split('\n')

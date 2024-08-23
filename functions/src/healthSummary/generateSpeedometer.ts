@@ -28,10 +28,9 @@ export function generateSpeedometerSvg(
   width: number,
   options: { languages: string[] },
 ): string {
-  const baselineScore = scores.length >= 1 ? scores[0] : undefined
-  const recentScore = scores.length >= 1 ? scores[scores.length - 1] : undefined
-  const previousScore =
-    scores.length >= 2 ? scores[scores.length - 2] : undefined
+  const baselineScore = scores.at(scores.length - 1)
+  const recentScore = scores.at(0)
+  const previousScore = scores.at(1)
   const generator = new SpeedometerSvgGenerator(width, options)
   const markers: SpeedometerMarker[] = []
   if (baselineScore) {
