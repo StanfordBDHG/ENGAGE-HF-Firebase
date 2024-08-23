@@ -85,11 +85,10 @@ export class DefaultMessageService implements MessageService {
         const existingMessages = (
           await collections
             .userMessages(userId)
-            .where('type', '==', message.type)
             .where('completionDate', '==', null)
             .orderBy('creationDate', 'desc')
             .get()
-        ).docs
+        ).docs.filter((doc) => doc.data().type === message.type)
 
         if (
           existingMessages.length === 0 ||
@@ -144,15 +143,17 @@ export class DefaultMessageService implements MessageService {
   ) {
     await this.databaseService.runTransaction(
       async (collections, transaction) => {
-        const messages = await transaction.get(
-          collections
-            .userMessages(userId)
-            .where('type', '==', type)
-            .where('completionDate', '==', null),
-        )
-        for (const message of messages.docs.filter(
-          (doc) => filter?.(doc.data()) ?? true,
-        )) {
+        const messages = (
+          await transaction.get(
+            collections
+              .userMessages(userId)
+              .where('completionDate', '==', null),
+          )
+        ).docs.filter((doc) => {
+          const docData = doc.data()
+          return docData.type === type && (filter?.(docData) ?? true)
+        })
+        for (const message of messages) {
           transaction.set(
             message.ref,
             new UserMessage({
