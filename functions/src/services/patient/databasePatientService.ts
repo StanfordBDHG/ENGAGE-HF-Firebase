@@ -6,6 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
+import { isDeepStrictEqual } from 'util'
 import {
   advanceDateByDays,
   type FHIRAllergyIntolerance,
@@ -118,19 +119,41 @@ export class DatabasePatientService implements PatientService {
 
   async updateMedicationRecommendations(
     userId: string,
-    recommendations: UserMedicationRecommendation[],
+    newRecommendations: UserMedicationRecommendation[],
   ): Promise<boolean> {
     return this.databaseService.runTransaction(
       async (collections, transaction) => {
         const collection = collections.userMedicationRecommendations(userId)
-        const result = await transaction.get(collection)
-        for (const doc of result.docs) {
-          transaction.delete(doc.ref)
+        const existingSnapshot = await transaction.get(collection)
+        const indicesToBeInserted = new Set<number>(
+          newRecommendations.map((_, index) => index),
+        )
+        for (const existing of existingSnapshot.docs) {
+          const existingRecommendation = existing.data()
+
+          const newRecommendationIndex = newRecommendations.findIndex(
+            (recommendation) =>
+              recommendation.displayInformation.title ===
+              existingRecommendation.displayInformation.title,
+          )
+
+          if (newRecommendationIndex < 0) {
+            transaction.delete(existing.ref)
+            continue
+          }
+          const newRecommendation = newRecommendations[newRecommendationIndex]
+          indicesToBeInserted.delete(newRecommendationIndex)
+
+          if (!isDeepStrictEqual(newRecommendation, existingRecommendation))
+            transaction.set(existing.ref, newRecommendation)
         }
-        for (const recommendation of recommendations) {
-          transaction.create(collection.doc(), recommendation)
-        }
-        return true // TODO: Check if recommendations actually changed and only return true, if they changed
+        indicesToBeInserted.forEach((newRecommendationIndex) => {
+          transaction.set(
+            collection.doc(),
+            newRecommendations[newRecommendationIndex],
+          )
+        })
+        return true
       },
     )
   }

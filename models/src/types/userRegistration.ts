@@ -7,14 +7,10 @@
 //
 
 import { z } from 'zod'
-import {
-  userMessagesSettingsConverter,
-  type UserMessagesSettings,
-} from './userMessagesSettings.js'
 import { UserType } from './userType.js'
 import { dateConverter } from '../helpers/dateConverter.js'
 import { Lazy } from '../helpers/lazy.js'
-import { optionalish } from '../helpers/optionalish.js'
+import { optionalish, optionalishDefault } from '../helpers/optionalish.js'
 import { SchemaConverter } from '../helpers/schemaConverter.js'
 
 export const userRegistrationInputConverter = new Lazy(
@@ -25,9 +21,12 @@ export const userRegistrationInputConverter = new Lazy(
         organization: optionalish(z.string()),
         dateOfBirth: optionalish(dateConverter.schema),
         clinician: optionalish(z.string()),
-        messagesSettings: optionalish(
-          z.lazy(() => userMessagesSettingsConverter.value.schema),
-        ),
+        receivesAppointmentReminders: optionalishDefault(z.boolean(), true),
+        receivesMedicationUpdates: optionalishDefault(z.boolean(), true),
+        receivesQuestionnaireReminders: optionalishDefault(z.boolean(), true),
+        receivesRecommendationUpdates: optionalishDefault(z.boolean(), true),
+        receivesVitalsReminders: optionalishDefault(z.boolean(), true),
+        receivesWeightAlerts: optionalishDefault(z.boolean(), true),
         language: optionalish(z.string()),
         timeZone: optionalish(z.string()),
       }),
@@ -37,10 +36,12 @@ export const userRegistrationInputConverter = new Lazy(
         dateOfBirth:
           object.dateOfBirth ? dateConverter.encode(object.dateOfBirth) : null,
         clinician: object.clinician ?? null,
-        messagesSettings:
-          object.messagesSettings ?
-            userMessagesSettingsConverter.value.encode(object.messagesSettings)
-          : null,
+        receivesAppointmentReminders: object.receivesAppointmentReminders,
+        receivesMedicationUpdates: object.receivesMedicationUpdates,
+        receivesQuestionnaireReminders: object.receivesQuestionnaireReminders,
+        receivesRecommendationUpdates: object.receivesRecommendationUpdates,
+        receivesVitalsReminders: object.receivesVitalsReminders,
+        receivesWeightAlerts: object.receivesWeightAlerts,
         language: object.language ?? null,
         timeZone: object.timeZone ?? null,
       }),
@@ -66,7 +67,12 @@ export class UserRegistration {
   readonly dateOfBirth?: Date
   readonly clinician?: string
 
-  readonly messagesSettings?: UserMessagesSettings
+  readonly receivesAppointmentReminders: boolean
+  readonly receivesMedicationUpdates: boolean
+  readonly receivesQuestionnaireReminders: boolean
+  readonly receivesRecommendationUpdates: boolean
+  readonly receivesVitalsReminders: boolean
+  readonly receivesWeightAlerts: boolean
 
   readonly language?: string
   readonly timeZone?: string
@@ -78,7 +84,12 @@ export class UserRegistration {
     organization?: string
     dateOfBirth?: Date
     clinician?: string
-    messagesSettings?: UserMessagesSettings
+    receivesAppointmentReminders: boolean
+    receivesMedicationUpdates: boolean
+    receivesQuestionnaireReminders: boolean
+    receivesRecommendationUpdates: boolean
+    receivesVitalsReminders: boolean
+    receivesWeightAlerts: boolean
     language?: string
     timeZone?: string
   }) {
@@ -86,7 +97,12 @@ export class UserRegistration {
     this.organization = input.organization
     this.dateOfBirth = input.dateOfBirth
     this.clinician = input.clinician
-    this.messagesSettings = input.messagesSettings
+    this.receivesAppointmentReminders = input.receivesAppointmentReminders
+    this.receivesMedicationUpdates = input.receivesMedicationUpdates
+    this.receivesQuestionnaireReminders = input.receivesQuestionnaireReminders
+    this.receivesRecommendationUpdates = input.receivesRecommendationUpdates
+    this.receivesVitalsReminders = input.receivesVitalsReminders
+    this.receivesWeightAlerts = input.receivesWeightAlerts
     this.language = input.language
     this.timeZone = input.timeZone
   }
