@@ -230,7 +230,7 @@ class HealthSummaryPDFGenerator {
           title:
             recommendation.displayInformation.dosageInformation.currentSchedule
               .map((schedule) =>
-                this.formatDoseSchedule(
+                this.texts.medicationsTable.doseSchedule(
                   schedule,
                   recommendation.displayInformation.dosageInformation.unit,
                 ),
@@ -246,7 +246,7 @@ class HealthSummaryPDFGenerator {
           title:
             recommendation.displayInformation.dosageInformation.targetSchedule
               .map((schedule) =>
-                this.formatDoseSchedule(
+                this.texts.medicationsTable.doseSchedule(
                   schedule,
                   recommendation.displayInformation.dosageInformation.unit,
                 ),
@@ -788,24 +788,5 @@ class HealthSummaryPDFGenerator {
     const fileName = file.split('/').at(-1) ?? file
     this.doc.addFileToVFS(fileName, fontFileContent)
     this.doc.addFont(fileName, name, style.toString())
-  }
-
-  formatDoseSchedule(
-    schedule: UserMedicationRecommendationDoseSchedule,
-    unit: string,
-  ): string {
-    const prefix =
-      schedule.quantity.map((quantity) => quantity.toString()).join('/') +
-      ' ' +
-      unit +
-      ' '
-    switch (schedule.frequency) {
-      case 1:
-        return prefix + 'daily'
-      case 2:
-        return prefix + 'twice daily'
-      default:
-        return prefix + `${schedule.frequency}x daily`
-    }
   }
 }
