@@ -8,6 +8,7 @@
 
 import {
   advanceDateByDays,
+  User,
   type UserDevice,
   UserMessage,
   UserMessageType,
@@ -75,7 +76,7 @@ export class DefaultMessageService implements MessageService {
     message: UserMessage,
     options: {
       notify: boolean
-      language?: string | null
+      user?: User | null
     },
   ): Promise<void> {
     const didAddMessage = await this.databaseService.runTransaction(
@@ -103,11 +104,29 @@ export class DefaultMessageService implements MessageService {
     )
 
     if (didAddMessage && options.notify) {
-      let language = options.language
-      if (language === undefined)
-        language = (await this.userService.getUser(userId))?.content.language
+      const user =
+        options.user ?? (await this.userService.getUser(userId))?.content
+      if (!user) return
+
+      switch (message.type) {
+        case UserMessageType.medicationChange:
+          if (!user.receivesMedicationUpdates) return
+        case UserMessageType.weightGain:
+          if (!user.receivesWeightAlerts) return
+        case UserMessageType.medicationUptitration:
+          if (!user.receivesRecommendationUpdates) return
+        case UserMessageType.welcome:
+          break
+        case UserMessageType.vitals:
+          if (!user.receivesVitalsReminders) return
+        case UserMessageType.symptomQuestionnaire:
+          if (!user.receivesQuestionnaireReminders) return
+        case UserMessageType.preAppointment:
+          if (!user.receivesAppointmentReminders) return
+      }
+
       await this.sendNotification(userId, message, {
-        language: language ?? undefined,
+        language: user.language,
       })
     }
   }
