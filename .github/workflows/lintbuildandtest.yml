@@ -24,7 +24,7 @@ jobs:
       - name: Use Node.js 22.x
         uses: actions/setup-node@v4
         with:
-          node-version: 22.x
+          node-version: 22.6.x
       - name: Install Dependencies
         run: npm run install
       - name: Install Firebase CLI

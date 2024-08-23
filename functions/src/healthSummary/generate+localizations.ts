@@ -6,7 +6,11 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { LocalizedText, type QuantityUnit } from '@stanfordbdhg/engagehf-models'
+import {
+  LocalizedText,
+  type UserMedicationRecommendationDoseSchedule,
+  type QuantityUnit,
+} from '@stanfordbdhg/engagehf-models'
 
 export function healthSummaryLocalizations(languages: string[]) {
   return {
@@ -71,6 +75,30 @@ export function healthSummaryLocalizations(languages: string[]) {
       commentsHeader: new LocalizedText({
         en: 'Questions/Comments',
       }).localize(...languages),
+      doseSchedule(
+        schedule: UserMedicationRecommendationDoseSchedule,
+        unit: string,
+      ): string {
+        const prefix =
+          schedule.quantity.map((quantity) => quantity.toString()).join('/') +
+          ' ' +
+          unit +
+          ' '
+        switch (schedule.frequency) {
+          case 1:
+            return new LocalizedText({
+              en: prefix + 'daily',
+            }).localize(...languages)
+          case 2:
+            return new LocalizedText({
+              en: prefix + 'twice daily',
+            }).localize(...languages)
+          default:
+            return new LocalizedText({
+              en: prefix + `${schedule.frequency}x daily`,
+            }).localize(...languages)
+        }
+      },
     },
     vitalsSection: {
       title: new LocalizedText({
