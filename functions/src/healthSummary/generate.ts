@@ -15,6 +15,7 @@ import {
 import { jsPDF } from 'jspdf'
 import 'jspdf-autotable' /* eslint-disable-line */
 import {
+  Styles,
   type CellDef,
   type RowInput,
   type UserOptions,
@@ -58,6 +59,8 @@ interface TextStyle {
 }
 
 class HealthSummaryPDFGenerator {
+  // Properties
+
   data: HealthSummaryData
   options: HealthSummaryOptions
 
@@ -117,6 +120,8 @@ class HealthSummaryPDFGenerator {
     } as TextStyle,
   }
 
+  // Constructor
+
   constructor(data: HealthSummaryData, options: HealthSummaryOptions) {
     this.data = data
     this.options = options
@@ -134,6 +139,8 @@ class HealthSummaryPDFGenerator {
     )
   }
 
+  // Methods
+
   addFirstPage() {
     this.addPageHeader()
     this.addMedicationSection()
@@ -150,7 +157,9 @@ class HealthSummaryPDFGenerator {
     return Buffer.from(this.doc.output('arraybuffer'))
   }
 
-  addMedicationSection() {
+  // Helpers
+
+  private addMedicationSection() {
     this.addSectionTitle(this.texts.medicationsSection.title)
     this.moveDown(4)
 
@@ -211,63 +220,52 @@ class HealthSummaryPDFGenerator {
         this.texts.medicationsTable.targetDoseHeader,
         this.texts.medicationsTable.recommendationHeader,
         this.texts.medicationsTable.commentsHeader,
-      ].map((title) => ({ title: title })),
+      ].map((title) => this.cell(title)),
       ...this.data.recommendations.map((recommendation, index) => [
-        {
-          title:
-            '[ ] ' +
+        this.cell(
+          '[ ] ' +
             recommendation.displayInformation.title.localize(
               ...this.options.languages,
             ),
-        },
-        {
-          styles: {
+        ),
+        this.cell(
+          recommendation.displayInformation.dosageInformation.currentSchedule
+            .map((schedule) =>
+              this.texts.medicationsTable.doseSchedule(
+                schedule,
+                recommendation.displayInformation.dosageInformation.unit,
+              ),
+            )
+            .join('\n'),
+        ),
+        this.cell(
+          recommendation.displayInformation.dosageInformation.targetSchedule
+            .map((schedule) =>
+              this.texts.medicationsTable.doseSchedule(
+                schedule,
+                recommendation.displayInformation.dosageInformation.unit,
+              ),
+            )
+            .join('\n'),
+          {
             fillColor: colorForRecommendationType(
               recommendation.displayInformation.type,
             ),
           },
-          title:
-            recommendation.displayInformation.dosageInformation.currentSchedule
-              .map((schedule) =>
-                this.texts.medicationsTable.doseSchedule(
-                  schedule,
-                  recommendation.displayInformation.dosageInformation.unit,
-                ),
-              )
-              .join('\n'),
-        },
-        {
-          styles: {
-            fillColor: colorForRecommendationType(
-              recommendation.displayInformation.type,
-            ),
-          },
-          title:
-            recommendation.displayInformation.dosageInformation.targetSchedule
-              .map((schedule) =>
-                this.texts.medicationsTable.doseSchedule(
-                  schedule,
-                  recommendation.displayInformation.dosageInformation.unit,
-                ),
-              )
-              .join('\n'),
-        },
-        {
-          title: recommendation.displayInformation.description.localize(
+        ),
+        this.cell(
+          recommendation.displayInformation.description.localize(
             ...this.options.languages,
           ),
-        },
-        {
-          styles: {
-            lineWidth: {
-              bottom: index === this.data.recommendations.length - 1 ? 0.5 : 0,
-              top: 0,
-              left: 0.5,
-              right: 0.5,
-            },
+        ),
+        this.cell('', {
+          lineWidth: {
+            bottom: index === this.data.recommendations.length - 1 ? 0.5 : 0,
+            top: index == 0 ? 0.5 : 0,
+            left: 0.5,
+            right: 0.5,
           },
-          title: '',
-        },
+        }),
       ]),
     ]
 
@@ -275,7 +273,7 @@ class HealthSummaryPDFGenerator {
     this.moveDown(this.textStyles.body.fontSize)
   }
 
-  addVitalsSection() {
+  private addVitalsSection() {
     this.addSectionTitle(this.texts.vitalsSection.title)
     this.moveDown(4)
     this.splitTwoColumns(
@@ -345,7 +343,7 @@ class HealthSummaryPDFGenerator {
     )
   }
 
-  addSymptomScoresSection() {
+  private addSymptomScoresSection() {
     this.addSectionTitle(this.texts.symptomScoresSection.title)
     this.moveDown(4)
 
@@ -362,8 +360,8 @@ class HealthSummaryPDFGenerator {
             this.moveDown(4)
           })
 
-        const currentScore = this.data.symptomScores.at(-1)
-        const previousScore = this.data.symptomScores.at(-2)
+        const currentScore = this.data.symptomScores.at(0)
+        const previousScore = this.data.symptomScores.at(1)
         if (
           this.data.symptomScores.length >= 2 &&
           currentScore !== undefined &&
@@ -415,28 +413,25 @@ class HealthSummaryPDFGenerator {
         this.texts.symptomScoresTable.qualityOfLifeScoreHeader,
         this.texts.symptomScoresTable.symptomFrequencyScoreHeader,
         this.texts.symptomScoresTable.dizzinessScoreHeader,
-      ].map((title) => ({ title: title })),
-      ...this.data.symptomScores.map((score, index) => [
-        {
-          title: this.texts.symptomScoresTable.formatDate(score.date),
-          styles: {
-            fontStyle:
-              index == this.data.symptomScores.length - 1 ? 'bold' : 'normal',
-          },
-        } as CellDef,
-        { title: score.overallScore.toFixed(0) },
-        { title: score.physicalLimitsScore?.toFixed(0) ?? '---' },
-        { title: score.socialLimitsScore?.toFixed(0) ?? '---' },
-        { title: score.qualityOfLifeScore?.toFixed(0) ?? '---' },
-        { title: score.symptomFrequencyScore?.toFixed(0) ?? '---' },
-        { title: score.dizzinessScore.toFixed(0) },
+      ].map((title) => this.cell(title)),
+      ...[...this.data.symptomScores].reverse().map((score, index) => [
+        this.cell(this.texts.symptomScoresTable.formatDate(score.date), {
+          fontStyle:
+            index == this.data.symptomScores.length - 1 ? 'bold' : 'normal',
+        }),
+        this.cell(score.overallScore.toFixed(0)),
+        this.cell(score.physicalLimitsScore?.toFixed(0) ?? '---'),
+        this.cell(score.socialLimitsScore?.toFixed(0) ?? '---'),
+        this.cell(score.qualityOfLifeScore?.toFixed(0) ?? '---'),
+        this.cell(score.symptomFrequencyScore?.toFixed(0) ?? '---'),
+        this.cell(score.dizzinessScore.toFixed(0)),
       ]),
     ]
     this.addTable(tableContent)
     this.moveDown(this.textStyles.body.fontSize)
   }
 
-  addVitalsChartsSection() {
+  private addVitalsChartsSection() {
     this.addSectionTitle(this.texts.detailedVitalsSection.title)
 
     this.splitTwoColumns(
@@ -467,7 +462,7 @@ class HealthSummaryPDFGenerator {
                 .sevenDayAverageHeader,
               this.texts.detailedVitalsSection.bodyWeightTable.lastVisitHeader,
               this.texts.detailedVitalsSection.bodyWeightTable.rangeHeader,
-            ],
+            ].map((title) => this.cell(title)),
             [
               this.texts.detailedVitalsSection.bodyWeightTable.rowTitle,
               this.data.vitals.bodyWeight.at(0)?.value.toFixed(0) ?? '---',
@@ -476,7 +471,7 @@ class HealthSummaryPDFGenerator {
               isFinite(maxWeight) && isFinite(minWeight) ?
                 (maxWeight - minWeight).toFixed(0)
               : '---',
-            ],
+            ].map((title) => this.cell(title)),
           ],
           columnWidth,
         )
@@ -504,7 +499,7 @@ class HealthSummaryPDFGenerator {
                 .percentageUnder50Header,
               this.texts.detailedVitalsSection.heartRateTable
                 .percentageOver120Header,
-            ],
+            ].map((title) => this.cell(title)),
             [
               this.texts.detailedVitalsSection.heartRateTable.rowTitle,
               presortedMedian(values)?.toFixed(0) ?? '---',
@@ -513,7 +508,7 @@ class HealthSummaryPDFGenerator {
               : '---',
               percentage(values, (value) => value < 50)?.toFixed(0) ?? '---',
               percentage(values, (value) => value > 120)?.toFixed(0) ?? '---',
-            ],
+            ].map((title) => this.cell(title)),
           ],
           columnWidth,
         )
@@ -565,7 +560,7 @@ class HealthSummaryPDFGenerator {
           .percentageUnder90Header,
         this.texts.detailedVitalsSection.bloodPressureTable
           .percentageOver180Header,
-      ],
+      ].map((title) => this.cell(title)),
       [
         this.texts.detailedVitalsSection.bloodPressureTable.systolicRowTitle,
         presortedMedian(systolicValues)?.toFixed(0) ?? '---',
@@ -574,7 +569,7 @@ class HealthSummaryPDFGenerator {
         : '---',
         percentage(systolicValues, (value) => value < 90)?.toFixed(0) ?? '---',
         percentage(systolicValues, (value) => value > 180)?.toFixed(0) ?? '---',
-      ],
+      ].map((title) => this.cell(title)),
       [
         this.texts.detailedVitalsSection.bloodPressureTable.diastolicRowTitle,
         presortedMedian(diastolicValues)?.toFixed(0) ?? '---',
@@ -583,18 +578,18 @@ class HealthSummaryPDFGenerator {
         : '---',
         '-',
         '-',
-      ],
+      ].map((title) => this.cell(title)),
     ])
     this.moveDown(this.textStyles.body.fontSize * 2)
   }
 
-  addPage() {
+  private addPage() {
     this.doc.addPage([this.pageWidth, this.pageHeight])
     this.cursor = { x: this.margins.left, y: this.margins.top }
     this.addPageHeader()
   }
 
-  addPageHeader() {
+  private addPageHeader() {
     this.addText(this.texts.header.title, this.textStyles.h2)
     this.moveDown(4)
     this.addText(this.data.name ?? '---', this.textStyles.h1)
@@ -631,13 +626,13 @@ class HealthSummaryPDFGenerator {
     this.moveDown(8)
   }
 
-  addSectionTitle(title: string) {
+  private addSectionTitle(title: string) {
     this.moveDown(8)
     this.addText(title, this.textStyles.h3)
     this.moveDown(4)
   }
 
-  addChart(data: Observation[], maxWidth?: number, baseline?: number) {
+  private addChart(data: Observation[], maxWidth?: number, baseline?: number) {
     const width =
       maxWidth ?? this.pageWidth - this.cursor.x - this.margins.right
     const height = width * 0.75
@@ -651,7 +646,7 @@ class HealthSummaryPDFGenerator {
     this.addPNG(img, width)
   }
 
-  addSpeedometer(maxWidth?: number) {
+  private addSpeedometer(maxWidth?: number) {
     const width =
       maxWidth ?? this.pageWidth - this.cursor.x - this.margins.right
     const svg = generateSpeedometerSvg(this.data.symptomScores, width, {
@@ -661,7 +656,7 @@ class HealthSummaryPDFGenerator {
     this.addPNG(img, width)
   }
 
-  convertSvgToPng(svg: string): Buffer {
+  private convertSvgToPng(svg: string): Buffer {
     const options: ResvgRenderOptions = {
       font: {
         loadSystemFonts: false,
@@ -681,7 +676,7 @@ class HealthSummaryPDFGenerator {
     return new Resvg(svg, options).render().asPng()
   }
 
-  addPNG(data: Buffer, maxWidth?: number) {
+  private addPNG(data: Buffer, maxWidth?: number) {
     const width =
       maxWidth ?? this.pageWidth - this.margins.left - this.margins.right
     const imgData = 'data:image/png;base64,' + data.toString('base64')
@@ -699,13 +694,14 @@ class HealthSummaryPDFGenerator {
     this.moveDown(height)
   }
 
-  addTable(rows: RowInput[], maxWidth?: number) {
+  private addTable(rows: CellDef[][], maxWidth?: number) {
     const textStyle = this.textStyles.body
     const options: UserOptions = {
       margin: { left: this.cursor.x },
       theme: 'grid',
       startY: this.cursor.y,
-      tableWidth: maxWidth ?? 'auto',
+      tableWidth:
+        maxWidth ?? this.pageWidth - this.margins.left - this.margins.right,
       body: rows,
       styles: {
         font: textStyle.fontName,
@@ -717,7 +713,7 @@ class HealthSummaryPDFGenerator {
     this.cursor.y = (this.doc as any).lastAutoTable.finalY // eslint-disable-line
   }
 
-  addText(
+  private addText(
     text: string,
     textStyle: TextStyle = this.textStyles.body,
     maxWidth?: number,
@@ -748,7 +744,7 @@ class HealthSummaryPDFGenerator {
     }
   }
 
-  addLine(
+  private addLine(
     start: { x: number; y: number },
     end: { x: number; y: number },
     color: [number, number, number],
@@ -759,7 +755,7 @@ class HealthSummaryPDFGenerator {
     this.doc.line(start.x, start.y, end.x, end.y)
   }
 
-  splitTwoColumns(
+  private splitTwoColumns(
     firstColumn: (width: number) => void,
     secondColumn: (width: number) => void,
   ) {
@@ -778,14 +774,31 @@ class HealthSummaryPDFGenerator {
     }
   }
 
-  moveDown(deltaY: number) {
+  private moveDown(deltaY: number) {
     this.cursor.y += deltaY
   }
 
-  addFont(file: string, name: string, style: FontStyle) {
+  private addFont(file: string, name: string, style: FontStyle) {
     const fontFileContent = fs.readFileSync(file).toString('base64')
     const fileName = file.split('/').at(-1) ?? file
     this.doc.addFileToVFS(fileName, fontFileContent)
     this.doc.addFont(fileName, name, style.toString())
+  }
+
+  private cell(title: string, styles: Partial<Styles> = {}): CellDef {
+    styles.cellPadding = styles.cellPadding ?? { vertical: 0, horizontal: 0 }
+    styles.cellPadding = styles.fontSize ?? 4
+    styles.lineWidth = styles.lineWidth ?? {
+      top: 0.5,
+      bottom: 0.5,
+      left: 0.5,
+      right: 0.5,
+    }
+    styles.textColor = styles.textColor ?? 'black'
+    styles.lineColor = styles.lineColor ?? this.colors.black
+    return {
+      styles: styles,
+      title: title,
+    }
   }
 }

@@ -97,7 +97,7 @@ export class MockHealthSummaryService implements HealthSummaryService {
           socialLimitsScore: 38,
           qualityOfLifeScore: 20,
           symptomFrequencyScore: 60,
-          dizzinessScore: 50,
+          dizzinessScore: 3,
           date: this.startDateAdvancedByDays(-9),
         },
         {
@@ -107,7 +107,7 @@ export class MockHealthSummaryService implements HealthSummaryService {
           socialLimitsScore: 75,
           qualityOfLifeScore: 37,
           symptomFrequencyScore: 72,
-          dizzinessScore: 70,
+          dizzinessScore: 2,
           date: this.startDateAdvancedByDays(-18),
         },
         {
@@ -117,7 +117,7 @@ export class MockHealthSummaryService implements HealthSummaryService {
           socialLimitsScore: 41,
           qualityOfLifeScore: 25,
           symptomFrequencyScore: 60,
-          dizzinessScore: 50,
+          dizzinessScore: 1,
           date: this.startDateAdvancedByDays(-34),
         },
         {
@@ -127,7 +127,7 @@ export class MockHealthSummaryService implements HealthSummaryService {
           socialLimitsScore: 75,
           qualityOfLifeScore: 60,
           symptomFrequencyScore: 80,
-          dizzinessScore: 100,
+          dizzinessScore: 1,
           date: this.startDateAdvancedByDays(-49),
         },
       ],
