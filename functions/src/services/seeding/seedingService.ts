@@ -50,9 +50,7 @@ export class SeedingService {
       }
     }
 
-    console.log('will create data', strategy)
     const result = await create()
-    console.log('did create data', strategy)
     if (
       strategy === CachingStrategy.updateCache ||
       strategy === CachingStrategy.updateCacheIfNeeded
