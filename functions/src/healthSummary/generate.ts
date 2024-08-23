@@ -15,9 +15,8 @@ import {
 import { jsPDF } from 'jspdf'
 import 'jspdf-autotable' /* eslint-disable-line */
 import {
-  Styles,
+  type Styles,
   type CellDef,
-  type RowInput,
   type UserOptions,
 } from 'jspdf-autotable' /* eslint-disable-line */
 import { healthSummaryLocalizations } from './generate+localizations.js'
