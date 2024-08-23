@@ -7,16 +7,17 @@
 //
 
 import fs from 'fs'
-import { expect } from 'chai'
-import { describe } from 'mocha'
-import { ContraindicationCategory } from './contraindicationService.js'
-import { DefaultContraindicationService } from './defaultContraindicationService.js'
 import {
   FHIRAllergyIntolerance,
   FHIRAllergyIntoleranceCriticality,
   FHIRAllergyIntoleranceType,
-} from '../../models/fhir/fhirAllergyIntolerance.js'
-import { MedicationClassReference, MedicationReference } from '../references.js'
+  MedicationClassReference,
+  MedicationReference,
+} from '@stanfordbdhg/engagehf-models'
+import { expect } from 'chai'
+import { describe } from 'mocha'
+import { ContraindicationCategory } from './contraindicationService.js'
+import { DefaultContraindicationService } from './defaultContraindicationService.js'
 
 describe('DefaultContraindicationService', () => {
   const contraindicationService = new DefaultContraindicationService()

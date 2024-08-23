@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { type QuantityUnit } from '../services/fhir/quantityUnit.js'
+import { type Observation } from '@stanfordbdhg/engagehf-models'
 
 export interface Vitals {
   systolicBloodPressure: Observation[]
@@ -18,10 +18,4 @@ export interface Vitals {
   dryWeight?: Observation
   estimatedGlomerularFiltrationRate?: Observation
   potassium?: Observation
-}
-
-export interface Observation {
-  date: Date
-  value: number
-  unit: QuantityUnit
 }

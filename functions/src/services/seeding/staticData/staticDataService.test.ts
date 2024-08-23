@@ -5,6 +5,7 @@
 //
 // SPDX-License-Identifier: MIT
 //
+import { CachingStrategy } from '@stanfordbdhg/engagehf-models'
 import { expect } from 'chai'
 import admin from 'firebase-admin'
 import { type Firestore } from 'firebase-admin/firestore'
@@ -12,7 +13,6 @@ import { type StaticDataService } from './staticDataService.js'
 import { cleanupMocks, setupMockFirebase } from '../../../tests/setup.js'
 import { TestFlags } from '../../../tests/testFlags.js'
 import { getServiceFactory } from '../../factory/getServiceFactory.js'
-import { CachingStrategy } from '../seedingService.js'
 
 describe('StaticDataService', () => {
   let firestore: Firestore

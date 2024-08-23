@@ -6,9 +6,12 @@
 // SPDX-License-Identifier: MIT
 //
 
+import {
+  type Observation,
+  type QuantityUnit,
+} from '@stanfordbdhg/engagehf-models'
 import { type HealthSummaryData } from '../../models/healthSummaryData.js'
-import { type Observation, type Vitals } from '../../models/vitals.js'
-import { type QuantityUnit } from '../fhir/quantityUnit.js'
+import { type Vitals } from '../../models/vitals.js'
 
 export interface HealthSummaryService {
   getHealthSummaryData(

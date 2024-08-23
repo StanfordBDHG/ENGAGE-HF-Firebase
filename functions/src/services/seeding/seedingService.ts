@@ -7,6 +7,7 @@
 //
 
 import fs from 'fs'
+import { CachingStrategy } from '@stanfordbdhg/engagehf-models'
 import { type CollectionReference } from 'firebase-admin/firestore'
 import { z } from 'zod'
 
@@ -16,13 +17,6 @@ import { z } from 'zod'
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-
-export enum CachingStrategy {
-  expectCache = 'expectCache',
-  ignoreCache = 'ignoreCache',
-  updateCache = 'updateCache',
-  updateCacheIfNeeded = 'updateCacheIfNeeded',
-}
 
 export interface SeedingOptions {
   useIndicesAsKeys: boolean
@@ -121,7 +115,7 @@ export class SeedingService {
     schema: Schema,
   ): Record<string, z.output<Schema>> {
     return z
-      .record(z.string(), schema)
+      .record(schema)
       .parse(
         JSON.parse(fs.readFileSync(this.path + filename, 'utf8')),
       ) as Record<string, z.output<Schema>>

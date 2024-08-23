@@ -14,9 +14,9 @@ import {
   initializeTestEnvironment,
   type RulesTestEnvironment,
 } from '@firebase/rules-unit-testing'
+import { UserType } from '@stanfordbdhg/engagehf-models'
 import type firebase from 'firebase/compat/app'
 import { describe, it } from 'mocha'
-import { UserType } from '../../models/types/userType.js'
 
 describe('firestore.rules: users/{userId}', () => {
   const organizationId = 'stanford'

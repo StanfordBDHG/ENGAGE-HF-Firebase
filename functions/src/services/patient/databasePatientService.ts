@@ -7,18 +7,18 @@
 //
 
 import { isDeepStrictEqual } from 'util'
-import { type PatientService } from './patientService.js'
-import { advanceDateByDays } from '../../extensions/date.js'
-import { type FHIRMedicationRequest } from '../../models/fhir/baseTypes/fhirElement.js'
-import { type FHIRAllergyIntolerance } from '../../models/fhir/fhirAllergyIntolerance.js'
-import { type FHIRAppointment } from '../../models/fhir/fhirAppointment.js'
-import { type FHIRObservation } from '../../models/fhir/fhirObservation.js'
-import { type FHIRQuestionnaireResponse } from '../../models/fhir/fhirQuestionnaireResponse.js'
-import { type SymptomScore } from '../../models/types/symptomScore.js'
 import {
+  advanceDateByDays,
+  type FHIRAllergyIntolerance,
+  type FHIRAppointment,
+  type FHIRMedicationRequest,
+  type FHIRObservation,
+  type FHIRQuestionnaireResponse,
+  type SymptomScore,
   type UserMedicationRecommendation,
   UserMedicationRecommendationType,
-} from '../../models/types/userMedicationRecommendation.js'
+} from '@stanfordbdhg/engagehf-models'
+import { type PatientService } from './patientService.js'
 import { UserObservationCollection } from '../database/collections.js'
 import {
   type Document,

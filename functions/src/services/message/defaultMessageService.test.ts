@@ -6,12 +6,15 @@
 // SPDX-License-Identifier: MIT
 //
 
+import {
+  LocalizedText,
+  UserMessage,
+  UserMessageType,
+} from '@stanfordbdhg/engagehf-models'
 import { expect } from 'chai'
 import admin from 'firebase-admin'
 import { https } from 'firebase-functions'
 import { type MessageService } from './messageService.js'
-import { LocalizedText } from '../../models/types/localizedText.js'
-import { UserMessage, UserMessageType } from '../../models/types/userMessage.js'
 import { cleanupMocks, setupMockFirebase } from '../../tests/setup.js'
 import { CollectionsService } from '../database/collections.js'
 import { getServiceFactory } from '../factory/getServiceFactory.js'

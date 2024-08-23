@@ -9,6 +9,7 @@
     "build": "tsc",
     "clean": "if [ -f 'tsconfig.tsbuildinfo' ]; then rm tsconfig.tsbuildinfo; fi && if [ -d 'lib' ]; then rm -r lib; fi",
     "test": "npm run clean && npm run build && npm run test:nobuild",
+    "test:ci": "c8 npm run test:nobuild",
     "test:coverage": "c8 npm run test",
     "test:emulators": "firebase emulators:exec --only auth,firestore,storage 'npm run test'",
     "test:nobuild": "env TZ=UTC mocha --reporter-option maxDiffSize=0",
@@ -27,6 +28,7 @@
   },
   "main": "lib/index.js",
   "dependencies": {
+    "@stanfordbdhg/engagehf-models": "file:../models",
     "@resvg/resvg-js": "^2.6.2",
     "d3": "^7.9.0",
     "firebase-admin": "^12.0",

@@ -5,15 +5,16 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import { type FHIRAllergyIntolerance } from '../../models/fhir/fhirAllergyIntolerance.js'
+
+import {
+  type FHIRAllergyIntolerance,
+  type MedicationClassReference,
+  type MedicationReference,
+} from '@stanfordbdhg/engagehf-models'
 import {
   type ContraindicationCategory,
   type ContraindicationService,
 } from '../../services/contraindication/contraindicationService.js'
-import {
-  type MedicationClassReference,
-  type MedicationReference,
-} from '../../services/references.js'
 
 export class MockContraindicationService implements ContraindicationService {
   // Properties

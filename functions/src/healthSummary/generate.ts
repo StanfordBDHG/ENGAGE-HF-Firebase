@@ -8,6 +8,11 @@
 
 import fs from 'fs'
 import { Resvg, type ResvgRenderOptions } from '@resvg/resvg-js'
+import {
+  type Observation,
+  type UserMedicationRecommendationDoseSchedule,
+  UserMedicationRecommendationType,
+} from '@stanfordbdhg/engagehf-models'
 import { jsPDF } from 'jspdf'
 import 'jspdf-autotable' /* eslint-disable-line */
 import {
@@ -25,11 +30,6 @@ import {
   presortedPercentile,
 } from '../extensions/array.js'
 import { type HealthSummaryData } from '../models/healthSummaryData.js'
-import {
-  type UserMedicationRecommendationDoseSchedule,
-  UserMedicationRecommendationType,
-} from '../models/types/userMedicationRecommendation.js'
-import { type Observation } from '../models/vitals.js'
 
 export interface HealthSummaryOptions {
   languages: string[]

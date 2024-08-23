@@ -6,13 +6,15 @@
 // SPDX-License-Identifier: MIT
 //
 
+import {
+  Invitation,
+  Organization,
+  User,
+  type UserAuth,
+  UserRegistration,
+  UserType,
+} from '@stanfordbdhg/engagehf-models'
 import { type UserService } from './userService.js'
-import { Invitation } from '../../models/types/invitation.js'
-import { Organization } from '../../models/types/organization.js'
-import { User } from '../../models/types/user.js'
-import { type UserAuth } from '../../models/types/userAuth.js'
-import { UserRegistration } from '../../models/types/userRegistration.js'
-import { UserType } from '../../models/types/userType.js'
 import { type Document } from '../database/databaseService.js'
 
 /* eslint-disable @typescript-eslint/require-await */

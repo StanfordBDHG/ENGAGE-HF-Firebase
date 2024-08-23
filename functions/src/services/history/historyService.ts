@@ -6,11 +6,10 @@
 // SPDX-License-Identifier: MIT
 //
 
+import { dateConverter, SchemaConverter } from '@stanfordbdhg/engagehf-models'
 import { type DocumentSnapshot } from 'firebase-admin/firestore'
 import { type Change } from 'firebase-functions'
 import { z } from 'zod'
-import { dateConverter } from '../../models/helpers/dateConverter.js'
-import { SchemaConverter } from '../../models/helpers/schemaConverter.js'
 
 export const historyChangeItemConverter = new SchemaConverter({
   schema: z.object({
@@ -24,7 +23,6 @@ export const historyChangeItemConverter = new SchemaConverter({
     data: object.data === undefined ? null : object.data,
   }),
 })
-
 export type HistoryChangeItem = z.output<
   typeof historyChangeItemConverter.schema
 >

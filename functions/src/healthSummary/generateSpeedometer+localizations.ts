@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { LocalizedText } from '../models/types/localizedText.js'
+import { LocalizedText } from '@stanfordbdhg/engagehf-models'
 
 export function symptomScoreSpeedometerLocalizations(languages: string[]) {
   return {
