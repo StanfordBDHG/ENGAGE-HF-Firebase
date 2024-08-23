@@ -10,6 +10,7 @@ import { type DocumentSnapshot } from 'firebase-admin/firestore'
 import { type Change } from 'firebase-functions'
 import { type HistoryService } from './historyService.js'
 import { type DatabaseService } from '../database/databaseService.js'
+import { isDeepStrictEqual } from 'util'
 
 export class DatabaseHistoryService implements HistoryService {
   // Properties
@@ -25,6 +26,7 @@ export class DatabaseHistoryService implements HistoryService {
   // Methods
 
   async recordChange(change: Change<DocumentSnapshot>): Promise<void> {
+    if (isDeepStrictEqual(change.before.data(), change.after.data())) return
     const path = change.after.ref.path
     await this.databaseService.runTransaction((collections, transaction) => {
       transaction.create(collections.history.doc(), {
