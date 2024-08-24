@@ -127,9 +127,6 @@ describe('RecommendationService', () => {
           }),
         )
 
-        console.log('actualRecommendations', actualRecommendations)
-        console.log('expectedRecommendations', expectedRecommendations)
-
         expect(actualRecommendations).to.have.length(
           expectedRecommendations.length,
         )

@@ -19,7 +19,6 @@ import { Flags } from '../flags.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
 async function _defaultSeed(data: z.output<typeof defaultSeedInputSchema>) {
-  console.log(JSON.stringify(data))
   const factory = getServiceFactory()
 
   if (!Flags.isEmulator)
