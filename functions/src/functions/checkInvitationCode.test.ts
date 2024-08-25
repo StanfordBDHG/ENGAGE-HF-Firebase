@@ -40,7 +40,7 @@ describeWithEmulators(
           ),
         (error) => {
           expect((error as https.HttpsError).message).to.equal(
-            'Error: Invitation not found',
+            'Invitation not found',
           )
         },
       )
