@@ -269,6 +269,8 @@ export class DefaultMessageService implements MessageService {
       (collections) => collections.userDevices(userId),
     )
 
+    if (devices.length === 0) return
+
     const notifications: TokenMessage[] = devices.map((device) =>
       this.tokenMessage(message, {
         device: device.content,
