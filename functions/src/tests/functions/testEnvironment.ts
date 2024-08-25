@@ -7,14 +7,17 @@
 //
 
 import http from 'http'
-import admin from 'firebase-admin'
 import { Lazy } from '@stanfordbdhg/engagehf-models'
-import { ServiceFactory } from '../../services/factory/serviceFactory.js'
-import { getServiceFactory } from '../../services/factory/getServiceFactory.js'
+import admin from 'firebase-admin'
+import {
+  type CallableFunction,
+  type CallableRequest,
+} from 'firebase-functions/v2/https'
 import firebaseFunctionsTest from 'firebase-functions-test'
-import { UserClaims } from '../../services/user/databaseUserService.js'
-import { CallableFunction, CallableRequest } from 'firebase-functions/v2/https'
 import { CollectionsService } from '../../services/database/collections.js'
+import { getServiceFactory } from '../../services/factory/getServiceFactory.js'
+import { type ServiceFactory } from '../../services/factory/serviceFactory.js'
+import { type UserClaims } from '../../services/user/databaseUserService.js'
 
 export interface EmulatorTestEnvironmentOptions {
   triggersEnabled: boolean
@@ -23,16 +26,16 @@ export interface EmulatorTestEnvironmentOptions {
 export function describeWithEmulators(
   title: string,
   options: EmulatorTestEnvironmentOptions,
-  perform: (env: EmulatorTestEnvironment) => Promise<void> | void,
+  perform: (env: EmulatorTestEnvironment) => void,
 ) {
-  describe(title, async () => {
+  describe(title, () => {
     const env = EmulatorTestEnvironment.instance
 
     beforeEach(async () => {
       await env.cleanup(options)
     })
 
-    await perform(env)
+    perform(env)
   })
 }
 
@@ -76,7 +79,7 @@ export class EmulatorTestEnvironment {
     auth: { uid: string; token?: Partial<UserClaims> },
   ): Promise<Output> {
     const wrapped = this.wrapper.wrap(func)
-    return await wrapped({
+    return wrapped({
       data: input,
       auth: {
         uid: auth.uid,
@@ -131,9 +134,11 @@ export class EmulatorTestEnvironment {
     return new Promise((resolve, reject) => {
       const request = http.request(url, { method: 'PUT' }, (response) => {
         if (response.statusCode === undefined) {
-          return reject(new Error('statusCode=undefined'))
+          reject(new Error('statusCode=undefined'))
+          return
         } else if (response.statusCode < 200 || response.statusCode >= 300) {
-          return reject(new Error('statusCode=' + response.statusCode))
+          reject(new Error(`statusCode=${response.statusCode}`))
+          return
         }
         response.on('end', resolve)
       })

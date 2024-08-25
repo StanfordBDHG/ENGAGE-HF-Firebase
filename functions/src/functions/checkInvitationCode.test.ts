@@ -6,11 +6,6 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { expect } from 'chai'
-import { describeWithEmulators } from '../tests/functions/testEnvironment.js'
-import { checkInvitationCode } from './checkInvitationCode.js'
-import { expectError } from '../tests/helpers.js'
-import { https } from 'firebase-functions'
 import {
   FHIRAppointment,
   fhirAppointmentConverter,
@@ -24,14 +19,19 @@ import {
   UserRegistration,
   UserType,
 } from '@stanfordbdhg/engagehf-models'
+import { expect } from 'chai'
+import { type https } from 'firebase-functions'
+import { checkInvitationCode } from './checkInvitationCode.js'
 import { DatabaseConverter } from '../services/database/databaseConverter.js'
+import { describeWithEmulators } from '../tests/functions/testEnvironment.js'
+import { expectError } from '../tests/helpers.js'
 
 describeWithEmulators(
   'function: checkInvitationCode',
   { triggersEnabled: true },
-  async (env) => {
+  (env) => {
     it('should fail if the invitation code does not exist', async () => {
-      expectError(
+      await expectError(
         async () =>
           env.call(
             checkInvitationCode,

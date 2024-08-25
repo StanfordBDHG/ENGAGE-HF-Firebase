@@ -13,14 +13,14 @@ import {
   UserRegistration,
   UserType,
 } from '@stanfordbdhg/engagehf-models'
+import { expect } from 'chai'
 import { checkInvitationCode } from './checkInvitationCode.js'
 import { describeWithEmulators } from '../tests/functions/testEnvironment.js'
-import { expect } from 'chai'
 
 describeWithEmulators(
   'function: createInvitation',
   { triggersEnabled: true },
-  async (env) => {
+  (env) => {
     it('should allow a user to create an invitation', async () => {
       const user = await env.auth.createUser({})
 
