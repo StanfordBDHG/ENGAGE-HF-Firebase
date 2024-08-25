@@ -148,6 +148,10 @@ export class MockUserService implements UserService {
     }
   }
 
+  async deleteInvitation(invitationCode: string): Promise<void> {
+    return
+  }
+
   // Methods - User
 
   async getAllPatients(): Promise<Array<Document<User>>> {

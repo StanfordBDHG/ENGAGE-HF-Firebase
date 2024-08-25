@@ -5,3 +5,11 @@
 //
 // SPDX-License-Identifier: MIT
 //
+
+import { describeWithEmulators } from '../tests/functions/testEnvironment.js'
+
+describeWithEmulators(
+  'function: customSeed',
+  { triggersEnabled: true },
+  (env) => {},
+)

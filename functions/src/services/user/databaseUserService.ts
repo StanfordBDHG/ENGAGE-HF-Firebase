@@ -179,6 +179,10 @@ export class DatabaseUserService implements UserService {
     await this.updateClaims(userId)
   }
 
+  async deleteInvitation(invitationCode: string): Promise<void> {
+    // TODO: Implement this function
+  }
+
   // Organizations
 
   async getOrganizationBySsoProviderId(

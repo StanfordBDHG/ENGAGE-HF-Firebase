@@ -63,7 +63,7 @@ export class EmulatorTestEnvironment {
 
   private readonly wrapper = firebaseFunctionsTest()
 
-  private areTriggersEnabled?: boolean
+  private areTriggersEnabled = true
 
   // Constructor
 

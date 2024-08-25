@@ -6,14 +6,10 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { expect } from 'chai'
 import { describeWithEmulators } from '../tests/functions/testEnvironment.js'
-import { expectError } from '../tests/helpers.js'
-import { https } from 'firebase-functions'
-import { createInvitation } from './createInvitation.js'
 
 describeWithEmulators(
-  'function: createInvitation',
+  'function: deleteInvitation',
   { triggersEnabled: true },
   (env) => {},
 )

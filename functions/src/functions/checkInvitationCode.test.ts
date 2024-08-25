@@ -16,6 +16,7 @@ import {
   LoincCode,
   QuantityUnit,
   UserAuth,
+  UserMessageType,
   UserRegistration,
   UserType,
 } from '@stanfordbdhg/engagehf-models'
@@ -130,6 +131,12 @@ describeWithEmulators(
       )
       expect(actualObservation?.effectiveDateTime).to.equal(
         expectedObservation.effectiveDateTime,
+      )
+
+      const userMessages = await env.collections.userMessages(authUser.uid).get()
+      expect(userMessages.docs.length).to.equal(1)
+      expect(userMessages.docs.at(0)?.data().type).to.equal(
+        UserMessageType.welcome,
       )
     })
   },
