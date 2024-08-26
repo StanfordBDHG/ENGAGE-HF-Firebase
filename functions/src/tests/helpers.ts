@@ -8,8 +8,8 @@
 
 import { expect } from 'chai'
 
-export async function expectError(
-  func: () => void | Promise<void>,
+export async function expectError<T>(
+  func: () => T | Promise<T>,
   check: (error: unknown) => void,
 ): Promise<void> {
   try {

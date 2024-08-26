@@ -6,11 +6,11 @@
 // SPDX-License-Identifier: MIT
 //
 
+import { deleteInvitationInputSchema } from '@stanfordbdhg/engagehf-models'
 import { https } from 'firebase-functions'
 import { validatedOnCall } from './helpers.js'
-import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 import { UserRole } from '../services/credential/credential.js'
-import { deleteInvitationInputSchema } from '@stanfordbdhg/engagehf-models'
+import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
 export const deleteInvitation = validatedOnCall(
   deleteInvitationInputSchema,
@@ -21,19 +21,18 @@ export const deleteInvitation = validatedOnCall(
     const factory = getServiceFactory()
     const credential = factory.credential(request.auth)
     const userService = factory.user()
-    try {
-      credential.check(UserRole.admin)
-    } catch {
-      const invitation = await userService.getInvitationByCode(
-        request.data.invitationCode,
-      )
-      if (!invitation?.content.user.organization)
-        throw credential.permissionDeniedError()
-      credential.check(
-        UserRole.owner(invitation.content.user.organization),
-        UserRole.clinician(invitation.content.user.organization),
-      )
-    }
-    await userService.deleteInvitation(request.data.invitationCode)
+    const invitation = await userService.getInvitationByCode(
+      request.data.invitationCode,
+    )
+    if (!invitation?.content.user.organization)
+      throw credential.permissionDeniedError()
+
+    credential.check(
+      UserRole.admin,
+      UserRole.owner(invitation.content.user.organization),
+      UserRole.clinician(invitation.content.user.organization),
+    )
+
+    await userService.deleteInvitation(invitation)
   },
 )

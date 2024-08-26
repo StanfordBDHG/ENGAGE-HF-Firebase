@@ -21,123 +21,125 @@ import {
   UserType,
 } from '@stanfordbdhg/engagehf-models'
 import { expect } from 'chai'
-import { type https } from 'firebase-functions'
 import { checkInvitationCode } from './checkInvitationCode.js'
-import { DatabaseConverter } from '../services/database/databaseConverter.js'
+import { UserObservationCollection } from '../services/database/collections.js'
 import { describeWithEmulators } from '../tests/functions/testEnvironment.js'
 import { expectError } from '../tests/helpers.js'
 
-describeWithEmulators(
-  'function: checkInvitationCode',
-  { triggersEnabled: true },
-  (env) => {
-    it('should fail if the invitation code does not exist', async () => {
-      await expectError(
-        async () =>
-          env.call(
-            checkInvitationCode,
-            { invitationCode: 'TESTCODE' },
-            { uid: 'test' },
-          ),
-        (error) => {
-          expect((error as https.HttpsError).message).to.equal(
-            'Invitation not found',
-          )
-        },
-      )
+describeWithEmulators('function: checkInvitationCode', (env) => {
+  it('should fail if the invitation code does not exist', async () => {
+    await expectError(
+      async () =>
+        env.call(
+          checkInvitationCode,
+          { invitationCode: 'TESTCODE' },
+          { uid: 'test' },
+        ),
+      (error) =>
+        expect(error).to.have.property('message', 'Invitation not found'),
+    )
+  })
+
+  it('should succeed if invitation code exists', async () => {
+    const invitation = new Invitation({
+      auth: new UserAuth({
+        email: 'engagehf-test@stanford.edu',
+      }),
+      code: 'TESTCODE',
+      user: new UserRegistration({
+        type: UserType.patient,
+        organization: 'stanford',
+        receivesAppointmentReminders: true,
+        receivesMedicationUpdates: true,
+        receivesQuestionnaireReminders: true,
+        receivesRecommendationUpdates: true,
+        receivesVitalsReminders: true,
+        receivesWeightAlerts: true,
+      }),
+    })
+    const invitationRef = env.collections.invitations.doc()
+    await invitationRef.set(invitation)
+
+    const expectedAppointment = new FHIRAppointment({
+      status: FHIRAppointmentStatus.booked,
+      created: new Date('2023-12-24'),
+      start: new Date('2023-12-31'),
+      end: new Date('2024-01-01'),
+      participant: [],
     })
 
-    it('should succeed if invitation code exists', async () => {
-      const invitation = new Invitation({
-        auth: new UserAuth({
-          email: 'engagehf-test@stanford.edu',
-        }),
-        code: 'TESTCODE',
-        user: new UserRegistration({
-          type: UserType.patient,
-          organization: 'stanford',
-          receivesAppointmentReminders: true,
-          receivesMedicationUpdates: true,
-          receivesQuestionnaireReminders: true,
-          receivesRecommendationUpdates: true,
-          receivesVitalsReminders: true,
-          receivesWeightAlerts: true,
-        }),
-      })
-      const invitationRef = env.collections.invitations.doc()
-      await invitationRef.set(invitation)
+    await env.collections
+      .invitationAppointments(invitationRef.id)
+      .doc()
+      .set(expectedAppointment)
 
-      const expectedAppointment = new FHIRAppointment({
-        status: FHIRAppointmentStatus.booked,
-        created: new Date('2023-12-24'),
-        start: new Date('2023-12-31'),
-        end: new Date('2024-01-01'),
-        participant: [],
-      })
-
-      await invitationRef
-        .collection('appointments')
-        .doc()
-        .withConverter(new DatabaseConverter(fhirAppointmentConverter.value))
-        .set(expectedAppointment)
-
-      const expectedObservation = FHIRObservation.createSimple({
-        id: '1',
-        code: LoincCode.bodyWeight,
-        value: 70,
-        unit: QuantityUnit.kg,
-        date: new Date(),
-      })
-
-      await invitationRef
-        .collection('bodyWeightObservations')
-        .doc()
-        .withConverter(new DatabaseConverter(fhirObservationConverter.value))
-        .set(expectedObservation)
-
-      const authUser = await env.auth.createUser({})
-      await env.call(
-        checkInvitationCode,
-        { invitationCode: 'TESTCODE' },
-        { uid: authUser.uid },
-      )
-
-      const users = await env.collections.users.get()
-      expect(users.docs).to.have.length(1)
-      const userRef = users.docs.at(0)?.ref
-      const user = users.docs.at(0)?.data()
-      expect(user?.invitationCode).to.equal(invitation.code)
-      expect(user?.dateOfEnrollment.getTime()).to.approximately(
-        new Date().getTime(),
-        2000,
-      )
-
-      const actualAppointments = await userRef?.collection('appointments').get()
-      expect(actualAppointments?.docs).to.have.length(1)
-      const actualAppointment = actualAppointments?.docs.at(0)?.data()
-      expect(actualAppointment?.status).to.equal(FHIRAppointmentStatus.booked)
-      expect(actualAppointment?.created).to.equal(expectedAppointment.created)
-      expect(actualAppointment?.start).to.equal(expectedAppointment.start)
-      expect(actualAppointment?.end).to.equal(expectedAppointment.end)
-
-      const actualObservations = await userRef
-        ?.collection('bodyWeightObservations')
-        .get()
-      expect(actualObservations?.docs).to.have.length(1)
-      const actualObservation = actualObservations?.docs.at(0)?.data()
-      expect(actualObservation?.code).to.equal(expectedObservation.code)
-      expect(actualObservation?.valueQuantity).to.deep.equal(
-        expectedObservation.valueQuantity,
-      )
-      expect(actualObservation?.effectiveDateTime).to.equal(
-        expectedObservation.effectiveDateTime,
-      )
-
-      const userMessages = await env.collections.userMessages(authUser.uid).get()
-      expect(userMessages.docs.length).to.equal(1)
-      expect(userMessages.docs.at(0)?.data().type).to.equal(
-        UserMessageType.welcome,
-      )
+    const expectedObservation = FHIRObservation.createSimple({
+      id: '1',
+      code: LoincCode.bodyWeight,
+      value: 70,
+      unit: QuantityUnit.kg,
+      date: new Date(),
     })
-  },
-)
+
+    await env.collections
+      .invitationObservations(
+        invitationRef.id,
+        UserObservationCollection.bodyWeight,
+      )
+      .doc()
+      .set(expectedObservation)
+
+    const authUser = await env.auth.createUser({})
+    await env.call(
+      checkInvitationCode,
+      { invitationCode: 'TESTCODE' },
+      { uid: authUser.uid },
+    )
+
+    const users = await env.collections.users.get()
+    expect(users.docs).to.have.length(1)
+
+    const user = users.docs.at(0)?.data()
+    expect(user?.invitationCode).to.equal(invitation.code)
+    expect(user?.dateOfEnrollment.getTime()).to.approximately(
+      new Date().getTime(),
+      2000,
+    )
+
+    const actualAppointments = await env.collections
+      .userAppointments(authUser.uid)
+      .get()
+    expect(actualAppointments.docs).to.have.length(1)
+    const actualAppointment = actualAppointments.docs.at(0)?.data()
+    if (actualAppointment === undefined) {
+      expect.fail('actualAppointment is undefined')
+    } else {
+      expect(
+        fhirAppointmentConverter.value.encode(actualAppointment),
+      ).to.deep.equal(
+        fhirAppointmentConverter.value.encode(expectedAppointment),
+      )
+    }
+
+    const actualObservations = await env.collections
+      .userObservations(authUser.uid, UserObservationCollection.bodyWeight)
+      .get()
+    expect(actualObservations.docs).to.have.length(1)
+    const actualObservation = actualObservations.docs.at(0)?.data()
+    if (actualObservation === undefined) {
+      expect.fail('actualObservation is undefined')
+    } else {
+      expect(
+        fhirObservationConverter.value.encode(actualObservation),
+      ).to.deep.equal(
+        fhirObservationConverter.value.encode(expectedObservation),
+      )
+    }
+
+    const userMessages = await env.collections.userMessages(authUser.uid).get()
+    expect(userMessages.docs.length).to.equal(1)
+    expect(userMessages.docs.at(0)?.data().type).to.equal(
+      UserMessageType.welcome,
+    )
+  })
+})

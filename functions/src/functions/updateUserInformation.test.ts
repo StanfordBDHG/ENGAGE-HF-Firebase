@@ -6,10 +6,31 @@
 // SPDX-License-Identifier: MIT
 //
 
+import { expect } from 'chai'
+import { it } from 'mocha'
+import { updateUserInformation } from './updateUserInformation.js'
 import { describeWithEmulators } from '../tests/functions/testEnvironment.js'
 
-describeWithEmulators(
-  'function: updateUserInformation',
-  { triggersEnabled: true },
-  (env) => {},
-)
+describeWithEmulators('function: updateUserInformation', (env) => {
+  it('updates user information successfully', async () => {
+    const authUser = await env.auth.createUser({})
+
+    await env.call(
+      updateUserInformation,
+      {
+        userId: authUser.uid,
+        data: {
+          auth: {
+            displayName: 'Test User',
+            email: 'engagehf-test@stanford.edu',
+          },
+        },
+      },
+      { uid: authUser.uid },
+    )
+
+    const updatedUser = await env.auth.getUser(authUser.uid)
+    expect(updatedUser.displayName).to.equal('Test User')
+    expect(updatedUser.email).to.equal('engagehf-test@stanford.edu')
+  })
+})

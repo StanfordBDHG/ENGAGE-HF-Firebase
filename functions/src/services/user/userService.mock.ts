@@ -148,7 +148,7 @@ export class MockUserService implements UserService {
     }
   }
 
-  async deleteInvitation(invitationCode: string): Promise<void> {
+  async deleteInvitation(invitation: Document<Invitation>): Promise<void> {
     return
   }
 
