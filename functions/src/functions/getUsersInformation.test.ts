@@ -17,230 +17,151 @@ import { describeWithEmulators } from '../tests/functions/testEnvironment.js'
 
 describeWithEmulators('function: getUsersInformation', (env) => {
   it('should return users information', async () => {
-    const adminAuth = await env.auth.createUser({})
-    const ownerAuth = await env.auth.createUser({})
-    const clinicianAuth = await env.auth.createUser({})
-    const patientAuth = await env.auth.createUser({})
-
-    const admin = new User({
+    const adminId = await env.createUser({
       type: UserType.admin,
-      invitationCode: 'ADMIN001',
-      dateOfEnrollment: new Date(),
-      receivesAppointmentReminders: true,
-      receivesMedicationUpdates: false,
-      receivesQuestionnaireReminders: true,
-      receivesRecommendationUpdates: false,
-      receivesVitalsReminders: true,
-      receivesWeightAlerts: false,
     })
-    await env.collections.users.doc(adminAuth.uid).set(admin)
-
-    const owner = new User({
-      ...admin,
+    const ownerId = await env.createUser({
       type: UserType.owner,
       organization: 'stanford',
-      invitationCode: 'OWNER001',
     })
-    await env.collections.users.doc(ownerAuth.uid).set(owner)
-
-    const clinician = new User({
-      ...admin,
+    const clinicianId = await env.createUser({
       type: UserType.clinician,
       organization: 'jhu',
-      invitationCode: 'CLINIC01',
     })
-    await env.collections.users.doc(clinicianAuth.uid).set(clinician)
-
-    const patient = new User({
-      ...admin,
+    const patientId = await env.createUser({
       type: UserType.patient,
       organization: 'stanford',
-      invitationCode: 'PATIENT01',
     })
-    await env.collections.users.doc(patientAuth.uid).set(patient)
 
     const adminResult = await env.call(
       getUsersInformation,
       {
-        userIds: [
-          adminAuth.uid,
-          ownerAuth.uid,
-          clinicianAuth.uid,
-          patientAuth.uid,
-        ],
+        userIds: [adminId, ownerId, clinicianId, patientId],
         includeUserData: true,
       },
-      { uid: adminAuth.uid, token: { type: UserType.admin } },
+      { uid: adminId, token: { type: UserType.admin } },
     )
     expect(Object.keys(adminResult)).to.have.length(4)
-    expect(adminResult[adminAuth.uid], 'admin: admin object').to.exist
-    expect((adminResult[adminAuth.uid] as any).data, 'admin: admin data').to
+    expect(adminResult[adminId], 'admin: admin object').to.exist
+    expect((adminResult[adminId] as any).data, 'admin: admin data').to.exist
+    expect((adminResult[adminId] as any).error, 'admin: admin error').to.be
+      .undefined
+    expect(adminResult[ownerId], 'admin: owner object').to.exist
+    expect((adminResult[ownerId] as any).data, 'admin: owner data').to.exist
+    expect((adminResult[ownerId] as any).error, 'admin: owner error').to.be
+      .undefined
+    expect(adminResult[clinicianId], 'admin: clinician object').to.exist
+    expect((adminResult[clinicianId] as any).data, 'admin: clinician data').to
       .exist
-    expect((adminResult[adminAuth.uid] as any).error, 'admin: admin error').to
+    expect((adminResult[clinicianId] as any).error, 'admin: clinician error').to
       .be.undefined
-    expect(adminResult[ownerAuth.uid], 'admin: owner object').to.exist
-    expect((adminResult[ownerAuth.uid] as any).data, 'admin: owner data').to
-      .exist
-    expect((adminResult[ownerAuth.uid] as any).error, 'admin: owner error').to
-      .be.undefined
-    expect(adminResult[clinicianAuth.uid], 'admin: clinician object').to.exist
-    expect(
-      (adminResult[clinicianAuth.uid] as any).data,
-      'admin: clinician data',
-    ).to.exist
-    expect(
-      (adminResult[clinicianAuth.uid] as any).error,
-      'admin: clinician error',
-    ).to.be.undefined
-    expect(adminResult[patientAuth.uid], 'admin: patient object').to.exist
-    expect((adminResult[patientAuth.uid] as any).data, 'admin: patient data').to
-      .exist
-    expect((adminResult[patientAuth.uid] as any).error, 'admin: patient error')
-      .to.be.undefined
+    expect(adminResult[patientId], 'admin: patient object').to.exist
+    expect((adminResult[patientId] as any).data, 'admin: patient data').to.exist
+    expect((adminResult[patientId] as any).error, 'admin: patient error').to.be
+      .undefined
 
     const ownerResult = await env.call(
       getUsersInformation,
       {
-        userIds: [
-          adminAuth.uid,
-          ownerAuth.uid,
-          clinicianAuth.uid,
-          patientAuth.uid,
-        ],
+        userIds: [adminId, ownerId, clinicianId, patientId],
         includeUserData: true,
       },
       {
-        uid: ownerAuth.uid,
+        uid: ownerId,
         token: { type: UserType.owner, organization: 'stanford' },
       },
     )
     expect(Object.keys(ownerResult)).to.have.length(4)
-    expect(ownerResult[adminAuth.uid], 'owner: admin object').to.exist
-    expect((ownerResult[adminAuth.uid] as any).data, 'owner: admin data').to.be
+    expect(ownerResult[adminId], 'owner: admin object').to.exist
+    expect((ownerResult[adminId] as any).data, 'owner: admin data').to.be
       .undefined
-    expect((ownerResult[adminAuth.uid] as any).error, 'owner: admin error').to
-      .exist
-    expect(ownerResult[ownerAuth.uid], 'owner: owner object').to.exist
-    expect((ownerResult[ownerAuth.uid] as any).data, 'owner: owner data').to
-      .exist
-    expect((ownerResult[ownerAuth.uid] as any).error, 'owner: owner error').to
+    expect((ownerResult[adminId] as any).error, 'owner: admin error').to.exist
+    expect(ownerResult[ownerId], 'owner: owner object').to.exist
+    expect((ownerResult[ownerId] as any).data, 'owner: owner data').to.exist
+    expect((ownerResult[ownerId] as any).error, 'owner: owner error').to.be
+      .undefined
+    expect(ownerResult[clinicianId], 'owner: clinician object').to.exist
+    expect((ownerResult[clinicianId] as any).data, 'owner: clinician data').to
       .be.undefined
-    expect(ownerResult[clinicianAuth.uid], 'owner: clinician object').to.exist
-    expect(
-      (ownerResult[clinicianAuth.uid] as any).data,
-      'owner: clinician data',
-    ).to.be.undefined
-    expect(
-      (ownerResult[clinicianAuth.uid] as any).error,
-      'owner: clinician error',
-    ).to.exist
-    expect(ownerResult[patientAuth.uid], 'owner: patient object').to.exist
-    expect((ownerResult[patientAuth.uid] as any).data, 'owner: patient data').to
+    expect((ownerResult[clinicianId] as any).error, 'owner: clinician error').to
       .exist
-    expect((ownerResult[patientAuth.uid] as any).error, 'owner: patient error')
-      .to.be.undefined
+    expect(ownerResult[patientId], 'owner: patient object').to.exist
+    expect((ownerResult[patientId] as any).data, 'owner: patient data').to.exist
+    expect((ownerResult[patientId] as any).error, 'owner: patient error').to.be
+      .undefined
 
     const clinicianResult = await env.call(
       getUsersInformation,
       {
-        userIds: [
-          adminAuth.uid,
-          ownerAuth.uid,
-          clinicianAuth.uid,
-          patientAuth.uid,
-        ],
+        userIds: [adminId, ownerId, clinicianId, patientId],
         includeUserData: true,
       },
       {
-        uid: clinicianAuth.uid,
+        uid: clinicianId,
         token: { type: UserType.clinician, organization: 'jhu' },
       },
     )
     expect(Object.keys(clinicianResult)).to.have.length(4)
-    expect(clinicianResult[adminAuth.uid], 'clinician: admin object').to.exist
-    expect(
-      (clinicianResult[adminAuth.uid] as any).data,
-      'clinician: admin data',
-    ).to.be.undefined
-    expect(
-      (clinicianResult[adminAuth.uid] as any).error,
-      'clinician: admin error',
-    ).to.exist
-    expect(clinicianResult[ownerAuth.uid], 'clinician: owner object').to.exist
-    expect(
-      (clinicianResult[ownerAuth.uid] as any).data,
-      'clinician: owner data',
-    ).to.be.undefined
-    expect(
-      (clinicianResult[ownerAuth.uid] as any).error,
-      'clinician: owner error',
-    ).to.exist
-    expect(clinicianResult[clinicianAuth.uid], 'clinician: clinician object').to
+    expect(clinicianResult[adminId], 'clinician: admin object').to.exist
+    expect((clinicianResult[adminId] as any).data, 'clinician: admin data').to
+      .be.undefined
+    expect((clinicianResult[adminId] as any).error, 'clinician: admin error').to
       .exist
+    expect(clinicianResult[ownerId], 'clinician: owner object').to.exist
+    expect((clinicianResult[ownerId] as any).data, 'clinician: owner data').to
+      .be.undefined
+    expect((clinicianResult[ownerId] as any).error, 'clinician: owner error').to
+      .exist
+    expect(clinicianResult[clinicianId], 'clinician: clinician object').to.exist
     expect(
-      (clinicianResult[clinicianAuth.uid] as any).data,
+      (clinicianResult[clinicianId] as any).data,
       'clinician: clinician data',
     ).to.exist
     expect(
-      (clinicianResult[clinicianAuth.uid] as any).error,
+      (clinicianResult[clinicianId] as any).error,
       'clinician: clinician error',
     ).to.be.undefined
-    expect(clinicianResult[patientAuth.uid], 'clinician: patient object').to
-      .exist
+    expect(clinicianResult[patientId], 'clinician: patient object').to.exist
+    expect((clinicianResult[patientId] as any).data, 'clinician: patient data')
+      .to.be.undefined
     expect(
-      (clinicianResult[patientAuth.uid] as any).data,
-      'clinician: patient data',
-    ).to.be.undefined
-    expect(
-      (clinicianResult[patientAuth.uid] as any).error,
+      (clinicianResult[patientId] as any).error,
       'clinician: patient error',
     ).to.exist
 
     const patientResult = await env.call(
       getUsersInformation,
       {
-        userIds: [
-          adminAuth.uid,
-          ownerAuth.uid,
-          clinicianAuth.uid,
-          patientAuth.uid,
-        ],
+        userIds: [adminId, ownerId, clinicianId, patientId],
         includeUserData: true,
       },
       {
-        uid: patientAuth.uid,
+        uid: patientId,
         token: { type: UserType.patient, organization: 'stanford' },
       },
     )
     expect(Object.keys(patientResult)).to.have.length(4)
-    expect(patientResult[adminAuth.uid], 'patient: admin object').to.exist
-    expect((patientResult[adminAuth.uid] as any).data, 'patient: admin data').to
-      .be.undefined
-    expect((patientResult[adminAuth.uid] as any).error, 'patient: admin error')
-      .to.exist
-    expect(patientResult[ownerAuth.uid], 'patient: owner object').to.exist
-    expect((patientResult[ownerAuth.uid] as any).data, 'patient: owner data').to
-      .be.undefined
-    expect((patientResult[ownerAuth.uid] as any).error, 'patient: owner error')
-      .to.exist
-    expect(patientResult[clinicianAuth.uid], 'patient: clinician object').to
+    expect(patientResult[adminId], 'patient: admin object').to.exist
+    expect((patientResult[adminId] as any).data, 'patient: admin data').to.be
+      .undefined
+    expect((patientResult[adminId] as any).error, 'patient: admin error').to
       .exist
+    expect(patientResult[ownerId], 'patient: owner object').to.exist
+    expect((patientResult[ownerId] as any).data, 'patient: owner data').to.be
+      .undefined
+    expect((patientResult[ownerId] as any).error, 'patient: owner error').to
+      .exist
+    expect(patientResult[clinicianId], 'patient: clinician object').to.exist
+    expect((patientResult[clinicianId] as any).data, 'patient: clinician data')
+      .to.be.undefined
     expect(
-      (patientResult[clinicianAuth.uid] as any).data,
-      'patient: clinician data',
-    ).to.be.undefined
-    expect(
-      (patientResult[clinicianAuth.uid] as any).error,
+      (patientResult[clinicianId] as any).error,
       'patient: clinician error',
     ).to.exist
-    expect(patientResult[patientAuth.uid], 'patient: patient object').to.exist
-    expect(
-      (patientResult[patientAuth.uid] as any).data,
-      'patient: patient data',
-    ).to.exist
-    expect(
-      (patientResult[patientAuth.uid] as any).error,
-      'patient: patient error',
-    ).to.be.undefined
+    expect(patientResult[patientId], 'patient: patient object').to.exist
+    expect((patientResult[patientId] as any).data, 'patient: patient data').to
+      .exist
+    expect((patientResult[patientId] as any).error, 'patient: patient error').to
+      .be.undefined
   })
 })

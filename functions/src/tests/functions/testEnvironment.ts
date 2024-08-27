@@ -7,7 +7,7 @@
 //
 
 import http from 'http'
-import { Lazy } from '@stanfordbdhg/engagehf-models'
+import { Lazy, User, UserType } from '@stanfordbdhg/engagehf-models'
 import admin from 'firebase-admin'
 import {
   type CallableFunction,
@@ -85,13 +85,6 @@ export class EmulatorTestEnvironment {
     } as unknown as CallableRequest<Input>)
   }
 
-  async request(name: string, data: object) {
-    await this.post(
-      'http://localhost:5501/stanford-bdhg-engage-hf/us-central1/' + name,
-      data,
-    )
-  }
-
   async cleanup() {
     const collections = await admin.firestore().listCollections()
     for (const collection of collections) {
@@ -101,6 +94,41 @@ export class EmulatorTestEnvironment {
     for (const user of usersResult.users) {
       await admin.auth().deleteUser(user.uid)
     }
+  }
+
+  async createUser(
+    options: {
+      type: UserType
+      organization?: string
+      dateOfEnrollment?: Date
+      invitationCode?: string
+      receivesAppointmentReminders?: boolean
+      receivesMedicationUpdates?: boolean
+      receivesQuestionnaireReminders?: boolean
+      receivesRecommendationUpdates?: boolean
+      receivesVitalsReminders?: boolean
+      receivesWeightAlerts?: boolean
+    } & admin.auth.CreateRequest,
+  ) {
+    const authUser = await this.auth.createUser(options)
+    await this.collections.users.doc(authUser.uid).set(
+      new User({
+        type: options.type,
+        organization: options.organization,
+        dateOfEnrollment: options.dateOfEnrollment ?? new Date(),
+        invitationCode: options.invitationCode ?? 'TESTCODE',
+        receivesAppointmentReminders:
+          options.receivesAppointmentReminders ?? true,
+        receivesMedicationUpdates: options.receivesMedicationUpdates ?? true,
+        receivesQuestionnaireReminders:
+          options.receivesQuestionnaireReminders ?? true,
+        receivesRecommendationUpdates:
+          options.receivesRecommendationUpdates ?? true,
+        receivesVitalsReminders: options.receivesVitalsReminders ?? true,
+        receivesWeightAlerts: options.receivesWeightAlerts ?? true,
+      }),
+    )
+    return authUser.uid
   }
 
   // Helpers
