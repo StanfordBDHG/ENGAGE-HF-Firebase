@@ -7,7 +7,7 @@
 //
 
 import http from 'http'
-import { Lazy, User, UserType } from '@stanfordbdhg/engagehf-models'
+import { Lazy, User, type UserType } from '@stanfordbdhg/engagehf-models'
 import admin from 'firebase-admin'
 import {
   type CallableFunction,

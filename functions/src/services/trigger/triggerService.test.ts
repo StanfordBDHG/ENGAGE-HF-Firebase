@@ -14,8 +14,8 @@ import {
   UserMessageType,
   UserType,
 } from '@stanfordbdhg/engagehf-models'
-import { describeWithEmulators } from '../../tests/functions/testEnvironment.js'
 import { expect } from 'chai'
+import { describeWithEmulators } from '../../tests/functions/testEnvironment.js'
 
 describeWithEmulators('TriggerService', (env) => {
   describe('every15Minutes', () => {

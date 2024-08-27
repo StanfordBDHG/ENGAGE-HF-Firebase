@@ -9,7 +9,6 @@
 import {
   FHIRAppointment,
   FHIRAppointmentStatus,
-  User,
   UserType,
 } from '@stanfordbdhg/engagehf-models'
 import { expect } from 'chai'

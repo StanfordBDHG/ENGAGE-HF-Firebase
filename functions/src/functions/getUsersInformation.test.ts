@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { User, UserType } from '@stanfordbdhg/engagehf-models'
+import { UserType } from '@stanfordbdhg/engagehf-models'
 import { expect } from 'chai'
 import { it } from 'mocha'
 import { getUsersInformation } from './getUsersInformation.js'
