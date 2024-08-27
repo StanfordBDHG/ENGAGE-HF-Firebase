@@ -15,7 +15,7 @@ import { readCsv } from '../../tests/helpers/csv.js'
 describe('DefaultSymptomScoreCalculator', () => {
   it('correctly computes symptom scores', () => {
     const calculator = new DefaultSymptomScoreCalculator()
-    readCsv('src/tests/resources/kccqvalues.csv', 2267, (values, index) => {
+    readCsv('src/tests/resources/symptomScores.csv', 2267, (values, index) => {
       const q1: Record<string, number> = {
         'Not at all limited': 5,
         'Slightly limited': 4,
