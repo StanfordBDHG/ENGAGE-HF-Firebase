@@ -53,8 +53,6 @@ describe('RecommendationService', () => {
           .map(getMedicationRequest)
           .flatMap((x) => (x ? [x] : []))
 
-        console.log(medicationRequests)
-
         const vitals = getVitals({
           countBloodPressureBelow85: parseInt(values[4]),
           medianSystolicBloodPressure:
