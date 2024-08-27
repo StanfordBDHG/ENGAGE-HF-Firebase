@@ -45,8 +45,7 @@ describe('RecommendationService', () => {
   describe('should return the right value', () => {
     readCsv('src/tests/resources/medtitrationtest.csv', 76, (values, index) => {
       if (index === 0) return
-      const lineIndex = index
-      it(`line ${lineIndex}: ${values.join(',')}`, async () => {
+      it(`line ${index + 1}: ${values.join(',')}`, async () => {
         expect(values).to.have.length(24)
 
         const medicationRequests = values
