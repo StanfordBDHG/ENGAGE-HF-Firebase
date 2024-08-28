@@ -45,17 +45,30 @@ export class DefaultMessageService implements MessageService {
 
   // Methods - Devices
 
-  async registerDevice(userId: string, device: UserDevice): Promise<void> {
+  async registerDevice(userId: string, newDevice: UserDevice): Promise<void> {
     await this.databaseService.runTransaction(
       async (collections, transaction) => {
-        const devices = await transaction.get(collections.userDevices(userId))
-        const existingDevice = devices.docs.find(
-          (doc) => doc.data().notificationToken === device.notificationToken,
+        const devices = await transaction.get(
+          collections.devices.where(
+            'notificationToken',
+            '==',
+            newDevice.notificationToken,
+          ),
         )
-        transaction.set(
-          existingDevice?.ref ?? collections.userDevices(userId).doc(),
-          device,
-        )
+        const userPath = collections.users.doc(userId).path
+        let didFindExistingDevice = false
+        for (const device of devices.docs) {
+          if (device.data().platform !== newDevice.platform) continue
+          if (!didFindExistingDevice && device.ref.path.startsWith(userPath)) {
+            transaction.set(device.ref, newDevice)
+            didFindExistingDevice = true
+          } else {
+            transaction.delete(device.ref)
+          }
+        }
+
+        if (!didFindExistingDevice)
+          transaction.set(collections.userDevices(userId).doc(), newDevice)
       },
     )
     return

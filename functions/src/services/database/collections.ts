@@ -57,6 +57,12 @@ export class CollectionsService {
       .withConverter(new DatabaseConverter(fhirAppointmentConverter.value))
   }
 
+  get devices() {
+    return this.firestore
+      .collectionGroup('devices')
+      .withConverter(new DatabaseConverter(userDeviceConverter.value))
+  }
+
   get invitations() {
     return this.firestore
       .collection('invitations')
