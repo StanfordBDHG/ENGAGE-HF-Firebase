@@ -76,16 +76,18 @@ export class DefaultMessageService implements MessageService {
   }
 
   async unregisterDevice(
-    userId: string,
+    _: string,
     notificationToken: string,
     platform: UserDevicePlatform,
   ): Promise<void> {
     await this.databaseService.runTransaction(
       async (collections, transaction) => {
         const devices = await transaction.get(
-          collections
-            .userDevices(userId)
-            .where('notificationToken', '==', notificationToken),
+          collections.devices.where(
+            'notificationToken',
+            '==',
+            notificationToken,
+          ),
         )
         for (const device of devices.docs) {
           if (device.data().platform !== platform) continue
