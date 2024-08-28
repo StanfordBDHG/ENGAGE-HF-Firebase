@@ -11,17 +11,59 @@ import {
   beforeUserSignedIn,
 } from 'firebase-functions/v2/identity'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
+import { https } from 'firebase-functions'
+import { UserType } from '@stanfordbdhg/engagehf-models'
 
-export const beforeUserCreatedFunction = beforeUserCreated((event) => {
-  console.log(`beforeUserCreated with event: ${JSON.stringify(event)}`)
+export const beforeUserCreatedFunction = beforeUserCreated(async (event) => {
+  const userId = event.data.uid
+
+  const factory = getServiceFactory()
+  const userService = factory.user()
+
+  if (event.credential === undefined)
+    throw new https.HttpsError(
+      'failed-precondition',
+      'No credential found for user.',
+    )
+
+  if (event.data.email === undefined)
+    throw new https.HttpsError(
+      'invalid-argument',
+      'Email address is required for user.',
+    )
+
+  const organization = await userService.getOrganizationBySsoProviderId(
+    event.credential.providerId,
+  )
+
+  if (organization === undefined)
+    throw new https.HttpsError('failed-precondition', 'Organization not found.')
+
+  const invitation = await userService.getInvitationByCode(event.data.email)
+  if (invitation?.content === undefined) {
+    throw new https.HttpsError(
+      'not-found',
+      'No valid invitation code found for user.',
+    )
+  }
+
+  if (
+    invitation.content.user.type === UserType.admin &&
+    invitation.content.user.organization !== organization.id
+  )
+    throw new https.HttpsError(
+      'failed-precondition',
+      'Organization does not match invitation code.',
+    )
+
+  await userService.enrollUser(invitation, userId)
+  await factory.trigger().userEnrolled(userId)
 })
 
 export const beforeUserSignedInFunction = beforeUserSignedIn(async (event) => {
   try {
     await getServiceFactory().user().updateClaims(event.data.uid)
   } catch (error) {
-    console.error(
-      `beforeUserSignedIn finished with error: ${String(error)}. This is expected behavior for the troubleshooting with Firebase Support.`,
-    )
+    console.error(`beforeUserSignedIn finished with error: ${String(error)}.`)
   }
 })
