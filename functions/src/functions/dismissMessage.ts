@@ -20,23 +20,18 @@ export const dismissMessage = validatedOnCall(
     if (!userId)
       throw new https.HttpsError('not-found', 'User could not be found.')
 
-    try {
-      const factory = getServiceFactory()
+    const factory = getServiceFactory()
 
-      factory
-        .credential(request.auth)
-        .check(UserRole.admin, UserRole.user(userId))
+    factory
+      .credential(request.auth)
+      .check(UserRole.admin, UserRole.user(userId))
 
-      await factory
-        .message()
-        .dismissMessage(
-          userId,
-          request.data.messageId,
-          request.data.didPerformAction,
-        )
-    } catch (error) {
-      console.error(error)
-      throw new https.HttpsError('internal', 'Internal server error.')
-    }
+    await factory
+      .message()
+      .dismissMessage(
+        userId,
+        request.data.messageId,
+        request.data.didPerformAction,
+      )
   },
 )

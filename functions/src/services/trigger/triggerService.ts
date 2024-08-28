@@ -82,6 +82,7 @@ export class TriggerService {
 
   async everyMorning() {
     try {
+      const now = new Date()
       const messageService = this.factory.message()
       const users = await this.factory.user().getAllPatients()
 
@@ -98,10 +99,18 @@ export class TriggerService {
               user: user.content,
             })
 
-            const enrollmentDate = user.content.dateOfEnrollment
+            const enrollmentDuration = Math.abs(
+              user.content.dateOfEnrollment.getTime() - now.getTime(),
+            )
             const durationOfOneDayInMilliseconds = 24 * 60 * 60 * 1000
+            console.log(
+              enrollmentDuration,
+              enrollmentDuration % (durationOfOneDayInMilliseconds * 14),
+              '<',
+              durationOfOneDayInMilliseconds,
+            )
             if (
-              enrollmentDate.getTime() % (durationOfOneDayInMilliseconds * 14) <
+              enrollmentDuration % (durationOfOneDayInMilliseconds * 14) <
               durationOfOneDayInMilliseconds
             ) {
               await messageService.addMessage(user.id, symptomReminderMessage, {
@@ -111,9 +120,10 @@ export class TriggerService {
             }
 
             if (
-              advanceDateByDays(enrollmentDate, -2).getTime() %
-                (durationOfOneDayInMilliseconds * 14) <
-              durationOfOneDayInMilliseconds
+              enrollmentDuration % (durationOfOneDayInMilliseconds * 14) >
+                durationOfOneDayInMilliseconds * 2 &&
+              enrollmentDuration % (durationOfOneDayInMilliseconds * 14) <
+                durationOfOneDayInMilliseconds * 3
             ) {
               await this.addMedicationUptitrationMessageIfNeeded({
                 userId: user.id,
