@@ -198,14 +198,19 @@ export class DatabaseUserService implements UserService {
                 userRef.collection(collectionId).doc(item.id),
                 item.data(),
               )
-              // transaction.delete(item.ref)
+              transaction.delete(item.ref)
             }
           },
         ),
       ),
     )
 
-    // transaction.delete(invitationRef)
+    await this.databaseService.bulkWrite(async (collections, writer) => {
+      collections.firestore.recursiveDelete(
+        collections.invitations.doc(invitation.id),
+        writer,
+      )
+    })
 
     await this.updateClaims(userId)
   }
