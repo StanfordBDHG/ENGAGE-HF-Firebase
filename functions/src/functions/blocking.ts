@@ -6,13 +6,13 @@
 // SPDX-License-Identifier: MIT
 //
 
+import { UserType } from '@stanfordbdhg/engagehf-models'
+import { https } from 'firebase-functions'
 import {
   beforeUserCreated,
   beforeUserSignedIn,
 } from 'firebase-functions/v2/identity'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
-import { https } from 'firebase-functions'
-import { UserType } from '@stanfordbdhg/engagehf-models'
 
 export const beforeUserCreatedFunction = beforeUserCreated(async (event) => {
   const userId = event.data.uid

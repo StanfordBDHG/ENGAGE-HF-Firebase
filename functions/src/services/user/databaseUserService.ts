@@ -211,7 +211,7 @@ export class DatabaseUserService implements UserService {
     )
 
     await this.databaseService.bulkWrite(async (collections, writer) => {
-      collections.firestore.recursiveDelete(
+      await collections.firestore.recursiveDelete(
         collections.invitations.doc(invitation.id),
         writer,
       )
