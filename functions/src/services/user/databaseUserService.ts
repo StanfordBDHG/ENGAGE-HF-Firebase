@@ -155,6 +155,11 @@ export class DatabaseUserService implements UserService {
     const user = await this.databaseService.getDocument((collections) =>
       collections.users.doc(userId),
     )
+    if (userId !== invitation.content.userId)
+      throw new https.HttpsError(
+        'permission-denied',
+        'Invitation does not belong to the user.',
+      )
     if (user?.content)
       throw new https.HttpsError(
         'already-exists',
