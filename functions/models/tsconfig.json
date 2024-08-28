@@ -13,7 +13,7 @@
     "isolatedModules": true,
     "incremental": true,
     "outDir": "lib",
-    "rootDir": "src",
+    "rootDir": "src"
   },
   "include": ["src/**/*.ts"],
   "exclude": []

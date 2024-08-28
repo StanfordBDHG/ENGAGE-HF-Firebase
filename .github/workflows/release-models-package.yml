@@ -21,14 +21,14 @@ jobs:
       packages: write
     defaults:
       run:
-        working-directory: ./models
+        working-directory: ./functions/models
     steps:
       - uses: actions/checkout@v4
         # Setup .npmrc file to publish to npm
       - uses: actions/setup-node@v4
         with:
           node-version: '22.x'
-          cache-dependency-path: ./models/package-lock.json
+          cache-dependency-path: ./functions/models/package-lock.json
           registry-url: https://npm.pkg.github.com/
           always-auth: true
           scope: '@stanfordbdhg'
