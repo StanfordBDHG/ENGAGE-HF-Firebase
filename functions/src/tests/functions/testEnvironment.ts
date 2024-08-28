@@ -18,6 +18,8 @@ import { CollectionsService } from '../../services/database/collections.js'
 import { getServiceFactory } from '../../services/factory/getServiceFactory.js'
 import { type ServiceFactory } from '../../services/factory/serviceFactory.js'
 import { type UserClaims } from '../../services/user/databaseUserService.js'
+import { Change } from 'firebase-functions'
+import { DocumentSnapshot, Timestamp } from 'firebase-admin/firestore'
 
 export function describeWithEmulators(
   title: string,
@@ -96,6 +98,22 @@ export class EmulatorTestEnvironment {
     }
   }
 
+  createChange(
+    path: string,
+    before: Record<string, any> | undefined,
+    after: Record<string, any> | undefined,
+  ): Change<DocumentSnapshot> {
+    const beforeSnapshot =
+      before !== undefined ?
+        this.wrapper.firestore.makeDocumentSnapshot(before, path)
+      : this.createEmptyDocumentSnapshot(path)
+    const afterSnapshot =
+      after !== undefined ?
+        this.wrapper.firestore.makeDocumentSnapshot(after, path)
+      : this.createEmptyDocumentSnapshot(path)
+    return this.wrapper.makeChange(beforeSnapshot, afterSnapshot)
+  }
+
   async createUser(
     options: {
       type: UserType
@@ -132,6 +150,22 @@ export class EmulatorTestEnvironment {
   }
 
   // Helpers
+
+  private createEmptyDocumentSnapshot(path: string): DocumentSnapshot {
+    return {
+      exists: false,
+      id: path.split('/').at(-1) ?? path,
+      ref: this.firestore.doc(path),
+      readTime: Timestamp.now(),
+      get(fieldPath) {
+        return undefined
+      },
+      isEqual(other) {
+        return false
+      },
+      data: () => undefined,
+    }
+  }
 
   private async post(url: string, data: object) {
     return new Promise((resolve, reject) => {
