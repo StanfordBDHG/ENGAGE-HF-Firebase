@@ -37,6 +37,7 @@ export interface UserService {
     userId: string,
   ): Promise<Document<Invitation> | undefined>
   enrollUser(invitation: Document<Invitation>, userId: string): Promise<void>
+  deleteInvitation(invitation: Document<Invitation>): Promise<void>
 
   // Organizations
 
