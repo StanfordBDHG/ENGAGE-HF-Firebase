@@ -7,9 +7,9 @@
 //
 
 import { unregisterDeviceInputSchema } from '@stanfordbdhg/engagehf-models'
+import { https } from 'firebase-functions'
 import { validatedOnCall } from './helpers.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
-import { https } from 'firebase-functions'
 
 export const unregisterDevice = validatedOnCall(
   unregisterDeviceInputSchema,

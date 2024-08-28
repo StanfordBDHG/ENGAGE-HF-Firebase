@@ -10,7 +10,7 @@ import {
   advanceDateByDays,
   type User,
   type UserDevice,
-  UserDevicePlatform,
+  type UserDevicePlatform,
   UserMessage,
   userMessageConverter,
   UserMessageType,

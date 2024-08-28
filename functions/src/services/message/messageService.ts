@@ -7,7 +7,7 @@
 //
 
 import {
-  UserDevicePlatform,
+  type UserDevicePlatform,
   type User,
   type UserDevice,
   type UserMessage,
