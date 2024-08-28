@@ -139,7 +139,8 @@ describe('DefaultSymptomScoreCalculator', () => {
       expect(score.date).to.equal(response.authored)
 
       // In this test, we use approximations to compare the expected and actual values.
-      // This is 
+      // This is to avoid floating point precision issues. Therefore, we use a tolerance of 0.001,
+      // which is a reasonable tolerance, since the values are shown to the user as integers anyways.
 
       if (score.physicalLimitsScore !== undefined) {
         expect(
