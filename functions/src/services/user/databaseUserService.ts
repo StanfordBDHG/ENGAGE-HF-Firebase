@@ -271,10 +271,10 @@ export class DatabaseUserService implements UserService {
 
   async deleteExpiredAccounts(): Promise<void> {
     const oneDayAgo = advanceDateByDays(new Date(), -1)
-    const promises: Promise<void>[] = []
+    const promises: Array<Promise<void>> = []
     let pageToken: string | undefined = undefined
     do {
-      let usersResult = await this.auth.listUsers(1_000, pageToken)
+      const usersResult = await this.auth.listUsers(1_000, pageToken)
       pageToken = usersResult.pageToken
       for (const user of usersResult.users) {
         if (
@@ -285,7 +285,7 @@ export class DatabaseUserService implements UserService {
           promises.push(
             this.auth
               .deleteUser(user.uid)
-              .catch((error) =>
+              .catch((error: unknown) =>
                 console.error(
                   `Failed to delete expired account ${user.uid}: ${String(error)}`,
                 ),

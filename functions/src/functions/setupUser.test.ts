@@ -6,8 +6,6 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { expect } from 'chai'
-import { describeWithEmulators } from '../tests/functions/testEnvironment.js'
 import {
   FHIRAppointment,
   fhirAppointmentConverter,
@@ -22,16 +20,18 @@ import {
   UserRegistration,
   UserType,
 } from '@stanfordbdhg/engagehf-models'
-import { UserObservationCollection } from '../services/database/collections.js'
+import { expect } from 'chai'
 import { checkInvitationCode } from './checkInvitationCode.js'
 import { setupUser } from './setupUser.js'
+import { UserObservationCollection } from '../services/database/collections.js'
+import { describeWithEmulators } from '../tests/functions/testEnvironment.js'
 import { expectError } from '../tests/helpers.js'
 
 describeWithEmulators('function: setupUser', (env) => {
   it('fails to set up a user without an invitation code', async () => {
     const authUser = await env.auth.createUser({})
     await expectError(
-      async () => await env.call(setupUser, {}, { uid: authUser.uid }),
+      async () => env.call(setupUser, {}, { uid: authUser.uid }),
       (error) =>
         expect(error).to.have.property('message', 'User is not authenticated'),
     )

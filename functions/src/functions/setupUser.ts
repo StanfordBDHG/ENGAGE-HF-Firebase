@@ -6,15 +6,19 @@
 // SPDX-License-Identifier: MIT
 //
 
+import { https, logger } from 'firebase-functions'
 import { z } from 'zod'
 import { validatedOnCall } from './helpers.js'
-import { https, logger } from 'firebase-functions'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
 export const setupUser = validatedOnCall(z.object({}), async (request) => {
   const userId = request.auth?.uid
-  const invitationCode = request.auth?.token.invitationCode
-  if (userId === undefined || invitationCode === undefined)
+  const invitationCode: unknown = request.auth?.token.invitationCode
+  if (
+    userId === undefined ||
+    invitationCode === undefined ||
+    typeof invitationCode !== 'string'
+  )
     throw new https.HttpsError('unauthenticated', 'User is not authenticated')
 
   const factory = getServiceFactory()

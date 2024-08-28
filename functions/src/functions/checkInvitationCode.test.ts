@@ -8,15 +8,12 @@
 
 import {
   FHIRAppointment,
-  fhirAppointmentConverter,
   FHIRAppointmentStatus,
   FHIRObservation,
-  fhirObservationConverter,
   Invitation,
   LoincCode,
   QuantityUnit,
   UserAuth,
-  UserMessageType,
   UserRegistration,
   UserType,
 } from '@stanfordbdhg/engagehf-models'
