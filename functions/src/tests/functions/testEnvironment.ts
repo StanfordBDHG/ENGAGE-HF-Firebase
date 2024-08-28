@@ -9,6 +9,8 @@
 import http from 'http'
 import { Lazy, User, type UserType } from '@stanfordbdhg/engagehf-models'
 import admin from 'firebase-admin'
+import { type DocumentSnapshot, Timestamp } from 'firebase-admin/firestore'
+import { type Change } from 'firebase-functions'
 import {
   type CallableFunction,
   type CallableRequest,
@@ -18,8 +20,6 @@ import { CollectionsService } from '../../services/database/collections.js'
 import { getServiceFactory } from '../../services/factory/getServiceFactory.js'
 import { type ServiceFactory } from '../../services/factory/serviceFactory.js'
 import { type UserClaims } from '../../services/user/databaseUserService.js'
-import { Change } from 'firebase-functions'
-import { DocumentSnapshot, Timestamp } from 'firebase-admin/firestore'
 
 export function describeWithEmulators(
   title: string,
@@ -98,16 +98,19 @@ export class EmulatorTestEnvironment {
     }
   }
 
-  createChange(
+  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+  createChange<T extends Record<string, any>>(
     path: string,
-    before: Record<string, any> | undefined,
-    after: Record<string, any> | undefined,
+    before: T | undefined,
+    after: T | undefined,
   ): Change<DocumentSnapshot> {
-    const beforeSnapshot =
+    /* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */
+    const beforeSnapshot: DocumentSnapshot<T> =
       before !== undefined ?
         this.wrapper.firestore.makeDocumentSnapshot(before, path)
       : this.createEmptyDocumentSnapshot(path)
-    const afterSnapshot =
+    /* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */
+    const afterSnapshot: DocumentSnapshot<T> =
       after !== undefined ?
         this.wrapper.firestore.makeDocumentSnapshot(after, path)
       : this.createEmptyDocumentSnapshot(path)
@@ -157,10 +160,10 @@ export class EmulatorTestEnvironment {
       id: path.split('/').at(-1) ?? path,
       ref: this.firestore.doc(path),
       readTime: Timestamp.now(),
-      get(fieldPath) {
+      get() {
         return undefined
       },
-      isEqual(other) {
+      isEqual() {
         return false
       },
       data: () => undefined,

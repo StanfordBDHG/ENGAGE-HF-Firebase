@@ -6,14 +6,14 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { it } from 'mocha'
-import { describeWithEmulators } from '../../tests/functions/testEnvironment.js'
 import {
   UserDevice,
   userDeviceConverter,
   UserDevicePlatform,
 } from '@stanfordbdhg/engagehf-models'
 import { expect } from 'chai'
+import { it } from 'mocha'
+import { describeWithEmulators } from '../../tests/functions/testEnvironment.js'
 
 describeWithEmulators('DatabaseHistoryService', (env) => {
   const device = new UserDevice({
