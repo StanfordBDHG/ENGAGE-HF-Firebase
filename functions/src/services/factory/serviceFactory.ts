@@ -9,6 +9,7 @@
 import { type AuthData } from 'firebase-functions/v2/tasks'
 import { type Credential } from '../credential/credential.js'
 import { type HealthSummaryService } from '../healthSummary/healthSummaryService.js'
+import { type HistoryService } from '../history/historyService.js'
 import { type MedicationService } from '../medication/medicationService.js'
 import { type MessageService } from '../message/messageService.js'
 import { type PatientService } from '../patient/patientService.js'
@@ -30,6 +31,7 @@ export interface ServiceFactory {
   medication(): MedicationService
   debugData(): DebugDataService
   staticData(): StaticDataService
+  history(): HistoryService
 
   // Patients
 
