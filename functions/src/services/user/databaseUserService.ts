@@ -7,6 +7,7 @@
 //
 
 import {
+  advanceDateByDays,
   type Invitation,
   type Organization,
   User,
@@ -14,7 +15,7 @@ import {
   UserType,
 } from '@stanfordbdhg/engagehf-models'
 import { type Auth } from 'firebase-admin/auth'
-import { https } from 'firebase-functions/v2'
+import { https, logger } from 'firebase-functions/v2'
 import { type UserService } from './userService.js'
 import {
   type Document,
@@ -63,12 +64,20 @@ export class DatabaseUserService implements UserService {
   async updateClaims(userId: string): Promise<void> {
     try {
       const user = await this.getUser(userId)
-      if (!user) throw new https.HttpsError('not-found', 'User not found.')
+      if (user !== undefined) {
+        await this.auth.setCustomUserClaims(userId, {
+          type: user.content.type,
+          organization: user.content.organization ?? null,
+        })
+      } else {
+        const invitation = await this.getInvitationByUserId(userId)
+        if (invitation === undefined)
+          throw new https.HttpsError('not-found', 'User not found.')
 
-      await this.auth.setCustomUserClaims(userId, {
-        type: user.content.type,
-        organization: user.content.organization ?? null,
-      })
+        await this.auth.setCustomUserClaims(userId, {
+          invitationCode: invitation.content.code,
+        })
+      }
     } catch (error) {
       await this.auth.setCustomUserClaims(userId, {})
       throw error
@@ -106,7 +115,17 @@ export class DatabaseUserService implements UserService {
     return result.at(0)
   }
 
-  async setInvitationUserId(
+  async getInvitationByUserId(
+    userId: string,
+  ): Promise<Document<Invitation> | undefined> {
+    const result = await this.databaseService.getQuery<Invitation>(
+      (collections) =>
+        collections.invitations.where('userId', '==', userId).limit(1),
+    )
+    return result.at(0)
+  }
+
+  async connectInvitationToUser(
     invitationCode: string,
     userId: string,
   ): Promise<void> {
@@ -118,20 +137,15 @@ export class DatabaseUserService implements UserService {
             .limit(1)
             .get()
         ).docs.at(0)
-        if (!invitation) throw new Error('Invitation not found')
+        if (!invitation)
+          throw new https.HttpsError('not-found', 'Invitation not found')
         transaction.update(invitation.ref, { userId: userId })
       },
     )
-  }
 
-  async getInvitationByUserId(
-    userId: string,
-  ): Promise<Document<Invitation> | undefined> {
-    const result = await this.databaseService.getQuery<Invitation>(
-      (collections) =>
-        collections.invitations.where('userId', '==', userId).limit(1),
-    )
-    return result.at(0)
+    await this.auth.setCustomUserClaims(userId, {
+      invitationCode: invitationCode,
+    })
   }
 
   async enrollUser(
@@ -253,5 +267,34 @@ export class DatabaseUserService implements UserService {
       )
       await this.auth.deleteUser(userId)
     })
+  }
+
+  async deleteExpiredAccounts(): Promise<void> {
+    const oneDayAgo = advanceDateByDays(new Date(), -1)
+    const promises: Promise<void>[] = []
+    let pageToken: string | undefined = undefined
+    do {
+      let usersResult = await this.auth.listUsers(1_000, pageToken)
+      pageToken = usersResult.pageToken
+      for (const user of usersResult.users) {
+        if (
+          Object.keys(user.customClaims ?? {}).length === 0 &&
+          new Date(user.metadata.lastSignInTime) < oneDayAgo
+        ) {
+          logger.info(`Deleting expired account ${user.uid}`)
+          promises.push(
+            this.auth
+              .deleteUser(user.uid)
+              .catch((error) =>
+                console.error(
+                  `Failed to delete expired account ${user.uid}: ${String(error)}`,
+                ),
+              ),
+          )
+        }
+      }
+    } while (pageToken !== undefined)
+
+    await Promise.all(promises)
   }
 }

@@ -6,6 +6,8 @@
 // SPDX-License-Identifier: MIT
 //
 
+import { expect } from 'chai'
+import { describeWithEmulators } from '../tests/functions/testEnvironment.js'
 import {
   FHIRAppointment,
   fhirAppointmentConverter,
@@ -20,27 +22,22 @@ import {
   UserRegistration,
   UserType,
 } from '@stanfordbdhg/engagehf-models'
-import { expect } from 'chai'
-import { checkInvitationCode } from './checkInvitationCode.js'
 import { UserObservationCollection } from '../services/database/collections.js'
-import { describeWithEmulators } from '../tests/functions/testEnvironment.js'
+import { checkInvitationCode } from './checkInvitationCode.js'
+import { setupUser } from './setupUser.js'
 import { expectError } from '../tests/helpers.js'
 
-describeWithEmulators('function: checkInvitationCode', (env) => {
-  it('should fail if the invitation code does not exist', async () => {
+describeWithEmulators('function: setupUser', (env) => {
+  it('fails to set up a user without an invitation code', async () => {
+    const authUser = await env.auth.createUser({})
     await expectError(
-      async () =>
-        env.call(
-          checkInvitationCode,
-          { invitationCode: 'TESTCODE' },
-          { uid: 'test' },
-        ),
+      async () => await env.call(setupUser, {}, { uid: authUser.uid }),
       (error) =>
-        expect(error).to.have.property('message', 'Invitation not found'),
+        expect(error).to.have.property('message', 'User is not authenticated'),
     )
   })
 
-  it('should succeed if invitation code exists', async () => {
+  it('correctly sets up a user', async () => {
     const invitation = new Invitation({
       auth: new UserAuth({
         email: 'engagehf-test@stanford.edu',
@@ -96,20 +93,59 @@ describeWithEmulators('function: checkInvitationCode', (env) => {
       { uid: authUser.uid },
     )
 
+    const actualAuthUser = await env.auth.getUser(authUser.uid)
+    expect(actualAuthUser.customClaims?.invitationCode).to.equal('TESTCODE')
+
+    await env.call(
+      setupUser,
+      {},
+      { uid: authUser.uid, token: { invitationCode: 'TESTCODE' } },
+    )
+
     const users = await env.collections.users.get()
-    expect(users.docs).to.have.length(0)
+    expect(users.docs).to.have.length(1)
+
+    const user = users.docs.at(0)?.data()
+    expect(user?.invitationCode).to.equal(invitation.code)
+    expect(user?.dateOfEnrollment.getTime()).to.approximately(
+      new Date().getTime(),
+      2000,
+    )
 
     const actualAppointments = await env.collections
       .userAppointments(authUser.uid)
       .get()
-    expect(actualAppointments.docs).to.have.length(0)
+    expect(actualAppointments.docs).to.have.length(1)
+    const actualAppointment = actualAppointments.docs.at(0)?.data()
+    if (actualAppointment === undefined) {
+      expect.fail('actualAppointment is undefined')
+    } else {
+      expect(
+        fhirAppointmentConverter.value.encode(actualAppointment),
+      ).to.deep.equal(
+        fhirAppointmentConverter.value.encode(expectedAppointment),
+      )
+    }
 
     const actualObservations = await env.collections
       .userObservations(authUser.uid, UserObservationCollection.bodyWeight)
       .get()
-    expect(actualObservations.docs).to.have.length(0)
+    expect(actualObservations.docs).to.have.length(1)
+    const actualObservation = actualObservations.docs.at(0)?.data()
+    if (actualObservation === undefined) {
+      expect.fail('actualObservation is undefined')
+    } else {
+      expect(
+        fhirObservationConverter.value.encode(actualObservation),
+      ).to.deep.equal(
+        fhirObservationConverter.value.encode(expectedObservation),
+      )
+    }
 
     const userMessages = await env.collections.userMessages(authUser.uid).get()
-    expect(userMessages.docs.length).to.equal(0)
+    expect(userMessages.docs.length).to.equal(1)
+    expect(userMessages.docs.at(0)?.data().type).to.equal(
+      UserMessageType.welcome,
+    )
   })
 })

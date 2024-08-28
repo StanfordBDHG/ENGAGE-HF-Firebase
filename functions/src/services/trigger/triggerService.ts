@@ -439,6 +439,14 @@ export class TriggerService {
 
   // Helpers
 
+  private async deleteExpiredAccounts() {
+    try {
+      await this.factory.user().deleteExpiredAccounts()
+    } catch (error) {
+      console.error(`Error clearing expired accounts: ${String(error)}`)
+    }
+  }
+
   private async addMedicationUptitrationMessageIfNeeded(input: {
     userId: string
     recommendations?: UserMedicationRecommendation[]

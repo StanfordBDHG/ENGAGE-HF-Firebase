@@ -106,7 +106,7 @@ export class MockUserService implements UserService {
     }
   }
 
-  async setInvitationUserId(
+  async connectInvitationToUser(
     invitationCode: string,
     userId: string,
   ): Promise<void> {
@@ -181,6 +181,10 @@ export class MockUserService implements UserService {
   }
 
   async deleteUser(userId: string): Promise<void> {
+    return
+  }
+
+  async deleteExpiredAccounts(): Promise<void> {
     return
   }
 }
