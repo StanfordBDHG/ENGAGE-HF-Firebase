@@ -37,22 +37,29 @@ export class DatabaseMedicationService implements MedicationService {
     reference: FHIRReference,
   ): Promise<MedicationRequestContext> {
     const drugReference = request.medicationReference
-    if (!drugReference) throw new Error('Drug reference not found')
+    if (drugReference === undefined) throw new Error('Drug reference not found')
     const drug = (await this.getReference(drugReference))?.content
-    if (!drug) throw new Error('Drug not found')
+    if (drug === undefined)
+      throw new Error(`Drug not found at ${drugReference.reference}`)
     const medicationReference: FHIRReference = {
       reference: drugReference.reference.split('/').slice(0, 2).join('/'),
     }
     const medication = (await this.getReference(medicationReference))?.content
     medicationReference.display = medication?.displayName
-    if (!medication) throw new Error('Medication not found')
+    if (medication === undefined)
+      throw new Error(
+        `Medication not found at ${medicationReference.reference}`,
+      )
     const medicationClassReference = medication.medicationClassReference
-    if (!medicationClassReference)
+    if (medicationClassReference === undefined)
       throw new Error('Medication class reference not found')
     const medicationClass = (
       await this.getClassReference(medicationClassReference)
     )?.content
-    if (!medicationClass) throw new Error('Medication class not found')
+    if (medicationClass === undefined)
+      throw new Error(
+        `Medication class not found at ${medicationClassReference.reference}`,
+      )
     return {
       requestReference: reference,
       request,

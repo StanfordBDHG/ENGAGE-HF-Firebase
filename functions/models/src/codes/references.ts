@@ -102,7 +102,7 @@ export enum DrugReference {
 
   losartan25 = 'medications/203160/drugs/979485',
   losartan100 = 'medications/203160/drugs/979480',
-  valsartan = 'medications/69749',
+  valsartan40 = 'medications/69749/drugs/349483',
 
   // Angiotensin Receptor Neprilysin Inhibitors
 
