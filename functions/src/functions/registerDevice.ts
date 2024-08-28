@@ -7,6 +7,7 @@
 //
 
 import { registerDeviceInputSchema } from '@stanfordbdhg/engagehf-models'
+import { https } from 'firebase-functions'
 import { validatedOnCall } from './helpers.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
@@ -14,7 +15,8 @@ export const registerDevice = validatedOnCall(
   registerDeviceInputSchema,
   async (request) => {
     const userId = request.auth?.uid
-    if (!userId) throw new Error('User is not authenticated')
+    if (!userId)
+      throw new https.HttpsError('unauthenticated', 'User is not authenticated')
     await getServiceFactory().message().registerDevice(userId, request.data)
   },
 )

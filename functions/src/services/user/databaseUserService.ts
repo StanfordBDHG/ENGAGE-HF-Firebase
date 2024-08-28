@@ -9,7 +9,7 @@
 import {
   type Invitation,
   type Organization,
-  type User,
+  User,
   type UserAuth,
   UserType,
 } from '@stanfordbdhg/engagehf-models'
@@ -154,29 +154,53 @@ export class DatabaseUserService implements UserService {
       photoURL: invitation.content.auth?.photoURL ?? undefined,
     })
 
-    await this.databaseService.runTransaction(
+    const invitationCollections = await this.databaseService.runTransaction(
       async (collections, transaction) => {
-        transaction.create(collections.users.doc(userId), {
-          ...invitation.content.user,
-          invitationCode: invitation.content.code,
-          dateOfEnrollment: new Date(),
-        })
-
         const invitationRef = collections.invitations.doc(invitation.id)
         const invitationCollections = await invitationRef.listCollections()
-        for (const collection of invitationCollections) {
-          const items = await transaction.get(collection)
-          for (const item of items.docs) {
-            transaction.create(collection.doc(item.id), item.data())
-            // transaction.delete(item.ref)
-          }
-        }
 
-        // transaction.delete(invitationRef)
+        transaction.set(
+          collections.users.doc(userId),
+          new User({
+            ...invitation.content.user,
+            invitationCode: invitation.content.code,
+            dateOfEnrollment: new Date(),
+          }),
+        )
+
+        return invitationCollections
       },
     )
 
+    await Promise.all(
+      invitationCollections.map(async (invitationCollection) =>
+        this.databaseService.runTransaction(
+          async (collections, transaction) => {
+            const userRef = collections.users.doc(userId)
+            const collectionId = invitationCollection.id
+            const items = await transaction.get(invitationCollection)
+            for (const item of items.docs) {
+              transaction.create(
+                userRef.collection(collectionId).doc(item.id),
+                item.data(),
+              )
+              // transaction.delete(item.ref)
+            }
+          },
+        ),
+      ),
+    )
+
+    // transaction.delete(invitationRef)
+
     await this.updateClaims(userId)
+  }
+
+  async deleteInvitation(invitation: Document<Invitation>): Promise<void> {
+    await this.databaseService.runTransaction(async (collections, _) => {
+      const ref = collections.invitations.doc(invitation.id)
+      await collections.firestore.recursiveDelete(ref)
+    })
   }
 
   // Organizations

@@ -16,14 +16,14 @@ import { type z } from 'zod'
 import { validatedOnCall, validatedOnRequest } from './helpers.js'
 import { _updateStaticData } from './updateStaticData.js'
 import { Flags } from '../flags.js'
+import { UserRole } from '../services/credential/credential.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
+import { type ServiceFactory } from '../services/factory/serviceFactory.js'
 
-async function _defaultSeed(data: z.output<typeof defaultSeedInputSchema>) {
-  const factory = getServiceFactory()
-
-  if (!Flags.isEmulator)
-    throw factory.credential(undefined).permissionDeniedError()
-
+export async function _defaultSeed(
+  factory: ServiceFactory,
+  data: z.output<typeof defaultSeedInputSchema>,
+) {
   if (data.staticData) await _updateStaticData(factory, data.staticData)
 
   const debugDataService = factory.debugData()
@@ -38,20 +38,25 @@ async function _defaultSeed(data: z.output<typeof defaultSeedInputSchema>) {
 
     for (const userId of userIds) {
       try {
+        const promises: Array<Promise<void>> = []
         const user = await userService.getUser(userId)
         if (user?.content.type !== UserType.patient) continue
         if (
           data.onlyUserCollections.includes(UserDebugDataComponent.appointments)
         )
-          await debugDataService.seedUserAppointments(userId, data.date)
+          promises.push(
+            debugDataService.seedUserAppointments(userId, data.date),
+          )
         if (
           data.onlyUserCollections.includes(
             UserDebugDataComponent.bloodPressureObservations,
           )
         )
-          await debugDataService.seedUserBloodPressureObservations(
-            userId,
-            data.date,
+          promises.push(
+            debugDataService.seedUserBloodPressureObservations(
+              userId,
+              data.date,
+            ),
           )
 
         if (
@@ -59,9 +64,8 @@ async function _defaultSeed(data: z.output<typeof defaultSeedInputSchema>) {
             UserDebugDataComponent.bodyWeightObservations,
           )
         )
-          await debugDataService.seedUserBodyWeightObservations(
-            userId,
-            data.date,
+          promises.push(
+            debugDataService.seedUserBodyWeightObservations(userId, data.date),
           )
 
         if (
@@ -69,9 +73,8 @@ async function _defaultSeed(data: z.output<typeof defaultSeedInputSchema>) {
             UserDebugDataComponent.creatinineObservations,
           )
         )
-          await debugDataService.seedUserCreatinineObservations(
-            userId,
-            data.date,
+          promises.push(
+            debugDataService.seedUserCreatinineObservations(userId, data.date),
           )
 
         if (
@@ -79,9 +82,8 @@ async function _defaultSeed(data: z.output<typeof defaultSeedInputSchema>) {
             UserDebugDataComponent.dryWeightObservations,
           )
         )
-          await debugDataService.seedUserDryWeightObservations(
-            userId,
-            data.date,
+          promises.push(
+            debugDataService.seedUserDryWeightObservations(userId, data.date),
           )
 
         if (
@@ -89,16 +91,17 @@ async function _defaultSeed(data: z.output<typeof defaultSeedInputSchema>) {
             UserDebugDataComponent.eGfrObservations,
           )
         )
-          await debugDataService.seedUserEgfrObservations(userId, data.date)
+          promises.push(
+            debugDataService.seedUserEgfrObservations(userId, data.date),
+          )
 
         if (
           data.onlyUserCollections.includes(
             UserDebugDataComponent.heartRateObservations,
           )
         )
-          await debugDataService.seedUserHeartRateObservations(
-            userId,
-            data.date,
+          promises.push(
+            debugDataService.seedUserHeartRateObservations(userId, data.date),
           )
 
         if (
@@ -106,9 +109,8 @@ async function _defaultSeed(data: z.output<typeof defaultSeedInputSchema>) {
             UserDebugDataComponent.potassiumObservations,
           )
         )
-          await debugDataService.seedUserPotassiumObservations(
-            userId,
-            data.date,
+          promises.push(
+            debugDataService.seedUserPotassiumObservations(userId, data.date),
           )
 
         if (
@@ -116,27 +118,28 @@ async function _defaultSeed(data: z.output<typeof defaultSeedInputSchema>) {
             UserDebugDataComponent.medicationRequests,
           )
         )
-          await debugDataService.seedUserMedicationRequests(userId)
+          promises.push(debugDataService.seedUserMedicationRequests(userId))
 
         if (data.onlyUserCollections.includes(UserDebugDataComponent.messages))
-          await debugDataService.seedUserMessages(userId, data.date)
+          promises.push(debugDataService.seedUserMessages(userId, data.date))
         if (data.onlyUserCollections.includes(UserDebugDataComponent.consent))
-          await debugDataService.seedUserConsent(userId)
+          promises.push(debugDataService.seedUserConsent(userId))
         if (
           data.onlyUserCollections.includes(
             UserDebugDataComponent.medicationRecommendations,
           )
         )
-          await triggerService.updateRecommendationsForUser(userId)
+          promises.push(
+            triggerService.updateRecommendationsForUser(userId).then(),
+          )
 
         if (
           data.onlyUserCollections.includes(
             UserDebugDataComponent.questionnaireResponses,
           )
         )
-          await debugDataService.seedUserQuestionnaireResponses(
-            userId,
-            data.date,
+          promises.push(
+            debugDataService.seedUserQuestionnaireResponses(userId, data.date),
           )
 
         if (
@@ -144,7 +147,9 @@ async function _defaultSeed(data: z.output<typeof defaultSeedInputSchema>) {
             UserDebugDataComponent.symptomScores,
           )
         )
-          await triggerService.updateAllSymptomScores(userId)
+          promises.push(triggerService.updateAllSymptomScores(userId))
+
+        await Promise.all(promises)
       } catch (error) {
         console.error(`Failed to seed user ${userId}: ${String(error)}`)
       }
@@ -153,63 +158,87 @@ async function _defaultSeed(data: z.output<typeof defaultSeedInputSchema>) {
 
   for (const userData of data.userData) {
     try {
+      const promises: Array<Promise<void>> = []
       if (userData.only.includes(UserDebugDataComponent.appointments))
-        await debugDataService.seedUserAppointments(userData.userId, data.date)
+        promises.push(
+          debugDataService.seedUserAppointments(userData.userId, data.date),
+        )
       if (userData.only.includes(UserDebugDataComponent.medicationRequests))
-        await debugDataService.seedUserMedicationRequests(userData.userId)
+        promises.push(
+          debugDataService.seedUserMedicationRequests(userData.userId),
+        )
       if (userData.only.includes(UserDebugDataComponent.messages))
-        await debugDataService.seedUserMessages(userData.userId, data.date)
+        promises.push(
+          debugDataService.seedUserMessages(userData.userId, data.date),
+        )
       if (
         userData.only.includes(UserDebugDataComponent.bloodPressureObservations)
       )
-        await debugDataService.seedUserBloodPressureObservations(
-          userData.userId,
-          data.date,
+        promises.push(
+          debugDataService.seedUserBloodPressureObservations(
+            userData.userId,
+            data.date,
+          ),
         )
       if (userData.only.includes(UserDebugDataComponent.bodyWeightObservations))
-        await debugDataService.seedUserBodyWeightObservations(
-          userData.userId,
-          data.date,
+        promises.push(
+          debugDataService.seedUserBodyWeightObservations(
+            userData.userId,
+            data.date,
+          ),
         )
       if (userData.only.includes(UserDebugDataComponent.creatinineObservations))
-        await debugDataService.seedUserCreatinineObservations(
-          userData.userId,
-          data.date,
+        promises.push(
+          debugDataService.seedUserCreatinineObservations(
+            userData.userId,
+            data.date,
+          ),
         )
       if (userData.only.includes(UserDebugDataComponent.dryWeightObservations))
-        await debugDataService.seedUserDryWeightObservations(
-          userData.userId,
-          data.date,
+        promises.push(
+          debugDataService.seedUserDryWeightObservations(
+            userData.userId,
+            data.date,
+          ),
         )
       if (userData.only.includes(UserDebugDataComponent.eGfrObservations))
-        await debugDataService.seedUserEgfrObservations(
-          userData.userId,
-          data.date,
+        promises.push(
+          debugDataService.seedUserEgfrObservations(userData.userId, data.date),
         )
       if (userData.only.includes(UserDebugDataComponent.heartRateObservations))
-        await debugDataService.seedUserHeartRateObservations(
-          userData.userId,
-          data.date,
+        promises.push(
+          debugDataService.seedUserHeartRateObservations(
+            userData.userId,
+            data.date,
+          ),
         )
       if (userData.only.includes(UserDebugDataComponent.potassiumObservations))
-        await debugDataService.seedUserPotassiumObservations(
-          userData.userId,
-          data.date,
+        promises.push(
+          debugDataService.seedUserPotassiumObservations(
+            userData.userId,
+            data.date,
+          ),
         )
       if (userData.only.includes(UserDebugDataComponent.consent))
-        await debugDataService.seedUserConsent(userData.userId)
+        promises.push(debugDataService.seedUserConsent(userData.userId))
       if (
         userData.only.includes(UserDebugDataComponent.medicationRecommendations)
       )
-        await triggerService.updateRecommendationsForUser(userData.userId)
+        promises.push(
+          triggerService.updateRecommendationsForUser(userData.userId).then(),
+        )
       if (userData.only.includes(UserDebugDataComponent.questionnaireResponses))
-        await debugDataService.seedUserQuestionnaireResponses(
-          userData.userId,
-          data.date,
+        promises.push(
+          debugDataService.seedUserQuestionnaireResponses(
+            userData.userId,
+            data.date,
+          ),
         )
 
       if (userData.only.includes(UserDebugDataComponent.symptomScores))
-        await triggerService.updateAllSymptomScores(userData.userId)
+        promises.push(triggerService.updateAllSymptomScores(userData.userId))
+
+      await Promise.all(promises)
     } catch (error) {
       console.error(
         `Failed to seed user data ${userData.userId}: ${String(error)}`,
@@ -221,11 +250,13 @@ async function _defaultSeed(data: z.output<typeof defaultSeedInputSchema>) {
 export const defaultSeed =
   Flags.isEmulator ?
     validatedOnRequest(defaultSeedInputSchema, async (_, data, response) => {
-      await _defaultSeed(data)
+      await _defaultSeed(getServiceFactory(), data)
       response.write('Success', 'utf8')
       response.end()
     })
   : validatedOnCall(defaultSeedInputSchema, async (request) => {
-      await _defaultSeed(request.data)
+      const factory = getServiceFactory()
+      factory.credential(request.auth).check(UserRole.admin)
+      await _defaultSeed(factory, request.data)
       return 'Success'
     })

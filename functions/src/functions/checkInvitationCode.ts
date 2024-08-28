@@ -60,8 +60,8 @@ export const checkInvitationCode = validatedOnCall(
     } catch (error) {
       if (error instanceof Error) {
         logger.error(`Error processing request: ${error.message}`)
-        if ('code' in error) {
-          throw new https.HttpsError('internal', 'Internal server error.')
+        if ('message' in error) {
+          throw new https.HttpsError('internal', error.message)
         }
       } else {
         logger.error(`Unknown error: ${String(error)}`)
