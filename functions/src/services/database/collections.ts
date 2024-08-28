@@ -63,7 +63,7 @@ export class CollectionsService {
       .collectionGroup('devices')
       .withConverter(new DatabaseConverter(userDeviceConverter.value))
   }
-  
+
   get history() {
     return this.firestore
       .collection('history')

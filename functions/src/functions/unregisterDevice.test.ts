@@ -12,10 +12,10 @@ import {
   UserDevicePlatform,
 } from '@stanfordbdhg/engagehf-models'
 import { expect } from 'chai'
+import { registerDevice } from './registerDevice.js'
+import { unregisterDevice } from './unregisterDevice.js'
 import { describeWithEmulators } from '../tests/functions/testEnvironment.js'
 import { expectError } from '../tests/helpers.js'
-import { unregisterDevice } from './unregisterDevice.js'
-import { registerDevice } from './registerDevice.js'
 
 describeWithEmulators('function: registerDevice', (env) => {
   const userDevice = new UserDevice({
