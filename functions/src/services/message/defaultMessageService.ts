@@ -10,6 +10,7 @@ import {
   advanceDateByDays,
   type User,
   type UserDevice,
+  UserDevicePlatform,
   UserMessage,
   userMessageConverter,
   UserMessageType,
@@ -69,6 +70,27 @@ export class DefaultMessageService implements MessageService {
 
         if (!didFindExistingDevice)
           transaction.set(collections.userDevices(userId).doc(), newDevice)
+      },
+    )
+    return
+  }
+
+  async unregisterDevice(
+    userId: string,
+    notificationToken: string,
+    platform: UserDevicePlatform,
+  ): Promise<void> {
+    await this.databaseService.runTransaction(
+      async (collections, transaction) => {
+        const devices = await transaction.get(
+          collections
+            .userDevices(userId)
+            .where('notificationToken', '==', notificationToken),
+        )
+        for (const device of devices.docs) {
+          if (device.data().platform !== platform) continue
+          transaction.delete(device.ref)
+        }
       },
     )
     return
