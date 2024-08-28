@@ -27,6 +27,7 @@ import {
 } from '@stanfordbdhg/engagehf-models'
 import { type Firestore } from 'firebase-admin/firestore'
 import { DatabaseConverter } from './databaseConverter.js'
+import { historyChangeItemConverter } from '../history/historyService.js'
 
 export enum UserObservationCollection {
   bodyWeight = 'bodyWeightObservations',
@@ -61,6 +62,12 @@ export class CollectionsService {
     return this.firestore
       .collectionGroup('devices')
       .withConverter(new DatabaseConverter(userDeviceConverter.value))
+  }
+  
+  get history() {
+    return this.firestore
+      .collection('history')
+      .withConverter(new DatabaseConverter(historyChangeItemConverter))
   }
 
   get invitations() {

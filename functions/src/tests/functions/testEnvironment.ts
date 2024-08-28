@@ -9,6 +9,8 @@
 import http from 'http'
 import { Lazy, User, type UserType } from '@stanfordbdhg/engagehf-models'
 import admin from 'firebase-admin'
+import { type DocumentSnapshot, Timestamp } from 'firebase-admin/firestore'
+import { type Change } from 'firebase-functions'
 import {
   type CallableFunction,
   type CallableRequest,
@@ -96,6 +98,25 @@ export class EmulatorTestEnvironment {
     }
   }
 
+  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+  createChange<T extends Record<string, any>>(
+    path: string,
+    before: T | undefined,
+    after: T | undefined,
+  ): Change<DocumentSnapshot> {
+    /* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */
+    const beforeSnapshot: DocumentSnapshot<T> =
+      before !== undefined ?
+        this.wrapper.firestore.makeDocumentSnapshot(before, path)
+      : this.createEmptyDocumentSnapshot(path)
+    /* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */
+    const afterSnapshot: DocumentSnapshot<T> =
+      after !== undefined ?
+        this.wrapper.firestore.makeDocumentSnapshot(after, path)
+      : this.createEmptyDocumentSnapshot(path)
+    return this.wrapper.makeChange(beforeSnapshot, afterSnapshot)
+  }
+
   async createUser(
     options: {
       type: UserType
@@ -132,6 +153,22 @@ export class EmulatorTestEnvironment {
   }
 
   // Helpers
+
+  private createEmptyDocumentSnapshot(path: string): DocumentSnapshot {
+    return {
+      exists: false,
+      id: path.split('/').at(-1) ?? path,
+      ref: this.firestore.doc(path),
+      readTime: Timestamp.now(),
+      get() {
+        return undefined
+      },
+      isEqual() {
+        return false
+      },
+      data: () => undefined,
+    }
+  }
 
   private async post(url: string, data: object) {
     return new Promise((resolve, reject) => {
