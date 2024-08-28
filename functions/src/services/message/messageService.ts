@@ -7,6 +7,7 @@
 //
 
 import {
+  type UserDevicePlatform,
   type User,
   type UserDevice,
   type UserMessage,
@@ -18,6 +19,11 @@ export interface MessageService {
   // Notifications
 
   registerDevice(userId: string, device: UserDevice): Promise<void>
+  unregisterDevice(
+    userId: string,
+    notificationToken: string,
+    platform: UserDevicePlatform,
+  ): Promise<void>
 
   // Messages
 
