@@ -771,6 +771,27 @@ If a notification token could not be generated on the device (e.g. due to missin
 
 None.
 
+## unregisterDevice
+
+Use `unregisterDevice` to remove a notification token associated to a user account. This will only remove it from the authenticated user.
+
+### Security
+
+Any user can unregister devices for their own account. In the foreseeable future, the function is only relevant for patients though.
+
+### Input
+
+If a notification token could not be generated on the device (e.g. due to missing permissions), simply do not call this function rather than creating a device without token. For the remaining inputs, please provide all values that are available.
+
+|Property|Type|Values|Comments|
+|-|-|-|-|
+|notificationToken|string|-|The notification token to be used for sending push notifications. This may either be an APNS token for iOS devices or a FCM registration token for Android.|
+|platform|string|'iOS' or 'Android'|The platform of the device.|
+
+### Output
+
+None.
+
 ## updateStaticData
 
 Use `updateStaticData` to update statically present data in Firestore. This function may either be called when the configuration of the static data has changed or when dynamically generated content needs an update (e.g. medication data is generated based on the RxNorm API).
