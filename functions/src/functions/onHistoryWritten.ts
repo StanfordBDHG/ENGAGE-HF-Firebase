@@ -12,7 +12,8 @@ import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 export const onHistoryOneLevelDeepWritten = onDocumentWritten(
   '{collection0}/{id0}',
   async (event) => {
-    if (event.data === undefined) return
+    if (event.data === undefined || event.params.collection0 === 'history')
+      return
     await getServiceFactory().history().recordChange(event.data)
   },
 )
