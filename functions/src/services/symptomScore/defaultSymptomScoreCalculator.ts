@@ -48,7 +48,7 @@ export class DefaultSymptomScoreCalculator implements SymptomScoreCalculator {
       (response.answer3 - 1) / 6,
       (response.answer4 - 1) / 6,
       (response.answer5 - 1) / 4,
-    ].map((x) => Math.floor(x * 100))
+    ].map((x) => x * 100)
 
     result.symptomFrequencyScore = average(symptomFrequencyAnswers)
 

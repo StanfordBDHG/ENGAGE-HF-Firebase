@@ -6,7 +6,6 @@
 // SPDX-License-Identifier: MIT
 //
 
-import fs from 'fs'
 import {
   CachingStrategy,
   DrugReference,
@@ -24,6 +23,7 @@ import { expect } from 'chai'
 import { describe, it } from 'mocha'
 import { type RecommendationService } from './recommendationService.js'
 import { type Vitals } from '../../models/vitals.js'
+import { readCsv } from '../../tests/helpers/csv.js'
 import { setupMockFirebase } from '../../tests/setup.js'
 import { getServiceFactory } from '../factory/getServiceFactory.js'
 import { type MedicationService } from '../medication/medicationService.js'
@@ -43,55 +43,44 @@ describe('RecommendationService', () => {
   })
 
   describe('should return the right value', () => {
-    const fileContents = fs.readFileSync(
-      'src/tests/resources/medtitrationtest.csv',
-      'utf8',
-    )
-    const lines = fileContents.split('\n').slice(1)
-    expect(lines).to.have.length(57)
+    readCsv('src/tests/resources/medtitrationtest.csv', 76, (values, index) => {
+      if (index === 0) return
+      it(`line ${index + 1}: ${values.join(',')}`, async () => {
+        expect(values).to.have.length(24)
 
-    let lineIndex = -1
-    for (const line of lines) {
-      lineIndex++
-
-      it(`line ${lineIndex}: ${line}`, async () => {
-        const fields = line.split(',')
-        expect(fields).to.have.length(24)
-
-        const medicationRequests = fields
+        const medicationRequests = values
           .slice(0, 4)
           .map(getMedicationRequest)
           .flatMap((x) => (x ? [x] : []))
 
         const vitals = getVitals({
-          countBloodPressureBelow85: parseInt(fields[4]),
+          countBloodPressureBelow85: parseInt(values[4]),
           medianSystolicBloodPressure:
-            fields[5] !== 'NA' ? parseInt(fields[5]) : null,
-          medianHeartRate: fields[6] !== 'NA' ? parseInt(fields[6]) : null,
-          potassium: parseFloat(fields[7]),
-          creatinine: parseFloat(fields[8]),
-          eGfr: parseFloat(fields[9]),
+            values[5] !== 'NA' ? parseInt(values[5]) : null,
+          medianHeartRate: values[6] !== 'NA' ? parseInt(values[6]) : null,
+          potassium: parseFloat(values[7]),
+          creatinine: parseFloat(values[8]),
+          eGfr: parseFloat(values[9]),
         })
-        const dizziness = parseInt(fields[10])
+        const dizziness = parseInt(values[10])
 
-        const contraindications = fields
-          .slice(11, 20)
-          .map((field, index) =>
-            getContraindication(
+        const contraindications = values.slice(11, 20).flatMap((value, index) =>
+          value.split(',').flatMap((field) =>
+            getContraindications(
               field,
               [0, 1, 2, 3].includes(index) ? FHIRAllergyIntoleranceType.allergy
               : [4, 5, 6, 7].includes(index) ?
                 FHIRAllergyIntoleranceType.intolerance
               : FHIRAllergyIntoleranceType.financial,
             ),
-          )
-          .flatMap((x) => (x ? [x] : []))
+          ),
+        )
 
         const expectedRecommendations = [
-          getExpectedRecommendation(fields[20]),
-          getExpectedRecommendation(fields[21]),
-          getExpectedRecommendation(fields[22]),
-          getExpectedRecommendation(fields[23]),
+          getExpectedRecommendation(values[20]),
+          getExpectedRecommendation(values[21]),
+          getExpectedRecommendation(values[22]),
+          getExpectedRecommendation(values[23]),
         ].flatMap((x) => (x ? [x] : []))
 
         const requestContexts = await Promise.all(
@@ -154,14 +143,14 @@ describe('RecommendationService', () => {
           }
         }
       })
-    }
+    })
   })
 })
 
 function getMedicationRequest(
-  field: string,
+  value: string,
 ): FHIRMedicationRequest | undefined {
-  switch (field.trim().toLowerCase()) {
+  switch (value.trim().toLowerCase()) {
     case 'none':
       return undefined
     case 'bisoprolol 2.5mg daily':
@@ -187,6 +176,13 @@ function getMedicationRequest(
         drugReference: DrugReference.carvedilol25,
         frequencyPerDay: 2,
         quantity: 1,
+      })
+    case 'carvedilol 50mg   daily':
+    case 'carvedilol 50mg  daily':
+      return FHIRMedicationRequest.create({
+        drugReference: DrugReference.carvedilol25,
+        frequencyPerDay: 1,
+        quantity: 2,
       })
     case 'dapagliflozin 5mg daily':
       return FHIRMedicationRequest.create({
@@ -278,14 +274,27 @@ function getMedicationRequest(
         frequencyPerDay: 2,
         quantity: 1,
       })
+    case 'sacubitril-valsartan 200mg daily (49-51mg twice daily)':
+      return FHIRMedicationRequest.create({
+        drugReference: DrugReference.sacubitrilValsartan49_51,
+        frequencyPerDay: 2,
+        quantity: 1,
+      })
     case 'sacubitril-valsartan 400mg daily (97-103mg twice daily)':
       return FHIRMedicationRequest.create({
         drugReference: DrugReference.sacubitrilValsartan97_103,
         frequencyPerDay: 1,
         quantity: 2,
       })
+    case 'valsartan 40mg':
+      console.log(DrugReference.valsartan40)
+      return FHIRMedicationRequest.create({
+        drugReference: DrugReference.valsartan40,
+        frequencyPerDay: 1,
+        quantity: 1,
+      })
     default:
-      expect.fail('Unhandled case for medication request:', field)
+      expect.fail('Unhandled case for medication request:', value)
   }
 }
 
@@ -356,67 +365,117 @@ function getVitals(options: {
   }
 }
 
-function getContraindication(
+function getContraindications(
   field: string,
   type: FHIRAllergyIntoleranceType,
-): FHIRAllergyIntolerance | undefined {
+): FHIRAllergyIntolerance[] {
   switch (field.trim().toLowerCase().split(' ').join('')) {
     case 'none':
-      return undefined
+      return []
+    case 'bisoprolol':
+      return [
+        FHIRAllergyIntolerance.create({
+          reference: MedicationReference.bisoprolol,
+          type,
+          criticality: FHIRAllergyIntoleranceCriticality.low,
+        }),
+      ]
     case 'carvedilol':
-      return FHIRAllergyIntolerance.create({
-        reference: MedicationReference.carvedilol,
-        type,
-        criticality: FHIRAllergyIntoleranceCriticality.low,
-      })
-    case 'lisinopril':
-      return FHIRAllergyIntolerance.create({
-        reference: MedicationReference.lisinopril,
-        type,
-        criticality: FHIRAllergyIntoleranceCriticality.low,
-      })
-    case 'lisinopril-anaphylaxis':
-      return FHIRAllergyIntolerance.create({
-        reference: MedicationReference.lisinopril,
-        type,
-        criticality: FHIRAllergyIntoleranceCriticality.high,
-      })
-    case 'spironolactone':
-      return FHIRAllergyIntolerance.create({
-        reference: MedicationReference.spironolactone,
-        type,
-        criticality: FHIRAllergyIntoleranceCriticality.low,
-      })
-    case 'sacubitril-valsartan':
-      return FHIRAllergyIntolerance.create({
-        reference: MedicationReference.sacubitrilValsartan,
-        type,
-        criticality: FHIRAllergyIntoleranceCriticality.low,
-      })
+      return [
+        FHIRAllergyIntolerance.create({
+          reference: MedicationReference.carvedilol,
+          type,
+          criticality: FHIRAllergyIntoleranceCriticality.low,
+        }),
+      ]
     case 'dapagliflozin':
-      return FHIRAllergyIntolerance.create({
-        reference: MedicationReference.dapagliflozin,
-        type,
-        criticality: FHIRAllergyIntoleranceCriticality.low,
-      })
+      return [
+        FHIRAllergyIntolerance.create({
+          reference: MedicationReference.dapagliflozin,
+          type,
+          criticality: FHIRAllergyIntoleranceCriticality.low,
+        }),
+      ]
     case 'empagliflozin':
-      return FHIRAllergyIntolerance.create({
-        reference: MedicationReference.empagliflozin,
-        type,
-        criticality: FHIRAllergyIntoleranceCriticality.low,
-      })
+      return [
+        FHIRAllergyIntolerance.create({
+          reference: MedicationReference.empagliflozin,
+          type,
+          criticality: FHIRAllergyIntoleranceCriticality.low,
+        }),
+      ]
+    case 'eplerenone':
+      return [
+        FHIRAllergyIntolerance.create({
+          reference: MedicationReference.eplerenone,
+          type,
+          criticality: FHIRAllergyIntoleranceCriticality.low,
+        }),
+      ]
+    case 'lisinopril':
+      return [
+        FHIRAllergyIntolerance.create({
+          reference: MedicationReference.lisinopril,
+          type,
+          criticality: FHIRAllergyIntoleranceCriticality.low,
+        }),
+      ]
+    case 'lisinopril-anaphylaxis':
+      return [
+        FHIRAllergyIntolerance.create({
+          reference: MedicationReference.lisinopril,
+          type,
+          criticality: FHIRAllergyIntoleranceCriticality.high,
+        }),
+      ]
+    case 'losartan':
+      return [
+        FHIRAllergyIntolerance.create({
+          reference: MedicationReference.losartan,
+          type,
+          criticality: FHIRAllergyIntoleranceCriticality.low,
+        }),
+      ]
+    case 'metoprolol':
+      return [
+        FHIRAllergyIntolerance.create({
+          reference: MedicationReference.metoprololSuccinate,
+          type,
+          criticality: FHIRAllergyIntoleranceCriticality.high,
+        }),
+      ]
+    case 'sacubitril-valsartan':
+      return [
+        FHIRAllergyIntolerance.create({
+          reference: MedicationReference.sacubitrilValsartan,
+          type,
+          criticality: FHIRAllergyIntoleranceCriticality.low,
+        }),
+      ]
     case 'sotagliflozin':
-      return FHIRAllergyIntolerance.create({
-        reference: MedicationReference.sotagliflozin,
-        type,
-        criticality: FHIRAllergyIntoleranceCriticality.low,
-      })
+      return [
+        FHIRAllergyIntolerance.create({
+          reference: MedicationReference.sotagliflozin,
+          type,
+          criticality: FHIRAllergyIntoleranceCriticality.low,
+        }),
+      ]
+    case 'spironolactone':
+      return [
+        FHIRAllergyIntolerance.create({
+          reference: MedicationReference.spironolactone,
+          type,
+          criticality: FHIRAllergyIntoleranceCriticality.low,
+        }),
+      ]
     case 'valsartan':
-      return FHIRAllergyIntolerance.create({
-        reference: MedicationReference.valsartan,
-        type,
-        criticality: FHIRAllergyIntoleranceCriticality.low,
-      })
+      return [
+        FHIRAllergyIntolerance.create({
+          reference: MedicationReference.valsartan,
+          type,
+          criticality: FHIRAllergyIntoleranceCriticality.low,
+        }),
+      ]
     default:
       expect.fail('Unhandled case for contraindication:', field)
   }
@@ -428,27 +487,28 @@ interface ExpectedRecommendation {
 }
 
 function getExpectedRecommendation(
-  field: string,
+  value: string,
 ): ExpectedRecommendation | undefined {
-  switch (field.trim().toLowerCase()) {
+  switch (value.trim().toLowerCase()) {
+    case 'no message listed':
     case 'no med listed':
       return undefined
-    case 'no message - carvedilol listed':
+    case 'no message, carvedilol listed':
       return {
         type: UserMedicationRecommendationType.noActionRequired,
         recommendedMedication: MedicationReference.carvedilol,
       }
-    case 'no message - empagliflozin listed':
+    case 'no message, empagliflozin listed':
       return {
         type: UserMedicationRecommendationType.noActionRequired,
         recommendedMedication: MedicationReference.empagliflozin,
       }
-    case 'no message - sacubitril-valsartan listed':
+    case 'no message, sacubitril-valsartan listed':
       return {
         type: UserMedicationRecommendationType.noActionRequired,
         recommendedMedication: MedicationReference.sacubitrilValsartan,
       }
-    case 'no message - spironolactone listed':
+    case 'no message, spironolactone listed':
       return {
         type: UserMedicationRecommendationType.noActionRequired,
         recommendedMedication: MedicationReference.spironolactone,
@@ -503,6 +563,16 @@ function getExpectedRecommendation(
         type: UserMedicationRecommendationType.improvementAvailable,
         recommendedMedication: MedicationReference.spironolactone,
       }
+    case 'discuss increasing valsartan':
+      return {
+        type: UserMedicationRecommendationType.improvementAvailable,
+        recommendedMedication: MedicationReference.valsartan,
+      }
+    case 'discuss starting bisoprolol':
+      return {
+        type: UserMedicationRecommendationType.notStarted,
+        recommendedMedication: MedicationReference.bisoprolol,
+      }
     case 'discuss starting carvedilol':
       return {
         type: UserMedicationRecommendationType.notStarted,
@@ -543,6 +613,11 @@ function getExpectedRecommendation(
         type: UserMedicationRecommendationType.improvementAvailable,
         recommendedMedication: MedicationReference.sacubitrilValsartan,
       }
+    case 'discuss starting sotagliflozin':
+      return {
+        type: UserMedicationRecommendationType.notStarted,
+        recommendedMedication: MedicationReference.sotagliflozin,
+      }
     case 'discuss starting spironolactone':
       return {
         type: UserMedicationRecommendationType.notStarted,
@@ -562,6 +637,6 @@ function getExpectedRecommendation(
         type: UserMedicationRecommendationType.personalTargetDoseReached,
       }
     default:
-      expect.fail('Unhandled case for expected recommendation:', field)
+      expect.fail('Unhandled case for expected recommendation:', value)
   }
 }
