@@ -13,7 +13,6 @@ import {
   type UserMessage,
   type UserMessageType,
 } from '@stanfordbdhg/engagehf-models'
-import { type Document } from '../database/databaseService.js'
 
 export interface MessageService {
   // Notifications
