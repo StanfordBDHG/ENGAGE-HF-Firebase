@@ -55,32 +55,18 @@ export class MockFirestore {
   }
 
   recursiveDelete(reference: MockFirestoreRef) {
-    const pathComponents = reference.path.split('/')
     if (reference instanceof MockFirestoreCollectionRef) {
       this.collections.delete(reference.path)
-      this.collections.forEach((_, key) => {
-        if (key.startsWith(reference.path + '/')) {
-          this.collections.delete(key)
-        }
-      })
     } else if (reference instanceof MockFirestoreDocRef) {
       reference.delete()
-      this.collections.forEach((_, key) => {
-        if (key.startsWith(reference.path + '/')) {
-          this.collections.delete(key)
-        }
-      })
     } else {
       throw new Error('Unsupported reference type')
     }
-
-    const collectionPath = pathComponents.slice(0, -1).join('/')
-    const docName = pathComponents[pathComponents.length - 1]
-    if (docName === '') {
-      this.collections.delete(collectionPath)
-    } else {
-      this.collections.get(collectionPath)?.delete(docName)
-    }
+    this.collections.forEach((_, key) => {
+      if (key.startsWith(reference.path + '/')) {
+        this.collections.delete(key)
+      }
+    })
   }
 }
 
