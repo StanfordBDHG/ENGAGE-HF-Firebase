@@ -7,7 +7,6 @@
 //
 
 import {
-  BulkWriterOptions,
   type FirestoreDataConverter,
   type QueryDocumentSnapshot,
 } from 'firebase-admin/firestore'
@@ -65,6 +64,7 @@ export class MockFirestore {
         }
       })
     } else if (reference instanceof MockFirestoreDocRef) {
+      reference.delete()
       this.collections.forEach((_, key) => {
         if (key.startsWith(reference.path + '/')) {
           this.collections.delete(key)
@@ -85,7 +85,9 @@ export class MockFirestore {
 }
 
 class MockFirestoreBulkWriter {
-  close() {}
+  close() {
+    return
+  }
 }
 
 class MockFirestoreTransaction {
