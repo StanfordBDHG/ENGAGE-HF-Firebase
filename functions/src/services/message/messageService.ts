@@ -36,8 +36,6 @@ export interface MessageService {
     },
   ): Promise<void>
 
-  getOpenMessages(userId: string): Promise<Array<Document<UserMessage>>>
-
   completeMessages(
     userId: string,
     type: UserMessageType,
