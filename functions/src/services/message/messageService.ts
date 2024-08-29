@@ -13,7 +13,6 @@ import {
   type UserMessage,
   type UserMessageType,
 } from '@stanfordbdhg/engagehf-models'
-import { type Document } from '../database/databaseService.js'
 
 export interface MessageService {
   // Notifications
@@ -35,8 +34,6 @@ export interface MessageService {
       user?: User | null
     },
   ): Promise<void>
-
-  getOpenMessages(userId: string): Promise<Array<Document<UserMessage>>>
 
   completeMessages(
     userId: string,
