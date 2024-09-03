@@ -18,14 +18,14 @@ import {
 import { expect } from 'chai'
 import { describe, it } from 'mocha'
 import { MraRecommender } from './mraRecommender.js'
-import { type HealthSummaryData } from '../../../models/healthSummaryData.js'
 import { type MedicationRequestContext } from '../../../models/medicationRequestContext.js'
 import { MockContraindicationService } from '../../../tests/mocks/contraindicationService.js'
-import { mockHealthSummaryData } from '../../../tests/mocks/healthSummaryData.js'
+import { mockRecommendationVitals } from '../../../tests/mocks/recommendationVitals.js'
 import { cleanupMocks, setupMockFirebase } from '../../../tests/setup.js'
 import { ContraindicationCategory } from '../../contraindication/contraindicationService.js'
 import { getServiceFactory } from '../../factory/getServiceFactory.js'
 import { type MedicationService } from '../../medication/medicationService.js'
+import { type RecommendationVitals } from '../recommendationService.js'
 
 describe('MraRecommender', () => {
   let medicationContraindication: (
@@ -42,7 +42,7 @@ describe('MraRecommender', () => {
       (_, medicationReferences) => medicationReferences.at(0),
     ),
   )
-  let healthSummaryData: HealthSummaryData
+  let vitals: RecommendationVitals
   let medicationService: MedicationService
 
   before(async () => {
@@ -54,8 +54,15 @@ describe('MraRecommender', () => {
     medicationService = factory.medication()
   })
 
-  beforeEach(async () => {
-    healthSummaryData = await mockHealthSummaryData(new Date())
+  beforeEach(() => {
+    vitals = mockRecommendationVitals({
+      countBloodPressureBelow85: 0,
+      medianSystolicBloodPressure: 110,
+      medianHeartRate: 70,
+      potassium: 4,
+      creatinine: 1,
+      eGfr: 60,
+    })
     medicationContraindication = (_) => ContraindicationCategory.none
     medicationClassContraindication = (_) => ContraindicationCategory.none
   })
@@ -74,7 +81,7 @@ describe('MraRecommender', () => {
       const result = recommender.compute({
         requests: [],
         contraindications: [],
-        vitals: healthSummaryData.vitals,
+        vitals: vitals,
       })
       expect(result).to.have.length(0)
     })
@@ -88,7 +95,7 @@ describe('MraRecommender', () => {
       const result = recommender.compute({
         requests: [],
         contraindications: [],
-        vitals: healthSummaryData.vitals,
+        vitals: vitals,
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
@@ -99,7 +106,7 @@ describe('MraRecommender', () => {
     })
 
     it('shows spironolactone when creatinine value is too bad', () => {
-      healthSummaryData.vitals.creatinine = {
+      vitals.creatinine = {
         date: new Date(),
         value: 3,
         unit: QuantityUnit.mg_dL,
@@ -107,7 +114,7 @@ describe('MraRecommender', () => {
       const result = recommender.compute({
         requests: [],
         contraindications: [],
-        vitals: healthSummaryData.vitals,
+        vitals: vitals,
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
@@ -118,7 +125,7 @@ describe('MraRecommender', () => {
     })
 
     it('shows spironolactone if potassium value is too bad', () => {
-      healthSummaryData.vitals.potassium = {
+      vitals.potassium = {
         date: new Date(),
         value: 6,
         unit: QuantityUnit.mEq_L,
@@ -126,7 +133,7 @@ describe('MraRecommender', () => {
       const result = recommender.compute({
         requests: [],
         contraindications: [],
-        vitals: healthSummaryData.vitals,
+        vitals: vitals,
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
@@ -140,7 +147,7 @@ describe('MraRecommender', () => {
       const result = recommender.compute({
         requests: [],
         contraindications: [],
-        vitals: healthSummaryData.vitals,
+        vitals: vitals,
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
@@ -176,7 +183,7 @@ describe('MraRecommender', () => {
       const result = recommender.compute({
         requests: [contextAtTarget],
         contraindications: [],
-        vitals: healthSummaryData.vitals,
+        vitals: vitals,
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
@@ -187,7 +194,7 @@ describe('MraRecommender', () => {
     })
 
     it('requests newer lab values when date is too old for potassium', () => {
-      healthSummaryData.vitals.potassium = {
+      vitals.potassium = {
         unit: QuantityUnit.mEq_L,
         value: 4,
         date: new Date('2021-01-01'),
@@ -195,7 +202,7 @@ describe('MraRecommender', () => {
       const result = recommender.compute({
         requests: [contextBelowTarget],
         contraindications: [],
-        vitals: healthSummaryData.vitals,
+        vitals: vitals,
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
@@ -206,7 +213,7 @@ describe('MraRecommender', () => {
     })
 
     it('requests newer lab values when date is too old for creatinine', () => {
-      healthSummaryData.vitals.creatinine = {
+      vitals.creatinine = {
         unit: QuantityUnit.mg_dL,
         value: 2,
         date: new Date('2021-01-01'),
@@ -214,7 +221,7 @@ describe('MraRecommender', () => {
       const result = recommender.compute({
         requests: [contextBelowTarget],
         contraindications: [],
-        vitals: healthSummaryData.vitals,
+        vitals: vitals,
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
@@ -225,7 +232,7 @@ describe('MraRecommender', () => {
     })
 
     it('detects personal target when creatinine is too high', () => {
-      healthSummaryData.vitals.creatinine = {
+      vitals.creatinine = {
         unit: QuantityUnit.mg_dL,
         value: 3,
         date: new Date(),
@@ -233,7 +240,7 @@ describe('MraRecommender', () => {
       const result = recommender.compute({
         requests: [contextBelowTarget],
         contraindications: [],
-        vitals: healthSummaryData.vitals,
+        vitals: vitals,
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
@@ -244,7 +251,7 @@ describe('MraRecommender', () => {
     })
 
     it('detects personal target when potassium is too high', () => {
-      healthSummaryData.vitals.potassium = {
+      vitals.potassium = {
         unit: QuantityUnit.mEq_L,
         value: 6,
         date: new Date(),
@@ -252,7 +259,7 @@ describe('MraRecommender', () => {
       const result = recommender.compute({
         requests: [contextBelowTarget],
         contraindications: [],
-        vitals: healthSummaryData.vitals,
+        vitals: vitals,
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
@@ -266,7 +273,7 @@ describe('MraRecommender', () => {
       const result = recommender.compute({
         requests: [contextBelowTarget],
         contraindications: [],
-        vitals: healthSummaryData.vitals,
+        vitals: vitals,
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({

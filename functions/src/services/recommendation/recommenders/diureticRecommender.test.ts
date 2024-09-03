@@ -42,7 +42,7 @@ describe('DiureticRecommender', () => {
         requests: [],
         contraindications: [],
         vitals: healthSummaryData.vitals,
-        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
+        latestDizzinessScore: undefined,
       })
       expect(result).to.have.length(0)
     })
@@ -126,7 +126,7 @@ describe('DiureticRecommender', () => {
         requests: [existingMedication],
         contraindications: [],
         vitals: healthSummaryData.vitals,
-        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
+        latestDizzinessScore: undefined,
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({

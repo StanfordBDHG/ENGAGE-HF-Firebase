@@ -13,19 +13,21 @@ import {
   type MedicationClassReference,
   MedicationReference,
   QuantityUnit,
+  type SymptomScore,
   UserMedicationRecommendationType,
 } from '@stanfordbdhg/engagehf-models'
 import { expect } from 'chai'
 import { describe, it } from 'mocha'
 import { Sglt2iRecommender } from './sglt2iRecommender.js'
-import { type HealthSummaryData } from '../../../models/healthSummaryData.js'
 import { type MedicationRequestContext } from '../../../models/medicationRequestContext.js'
 import { MockContraindicationService } from '../../../tests/mocks/contraindicationService.js'
 import { mockHealthSummaryData } from '../../../tests/mocks/healthSummaryData.js'
+import { mockRecommendationVitals } from '../../../tests/mocks/recommendationVitals.js'
 import { cleanupMocks, setupMockFirebase } from '../../../tests/setup.js'
 import { ContraindicationCategory } from '../../contraindication/contraindicationService.js'
 import { getServiceFactory } from '../../factory/getServiceFactory.js'
 import { type MedicationService } from '../../medication/medicationService.js'
+import { type RecommendationVitals } from '../recommendationService.js'
 
 describe('Sglt2iRecommender', () => {
   let medicationContraindication: (
@@ -42,7 +44,8 @@ describe('Sglt2iRecommender', () => {
       (_, medicationReferences) => medicationReferences.at(0),
     ),
   )
-  let healthSummaryData: HealthSummaryData
+  let vitals: RecommendationVitals
+  let symptomScore: SymptomScore | undefined
   let medicationService: MedicationService
 
   before(async () => {
@@ -55,7 +58,17 @@ describe('Sglt2iRecommender', () => {
   })
 
   beforeEach(async () => {
-    healthSummaryData = await mockHealthSummaryData(new Date())
+    symptomScore = (await mockHealthSummaryData(new Date())).symptomScores.at(
+      -1,
+    )
+    vitals = mockRecommendationVitals({
+      countBloodPressureBelow85: 0,
+      medianSystolicBloodPressure: 110,
+      medianHeartRate: 70,
+      potassium: 4,
+      creatinine: 1,
+      eGfr: 60,
+    })
     medicationContraindication = (_) => ContraindicationCategory.none
     medicationClassContraindication = (_) => ContraindicationCategory.none
   })
@@ -73,14 +86,14 @@ describe('Sglt2iRecommender', () => {
       const result = recommender.compute({
         requests: [],
         contraindications: [],
-        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
-        vitals: healthSummaryData.vitals,
+        latestDizzinessScore: symptomScore?.dizzinessScore,
+        vitals: vitals,
       })
       expect(result).to.have.length(0)
     })
 
     it('recommends no treatment when eGFR is too low', () => {
-      healthSummaryData.vitals.estimatedGlomerularFiltrationRate = {
+      vitals.estimatedGlomerularFiltrationRate = {
         date: new Date(),
         unit: QuantityUnit.mL_min_173m2,
         value: 19,
@@ -88,8 +101,8 @@ describe('Sglt2iRecommender', () => {
       const result = recommender.compute({
         requests: [],
         contraindications: [],
-        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
-        vitals: healthSummaryData.vitals,
+        latestDizzinessScore: symptomScore?.dizzinessScore,
+        vitals: vitals,
       })
       expect(result).to.have.length(0)
     })
@@ -103,8 +116,8 @@ describe('Sglt2iRecommender', () => {
       const result = recommender.compute({
         requests: [],
         contraindications: [],
-        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
-        vitals: healthSummaryData.vitals,
+        latestDizzinessScore: symptomScore?.dizzinessScore,
+        vitals: vitals,
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
@@ -115,13 +128,12 @@ describe('Sglt2iRecommender', () => {
     })
 
     it('requests more blood pressure observations', () => {
-      healthSummaryData.vitals.systolicBloodPressure =
-        healthSummaryData.vitals.systolicBloodPressure.slice(0, 2)
+      vitals.systolicBloodPressure = vitals.systolicBloodPressure.slice(0, 2)
       const result = recommender.compute({
         requests: [],
         contraindications: [],
-        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
-        vitals: healthSummaryData.vitals,
+        latestDizzinessScore: symptomScore?.dizzinessScore,
+        vitals: vitals,
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
@@ -132,14 +144,14 @@ describe('Sglt2iRecommender', () => {
     })
 
     it('shows empagliflozin when median systolic is too low', () => {
-      healthSummaryData.vitals.systolicBloodPressure.forEach((observation) => {
+      vitals.systolicBloodPressure.forEach((observation) => {
         observation.value = 99
       })
       const result = recommender.compute({
         requests: [],
         contraindications: [],
-        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
-        vitals: healthSummaryData.vitals,
+        latestDizzinessScore: symptomScore?.dizzinessScore,
+        vitals: vitals,
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
@@ -153,8 +165,8 @@ describe('Sglt2iRecommender', () => {
       const result = recommender.compute({
         requests: [],
         contraindications: [],
-        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
-        vitals: healthSummaryData.vitals,
+        latestDizzinessScore: symptomScore?.dizzinessScore,
+        vitals: vitals,
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
@@ -190,8 +202,8 @@ describe('Sglt2iRecommender', () => {
       const result = recommender.compute({
         requests: [contextAtTarget],
         contraindications: [],
-        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
-        vitals: healthSummaryData.vitals,
+        latestDizzinessScore: symptomScore?.dizzinessScore,
+        vitals: vitals,
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
@@ -202,13 +214,12 @@ describe('Sglt2iRecommender', () => {
     })
 
     it('requests more blood pressure observations', () => {
-      healthSummaryData.vitals.systolicBloodPressure =
-        healthSummaryData.vitals.systolicBloodPressure.slice(0, 2)
+      vitals.systolicBloodPressure = vitals.systolicBloodPressure.slice(0, 2)
       const result = recommender.compute({
         requests: [contextBelowTarget],
         contraindications: [],
-        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
-        vitals: healthSummaryData.vitals,
+        latestDizzinessScore: symptomScore?.dizzinessScore,
+        vitals: vitals,
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
@@ -219,14 +230,14 @@ describe('Sglt2iRecommender', () => {
     })
 
     it('detects personal target reached', () => {
-      healthSummaryData.vitals.systolicBloodPressure.forEach((observation) => {
+      vitals.systolicBloodPressure.forEach((observation) => {
         observation.value = 99
       })
       const result = recommender.compute({
         requests: [contextBelowTarget],
         contraindications: [],
-        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
-        vitals: healthSummaryData.vitals,
+        latestDizzinessScore: symptomScore?.dizzinessScore,
+        vitals: vitals,
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
@@ -240,8 +251,8 @@ describe('Sglt2iRecommender', () => {
       const result = recommender.compute({
         requests: [contextBelowTarget],
         contraindications: [],
-        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
-        vitals: healthSummaryData.vitals,
+        latestDizzinessScore: symptomScore?.dizzinessScore,
+        vitals: vitals,
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
