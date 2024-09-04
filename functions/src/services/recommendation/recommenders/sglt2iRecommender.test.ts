@@ -27,10 +27,6 @@ import { cleanupMocks, setupMockFirebase } from '../../../tests/setup.js'
 import { ContraindicationCategory } from '../../contraindication/contraindicationService.js'
 import { getServiceFactory } from '../../factory/getServiceFactory.js'
 import { type MedicationService } from '../../medication/medicationService.js'
-<<<<<<< Updated upstream
-=======
-import { type RecommendationVitals } from '../recommendationService.js'
->>>>>>> Stashed changes
 
 describe('Sglt2iRecommender', () => {
   let medicationContraindication: (
