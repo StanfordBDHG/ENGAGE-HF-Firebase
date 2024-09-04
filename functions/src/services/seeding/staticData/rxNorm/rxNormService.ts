@@ -395,18 +395,18 @@ export class RxNormService {
   ): Promise<RxNormConceptProperty[]> {
     const ingredientsData = await this.api.getRelated(rxcui, 'ingredient_of')
     const ingredients =
-      ingredientsData.relatedGroup?.conceptGroup
-        .filter((group) => group.tty === 'SCDC')
-        .at(0)?.conceptProperties ?? []
+      ingredientsData.relatedGroup?.conceptGroup.find(
+        (group) => group.tty === 'SCDC',
+      )?.conceptProperties ?? []
     const allDrugs = []
     for (const ingredient of ingredients) {
       const drugData = await this.api.getRelated(
         ingredient.rxcui,
         'constitutes',
       )
-      const drugs = drugData.relatedGroup?.conceptGroup
-        .filter((group) => group.tty === 'SCD')
-        .at(0)?.conceptProperties
+      const drugs = drugData.relatedGroup?.conceptGroup.find(
+        (group) => group.tty === 'SCD',
+      )?.conceptProperties
       allDrugs.push(...(drugs ?? []))
     }
     return allDrugs
