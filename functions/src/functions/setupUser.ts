@@ -11,7 +11,7 @@ import { z } from 'zod'
 import { validatedOnCall } from './helpers.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
-export const setupUser = validatedOnCall(z.object({}), async (request) => {
+export const setupUser = validatedOnCall(z.unknown(), async (request) => {
   const userId = request.auth?.uid
   const invitationCode: unknown = request.auth?.token.invitationCode
   if (
