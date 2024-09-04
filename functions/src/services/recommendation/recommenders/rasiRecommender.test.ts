@@ -31,6 +31,7 @@ import { ContraindicationCategory } from '../../contraindication/contraindicatio
 import { getServiceFactory } from '../../factory/getServiceFactory.js'
 import { type MedicationService } from '../../medication/medicationService.js'
 import { type RecommendationVitals } from '../recommendationService.js'
+import { Recommender } from './recommender.js'
 
 describe('RasiRecommender', () => {
   let medicationContraindication: (
@@ -40,7 +41,7 @@ describe('RasiRecommender', () => {
     reference: MedicationClassReference,
   ) => ContraindicationCategory
 
-  const recommender = new RasiRecommender(
+  const recommender: Recommender = new RasiRecommender(
     new MockContraindicationService(
       (_, reference) => medicationContraindication(reference),
       (_, reference) => medicationClassContraindication(reference),

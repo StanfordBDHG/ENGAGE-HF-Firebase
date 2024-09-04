@@ -25,9 +25,10 @@ import { type MedicationRequestContext } from '../../../models/medicationRequest
 import { MockContraindicationService } from '../../../tests/mocks/contraindicationService.js'
 import { mockHealthSummaryData } from '../../../tests/mocks/healthSummaryData.js'
 import { ContraindicationCategory } from '../../contraindication/contraindicationService.js'
+import { Recommender } from './recommender.js'
 
 describe('DiureticRecommender', () => {
-  const recommender = new DiureticRecommender(
+  const recommender: Recommender = new DiureticRecommender(
     new MockContraindicationService(
       () => ContraindicationCategory.none,
       () => ContraindicationCategory.none,

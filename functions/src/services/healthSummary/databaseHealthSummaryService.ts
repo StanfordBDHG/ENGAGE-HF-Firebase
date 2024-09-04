@@ -50,8 +50,8 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
       this.userService.getAuth(userId),
       this.userService.getUser(userId),
       this.patientService.getNextAppointment(userId),
-      this.getMedicationRecommendations(userId),
-      this.getSymptomScores(userId, { limit: 5 }),
+      this.patientService.getMedicationRecommendations(userId),
+      this.patientService.getSymptomScores(userId, { limit: 5 }),
       this.getVitals(userId, advanceDateByDays(new Date(), -14), weightUnit),
     ])
 
@@ -67,30 +67,10 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
       dateOfBirth: dateOfBirth ?? undefined,
       clinicianName: clinician?.displayName,
       nextAppointment: nextAppointmentStart ?? undefined,
-      recommendations: recommendations,
+      recommendations: recommendations.map((doc) => doc.content),
       vitals: vitals,
-      symptomScores: symptomScores,
+      symptomScores: symptomScores.map((doc) => doc.content),
     }
-  }
-
-  // Methods - Symptom Scores
-
-  async getSymptomScores(
-    userId: string,
-    options: { limit?: number } = {},
-  ): Promise<SymptomScore[]> {
-    const result = await this.patientService.getSymptomScores(userId, options)
-    return result.map((doc) => doc.content)
-  }
-
-  // Methods - Medication Recommendations
-
-  async getMedicationRecommendations(
-    userId: string,
-  ): Promise<UserMedicationRecommendation[]> {
-    const result =
-      await this.patientService.getMedicationRecommendations(userId)
-    return result.map((doc) => doc.content)
   }
 
   // Helpers

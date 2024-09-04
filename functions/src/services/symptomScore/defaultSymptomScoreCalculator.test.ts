@@ -10,10 +10,12 @@ import { FHIRQuestionnaireResponse } from '@stanfordbdhg/engagehf-models'
 import { expect } from 'chai'
 import { DefaultSymptomScoreCalculator } from './defaultSymptomScoreCalculator.js'
 import { readCsv } from '../../tests/helpers/csv.js'
+import { SymptomScoreCalculator } from './symptomScoreCalculator.js'
 
 describe('DefaultSymptomScoreCalculator', () => {
   it('correctly computes symptom scores', () => {
-    const calculator = new DefaultSymptomScoreCalculator()
+    const calculator: SymptomScoreCalculator =
+      new DefaultSymptomScoreCalculator()
     readCsv('src/tests/resources/symptomScores.csv', 2268, (values, index) => {
       if (index === 0) return
       expect(values).to.have.length(18)

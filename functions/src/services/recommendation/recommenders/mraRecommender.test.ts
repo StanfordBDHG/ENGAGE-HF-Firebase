@@ -26,6 +26,7 @@ import { ContraindicationCategory } from '../../contraindication/contraindicatio
 import { getServiceFactory } from '../../factory/getServiceFactory.js'
 import { type MedicationService } from '../../medication/medicationService.js'
 import { type RecommendationVitals } from '../recommendationService.js'
+import { Recommender } from './recommender.js'
 
 describe('MraRecommender', () => {
   let medicationContraindication: (
@@ -35,7 +36,7 @@ describe('MraRecommender', () => {
     reference: MedicationClassReference,
   ) => ContraindicationCategory
 
-  const recommender = new MraRecommender(
+  const recommender: Recommender = new MraRecommender(
     new MockContraindicationService(
       (_, reference) => medicationContraindication(reference),
       (_, reference) => medicationClassContraindication(reference),

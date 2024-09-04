@@ -26,6 +26,7 @@ import { cleanupMocks, setupMockFirebase } from '../../../tests/setup.js'
 import { ContraindicationCategory } from '../../contraindication/contraindicationService.js'
 import { getServiceFactory } from '../../factory/getServiceFactory.js'
 import { type MedicationService } from '../../medication/medicationService.js'
+import { Recommender } from './recommender.js'
 
 describe('BetaBlockerRecommender', () => {
   let medicationContraindication: (
@@ -35,7 +36,7 @@ describe('BetaBlockerRecommender', () => {
     reference: MedicationClassReference,
   ) => ContraindicationCategory
 
-  const recommender = new BetaBlockerRecommender(
+  const recommender: Recommender = new BetaBlockerRecommender(
     new MockContraindicationService(
       (_, reference) => medicationContraindication(reference),
       (_, reference) => medicationClassContraindication(reference),

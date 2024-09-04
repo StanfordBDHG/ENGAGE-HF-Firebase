@@ -28,6 +28,7 @@ import { ContraindicationCategory } from '../../contraindication/contraindicatio
 import { getServiceFactory } from '../../factory/getServiceFactory.js'
 import { type MedicationService } from '../../medication/medicationService.js'
 import { type RecommendationVitals } from '../recommendationService.js'
+import { Recommender } from './recommender.js'
 
 describe('Sglt2iRecommender', () => {
   let medicationContraindication: (
@@ -37,7 +38,7 @@ describe('Sglt2iRecommender', () => {
     reference: MedicationClassReference,
   ) => ContraindicationCategory
 
-  const recommender = new Sglt2iRecommender(
+  const recommender: Recommender = new Sglt2iRecommender(
     new MockContraindicationService(
       (_, reference) => medicationContraindication(reference),
       (_, reference) => medicationClassContraindication(reference),
