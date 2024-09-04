@@ -9,6 +9,7 @@
 import { FHIRQuestionnaireResponse } from '@stanfordbdhg/engagehf-models'
 import { expect } from 'chai'
 import { DefaultSymptomScoreCalculator } from './defaultSymptomScoreCalculator.js'
+import { type SymptomScoreCalculator } from './symptomScoreCalculator.js'
 import { readCsv } from '../../tests/helpers/csv.js'
 
 describe('DefaultSymptomScoreCalculator', () => {

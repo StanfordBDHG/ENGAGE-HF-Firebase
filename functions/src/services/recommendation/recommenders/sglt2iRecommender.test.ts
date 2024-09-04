@@ -17,6 +17,7 @@ import {
 } from '@stanfordbdhg/engagehf-models'
 import { expect } from 'chai'
 import { describe, it } from 'mocha'
+import { type Recommender } from './recommender.js'
 import { Sglt2iRecommender } from './sglt2iRecommender.js'
 import { type HealthSummaryData } from '../../../models/healthSummaryData.js'
 import { type MedicationRequestContext } from '../../../models/medicationRequestContext.js'
@@ -26,6 +27,10 @@ import { cleanupMocks, setupMockFirebase } from '../../../tests/setup.js'
 import { ContraindicationCategory } from '../../contraindication/contraindicationService.js'
 import { getServiceFactory } from '../../factory/getServiceFactory.js'
 import { type MedicationService } from '../../medication/medicationService.js'
+<<<<<<< Updated upstream
+=======
+import { type RecommendationVitals } from '../recommendationService.js'
+>>>>>>> Stashed changes
 
 describe('Sglt2iRecommender', () => {
   let medicationContraindication: (

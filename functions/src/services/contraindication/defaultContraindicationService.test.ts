@@ -16,7 +16,14 @@ import {
 } from '@stanfordbdhg/engagehf-models'
 import { expect } from 'chai'
 import { describe } from 'mocha'
+<<<<<<< Updated upstream
 import { ContraindicationCategory } from './contraindicationService.js'
+=======
+import {
+  ContraindicationCategory,
+  type ContraindicationService,
+} from './contraindicationService.js'
+>>>>>>> Stashed changes
 import { DefaultContraindicationService } from './defaultContraindicationService.js'
 
 describe('DefaultContraindicationService', () => {

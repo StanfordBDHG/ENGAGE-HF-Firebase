@@ -18,6 +18,7 @@ import {
 import { expect } from 'chai'
 import { describe, it } from 'mocha'
 import { BetaBlockerRecommender } from './betaBlockerRecommender.js'
+import { type Recommender } from './recommender.js'
 import { type HealthSummaryData } from '../../../models/healthSummaryData.js'
 import { type MedicationRequestContext } from '../../../models/medicationRequestContext.js'
 import { MockContraindicationService } from '../../../tests/mocks/contraindicationService.js'

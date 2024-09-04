@@ -8,6 +8,7 @@
 
 import http from 'http'
 import { Lazy, User, type UserType } from '@stanfordbdhg/engagehf-models'
+import { expect } from 'chai'
 import admin from 'firebase-admin'
 import { type DocumentSnapshot, Timestamp } from 'firebase-admin/firestore'
 import { type Change } from 'firebase-functions'
@@ -20,19 +21,26 @@ import { CollectionsService } from '../../services/database/collections.js'
 import { getServiceFactory } from '../../services/factory/getServiceFactory.js'
 import { type ServiceFactory } from '../../services/factory/serviceFactory.js'
 import { type UserClaims } from '../../services/user/databaseUserService.js'
+import { TestFlags } from '../testFlags.js'
 
 export function describeWithEmulators(
   title: string,
   perform: (env: EmulatorTestEnvironment) => void,
 ) {
   describe(title, () => {
-    const env = EmulatorTestEnvironment.instance
+    if (TestFlags.connectsToEmulator) {
+      const env = EmulatorTestEnvironment.instance
 
-    beforeEach(async () => {
-      await env.cleanup()
-    })
+      beforeEach(async () => {
+        await env.cleanup()
+      })
 
-    perform(env)
+      perform(env)
+    } else {
+      it('skipped due to missing emulator', () => {
+        expect.fail('skipped test')
+      })
+    }
   })
 }
 
