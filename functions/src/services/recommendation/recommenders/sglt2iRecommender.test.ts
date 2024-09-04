@@ -17,7 +17,6 @@ import {
 } from '@stanfordbdhg/engagehf-models'
 import { expect } from 'chai'
 import { describe, it } from 'mocha'
-import { type Recommender } from './recommender.js'
 import { Sglt2iRecommender } from './sglt2iRecommender.js'
 import { type HealthSummaryData } from '../../../models/healthSummaryData.js'
 import { type MedicationRequestContext } from '../../../models/medicationRequestContext.js'

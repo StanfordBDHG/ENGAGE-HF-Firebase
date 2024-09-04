@@ -13,7 +13,7 @@ import {
   type Observation,
   type SymptomScore,
   type UserMedicationRecommendation,
-  type QuantityUnit,
+  QuantityUnit,
 } from '@stanfordbdhg/engagehf-models'
 import { type HealthSummaryService } from './healthSummaryService.js'
 import { type HealthSummaryData } from '../../models/healthSummaryData.js'

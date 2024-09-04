@@ -6,9 +6,9 @@
 // SPDX-License-Identifier: MIT
 //
 
+import { expect } from 'chai'
 import { describe } from 'mocha'
 import { RxNormApi } from './rxNormApi.js'
-import { expect } from 'chai'
 
 describe('RxNormApi', () => {
   const api = new RxNormApi()

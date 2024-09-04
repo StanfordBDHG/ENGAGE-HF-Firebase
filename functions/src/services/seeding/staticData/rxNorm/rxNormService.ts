@@ -19,8 +19,7 @@ import {
 import { z } from 'zod'
 import { RxNormApi } from './rxNormApi.js'
 import {
-  RxNormConceptProperty,
-  RxNormPropConcept,
+  type RxNormConceptProperty,
   type RxTermInfo,
   rxTermInfo,
 } from './rxNormModels.js'
