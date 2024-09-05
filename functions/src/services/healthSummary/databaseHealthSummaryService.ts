@@ -9,8 +9,6 @@
 import {
   advanceDateByDays,
   type QuantityUnit,
-  type SymptomScore,
-  type UserMedicationRecommendation,
 } from '@stanfordbdhg/engagehf-models'
 import { type HealthSummaryService } from './healthSummaryService.js'
 import {

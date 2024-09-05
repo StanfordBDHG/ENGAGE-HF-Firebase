@@ -21,11 +21,11 @@ import {
 import { expect } from 'chai'
 import { describe, it } from 'mocha'
 import { DiureticRecommender } from './diureticRecommender.js'
+import { type Recommender } from './recommender.js'
 import { type MedicationRequestContext } from '../../../models/medicationRequestContext.js'
 import { MockContraindicationService } from '../../../tests/mocks/contraindicationService.js'
 import { mockHealthSummaryData } from '../../../tests/mocks/healthSummaryData.js'
 import { ContraindicationCategory } from '../../contraindication/contraindicationService.js'
-import { Recommender } from './recommender.js'
 
 describe('DiureticRecommender', () => {
   const recommender: Recommender = new DiureticRecommender(

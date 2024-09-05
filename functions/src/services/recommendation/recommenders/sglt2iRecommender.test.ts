@@ -18,6 +18,7 @@ import {
 } from '@stanfordbdhg/engagehf-models'
 import { expect } from 'chai'
 import { describe, it } from 'mocha'
+import { type Recommender } from './recommender.js'
 import { Sglt2iRecommender } from './sglt2iRecommender.js'
 import { type MedicationRequestContext } from '../../../models/medicationRequestContext.js'
 import { MockContraindicationService } from '../../../tests/mocks/contraindicationService.js'
@@ -28,7 +29,6 @@ import { ContraindicationCategory } from '../../contraindication/contraindicatio
 import { getServiceFactory } from '../../factory/getServiceFactory.js'
 import { type MedicationService } from '../../medication/medicationService.js'
 import { type RecommendationVitals } from '../recommendationService.js'
-import { Recommender } from './recommender.js'
 
 describe('Sglt2iRecommender', () => {
   let medicationContraindication: (

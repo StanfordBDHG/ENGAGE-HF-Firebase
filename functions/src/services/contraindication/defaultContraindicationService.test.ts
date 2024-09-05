@@ -18,7 +18,7 @@ import { expect } from 'chai'
 import { describe } from 'mocha'
 import {
   ContraindicationCategory,
-  ContraindicationService,
+  type ContraindicationService,
 } from './contraindicationService.js'
 import { DefaultContraindicationService } from './defaultContraindicationService.js'
 

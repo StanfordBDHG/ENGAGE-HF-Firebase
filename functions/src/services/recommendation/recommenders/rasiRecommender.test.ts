@@ -22,6 +22,7 @@ import {
 import { expect } from 'chai'
 import { describe, it } from 'mocha'
 import { RasiRecommender } from './rasiRecommender.js'
+import { type Recommender } from './recommender.js'
 import { type MedicationRequestContext } from '../../../models/medicationRequestContext.js'
 import { MockContraindicationService } from '../../../tests/mocks/contraindicationService.js'
 import { mockHealthSummaryData } from '../../../tests/mocks/healthSummaryData.js'
@@ -31,7 +32,6 @@ import { ContraindicationCategory } from '../../contraindication/contraindicatio
 import { getServiceFactory } from '../../factory/getServiceFactory.js'
 import { type MedicationService } from '../../medication/medicationService.js'
 import { type RecommendationVitals } from '../recommendationService.js'
-import { Recommender } from './recommender.js'
 
 describe('RasiRecommender', () => {
   let medicationContraindication: (
