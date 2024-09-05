@@ -231,7 +231,7 @@ export class RecommendationService {
         return new LocalizedText('Measure blood pressure/heart rate')
       }
       case UserMedicationRecommendationType.noActionRequired: {
-        return new LocalizedText('')
+        return new LocalizedText('May not be eligible')
       }
       case UserMedicationRecommendationType.notStarted: {
         return new LocalizedText('Discuss starting')
