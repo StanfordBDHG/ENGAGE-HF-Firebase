@@ -215,7 +215,7 @@ export class RecommendationService {
   ): LocalizedText {
     switch (output.type) {
       case UserMedicationRecommendationType.improvementAvailable: {
-        if (recommendedMedication) {
+        if (recommendedMedication !== undefined) {
           const displayName = recommendedMedication.displayName
           return new LocalizedText(
             `Discuss starting ${displayName} (more effective med)`,
