@@ -6,12 +6,12 @@
 // SPDX-License-Identifier: MIT
 //
 
+import { logger } from 'firebase-functions'
 import {
   beforeUserCreated,
   beforeUserSignedIn,
 } from 'firebase-functions/v2/identity'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
-import { logger } from 'firebase-functions'
 
 export const beforeUserCreatedFunction = beforeUserCreated((event) => {
   console.log(`beforeUserCreated with event: ${JSON.stringify(event)}`)

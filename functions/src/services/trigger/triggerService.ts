@@ -6,7 +6,6 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { logger } from 'firebase-functions'
 import {
   advanceDateByDays,
   advanceDateByMinutes,
@@ -20,6 +19,7 @@ import {
   UserMessageType,
   VideoReference,
 } from '@stanfordbdhg/engagehf-models'
+import { logger } from 'firebase-functions'
 import { median } from '../../extensions/array.js'
 import { UserObservationCollection } from '../database/collections.js'
 import { type ServiceFactory } from '../factory/serviceFactory.js'
