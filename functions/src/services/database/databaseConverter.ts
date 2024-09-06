@@ -32,8 +32,16 @@ export class DatabaseConverter<Schema extends z.ZodType<any, any, any>>
   // Methods
 
   fromFirestore(snapshot: DocumentSnapshot): z.output<Schema> {
-    /* eslint-disable-next-line @typescript-eslint/no-unsafe-return */
-    return this.converter.schema.parse(snapshot.data()) as z.output<Schema>
+    const data = snapshot.data()
+    try {
+      /* eslint-disable-next-line @typescript-eslint/no-unsafe-return */
+      return this.converter.schema.parse(data) as z.output<Schema>
+    } catch (error) {
+      logger.error(
+        `DatabaseDecoder(${this.converter.schema._output}): Failed to decode object ${String(data)} due to ${String(error)}.`,
+      )
+      throw error
+    }
   }
 
   toFirestore(modelObject: z.output<Schema>): DocumentData {
@@ -41,7 +49,7 @@ export class DatabaseConverter<Schema extends z.ZodType<any, any, any>>
       return this.converter.encode(modelObject) as DocumentData
     } catch (error) {
       logger.error(
-        `Failing to encode object of type ${typeof modelObject} due to ${String(error)}`,
+        `DatabaseDecoder(${typeof modelObject}): Failed to encode object ${modelObject} due to ${String(error)}.`,
       )
       throw error
     }
