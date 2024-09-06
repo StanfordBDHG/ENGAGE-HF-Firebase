@@ -24,6 +24,7 @@ import {
   type DatabaseService,
 } from '../database/databaseService.js'
 import { type UserService } from '../user/userService.js'
+import { compact, compactMap } from '../../extensions/array.js'
 
 export class DefaultMessageService implements MessageService {
   // Properties
@@ -47,6 +48,9 @@ export class DefaultMessageService implements MessageService {
   // Methods - Devices
 
   async registerDevice(userId: string, newDevice: UserDevice): Promise<void> {
+    logger.debug(
+      `DefaultMessageService.registerDevice(user: ${userId}, ${newDevice.platform}, ${newDevice.notificationToken}): Start`,
+    )
     await this.databaseService.runTransaction(
       async (collections, transaction) => {
         const devices = await transaction.get(
@@ -56,23 +60,36 @@ export class DefaultMessageService implements MessageService {
             newDevice.notificationToken,
           ),
         )
+        logger.debug(
+          `DefaultMessageService.registerDevice(user: ${userId}, ${newDevice.platform}, ${newDevice.notificationToken}): Found ${devices.size} devices with this token`,
+        )
         const userPath = collections.users.doc(userId).path
         let didFindExistingDevice = false
         for (const device of devices.docs) {
           if (device.data().platform !== newDevice.platform) continue
           if (!didFindExistingDevice && device.ref.path.startsWith(userPath)) {
+            logger.debug(
+              `DefaultMessageService.registerDevice(user: ${userId}, ${newDevice.platform}, ${newDevice.notificationToken}): Found perfect match at ${device.ref.path}, updating`,
+            )
             transaction.set(device.ref, newDevice)
             didFindExistingDevice = true
           } else {
+            logger.debug(
+              `DefaultMessageService.registerDevice(user: ${userId}, ${newDevice.platform}, ${newDevice.notificationToken}): Deleting device at ${device.ref.path}`,
+            )
             transaction.delete(device.ref)
           }
         }
 
-        if (!didFindExistingDevice)
-          transaction.set(collections.userDevices(userId).doc(), newDevice)
+        if (!didFindExistingDevice) {
+          const newDeviceRef = collections.userDevices(userId).doc()
+          logger.debug(
+            `DefaultMessageService.registerDevice(user: ${userId}, ${newDevice.platform}, ${newDevice.notificationToken}): Creating new device at ${newDeviceRef.path}`,
+          )
+          transaction.set(newDeviceRef, newDevice)
+        }
       },
     )
-    return
   }
 
   async unregisterDevice(
@@ -89,8 +106,14 @@ export class DefaultMessageService implements MessageService {
             notificationToken,
           ),
         )
+        logger.debug(
+          `DefaultMessageService.unregisterDevice(${platform}, ${notificationToken}): Found ${devices.size} devices with this token`,
+        )
         for (const device of devices.docs) {
           if (device.data().platform !== platform) continue
+          logger.debug(
+            `DefaultMessageService.unregisterDevice(${platform}, ${notificationToken}): Found device at ${device.ref.path}, deleting`,
+          )
           transaction.delete(device.ref)
         }
       },
@@ -110,6 +133,9 @@ export class DefaultMessageService implements MessageService {
   ): Promise<void> {
     const newMessage = await this.databaseService.runTransaction(
       async (collections, transaction) => {
+        logger.debug(
+          `DatabaseMessageService.addMessage(user: ${userId}): Type = ${message.type}, Reference = ${message.reference}`,
+        )
         const existingMessages = (
           await collections
             .userMessages(userId)
@@ -117,11 +143,18 @@ export class DefaultMessageService implements MessageService {
             .get()
         ).docs.filter((doc) => doc.data().type === message.type)
 
+        logger.debug(
+          `DatabaseMessageService.addMessage(user: ${userId}): Found ${existingMessages.length} existing messages`,
+        )
+
         if (
           existingMessages.length === 0 ||
           this.handleOldMessages(existingMessages, message, transaction)
         ) {
           const newMessageRef = collections.userMessages(userId).doc()
+          logger.debug(
+            `DatabaseMessageService.addMessage(user: ${userId}): Adding new message at ${newMessageRef.path}`,
+          )
           transaction.set(newMessageRef, message)
           const document: Document<UserMessage> = {
             id: newMessageRef.id,
@@ -136,6 +169,10 @@ export class DefaultMessageService implements MessageService {
     )
 
     if (newMessage !== undefined && options.notify) {
+      logger.debug(
+        `DatabaseMessageService.addMessage(user: ${userId}): System will notify user unless user settings prevent it`,
+      )
+
       const user =
         options.user ?? (await this.userService.getUser(userId))?.content
       if (!user) return
@@ -180,6 +217,9 @@ export class DefaultMessageService implements MessageService {
           const docData = doc.data()
           return docData.type === type && (filter?.(docData) ?? true)
         })
+        logger.debug(
+          `DefaultMessageService.completeMessages(user: ${userId}, type: ${type}): Completing ${messages.length} messages (${messages.map((message) => message.ref.path).join(', ')})`,
+        )
         for (const message of messages) {
           transaction.set(
             message.ref,
@@ -230,7 +270,7 @@ export class DefaultMessageService implements MessageService {
 
   /// returns whether to save the new message or throw it away
   private handleOldMessages(
-    oldMessages: Array<QueryDocumentSnapshot<UserMessage>>,
+    oldMessages: QueryDocumentSnapshot<UserMessage>[],
     newMessage: UserMessage,
     transaction: FirebaseFirestore.Transaction,
   ): boolean {
@@ -242,6 +282,9 @@ export class DefaultMessageService implements MessageService {
           const isOld =
             oldMessage.data().creationDate < advanceDateByDays(new Date(), -7)
           if (isOld) {
+            logger.debug(
+              `DefaultMessageService.handleOldMessages(weightGain): Completing old message ${oldMessage.ref.path}`,
+            )
             transaction.set(
               oldMessage.ref,
               new UserMessage({
@@ -250,18 +293,30 @@ export class DefaultMessageService implements MessageService {
               }),
             )
           } else {
+            logger.debug(
+              `DefaultMessageService.handleOldMessages(weightGain): Contains newish message at: ${oldMessage.ref.path}`,
+            )
             containsNewishMessage = true
           }
         }
+        logger.debug(
+          `DefaultMessageService.handleOldMessages(weightGain): Contains newish message? ${containsNewishMessage ? 'yes' : 'no'}`,
+        )
         return !containsNewishMessage
       case UserMessageType.welcome:
       case UserMessageType.medicationUptitration:
+        logger.debug(
+          `DefaultMessageService.handleOldMessages(${newMessage.type}): Only creating new message, if there are no old messages (count: ${oldMessages.length})`,
+        )
         // Keep only the most recent message
-        return false
+        return oldMessages.length === 0
       case UserMessageType.symptomQuestionnaire:
       case UserMessageType.vitals:
         // Mark old messages as completed and create new ones instead
         for (const oldMessage of oldMessages) {
+          logger.debug(
+            `DefaultMessageService.handleOldMessages(${newMessage.type}): Completing message ${oldMessage.ref.path}`,
+          )
           transaction.set(
             oldMessage.ref,
             new UserMessage({
@@ -273,9 +328,15 @@ export class DefaultMessageService implements MessageService {
         return true
       case UserMessageType.medicationChange:
       case UserMessageType.preAppointment:
+        logger.debug(
+          `DefaultMessageService.handleOldMessages(${newMessage.type}): Only creating new message, if there are no old messages with the same reference (count: ${oldMessages.length})`,
+        )
         // Keep old message, if it references the same entity
         for (const oldMessage of oldMessages) {
           if (oldMessage.data().reference === newMessage.reference) {
+            logger.debug(
+              `DefaultMessageService.handleOldMessages(${newMessage.type}): Found message with the same reference at ${oldMessage.ref.path}`,
+            )
             return false
           }
         }
@@ -292,8 +353,16 @@ export class DefaultMessageService implements MessageService {
       language?: string
     },
   ): Promise<void> {
+    logger.debug(
+      `DatabaseMessageService.sendNotification(user: ${userId}): Start`,
+    )
+
     const devices = await this.databaseService.getQuery<UserDevice>(
       (collections) => collections.userDevices(userId),
+    )
+
+    logger.debug(
+      `DatabaseMessageService.sendNotification(user: ${userId}): Found ${devices.length} devices`,
     )
 
     if (devices.length === 0) return
@@ -301,10 +370,12 @@ export class DefaultMessageService implements MessageService {
     const notifications: TokenMessage[] = devices.map((device) =>
       this.tokenMessage(message, {
         device: device.content,
-        languages: [device.content.language, options.language].flatMap(
-          (language) => (language ? [language] : []),
-        ),
+        languages: compact([device.content.language, options.language]),
       }),
+    )
+
+    logger.debug(
+      `DatabaseMessageService.sendNotification(user: ${userId}): Sending out ${notifications.length} notifications`,
     )
 
     const batchResponse = await this.messaging.sendEach(notifications)
@@ -313,7 +384,7 @@ export class DefaultMessageService implements MessageService {
       batchResponse.responses.map(async (individualResponse, index) => {
         if (!individualResponse.success) {
           logger.error(
-            `Tried sending message to ${devices[index].content.notificationToken} but failed: ${String(individualResponse.error)}`,
+            `DatabaseMessageService.sendNotification(user: ${userId}): Tried sending message to ${devices[index].content.notificationToken} but failed: ${String(individualResponse.error)}`,
           )
         }
         if (
@@ -321,6 +392,10 @@ export class DefaultMessageService implements MessageService {
           'messaging/registration-token-not-registered'
         )
           return
+
+        logger.error(
+          `DatabaseMessageService.sendNotification(user: ${userId}): Deleting token ${devices[index].content.notificationToken}`,
+        )
 
         await this.databaseService.runTransaction(
           (collections, transaction) => {

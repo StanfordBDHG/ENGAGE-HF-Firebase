@@ -40,109 +40,109 @@ export class TriggerService {
   // Methods - Schedule
 
   async every15Minutes() {
-    try {
-      const now = new Date()
-      const tomorrow = advanceDateByDays(now, 1)
-      const yesterday = advanceDateByDays(now, -1)
-      const patientService = this.factory.patient()
-      const messageService = this.factory.message()
+    const now = new Date()
+    const tomorrow = advanceDateByDays(now, 1)
+    const yesterday = advanceDateByDays(now, -1)
+    const patientService = this.factory.patient()
+    const messageService = this.factory.message()
 
-      const upcomingAppointments = await patientService.getEveryAppoinment(
-        advanceDateByMinutes(tomorrow, -15),
-        advanceDateByMinutes(tomorrow, 15),
-      )
+    const upcomingAppointments = await patientService.getEveryAppoinment(
+      advanceDateByMinutes(tomorrow, -15),
+      advanceDateByMinutes(tomorrow, 15),
+    )
 
-      await Promise.all(
-        upcomingAppointments.map(async (appointment) =>
-          messageService.addMessage(
-            appointment.path.split('/')[1],
-            UserMessage.createPreAppointment({
-              reference: appointment.path,
-            }),
-            { notify: true },
-          ),
+    logger.debug(
+      `every15Minutes: Found ${upcomingAppointments.length} upcoming appointments`,
+    )
+
+    await Promise.all(
+      upcomingAppointments.map(async (appointment) =>
+        messageService.addMessage(
+          appointment.path.split('/')[1],
+          UserMessage.createPreAppointment({
+            reference: appointment.path,
+          }),
+          { notify: true },
         ),
-      )
+      ),
+    )
 
-      const pastAppointments = await patientService.getEveryAppoinment(
-        advanceDateByMinutes(yesterday, -15),
-        advanceDateByMinutes(yesterday, 15),
-      )
+    const pastAppointments = await patientService.getEveryAppoinment(
+      advanceDateByMinutes(yesterday, -15),
+      advanceDateByMinutes(yesterday, 15),
+    )
 
-      await Promise.all(
-        pastAppointments.map(async (appointment) =>
-          messageService.completeMessages(
-            appointment.path.split('/')[1],
-            UserMessageType.preAppointment,
-            (message) => message.reference === appointment.path,
-          ),
+    logger.debug(
+      `every15Minutes: Found ${upcomingAppointments.length} past appointments`,
+    )
+
+    await Promise.all(
+      pastAppointments.map(async (appointment) =>
+        messageService.completeMessages(
+          appointment.path.split('/')[1],
+          UserMessageType.preAppointment,
+          (message) => message.reference === appointment.path,
         ),
-      )
-    } catch (error) {
-      logger.error(`Error running every 15 minutes trigger: ${String(error)}`)
-    }
+      ),
+    )
   }
 
   async everyMorning() {
-    try {
-      const now = new Date()
-      const messageService = this.factory.message()
-      const users = await this.factory.user().getAllPatients()
+    const now = new Date()
+    const messageService = this.factory.message()
+    const users = await this.factory.user().getAllPatients()
 
-      const symptomReminderMessage = UserMessage.createSymptomQuestionnaire({
-        questionnaireReference: QuestionnaireReference.enUS,
-      })
-      const vitalsMessage = UserMessage.createVitals()
+    logger.debug(`everyMorning: Found ${users.length} patients`)
 
-      await Promise.all(
-        users.map(async (user) => {
-          try {
-            await messageService.addMessage(user.id, vitalsMessage, {
+    const symptomReminderMessage = UserMessage.createSymptomQuestionnaire({
+      questionnaireReference: QuestionnaireReference.enUS,
+    })
+    const vitalsMessage = UserMessage.createVitals()
+
+    await Promise.all(
+      users.map(async (user) => {
+        try {
+          await messageService.addMessage(user.id, vitalsMessage, {
+            notify: true,
+            user: user.content,
+          })
+
+          const enrollmentDuration = Math.abs(
+            user.content.dateOfEnrollment.getTime() - now.getTime(),
+          )
+          const durationOfOneDayInMilliseconds = 24 * 60 * 60 * 1000
+
+          logger.debug(
+            `everyMorning(user: ${user.id}): enrolled on ${user.content.dateOfEnrollment}, which was ${enrollmentDuration} ms ago`,
+          )
+          if (
+            enrollmentDuration % (durationOfOneDayInMilliseconds * 14) <
+            durationOfOneDayInMilliseconds
+          ) {
+            await messageService.addMessage(user.id, symptomReminderMessage, {
               notify: true,
               user: user.content,
             })
-
-            const enrollmentDuration = Math.abs(
-              user.content.dateOfEnrollment.getTime() - now.getTime(),
-            )
-            const durationOfOneDayInMilliseconds = 24 * 60 * 60 * 1000
-            logger.info(
-              enrollmentDuration,
-              enrollmentDuration % (durationOfOneDayInMilliseconds * 14),
-              '<',
-              durationOfOneDayInMilliseconds,
-            )
-            if (
-              enrollmentDuration % (durationOfOneDayInMilliseconds * 14) <
-              durationOfOneDayInMilliseconds
-            ) {
-              await messageService.addMessage(user.id, symptomReminderMessage, {
-                notify: true,
-                user: user.content,
-              })
-            }
-
-            if (
-              enrollmentDuration % (durationOfOneDayInMilliseconds * 14) >
-                durationOfOneDayInMilliseconds * 2 &&
-              enrollmentDuration % (durationOfOneDayInMilliseconds * 14) <
-                durationOfOneDayInMilliseconds * 3
-            ) {
-              await this.addMedicationUptitrationMessageIfNeeded({
-                userId: user.id,
-                recommendations: undefined, // Probably need to get recommendations, right?
-              })
-            }
-          } catch (error) {
-            logger.error(
-              `Error running every morning trigger for user ${user.id}: ${String(error)}`,
-            )
           }
-        }),
-      )
-    } catch (error) {
-      logger.error(`Error running every morning trigger: ${String(error)}`)
-    }
+
+          if (
+            enrollmentDuration % (durationOfOneDayInMilliseconds * 14) >
+              durationOfOneDayInMilliseconds * 2 &&
+            enrollmentDuration % (durationOfOneDayInMilliseconds * 14) <
+              durationOfOneDayInMilliseconds * 3
+          ) {
+            await this.addMedicationUptitrationMessageIfNeeded({
+              userId: user.id,
+              recommendations: undefined, // Probably need to get recommendations, right?
+            })
+          }
+        } catch (error) {
+          logger.error(
+            `everyMorning(user: ${user.id}): Failed due to ${String(error)}`,
+          )
+        }
+      }),
+    )
   }
 
   // Methods - Triggers
@@ -153,44 +153,59 @@ export class TriggerService {
     beforeData: FHIRQuestionnaireResponse | undefined,
     afterData: FHIRQuestionnaireResponse | undefined,
   ) {
-    try {
-      const patientService = this.factory.patient()
-      const symptomScoreCalculator = this.factory.symptomScore()
+    logger.debug(
+      `questionnaireResponseWritten(${userId}, ${questionnaireResponseId}): beforeData: ${beforeData}, afterData: ${afterData}`,
+    )
 
-      await patientService.updateSymptomScore(
-        userId,
-        questionnaireResponseId,
-        afterData ? symptomScoreCalculator.calculate(afterData) : undefined,
+    const patientService = this.factory.patient()
+    const symptomScoreCalculator = this.factory.symptomScore()
+
+    const newScore =
+      afterData ? symptomScoreCalculator.calculate(afterData) : undefined
+
+    logger.debug(
+      `questionnaireResponseWritten(${userId}, ${questionnaireResponseId}): Calculated new score: ${newScore}`,
+    )
+    await patientService.updateSymptomScore(
+      userId,
+      questionnaireResponseId,
+      newScore,
+    )
+
+    const messageService = this.factory.message()
+    if (beforeData === undefined && afterData !== undefined) {
+      logger.debug(
+        `questionnaireResponseWritten(${userId}, ${questionnaireResponseId}): Completing symptom questionnaire messages`,
       )
+      await messageService.completeMessages(
+        userId,
+        UserMessageType.symptomQuestionnaire,
+      )
+    }
 
-      const messageService = this.factory.message()
-      if (beforeData === undefined && afterData !== undefined) {
-        await messageService.completeMessages(
-          userId,
-          UserMessageType.symptomQuestionnaire,
-        )
-      }
+    logger.debug(
+      `questionnaireResponseWritten(${userId}, ${questionnaireResponseId}): Updating recommendations`,
+    )
 
-      const recommendations = await this.updateRecommendationsForUser(userId)
+    const recommendations = await this.updateRecommendationsForUser(userId)
 
-      const hasImprovementAvailable =
-        recommendations?.some((recommendation) =>
-          [
-            UserMedicationRecommendationType.improvementAvailable,
-            UserMedicationRecommendationType.notStarted,
-          ].includes(recommendation.displayInformation.type),
-        ) ?? false
+    const hasImprovementAvailable =
+      recommendations?.some((recommendation) =>
+        [
+          UserMedicationRecommendationType.improvementAvailable,
+          UserMedicationRecommendationType.notStarted,
+        ].includes(recommendation.displayInformation.type),
+      ) ?? false
 
-      if (hasImprovementAvailable) {
-        await messageService.addMessage(
-          userId,
-          UserMessage.createMedicationUptitration(),
-          { notify: true },
-        )
-      }
-    } catch (error) {
-      logger.error(
-        `Error updating symptom scores for questionnaire response ${questionnaireResponseId} for user ${userId}: ${String(error)}`,
+    logger.debug(
+      `questionnaireResponseWritten(${userId}, ${questionnaireResponseId}): Improvement available: ${hasImprovementAvailable ? 'yes' : 'no'}`,
+    )
+
+    if (hasImprovementAvailable) {
+      await messageService.addMessage(
+        userId,
+        UserMessage.createMedicationUptitration(),
+        { notify: true },
       )
     }
   }
