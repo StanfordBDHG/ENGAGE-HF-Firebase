@@ -22,6 +22,8 @@ import {
 import { median } from '../../extensions/array.js'
 import { UserObservationCollection } from '../database/collections.js'
 import { type ServiceFactory } from '../factory/serviceFactory.js'
+import { type PatientService } from '../patient/patientService.js'
+import { type RecommendationVitals } from '../recommendation/recommendationService.js'
 
 export class TriggerService {
   // Properties
@@ -222,12 +224,12 @@ export class TriggerService {
     if (collection === UserObservationCollection.bodyWeight) {
       try {
         const date = new Date()
-        const healthSummaryService = this.factory.healthSummary()
+        const patientService = this.factory.patient()
         const bodyWeightObservations =
-          await healthSummaryService.getBodyWeightObservations(
+          await patientService.getBodyWeightObservations(
             userId,
-            advanceDateByDays(date, -7),
             QuantityUnit.lbs,
+            advanceDateByDays(date, -7),
           )
 
         const bodyWeightMedian = median(
@@ -261,7 +263,11 @@ export class TriggerService {
         const yesterday = advanceDateByDays(new Date(), -1)
         const [bloodPressure, bodyWeight, heartRate] = await Promise.all([
           patientService.getBloodPressureObservations(userId, yesterday),
-          patientService.getBodyWeightObservations(userId, yesterday),
+          patientService.getBodyWeightObservations(
+            userId,
+            QuantityUnit.lbs,
+            yesterday,
+          ),
           patientService.getHeartRateObservations(userId, yesterday),
         ])
 
@@ -270,7 +276,8 @@ export class TriggerService {
         )
 
         if (
-          bloodPressure.length > 0 &&
+          bloodPressure[0].length > 0 &&
+          bloodPressure[1].length > 0 &&
           bodyWeight.length > 0 &&
           heartRate.length > 0
         ) {
@@ -388,7 +395,6 @@ export class TriggerService {
     userId: string,
   ): Promise<UserMedicationRecommendation[] | undefined> {
     try {
-      const healthSummaryService = this.factory.healthSummary()
       const medicationService = this.factory.medication()
       const patientService = this.factory.patient()
       const recommendationService = this.factory.recommendation()
@@ -397,10 +403,10 @@ export class TriggerService {
       const contraindications =
         await patientService.getContraindications(userId)
 
-      const vitals = await healthSummaryService.getVitals(
+      const vitals = await this.getRecommendationVitals(
+        patientService,
         userId,
         advanceDateByDays(new Date(), -14),
-        QuantityUnit.lbs,
       )
 
       const latestSymptomScore =
@@ -420,7 +426,7 @@ export class TriggerService {
           (document) => document.content,
         ),
         vitals: vitals,
-        latestSymptomScore: latestSymptomScore?.content,
+        latestDizzinessScore: latestSymptomScore?.content.dizzinessScore,
       })
 
       await patientService.updateMedicationRecommendations(
@@ -444,6 +450,29 @@ export class TriggerService {
       await this.factory.user().deleteExpiredAccounts()
     } catch (error) {
       console.error(`Error clearing expired accounts: ${String(error)}`)
+    }
+  }
+
+  private async getRecommendationVitals(
+    patientService: PatientService,
+    userId: string,
+    cutoffDate: Date,
+  ): Promise<RecommendationVitals> {
+    return {
+      systolicBloodPressure: (
+        await patientService.getBloodPressureObservations(userId, cutoffDate)
+      ).map((value) => value[0]),
+      heartRate: await patientService.getHeartRateObservations(
+        userId,
+        cutoffDate,
+      ),
+      creatinine:
+        await patientService.getMostRecentCreatinineObservation(userId),
+      estimatedGlomerularFiltrationRate:
+        await patientService.getMostRecentEstimatedGlomerularFiltrationRateObservation(
+          userId,
+        ),
+      potassium: await patientService.getMostRecentPotassiumObservation(userId),
     }
   }
 

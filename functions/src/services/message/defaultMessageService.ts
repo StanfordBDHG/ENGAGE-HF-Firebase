@@ -100,15 +100,6 @@ export class DefaultMessageService implements MessageService {
 
   // Methods - Messages
 
-  async getOpenMessages(userId: string): Promise<Array<Document<UserMessage>>> {
-    return this.databaseService.getQuery((collections) =>
-      collections
-        .userMessages(userId)
-        .where('completionDate', '==', null)
-        .orderBy('creationDate', 'desc'),
-    )
-  }
-
   async addMessage(
     userId: string,
     message: UserMessage,
@@ -123,7 +114,6 @@ export class DefaultMessageService implements MessageService {
           await collections
             .userMessages(userId)
             .where('completionDate', '==', null)
-            .orderBy('creationDate', 'desc')
             .get()
         ).docs.filter((doc) => doc.data().type === message.type)
 

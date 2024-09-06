@@ -12,9 +12,8 @@ import {
   FHIRAppointment,
   FHIRAppointmentStatus,
   FHIRMedicationRequest,
-  FHIRObservation,
   type FHIRQuestionnaireResponse,
-  LoincCode,
+  type Observation,
   QuantityUnit,
   SymptomScore,
   type UserMedicationRecommendation,
@@ -105,42 +104,42 @@ export class MockPatientService implements PatientService {
 
   async getBloodPressureObservations(
     userId: string,
-  ): Promise<Array<Document<FHIRObservation>>> {
+  ): Promise<[Observation[], Observation[]]> {
     const values = [
-      this.bloodPressureObservation(110, 70, new Date('2024-02-01')),
-      this.bloodPressureObservation(114, 82, new Date('2024-01-31')),
-      this.bloodPressureObservation(123, 75, new Date('2024-01-30')),
-      this.bloodPressureObservation(109, 77, new Date('2024-01-29')),
-      this.bloodPressureObservation(105, 72, new Date('2024-01-28')),
-      this.bloodPressureObservation(98, 68, new Date('2024-01-27')),
-      this.bloodPressureObservation(94, 65, new Date('2024-01-26')),
-      this.bloodPressureObservation(104, 72, new Date('2024-01-25')),
-      this.bloodPressureObservation(102, 80, new Date('2024-01-24')),
+      this.bloodPressureObservations(110, 70, new Date('2024-02-01')),
+      this.bloodPressureObservations(114, 82, new Date('2024-01-31')),
+      this.bloodPressureObservations(123, 75, new Date('2024-01-30')),
+      this.bloodPressureObservations(109, 77, new Date('2024-01-29')),
+      this.bloodPressureObservations(105, 72, new Date('2024-01-28')),
+      this.bloodPressureObservations(98, 68, new Date('2024-01-27')),
+      this.bloodPressureObservations(94, 65, new Date('2024-01-26')),
+      this.bloodPressureObservations(104, 72, new Date('2024-01-25')),
+      this.bloodPressureObservations(102, 80, new Date('2024-01-24')),
     ]
-    return values.map((value, index) => ({
-      id: index.toString(),
-      path: `users/${userId}/bloodPressureObservations/${index}`,
-      content: value,
-    }))
+    return [values.map((value) => value[0]), values.map((value) => value[1])]
   }
 
-  private bloodPressureObservation(
+  private bloodPressureObservations(
     systolicBloodPressure: number,
     diastolicBloodPressure: number,
     date: Date,
-  ): FHIRObservation {
-    return FHIRObservation.createBloodPressure({
-      id: 'DDA0F363-2BA3-426F-9F68-1C938FFDF943',
-      systolic: systolicBloodPressure,
-      diastolic: diastolicBloodPressure,
-      date,
-    })
+  ): [Observation, Observation] {
+    return [
+      {
+        value: systolicBloodPressure,
+        unit: QuantityUnit.mmHg,
+        date: date,
+      },
+      {
+        value: diastolicBloodPressure,
+        unit: QuantityUnit.mmHg,
+        date: date,
+      },
+    ]
   }
 
-  async getBodyWeightObservations(
-    userId: string,
-  ): Promise<Array<Document<FHIRObservation>>> {
-    const values = [
+  async getBodyWeightObservations(userId: string): Promise<Observation[]> {
+    return [
       this.bodyWeightObservation(269, QuantityUnit.lbs, new Date('2024-02-01')),
       this.bodyWeightObservation(267, QuantityUnit.lbs, new Date('2024-01-31')),
       this.bodyWeightObservation(267, QuantityUnit.lbs, new Date('2024-01-30')),
@@ -151,31 +150,22 @@ export class MockPatientService implements PatientService {
       this.bodyWeightObservation(266, QuantityUnit.lbs, new Date('2024-01-25')),
       this.bodyWeightObservation(267, QuantityUnit.lbs, new Date('2024-01-24')),
     ]
-    return values.map((value, index) => ({
-      id: index.toString(),
-      path: `users/${userId}/bodyWeightObservations/${index}`,
-      content: value,
-    }))
   }
 
   private bodyWeightObservation(
     value: number,
     unit: QuantityUnit,
     date: Date,
-  ): FHIRObservation {
-    return FHIRObservation.createSimple({
-      id: 'C38FFD7E-7B86-4C79-9C8A-0B90E2F3DF14',
+  ): Observation {
+    return {
       date: date,
       value: value,
       unit: unit,
-      code: LoincCode.bodyWeight,
-    })
+    }
   }
 
-  async getHeartRateObservations(
-    userId: string,
-  ): Promise<Array<Document<FHIRObservation>>> {
-    const values = [
+  async getHeartRateObservations(userId: string): Promise<Observation[]> {
+    return [
       this.heartRateObservation(79, new Date('2024-02-01')),
       this.heartRateObservation(62, new Date('2024-01-31')),
       this.heartRateObservation(77, new Date('2024-01-30')),
@@ -186,84 +176,52 @@ export class MockPatientService implements PatientService {
       this.heartRateObservation(80, new Date('2024-01-25')),
       this.heartRateObservation(65, new Date('2024-01-24')),
     ]
-    return values.map((value, index) => ({
-      id: index.toString(),
-      path: `users/${userId}/heartRateObservations/${index}`,
-      content: value,
-    }))
   }
 
-  private heartRateObservation(value: number, date: Date): FHIRObservation {
-    return FHIRObservation.createSimple({
-      id: 'C38FFD7E-7B86-4C79-9C8A-0B90E2F3DF14',
+  private heartRateObservation(value: number, date: Date): Observation {
+    return {
       date: date,
       value: value,
       unit: QuantityUnit.bpm,
-      code: LoincCode.heartRate,
-    })
+    }
   }
 
   async getMostRecentCreatinineObservation(
     userId: string,
-  ): Promise<Document<FHIRObservation> | undefined> {
+  ): Promise<Observation | undefined> {
     return {
-      id: '0',
-      path: `users/${userId}/creatinineObservations/0`,
-      content: FHIRObservation.createSimple({
-        id: '0',
-        date: new Date('2024-01-29'),
-        value: 1.1,
-        unit: QuantityUnit.mg_dL,
-        code: LoincCode.creatinine,
-      }),
+      date: new Date('2024-01-29'),
+      value: 1.1,
+      unit: QuantityUnit.mg_dL,
     }
   }
 
   async getMostRecentDryWeightObservation(
     userId: string,
-  ): Promise<Document<FHIRObservation> | undefined> {
+    unit: QuantityUnit,
+  ): Promise<Observation | undefined> {
     return {
-      id: '0',
-      path: `users/${userId}/dryWeightObservations/0`,
-      content: FHIRObservation.createSimple({
-        id: '0',
-        date: new Date('2024-01-29'),
-        value: 267.5,
-        unit: QuantityUnit.lbs,
-        code: LoincCode.bodyWeight,
-      }),
+      date: new Date('2024-01-29'),
+      value: 267.5,
+      unit: QuantityUnit.lbs,
     }
   }
 
-  async getMostRecentEstimatedGlomerularFiltrationRateObservation(
-    userId: string,
-  ): Promise<Document<FHIRObservation> | undefined> {
+  async getMostRecentEstimatedGlomerularFiltrationRateObservation(): Promise<
+    Observation | undefined
+  > {
     return {
-      id: '0',
-      path: `users/${userId}/eGfrObservations/0`,
-      content: FHIRObservation.createSimple({
-        id: '0',
-        date: new Date('2024-01-29'),
-        value: 60,
-        unit: QuantityUnit.mL_min_173m2,
-        code: LoincCode.estimatedGlomerularFiltrationRate,
-      }),
+      date: new Date('2024-01-29'),
+      value: 60,
+      unit: QuantityUnit.mL_min_173m2,
     }
   }
 
-  async getMostRecentPotassiumObservation(
-    userId: string,
-  ): Promise<Document<FHIRObservation> | undefined> {
+  async getMostRecentPotassiumObservation(): Promise<Observation | undefined> {
     return {
-      id: '0',
-      path: `users/${userId}/potassiumObservations/0`,
-      content: FHIRObservation.createSimple({
-        id: '0',
-        date: new Date('2024-01-29'),
-        value: 4.2,
-        unit: QuantityUnit.mEq_L,
-        code: LoincCode.potassium,
-      }),
+      date: new Date('2024-01-29'),
+      unit: QuantityUnit.mEq_L,
+      value: 4.2,
     }
   }
 

@@ -7,10 +7,11 @@
 //
 
 import {
+  type Observation,
+  type QuantityUnit,
   type FHIRAllergyIntolerance,
   type FHIRAppointment,
   type FHIRMedicationRequest,
-  type FHIRObservation,
   type FHIRQuestionnaireResponse,
   type SymptomScore,
   type UserMedicationRecommendation,
@@ -54,28 +55,30 @@ export interface PatientService {
   getBloodPressureObservations(
     userId: string,
     cutoffDate: Date,
-  ): Promise<Array<Document<FHIRObservation>>>
+  ): Promise<[Observation[], Observation[]]>
   getBodyWeightObservations(
     userId: string,
+    unit: QuantityUnit,
     cutoffDate: Date,
-  ): Promise<Array<Document<FHIRObservation>>>
+  ): Promise<Observation[]>
   getHeartRateObservations(
     userId: string,
     cutoffDate: Date,
-  ): Promise<Array<Document<FHIRObservation>>>
+  ): Promise<Observation[]>
 
   getMostRecentCreatinineObservation(
     userId: string,
-  ): Promise<Document<FHIRObservation> | undefined>
+  ): Promise<Observation | undefined>
   getMostRecentDryWeightObservation(
     userId: string,
-  ): Promise<Document<FHIRObservation> | undefined>
+    unit: QuantityUnit,
+  ): Promise<Observation | undefined>
   getMostRecentEstimatedGlomerularFiltrationRateObservation(
     userId: string,
-  ): Promise<Document<FHIRObservation> | undefined>
+  ): Promise<Observation | undefined>
   getMostRecentPotassiumObservation(
     userId: string,
-  ): Promise<Document<FHIRObservation> | undefined>
+  ): Promise<Observation | undefined>
 
   // Questionnaire Responses
 
