@@ -20,7 +20,6 @@ import firebaseFunctionsTest from 'firebase-functions-test'
 import { CollectionsService } from '../../services/database/collections.js'
 import { getServiceFactory } from '../../services/factory/getServiceFactory.js'
 import { type ServiceFactory } from '../../services/factory/serviceFactory.js'
-import { type UserClaims } from '../../services/user/databaseUserService.js'
 import { TestFlags } from '../testFlags.js'
 
 export function describeWithEmulators(
