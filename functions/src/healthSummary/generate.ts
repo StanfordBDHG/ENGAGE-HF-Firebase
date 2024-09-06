@@ -29,6 +29,7 @@ import {
   presortedPercentile,
 } from '../extensions/array.js'
 import { type HealthSummaryData } from '../models/healthSummaryData.js'
+import { logger } from 'firebase-functions'
 
 export interface HealthSummaryOptions {
   languages: string[]
@@ -38,6 +39,27 @@ export function generateHealthSummary(
   data: HealthSummaryData,
   options: HealthSummaryOptions,
 ): Buffer {
+  logger.debug(
+    `generateHealthSummary: ${data.vitals.bodyWeight.length} body weight observations.`,
+  )
+  logger.debug(
+    `generateHealthSummary: ${data.vitals.heartRate.length} heart rate observations.`,
+  )
+  logger.debug(
+    `generateHealthSummary: ${data.vitals.systolicBloodPressure.length} systolic blood pressure observations.`,
+  )
+  logger.debug(
+    `generateHealthSummary: ${data.vitals.diastolicBloodPressure.length} diastolic blood pressure observations.`,
+  )
+  logger.debug(
+    `generateHealthSummary: ${data.vitals.dryWeight !== undefined ? 1 : 0} dry weight observations.`,
+  )
+  logger.debug(
+    `generateHealthSummary: ${data.recommendations.length} recommendations.`,
+  )
+  logger.debug(
+    `generateHealthSummary: ${data.symptomScores.length} symptom scores.`,
+  )
   const generator = new HealthSummaryPDFGenerator(data, options)
   generator.addFirstPage()
   generator.addSecondPage()
@@ -153,6 +175,9 @@ class HealthSummaryPDFGenerator {
   }
 
   finish(): Buffer {
+    logger.debug(
+      `HealthSummaryPDFGenerator.finish: ${this.doc.getNumberOfPages()} pages total.`,
+    )
     return Buffer.from(this.doc.output('arraybuffer'))
   }
 
