@@ -22,14 +22,16 @@ import {
 import { expect } from 'chai'
 import { describe, it } from 'mocha'
 import { RasiRecommender } from './rasiRecommender.js'
-import { type HealthSummaryData } from '../../../models/healthSummaryData.js'
+import { type Recommender } from './recommender.js'
 import { type MedicationRequestContext } from '../../../models/medicationRequestContext.js'
 import { MockContraindicationService } from '../../../tests/mocks/contraindicationService.js'
 import { mockHealthSummaryData } from '../../../tests/mocks/healthSummaryData.js'
+import { mockRecommendationVitals } from '../../../tests/mocks/recommendationVitals.js'
 import { cleanupMocks, setupMockFirebase } from '../../../tests/setup.js'
 import { ContraindicationCategory } from '../../contraindication/contraindicationService.js'
 import { getServiceFactory } from '../../factory/getServiceFactory.js'
 import { type MedicationService } from '../../medication/medicationService.js'
+import { type RecommendationVitals } from '../recommendationService.js'
 
 describe('RasiRecommender', () => {
   let medicationContraindication: (
@@ -39,14 +41,15 @@ describe('RasiRecommender', () => {
     reference: MedicationClassReference,
   ) => ContraindicationCategory
 
-  const recommender = new RasiRecommender(
+  const recommender: Recommender = new RasiRecommender(
     new MockContraindicationService(
       (_, reference) => medicationContraindication(reference),
       (_, reference) => medicationClassContraindication(reference),
       (_, medicationReferences) => medicationReferences.at(0),
     ),
   )
-  let healthSummaryData: HealthSummaryData
+  let symptomScore: SymptomScore | undefined
+  let vitals: RecommendationVitals
   let medicationService: MedicationService
 
   before(async () => {
@@ -59,14 +62,23 @@ describe('RasiRecommender', () => {
   })
 
   beforeEach(async () => {
-    healthSummaryData = await mockHealthSummaryData(new Date())
-    healthSummaryData.symptomScores = healthSummaryData.symptomScores.map(
-      (score) =>
-        new SymptomScore({
-          ...score,
-          dizzinessScore: 0,
-        }),
+    symptomScore = (await mockHealthSummaryData(new Date())).symptomScores.at(
+      -1,
     )
+    vitals = mockRecommendationVitals({
+      countBloodPressureBelow85: 0,
+      medianSystolicBloodPressure: 110,
+      medianHeartRate: 70,
+      potassium: 4,
+      creatinine: 1,
+      eGfr: 60,
+    })
+    if (symptomScore !== undefined) {
+      symptomScore = new SymptomScore({
+        ...symptomScore,
+        dizzinessScore: 0,
+      })
+    }
     medicationContraindication = (_) => ContraindicationCategory.none
     medicationClassContraindication = (_) => ContraindicationCategory.none
   })
@@ -89,8 +101,8 @@ describe('RasiRecommender', () => {
       const result = recommender.compute({
         requests: [],
         contraindications: [],
-        vitals: healthSummaryData.vitals,
-        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
+        vitals: vitals,
+        latestDizzinessScore: symptomScore?.dizzinessScore,
       })
       expect(result).to.have.length(0)
     })
@@ -108,8 +120,8 @@ describe('RasiRecommender', () => {
       const result = recommender.compute({
         requests: [],
         contraindications: [],
-        vitals: healthSummaryData.vitals,
-        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
+        vitals: vitals,
+        latestDizzinessScore: symptomScore?.dizzinessScore,
       })
       expect(result).to.have.length(0)
     })
@@ -123,8 +135,8 @@ describe('RasiRecommender', () => {
       const result = recommender.compute({
         requests: [],
         contraindications: [],
-        vitals: healthSummaryData.vitals,
-        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
+        vitals: vitals,
+        latestDizzinessScore: symptomScore?.dizzinessScore,
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
@@ -135,13 +147,12 @@ describe('RasiRecommender', () => {
     })
 
     it('requests more blood pressure observations', () => {
-      healthSummaryData.vitals.systolicBloodPressure =
-        healthSummaryData.vitals.systolicBloodPressure.slice(0, 2)
+      vitals.systolicBloodPressure = vitals.systolicBloodPressure.slice(0, 2)
       const result = recommender.compute({
         requests: [],
         contraindications: [],
-        vitals: healthSummaryData.vitals,
-        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
+        vitals: vitals,
+        latestDizzinessScore: symptomScore?.dizzinessScore,
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
@@ -152,14 +163,14 @@ describe('RasiRecommender', () => {
     })
 
     it('shows sacubitril-valsartan when median systolic is below 100', () => {
-      healthSummaryData.vitals.systolicBloodPressure.forEach((observation) => {
+      vitals.systolicBloodPressure.forEach((observation) => {
         observation.value = 99
       })
       const result = recommender.compute({
         requests: [],
         contraindications: [],
-        vitals: healthSummaryData.vitals,
-        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
+        vitals: vitals,
+        latestDizzinessScore: symptomScore?.dizzinessScore,
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
@@ -170,7 +181,7 @@ describe('RasiRecommender', () => {
     })
 
     it('shows sacubitril-valsartan when creatinine is too high', () => {
-      healthSummaryData.vitals.creatinine = {
+      vitals.creatinine = {
         date: new Date(),
         value: 2.5,
         unit: QuantityUnit.mg_dL,
@@ -178,8 +189,8 @@ describe('RasiRecommender', () => {
       const result = recommender.compute({
         requests: [],
         contraindications: [],
-        vitals: healthSummaryData.vitals,
-        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
+        vitals: vitals,
+        latestDizzinessScore: symptomScore?.dizzinessScore,
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
@@ -190,7 +201,7 @@ describe('RasiRecommender', () => {
     })
 
     it('shows sacubitril-valsartan when potassium is too high', () => {
-      healthSummaryData.vitals.potassium = {
+      vitals.potassium = {
         date: new Date(),
         value: 6,
         unit: QuantityUnit.mEq_L,
@@ -198,8 +209,8 @@ describe('RasiRecommender', () => {
       const result = recommender.compute({
         requests: [],
         contraindications: [],
-        vitals: healthSummaryData.vitals,
-        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
+        vitals: vitals,
+        latestDizzinessScore: symptomScore?.dizzinessScore,
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
@@ -220,8 +231,8 @@ describe('RasiRecommender', () => {
       const result = recommender.compute({
         requests: [],
         contraindications: [],
-        vitals: healthSummaryData.vitals,
-        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
+        vitals: vitals,
+        latestDizzinessScore: symptomScore?.dizzinessScore,
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
@@ -235,8 +246,8 @@ describe('RasiRecommender', () => {
       const result = recommender.compute({
         requests: [],
         contraindications: [],
-        vitals: healthSummaryData.vitals,
-        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
+        vitals: vitals,
+        latestDizzinessScore: symptomScore?.dizzinessScore,
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
@@ -283,8 +294,8 @@ describe('RasiRecommender', () => {
         const result = recommender.compute({
           requests: [contextAtTarget],
           contraindications: [],
-          vitals: healthSummaryData.vitals,
-          latestSymptomScore: healthSummaryData.symptomScores.at(-1),
+          vitals: vitals,
+          latestDizzinessScore: symptomScore?.dizzinessScore,
         })
         expect(result).to.have.length(1)
         expect(result.at(0)).to.deep.equal({
@@ -295,13 +306,12 @@ describe('RasiRecommender', () => {
       })
 
       it('requests more blood pressure observations', () => {
-        healthSummaryData.vitals.systolicBloodPressure =
-          healthSummaryData.vitals.systolicBloodPressure.slice(0, 2)
+        vitals.systolicBloodPressure = vitals.systolicBloodPressure.slice(0, 2)
         const result = recommender.compute({
           requests: [contextBelowTarget],
           contraindications: [],
-          vitals: healthSummaryData.vitals,
-          latestSymptomScore: healthSummaryData.symptomScores.at(-1),
+          vitals: vitals,
+          latestDizzinessScore: symptomScore?.dizzinessScore,
         })
         expect(result).to.have.length(1)
         expect(result.at(0)).to.deep.equal({
@@ -312,16 +322,14 @@ describe('RasiRecommender', () => {
       })
 
       it('detects personal target reached with low median systolic', () => {
-        healthSummaryData.vitals.systolicBloodPressure.forEach(
-          (observation) => {
-            observation.value = 99
-          },
-        )
+        vitals.systolicBloodPressure.forEach((observation) => {
+          observation.value = 99
+        })
         const result = recommender.compute({
           requests: [contextBelowTarget],
           contraindications: [],
-          vitals: healthSummaryData.vitals,
-          latestSymptomScore: healthSummaryData.symptomScores.at(-1),
+          vitals: vitals,
+          latestDizzinessScore: symptomScore?.dizzinessScore,
         })
         expect(result).to.have.length(1)
         expect(result.at(0)).to.deep.equal({
@@ -332,7 +340,7 @@ describe('RasiRecommender', () => {
       })
 
       it('detects personal target reached with creatinine too high', () => {
-        healthSummaryData.vitals.creatinine = {
+        vitals.creatinine = {
           date: new Date(),
           value: 3,
           unit: QuantityUnit.mg_dL,
@@ -340,8 +348,8 @@ describe('RasiRecommender', () => {
         const result = recommender.compute({
           requests: [contextBelowTarget],
           contraindications: [],
-          vitals: healthSummaryData.vitals,
-          latestSymptomScore: healthSummaryData.symptomScores.at(-1),
+          vitals: vitals,
+          latestDizzinessScore: symptomScore?.dizzinessScore,
         })
         expect(result).to.have.length(1)
         expect(result.at(0)).to.deep.equal({
@@ -352,7 +360,7 @@ describe('RasiRecommender', () => {
       })
 
       it('detects personal target reached with potassium too high', () => {
-        healthSummaryData.vitals.potassium = {
+        vitals.potassium = {
           date: new Date(),
           value: 6,
           unit: QuantityUnit.mEq_L,
@@ -360,8 +368,8 @@ describe('RasiRecommender', () => {
         const result = recommender.compute({
           requests: [contextBelowTarget],
           contraindications: [],
-          vitals: healthSummaryData.vitals,
-          latestSymptomScore: healthSummaryData.symptomScores.at(-1),
+          vitals: vitals,
+          latestDizzinessScore: symptomScore?.dizzinessScore,
         })
         expect(result).to.have.length(1)
         expect(result.at(0)).to.deep.equal({
@@ -372,18 +380,11 @@ describe('RasiRecommender', () => {
       })
 
       it('detects personal target reached with dizziness score too high', () => {
-        healthSummaryData.symptomScores = healthSummaryData.symptomScores.map(
-          (score) =>
-            new SymptomScore({
-              ...score,
-              dizzinessScore: 3,
-            }),
-        )
         const result = recommender.compute({
           requests: [contextBelowTarget],
           contraindications: [],
-          vitals: healthSummaryData.vitals,
-          latestSymptomScore: healthSummaryData.symptomScores.at(-1),
+          vitals: vitals,
+          latestDizzinessScore: 3,
         })
         expect(result).to.have.length(1)
         expect(result.at(0)).to.deep.equal({
@@ -397,8 +398,8 @@ describe('RasiRecommender', () => {
         const result = recommender.compute({
           requests: [contextBelowTarget],
           contraindications: [],
-          vitals: healthSummaryData.vitals,
-          latestSymptomScore: healthSummaryData.symptomScores.at(-1),
+          vitals: vitals,
+          latestDizzinessScore: symptomScore?.dizzinessScore,
         })
         expect(result).to.have.length(1)
         expect(result.at(0)).to.deep.equal({
@@ -411,13 +412,12 @@ describe('RasiRecommender', () => {
 
     describe('No contraindication to ARNI', () => {
       it('requests more blood pressure observations', () => {
-        healthSummaryData.vitals.systolicBloodPressure =
-          healthSummaryData.vitals.systolicBloodPressure.slice(0, 2)
+        vitals.systolicBloodPressure = vitals.systolicBloodPressure.slice(0, 2)
         const result = recommender.compute({
           requests: [contextBelowTarget],
           contraindications: [],
-          vitals: healthSummaryData.vitals,
-          latestSymptomScore: healthSummaryData.symptomScores.at(-1),
+          vitals: vitals,
+          latestDizzinessScore: symptomScore?.dizzinessScore,
         })
         expect(result).to.have.length(1)
         expect(result.at(0)).to.deep.equal({
@@ -428,16 +428,14 @@ describe('RasiRecommender', () => {
       })
 
       it('detects personal target reached with low median systolic', () => {
-        healthSummaryData.vitals.systolicBloodPressure.forEach(
-          (observation) => {
-            observation.value = 99
-          },
-        )
+        vitals.systolicBloodPressure.forEach((observation) => {
+          observation.value = 99
+        })
         const result = recommender.compute({
           requests: [contextBelowTarget],
           contraindications: [],
-          vitals: healthSummaryData.vitals,
-          latestSymptomScore: healthSummaryData.symptomScores.at(-1),
+          vitals: vitals,
+          latestDizzinessScore: symptomScore?.dizzinessScore,
         })
         expect(result).to.have.length(1)
         expect(result.at(0)).to.deep.equal({
@@ -448,7 +446,7 @@ describe('RasiRecommender', () => {
       })
 
       it('detects personal target reached with creatinine too high', () => {
-        healthSummaryData.vitals.creatinine = {
+        vitals.creatinine = {
           date: new Date(),
           value: 3,
           unit: QuantityUnit.mg_dL,
@@ -456,8 +454,8 @@ describe('RasiRecommender', () => {
         const result = recommender.compute({
           requests: [contextBelowTarget],
           contraindications: [],
-          vitals: healthSummaryData.vitals,
-          latestSymptomScore: healthSummaryData.symptomScores.at(-1),
+          vitals: vitals,
+          latestDizzinessScore: symptomScore?.dizzinessScore,
         })
         expect(result).to.have.length(1)
         expect(result.at(0)).to.deep.equal({
@@ -468,7 +466,7 @@ describe('RasiRecommender', () => {
       })
 
       it('detects personal target reached with potassium too high', () => {
-        healthSummaryData.vitals.potassium = {
+        vitals.potassium = {
           date: new Date(),
           value: 6,
           unit: QuantityUnit.mEq_L,
@@ -476,8 +474,8 @@ describe('RasiRecommender', () => {
         const result = recommender.compute({
           requests: [contextBelowTarget],
           contraindications: [],
-          vitals: healthSummaryData.vitals,
-          latestSymptomScore: healthSummaryData.symptomScores.at(-1),
+          vitals: vitals,
+          latestDizzinessScore: symptomScore?.dizzinessScore,
         })
         expect(result).to.have.length(1)
         expect(result.at(0)).to.deep.equal({
@@ -488,18 +486,11 @@ describe('RasiRecommender', () => {
       })
 
       it('detects personal target reached with dizziness score too high', () => {
-        healthSummaryData.symptomScores = healthSummaryData.symptomScores.map(
-          (score) =>
-            new SymptomScore({
-              ...score,
-              dizzinessScore: 3,
-            }),
-        )
         const result = recommender.compute({
           requests: [contextBelowTarget],
           contraindications: [],
-          vitals: healthSummaryData.vitals,
-          latestSymptomScore: healthSummaryData.symptomScores.at(-1),
+          vitals: vitals,
+          latestDizzinessScore: 3,
         })
         expect(result).to.have.length(1)
         expect(result.at(0)).to.deep.equal({
@@ -513,8 +504,8 @@ describe('RasiRecommender', () => {
         const result = recommender.compute({
           requests: [contextBelowTarget],
           contraindications: [],
-          vitals: healthSummaryData.vitals,
-          latestSymptomScore: healthSummaryData.symptomScores.at(-1),
+          vitals: vitals,
+          latestDizzinessScore: symptomScore?.dizzinessScore,
         })
         expect(result).to.have.length(1)
         expect(result.at(0)).to.deep.equal({
@@ -551,8 +542,8 @@ describe('RasiRecommender', () => {
       const result = recommender.compute({
         requests: [contextAtTarget],
         contraindications: [],
-        vitals: healthSummaryData.vitals,
-        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
+        vitals: vitals,
+        latestDizzinessScore: symptomScore?.dizzinessScore,
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
@@ -563,13 +554,12 @@ describe('RasiRecommender', () => {
     })
 
     it('requests more blood pressure observations', () => {
-      healthSummaryData.vitals.systolicBloodPressure =
-        healthSummaryData.vitals.systolicBloodPressure.slice(0, 2)
+      vitals.systolicBloodPressure = vitals.systolicBloodPressure.slice(0, 2)
       const result = recommender.compute({
         requests: [contextBelowTarget],
         contraindications: [],
-        vitals: healthSummaryData.vitals,
-        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
+        vitals: vitals,
+        latestDizzinessScore: symptomScore?.dizzinessScore,
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
@@ -580,14 +570,14 @@ describe('RasiRecommender', () => {
     })
 
     it('detects personal target dose when median systolic is low', () => {
-      healthSummaryData.vitals.systolicBloodPressure.forEach((observation) => {
+      vitals.systolicBloodPressure.forEach((observation) => {
         observation.value = 99
       })
       const result = recommender.compute({
         requests: [contextBelowTarget],
         contraindications: [],
-        vitals: healthSummaryData.vitals,
-        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
+        vitals: vitals,
+        latestDizzinessScore: symptomScore?.dizzinessScore,
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
@@ -598,7 +588,7 @@ describe('RasiRecommender', () => {
     })
 
     it('detects personal target dose when creatinine is too high', () => {
-      healthSummaryData.vitals.creatinine = {
+      vitals.creatinine = {
         date: new Date(),
         value: 3,
         unit: QuantityUnit.mg_dL,
@@ -606,8 +596,8 @@ describe('RasiRecommender', () => {
       const result = recommender.compute({
         requests: [contextBelowTarget],
         contraindications: [],
-        vitals: healthSummaryData.vitals,
-        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
+        vitals: vitals,
+        latestDizzinessScore: symptomScore?.dizzinessScore,
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
@@ -618,7 +608,7 @@ describe('RasiRecommender', () => {
     })
 
     it('detects personal target dose when potassium is too high', () => {
-      healthSummaryData.vitals.potassium = {
+      vitals.potassium = {
         date: new Date(),
         value: 6,
         unit: QuantityUnit.mEq_L,
@@ -626,8 +616,8 @@ describe('RasiRecommender', () => {
       const result = recommender.compute({
         requests: [contextBelowTarget],
         contraindications: [],
-        vitals: healthSummaryData.vitals,
-        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
+        vitals: vitals,
+        latestDizzinessScore: symptomScore?.dizzinessScore,
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
@@ -638,18 +628,11 @@ describe('RasiRecommender', () => {
     })
 
     it('detects personal target dose when dizziness is too high', () => {
-      healthSummaryData.symptomScores = healthSummaryData.symptomScores.map(
-        (score) =>
-          new SymptomScore({
-            ...score,
-            dizzinessScore: 3,
-          }),
-      )
       const result = recommender.compute({
         requests: [contextBelowTarget],
         contraindications: [],
-        vitals: healthSummaryData.vitals,
-        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
+        vitals: vitals,
+        latestDizzinessScore: 3,
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({
@@ -663,8 +646,8 @@ describe('RasiRecommender', () => {
       const result = recommender.compute({
         requests: [contextBelowTarget],
         contraindications: [],
-        vitals: healthSummaryData.vitals,
-        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
+        vitals: vitals,
+        latestDizzinessScore: symptomScore?.dizzinessScore,
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({

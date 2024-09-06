@@ -22,6 +22,18 @@ export function chunks<T>(array: T[], size: number): T[][] {
   )
 }
 
+// CompactMap
+
+export function compactMap<T, V>(
+  array: T[],
+  map: (arg0: T) => V | undefined,
+): V[] {
+  return array.flatMap((value) => {
+    const mappedValue = map(value)
+    return mappedValue !== undefined ? [mappedValue] : []
+  })
+}
+
 // Median
 
 export function median(values: number[]): number | undefined {
