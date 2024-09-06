@@ -131,9 +131,12 @@ export class TriggerService {
             enrollmentDuration % (durationOfOneDayInMilliseconds * 14) <
               durationOfOneDayInMilliseconds * 3
           ) {
+            const recommendations = await this.factory
+              .patient()
+              .getMedicationRecommendations(user.id)
             await this.addMedicationUptitrationMessageIfNeeded({
               userId: user.id,
-              recommendations: undefined, // Probably need to get recommendations, right?
+              recommendations: recommendations.map((doc) => doc.content),
             })
           }
         } catch (error) {
@@ -211,7 +214,14 @@ export class TriggerService {
   }
 
   async userEnrolled(userId: string) {
-    await this.updateRecommendationsForUser(userId)
+    try {
+      await this.updateRecommendationsForUser(userId)
+    } catch (error) {
+      logger.error(
+        `TriggerService.userEnrolled(${userId}): Updating recommendations failed due to ${String(error)}`,
+      )
+    }
+
     try {
       await this.factory.message().addMessage(
         userId,
@@ -222,7 +232,7 @@ export class TriggerService {
       )
     } catch (error) {
       logger.error(
-        `Error updating user data for enrollment for user ${userId}: ${String(error)}`,
+        `TriggerService.userEnrolled(${userId}): Adding welcome message failed due to ${String(error)}`,
       )
     }
   }
@@ -235,7 +245,13 @@ export class TriggerService {
     userId: string,
     collection: UserObservationCollection,
   ): Promise<void> {
-    await this.updateRecommendationsForUser(userId)
+    try {
+      await this.updateRecommendationsForUser(userId)
+    } catch (error) {
+      logger.error(
+        `TriggerService.userObservationWritten(${userId}, ${collection}): Updating recommendations failed due to ${String(error)}`,
+      )
+    }
 
     if (collection === UserObservationCollection.bodyWeight) {
       try {
@@ -251,15 +267,24 @@ export class TriggerService {
         const bodyWeightMedian = median(
           bodyWeightObservations.map((observation) => observation.value),
         )
+
+        logger.error(
+          `TriggerService.userObservationWritten(${userId}, ${collection}): Found ${bodyWeightObservations.length} body weight observations with median ${bodyWeightMedian}`,
+        )
+
         if (!bodyWeightMedian) return
         const mostRecentBodyWeight = bodyWeightObservations[0].value
 
-        if (mostRecentBodyWeight - bodyWeightMedian >= 7)
+        logger.error(
+          `TriggerService.userObservationWritten(${userId}, ${collection}): Most recent body weight is ${mostRecentBodyWeight} compared to a median of ${bodyWeightMedian}`,
+        )
+        if (mostRecentBodyWeight - bodyWeightMedian >= 7) {
           await this.factory
             .message()
             .addMessage(userId, UserMessage.createWeightGain(), {
               notify: true,
             })
+        }
       } catch (error) {
         logger.error(
           `Error on user body weight observation written: ${String(error)}`,
@@ -288,7 +313,7 @@ export class TriggerService {
         ])
 
         logger.log(
-          `Checked whether to complete vitals message due to ${bloodPressure.length} blood pressure observations, ${bodyWeight.length} body weight observations, and ${heartRate.length} heart rate observations.`,
+          `TriggerService.userObservationWritten(${userId}, ${collection}): ${bloodPressure[0].length} SBP, ${bloodPressure[1].length} DBP, ${bodyWeight.length} weight and ${heartRate.length} HR values.`,
         )
 
         if (
@@ -313,150 +338,195 @@ export class TriggerService {
     before: FHIRMedicationRequest | undefined,
     after: FHIRMedicationRequest | undefined,
   ): Promise<void> {
-    await this.updateRecommendationsForUser(userId)
-
     try {
-      // Drug
-
-      const drugReference =
-        after?.medicationReference ?? before?.medicationReference
-      if (!drugReference) throw new Error('Drug reference not found.')
-
-      // Medication
-
-      const medicationReference = drugReference.reference
-        .split('/')
-        .slice(0, 2)
-        .join('/')
-      const medicationService = this.factory.medication()
-      const medication = await medicationService.getReference({
-        reference: medicationReference,
-      })
-      if (!medication) throw new Error('Medication not found.')
-      const medicationName = medication.content.displayName
-      if (!medicationName) throw new Error('Medication name not found.')
-
-      // Medication Class
-
-      const medicationClass =
-        medication.content.medicationClassReference ?
-          await medicationService.getClassReference(
-            medication.content.medicationClassReference,
-          )
-        : undefined
-
-      await this.factory.message().addMessage(
-        userId,
-        UserMessage.createMedicationChange({
-          medicationName: medicationName,
-          reference: medicationReference,
-          videoReference: medicationClass?.content.videoPath,
-        }),
-        { notify: true },
-      )
+      await this.updateRecommendationsForUser(userId)
     } catch (error) {
       logger.error(
-        `Error creating medication change message for user ${userId}: ${String(error)}`,
+        `TriggerService.userMedicationRequestWritten(${userId}, ${medicationRequestId}): Updating recommendations failed due to ${String(error)}`,
       )
     }
+
+    // Drug
+
+    const drugReference =
+      after?.medicationReference ?? before?.medicationReference
+    if (drugReference === undefined) {
+      logger.error(
+        `TriggerService.userMedicationRequestWritten(${userId}, ${medicationRequestId}): Neither before nor after data contains a medication reference`,
+      )
+      throw new Error('Drug reference not found.')
+    }
+
+    // Medication
+
+    const medicationReference = drugReference.reference
+      .split('/')
+      .slice(0, 2)
+      .join('/')
+    const medicationService = this.factory.medication()
+    const medication = await medicationService.getReference({
+      reference: medicationReference,
+    })
+    if (medication === undefined) {
+      logger.error(
+        `TriggerService.userMedicationRequestWritten(${userId}, ${medicationRequestId}): Could not find medication with reference: ${medicationReference}`,
+      )
+      throw new Error('Medication not found.')
+    }
+    const medicationName = medication.content.displayName
+    if (medicationName === undefined) {
+      logger.error(
+        `TriggerService.userMedicationRequestWritten(${userId}, ${medicationRequestId}): Could not find name for medication with reference: ${medicationReference}`,
+      )
+      throw new Error('Medication name not found.')
+    }
+
+    // Medication Class
+
+    const medicationClass =
+      medication.content.medicationClassReference ?
+        await medicationService.getClassReference(
+          medication.content.medicationClassReference,
+        )
+      : undefined
+
+    await this.factory.message().addMessage(
+      userId,
+      UserMessage.createMedicationChange({
+        medicationName: medicationName,
+        reference: medicationReference,
+        videoReference: medicationClass?.content.videoPath,
+      }),
+      { notify: true },
+    )
   }
 
   // Methods - Actions
 
   async updateAllSymptomScores(userId: string) {
-    try {
-      const patientService = this.factory.patient()
-      const symptomScores = await patientService.getSymptomScores(userId)
-      for (const symptomScore of symptomScores) {
-        await patientService.updateSymptomScore(
-          userId,
-          symptomScore.id,
-          undefined,
-        )
-      }
+    const patientService = this.factory.patient()
+    const symptomScores = await patientService.getSymptomScores(userId)
 
-      const questionnaireResponses =
-        await patientService.getQuestionnaireResponses(userId)
-      for (const questionnaireResponse of questionnaireResponses) {
-        await this.questionnaireResponseWritten(
-          userId,
-          questionnaireResponse.id,
-          questionnaireResponse.content,
-          questionnaireResponse.content,
-        )
-      }
-    } catch (error) {
-      logger.error(
-        `Error updating symptom scores for all users: ${String(error)}`,
+    logger.debug(
+      `TriggerService.updateAllSymptomScores(${userId}): Found ${symptomScores.length} symptom scores to delete`,
+    )
+
+    for (const symptomScore of symptomScores) {
+      logger.debug(
+        `TriggerService.updateAllSymptomScores(${userId}): Deleting symptom score at ${symptomScore.path}`,
+      )
+      await patientService.updateSymptomScore(
+        userId,
+        symptomScore.id,
+        undefined,
+      )
+    }
+
+    const questionnaireResponses =
+      await patientService.getQuestionnaireResponses(userId)
+
+    logger.debug(
+      `TriggerService.updateAllSymptomScores(${userId}): Found ${questionnaireResponses.length} questionnaire responses to create symptom scores for`,
+    )
+
+    for (const questionnaireResponse of questionnaireResponses) {
+      logger.debug(
+        `TriggerService.updateAllSymptomScores(${userId}): Creating symptom score for questionnaire response ${questionnaireResponse.path}`,
+      )
+      await this.questionnaireResponseWritten(
+        userId,
+        questionnaireResponse.id,
+        questionnaireResponse.content,
+        questionnaireResponse.content,
       )
     }
   }
 
-  async updateRecommendationsForAllUsers() {
-    try {
-      const userService = this.factory.user()
-      const users = await userService.getAllPatients()
+  async updateRecommendationsForAllPatients() {
+    const userService = this.factory.user()
+    const users = await userService.getAllPatients()
 
-      for (const user of users) {
+    for (const user of users) {
+      try {
         await this.updateRecommendationsForUser(user.id)
+      } catch (error) {
+        logger.error(
+          `TriggerService.updateRecommendationsForAllUsers: Updating recommendations for user ${user.id} failed due to ${String(error)}`,
+        )
       }
-    } catch (error) {
-      logger.error(
-        `Error updating medication recommendations for all users: ${String(error)}`,
-      )
     }
   }
 
   async updateRecommendationsForUser(
     userId: string,
-  ): Promise<UserMedicationRecommendation[] | undefined> {
-    try {
-      const medicationService = this.factory.medication()
-      const patientService = this.factory.patient()
-      const recommendationService = this.factory.recommendation()
+  ): Promise<UserMedicationRecommendation[]> {
+    const medicationService = this.factory.medication()
+    const patientService = this.factory.patient()
+    const recommendationService = this.factory.recommendation()
 
-      const requests = await patientService.getMedicationRequests(userId)
-      const contraindications =
-        await patientService.getContraindications(userId)
+    const requests = await patientService.getMedicationRequests(userId)
+    logger.debug(
+      `TriggerService.updateRecommendationsForUser(${userId}): Found ${requests.length} medication requests`,
+    )
 
-      const vitals = await this.getRecommendationVitals(
-        patientService,
-        userId,
-        advanceDateByDays(new Date(), -14),
-      )
+    const contraindications = await patientService.getContraindications(userId)
+    logger.debug(
+      `TriggerService.updateRecommendationsForUser(${userId}): Found ${contraindications.length} contraindications`,
+    )
 
-      const latestSymptomScore =
-        await patientService.getLatestSymptomScore(userId)
+    const vitals = await this.getRecommendationVitals(
+      patientService,
+      userId,
+      advanceDateByDays(new Date(), -14),
+    )
 
-      const requestContexts = await Promise.all(
-        requests.map(async (document) =>
-          medicationService.getContext(document.content, {
-            reference: `users/${userId}/medicationRequests/${document.id}`,
-          }),
-        ),
-      )
+    logger.debug(
+      `TriggerService.updateRecommendationsForUser(${userId}): Found ${vitals.systolicBloodPressure} SBP and ${vitals.heartRate} HR values`,
+    )
+    logger.debug(
+      `TriggerService.updateRecommendationsForUser(${userId}): Found ${vitals.creatinine !== undefined ? 1 : 0} creatinine, ${vitals.estimatedGlomerularFiltrationRate !== undefined ? 1 : 0} eGFR and ${vitals.potassium !== undefined ? 1 : 0} potassium values`,
+    )
 
-      const recommendations = await recommendationService.compute({
-        requests: requestContexts,
-        contraindications: contraindications.map(
-          (document) => document.content,
-        ),
-        vitals: vitals,
-        latestDizzinessScore: latestSymptomScore?.content.dizzinessScore,
-      })
+    const latestSymptomScore =
+      await patientService.getLatestSymptomScore(userId)
 
-      await patientService.updateMedicationRecommendations(
-        userId,
-        recommendations,
-      )
+    logger.debug(
+      `TriggerService.updateRecommendationsForUser(${userId}): Found ${latestSymptomScore !== undefined ? 1 : 0} symptom scores`,
+    )
 
-      return recommendations
-    } catch (error) {
-      logger.error(
-        `Error updating medication recommendations for user ${userId}: ${String(error)}`,
-      )
-      return undefined
-    }
+    const requestContexts = await Promise.all(
+      requests.map(async (document) =>
+        medicationService.getContext(document.content, {
+          reference: `users/${userId}/medicationRequests/${document.id}`,
+        }),
+      ),
+    )
+
+    logger.debug(
+      `TriggerService.updateRecommendationsForUser(${userId}): Got ${requestContexts.length} request contexts`,
+    )
+
+    const recommendations = await recommendationService.compute({
+      requests: requestContexts,
+      contraindications: contraindications.map((document) => document.content),
+      vitals: vitals,
+      latestDizzinessScore: latestSymptomScore?.content.dizzinessScore,
+    })
+
+    logger.debug(
+      `TriggerService.updateRecommendationsForUser(${userId}): Computed ${recommendations.length} recommendations`,
+    )
+
+    await patientService.updateMedicationRecommendations(
+      userId,
+      recommendations,
+    )
+
+    logger.debug(
+      `TriggerService.updateRecommendationsForUser(${userId}): Updated recommendations successfully`,
+    )
+
+    return recommendations
   }
 
   // Helpers
@@ -495,6 +565,10 @@ export class TriggerService {
           UserMedicationRecommendationType.notStarted,
         ].includes(recommendation.displayInformation.type),
       ) ?? false
+
+    logger.debug(
+      `TriggerService.addMedicationUptitrationMessageIfNeeded(${input.userId}): Improvement available: ${hasImprovementAvailable ? 'yes' : 'no'}`,
+    )
 
     if (!hasImprovementAvailable) return false
     const message = UserMessage.createMedicationUptitration()
