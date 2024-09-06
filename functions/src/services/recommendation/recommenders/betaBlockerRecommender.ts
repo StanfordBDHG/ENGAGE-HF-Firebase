@@ -52,8 +52,8 @@ export class BetaBlockerRecommender extends Recommender {
       )
 
     if (
-      input.latestSymptomScore !== undefined &&
-      input.latestSymptomScore.dizzinessScore >= 3
+      input.latestDizzinessScore !== undefined &&
+      input.latestDizzinessScore >= 3
     )
       return this.createRecommendation(
         currentRequests,

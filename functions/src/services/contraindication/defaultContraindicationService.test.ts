@@ -16,11 +16,15 @@ import {
 } from '@stanfordbdhg/engagehf-models'
 import { expect } from 'chai'
 import { describe } from 'mocha'
-import { ContraindicationCategory } from './contraindicationService.js'
+import {
+  ContraindicationCategory,
+  type ContraindicationService,
+} from './contraindicationService.js'
 import { DefaultContraindicationService } from './defaultContraindicationService.js'
 
 describe('DefaultContraindicationService', () => {
-  const contraindicationService = new DefaultContraindicationService()
+  const contraindicationService: ContraindicationService =
+    new DefaultContraindicationService()
 
   function check(
     field: string,

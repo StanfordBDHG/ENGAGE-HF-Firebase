@@ -237,9 +237,7 @@ export class RxNormService {
     if (minimumDailyDose) {
       result.extension.push({
         url: FHIRExtensionUrl.minimumDailyDose,
-        /*
         valueMedicationRequest: new FHIRMedicationRequest({
-          resourceType: 'MedicationRequest',
           medicationReference: {
             reference: `medications/${rxcui}/drugs/${minimumDailyDose.drug}`,
             display: drugs[minimumDailyDose.drug].code?.coding?.at(0)?.display,
@@ -282,7 +280,6 @@ export class RxNormService {
             },
           ],
         }),
-        */
       })
     }
     if (targetDailyDose) {

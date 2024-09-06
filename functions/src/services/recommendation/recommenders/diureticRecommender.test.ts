@@ -21,13 +21,14 @@ import {
 import { expect } from 'chai'
 import { describe, it } from 'mocha'
 import { DiureticRecommender } from './diureticRecommender.js'
+import { type Recommender } from './recommender.js'
 import { type MedicationRequestContext } from '../../../models/medicationRequestContext.js'
 import { MockContraindicationService } from '../../../tests/mocks/contraindicationService.js'
 import { mockHealthSummaryData } from '../../../tests/mocks/healthSummaryData.js'
 import { ContraindicationCategory } from '../../contraindication/contraindicationService.js'
 
 describe('DiureticRecommender', () => {
-  const recommender = new DiureticRecommender(
+  const recommender: Recommender = new DiureticRecommender(
     new MockContraindicationService(
       () => ContraindicationCategory.none,
       () => ContraindicationCategory.none,
@@ -42,7 +43,7 @@ describe('DiureticRecommender', () => {
         requests: [],
         contraindications: [],
         vitals: healthSummaryData.vitals,
-        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
+        latestDizzinessScore: undefined,
       })
       expect(result).to.have.length(0)
     })
@@ -126,7 +127,7 @@ describe('DiureticRecommender', () => {
         requests: [existingMedication],
         contraindications: [],
         vitals: healthSummaryData.vitals,
-        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
+        latestDizzinessScore: undefined,
       })
       expect(result).to.have.length(1)
       expect(result.at(0)).to.deep.equal({

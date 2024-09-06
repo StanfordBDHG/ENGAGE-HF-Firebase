@@ -12,7 +12,7 @@ import {
   type FHIRMedicationRequest,
   LocalizedText,
   type MedicationReference,
-  type SymptomScore,
+  type Observation,
   type UserMedicationRecommendation,
   type UserMedicationRecommendationDoseSchedule,
   UserMedicationRecommendationType,
@@ -24,15 +24,22 @@ import { RasiRecommender } from './recommenders/rasiRecommender.js'
 import { type Recommender } from './recommenders/recommender.js'
 import { Sglt2iRecommender } from './recommenders/sglt2iRecommender.js'
 import { type MedicationRequestContext } from '../../models/medicationRequestContext.js'
-import { type Vitals } from '../../models/vitals.js'
 import { type ContraindicationService } from '../contraindication/contraindicationService.js'
 import { type MedicationService } from '../medication/medicationService.js'
 
 export interface RecommendationInput {
   requests: MedicationRequestContext[]
   contraindications: FHIRAllergyIntolerance[]
-  vitals: Vitals
-  latestSymptomScore?: SymptomScore
+  vitals: RecommendationVitals
+  latestDizzinessScore?: number
+}
+
+export interface RecommendationVitals {
+  systolicBloodPressure: Observation[]
+  heartRate: Observation[]
+  creatinine?: Observation
+  estimatedGlomerularFiltrationRate?: Observation
+  potassium?: Observation
 }
 
 export interface RecommendationOutput {
