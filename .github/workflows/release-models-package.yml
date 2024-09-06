@@ -27,18 +27,16 @@ jobs:
       - uses: actions/checkout@v4
         # Setup .npmrc file to publish to npm
       - uses: actions/setup-node@v4
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         with:
           node-version: '22.x'
           cache-dependency-path: ./functions/models/package-lock.json
-          always-auth: true
+          registry-url: 'https://registry.npmjs.org'
           scope: '@stanfordbdhg'
       - name: Clean Install
         run: npm ci
       - name: Set version
         run: npm version ${{ github.event.release.tag_name }}
       - name: Publish
-        run: npm publish --provenance
+        run: npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
