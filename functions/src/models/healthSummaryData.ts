@@ -7,10 +7,10 @@
 //
 
 import {
+  type Observation,
   type SymptomScore,
   type UserMedicationRecommendation,
 } from '@stanfordbdhg/engagehf-models'
-import { type Vitals } from './vitals.js'
 
 export interface HealthSummaryData {
   name?: string
@@ -18,6 +18,15 @@ export interface HealthSummaryData {
   clinicianName?: string
   nextAppointment?: Date
   recommendations: UserMedicationRecommendation[]
-  vitals: Vitals
+  vitals: HealthSummaryVitals
   symptomScores: SymptomScore[]
+}
+
+export interface HealthSummaryVitals {
+  systolicBloodPressure: Observation[]
+  diastolicBloodPressure: Observation[]
+  heartRate: Observation[]
+  bodyWeight: Observation[]
+
+  dryWeight?: Observation
 }
