@@ -14,8 +14,10 @@ import {
   UserMedicationRecommendationType,
 } from '@stanfordbdhg/engagehf-models'
 import { type HealthSummaryService } from './healthSummaryService.js'
-import { type HealthSummaryData } from '../../models/healthSummaryData.js'
-import { type Vitals } from '../../models/vitals.js'
+import {
+  type HealthSummaryVitals,
+  type HealthSummaryData,
+} from '../../models/healthSummaryData.js'
 
 /* eslint-disable @typescript-eslint/require-await */
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -134,7 +136,7 @@ export class MockHealthSummaryService implements HealthSummaryService {
     }
   }
 
-  async getVitals(userId: string): Promise<Vitals> {
+  async getVitals(userId: string): Promise<HealthSummaryVitals> {
     const [systolicBloodPressure, diastolicBloodPressure] =
       await this.getBloodPressureObservations(userId, this.startDate)
     return {
@@ -147,12 +149,6 @@ export class MockHealthSummaryService implements HealthSummaryService {
         QuantityUnit.lbs,
       ),
       dryWeight: await this.getMostRecentDryWeightObservation(userId),
-      creatinine: await this.getMostRecentCreatinineObservation(userId),
-      potassium: await this.getMostRecentPotassiumObservation(userId),
-      estimatedGlomerularFiltrationRate:
-        await this.getMostRecentEstimatedGlomerularFiltrationRateObservation(
-          userId,
-        ),
     }
   }
 

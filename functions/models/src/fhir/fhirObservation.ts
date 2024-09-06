@@ -227,7 +227,7 @@ export class FHIRObservation extends FHIRResource {
     })
   }
 
-  // Properties
+  // Stored Properties
 
   readonly resourceType: string = 'Observation'
   readonly status: FHIRObservationStatus
@@ -237,6 +237,72 @@ export class FHIRObservation extends FHIRResource {
   readonly effectivePeriod?: FHIRPeriod
   readonly effectiveDateTime?: Date
   readonly effectiveInstant?: Date
+
+  // Computed Properties
+
+  get systolicBloodPressure(): Observation | undefined {
+    return this.observations({
+      code: LoincCode.bloodPressure,
+      system: CodingSystem.loinc,
+      unit: QuantityUnit.mmHg,
+      component: {
+        code: LoincCode.systolicBloodPressure,
+        system: CodingSystem.loinc,
+      },
+    }).at(0)
+  }
+
+  get diastolicBloodPressure(): Observation | undefined {
+    return this.observations({
+      code: LoincCode.bloodPressure,
+      system: CodingSystem.loinc,
+      unit: QuantityUnit.mmHg,
+      component: {
+        code: LoincCode.diastolicBloodPressure,
+        system: CodingSystem.loinc,
+      },
+    }).at(0)
+  }
+
+  bodyWeight(unit: QuantityUnit): Observation | undefined {
+    return this.observations({
+      code: LoincCode.bodyWeight,
+      system: CodingSystem.loinc,
+      unit: unit,
+    }).at(0)
+  }
+
+  get creatinine(): Observation | undefined {
+    return this.observations({
+      code: LoincCode.creatinine,
+      system: CodingSystem.loinc,
+      unit: QuantityUnit.mg_dL,
+    }).at(0)
+  }
+
+  get estimatedGlomerularFiltrationRate(): Observation | undefined {
+    return this.observations({
+      code: LoincCode.estimatedGlomerularFiltrationRate,
+      system: CodingSystem.loinc,
+      unit: QuantityUnit.mL_min_173m2,
+    }).at(0)
+  }
+
+  get heartRate(): Observation | undefined {
+    return this.observations({
+      code: LoincCode.heartRate,
+      system: CodingSystem.loinc,
+      unit: QuantityUnit.bpm,
+    }).at(0)
+  }
+
+  get potassium(): Observation | undefined {
+    return this.observations({
+      code: LoincCode.potassium,
+      system: CodingSystem.loinc,
+      unit: QuantityUnit.mEq_L,
+    }).at(0)
+  }
 
   // Constructor
 
@@ -263,7 +329,7 @@ export class FHIRObservation extends FHIRResource {
 
   // Methods
 
-  observations(
+  private observations(
     options: {
       unit: QuantityUnit
       component?: FHIRCoding

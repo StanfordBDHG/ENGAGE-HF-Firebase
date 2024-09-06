@@ -14,16 +14,13 @@ import {
   FHIRAllergyIntoleranceType,
   FHIRMedicationRequest,
   MedicationReference,
-  type Observation,
-  QuantityUnit,
-  SymptomScore,
   UserMedicationRecommendationType,
 } from '@stanfordbdhg/engagehf-models'
 import { expect } from 'chai'
 import { describe, it } from 'mocha'
 import { type RecommendationService } from './recommendationService.js'
-import { type Vitals } from '../../models/vitals.js'
 import { readCsv } from '../../tests/helpers/csv.js'
+import { mockRecommendationVitals } from '../../tests/mocks/recommendationVitals.js'
 import { setupMockFirebase } from '../../tests/setup.js'
 import { getServiceFactory } from '../factory/getServiceFactory.js'
 import { type MedicationService } from '../medication/medicationService.js'
@@ -53,7 +50,7 @@ describe('RecommendationService', () => {
           .map(getMedicationRequest)
           .flatMap((x) => (x ? [x] : []))
 
-        const vitals = getVitals({
+        const vitals = mockRecommendationVitals({
           countBloodPressureBelow85: parseInt(values[4]),
           medianSystolicBloodPressure:
             values[5] !== 'NA' ? parseInt(values[5]) : null,
@@ -95,16 +92,7 @@ describe('RecommendationService', () => {
           requests: requestContexts,
           contraindications,
           vitals,
-          latestSymptomScore: new SymptomScore({
-            questionnaireResponseId: 'string',
-            date: new Date(),
-            overallScore: 5,
-            physicalLimitsScore: 17,
-            symptomFrequencyScore: 15,
-            socialLimitsScore: 86,
-            qualityOfLifeScore: 12,
-            dizzinessScore: dizziness,
-          }),
+          latestDizzinessScore: dizziness,
         })
 
         const actualRecommendations = result.map(
@@ -295,73 +283,6 @@ function getMedicationRequest(
       })
     default:
       expect.fail('Unhandled case for medication request:', value)
-  }
-}
-
-function getVitals(options: {
-  countBloodPressureBelow85: number
-  medianSystolicBloodPressure: number | null
-  medianHeartRate: number | null
-  potassium: number
-  creatinine: number
-  eGfr: number
-}): Vitals {
-  const regularBloodPressureCount =
-    options.medianSystolicBloodPressure ?
-      Math.min(options.countBloodPressureBelow85 + 5, 10)
-    : 0
-  return {
-    systolicBloodPressure: [
-      ...Array.from(
-        { length: options.countBloodPressureBelow85 },
-        (_): Observation => ({
-          date: new Date(),
-          value: 84,
-          unit: QuantityUnit.mmHg,
-        }),
-      ),
-      ...Array.from({ length: regularBloodPressureCount }, (_) => ({
-        date: new Date(),
-        value: options.medianSystolicBloodPressure ?? 110,
-        unit: QuantityUnit.mmHg,
-      })),
-    ],
-    diastolicBloodPressure: Array.from(
-      { length: options.countBloodPressureBelow85 + regularBloodPressureCount },
-      (_) => ({
-        date: new Date(),
-        value: 74,
-        unit: QuantityUnit.mmHg,
-      }),
-    ),
-    heartRate: Array.from(
-      { length: options.medianHeartRate !== null ? 10 : 0 },
-      (_) => ({
-        date: new Date(),
-        value: options.medianHeartRate ?? 0,
-        unit: QuantityUnit.bpm,
-      }),
-    ),
-    bodyWeight: Array.from({ length: 10 }, (_) => ({
-      date: new Date(),
-      value: 70,
-      unit: QuantityUnit.kg,
-    })),
-    creatinine: {
-      date: new Date(),
-      value: options.creatinine,
-      unit: QuantityUnit.mg_dL,
-    },
-    estimatedGlomerularFiltrationRate: {
-      date: new Date(),
-      value: options.eGfr,
-      unit: QuantityUnit.mL_min_173m2,
-    },
-    potassium: {
-      date: new Date(),
-      value: options.potassium,
-      unit: QuantityUnit.mEq_L,
-    },
   }
 }
 
