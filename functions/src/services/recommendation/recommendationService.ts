@@ -222,34 +222,33 @@ export class RecommendationService {
   ): LocalizedText {
     switch (output.type) {
       case UserMedicationRecommendationType.improvementAvailable: {
-        if (recommendedMedication) {
+        if (recommendedMedication !== undefined) {
           const displayName = recommendedMedication.displayName
           return new LocalizedText(
-            `Switch to ${displayName} (More effective medication)`,
+            `Discuss starting ${displayName} (more effective med)`,
           )
         } else {
-          return new LocalizedText('Uptitrate')
+          return new LocalizedText('Discuss increasing')
         }
       }
       case UserMedicationRecommendationType.moreLabObservationsRequired: {
-        return new LocalizedText('Wait for appointment')
+        return new LocalizedText('Discuss lab check before med change')
       }
       case UserMedicationRecommendationType.morePatientObservationsRequired: {
-        return new LocalizedText('Measure blood pressure')
+        return new LocalizedText('Measure blood pressure/heart rate')
       }
       case UserMedicationRecommendationType.noActionRequired: {
-        return new LocalizedText('No action required')
+        return new LocalizedText('May not be eligible')
       }
       case UserMedicationRecommendationType.notStarted: {
-        return new LocalizedText('Start medication')
+        return new LocalizedText('Discuss starting')
       }
       case UserMedicationRecommendationType.personalTargetDoseReached: {
-        return new LocalizedText('Continue dose (personal goal reached)')
+        return new LocalizedText('Possible personal target reached')
       }
       case UserMedicationRecommendationType.targetDoseReached: {
-        return new LocalizedText('Continue dose')
+        return new LocalizedText('Target dose reached')
       }
     }
-    return new LocalizedText('Unknown')
   }
 }
