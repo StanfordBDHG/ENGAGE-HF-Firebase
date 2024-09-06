@@ -11,6 +11,7 @@ name: Release Models Package
 on:
   release:
     types: [published]
+  workflow_dispatch:
 
 jobs:
   build:
@@ -29,14 +30,13 @@ jobs:
         with:
           node-version: '22.x'
           cache-dependency-path: ./functions/models/package-lock.json
-          registry-url: https://npm.pkg.github.com/
-          always-auth: true
+          registry-url: 'https://registry.npmjs.org'
           scope: '@stanfordbdhg'
       - name: Clean Install
         run: npm ci
       - name: Set version
         run: npm version ${{ github.event.release.tag_name }}
       - name: Publish
-        run: npm publish
+        run: npm publish --provenance --access public
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

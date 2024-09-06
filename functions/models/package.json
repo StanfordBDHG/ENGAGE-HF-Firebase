@@ -31,8 +31,5 @@
     "eslint-plugin-prettier": "^5",
     "prettier": "^3",
     "typescript": "^5"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
   }
 }
