@@ -7,7 +7,6 @@
 //
 
 import { deleteInvitationInputSchema } from '@stanfordbdhg/engagehf-models'
-import { https } from 'firebase-functions'
 import { validatedOnCall } from './helpers.js'
 import { UserRole } from '../services/credential/credential.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'

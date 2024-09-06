@@ -7,7 +7,6 @@
 //
 
 import { updateUserInformationInputSchema } from '@stanfordbdhg/engagehf-models'
-import { https } from 'firebase-functions'
 import { validatedOnCall } from './helpers.js'
 import { UserRole } from '../services/credential/credential.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
@@ -21,7 +20,7 @@ export const updateUserInformation = validatedOnCall(
     const userService = factory.user()
 
     await credential.checkAsync(
-      async () => [UserRole.admin, UserRole.user(request.data.userId)],
+      () => [UserRole.admin, UserRole.user(request.data.userId)],
       async () => {
         const user = await userService.getUser(credential.userId)
         if (user?.content.organization === undefined)

@@ -9,7 +9,6 @@
 import { customSeedingOptionsSchema } from '@stanfordbdhg/engagehf-models'
 import { validatedOnRequest } from './helpers.js'
 import { Flags } from '../flags.js'
-import { UserRole } from '../services/credential/credential.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
 export const customSeed = validatedOnRequest(

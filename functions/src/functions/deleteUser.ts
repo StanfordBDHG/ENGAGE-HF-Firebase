@@ -7,7 +7,6 @@
 //
 
 import { deleteUserInputSchema } from '@stanfordbdhg/engagehf-models'
-import { https } from 'firebase-functions'
 import { validatedOnCall } from './helpers.js'
 import { UserRole } from '../services/credential/credential.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
@@ -20,8 +19,8 @@ export const deleteUser = validatedOnCall(
     const credential = factory.credential(request.auth)
     const userService = factory.user()
 
-    credential.checkAsync(
-      async () => [UserRole.admin],
+    await credential.checkAsync(
+      () => [UserRole.admin],
       async () => {
         const user = await userService.getUser(credential.userId)
         return user?.content.organization !== undefined ?
@@ -32,6 +31,7 @@ export const deleteUser = validatedOnCall(
           : []
       },
     )
+
     await userService.deleteUser(request.data.userId)
   },
 )

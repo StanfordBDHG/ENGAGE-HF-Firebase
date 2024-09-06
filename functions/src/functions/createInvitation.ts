@@ -12,7 +12,7 @@ import {
   Invitation,
   UserType,
 } from '@stanfordbdhg/engagehf-models'
-import { https, logger } from 'firebase-functions/v2'
+import { https } from 'firebase-functions/v2'
 import { validatedOnCall } from './helpers.js'
 import { UserRole } from '../services/credential/credential.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
@@ -23,7 +23,7 @@ export const createInvitation = validatedOnCall(
   async (request): Promise<CreateInvitationOutput> => {
     const factory = getServiceFactory()
     const credential = factory.credential(request.auth)
-    
+
     if (request.data.user.type === UserType.admin) {
       credential.check(UserRole.admin)
     } else if (request.data.user.organization !== undefined) {

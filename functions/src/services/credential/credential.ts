@@ -95,7 +95,7 @@ export class Credential {
   }
 
   async checkAsync(
-    ...promises: (() => Promise<UserRole[]>)[]
+    ...promises: Array<() => Promise<UserRole[]> | UserRole[]>
   ): Promise<UserRole> {
     for (const promise of promises) {
       const roles = await promise()
