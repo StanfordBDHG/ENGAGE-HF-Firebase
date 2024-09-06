@@ -3,15 +3,14 @@
     "firebase-admin": "^12.1.1"
   },
   "scripts": {
-    "install": "npm --prefix functions/models install && npm --prefix functions install",
-    "install:dev": "npm --prefix functions/models install --save-dev && npm --prefix functions install --save-dev",
+    "install": "npm --prefix functions/models install --save-dev && npm --prefix functions install --save-dev",
     "lint": "npm --prefix functions/models run lint && npm --prefix functions run lint", 
     "lint:fix": "npm --prefix functions/models run lint:fix && npm --prefix functions run lint:fix",
     "lint:strict": "npm --prefix functions/models run lint:strict && npm --prefix functions run lint:strict",
     "build": "npm --prefix functions/models run build && npm --prefix functions run build",
     "clean": "npm --prefix functions/models run clean && npm --prefix functions run clean",
-    "test:ci": "firebase --version && firebase emulators:exec --only auth,firestore 'npm --prefix functions run test:ci'",
-    "prepare": "npm run clean && npm run install:dev && npm run build",
+    "test": "firebase --version && firebase emulators:exec --only auth,firestore 'npm --prefix functions run test:emulators'",
+    "prepare": "npm run clean && npm run install && npm run build",
     "serve:seeded": "npm --prefix functions run serve:seeded"
   }
 }
