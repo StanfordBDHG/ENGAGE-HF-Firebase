@@ -12,6 +12,7 @@ import {
   type DocumentSnapshot,
   type FirestoreDataConverter,
 } from 'firebase-admin/firestore'
+import { logger } from 'firebase-functions'
 import { type z } from 'zod'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -39,7 +40,7 @@ export class DatabaseConverter<Schema extends z.ZodType<any, any, any>>
     try {
       return this.converter.encode(modelObject) as DocumentData
     } catch (error) {
-      console.error(
+      logger.error(
         `Failing to encode object of type ${typeof modelObject} due to ${String(error)}`,
       )
       throw error

@@ -29,6 +29,7 @@ import {
 import { type Auth } from 'firebase-admin/auth'
 import { type CollectionReference } from 'firebase-admin/firestore'
 import { type Storage } from 'firebase-admin/storage'
+import { logger } from 'firebase-functions'
 import { chunks } from '../../../extensions/array.js'
 import {
   type CollectionsService,
@@ -63,7 +64,7 @@ export class DebugDataService extends SeedingService {
       try {
         userIds.push(await this.createUser(user))
       } catch (error) {
-        console.error(error)
+        logger.error(error)
       }
     }
     await this.databaseService.runTransaction((collections, transaction) => {

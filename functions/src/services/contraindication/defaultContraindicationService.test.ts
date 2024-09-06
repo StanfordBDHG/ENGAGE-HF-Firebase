@@ -15,6 +15,7 @@ import {
   MedicationReference,
 } from '@stanfordbdhg/engagehf-models'
 import { expect } from 'chai'
+import { logger } from 'firebase-functions'
 import { describe } from 'mocha'
 import {
   ContraindicationCategory,
@@ -191,10 +192,7 @@ function references(field: string): {
       case '':
         break
       default:
-        console.error(
-          'Unknown medication or medication class reference:',
-          value,
-        )
+        logger.error('Unknown medication or medication class reference:', value)
         break
     }
   })

@@ -13,6 +13,7 @@ import {
   MedicationClassReference,
   MedicationReference,
 } from '@stanfordbdhg/engagehf-models'
+import { logger } from 'firebase-functions'
 import {
   ContraindicationCategory,
   type ContraindicationService,
@@ -102,7 +103,7 @@ export class DefaultContraindicationService implements ContraindicationService {
             (value) => value.toString() === 'medications/' + code,
           )
           if (reference === undefined)
-            console.error(`Unknown RxNorm code in contraindication: ${code}`)
+            logger.error(`Unknown RxNorm code in contraindication: ${code}`)
           return reference !== undefined ? [reference] : []
         },
       )

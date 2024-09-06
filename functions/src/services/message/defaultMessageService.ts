@@ -17,7 +17,7 @@ import {
 } from '@stanfordbdhg/engagehf-models'
 import { type QueryDocumentSnapshot } from 'firebase-admin/firestore'
 import { type Messaging, type TokenMessage } from 'firebase-admin/messaging'
-import { https } from 'firebase-functions'
+import { https, logger } from 'firebase-functions'
 import { type MessageService } from './messageService.js'
 import {
   type Document,
@@ -198,7 +198,7 @@ export class DefaultMessageService implements MessageService {
     messageId: string,
     didPerformAction: boolean,
   ): Promise<void> {
-    console.log(
+    logger.info(
       `dismissMessage for user/${userId}/message/${messageId} with didPerformAction ${didPerformAction}`,
     )
     await this.databaseService.runTransaction(
@@ -312,7 +312,7 @@ export class DefaultMessageService implements MessageService {
     await Promise.all(
       batchResponse.responses.map(async (individualResponse, index) => {
         if (!individualResponse.success) {
-          console.error(
+          logger.error(
             `Tried sending message to ${devices[index].content.notificationToken} but failed: ${String(individualResponse.error)}`,
           )
         }

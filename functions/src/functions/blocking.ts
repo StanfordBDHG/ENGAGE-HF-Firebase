@@ -14,7 +14,7 @@ import {
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
 export const beforeUserCreatedFunction = beforeUserCreated((event) => {
-  console.log(`beforeUserCreated with event: ${JSON.stringify(event)}`)
+  logger.info(`beforeUserCreated with event: ${JSON.stringify(event)}`)
 })
 
 export const beforeUserSignedInFunction = beforeUserSignedIn(async (event) => {
