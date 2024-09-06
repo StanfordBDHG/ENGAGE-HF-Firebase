@@ -65,9 +65,15 @@ export class UserRole {
 }
 
 export class Credential {
-  // Properties
+  // Stored Properties
 
   private readonly authData: AuthData
+
+  // Computed Properties
+
+  get userId(): string {
+    return this.authData.uid
+  }
 
   // Constructor
 
@@ -84,8 +90,19 @@ export class Credential {
 
   check(...roles: UserRole[]): UserRole {
     const role = roles.find((role) => this.checkSingle(role))
-    if (!role) throw this.permissionDeniedError()
-    return role
+    if (role !== undefined) return role
+    throw this.permissionDeniedError()
+  }
+
+  async checkAsync(
+    ...promises: (() => Promise<UserRole[]>)[]
+  ): Promise<UserRole> {
+    for (const promise of promises) {
+      const roles = await promise()
+      const role = roles.find((role) => this.checkSingle(role))
+      if (role !== undefined) return role
+    }
+    throw this.permissionDeniedError()
   }
 
   permissionDeniedError(): https.HttpsError {

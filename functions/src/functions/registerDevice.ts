@@ -12,11 +12,11 @@ import { validatedOnCall } from './helpers.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
 export const registerDevice = validatedOnCall(
+  'registerDevice',
   registerDeviceInputSchema,
   async (request) => {
-    const userId = request.auth?.uid
-    if (!userId)
-      throw new https.HttpsError('unauthenticated', 'User is not authenticated')
-    await getServiceFactory().message().registerDevice(userId, request.data)
+    const factory = getServiceFactory()
+    const credential = factory.credential(request.auth)
+    await factory.message().registerDevice(credential.userId, request.data)
   },
 )

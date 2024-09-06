@@ -13,18 +13,16 @@ import { UserRole } from '../services/credential/credential.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
 export const deleteInvitation = validatedOnCall(
+  'deleteInvitation',
   deleteInvitationInputSchema,
   async (request): Promise<void> => {
-    if (!request.auth?.uid)
-      throw new https.HttpsError('unauthenticated', 'User is not authenticated')
-
     const factory = getServiceFactory()
     const credential = factory.credential(request.auth)
     const userService = factory.user()
     const invitation = await userService.getInvitationByCode(
       request.data.invitationCode,
     )
-    if (!invitation?.content.user.organization)
+    if (invitation?.content.user.organization === undefined)
       throw credential.permissionDeniedError()
 
     credential.check(

@@ -249,12 +249,16 @@ export async function _defaultSeed(
 
 export const defaultSeed =
   Flags.isEmulator ?
-    validatedOnRequest(defaultSeedInputSchema, async (_, data, response) => {
-      await _defaultSeed(getServiceFactory(), data)
-      response.write('Success', 'utf8')
-      response.end()
-    })
-  : validatedOnCall(defaultSeedInputSchema, async (request) => {
+    validatedOnRequest(
+      'defaultSeed',
+      defaultSeedInputSchema,
+      async (_, data, response) => {
+        await _defaultSeed(getServiceFactory(), data)
+        response.write('Success', 'utf8')
+        response.end()
+      },
+    )
+  : validatedOnCall('defaultSeed', defaultSeedInputSchema, async (request) => {
       const factory = getServiceFactory()
       factory.credential(request.auth).check(UserRole.admin)
       await _defaultSeed(factory, request.data)

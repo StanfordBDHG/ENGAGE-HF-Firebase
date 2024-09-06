@@ -13,18 +13,13 @@ import { UserRole } from '../services/credential/credential.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
 export const dismissMessage = validatedOnCall(
+  'dismissMessage',
   dismissMessageInputSchema,
   async (request): Promise<void> => {
-    const userId = request.data.userId ?? request.auth?.uid
-
-    if (!userId)
-      throw new https.HttpsError('not-found', 'User could not be found.')
-
     const factory = getServiceFactory()
-
-    factory
-      .credential(request.auth)
-      .check(UserRole.admin, UserRole.user(userId))
+    const credential = factory.credential(request.auth)
+    const userId = request.data.userId ?? credential.userId
+    credential.check(UserRole.admin, UserRole.user(userId))
 
     await factory
       .message()
