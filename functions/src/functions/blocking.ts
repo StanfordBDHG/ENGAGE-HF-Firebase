@@ -11,6 +11,7 @@ import {
   beforeUserSignedIn,
 } from 'firebase-functions/v2/identity'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
+import { logger } from 'firebase-functions'
 
 export const beforeUserCreatedFunction = beforeUserCreated((event) => {
   console.log(`beforeUserCreated with event: ${JSON.stringify(event)}`)
@@ -18,10 +19,10 @@ export const beforeUserCreatedFunction = beforeUserCreated((event) => {
 
 export const beforeUserSignedInFunction = beforeUserSignedIn(async (event) => {
   try {
-    await getServiceFactory().user().updateClaims(event.data.uid)
+    const userService = getServiceFactory().user()
+    await userService.updateClaims(event.data.uid)
+    logger.info(`beforeUserSignedIn finished successfully.`)
   } catch (error) {
-    console.error(
-      `beforeUserSignedIn finished with error: ${String(error)}. This is expected behavior for the troubleshooting with Firebase Support.`,
-    )
+    logger.error(`beforeUserSignedIn finished with error: ${String(error)}`)
   }
 })

@@ -22,6 +22,7 @@ import {
 import { median } from '../../extensions/array.js'
 import { UserObservationCollection } from '../database/collections.js'
 import { type ServiceFactory } from '../factory/serviceFactory.js'
+import { logger } from 'firebase-functions'
 
 export class TriggerService {
   // Properties
@@ -76,7 +77,7 @@ export class TriggerService {
         ),
       )
     } catch (error) {
-      console.error(`Error running every 15 minutes trigger: ${String(error)}`)
+      logger.error(`Error running every 15 minutes trigger: ${String(error)}`)
     }
   }
 
@@ -103,7 +104,7 @@ export class TriggerService {
               user.content.dateOfEnrollment.getTime() - now.getTime(),
             )
             const durationOfOneDayInMilliseconds = 24 * 60 * 60 * 1000
-            console.log(
+            logger.info(
               enrollmentDuration,
               enrollmentDuration % (durationOfOneDayInMilliseconds * 14),
               '<',
@@ -131,14 +132,14 @@ export class TriggerService {
               })
             }
           } catch (error) {
-            console.error(
+            logger.error(
               `Error running every morning trigger for user ${user.id}: ${String(error)}`,
             )
           }
         }),
       )
     } catch (error) {
-      console.error(`Error running every morning trigger: ${String(error)}`)
+      logger.error(`Error running every morning trigger: ${String(error)}`)
     }
   }
 
@@ -186,7 +187,7 @@ export class TriggerService {
         )
       }
     } catch (error) {
-      console.error(
+      logger.error(
         `Error updating symptom scores for questionnaire response ${questionnaireResponseId} for user ${userId}: ${String(error)}`,
       )
     }
@@ -203,7 +204,7 @@ export class TriggerService {
         { notify: true },
       )
     } catch (error) {
-      console.error(
+      logger.error(
         `Error updating user data for enrollment for user ${userId}: ${String(error)}`,
       )
     }
@@ -243,7 +244,7 @@ export class TriggerService {
               notify: true,
             })
       } catch (error) {
-        console.error(
+        logger.error(
           `Error on user body weight observation written: ${String(error)}`,
         )
       }
@@ -265,7 +266,7 @@ export class TriggerService {
           patientService.getHeartRateObservations(userId, yesterday),
         ])
 
-        console.log(
+        logger.log(
           `Checked whether to complete vitals message due to ${bloodPressure.length} blood pressure observations, ${bodyWeight.length} body weight observations, and ${heartRate.length} heart rate observations.`,
         )
 
@@ -279,7 +280,7 @@ export class TriggerService {
             .completeMessages(userId, UserMessageType.vitals)
         }
       } catch (error) {
-        console.error(`Failed updating vitals message: ${String(error)}`)
+        logger.error(`Failed updating vitals message: ${String(error)}`)
       }
     }
   }
@@ -332,7 +333,7 @@ export class TriggerService {
         { notify: true },
       )
     } catch (error) {
-      console.error(
+      logger.error(
         `Error creating medication change message for user ${userId}: ${String(error)}`,
       )
     }
@@ -363,7 +364,7 @@ export class TriggerService {
         )
       }
     } catch (error) {
-      console.error(
+      logger.error(
         `Error updating symptom scores for all users: ${String(error)}`,
       )
     }
@@ -378,7 +379,7 @@ export class TriggerService {
         await this.updateRecommendationsForUser(user.id)
       }
     } catch (error) {
-      console.error(
+      logger.error(
         `Error updating medication recommendations for all users: ${String(error)}`,
       )
     }
@@ -430,7 +431,7 @@ export class TriggerService {
 
       return recommendations
     } catch (error) {
-      console.error(
+      logger.error(
         `Error updating medication recommendations for user ${userId}: ${String(error)}`,
       )
       return undefined

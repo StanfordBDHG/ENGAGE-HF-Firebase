@@ -14,7 +14,7 @@ import {
   UserType,
 } from '@stanfordbdhg/engagehf-models'
 import { type Auth } from 'firebase-admin/auth'
-import { https } from 'firebase-functions/v2'
+import { https, logger } from 'firebase-functions/v2'
 import { type UserService } from './userService.js'
 import {
   type Document,
@@ -65,12 +65,25 @@ export class DatabaseUserService implements UserService {
       const user = await this.getUser(userId)
       if (!user) throw new https.HttpsError('not-found', 'User not found.')
 
-      await this.auth.setCustomUserClaims(userId, {
+      const claims: UserClaims = {
         type: user.content.type,
-        organization: user.content.organization ?? null,
-      })
+      }
+      if (user.content.organization !== undefined)
+        claims.organization = user.content.organization
+
+      logger.info(
+        `Will set claims for user ${userId}: ${JSON.stringify(claims)}`,
+      )
+      await this.auth.setCustomUserClaims(userId, claims)
+      logger.info(`Successfully set claims for user ${userId}.`)
     } catch (error) {
+      logger.error(
+        `Failed to update claims for user ${userId}: ${String(error)}`,
+      )
       await this.auth.setCustomUserClaims(userId, {})
+      logger.info(
+        `Successfully reset claims for user ${userId} to empty object.`,
+      )
       throw error
     }
   }
@@ -83,13 +96,20 @@ export class DatabaseUserService implements UserService {
         const invitations = await transaction.get(
           collections.invitations.where('code', '==', content.code).limit(1),
         )
-        if (!invitations.empty)
+        if (!invitations.empty) {
+          logger.error(
+            `Invitation code '${content.code}' already exists in invitations with ids [${invitations.docs.map((doc) => `'${doc.id}'`).join(', ')}].`,
+          )
           throw new https.HttpsError(
             'invalid-argument',
             'Invitation code is not unique.',
           )
+        }
         const invitationDoc = collections.invitations.doc()
         transaction.create(invitationDoc, content)
+        logger.info(
+          `Created invitation with code '${content.code}' using id '${invitationDoc.id}'.`,
+        )
         return invitationDoc.id
       },
     )
@@ -118,7 +138,13 @@ export class DatabaseUserService implements UserService {
             .limit(1)
             .get()
         ).docs.at(0)
-        if (!invitation) throw new Error('Invitation not found')
+        if (invitation === undefined) {
+          logger.error(`Invitation with code '${invitationCode}' not found.`)
+          throw new Error('Invitation not found')
+        }
+        logger.info(
+          `Setting userId '${userId}' for invitation with code '${invitationCode}' at id '${invitation.id}'.`,
+        )
         transaction.update(invitation.ref, { userId: userId })
       },
     )
@@ -138,14 +164,19 @@ export class DatabaseUserService implements UserService {
     invitation: Document<Invitation>,
     userId: string,
   ): Promise<void> {
+    logger.info(
+      `About to enroll user ${userId} using invitation at '${invitation.id}' with code '${invitation.content.code}'.`,
+    )
     const user = await this.databaseService.getDocument((collections) =>
       collections.users.doc(userId),
     )
-    if (user?.content)
+    if (user?.content !== undefined) {
+      logger.error(`User with id ${userId} already exists.`)
       throw new https.HttpsError(
         'already-exists',
         'User is already enrolled in the study.',
       )
+    }
 
     await this.auth.updateUser(userId, {
       displayName: invitation.content.auth?.displayName ?? undefined,
@@ -153,6 +184,10 @@ export class DatabaseUserService implements UserService {
       phoneNumber: invitation.content.auth?.phoneNumber ?? undefined,
       photoURL: invitation.content.auth?.photoURL ?? undefined,
     })
+
+    logger.info(
+      `Updated auth information for user with id '${userId}' using invitation auth content.`,
+    )
 
     const invitationCollections = await this.databaseService.runTransaction(
       async (collections, transaction) => {
@@ -172,6 +207,10 @@ export class DatabaseUserService implements UserService {
       },
     )
 
+    logger.info(
+      `Created user with id '${userId}' using invitation content. Will now copy invitation collections: [${invitationCollections.map((collection) => `'${collection.id}'`).join(', ')}].`,
+    )
+
     await Promise.all(
       invitationCollections.map(async (invitationCollection) =>
         this.databaseService.runTransaction(
@@ -184,23 +223,27 @@ export class DatabaseUserService implements UserService {
                 userRef.collection(collectionId).doc(item.id),
                 item.data(),
               )
-              // transaction.delete(item.ref)
+              transaction.delete(item.ref)
             }
+
+            logger.info(
+              `Copied invitation collection '${collectionId}' with ${items.size} items for user '${userId}'.`,
+            )
           },
         ),
       ),
     )
 
-    // transaction.delete(invitationRef)
-
     await this.updateClaims(userId)
   }
 
   async deleteInvitation(invitation: Document<Invitation>): Promise<void> {
-    await this.databaseService.runTransaction(async (collections, _) => {
+    await this.databaseService.bulkWrite(async (collections, _) => {
       const ref = collections.invitations.doc(invitation.id)
       await collections.firestore.recursiveDelete(ref)
     })
+
+    logger.info(`Deleted invitation with id '${invitation.id}' recursively.`)
   }
 
   // Organizations
@@ -251,7 +294,9 @@ export class DatabaseUserService implements UserService {
         collections.users.doc(userId),
         writer,
       )
+      logger.info(`Deleted user with id '${userId}' recursively.`)
       await this.auth.deleteUser(userId)
+      logger.info(`Deleted user auth with id '${userId}'.`)
     })
   }
 }
