@@ -12,6 +12,7 @@ import {
   type Observation,
   UserMedicationRecommendationType,
 } from '@stanfordbdhg/engagehf-models'
+import { logger } from 'firebase-functions'
 import { jsPDF } from 'jspdf'
 import 'jspdf-autotable' /* eslint-disable-line */
 import {
@@ -29,7 +30,6 @@ import {
   presortedPercentile,
 } from '../extensions/array.js'
 import { type HealthSummaryData } from '../models/healthSummaryData.js'
-import { logger } from 'firebase-functions'
 
 export interface HealthSummaryOptions {
   languages: string[]

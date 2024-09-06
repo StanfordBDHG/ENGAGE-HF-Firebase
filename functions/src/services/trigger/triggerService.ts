@@ -113,7 +113,7 @@ export class TriggerService {
           const durationOfOneDayInMilliseconds = 24 * 60 * 60 * 1000
 
           logger.debug(
-            `everyMorning(user: ${user.id}): enrolled on ${user.content.dateOfEnrollment}, which was ${enrollmentDuration} ms ago`,
+            `everyMorning(user: ${user.id}): enrolled on ${user.content.dateOfEnrollment.toISOString()}, which was ${enrollmentDuration} ms ago`,
           )
           if (
             enrollmentDuration % (durationOfOneDayInMilliseconds * 14) <
@@ -157,7 +157,7 @@ export class TriggerService {
     afterData: FHIRQuestionnaireResponse | undefined,
   ) {
     logger.debug(
-      `questionnaireResponseWritten(${userId}, ${questionnaireResponseId}): beforeData: ${beforeData}, afterData: ${afterData}`,
+      `questionnaireResponseWritten(${userId}, ${questionnaireResponseId}): beforeData: ${beforeData !== undefined ? 'exists' : 'undefined'}, afterData: ${afterData !== undefined ? 'exists' : 'undefined'}`,
     )
 
     const patientService = this.factory.patient()
@@ -167,7 +167,7 @@ export class TriggerService {
       afterData ? symptomScoreCalculator.calculate(afterData) : undefined
 
     logger.debug(
-      `questionnaireResponseWritten(${userId}, ${questionnaireResponseId}): Calculated new score: ${newScore}`,
+      `questionnaireResponseWritten(${userId}, ${questionnaireResponseId}): Calculated new score ${newScore?.overallScore}`,
     )
     await patientService.updateSymptomScore(
       userId,
@@ -192,13 +192,12 @@ export class TriggerService {
 
     const recommendations = await this.updateRecommendationsForUser(userId)
 
-    const hasImprovementAvailable =
-      recommendations?.some((recommendation) =>
-        [
-          UserMedicationRecommendationType.improvementAvailable,
-          UserMedicationRecommendationType.notStarted,
-        ].includes(recommendation.displayInformation.type),
-      ) ?? false
+    const hasImprovementAvailable = recommendations.some((recommendation) =>
+      [
+        UserMedicationRecommendationType.improvementAvailable,
+        UserMedicationRecommendationType.notStarted,
+      ].includes(recommendation.displayInformation.type),
+    )
 
     logger.debug(
       `questionnaireResponseWritten(${userId}, ${questionnaireResponseId}): Improvement available: ${hasImprovementAvailable ? 'yes' : 'no'}`,
@@ -481,7 +480,7 @@ export class TriggerService {
     )
 
     logger.debug(
-      `TriggerService.updateRecommendationsForUser(${userId}): Found ${vitals.systolicBloodPressure} SBP and ${vitals.heartRate} HR values`,
+      `TriggerService.updateRecommendationsForUser(${userId}): Found ${vitals.systolicBloodPressure.length} SBP and ${vitals.heartRate.length} HR values`,
     )
     logger.debug(
       `TriggerService.updateRecommendationsForUser(${userId}): Found ${vitals.creatinine !== undefined ? 1 : 0} creatinine, ${vitals.estimatedGlomerularFiltrationRate !== undefined ? 1 : 0} eGFR and ${vitals.potassium !== undefined ? 1 : 0} potassium values`,

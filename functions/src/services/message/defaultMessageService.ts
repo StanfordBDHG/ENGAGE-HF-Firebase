@@ -19,12 +19,12 @@ import { type QueryDocumentSnapshot } from 'firebase-admin/firestore'
 import { type Messaging, type TokenMessage } from 'firebase-admin/messaging'
 import { https, logger } from 'firebase-functions'
 import { type MessageService } from './messageService.js'
+import { compact } from '../../extensions/array.js'
 import {
   type Document,
   type DatabaseService,
 } from '../database/databaseService.js'
 import { type UserService } from '../user/userService.js'
-import { compact, compactMap } from '../../extensions/array.js'
 
 export class DefaultMessageService implements MessageService {
   // Properties
@@ -270,7 +270,7 @@ export class DefaultMessageService implements MessageService {
 
   /// returns whether to save the new message or throw it away
   private handleOldMessages(
-    oldMessages: QueryDocumentSnapshot<UserMessage>[],
+    oldMessages: Array<QueryDocumentSnapshot<UserMessage>>,
     newMessage: UserMessage,
     transaction: FirebaseFirestore.Transaction,
   ): boolean {

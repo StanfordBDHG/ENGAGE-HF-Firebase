@@ -30,5 +30,6 @@ export const onScheduleUpdateMedicationRecommendations = onSchedule(
     schedule: '0 0 * * *',
     timeZone: 'America/Los_Angeles',
   },
-  async () => getServiceFactory().trigger().updateRecommendationsForAllUsers(),
+  async () =>
+    getServiceFactory().trigger().updateRecommendationsForAllPatients(),
 )
