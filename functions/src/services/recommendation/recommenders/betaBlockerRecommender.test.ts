@@ -18,6 +18,7 @@ import {
 import { expect } from 'chai'
 import { describe, it } from 'mocha'
 import { BetaBlockerRecommender } from './betaBlockerRecommender.js'
+import { type Recommender } from './recommender.js'
 import { type HealthSummaryData } from '../../../models/healthSummaryData.js'
 import { type MedicationRequestContext } from '../../../models/medicationRequestContext.js'
 import { MockContraindicationService } from '../../../tests/mocks/contraindicationService.js'
@@ -35,7 +36,7 @@ describe('BetaBlockerRecommender', () => {
     reference: MedicationClassReference,
   ) => ContraindicationCategory
 
-  const recommender = new BetaBlockerRecommender(
+  const recommender: Recommender = new BetaBlockerRecommender(
     new MockContraindicationService(
       (_, reference) => medicationContraindication(reference),
       (_, reference) => medicationClassContraindication(reference),
@@ -74,7 +75,7 @@ describe('BetaBlockerRecommender', () => {
       const result = recommender.compute({
         requests: [],
         contraindications: [],
-        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
+        latestDizzinessScore: undefined,
         vitals: healthSummaryData.vitals,
       })
       expect(result).to.be.empty
@@ -89,7 +90,7 @@ describe('BetaBlockerRecommender', () => {
       const result = recommender.compute({
         requests: [],
         contraindications: [],
-        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
+        latestDizzinessScore: undefined,
         vitals: healthSummaryData.vitals,
       })
       expect(result).to.have.length(1)
@@ -106,7 +107,7 @@ describe('BetaBlockerRecommender', () => {
       const result = recommender.compute({
         requests: [],
         contraindications: [],
-        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
+        latestDizzinessScore: undefined,
         vitals: healthSummaryData.vitals,
       })
       expect(result).to.have.length(1)
@@ -123,7 +124,7 @@ describe('BetaBlockerRecommender', () => {
       const result = recommender.compute({
         requests: [],
         contraindications: [],
-        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
+        latestDizzinessScore: undefined,
         vitals: healthSummaryData.vitals,
       })
       expect(result).to.have.length(1)
@@ -143,7 +144,7 @@ describe('BetaBlockerRecommender', () => {
       const result = recommender.compute({
         requests: [],
         contraindications: [],
-        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
+        latestDizzinessScore: undefined,
         vitals: healthSummaryData.vitals,
       })
       expect(result).to.have.length(1)
@@ -163,7 +164,7 @@ describe('BetaBlockerRecommender', () => {
       const result = recommender.compute({
         requests: [],
         contraindications: [],
-        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
+        latestDizzinessScore: undefined,
         vitals: healthSummaryData.vitals,
       })
       expect(result).to.have.length(1)
@@ -178,7 +179,7 @@ describe('BetaBlockerRecommender', () => {
       const result = recommender.compute({
         requests: [],
         contraindications: [],
-        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
+        latestDizzinessScore: undefined,
         vitals: healthSummaryData.vitals,
       })
       expect(result).to.have.length(1)
@@ -215,7 +216,7 @@ describe('BetaBlockerRecommender', () => {
       const result = recommender.compute({
         requests: [contextAtTarget],
         contraindications: [],
-        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
+        latestDizzinessScore: undefined,
         vitals: healthSummaryData.vitals,
       })
       expect(result).to.have.length(1)
@@ -232,7 +233,7 @@ describe('BetaBlockerRecommender', () => {
       const result = recommender.compute({
         requests: [contextBelowTarget],
         contraindications: [],
-        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
+        latestDizzinessScore: undefined,
         vitals: healthSummaryData.vitals,
       })
       expect(result).to.have.length(1)
@@ -249,7 +250,7 @@ describe('BetaBlockerRecommender', () => {
       const result = recommender.compute({
         requests: [contextBelowTarget],
         contraindications: [],
-        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
+        latestDizzinessScore: undefined,
         vitals: healthSummaryData.vitals,
       })
       expect(result).to.have.length(1)
@@ -266,7 +267,7 @@ describe('BetaBlockerRecommender', () => {
       const result = recommender.compute({
         requests: [contextBelowTarget],
         contraindications: [],
-        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
+        latestDizzinessScore: undefined,
         vitals: healthSummaryData.vitals,
       })
       expect(result).to.have.length(1)
@@ -283,7 +284,7 @@ describe('BetaBlockerRecommender', () => {
       const result = recommender.compute({
         requests: [contextBelowTarget],
         contraindications: [],
-        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
+        latestDizzinessScore: undefined,
         vitals: healthSummaryData.vitals,
       })
       expect(result).to.have.length(1)
@@ -295,17 +296,10 @@ describe('BetaBlockerRecommender', () => {
     })
 
     it('shows carvedilol when dizziness score is too bad', () => {
-      healthSummaryData.symptomScores = healthSummaryData.symptomScores.map(
-        (scores) =>
-          new SymptomScore({
-            ...scores,
-            dizzinessScore: 4,
-          }),
-      )
       const result = recommender.compute({
         requests: [contextBelowTarget],
         contraindications: [],
-        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
+        latestDizzinessScore: 4,
         vitals: healthSummaryData.vitals,
       })
       expect(result).to.have.length(1)
@@ -327,7 +321,7 @@ describe('BetaBlockerRecommender', () => {
       const result = recommender.compute({
         requests: [contextBelowTarget],
         contraindications: [],
-        latestSymptomScore: healthSummaryData.symptomScores.at(-1),
+        latestDizzinessScore: undefined,
         vitals: healthSummaryData.vitals,
       })
       expect(result).to.have.length(1)
