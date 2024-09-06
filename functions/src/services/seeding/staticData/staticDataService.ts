@@ -22,7 +22,7 @@ import { z } from 'zod'
 import {
   medicationClassSpecificationSchema,
   type RxNormService,
-} from './rxNormService.js'
+} from './rxNorm/rxNormService.js'
 import { type DatabaseService } from '../../database/databaseService.js'
 import { SeedingService } from '../seedingService.js'
 
