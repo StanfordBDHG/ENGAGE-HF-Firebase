@@ -15,16 +15,10 @@ export const setupUser = validatedOnCall(
   'setupUser',
   z.unknown(),
   async (request) => {
-    const userId = request.auth?.uid
-    const invitationCode: unknown = request.auth?.token.invitationCode
-    if (
-      userId === undefined ||
-      invitationCode === undefined ||
-      typeof invitationCode !== 'string'
-    )
-      throw new https.HttpsError('unauthenticated', 'User is not authenticated')
-
     const factory = getServiceFactory()
+    const userId = factory.credential(request.auth).userId
+    const invitationCode = z.string().parse(request.auth?.token.invitationCode)
+
     const userService = factory.user()
     const triggerService = factory.trigger()
 
@@ -35,9 +29,11 @@ export const setupUser = validatedOnCall(
     await userService.enrollUser(invitation, userId)
 
     logger.debug(
-      `User (${userId}) successfully enrolled in the study with invitation code: ${invitationCode}`,
+      `setupUser: User '${userId}' successfully enrolled in the study with invitation code: ${invitationCode}`,
     )
 
     await triggerService.userEnrolled(userId)
+
+    logger.debug(`setupUser: User '${userId}' enrollment triggers finished`)
   },
 )
