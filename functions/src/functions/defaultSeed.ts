@@ -12,6 +12,7 @@ import {
   UserDebugDataComponent,
   UserType,
 } from '@stanfordbdhg/engagehf-models'
+import { logger } from 'firebase-functions'
 import { type z } from 'zod'
 import { validatedOnCall, validatedOnRequest } from './helpers.js'
 import { _updateStaticData } from './updateStaticData.js'
@@ -151,7 +152,7 @@ export async function _defaultSeed(
 
         await Promise.all(promises)
       } catch (error) {
-        console.error(`Failed to seed user ${userId}: ${String(error)}`)
+        logger.error(`Failed to seed user ${userId}: ${String(error)}`)
       }
     }
   }
@@ -240,7 +241,7 @@ export async function _defaultSeed(
 
       await Promise.all(promises)
     } catch (error) {
-      console.error(
+      logger.error(
         `Failed to seed user data ${userData.userId}: ${String(error)}`,
       )
     }
@@ -249,12 +250,16 @@ export async function _defaultSeed(
 
 export const defaultSeed =
   Flags.isEmulator ?
-    validatedOnRequest(defaultSeedInputSchema, async (_, data, response) => {
-      await _defaultSeed(getServiceFactory(), data)
-      response.write('Success', 'utf8')
-      response.end()
-    })
-  : validatedOnCall(defaultSeedInputSchema, async (request) => {
+    validatedOnRequest(
+      'defaultSeed',
+      defaultSeedInputSchema,
+      async (_, data, response) => {
+        await _defaultSeed(getServiceFactory(), data)
+        response.write('Success', 'utf8')
+        response.end()
+      },
+    )
+  : validatedOnCall('defaultSeed', defaultSeedInputSchema, async (request) => {
       const factory = getServiceFactory()
       factory.credential(request.auth).check(UserRole.admin)
       await _defaultSeed(factory, request.data)

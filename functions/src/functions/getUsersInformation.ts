@@ -19,11 +19,9 @@ import { UserRole } from '../services/credential/credential.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
 export const getUsersInformation = validatedOnCall(
+  'getUsersInformation',
   getUsersInformationInputSchema,
   async (request): Promise<z.input<typeof getUsersInformationOutputSchema>> => {
-    if (!request.auth?.uid)
-      throw new https.HttpsError('unauthenticated', 'User is not authenticated')
-
     const factory = getServiceFactory()
     const credential = factory.credential(request.auth)
     const userService = factory.user()

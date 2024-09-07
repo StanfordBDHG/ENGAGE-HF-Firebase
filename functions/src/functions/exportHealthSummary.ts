@@ -17,14 +17,13 @@ import { UserRole } from '../services/credential/credential.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
 export const exportHealthSummary = validatedOnCall(
+  'exportHealthSummary',
   exportHealthSummaryInputSchema,
   async (request): Promise<{ content: string }> => {
-    if (!request.data.userId)
-      throw new https.HttpsError('invalid-argument', 'User ID is required')
-
     const factory = getServiceFactory()
-    const userService = factory.user()
     const credential = factory.credential(request.auth)
+
+    const userService = factory.user()
     const user = await userService.getUser(request.data.userId)
 
     credential.check(

@@ -8,6 +8,7 @@
 
 import * as https from 'https'
 import { optionalish } from '@stanfordbdhg/engagehf-models'
+import { logger } from 'firebase-functions'
 import { z } from 'zod'
 import {
   rxNormRelatedDrugGroupResponse,
@@ -71,7 +72,7 @@ export class RxNormApi {
             const statusCode = response.statusCode ?? 500
             if (statusCode >= 200 && statusCode <= 299) {
               try {
-                console.log(body.toString('utf8'))
+                logger.debug(body.toString('utf8'))
                 resolve(
                   schema.parse(
                     JSON.parse(body.toString('utf8')),

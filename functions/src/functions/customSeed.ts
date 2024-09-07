@@ -9,15 +9,16 @@
 import { customSeedingOptionsSchema } from '@stanfordbdhg/engagehf-models'
 import { validatedOnRequest } from './helpers.js'
 import { Flags } from '../flags.js'
-import { UserRole } from '../services/credential/credential.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
 export const customSeed = validatedOnRequest(
+  'customSeed',
   customSeedingOptionsSchema,
   async (_, data, response) => {
     const factory = getServiceFactory()
 
-    if (!Flags.isEmulator) factory.credential(undefined).check(UserRole.admin)
+    if (!Flags.isEmulator)
+      throw factory.credential(undefined).permissionDeniedError()
 
     await factory.debugData().seedCustom(data)
     response.write('Success', 'utf8')

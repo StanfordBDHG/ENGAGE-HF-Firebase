@@ -16,6 +16,7 @@ import {
   optionalish,
   QuantityUnit,
 } from '@stanfordbdhg/engagehf-models'
+import { logger } from 'firebase-functions'
 import { z } from 'zod'
 import { RxNormApi } from './rxNormApi.js'
 import {
@@ -76,7 +77,7 @@ export class RxNormService {
     const drugs: Record<string, Record<string, FHIRMedication>> = {}
 
     for (const medicationClass of specification) {
-      console.log(`Processing medication class ${medicationClass.key}...`)
+      logger.debug(`Processing medication class ${medicationClass.key}...`)
 
       for (const medication of medicationClass.medications) {
         const medicationName = await this.api.getRxNormName(medication.code)
@@ -90,13 +91,13 @@ export class RxNormService {
                 await this.api.getRxNormName(ingredientRxcui)
               ingredients.push({ name: ingredientName, rxcui: ingredientRxcui })
             } catch (error) {
-              console.error(
+              logger.error(
                 `Error processing ingredient ${ingredientRxcui}: ${JSON.stringify(error)}`,
               )
             }
           }
         }
-        console.log(`Processing medication ${medicationName}...`)
+        logger.info(`Processing medication ${medicationName}...`)
 
         drugs[medication.code] = {}
 
@@ -111,7 +112,7 @@ export class RxNormService {
                 )
                 drugs[medication.code][drugRxcui] = fhirDrug
               } catch (error) {
-                console.error(
+                logger.error(
                   `Error processing drug ${drugRxcui}: ${JSON.stringify(error)}`,
                 )
               }
@@ -120,11 +121,11 @@ export class RxNormService {
             const medicationDrugs = await this.getDrugsContaining(
               medication.code,
             )
-            console.log(
+            logger.info(
               `Found ${medicationDrugs.length} drugs for ${medication.code}`,
             )
             for (const drug of medicationDrugs) {
-              console.log(`Processing drug ${JSON.stringify(drug)}...`)
+              logger.info(`Processing drug ${JSON.stringify(drug)}...`)
               try {
                 const fhirDrug = await this.buildFHIRDrug(
                   drug.rxcui,
@@ -135,14 +136,14 @@ export class RxNormService {
                   drugs[medication.code][fhirDrug.id] = fhirDrug
                 }
               } catch (error) {
-                console.error(
+                logger.error(
                   `Error processing drug ${drug.rxcui}: ${JSON.stringify(error)}`,
                 )
               }
             }
           }
         } catch (error) {
-          console.error(
+          logger.error(
             `Error processing medication ${medication.code}: ${JSON.stringify(error)}`,
           )
         }
@@ -329,7 +330,7 @@ export class RxNormService {
   ): Promise<FHIRMedication> {
     let rxTermInfo = await this.api.getAllRxTermInfo(rxcui)
     if (rxTermInfo === undefined || Object.entries(rxTermInfo).length === 0) {
-      console.error(
+      logger.error(
         `Error getting term info for ${rxcui}. Using fallback terms...`,
       )
       rxTermInfo = fallbackTerms ?? {}
