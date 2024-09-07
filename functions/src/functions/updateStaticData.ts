@@ -39,6 +39,7 @@ export async function _updateStaticData(
 export const updateStaticData =
   Flags.isEmulator ?
     validatedOnRequest(
+      'updateStaticData',
       updateStaticDataInputSchema,
       async (_, data, response) => {
         await _updateStaticData(getServiceFactory(), data)
@@ -46,9 +47,13 @@ export const updateStaticData =
         response.end()
       },
     )
-  : validatedOnCall(updateStaticDataInputSchema, async (request) => {
-      const factory = getServiceFactory()
-      factory.credential(request.auth).check(UserRole.admin)
-      await _updateStaticData(factory, request.data)
-      return 'Success'
-    })
+  : validatedOnCall(
+      'updateStaticData',
+      updateStaticDataInputSchema,
+      async (request) => {
+        const factory = getServiceFactory()
+        factory.credential(request.auth).check(UserRole.admin)
+        await _updateStaticData(factory, request.data)
+        return 'Success'
+      },
+    )

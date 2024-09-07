@@ -24,6 +24,10 @@ export function chunks<T>(array: T[], size: number): T[][] {
 
 // CompactMap
 
+export function compact<T>(array: Array<T | undefined>): T[] {
+  return array.flatMap((value) => (value !== undefined ? [value] : []))
+}
+
 export function compactMap<T, V>(
   array: T[],
   map: (arg0: T) => V | undefined,

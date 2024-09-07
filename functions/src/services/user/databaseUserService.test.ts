@@ -60,7 +60,6 @@ describe('DatabaseUserService', () => {
       expect(auth.displayName).to.equal(displayName)
       expect(auth.customClaims).to.deep.equal({
         type: UserType.admin,
-        organization: null,
       })
 
       const userSnapshot = await collectionsService.users.doc(userId).get()

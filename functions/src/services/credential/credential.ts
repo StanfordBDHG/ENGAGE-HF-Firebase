@@ -65,14 +65,20 @@ export class UserRole {
 }
 
 export class Credential {
-  // Properties
+  // Stored Properties
 
   private readonly authData: AuthData
+
+  // Computed Properties
+
+  get userId(): string {
+    return this.authData.uid
+  }
 
   // Constructor
 
   constructor(authData: AuthData | undefined) {
-    if (!authData)
+    if (authData?.uid === undefined)
       throw new https.HttpsError(
         'unauthenticated',
         'User is not authenticated.',
@@ -84,8 +90,19 @@ export class Credential {
 
   check(...roles: UserRole[]): UserRole {
     const role = roles.find((role) => this.checkSingle(role))
-    if (!role) throw this.permissionDeniedError()
-    return role
+    if (role !== undefined) return role
+    throw this.permissionDeniedError()
+  }
+
+  async checkAsync(
+    ...promises: Array<() => Promise<UserRole[]> | UserRole[]>
+  ): Promise<UserRole> {
+    for (const promise of promises) {
+      const roles = await promise()
+      const role = roles.find((role) => this.checkSingle(role))
+      if (role !== undefined) return role
+    }
+    throw this.permissionDeniedError()
   }
 
   permissionDeniedError(): https.HttpsError {

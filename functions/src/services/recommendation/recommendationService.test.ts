@@ -275,7 +275,6 @@ function getMedicationRequest(
         quantity: 2,
       })
     case 'valsartan 40mg':
-      console.log(DrugReference.valsartan40)
       return FHIRMedicationRequest.create({
         drugReference: DrugReference.valsartan40,
         frequencyPerDay: 1,

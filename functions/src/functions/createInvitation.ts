@@ -18,16 +18,15 @@ import { UserRole } from '../services/credential/credential.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
 export const createInvitation = validatedOnCall(
+  'createInvitation',
   createInvitationInputSchema,
   async (request): Promise<CreateInvitationOutput> => {
-    if (!request.auth?.uid)
-      throw new https.HttpsError('unauthenticated', 'User is not authenticated')
-
     const factory = getServiceFactory()
     const credential = factory.credential(request.auth)
+
     if (request.data.user.type === UserType.admin) {
       credential.check(UserRole.admin)
-    } else if (request.data.user.organization) {
+    } else if (request.data.user.organization !== undefined) {
       credential.check(
         UserRole.admin,
         UserRole.owner(request.data.user.organization),
@@ -43,7 +42,7 @@ export const createInvitation = validatedOnCall(
     for (let counter = 0; ; counter++) {
       const invitationCode =
         isPatient ? generateInvitationCode(8) : request.data.auth.email
-      if (!invitationCode)
+      if (invitationCode === undefined)
         throw new https.HttpsError(
           'invalid-argument',
           'Invalid invitation code',

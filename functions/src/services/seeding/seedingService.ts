@@ -9,6 +9,7 @@
 import fs from 'fs'
 import { CachingStrategy } from '@stanfordbdhg/engagehf-models'
 import { type CollectionReference } from 'firebase-admin/firestore'
+import { logger } from 'firebase-functions'
 import { z } from 'zod'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -45,7 +46,7 @@ export class SeedingService {
       try {
         return await retrieve()
       } catch (error) {
-        console.error('Could not retrieve cached data:', error)
+        logger.error('Could not retrieve cached data:', error)
         if (strategy === CachingStrategy.expectCache) throw error
       }
     }

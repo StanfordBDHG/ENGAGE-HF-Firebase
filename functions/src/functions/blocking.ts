@@ -7,7 +7,7 @@
 //
 
 import { UserType } from '@stanfordbdhg/engagehf-models'
-import { https } from 'firebase-functions'
+import { https, logger } from 'firebase-functions'
 import {
   beforeUserCreated,
   beforeUserSignedIn,
@@ -62,8 +62,10 @@ export const beforeUserCreatedFunction = beforeUserCreated(async (event) => {
 
 export const beforeUserSignedInFunction = beforeUserSignedIn(async (event) => {
   try {
-    await getServiceFactory().user().updateClaims(event.data.uid)
+    const userService = getServiceFactory().user()
+    await userService.updateClaims(event.data.uid)
+    logger.info(`beforeUserSignedIn finished successfully.`)
   } catch (error) {
-    console.error(`beforeUserSignedIn finished with error: ${String(error)}.`)
+    logger.error(`beforeUserSignedIn finished with error: ${String(error)}`)
   }
 })

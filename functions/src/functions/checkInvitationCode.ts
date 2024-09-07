@@ -15,14 +15,11 @@ import { validatedOnCall } from './helpers.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
 export const checkInvitationCode = validatedOnCall(
+  'checkInvitationCode',
   checkInvitationCodeInputSchema,
   async (request): Promise<void> => {
-    if (!request.auth?.uid) {
-      throw new https.HttpsError(
-        'unauthenticated',
-        'User is not properly authenticated.',
-      )
-    }
+    const factory = getServiceFactory()
+    const userId = factory.credential(request.auth).userId
 
     if (!request.data.invitationCode.match(/^[A-Z0-9]{6,12}$/))
       throw new https.HttpsError(
@@ -30,14 +27,12 @@ export const checkInvitationCode = validatedOnCall(
         'Invalid invitation code format.',
       )
 
-    const userId = request.auth.uid
     const { invitationCode } = request.data
 
     logger.debug(
       `User (${userId}) -> ENGAGE-HF, InvitationCode ${invitationCode}`,
     )
 
-    const factory = getServiceFactory()
     const userService = factory.user()
 
     try {
