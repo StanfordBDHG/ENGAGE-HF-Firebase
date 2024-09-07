@@ -32,8 +32,7 @@ describeWithEmulators('function: setupUser', (env) => {
     const authUser = await env.auth.createUser({})
     await expectError(
       async () => env.call(setupUser, {}, { uid: authUser.uid }),
-      (error) =>
-        expect(error).to.have.property('message', 'User is not authenticated'),
+      (error) => expect(error).to.have.property('code', 'permission-denied'),
     )
   })
 

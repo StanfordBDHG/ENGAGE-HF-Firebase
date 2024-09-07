@@ -16,8 +16,15 @@ export const setupUser = validatedOnCall(
   z.unknown(),
   async (request) => {
     const factory = getServiceFactory()
-    const userId = factory.credential(request.auth).userId
-    const invitationCode = z.string().parse(request.auth?.token.invitationCode)
+    const credential = factory.credential(request.auth)
+    const userId = credential.userId
+
+    let invitationCode: string
+    try {
+      invitationCode = z.string().parse(request.auth?.token.invitationCode)
+    } catch {
+      throw credential.permissionDeniedError()
+    }
 
     const userService = factory.user()
     const triggerService = factory.trigger()
