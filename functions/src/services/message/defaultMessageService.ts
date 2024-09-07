@@ -393,7 +393,7 @@ export class DefaultMessageService implements MessageService {
         )
           return
 
-        logger.error(
+        logger.debug(
           `DatabaseMessageService.sendNotification(user: ${userId}): Deleting token ${devices[index].content.notificationToken}`,
         )
 

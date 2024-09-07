@@ -267,14 +267,14 @@ export class TriggerService {
           bodyWeightObservations.map((observation) => observation.value),
         )
 
-        logger.error(
+        logger.debug(
           `TriggerService.userObservationWritten(${userId}, ${collection}): Found ${bodyWeightObservations.length} body weight observations with median ${bodyWeightMedian}`,
         )
 
         if (!bodyWeightMedian) return
         const mostRecentBodyWeight = bodyWeightObservations[0].value
 
-        logger.error(
+        logger.debug(
           `TriggerService.userObservationWritten(${userId}, ${collection}): Most recent body weight is ${mostRecentBodyWeight} compared to a median of ${bodyWeightMedian}`,
         )
         if (mostRecentBodyWeight - bodyWeightMedian >= 7) {

@@ -81,7 +81,7 @@ export class DatabaseUserService implements UserService {
         `Failed to update claims for user ${userId}: ${String(error)}`,
       )
       await this.auth.setCustomUserClaims(userId, {})
-      logger.info(
+      logger.debug(
         `Successfully reset claims for user ${userId} to empty object.`,
       )
       throw error
