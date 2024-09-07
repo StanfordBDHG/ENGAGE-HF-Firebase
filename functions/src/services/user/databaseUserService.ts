@@ -86,7 +86,9 @@ export class DatabaseUserService implements UserService {
         await this.auth.setCustomUserClaims(userId, {
           invitationCode: invitation.content.code,
         })
-        logger.info(`Successfully set claims for not-yet-enrolled user ${userId}.`)
+        logger.info(
+          `Successfully set claims for not-yet-enrolled user ${userId}.`,
+        )
       }
     } catch (error) {
       logger.error(
@@ -187,7 +189,9 @@ export class DatabaseUserService implements UserService {
       collections.users.doc(userId),
     )
     if (userId !== invitation.content.userId) {
-      logger.error(`User with id ${userId} is not connected to invitation with id ${invitation.id}.`)
+      logger.error(
+        `User with id ${userId} is not connected to invitation with id ${invitation.id}.`,
+      )
       throw new https.HttpsError(
         'permission-denied',
         'Invitation does not belong to the user.',
