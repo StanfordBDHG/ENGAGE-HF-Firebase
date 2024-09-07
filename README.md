@@ -830,8 +830,9 @@ To make this structure simpler to use, we provide different scripts as part of t
 |npm run lint|Lints both packages. Make sure to build before using this command. You may want to append `:fix` to fix existing issues automatically or `:strict` to make sure the command does not succeed with existing warnings or errors.|
 |npm run prepare|Combines cleaning, installing and building both packages.|
 |npm run test:ci|Tests the Firebase functions with emulators running and with test coverage collection active.|
-|npm run serve:seeded|
+|npm run serve:seeded|Starts up the relevant emulators for ENGAGE-HF and seeds them. Make sure to build the project first before executing this command.|
 
+For using the emulators for client applications, it is probably easiest to call `npm run prepare` whenever files could have changed (e.g. when changing branch or pulling new changes) and then calling `npm run serve:seeded` to start up the emulators in a seeded state. Both of these commands are performed in the root directory of this repository.
 
 # Resources
 
