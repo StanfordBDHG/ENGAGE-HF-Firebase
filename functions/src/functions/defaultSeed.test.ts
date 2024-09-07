@@ -42,9 +42,9 @@ describeWithEmulators('function: defaultSeed', (env) => {
     const users = await env.collections.users.get()
     expect(users.docs, 'user count').to.have.length.greaterThanOrEqual(8)
 
-    const user = users.docs
-      .filter((userDoc) => userDoc.data().type === UserType.patient)
-      .at(0)
+    const user = users.docs.find(
+      (userDoc) => userDoc.data().type === UserType.patient,
+    )
     expect(user).to.exist
 
     if (user === undefined) expect.fail('user is undefined')

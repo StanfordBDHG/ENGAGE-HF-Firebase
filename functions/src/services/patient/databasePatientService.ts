@@ -14,11 +14,14 @@ import {
   type FHIRMedicationRequest,
   type FHIRObservation,
   type FHIRQuestionnaireResponse,
+  type Observation,
+  QuantityUnit,
   type SymptomScore,
   type UserMedicationRecommendation,
   UserMedicationRecommendationType,
 } from '@stanfordbdhg/engagehf-models'
 import { type PatientService } from './patientService.js'
+import { compactMap } from '../../extensions/array.js'
 import { UserObservationCollection } from '../database/collections.js'
 import {
   type Document,
@@ -163,42 +166,63 @@ export class DatabasePatientService implements PatientService {
   async getBloodPressureObservations(
     userId: string,
     cutoffDate: Date,
-  ): Promise<Array<Document<FHIRObservation>>> {
-    return this.databaseService.getQuery<FHIRObservation>((collections) =>
-      collections
-        .userObservations(userId, UserObservationCollection.bloodPressure)
-        .where('effectiveDateTime', '>', cutoffDate.toISOString())
-        .orderBy('effectiveDateTime', 'desc'),
+  ): Promise<[Observation[], Observation[]]> {
+    const observations = await this.databaseService.getQuery<FHIRObservation>(
+      (collections) =>
+        collections
+          .userObservations(userId, UserObservationCollection.bloodPressure)
+          .where('effectiveDateTime', '>', cutoffDate.toISOString())
+          .orderBy('effectiveDateTime', 'desc'),
     )
+    return [
+      compactMap(
+        observations,
+        (observation) => observation.content.systolicBloodPressure,
+      ),
+      compactMap(
+        observations,
+        (observation) => observation.content.diastolicBloodPressure,
+      ),
+    ]
   }
 
   async getBodyWeightObservations(
     userId: string,
+    unit: QuantityUnit,
     cutoffDate: Date,
-  ): Promise<Array<Document<FHIRObservation>>> {
-    return this.databaseService.getQuery<FHIRObservation>((collections) =>
-      collections
-        .userObservations(userId, UserObservationCollection.bodyWeight)
-        .where('effectiveDateTime', '>', cutoffDate.toISOString())
-        .orderBy('effectiveDateTime', 'desc'),
+  ): Promise<Observation[]> {
+    const observations = await this.databaseService.getQuery<FHIRObservation>(
+      (collections) =>
+        collections
+          .userObservations(userId, UserObservationCollection.bodyWeight)
+          .where('effectiveDateTime', '>', cutoffDate.toISOString())
+          .orderBy('effectiveDateTime', 'desc'),
+    )
+    return compactMap(observations, (observation) =>
+      observation.content.bodyWeight(unit),
     )
   }
 
   async getHeartRateObservations(
     userId: string,
     cutoffDate: Date,
-  ): Promise<Array<Document<FHIRObservation>>> {
-    return this.databaseService.getQuery<FHIRObservation>((collections) =>
-      collections
-        .userObservations(userId, UserObservationCollection.heartRate)
-        .where('effectiveDateTime', '>', cutoffDate.toISOString())
-        .orderBy('effectiveDateTime', 'desc'),
+  ): Promise<Observation[]> {
+    const observations = await this.databaseService.getQuery<FHIRObservation>(
+      (collections) =>
+        collections
+          .userObservations(userId, UserObservationCollection.heartRate)
+          .where('effectiveDateTime', '>', cutoffDate.toISOString())
+          .orderBy('effectiveDateTime', 'desc'),
+    )
+    return compactMap(
+      observations,
+      (observation) => observation.content.heartRate,
     )
   }
 
   async getMostRecentCreatinineObservation(
     userId: string,
-  ): Promise<Document<FHIRObservation> | undefined> {
+  ): Promise<Observation | undefined> {
     const result = await this.databaseService.getQuery<FHIRObservation>(
       (collections) =>
         collections
@@ -206,12 +230,12 @@ export class DatabasePatientService implements PatientService {
           .orderBy('effectiveDateTime', 'desc')
           .limit(1),
     )
-    return result.at(0)
+    return result.at(0)?.content.creatinine
   }
 
   async getMostRecentDryWeightObservation(
     userId: string,
-  ): Promise<Document<FHIRObservation> | undefined> {
+  ): Promise<Observation | undefined> {
     const result = await this.databaseService.getQuery<FHIRObservation>(
       (collections) =>
         collections
@@ -219,12 +243,12 @@ export class DatabasePatientService implements PatientService {
           .orderBy('effectiveDateTime', 'desc')
           .limit(1),
     )
-    return result.at(0)
+    return result.at(0)?.content.bodyWeight(QuantityUnit.lbs)
   }
 
   async getMostRecentEstimatedGlomerularFiltrationRateObservation(
     userId: string,
-  ): Promise<Document<FHIRObservation> | undefined> {
+  ): Promise<Observation | undefined> {
     const result = await this.databaseService.getQuery<FHIRObservation>(
       (collections) =>
         collections
@@ -232,12 +256,12 @@ export class DatabasePatientService implements PatientService {
           .orderBy('effectiveDateTime', 'desc')
           .limit(1),
     )
-    return result.at(0)
+    return result.at(0)?.content.estimatedGlomerularFiltrationRate
   }
 
   async getMostRecentPotassiumObservation(
     userId: string,
-  ): Promise<Document<FHIRObservation> | undefined> {
+  ): Promise<Observation | undefined> {
     const result = await this.databaseService.getQuery<FHIRObservation>(
       (collections) =>
         collections
@@ -245,7 +269,7 @@ export class DatabasePatientService implements PatientService {
           .orderBy('effectiveDateTime', 'desc')
           .limit(1),
     )
-    return result.at(0)
+    return result.at(0)?.content.potassium
   }
 
   // Methods - Questionnaire Responses
