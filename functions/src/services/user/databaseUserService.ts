@@ -73,10 +73,7 @@ export class DatabaseUserService implements UserService {
         logger.info(
           `Will set claims for user ${userId}: ${JSON.stringify(claims)}`,
         )
-        await this.auth.setCustomUserClaims(userId, {
-          type: user.content.type,
-          organization: user.content.organization ?? null,
-        })
+        await this.auth.setCustomUserClaims(userId, claims)
         logger.info(`Successfully set claims for user ${userId}.`)
       } else {
         const invitation = await this.getInvitationByUserId(userId)
