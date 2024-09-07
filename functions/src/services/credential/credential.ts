@@ -78,7 +78,7 @@ export class Credential {
   // Constructor
 
   constructor(authData: AuthData | undefined) {
-    if (!authData)
+    if (authData?.uid === undefined)
       throw new https.HttpsError(
         'unauthenticated',
         'User is not authenticated.',

@@ -31,7 +31,10 @@ describeWithEmulators('function: registerDevice', (env) => {
           // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
           {} as any, // eslint-disable-line @typescript-eslint/no-explicit-any
         ),
-      (error) => expect(error).to.have.property('code', 'unauthenticated'),
+      (error) => {
+        console.error(error)
+        expect(error).to.have.property('code', 'unauthenticated')
+      },
     )
   })
 
