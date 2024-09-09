@@ -819,7 +819,7 @@ To perform certain queries, ENGAGE-HF requires indexes on different properties. 
 |-|-|-|-|
 |Composite|collection:users|organization:asc,type:asc,__name__:asc|Querying users on the Web dashboard|
 |Composite|collection:invitations|user.organization:asc,user.type:asc,__name__:asc|Querying invitations on the Web dashboard|
-|Single|group:appointments|organization:asc,type:asc,__name__:asc|Querying appointments across all users (for appointment messages)|
+|Single|group:appointments|start:asc|Querying appointments across all users (for appointment messages)|
 |Single|group:devices|notificationToken:asc|Querying devices across all users (for deleting existing notification tokens assigned to other users)|
 
 # Usage
