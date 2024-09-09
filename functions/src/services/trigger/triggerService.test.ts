@@ -26,30 +26,16 @@ import { UserObservationCollection } from '../database/collections.js'
 describeWithEmulators('TriggerService', (env) => {
   describe('every15Minutes', () => {
     it('should create a message for an upcoming appointment', async () => {
-      const patientId = await env.createUser({
-        type: UserType.patient,
-        organization: 'stanford',
-      })
-
       const clinicianId = await env.createUser({
         type: UserType.clinician,
         organization: 'stanford',
       })
 
-      const patient = new User({
+      const patientId = await env.createUser({
         type: UserType.patient,
         organization: 'stanford',
-        dateOfEnrollment: advanceDateByDays(new Date(), -6),
-        invitationCode: '12345678',
         clinician: clinicianId,
-        receivesAppointmentReminders: true,
-        receivesMedicationUpdates: true,
-        receivesQuestionnaireReminders: true,
-        receivesRecommendationUpdates: true,
-        receivesVitalsReminders: true,
-        receivesWeightAlerts: true,
       })
-      await env.collections.users.doc(patientId).set(patient)
 
       const appointment = FHIRAppointment.create({
         userId: patientId,
@@ -84,30 +70,16 @@ describeWithEmulators('TriggerService', (env) => {
     })
 
     it('should create a complete a message for a past appointment', async () => {
-      const patientId = await env.createUser({
-        type: UserType.patient,
-        organization: 'stanford',
-      })
-
       const clinicianId = await env.createUser({
         type: UserType.clinician,
         organization: 'stanford',
       })
 
-      const patient = new User({
+      const patientId = await env.createUser({
         type: UserType.patient,
         organization: 'stanford',
-        dateOfEnrollment: advanceDateByDays(new Date(), -6),
-        invitationCode: '12345678',
         clinician: clinicianId,
-        receivesAppointmentReminders: true,
-        receivesMedicationUpdates: true,
-        receivesQuestionnaireReminders: true,
-        receivesRecommendationUpdates: true,
-        receivesVitalsReminders: true,
-        receivesWeightAlerts: true,
       })
-      await env.collections.users.doc(patientId).set(patient)
 
       const appointment = FHIRAppointment.create({
         userId: patientId,
@@ -209,6 +181,80 @@ describeWithEmulators('TriggerService', (env) => {
       expect(questionnaireMessage).to.exist
       expect(questionnaireMessage?.completionDate).to.be.undefined
     })
+
+    it('create a message about inactivity', async () => {
+      const clinicianId = await env.createUser({
+        type: UserType.clinician,
+        organization: 'stanford',
+      })
+
+      const patientId = await env.createUser({
+        type: UserType.patient,
+        organization: 'stanford',
+        clinician: clinicianId,
+        dateOfEnrollment: advanceDateByDays(new Date(), -2),
+        lastActiveDate: advanceDateByDays(new Date(), -8),
+      })
+
+      await env.factory.trigger().everyMorning()
+
+      const patientMessages = await env.collections
+        .userMessages(patientId)
+        .get()
+      expect(patientMessages.docs).to.have.length(2)
+      const patientMessagesData = patientMessages.docs.map((doc) => doc.data())
+      const vitalsMessage = patientMessagesData
+        .filter((message) => message.type === UserMessageType.vitals)
+        .at(0)
+      expect(vitalsMessage).to.exist
+      expect(vitalsMessage?.reference).to.be.undefined
+      expect(vitalsMessage?.completionDate).to.be.undefined
+      const inactiveMessage = patientMessagesData
+        .filter((message) => message.type === UserMessageType.vitals)
+        .at(0)
+      expect(inactiveMessage).to.exist
+      expect(inactiveMessage?.reference).to.be.undefined
+      expect(inactiveMessage?.completionDate).to.be.undefined
+
+      const clinicianMessages = await env.collections
+        .userMessages(clinicianId)
+        .get()
+      expect(clinicianMessages.docs).to.have.length(1)
+      const clinicianMessage = clinicianMessages.docs.at(0)?.data()
+      expect(clinicianMessage?.type).to.equal(UserMessageType.inactive)
+      expect(clinicianMessage?.reference).to.equal(`users/${patientId}`)
+      expect(clinicianMessage?.completionDate).to.be.undefined
+    })
+
+    it('create no message about inactivity', async () => {
+      const clinicianId = await env.createUser({
+        type: UserType.clinician,
+        organization: 'stanford',
+      })
+
+      const patientId = await env.createUser({
+        type: UserType.patient,
+        organization: 'stanford',
+        clinician: clinicianId,
+        dateOfEnrollment: advanceDateByDays(new Date(), -2),
+        lastActiveDate: advanceDateByDays(new Date(), -1),
+      })
+
+      await env.factory.trigger().everyMorning()
+
+      const patientMessages = await env.collections
+        .userMessages(patientId)
+        .get()
+      expect(patientMessages.docs).to.have.length(1)
+      const patientMessage = patientMessages.docs.at(0)?.data()
+      expect(patientMessage?.type).to.equal(UserMessageType.vitals)
+      expect(patientMessage?.completionDate).to.be.undefined
+
+      const clinicianMessages = await env.collections
+        .userMessages(clinicianId)
+        .get()
+      expect(clinicianMessages.docs).to.have.length(0)
+    })
   })
 
   describe('userObservationWritten', () => {
@@ -216,30 +262,16 @@ describeWithEmulators('TriggerService', (env) => {
       it('should create a weight gain message for a user', async () => {
         const triggerService = env.factory.trigger()
 
-        const patientId = await env.createUser({
-          type: UserType.patient,
-          organization: 'stanford',
-        })
-
         const clinicianId = await env.createUser({
           type: UserType.clinician,
           organization: 'stanford',
         })
 
-        const patient = new User({
+        const patientId = await env.createUser({
           type: UserType.patient,
           organization: 'stanford',
-          dateOfEnrollment: advanceDateByDays(new Date(), -6),
-          invitationCode: '12345678',
           clinician: clinicianId,
-          receivesAppointmentReminders: true,
-          receivesMedicationUpdates: true,
-          receivesQuestionnaireReminders: true,
-          receivesRecommendationUpdates: true,
-          receivesVitalsReminders: true,
-          receivesWeightAlerts: true,
         })
-        await env.collections.users.doc(patientId).set(patient)
 
         const observations = Array.from({ length: 10 }, (_, i) =>
           FHIRObservation.createSimple({

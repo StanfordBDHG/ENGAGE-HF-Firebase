@@ -26,6 +26,7 @@ export enum UserMessageType {
   vitals = 'Vitals',
   symptomQuestionnaire = 'SymptomQuestionnaire',
   preAppointment = 'PreAppointment',
+  inactive = 'Inactive',
 }
 
 export const userMessageConverter = new Lazy(
@@ -66,6 +67,25 @@ export const userMessageConverter = new Lazy(
 
 export class UserMessage {
   // Static Functions
+
+  static createInactive(input: {
+    creationDate?: Date
+    reference?: string
+  }): UserMessage {
+    return new UserMessage({
+      creationDate: input.creationDate ?? new Date(),
+      title: new LocalizedText({
+        en: 'Inactive',
+      }),
+      description: new LocalizedText({
+        en: 'You have been inactive for 7 days. Please log in to continue your care.',
+      }),
+      action: undefined,
+      type: UserMessageType.inactive,
+      isDismissible: false,
+      reference: input.reference,
+    })
+  }
 
   static createMedicationChange(input: {
     creationDate?: Date

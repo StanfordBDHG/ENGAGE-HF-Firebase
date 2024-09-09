@@ -309,13 +309,6 @@ export class DefaultMessageService implements MessageService {
           `DefaultMessageService.handleOldMessages(${newMessage.type}): Contains newish message? ${containsNewishMessage ? 'yes' : 'no'}`,
         )
         return !containsNewishMessage
-      case UserMessageType.welcome:
-      case UserMessageType.medicationUptitration:
-        logger.debug(
-          `DefaultMessageService.handleOldMessages(${newMessage.type}): Only creating new message, if there are no old messages (count: ${oldMessages.length})`,
-        )
-        // Keep only the most recent message
-        return oldMessages.length === 0
       case UserMessageType.symptomQuestionnaire:
       case UserMessageType.vitals:
         // Mark old messages as completed and create new ones instead
@@ -332,8 +325,11 @@ export class DefaultMessageService implements MessageService {
           )
         }
         return true
+      case UserMessageType.welcome:
+      case UserMessageType.medicationUptitration:
       case UserMessageType.medicationChange:
       case UserMessageType.preAppointment:
+      case UserMessageType.inactive:
         logger.debug(
           `DefaultMessageService.handleOldMessages(${newMessage.type}): Only creating new message, if there are no old messages with the same reference (count: ${oldMessages.length})`,
         )

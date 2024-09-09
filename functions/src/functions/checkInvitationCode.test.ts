@@ -50,6 +50,7 @@ describeWithEmulators('function: checkInvitationCode', (env) => {
         type: UserType.patient,
         organization: 'stanford',
         receivesAppointmentReminders: true,
+        receivesInactivityReminders: true,
         receivesMedicationUpdates: true,
         receivesQuestionnaireReminders: true,
         receivesRecommendationUpdates: true,

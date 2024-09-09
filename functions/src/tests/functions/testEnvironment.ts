@@ -129,9 +129,12 @@ export class EmulatorTestEnvironment {
     options: {
       type: UserType
       organization?: string
+      clinician?: string
       dateOfEnrollment?: Date
+      lastActiveDate?: Date
       invitationCode?: string
       receivesAppointmentReminders?: boolean
+      receivesInactivityReminders?: boolean
       receivesMedicationUpdates?: boolean
       receivesQuestionnaireReminders?: boolean
       receivesRecommendationUpdates?: boolean
@@ -145,9 +148,13 @@ export class EmulatorTestEnvironment {
         type: options.type,
         organization: options.organization,
         dateOfEnrollment: options.dateOfEnrollment ?? new Date(),
+        clinician: options.clinician,
+        lastActiveDate: options.lastActiveDate ?? new Date(),
         invitationCode: options.invitationCode ?? 'TESTCODE',
         receivesAppointmentReminders:
           options.receivesAppointmentReminders ?? true,
+        receivesInactivityReminders:
+          options.receivesInactivityReminders ?? true,
         receivesMedicationUpdates: options.receivesMedicationUpdates ?? true,
         receivesQuestionnaireReminders:
           options.receivesQuestionnaireReminders ?? true,

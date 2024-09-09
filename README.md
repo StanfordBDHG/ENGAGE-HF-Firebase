@@ -252,6 +252,7 @@ In this section, we describe all user-related data to be stored. The security ru
 |invitationCode|string|-|The invitationCode to be used when logging in to the app for the first time.|
 |language|optional string|e.g. "en"|Following IETF BCP-47 / [FHIR ValueSet languages](https://hl7.org/fhir/R4B/valueset-languages.html).|
 |receivesAppointmentReminders|optional boolean|true, false|Decides whether to send out appointment reminders one day before each appointment.|
+|receivesInactivityReminders|optional boolean|true, false|Decides whether to send updates about inactivity.|
 |receivesMedicationUpdates|optional boolean|true, false|Decides whether to send updates about current medication changes.|
 |receivesQuestionnaireReminders|optional boolean|true, false|Decides whether to send reminders about filling out their questionnaire every 14 days.|
 |receivesRecommendationUpdates|optional boolean|true, false|Decides whether to send updates about recommended medication changes.|

@@ -106,9 +106,10 @@ export class TriggerService {
   async everyMorning() {
     const now = new Date()
     const messageService = this.factory.message()
-    const users = await this.factory.user().getAllPatients()
+    const userService = this.factory.user()
+    const patients = await userService.getAllPatients()
 
-    logger.debug(`everyMorning: Found ${users.length} patients`)
+    logger.debug(`everyMorning: Found ${patients.length} patients`)
 
     const symptomReminderMessage = UserMessage.createSymptomQuestionnaire({
       questionnaireReference: QuestionnaireReference.enUS,
@@ -116,7 +117,7 @@ export class TriggerService {
     const vitalsMessage = UserMessage.createVitals()
 
     await Promise.all(
-      users.map(async (user) => {
+      patients.map(async (user) => {
         try {
           await messageService.addMessage(user.id, vitalsMessage, {
             notify: true,
@@ -158,6 +159,29 @@ export class TriggerService {
         } catch (error) {
           logger.error(
             `everyMorning(user: ${user.id}): Failed due to ${String(error)}`,
+          )
+        }
+      }),
+    )
+
+    const inactivePatients = patients.filter(
+      (patient) => advanceDateByDays(patient.content.lastActiveDate, 7) < now,
+    )
+    await Promise.all(
+      inactivePatients.map(async (user) => {
+        await messageService.addMessage(
+          user.id,
+          UserMessage.createInactive({}),
+          { notify: true },
+        )
+
+        if (user.content.clinician !== undefined) {
+          await messageService.addMessage(
+            user.content.clinician,
+            UserMessage.createInactive({
+              reference: `users/${user.id}`,
+            }),
+            { notify: true },
           )
         }
       }),
@@ -261,6 +285,15 @@ export class TriggerService {
     collection: UserObservationCollection,
   ): Promise<void> {
     try {
+      const userService = this.factory.user()
+      await userService.updateLastActiveDate(userId)
+    } catch (error) {
+      logger.error(
+        `TriggerService.userObservationWritten(${userId}, ${collection}): Updating lastActiveDate failed due to ${String(error)}`,
+      )
+    }
+
+    try {
       await this.updateRecommendationsForUser(userId)
     } catch (error) {
       logger.error(
@@ -309,7 +342,7 @@ export class TriggerService {
             await messageService.addMessage(
               clinicianId,
               UserMessage.createWeightGain({
-                reference: `/users/${userId}`,
+                reference: `users/${userId}`,
               }),
               { notify: true },
             )

@@ -138,6 +138,9 @@ export class DebugDataService extends SeedingService {
 
   async seedUserMessages(userId: string, date: Date) {
     const values = [
+      UserMessage.createInactive({
+        creationDate: date,
+      }),
       UserMessage.createMedicationChange({
         creationDate: date,
         medicationName: 'Losartan Potassium',

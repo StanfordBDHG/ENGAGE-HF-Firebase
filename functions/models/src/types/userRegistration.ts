@@ -22,6 +22,7 @@ export const userRegistrationInputConverter = new Lazy(
         dateOfBirth: optionalish(dateConverter.schema),
         clinician: optionalish(z.string()),
         receivesAppointmentReminders: optionalishDefault(z.boolean(), true),
+        receivesInactivityReminders: optionalishDefault(z.boolean(), true),
         receivesMedicationUpdates: optionalishDefault(z.boolean(), true),
         receivesQuestionnaireReminders: optionalishDefault(z.boolean(), true),
         receivesRecommendationUpdates: optionalishDefault(z.boolean(), true),
@@ -37,6 +38,7 @@ export const userRegistrationInputConverter = new Lazy(
           object.dateOfBirth ? dateConverter.encode(object.dateOfBirth) : null,
         clinician: object.clinician ?? null,
         receivesAppointmentReminders: object.receivesAppointmentReminders,
+        receivesInactivityReminders: object.receivesInactivityReminders,
         receivesMedicationUpdates: object.receivesMedicationUpdates,
         receivesQuestionnaireReminders: object.receivesQuestionnaireReminders,
         receivesRecommendationUpdates: object.receivesRecommendationUpdates,
@@ -68,6 +70,7 @@ export class UserRegistration {
   readonly clinician?: string
 
   readonly receivesAppointmentReminders: boolean
+  readonly receivesInactivityReminders: boolean
   readonly receivesMedicationUpdates: boolean
   readonly receivesQuestionnaireReminders: boolean
   readonly receivesRecommendationUpdates: boolean
@@ -85,6 +88,7 @@ export class UserRegistration {
     dateOfBirth?: Date
     clinician?: string
     receivesAppointmentReminders: boolean
+    receivesInactivityReminders: boolean
     receivesMedicationUpdates: boolean
     receivesQuestionnaireReminders: boolean
     receivesRecommendationUpdates: boolean
@@ -98,6 +102,7 @@ export class UserRegistration {
     this.dateOfBirth = input.dateOfBirth
     this.clinician = input.clinician
     this.receivesAppointmentReminders = input.receivesAppointmentReminders
+    this.receivesInactivityReminders = input.receivesInactivityReminders
     this.receivesMedicationUpdates = input.receivesMedicationUpdates
     this.receivesQuestionnaireReminders = input.receivesQuestionnaireReminders
     this.receivesRecommendationUpdates = input.receivesRecommendationUpdates
