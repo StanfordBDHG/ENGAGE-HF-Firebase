@@ -10,6 +10,7 @@ import {
   advanceDateByDays,
   FHIRAppointment,
   FHIRAppointmentStatus,
+  User,
   UserMessage,
   UserMessageType,
   UserType,
@@ -20,65 +21,130 @@ import { describeWithEmulators } from '../../tests/functions/testEnvironment.js'
 describeWithEmulators('TriggerService', (env) => {
   describe('every15Minutes', () => {
     it('should create a message for an upcoming appointment', async () => {
-      const userId = await env.createUser({
+      const patientId = await env.createUser({
         type: UserType.patient,
         organization: 'stanford',
       })
 
+      const clinicianId = await env.createUser({
+        type: UserType.clinician,
+        organization: 'stanford',
+      })
+
+      const patient = new User({
+        type: UserType.patient,
+        organization: 'stanford',
+        dateOfEnrollment: advanceDateByDays(new Date(), -6),
+        invitationCode: '12345678',
+        clinician: clinicianId,
+        receivesAppointmentReminders: true,
+        receivesMedicationUpdates: true,
+        receivesQuestionnaireReminders: true,
+        receivesRecommendationUpdates: true,
+        receivesVitalsReminders: true,
+        receivesWeightAlerts: true,
+      })
+      await env.collections.users.doc(patientId).set(patient)
+
       const appointment = FHIRAppointment.create({
-        userId,
+        userId: patientId,
         status: FHIRAppointmentStatus.proposed,
         created: advanceDateByDays(new Date(), -3),
         start: advanceDateByDays(new Date(), 1.01),
         durationInMinutes: 60,
       })
 
-      const appointmentRef = env.collections.userAppointments(userId).doc()
+      const appointmentRef = env.collections.userAppointments(patientId).doc()
       await appointmentRef.set(appointment)
 
       await env.factory.trigger().every15Minutes()
 
-      const messages = await env.collections.userMessages(userId).get()
-      expect(messages.docs).to.have.length(1)
-      const message = messages.docs.at(0)?.data()
+      const patientMessages = await env.collections
+        .userMessages(patientId)
+        .get()
+      expect(patientMessages.docs).to.have.length(1)
+      const patientMessage = patientMessages.docs.at(0)?.data()
+      expect(patientMessage?.type).to.equal(UserMessageType.preAppointment)
+      expect(patientMessage?.reference).to.equal(appointmentRef.path)
+      expect(patientMessage?.completionDate).to.be.undefined
 
-      expect(message?.type).to.equal(UserMessageType.preAppointment)
-      expect(message?.reference).to.equal(appointmentRef.path)
-      expect(message?.completionDate).to.be.undefined
+      const clinicianMessages = await env.collections
+        .userMessages(clinicianId)
+        .get()
+      expect(clinicianMessages.docs).to.have.length(1)
+      const clinicianMessage = clinicianMessages.docs.at(0)?.data()
+      expect(clinicianMessage?.type).to.equal(UserMessageType.preAppointment)
+      expect(clinicianMessage?.reference).to.equal(appointmentRef.path)
+      expect(clinicianMessage?.completionDate).to.be.undefined
     })
 
     it('should create a complete a message for a past appointment', async () => {
-      const userId = await env.createUser({
+      const patientId = await env.createUser({
         type: UserType.patient,
         organization: 'stanford',
       })
 
+      const clinicianId = await env.createUser({
+        type: UserType.clinician,
+        organization: 'stanford',
+      })
+
+      const patient = new User({
+        type: UserType.patient,
+        organization: 'stanford',
+        dateOfEnrollment: advanceDateByDays(new Date(), -6),
+        invitationCode: '12345678',
+        clinician: clinicianId,
+        receivesAppointmentReminders: true,
+        receivesMedicationUpdates: true,
+        receivesQuestionnaireReminders: true,
+        receivesRecommendationUpdates: true,
+        receivesVitalsReminders: true,
+        receivesWeightAlerts: true,
+      })
+      await env.collections.users.doc(patientId).set(patient)
+
       const appointment = FHIRAppointment.create({
-        userId,
+        userId: patientId,
         status: FHIRAppointmentStatus.proposed,
         created: advanceDateByDays(new Date(), -3),
         start: advanceDateByDays(new Date(), -1),
         durationInMinutes: 60,
       })
 
-      const appointmentRef = env.collections.userAppointments(userId).doc()
+      const appointmentRef = env.collections.userAppointments(patientId).doc()
       await appointmentRef.set(appointment)
 
       const message = UserMessage.createPreAppointment({
         reference: appointmentRef.path,
       })
-      const messageRef = env.collections.userMessages(userId).doc()
-      await messageRef.set(message)
+      const patientMessageRef = env.collections.userMessages(patientId).doc()
+      await patientMessageRef.set(message)
+
+      const clinicianMessageRef = env.collections
+        .userMessages(clinicianId)
+        .doc()
+      await clinicianMessageRef.set(message)
 
       await env.factory.trigger().every15Minutes()
 
-      const messages = await env.collections.userMessages(userId).get()
-      expect(messages.docs).to.have.length(1)
+      const patientMessages = await env.collections
+        .userMessages(patientId)
+        .get()
+      expect(patientMessages.docs).to.have.length(1)
+      const patientMessage = patientMessages.docs.at(0)?.data()
+      expect(patientMessage?.type).to.equal(UserMessageType.preAppointment)
+      expect(patientMessage?.reference).to.equal(appointmentRef.path)
+      expect(patientMessage?.completionDate).to.exist
 
-      const actualMessage = messages.docs.at(0)?.data()
-      expect(actualMessage?.type).to.equal(UserMessageType.preAppointment)
-      expect(actualMessage?.reference).to.equal(appointmentRef.path)
-      expect(actualMessage?.completionDate).to.exist
+      const clinicianMessages = await env.collections
+        .userMessages(patientId)
+        .get()
+      expect(clinicianMessages.docs).to.have.length(1)
+      const clinicianMessage = clinicianMessages.docs.at(0)?.data()
+      expect(clinicianMessage?.type).to.equal(UserMessageType.preAppointment)
+      expect(clinicianMessage?.reference).to.equal(appointmentRef.path)
+      expect(clinicianMessage?.completionDate).to.exist
     })
   })
 

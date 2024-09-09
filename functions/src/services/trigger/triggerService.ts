@@ -44,6 +44,7 @@ export class TriggerService {
     const tomorrow = advanceDateByDays(now, 1)
     const yesterday = advanceDateByDays(now, -1)
     const patientService = this.factory.patient()
+    const userService = this.factory.user()
     const messageService = this.factory.message()
 
     const upcomingAppointments = await patientService.getEveryAppoinment(
@@ -56,15 +57,30 @@ export class TriggerService {
     )
 
     await Promise.all(
-      upcomingAppointments.map(async (appointment) =>
-        messageService.addMessage(
-          appointment.path.split('/')[1],
+      upcomingAppointments.map(async (appointment) => {
+        const userId = appointment.path.split('/')[1]
+        await messageService.addMessage(
+          userId,
           UserMessage.createPreAppointment({
             reference: appointment.path,
           }),
           { notify: true },
-        ),
-      ),
+        )
+        const user = await userService.getUser(userId)
+        const clinicianId = user?.content.clinician
+        logger.debug(
+          `TriggerService.every15Minutes: About to add clinician message for clinician ${clinicianId} and appointment ${appointment.path}.`,
+        )
+        if (clinicianId !== undefined) {
+          await messageService.addMessage(
+            clinicianId,
+            UserMessage.createPreAppointment({
+              reference: appointment.path,
+            }),
+            { notify: true },
+          )
+        }
+      }),
     )
 
     const pastAppointments = await patientService.getEveryAppoinment(
