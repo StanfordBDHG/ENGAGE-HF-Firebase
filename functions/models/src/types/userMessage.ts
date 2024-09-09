@@ -111,6 +111,7 @@ export class UserMessage {
   static createMedicationUptitration(
     input: {
       creationDate?: Date
+      reference?: string
     } = {},
   ): UserMessage {
     return new UserMessage({
@@ -121,6 +122,7 @@ export class UserMessage {
       description: new LocalizedText({
         en: 'You may be eligible for med changes that may help your heart. Your care team will be sent this information. You can review med information on the Education Page.',
       }),
+      reference: input.reference,
       action: 'medications',
       type: UserMessageType.medicationUptitration,
       isDismissible: true,

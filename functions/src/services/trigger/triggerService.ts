@@ -637,6 +637,18 @@ export class TriggerService {
     const message = UserMessage.createMedicationUptitration()
     const messageService = this.factory.message()
     await messageService.addMessage(input.userId, message, { notify: true })
+
+    const user = await this.factory.user().getUser(input.userId)
+    const clinicianId = user?.content.clinician
+    if (clinicianId !== undefined) {
+      await messageService.addMessage(
+        clinicianId,
+        UserMessage.createMedicationUptitration({
+          reference: `users/${input.userId}`,
+        }),
+        { notify: true },
+      )
+    }
     return true
   }
 }
