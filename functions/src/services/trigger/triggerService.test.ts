@@ -14,7 +14,6 @@ import {
   FHIRObservation,
   LoincCode,
   QuantityUnit,
-  User,
   UserMessage,
   UserMessageType,
   UserType,
@@ -284,15 +283,11 @@ describeWithEmulators('TriggerService', (env) => {
         )
 
         await Promise.all(
-          observations.map(
-            async (observation) =>
-              await env.collections
-                .userObservations(
-                  patientId,
-                  UserObservationCollection.bodyWeight,
-                )
-                .doc()
-                .set(observation),
+          observations.map(async (observation) =>
+            env.collections
+              .userObservations(patientId, UserObservationCollection.bodyWeight)
+              .doc()
+              .set(observation),
           ),
         )
         await triggerService.userObservationWritten(
