@@ -294,11 +294,26 @@ export class TriggerService {
           `TriggerService.userObservationWritten(${userId}, ${collection}): Most recent body weight is ${mostRecentBodyWeight} compared to a median of ${bodyWeightMedian}`,
         )
         if (mostRecentBodyWeight - bodyWeightMedian >= 7) {
-          await this.factory
-            .message()
-            .addMessage(userId, UserMessage.createWeightGain(), {
-              notify: true,
-            })
+          const messageService = this.factory.message()
+          await messageService.addMessage(
+            userId,
+            UserMessage.createWeightGain(),
+            { notify: true },
+          )
+
+          const userService = this.factory.user()
+          const user = await userService.getUser(userId)
+          const clinicianId = user?.content.clinician
+
+          if (clinicianId !== undefined) {
+            await messageService.addMessage(
+              clinicianId,
+              UserMessage.createWeightGain({
+                reference: `/users/${userId}`,
+              }),
+              { notify: true },
+            )
+          }
         }
       } catch (error) {
         logger.error(

@@ -141,7 +141,13 @@ export class DefaultMessageService implements MessageService {
             .userMessages(userId)
             .where('completionDate', '==', null)
             .get()
-        ).docs.filter((doc) => doc.data().type === message.type)
+        ).docs.filter((doc) => {
+          const docData = doc.data()
+          return (
+            docData.type === message.type &&
+            docData.reference === message.reference
+          )
+        })
 
         logger.debug(
           `DatabaseMessageService.addMessage(user: ${userId}): Found ${existingMessages.length} existing messages`,
@@ -294,13 +300,13 @@ export class DefaultMessageService implements MessageService {
             )
           } else {
             logger.debug(
-              `DefaultMessageService.handleOldMessages(weightGain): Contains newish message at: ${oldMessage.ref.path}`,
+              `DefaultMessageService.handleOldMessages(${newMessage.type}): Contains newish message at: ${oldMessage.ref.path}`,
             )
             containsNewishMessage = true
           }
         }
         logger.debug(
-          `DefaultMessageService.handleOldMessages(weightGain): Contains newish message? ${containsNewishMessage ? 'yes' : 'no'}`,
+          `DefaultMessageService.handleOldMessages(${newMessage.type}): Contains newish message? ${containsNewishMessage ? 'yes' : 'no'}`,
         )
         return !containsNewishMessage
       case UserMessageType.welcome:
@@ -331,16 +337,7 @@ export class DefaultMessageService implements MessageService {
         logger.debug(
           `DefaultMessageService.handleOldMessages(${newMessage.type}): Only creating new message, if there are no old messages with the same reference (count: ${oldMessages.length})`,
         )
-        // Keep old message, if it references the same entity
-        for (const oldMessage of oldMessages) {
-          if (oldMessage.data().reference === newMessage.reference) {
-            logger.debug(
-              `DefaultMessageService.handleOldMessages(${newMessage.type}): Found message with the same reference at ${oldMessage.ref.path}`,
-            )
-            return false
-          }
-        }
-        return true
+        return oldMessages.length === 0
     }
   }
 

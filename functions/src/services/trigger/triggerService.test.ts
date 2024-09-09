@@ -8,8 +8,12 @@
 
 import {
   advanceDateByDays,
+  advanceDateByMinutes,
   FHIRAppointment,
   FHIRAppointmentStatus,
+  FHIRObservation,
+  LoincCode,
+  QuantityUnit,
   User,
   UserMessage,
   UserMessageType,
@@ -17,6 +21,7 @@ import {
 } from '@stanfordbdhg/engagehf-models'
 import { expect } from 'chai'
 import { describeWithEmulators } from '../../tests/functions/testEnvironment.js'
+import { UserObservationCollection } from '../database/collections.js'
 
 describeWithEmulators('TriggerService', (env) => {
   describe('every15Minutes', () => {
@@ -203,6 +208,137 @@ describeWithEmulators('TriggerService', (env) => {
       )
       expect(questionnaireMessage).to.exist
       expect(questionnaireMessage?.completionDate).to.be.undefined
+    })
+  })
+
+  describe('userObservationWritten', () => {
+    describe('bodyWeightObservations', () => {
+      it('should create a weight gain message for a user', async () => {
+        const triggerService = env.factory.trigger()
+
+        const patientId = await env.createUser({
+          type: UserType.patient,
+          organization: 'stanford',
+        })
+
+        const clinicianId = await env.createUser({
+          type: UserType.clinician,
+          organization: 'stanford',
+        })
+
+        const patient = new User({
+          type: UserType.patient,
+          organization: 'stanford',
+          dateOfEnrollment: advanceDateByDays(new Date(), -6),
+          invitationCode: '12345678',
+          clinician: clinicianId,
+          receivesAppointmentReminders: true,
+          receivesMedicationUpdates: true,
+          receivesQuestionnaireReminders: true,
+          receivesRecommendationUpdates: true,
+          receivesVitalsReminders: true,
+          receivesWeightAlerts: true,
+        })
+        await env.collections.users.doc(patientId).set(patient)
+
+        const observations = Array.from({ length: 10 }, (_, i) =>
+          FHIRObservation.createSimple({
+            id: `observation-${i}`,
+            code: LoincCode.bodyWeight,
+            value: 200,
+            unit: QuantityUnit.lbs,
+            date: advanceDateByDays(new Date(), -i - 1),
+          }),
+        )
+
+        await Promise.all(
+          observations.map(
+            async (observation) =>
+              await env.collections
+                .userObservations(
+                  patientId,
+                  UserObservationCollection.bodyWeight,
+                )
+                .doc()
+                .set(observation),
+          ),
+        )
+        await triggerService.userObservationWritten(
+          patientId,
+          UserObservationCollection.bodyWeight,
+        )
+        const patientMessages0 = await env.collections
+          .userMessages(patientId)
+          .get()
+        expect(patientMessages0.docs).to.have.length(0)
+
+        const clinicianMessages0 = await env.collections
+          .userMessages(clinicianId)
+          .get()
+        expect(clinicianMessages0.docs).to.have.length(0)
+
+        const slightlyHigherWeight = FHIRObservation.createSimple({
+          id: 'observation-10',
+          code: LoincCode.bodyWeight,
+          value: 207.5,
+          unit: QuantityUnit.lbs,
+          date: advanceDateByMinutes(new Date(), -30),
+        })
+        await env.collections
+          .userObservations(patientId, UserObservationCollection.bodyWeight)
+          .doc()
+          .set(slightlyHigherWeight)
+        await triggerService.userObservationWritten(
+          patientId,
+          UserObservationCollection.bodyWeight,
+        )
+        const patientMessages1 = await env.collections
+          .userMessages(patientId)
+          .get()
+        expect(patientMessages1.docs, 'patientMessages1').to.have.length(1)
+        const patientMessage1 = patientMessages1.docs.at(0)?.data()
+        expect(patientMessage1?.type).to.equal(UserMessageType.weightGain)
+        expect(patientMessage1?.completionDate).to.be.undefined
+
+        const clinicianMessages1 = await env.collections
+          .userMessages(patientId)
+          .get()
+        expect(clinicianMessages1.docs, 'clinicianMessages1').to.have.length(1)
+        const clinicianMessage1 = clinicianMessages1.docs.at(0)?.data()
+        expect(clinicianMessage1?.type).to.equal(UserMessageType.weightGain)
+        expect(clinicianMessage1?.completionDate).to.be.undefined
+
+        const actuallyHigherWeight = FHIRObservation.createSimple({
+          id: 'observation-11',
+          code: LoincCode.bodyWeight,
+          value: 208,
+          unit: QuantityUnit.lbs,
+          date: advanceDateByMinutes(new Date(), -15),
+        })
+        await env.collections
+          .userObservations(patientId, UserObservationCollection.bodyWeight)
+          .doc()
+          .set(actuallyHigherWeight)
+        await triggerService.userObservationWritten(
+          patientId,
+          UserObservationCollection.bodyWeight,
+        )
+        const patientMessages2 = await env.collections
+          .userMessages(patientId)
+          .get()
+        expect(patientMessages2.docs, 'patientMessages2').to.have.length(1)
+        const patientMessage2 = patientMessages1.docs.at(0)?.data()
+        expect(patientMessage2?.type).to.equal(UserMessageType.weightGain)
+        expect(patientMessage2?.completionDate).to.be.undefined
+
+        const clinicianMessages2 = await env.collections
+          .userMessages(patientId)
+          .get()
+        expect(clinicianMessages2.docs, 'clinicianMessages2').to.have.length(1)
+        const clinicianMessage2 = clinicianMessages1.docs.at(0)?.data()
+        expect(clinicianMessage2?.type).to.equal(UserMessageType.weightGain)
+        expect(clinicianMessage2?.completionDate).to.be.undefined
+      })
     })
   })
 })

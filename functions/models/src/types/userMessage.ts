@@ -170,6 +170,7 @@ export class UserMessage {
   static createWeightGain(
     input: {
       creationDate?: Date
+      reference?: string
     } = {},
   ): UserMessage {
     return new UserMessage({
@@ -181,6 +182,7 @@ export class UserMessage {
         en: 'Your weight increased over 3 lbs. Your care team will be informed. Please follow any instructions about diuretic changes after weight increase on the Medication page.',
       }),
       action: 'medications',
+      reference: input.reference,
       type: UserMessageType.weightGain,
       isDismissible: true,
     })
