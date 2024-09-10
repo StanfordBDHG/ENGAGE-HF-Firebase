@@ -8,13 +8,11 @@
 
 import { z } from 'zod'
 
-/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-export function optionalish<T extends z.ZodType<any, any, any>>(type: T) {
+export function optionalish<T extends z.Schema>(type: T) {
   return type.or(z.null().transform(() => undefined)).optional()
 }
 
-/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-export function optionalishDefault<T extends z.ZodType<any, any, any>>(
+export function optionalishDefault<T extends z.Schema>(
   type: T,
   defaultValue: z.output<T>,
 ) {

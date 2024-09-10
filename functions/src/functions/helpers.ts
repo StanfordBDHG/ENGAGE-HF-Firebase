@@ -16,13 +16,13 @@ import {
   onRequest,
   type Request,
 } from 'firebase-functions/v2/https'
-import { type TypeOf, z, type ZodType } from 'zod'
+import { type TypeOf, z } from 'zod'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-redundant-type-constituents */
 
 export function validatedOnCall<
-  Schema extends ZodType<any, any, any>,
+  Schema extends z.Schema,
   Return = any | Promise<any>,
 >(
   name: string,
@@ -56,7 +56,7 @@ export function validatedOnCall<
 }
 
 export function validatedOnCallWithOptions<
-  Schema extends ZodType<any, any, any>,
+  Schema extends z.Schema,
   Return = any | Promise<any>,
 >(
   name: string,
@@ -90,7 +90,7 @@ export function validatedOnCallWithOptions<
   })
 }
 
-export function validatedOnRequest<Schema extends ZodType<any, any, any>>(
+export function validatedOnRequest<Schema extends z.Schema>(
   name: string,
   schema: Schema,
   handler: (
@@ -120,9 +120,7 @@ export function validatedOnRequest<Schema extends ZodType<any, any, any>>(
   })
 }
 
-export function validatedOnRequestWithOptions<
-  Schema extends ZodType<any, any, any>,
->(
+export function validatedOnRequestWithOptions<Schema extends z.Schema>(
   name: string,
   schema: Schema,
   options: https.HttpsOptions,
