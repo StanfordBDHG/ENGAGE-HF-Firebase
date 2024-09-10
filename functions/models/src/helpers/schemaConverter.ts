@@ -7,6 +7,7 @@
 //
 
 import { type z } from 'zod'
+import { type Lazy } from './lazy'
 
 export class SchemaConverter<Schema extends z.Schema, Encoded> {
   // Properties
@@ -28,3 +29,11 @@ export class SchemaConverter<Schema extends z.Schema, Encoded> {
     this.encode = input.encode
   }
 }
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export type InferEncoded<Input> =
+  Input extends SchemaConverter<any, any> ? ReturnType<Input['encode']>
+  : Input extends Lazy<SchemaConverter<any, any>> ?
+    ReturnType<Input['value']['encode']>
+  : never
+/* eslint-enable @typescript-eslint/no-explicit-any */
