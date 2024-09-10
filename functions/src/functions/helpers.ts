@@ -29,7 +29,7 @@ export function validatedOnCall<
   schema: Schema,
   handler: (request: CallableRequest<z.output<Schema>>) => Return,
 ): CallableFunction<
-  z.output<Schema>,
+  z.input<Schema>,
   Return extends Promise<unknown> ? Return : Promise<Return>
 > {
   return onCall((request) => {
