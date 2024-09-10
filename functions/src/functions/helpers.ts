@@ -16,7 +16,7 @@ import {
   onRequest,
   type Request,
 } from 'firebase-functions/v2/https'
-import { type TypeOf, z } from 'zod'
+import { z } from 'zod'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-redundant-type-constituents */
@@ -37,7 +37,7 @@ export function validatedOnCall<
       logger.debug(
         `onCall(${name}) from user '${request.auth?.uid}' with ${JSON.stringify(request.data)}`,
       )
-      request.data = schema.parse(request.data) as TypeOf<Schema>
+      request.data = schema.parse(request.data) as z.output<Schema>
       return handler(request)
     } catch (error) {
       logger.debug(
