@@ -9,7 +9,10 @@
 // Based on:
 // https://github.com/StanfordBDHG/PediatricAppleWatchStudy/pull/54/files
 
-import { checkInvitationCodeInputSchema } from '@stanfordbdhg/engagehf-models'
+import {
+  checkInvitationCodeInputSchema,
+  type CheckInvitationCodeOutput,
+} from '@stanfordbdhg/engagehf-models'
 import { https, logger } from 'firebase-functions/v2'
 import { validatedOnCall } from './helpers.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
@@ -17,7 +20,7 @@ import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 export const checkInvitationCode = validatedOnCall(
   'checkInvitationCode',
   checkInvitationCodeInputSchema,
-  async (request): Promise<void> => {
+  async (request): Promise<CheckInvitationCodeOutput> => {
     const factory = getServiceFactory()
     const userId = factory.credential(request.auth).userId
 
