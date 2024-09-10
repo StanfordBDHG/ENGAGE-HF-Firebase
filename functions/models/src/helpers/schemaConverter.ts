@@ -8,8 +8,7 @@
 
 import { type z } from 'zod'
 
-/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-export class SchemaConverter<Schema extends z.ZodType<any, any, any>, Encoded> {
+export class SchemaConverter<Schema extends z.Schema, Encoded> {
   // Properties
 
   readonly schema: Schema
