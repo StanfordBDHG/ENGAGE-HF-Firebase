@@ -9,7 +9,7 @@
 import { type z } from 'zod'
 import { type Lazy } from './lazy'
 
-export class SchemaConverter<Schema extends z.Schema, Encoded> {
+export class SchemaConverter<Schema extends z.ZodTypeAny, Encoded> {
   // Properties
 
   readonly schema: Schema

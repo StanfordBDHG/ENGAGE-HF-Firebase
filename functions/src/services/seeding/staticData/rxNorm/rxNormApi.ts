@@ -53,7 +53,7 @@ export class RxNormApi {
 
   // Helpers
 
-  private async get<Schema extends z.Schema>(
+  private async get<Schema extends z.ZodTypeAny>(
     path: string,
     schema: Schema,
   ): Promise<z.output<Schema>> {

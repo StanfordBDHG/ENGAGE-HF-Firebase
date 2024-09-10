@@ -8,11 +8,11 @@
 
 import { z } from 'zod'
 
-export function optionalish<T extends z.Schema>(type: T) {
+export function optionalish<T extends z.ZodTypeAny>(type: T) {
   return type.or(z.null().transform(() => undefined)).optional()
 }
 
-export function optionalishDefault<T extends z.Schema>(
+export function optionalishDefault<T extends z.ZodTypeAny>(
   type: T,
   defaultValue: z.output<T>,
 ) {

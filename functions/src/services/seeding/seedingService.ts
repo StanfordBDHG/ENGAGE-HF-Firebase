@@ -98,7 +98,7 @@ export class SeedingService {
     )
   }
 
-  protected readJSONArray<Schema extends z.Schema>(
+  protected readJSONArray<Schema extends z.ZodTypeAny>(
     filename: string,
     schema: Schema,
   ): Array<z.output<Schema>> {
@@ -109,7 +109,7 @@ export class SeedingService {
       ) as Array<z.output<Schema>>
   }
 
-  protected readJSONRecord<Schema extends z.Schema>(
+  protected readJSONRecord<Schema extends z.ZodTypeAny>(
     filename: string,
     schema: Schema,
   ): Record<string, z.output<Schema>> {

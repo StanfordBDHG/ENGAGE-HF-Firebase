@@ -22,7 +22,7 @@ import { type TypeOf, z } from 'zod'
 /* eslint-disable @typescript-eslint/no-redundant-type-constituents */
 
 export function validatedOnCall<
-  Schema extends z.Schema,
+  Schema extends z.ZodTypeAny,
   Return = any | Promise<any>,
 >(
   name: string,
@@ -56,7 +56,7 @@ export function validatedOnCall<
 }
 
 export function validatedOnCallWithOptions<
-  Schema extends z.Schema,
+  Schema extends z.ZodTypeAny,
   Return = any | Promise<any>,
 >(
   name: string,
@@ -90,7 +90,7 @@ export function validatedOnCallWithOptions<
   })
 }
 
-export function validatedOnRequest<Schema extends z.Schema>(
+export function validatedOnRequest<Schema extends z.ZodTypeAny>(
   name: string,
   schema: Schema,
   handler: (
@@ -120,7 +120,7 @@ export function validatedOnRequest<Schema extends z.Schema>(
   })
 }
 
-export function validatedOnRequestWithOptions<Schema extends z.Schema>(
+export function validatedOnRequestWithOptions<Schema extends z.ZodTypeAny>(
   name: string,
   schema: Schema,
   options: https.HttpsOptions,
