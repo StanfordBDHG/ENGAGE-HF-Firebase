@@ -75,42 +75,8 @@ export class MockUserService implements UserService {
           timeZone: 'America/Los_Angeles',
         }),
         code: invitationCode,
-        userId: 'test',
       }),
     }
-  }
-
-  async getInvitationByUserId(
-    userId: string,
-  ): Promise<Document<Invitation> | undefined> {
-    return {
-      id: '123',
-      path: 'invitations/123',
-      content: new Invitation({
-        user: new UserRegistration({
-          type: UserType.patient,
-          dateOfBirth: new Date('1970-01-02'),
-          clinician: 'mockPatient',
-          receivesAppointmentReminders: true,
-          receivesMedicationUpdates: true,
-          receivesQuestionnaireReminders: true,
-          receivesRecommendationUpdates: true,
-          receivesVitalsReminders: true,
-          receivesWeightAlerts: true,
-          organization: 'stanford',
-          timeZone: 'America/Los_Angeles',
-        }),
-        code: 'test',
-        userId: userId,
-      }),
-    }
-  }
-
-  async connectInvitationToUser(
-    invitationCode: string,
-    userId: string,
-  ): Promise<void> {
-    return
   }
 
   async enrollUser(

@@ -10,24 +10,19 @@ import { https, logger } from 'firebase-functions'
 import { z } from 'zod'
 import { validatedOnCall } from './helpers.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
+import { enrollUserInputSchema } from '@stanfordbdhg/engagehf-models'
 
-export const setupUser = validatedOnCall(
-  'setupUser',
-  z.unknown(),
+export const enrollUser = validatedOnCall(
+  'enrollUser',
+  enrollUserInputSchema,
   async (request) => {
     const factory = getServiceFactory()
     const credential = factory.credential(request.auth)
-    const userId = credential.userId
-
-    let invitationCode: string
-    try {
-      invitationCode = z.string().parse(request.auth?.token.invitationCode)
-    } catch {
-      throw credential.permissionDeniedError()
-    }
-
-    const userService = factory.user()
     const triggerService = factory.trigger()
+    const userService = factory.user()
+
+    const userId = credential.userId
+    const invitationCode = request.data.invitationCode
 
     const invitation = await userService.getInvitationByCode(invitationCode)
     if (invitation === undefined)

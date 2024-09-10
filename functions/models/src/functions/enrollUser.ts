@@ -8,9 +8,9 @@
 
 import { z } from 'zod'
 
-export const checkInvitationCodeInputSchema = z.object({
-  invitationCode: z.string(),
+export const enrollUserInputSchema = z.object({
+  invitationCode: z.string().regex(/^[A-Z0-9]{8,16}$/),
 })
-export type CheckInvitationCodeInput = z.input<
-  typeof checkInvitationCodeInputSchema
->
+export type EnrollUserInputSchema = z.input<typeof enrollUserInputSchema>
+
+export type EnrollUserOutputSchema = undefined

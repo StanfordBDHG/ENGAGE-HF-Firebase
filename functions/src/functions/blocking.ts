@@ -20,11 +20,8 @@ export const beforeUserCreatedFunction = beforeUserCreated(async (event) => {
   const factory = getServiceFactory()
   const userService = factory.user()
 
-  if (event.credential === undefined)
-    throw new https.HttpsError(
-      'failed-precondition',
-      'No credential found for user.',
-    )
+  // Escape hatch for users using invitation code to enroll
+  if (event.credential === undefined) return
 
   if (event.data.email === undefined)
     throw new https.HttpsError(

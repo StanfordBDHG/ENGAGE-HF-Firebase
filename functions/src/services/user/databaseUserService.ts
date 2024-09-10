@@ -76,13 +76,7 @@ export class DatabaseUserService implements UserService {
         await this.auth.setCustomUserClaims(userId, claims)
         logger.info(`Successfully set claims for user ${userId}.`)
       } else {
-        const invitation = await this.getInvitationByUserId(userId)
-        if (invitation === undefined)
-          throw new https.HttpsError('not-found', 'User not found.')
-
-        await this.auth.setCustomUserClaims(userId, {
-          invitationCode: invitation.content.code,
-        })
+        await this.auth.setCustomUserClaims(userId, {})
         logger.info(
           `Successfully set claims for not-yet-enrolled user ${userId}.`,
         )
@@ -137,44 +131,6 @@ export class DatabaseUserService implements UserService {
     return result.at(0)
   }
 
-  async getInvitationByUserId(
-    userId: string,
-  ): Promise<Document<Invitation> | undefined> {
-    const result = await this.databaseService.getQuery<Invitation>(
-      (collections) =>
-        collections.invitations.where('userId', '==', userId).limit(1),
-    )
-    return result.at(0)
-  }
-
-  async connectInvitationToUser(
-    invitationCode: string,
-    userId: string,
-  ): Promise<void> {
-    await this.databaseService.runTransaction(
-      async (collections, transaction) => {
-        const invitation = (
-          await collections.invitations
-            .where('code', '==', invitationCode)
-            .limit(1)
-            .get()
-        ).docs.at(0)
-        if (invitation === undefined) {
-          logger.error(`Invitation with code '${invitationCode}' not found.`)
-          throw new Error('Invitation not found')
-        }
-        logger.info(
-          `Setting userId '${userId}' for invitation with code '${invitationCode}' at id '${invitation.id}'.`,
-        )
-        transaction.update(invitation.ref, { userId: userId })
-      },
-    )
-
-    await this.auth.setCustomUserClaims(userId, {
-      invitationCode: invitationCode,
-    })
-  }
-
   async enrollUser(
     invitation: Document<Invitation>,
     userId: string,
@@ -185,15 +141,6 @@ export class DatabaseUserService implements UserService {
     const user = await this.databaseService.getDocument((collections) =>
       collections.users.doc(userId),
     )
-    if (userId !== invitation.content.userId) {
-      logger.error(
-        `User with id ${userId} is not connected to invitation with id ${invitation.id}.`,
-      )
-      throw new https.HttpsError(
-        'permission-denied',
-        'Invitation does not belong to the user.',
-      )
-    }
     if (user?.content !== undefined) {
       logger.error(`User with id ${userId} already exists.`)
       throw new https.HttpsError(

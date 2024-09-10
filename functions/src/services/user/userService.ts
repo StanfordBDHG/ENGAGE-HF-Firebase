@@ -29,17 +29,10 @@ export interface UserService {
   // Invitations
 
   createInvitation(content: Invitation): Promise<{ id: string }>
-
   getInvitationByCode(
     invitationCode: string,
   ): Promise<Document<Invitation> | undefined>
-  getInvitationByUserId(
-    userId: string,
-  ): Promise<Document<Invitation> | undefined>
-
-  connectInvitationToUser(invitationCode: string, userId: string): Promise<void>
   enrollUser(invitation: Document<Invitation>, userId: string): Promise<void>
-
   deleteInvitation(invitation: Document<Invitation>): Promise<void>
 
   // Organizations

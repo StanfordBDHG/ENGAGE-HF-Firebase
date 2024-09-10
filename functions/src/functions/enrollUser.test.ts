@@ -21,22 +21,26 @@ import {
   UserType,
 } from '@stanfordbdhg/engagehf-models'
 import { expect } from 'chai'
-import { checkInvitationCode } from './checkInvitationCode.js'
-import { setupUser } from './setupUser.js'
 import { UserObservationCollection } from '../services/database/collections.js'
 import { describeWithEmulators } from '../tests/functions/testEnvironment.js'
 import { expectError } from '../tests/helpers.js'
+import { enrollUser } from './enrollUser.js'
 
-describeWithEmulators('function: setupUser', (env) => {
-  it('fails to set up a user without an invitation code', async () => {
+describeWithEmulators('function: enrollUser', (env) => {
+  it('fails to enroll a user without an invitation code', async () => {
     const authUser = await env.auth.createUser({})
     await expectError(
-      async () => env.call(setupUser, {}, { uid: authUser.uid }),
-      (error) => expect(error).to.have.property('code', 'permission-denied'),
+      async () =>
+        env.call(
+          enrollUser,
+          { invitationCode: 'TESTCODE' },
+          { uid: authUser.uid },
+        ),
+      (error) => expect(error).to.have.property('code', 'not-found'),
     )
   })
 
-  it('correctly sets up a user', async () => {
+  it('correctly enrolls a user', async () => {
     const invitation = new Invitation({
       auth: new UserAuth({
         email: 'engagehf-test@stanford.edu',
@@ -87,18 +91,9 @@ describeWithEmulators('function: setupUser', (env) => {
 
     const authUser = await env.auth.createUser({})
     await env.call(
-      checkInvitationCode,
+      enrollUser,
       { invitationCode: 'TESTCODE' },
       { uid: authUser.uid },
-    )
-
-    const actualAuthUser = await env.auth.getUser(authUser.uid)
-    expect(actualAuthUser.customClaims?.invitationCode).to.equal('TESTCODE')
-
-    await env.call(
-      setupUser,
-      {},
-      { uid: authUser.uid, token: { invitationCode: 'TESTCODE' } },
     )
 
     const users = await env.collections.users.get()
