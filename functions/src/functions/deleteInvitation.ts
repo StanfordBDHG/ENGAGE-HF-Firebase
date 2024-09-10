@@ -6,7 +6,10 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { deleteInvitationInputSchema } from '@stanfordbdhg/engagehf-models'
+import {
+  deleteInvitationInputSchema,
+  type DeleteInvitationOutput,
+} from '@stanfordbdhg/engagehf-models'
 import { validatedOnCall } from './helpers.js'
 import { UserRole } from '../services/credential/credential.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
@@ -14,7 +17,7 @@ import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 export const deleteInvitation = validatedOnCall(
   'deleteInvitation',
   deleteInvitationInputSchema,
-  async (request): Promise<void> => {
+  async (request): Promise<DeleteInvitationOutput> => {
     const factory = getServiceFactory()
     const credential = factory.credential(request.auth)
     const userService = factory.user()

@@ -53,8 +53,7 @@ export class RxNormApi {
 
   // Helpers
 
-  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-  private async get<Schema extends z.ZodType<any, any, any>>(
+  private async get<Schema extends z.ZodTypeAny>(
     path: string,
     schema: Schema,
   ): Promise<z.output<Schema>> {

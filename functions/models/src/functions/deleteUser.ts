@@ -12,3 +12,5 @@ export const deleteUserInputSchema = z.object({
   userId: z.string(),
 })
 export type DeleteUserInput = z.input<typeof deleteUserInputSchema>
+
+export type DeleteUserOutput = undefined

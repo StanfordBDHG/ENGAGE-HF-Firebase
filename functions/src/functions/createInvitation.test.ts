@@ -18,7 +18,7 @@ import { expectError } from '../tests/helpers.js'
 
 describeWithEmulators('function: createInvitation', (env) => {
   it('should create an invitation for a clinician', async () => {
-    const input: z.output<typeof createInvitationInputSchema> = {
+    const input: z.input<typeof createInvitationInputSchema> = {
       auth: {
         displayName: 'Test User',
         email: 'engagehf-test@stanford.edu',
@@ -48,7 +48,7 @@ describeWithEmulators('function: createInvitation', (env) => {
   })
 
   it('should create an invitation for a patient', async () => {
-    const input: z.output<typeof createInvitationInputSchema> = {
+    const input: z.input<typeof createInvitationInputSchema> = {
       auth: {
         displayName: 'Test User',
         email: 'engagehf-test@stanford.edu',
@@ -79,7 +79,7 @@ describeWithEmulators('function: createInvitation', (env) => {
   })
 
   it('should not create an invitation without authentication', () => {
-    const input: z.output<typeof createInvitationInputSchema> = {
+    const input: z.input<typeof createInvitationInputSchema> = {
       auth: {
         displayName: 'Test User',
       },
