@@ -20,13 +20,15 @@ export type GetUsersInformationInput = z.input<
   typeof getUsersInformationInputSchema
 >
 
+export interface UserInformation {
+  auth: InferEncoded<typeof userAuthConverter>
+  user: InferEncoded<typeof userConverter> | undefined
+}
+
 export type GetUsersInformationOutput = Record<
   string,
   | {
-      data: {
-        auth: InferEncoded<typeof userAuthConverter>
-        user: InferEncoded<typeof userConverter> | undefined
-      }
+      data: UserInformation
       error?: undefined
     }
   | { data?: undefined; error: { code: string; message: string } }
