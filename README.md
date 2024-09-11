@@ -6,7 +6,7 @@ SPDX-License-Identifier: MIT
 
 # ENGAGE-HF Firebase
 
-[![Build and Test](https://github.com/StanfordBDHG/ENGAGE-HF-Firebase/actions/workflows/build-and-test.yml.yml/badge.svg)](https://github.com/StanfordBDHG/ENGAGE-HF-Firebase/actions/workflows/build-and-test.yml.yml)
+[![Build and Test](https://github.com/StanfordBDHG/ENGAGE-HF-Firebase/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/StanfordBDHG/ENGAGE-HF-Firebase/actions/workflows/build-and-test.yml)
 [![Deployment](https://github.com/StanfordBDHG/ENGAGE-HF-Firebase/actions/workflows/deployment.yml/badge.svg)](https://github.com/StanfordBDHG/ENGAGE-HF-Firebase/actions/workflows/deployment.yml)
 
 
