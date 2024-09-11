@@ -7,9 +7,10 @@
 //
 
 import { z } from 'zod'
-import { optionalish, optionalishDefault } from '../helpers/optionalish.js'
-import { userConverter } from '../types/user.js'
-import { userAuthConverter } from '../types/userAuth.js'
+import { optionalishDefault } from '../helpers/optionalish.js'
+import { type InferEncoded } from '../helpers/schemaConverter'
+import { type userConverter } from '../types/user.js'
+import { type userAuthConverter } from '../types/userAuth.js'
 
 export const getUsersInformationInputSchema = z.object({
   includeUserData: optionalishDefault(z.boolean(), false),
@@ -19,26 +20,16 @@ export type GetUsersInformationInput = z.input<
   typeof getUsersInformationInputSchema
 >
 
-export const userInformationSchema = z.object({
-  auth: z.lazy(() => userAuthConverter.value.schema),
-  user: optionalish(z.lazy(() => userConverter.value.schema)),
-})
-export type UserInformation = z.output<typeof userInformationSchema>
+export interface UserInformation {
+  auth: InferEncoded<typeof userAuthConverter>
+  user: InferEncoded<typeof userConverter> | undefined
+}
 
-export const getUsersInformationOutputSchema = z.record(
-  z
-    .object({
-      data: userInformationSchema,
-    })
-    .or(
-      z.object({
-        error: z.object({
-          code: z.string(),
-          message: z.string(),
-        }),
-      }),
-    ),
-)
-export type GetUsersInformationOutput = z.output<
-  typeof getUsersInformationOutputSchema
+export type GetUsersInformationOutput = Record<
+  string,
+  | {
+      data: UserInformation
+      error?: undefined
+    }
+  | { data?: undefined; error: { code: string; message: string } }
 >

@@ -16,9 +16,6 @@ export const createInvitationInputSchema = z.object({
 })
 export type CreateInvitationInput = z.input<typeof createInvitationInputSchema>
 
-export const createInvitationOutputSchema = z.object({
-  id: z.string(),
-})
-export type CreateInvitationOutput = z.output<
-  typeof createInvitationOutputSchema
->
+export interface CreateInvitationOutput {
+  id: string
+}

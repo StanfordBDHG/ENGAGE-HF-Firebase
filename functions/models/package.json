@@ -16,6 +16,10 @@
   "engines": {
     "node": "22"
   },
+  "files": [
+    "lib",
+    "README.md"
+  ],
   "main": "lib/index.js",
   "dependencies": {
     "zod": "^3.23.8"

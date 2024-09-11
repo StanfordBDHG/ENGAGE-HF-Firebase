@@ -6,7 +6,10 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { dismissMessageInputSchema } from '@stanfordbdhg/engagehf-models'
+import {
+  dismissMessageInputSchema,
+  type DismissMessageOutput,
+} from '@stanfordbdhg/engagehf-models'
 import { validatedOnCall } from './helpers.js'
 import { UserRole } from '../services/credential/credential.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
@@ -14,7 +17,7 @@ import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 export const dismissMessage = validatedOnCall(
   'dismissMessage',
   dismissMessageInputSchema,
-  async (request): Promise<void> => {
+  async (request): Promise<DismissMessageOutput> => {
     const factory = getServiceFactory()
     const credential = factory.credential(request.auth)
     const userId = request.data.userId ?? credential.userId
