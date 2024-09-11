@@ -6,6 +6,10 @@ SPDX-License-Identifier: MIT
 
 # ENGAGE-HF Firebase
 
+[![Build and Test](https://github.com/StanfordBDHG/ENGAGE-HF-Firebase/actions/workflows/build-and-test.yml.yml/badge.svg)](https://github.com/StanfordBDHG/ENGAGE-HF-Firebase/actions/workflows/build-and-test.yml.yml)
+[![Deployment](https://github.com/StanfordBDHG/ENGAGE-HF-Firebase/actions/workflows/deployment.yml/badge.svg)](https://github.com/StanfordBDHG/ENGAGE-HF-Firebase/actions/workflows/deployment.yml)
+
+
 Firebase cloud hosting infrastructure for the ENGAGE-HF project.
 
 # Behavior
