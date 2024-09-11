@@ -20,8 +20,8 @@ import { Flags } from '../flags.js'
 import { UserRole } from '../services/credential/credential.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 import { type ServiceFactory } from '../services/factory/serviceFactory.js'
-import { TriggerService } from '../services/trigger/triggerService.js'
-import { DebugDataService } from '../services/seeding/debugData/debugDataService.js'
+import { type DebugDataService } from '../services/seeding/debugData/debugDataService.js'
+import { type TriggerService } from '../services/trigger/triggerService.js'
 
 async function _seedPatientCollections(input: {
   debugData: DebugDataService
@@ -30,7 +30,7 @@ async function _seedPatientCollections(input: {
   components: UserDebugDataComponent[]
   date: Date
 }): Promise<void> {
-  let promises: Promise<void>[] = []
+  const promises: Array<Promise<void>> = []
   if (input.components.includes(UserDebugDataComponent.appointments))
     promises.push(
       input.debugData.seedUserAppointments(input.userId, input.date),

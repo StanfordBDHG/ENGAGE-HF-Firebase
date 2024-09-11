@@ -233,7 +233,7 @@ export class TriggerService {
     )
 
     const recommendations = await this.updateRecommendationsForUser(userId)
-    this.addMedicationUptitrationMessageIfNeeded({
+    await this.addMedicationUptitrationMessageIfNeeded({
       userId: userId,
       recommendations: recommendations,
     })
