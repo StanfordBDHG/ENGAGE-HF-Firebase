@@ -26,6 +26,7 @@ export enum UserMessageType {
   vitals = 'Vitals',
   symptomQuestionnaire = 'SymptomQuestionnaire',
   preAppointment = 'PreAppointment',
+  inactive = 'Inactive',
 }
 
 export const userMessageConverter = new Lazy(
@@ -67,6 +68,26 @@ export const userMessageConverter = new Lazy(
 export class UserMessage {
   // Static Functions
 
+  static createInactive(input: {
+    creationDate?: Date
+    reference?: string
+    isDismissible?: boolean
+  }): UserMessage {
+    return new UserMessage({
+      creationDate: input.creationDate ?? new Date(),
+      title: new LocalizedText({
+        en: 'Inactive',
+      }),
+      description: new LocalizedText({
+        en: 'You have been inactive for 7 days. Please log in to continue your care.',
+      }),
+      action: undefined,
+      type: UserMessageType.inactive,
+      isDismissible: input.isDismissible ?? false,
+      reference: input.reference,
+    })
+  }
+
   static createMedicationChange(input: {
     creationDate?: Date
     reference: string
@@ -91,6 +112,7 @@ export class UserMessage {
   static createMedicationUptitration(
     input: {
       creationDate?: Date
+      reference?: string
     } = {},
   ): UserMessage {
     return new UserMessage({
@@ -101,6 +123,7 @@ export class UserMessage {
       description: new LocalizedText({
         en: 'You may be eligible for med changes that may help your heart. Your care team will be sent this information. You can review med information on the Education Page.',
       }),
+      reference: input.reference,
       action: 'medications',
       type: UserMessageType.medicationUptitration,
       isDismissible: true,
@@ -111,6 +134,7 @@ export class UserMessage {
     input: {
       creationDate?: Date
       reference?: string
+      isDismissible?: boolean
     } = {},
   ): UserMessage {
     return new UserMessage({
@@ -123,7 +147,7 @@ export class UserMessage {
       }),
       action: 'healthSummary',
       type: UserMessageType.preAppointment,
-      isDismissible: false,
+      isDismissible: input.isDismissible ?? false,
       reference: input.reference,
     })
   }
@@ -170,6 +194,7 @@ export class UserMessage {
   static createWeightGain(
     input: {
       creationDate?: Date
+      reference?: string
     } = {},
   ): UserMessage {
     return new UserMessage({
@@ -181,6 +206,7 @@ export class UserMessage {
         en: 'Your weight increased over 3 lbs. Your care team will be informed. Please follow any instructions about diuretic changes after weight increase on the Medication page.',
       }),
       action: 'medications',
+      reference: input.reference,
       type: UserMessageType.weightGain,
       isDismissible: true,
     })

@@ -20,6 +20,74 @@ import { Flags } from '../flags.js'
 import { UserRole } from '../services/credential/credential.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 import { type ServiceFactory } from '../services/factory/serviceFactory.js'
+import { type DebugDataService } from '../services/seeding/debugData/debugDataService.js'
+import { type TriggerService } from '../services/trigger/triggerService.js'
+
+async function _seedPatientCollections(input: {
+  debugData: DebugDataService
+  trigger: TriggerService
+  userId: string
+  components: UserDebugDataComponent[]
+  date: Date
+}): Promise<void> {
+  const promises: Array<Promise<void>> = []
+  if (input.components.includes(UserDebugDataComponent.appointments))
+    promises.push(
+      input.debugData.seedUserAppointments(input.userId, input.date),
+    )
+  if (
+    input.components.includes(UserDebugDataComponent.bloodPressureObservations)
+  )
+    promises.push(
+      input.debugData.seedUserBloodPressureObservations(
+        input.userId,
+        input.date,
+      ),
+    )
+  if (input.components.includes(UserDebugDataComponent.bodyWeightObservations))
+    promises.push(
+      input.debugData.seedUserBodyWeightObservations(input.userId, input.date),
+    )
+  if (input.components.includes(UserDebugDataComponent.creatinineObservations))
+    promises.push(
+      input.debugData.seedUserCreatinineObservations(input.userId, input.date),
+    )
+  if (input.components.includes(UserDebugDataComponent.dryWeightObservations))
+    promises.push(
+      input.debugData.seedUserDryWeightObservations(input.userId, input.date),
+    )
+  if (input.components.includes(UserDebugDataComponent.eGfrObservations))
+    promises.push(
+      input.debugData.seedUserEgfrObservations(input.userId, input.date),
+    )
+  if (input.components.includes(UserDebugDataComponent.heartRateObservations))
+    promises.push(
+      input.debugData.seedUserHeartRateObservations(input.userId, input.date),
+    )
+  if (input.components.includes(UserDebugDataComponent.potassiumObservations))
+    promises.push(
+      input.debugData.seedUserPotassiumObservations(input.userId, input.date),
+    )
+  if (input.components.includes(UserDebugDataComponent.medicationRequests))
+    promises.push(input.debugData.seedUserMedicationRequests(input.userId))
+  if (input.components.includes(UserDebugDataComponent.messages))
+    promises.push(input.debugData.seedUserMessages(input.userId, input.date))
+  if (input.components.includes(UserDebugDataComponent.consent))
+    promises.push(input.debugData.seedUserConsent(input.userId))
+  if (
+    input.components.includes(UserDebugDataComponent.medicationRecommendations)
+  )
+    promises.push(
+      input.trigger.updateRecommendationsForUser(input.userId).then(),
+    )
+  if (input.components.includes(UserDebugDataComponent.questionnaireResponses))
+    promises.push(
+      input.debugData.seedUserQuestionnaireResponses(input.userId, input.date),
+    )
+  if (input.components.includes(UserDebugDataComponent.symptomScores))
+    promises.push(input.trigger.updateAllSymptomScores(input.userId))
+  await Promise.all(promises)
+}
 
 export async function _defaultSeed(
   factory: ServiceFactory,
@@ -39,118 +107,15 @@ export async function _defaultSeed(
 
     for (const userId of userIds) {
       try {
-        const promises: Array<Promise<void>> = []
         const user = await userService.getUser(userId)
         if (user?.content.type !== UserType.patient) continue
-        if (
-          data.onlyUserCollections.includes(UserDebugDataComponent.appointments)
-        )
-          promises.push(
-            debugDataService.seedUserAppointments(userId, data.date),
-          )
-        if (
-          data.onlyUserCollections.includes(
-            UserDebugDataComponent.bloodPressureObservations,
-          )
-        )
-          promises.push(
-            debugDataService.seedUserBloodPressureObservations(
-              userId,
-              data.date,
-            ),
-          )
-
-        if (
-          data.onlyUserCollections.includes(
-            UserDebugDataComponent.bodyWeightObservations,
-          )
-        )
-          promises.push(
-            debugDataService.seedUserBodyWeightObservations(userId, data.date),
-          )
-
-        if (
-          data.onlyUserCollections.includes(
-            UserDebugDataComponent.creatinineObservations,
-          )
-        )
-          promises.push(
-            debugDataService.seedUserCreatinineObservations(userId, data.date),
-          )
-
-        if (
-          data.onlyUserCollections.includes(
-            UserDebugDataComponent.dryWeightObservations,
-          )
-        )
-          promises.push(
-            debugDataService.seedUserDryWeightObservations(userId, data.date),
-          )
-
-        if (
-          data.onlyUserCollections.includes(
-            UserDebugDataComponent.eGfrObservations,
-          )
-        )
-          promises.push(
-            debugDataService.seedUserEgfrObservations(userId, data.date),
-          )
-
-        if (
-          data.onlyUserCollections.includes(
-            UserDebugDataComponent.heartRateObservations,
-          )
-        )
-          promises.push(
-            debugDataService.seedUserHeartRateObservations(userId, data.date),
-          )
-
-        if (
-          data.onlyUserCollections.includes(
-            UserDebugDataComponent.potassiumObservations,
-          )
-        )
-          promises.push(
-            debugDataService.seedUserPotassiumObservations(userId, data.date),
-          )
-
-        if (
-          data.onlyUserCollections.includes(
-            UserDebugDataComponent.medicationRequests,
-          )
-        )
-          promises.push(debugDataService.seedUserMedicationRequests(userId))
-
-        if (data.onlyUserCollections.includes(UserDebugDataComponent.messages))
-          promises.push(debugDataService.seedUserMessages(userId, data.date))
-        if (data.onlyUserCollections.includes(UserDebugDataComponent.consent))
-          promises.push(debugDataService.seedUserConsent(userId))
-        if (
-          data.onlyUserCollections.includes(
-            UserDebugDataComponent.medicationRecommendations,
-          )
-        )
-          promises.push(
-            triggerService.updateRecommendationsForUser(userId).then(),
-          )
-
-        if (
-          data.onlyUserCollections.includes(
-            UserDebugDataComponent.questionnaireResponses,
-          )
-        )
-          promises.push(
-            debugDataService.seedUserQuestionnaireResponses(userId, data.date),
-          )
-
-        if (
-          data.onlyUserCollections.includes(
-            UserDebugDataComponent.symptomScores,
-          )
-        )
-          promises.push(triggerService.updateAllSymptomScores(userId))
-
-        await Promise.all(promises)
+        await _seedPatientCollections({
+          debugData: debugDataService,
+          trigger: triggerService,
+          userId,
+          components: data.onlyUserCollections,
+          date: data.date,
+        })
       } catch (error) {
         logger.error(`Failed to seed user ${userId}: ${String(error)}`)
       }
@@ -159,87 +124,13 @@ export async function _defaultSeed(
 
   for (const userData of data.userData) {
     try {
-      const promises: Array<Promise<void>> = []
-      if (userData.only.includes(UserDebugDataComponent.appointments))
-        promises.push(
-          debugDataService.seedUserAppointments(userData.userId, data.date),
-        )
-      if (userData.only.includes(UserDebugDataComponent.medicationRequests))
-        promises.push(
-          debugDataService.seedUserMedicationRequests(userData.userId),
-        )
-      if (userData.only.includes(UserDebugDataComponent.messages))
-        promises.push(
-          debugDataService.seedUserMessages(userData.userId, data.date),
-        )
-      if (
-        userData.only.includes(UserDebugDataComponent.bloodPressureObservations)
-      )
-        promises.push(
-          debugDataService.seedUserBloodPressureObservations(
-            userData.userId,
-            data.date,
-          ),
-        )
-      if (userData.only.includes(UserDebugDataComponent.bodyWeightObservations))
-        promises.push(
-          debugDataService.seedUserBodyWeightObservations(
-            userData.userId,
-            data.date,
-          ),
-        )
-      if (userData.only.includes(UserDebugDataComponent.creatinineObservations))
-        promises.push(
-          debugDataService.seedUserCreatinineObservations(
-            userData.userId,
-            data.date,
-          ),
-        )
-      if (userData.only.includes(UserDebugDataComponent.dryWeightObservations))
-        promises.push(
-          debugDataService.seedUserDryWeightObservations(
-            userData.userId,
-            data.date,
-          ),
-        )
-      if (userData.only.includes(UserDebugDataComponent.eGfrObservations))
-        promises.push(
-          debugDataService.seedUserEgfrObservations(userData.userId, data.date),
-        )
-      if (userData.only.includes(UserDebugDataComponent.heartRateObservations))
-        promises.push(
-          debugDataService.seedUserHeartRateObservations(
-            userData.userId,
-            data.date,
-          ),
-        )
-      if (userData.only.includes(UserDebugDataComponent.potassiumObservations))
-        promises.push(
-          debugDataService.seedUserPotassiumObservations(
-            userData.userId,
-            data.date,
-          ),
-        )
-      if (userData.only.includes(UserDebugDataComponent.consent))
-        promises.push(debugDataService.seedUserConsent(userData.userId))
-      if (
-        userData.only.includes(UserDebugDataComponent.medicationRecommendations)
-      )
-        promises.push(
-          triggerService.updateRecommendationsForUser(userData.userId).then(),
-        )
-      if (userData.only.includes(UserDebugDataComponent.questionnaireResponses))
-        promises.push(
-          debugDataService.seedUserQuestionnaireResponses(
-            userData.userId,
-            data.date,
-          ),
-        )
-
-      if (userData.only.includes(UserDebugDataComponent.symptomScores))
-        promises.push(triggerService.updateAllSymptomScores(userData.userId))
-
-      await Promise.all(promises)
+      await _seedPatientCollections({
+        debugData: debugDataService,
+        trigger: triggerService,
+        userId: userData.userId,
+        components: userData.only,
+        date: data.date,
+      })
     } catch (error) {
       logger.error(
         `Failed to seed user data ${userData.userId}: ${String(error)}`,

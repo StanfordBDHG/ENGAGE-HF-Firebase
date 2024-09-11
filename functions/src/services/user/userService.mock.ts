@@ -66,6 +66,7 @@ export class MockUserService implements UserService {
           dateOfBirth: new Date('1970-01-02'),
           clinician: 'mockPatient',
           receivesAppointmentReminders: true,
+          receivesInactivityReminders: true,
           receivesMedicationUpdates: true,
           receivesQuestionnaireReminders: true,
           receivesRecommendationUpdates: true,
@@ -92,6 +93,7 @@ export class MockUserService implements UserService {
           dateOfBirth: new Date('1970-01-02'),
           clinician: 'mockPatient',
           receivesAppointmentReminders: true,
+          receivesInactivityReminders: true,
           receivesMedicationUpdates: true,
           receivesQuestionnaireReminders: true,
           receivesRecommendationUpdates: true,
@@ -166,7 +168,9 @@ export class MockUserService implements UserService {
         type: UserType.clinician,
         dateOfBirth: new Date('1970-01-02'),
         clinician: 'mockClinician',
+        lastActiveDate: new Date('2024-04-04'),
         receivesAppointmentReminders: true,
+        receivesInactivityReminders: true,
         receivesMedicationUpdates: true,
         receivesQuestionnaireReminders: true,
         receivesRecommendationUpdates: true,
@@ -178,6 +182,10 @@ export class MockUserService implements UserService {
         timeZone: 'America/Los_Angeles',
       }),
     }
+  }
+
+  async updateLastActiveDate(userId: string): Promise<void> {
+    return
   }
 
   async deleteUser(userId: string): Promise<void> {
