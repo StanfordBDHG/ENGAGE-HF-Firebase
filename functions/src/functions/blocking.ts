@@ -19,9 +19,10 @@ export const beforeUserCreatedFunction = beforeUserCreated(async (event) => {
 
   const factory = getServiceFactory()
   const userService = factory.user()
+  const credential = event.credential
 
   // Escape hatch for users using invitation code to enroll
-  if (event.credential === undefined) return
+  if (!credential) return
 
   if (event.data.email === undefined)
     throw new https.HttpsError(
@@ -30,7 +31,7 @@ export const beforeUserCreatedFunction = beforeUserCreated(async (event) => {
     )
 
   const organization = await userService.getOrganizationBySsoProviderId(
-    event.credential.providerId,
+    credential.providerId,
   )
 
   if (organization === undefined)
