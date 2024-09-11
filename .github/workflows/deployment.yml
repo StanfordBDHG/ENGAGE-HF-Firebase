@@ -76,11 +76,10 @@ jobs:
     name: Deploy Firebase Project
     needs: [buildandtest, determineenvironment, vars]
     uses: StanfordBDHG/.github/.github/workflows/firebase-deploy.yml@v2
-    with:
-      customcommand: "npm run install"
     permissions:
       contents: read
     with:
+      customcommand: "npm run install"
       environment: ${{ needs.determineenvironment.outputs.environment }}
       arguments: '--project ${{ needs.vars.outputs.FIREBASE_PROJECT_ID }}'
     secrets:
