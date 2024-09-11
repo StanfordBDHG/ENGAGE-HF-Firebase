@@ -15,3 +15,5 @@ export const dismissMessageInputSchema = z.object({
   didPerformAction: optionalishDefault(z.boolean(), false),
 })
 export type DismissMessageInput = z.input<typeof dismissMessageInputSchema>
+
+export type DismissMessageOutput = undefined

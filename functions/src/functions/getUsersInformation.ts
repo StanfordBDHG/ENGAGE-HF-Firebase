@@ -8,12 +8,11 @@
 
 import {
   getUsersInformationInputSchema,
-  type getUsersInformationOutputSchema,
+  type GetUsersInformationOutput,
+  userAuthConverter,
   userConverter,
-  type userInformationSchema,
 } from '@stanfordbdhg/engagehf-models'
 import { https } from 'firebase-functions'
-import { type z } from 'zod'
 import { validatedOnCall } from './helpers.js'
 import { UserRole } from '../services/credential/credential.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
@@ -21,12 +20,12 @@ import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 export const getUsersInformation = validatedOnCall(
   'getUsersInformation',
   getUsersInformationInputSchema,
-  async (request): Promise<z.input<typeof getUsersInformationOutputSchema>> => {
+  async (request): Promise<GetUsersInformationOutput> => {
     const factory = getServiceFactory()
     const credential = factory.credential(request.auth)
     const userService = factory.user()
 
-    const result: z.input<typeof getUsersInformationOutputSchema> = {}
+    const result: GetUsersInformationOutput = {}
     for (const userId of request.data.userIds) {
       try {
         const userData = await userService.getUser(userId)
@@ -43,18 +42,15 @@ export const getUsersInformation = validatedOnCall(
         )
 
         const user = await userService.getAuth(userId)
-        const userInformation: z.input<typeof userInformationSchema> = {
-          auth: {
-            displayName: user.displayName,
-            email: user.email,
-            phoneNumber: user.phoneNumber,
-            photoURL: user.photoURL,
+        result[userId] = {
+          data: {
+            auth: userAuthConverter.value.encode(user),
+            user:
+              request.data.includeUserData && userData !== undefined ?
+                userConverter.value.encode(userData.content)
+              : undefined,
           },
         }
-        if (request.data.includeUserData && userData !== undefined) {
-          userInformation.user = userConverter.value.encode(userData.content)
-        }
-        result[userId] = { data: userInformation }
       } catch (error) {
         if (error instanceof https.HttpsError) {
           result[userId] = {

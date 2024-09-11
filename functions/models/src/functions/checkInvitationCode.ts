@@ -14,3 +14,5 @@ export const checkInvitationCodeInputSchema = z.object({
 export type CheckInvitationCodeInput = z.input<
   typeof checkInvitationCodeInputSchema
 >
+
+export type CheckInvitationCodeOutput = undefined

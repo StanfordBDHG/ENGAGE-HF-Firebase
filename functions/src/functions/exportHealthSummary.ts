@@ -8,6 +8,7 @@
 
 import {
   exportHealthSummaryInputSchema,
+  type ExportHealthSummaryOutput,
   QuantityUnit,
 } from '@stanfordbdhg/engagehf-models'
 import { https } from 'firebase-functions/v2'
@@ -19,7 +20,7 @@ import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 export const exportHealthSummary = validatedOnCall(
   'exportHealthSummary',
   exportHealthSummaryInputSchema,
-  async (request): Promise<{ content: string }> => {
+  async (request): Promise<ExportHealthSummaryOutput> => {
     const factory = getServiceFactory()
     const credential = factory.credential(request.auth)
 

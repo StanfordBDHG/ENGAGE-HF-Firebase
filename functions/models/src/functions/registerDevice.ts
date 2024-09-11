@@ -11,3 +11,5 @@ import { userDeviceConverter } from '../types/userDevice.js'
 
 export const registerDeviceInputSchema = userDeviceConverter.value.schema
 export type RegisterDeviceInput = z.input<typeof registerDeviceInputSchema>
+
+export type RegisterDeviceOutput = undefined

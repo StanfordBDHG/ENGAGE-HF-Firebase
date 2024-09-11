@@ -6,14 +6,17 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { unregisterDeviceInputSchema } from '@stanfordbdhg/engagehf-models'
+import {
+  unregisterDeviceInputSchema,
+  type UnregisterDeviceOutput,
+} from '@stanfordbdhg/engagehf-models'
 import { validatedOnCall } from './helpers.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
 export const unregisterDevice = validatedOnCall(
   'unregisterDevice',
   unregisterDeviceInputSchema,
-  async (request) => {
+  async (request): Promise<UnregisterDeviceOutput> => {
     const factory = getServiceFactory()
     const credential = factory.credential(request.auth)
     await factory
