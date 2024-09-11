@@ -71,6 +71,7 @@ export class UserMessage {
   static createInactive(input: {
     creationDate?: Date
     reference?: string
+    isDismissible?: boolean
   }): UserMessage {
     return new UserMessage({
       creationDate: input.creationDate ?? new Date(),
@@ -82,7 +83,7 @@ export class UserMessage {
       }),
       action: undefined,
       type: UserMessageType.inactive,
-      isDismissible: false,
+      isDismissible: input.isDismissible ?? false,
       reference: input.reference,
     })
   }
@@ -133,6 +134,7 @@ export class UserMessage {
     input: {
       creationDate?: Date
       reference?: string
+      isDismissible?: boolean
     } = {},
   ): UserMessage {
     return new UserMessage({
@@ -145,7 +147,7 @@ export class UserMessage {
       }),
       action: 'healthSummary',
       type: UserMessageType.preAppointment,
-      isDismissible: false,
+      isDismissible: input.isDismissible ?? false,
       reference: input.reference,
     })
   }

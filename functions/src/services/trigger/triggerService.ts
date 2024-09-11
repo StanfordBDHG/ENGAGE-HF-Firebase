@@ -76,6 +76,7 @@ export class TriggerService {
             clinicianId,
             UserMessage.createPreAppointment({
               reference: appointment.path,
+              isDismissible: true,
             }),
             { notify: true },
           )
@@ -180,6 +181,7 @@ export class TriggerService {
             user.content.clinician,
             UserMessage.createInactive({
               reference: `users/${user.id}`,
+              isDismissible: true,
             }),
             { notify: true },
           )
@@ -231,25 +233,10 @@ export class TriggerService {
     )
 
     const recommendations = await this.updateRecommendationsForUser(userId)
-
-    const hasImprovementAvailable = recommendations.some((recommendation) =>
-      [
-        UserMedicationRecommendationType.improvementAvailable,
-        UserMedicationRecommendationType.notStarted,
-      ].includes(recommendation.displayInformation.type),
-    )
-
-    logger.debug(
-      `questionnaireResponseWritten(${userId}, ${questionnaireResponseId}): Improvement available: ${hasImprovementAvailable ? 'yes' : 'no'}`,
-    )
-
-    if (hasImprovementAvailable) {
-      await messageService.addMessage(
-        userId,
-        UserMessage.createMedicationUptitration(),
-        { notify: true },
-      )
-    }
+    this.addMedicationUptitrationMessageIfNeeded({
+      userId: userId,
+      recommendations: recommendations,
+    })
   }
 
   async userEnrolled(userId: string) {
@@ -619,15 +606,15 @@ export class TriggerService {
 
   private async addMedicationUptitrationMessageIfNeeded(input: {
     userId: string
-    recommendations?: UserMedicationRecommendation[]
+    recommendations: UserMedicationRecommendation[]
   }): Promise<boolean> {
-    const hasImprovementAvailable =
-      input.recommendations?.some((recommendation) =>
+    const hasImprovementAvailable = input.recommendations.some(
+      (recommendation) =>
         [
           UserMedicationRecommendationType.improvementAvailable,
           UserMedicationRecommendationType.notStarted,
         ].includes(recommendation.displayInformation.type),
-      ) ?? false
+    )
 
     logger.debug(
       `TriggerService.addMedicationUptitrationMessageIfNeeded(${input.userId}): Improvement available: ${hasImprovementAvailable ? 'yes' : 'no'}`,
