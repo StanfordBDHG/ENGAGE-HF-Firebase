@@ -18,9 +18,6 @@ export type ExportHealthSummaryInput = z.input<
   typeof exportHealthSummaryInputSchema
 >
 
-export const exportHealthSummaryOutputSchema = z.object({
-  content: z.string(),
-})
-export type ExportHealthSummaryOutput = z.output<
-  typeof exportHealthSummaryOutputSchema
->
+export interface ExportHealthSummaryOutput {
+  content: string
+}

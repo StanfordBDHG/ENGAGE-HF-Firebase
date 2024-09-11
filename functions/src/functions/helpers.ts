@@ -16,20 +16,20 @@ import {
   onRequest,
   type Request,
 } from 'firebase-functions/v2/https'
-import { type TypeOf, z, type ZodType } from 'zod'
+import { z } from 'zod'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-redundant-type-constituents */
 
 export function validatedOnCall<
-  Schema extends ZodType<any, any, any>,
+  Schema extends z.ZodTypeAny,
   Return = any | Promise<any>,
 >(
   name: string,
   schema: Schema,
   handler: (request: CallableRequest<z.output<Schema>>) => Return,
 ): CallableFunction<
-  z.output<Schema>,
+  z.input<Schema>,
   Return extends Promise<unknown> ? Return : Promise<Return>
 > {
   return onCall((request) => {
@@ -37,7 +37,7 @@ export function validatedOnCall<
       logger.debug(
         `onCall(${name}) from user '${request.auth?.uid}' with ${JSON.stringify(request.data)}`,
       )
-      request.data = schema.parse(request.data) as TypeOf<Schema>
+      request.data = schema.parse(request.data) as z.output<Schema>
       return handler(request)
     } catch (error) {
       logger.debug(
@@ -56,7 +56,7 @@ export function validatedOnCall<
 }
 
 export function validatedOnCallWithOptions<
-  Schema extends ZodType<any, any, any>,
+  Schema extends z.ZodTypeAny,
   Return = any | Promise<any>,
 >(
   name: string,
@@ -90,7 +90,7 @@ export function validatedOnCallWithOptions<
   })
 }
 
-export function validatedOnRequest<Schema extends ZodType<any, any, any>>(
+export function validatedOnRequest<Schema extends z.ZodTypeAny>(
   name: string,
   schema: Schema,
   handler: (
@@ -120,9 +120,7 @@ export function validatedOnRequest<Schema extends ZodType<any, any, any>>(
   })
 }
 
-export function validatedOnRequestWithOptions<
-  Schema extends ZodType<any, any, any>,
->(
+export function validatedOnRequestWithOptions<Schema extends z.ZodTypeAny>(
   name: string,
   schema: Schema,
   options: https.HttpsOptions,

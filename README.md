@@ -6,6 +6,10 @@ SPDX-License-Identifier: MIT
 
 # ENGAGE-HF Firebase
 
+[![Build and Test](https://github.com/StanfordBDHG/ENGAGE-HF-Firebase/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/StanfordBDHG/ENGAGE-HF-Firebase/actions/workflows/build-and-test.yml)
+[![Deployment](https://github.com/StanfordBDHG/ENGAGE-HF-Firebase/actions/workflows/deployment.yml/badge.svg)](https://github.com/StanfordBDHG/ENGAGE-HF-Firebase/actions/workflows/deployment.yml)
+
+
 Firebase cloud hosting infrastructure for the ENGAGE-HF project.
 
 # Behavior
@@ -291,7 +295,7 @@ Based on [FHIR AllergyIntolerance](https://hl7.org/fhir/R4B/allergyintolerance.h
 |-|-|-|-|
 |id|string|-|[Resource](https://hl7.org/fhir/R4B/resource.html): Logical id of this artifact|
 |type|optional [allergyIntoleranceType](https://hl7.org/fhir/R4B/valueset-allergy-intolerance-type.html)|e.g. "allergy", "intolerance"|In addition to the FHIR defined value set, we also use "financial" - these values shall not be exposed to EHR systems.|
-|code|CodableContent|e.g. "{"coding":[{"system":"https://hl7.org/fhir/R4B/valueset-allergyintolerance-code.html","code":"293963004","display":"Cardioselective beta-blocker allergy"}],"text":"Cardioselective beta-blocker allergy"}"|Uses either [AllergyIntoleranceCode](https://hl7.org/fhir/R4B/valueset-allergyintolerance-code.html), `medicationId` as used in /medications/$medicationId$ and/or `medicationId` as used in /medicationClasses/$medicationClassId$.|
+|code|CodableContent|e.g. `{"coding":[{"system":"https://hl7.org/fhir/R4B/valueset-allergyintolerance-code.html","code":"293963004","display":"Cardioselective beta-blocker allergy"}],"text":"Cardioselective beta-blocker allergy"}`|Uses either [AllergyIntoleranceCode](https://hl7.org/fhir/R4B/valueset-allergyintolerance-code.html), `medicationId` as used in /medications/$medicationId$ and/or `medicationId` as used in /medicationClasses/$medicationClassId$.|
 |patient|string|-|`userId` as used in /users/$userId$ and related collections.|
 
 We use RxNorm codes to identify contraindications using the following rules:
@@ -810,6 +814,17 @@ This function may only be called by admins. On emulators, this function can easi
 ### Output 
 
 None.
+
+# Indexes
+
+To perform certain queries, ENGAGE-HF requires indexes on different properties. The following indexes need to be created:
+
+|Type|Reference|Properties|Usage|
+|-|-|-|-|
+|Composite|collection:users|organization:asc,type:asc,__name__:asc|Querying users on the Web dashboard|
+|Composite|collection:invitations|user.organization:asc,user.type:asc,__name__:asc|Querying invitations on the Web dashboard|
+|Single|group:appointments|start:asc|Querying appointments across all users (for appointment messages)|
+|Single|group:devices|notificationToken:asc|Querying devices across all users (for deleting existing notification tokens assigned to other users)|
 
 # Usage
 

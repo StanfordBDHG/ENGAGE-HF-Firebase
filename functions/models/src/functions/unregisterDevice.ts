@@ -14,3 +14,5 @@ export const unregisterDeviceInputSchema = z.object({
   platform: z.nativeEnum(UserDevicePlatform),
 })
 export type UnregisterDeviceInput = z.input<typeof unregisterDeviceInputSchema>
+
+export type UnregisterDeviceOutput = undefined

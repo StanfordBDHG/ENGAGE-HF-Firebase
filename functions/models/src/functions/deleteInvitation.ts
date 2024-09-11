@@ -12,3 +12,5 @@ export const deleteInvitationInputSchema = z.object({
   invitationCode: z.string(),
 })
 export type DeleteInvitationInput = z.input<typeof deleteInvitationInputSchema>
+
+export type DeleteInvitationOutput = undefined

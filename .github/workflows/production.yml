@@ -1,20 +1,35 @@
 #
-# This source file is part of the ENGAGE-HF project based on the Stanford Spezi Template Application project
+# This source file is part of the Stanford Biodesign Digital Health ENGAGE-HF open-source project
 #
-# SPDX-FileCopyrightText: 2023 Stanford University
+# SPDX-FileCopyrightText: 2023 Stanford University and the project authors (see CONTRIBUTORS.md)
 #
 # SPDX-License-Identifier: MIT
 #
 
-name: Release Models Package
+name: Production Deployment
 
 on:
   release:
     types: [published]
   workflow_dispatch:
 
+concurrency:
+  group: production
+  cancel-in-progress: false
+
 jobs:
-  build:
+  deployment:
+    name: Production Deployment
+    uses: ./.github/workflows/deployment.yml
+    permissions:
+      contents: read
+      actions: read
+      security-events: write
+    secrets: inherit
+    with:
+      environment: production
+  publishpackage:
+    name: Publish Package
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -25,7 +40,6 @@ jobs:
         working-directory: ./functions/models
     steps:
       - uses: actions/checkout@v4
-        # Setup .npmrc file to publish to npm
       - uses: actions/setup-node@v4
         with:
           node-version: '22.x'
@@ -36,6 +50,8 @@ jobs:
         run: npm ci
       - name: Set version
         run: npm version ${{ github.event.release.tag_name }}
+      - name: Build
+        run: npm run build
       - name: Publish
         run: npm publish --provenance --access public
         env:

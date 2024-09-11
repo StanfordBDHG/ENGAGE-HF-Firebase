@@ -6,7 +6,10 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { updateUserInformationInputSchema } from '@stanfordbdhg/engagehf-models'
+import {
+  updateUserInformationInputSchema,
+  type UpdateUserInformationOutput,
+} from '@stanfordbdhg/engagehf-models'
 import { validatedOnCall } from './helpers.js'
 import { UserRole } from '../services/credential/credential.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
@@ -14,7 +17,7 @@ import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 export const updateUserInformation = validatedOnCall(
   'updateUserInformation',
   updateUserInformationInputSchema,
-  async (request): Promise<void> => {
+  async (request): Promise<UpdateUserInformationOutput> => {
     const factory = getServiceFactory()
     const credential = factory.credential(request.auth)
     const userService = factory.user()
