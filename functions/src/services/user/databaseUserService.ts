@@ -8,6 +8,7 @@
 
 import {
   advanceDateByDays,
+  dateConverter,
   type Invitation,
   type Organization,
   User,
@@ -169,6 +170,7 @@ export class DatabaseUserService implements UserService {
           collections.users.doc(userId),
           new User({
             ...invitation.content.user,
+            lastActiveDate: new Date(),
             invitationCode: invitation.content.code,
             dateOfEnrollment: new Date(),
           }),
@@ -264,6 +266,14 @@ export class DatabaseUserService implements UserService {
     return this.databaseService.getDocument<User>((collections) =>
       collections.users.doc(userId),
     )
+  }
+
+  async updateLastActiveDate(userId: string): Promise<void> {
+    return this.databaseService.runTransaction((collections, transaction) => {
+      transaction.update(collections.users.doc(userId), {
+        lastActiveDate: dateConverter.encode(new Date()),
+      })
+    })
   }
 
   async deleteUser(userId: string): Promise<void> {

@@ -24,10 +24,12 @@ export const userConverter = new Lazy(
         .extend({
           dateOfEnrollment: dateConverter.schema,
           invitationCode: z.string(),
+          lastActiveDate: dateConverter.schema,
         })
         .transform((values) => new User(values)),
       encode: (object) => ({
         ...userRegistrationConverter.value.encode(object),
+        lastActiveDate: dateConverter.encode(object.lastActiveDate),
         dateOfEnrollment: dateConverter.encode(object.dateOfEnrollment),
         invitationCode: object.invitationCode,
       }),
@@ -39,6 +41,7 @@ export class User extends UserRegistration {
 
   readonly dateOfEnrollment: Date
   readonly invitationCode: string
+  readonly lastActiveDate: Date
 
   // Constructor
 
@@ -48,6 +51,7 @@ export class User extends UserRegistration {
     dateOfBirth?: Date
     clinician?: string
     receivesAppointmentReminders: boolean
+    receivesInactivityReminders: boolean
     receivesMedicationUpdates: boolean
     receivesQuestionnaireReminders: boolean
     receivesRecommendationUpdates: boolean
@@ -57,9 +61,11 @@ export class User extends UserRegistration {
     timeZone?: string
     dateOfEnrollment: Date
     invitationCode: string
+    lastActiveDate: Date
   }) {
     super(input)
     this.dateOfEnrollment = input.dateOfEnrollment
     this.invitationCode = input.invitationCode
+    this.lastActiveDate = input.lastActiveDate
   }
 }

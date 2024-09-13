@@ -31,6 +31,7 @@ describeWithEmulators('function: deleteInvitation', (env) => {
         type: UserType.patient,
         organization: 'stanford',
         receivesAppointmentReminders: false,
+        receivesInactivityReminders: true,
         receivesMedicationUpdates: true,
         receivesQuestionnaireReminders: false,
         receivesRecommendationUpdates: true,
