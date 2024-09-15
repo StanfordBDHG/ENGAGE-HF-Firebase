@@ -21,10 +21,10 @@ import {
   UserType,
 } from '@stanfordbdhg/engagehf-models'
 import { expect } from 'chai'
+import { enrollUser } from './enrollUser.js'
 import { UserObservationCollection } from '../services/database/collections.js'
 import { describeWithEmulators } from '../tests/functions/testEnvironment.js'
 import { expectError } from '../tests/helpers.js'
-import { enrollUser } from './enrollUser.js'
 
 describeWithEmulators('function: enrollUser', (env) => {
   it('fails to enroll a user without an invitation code', async () => {

@@ -6,11 +6,10 @@
 // SPDX-License-Identifier: MIT
 //
 
+import { enrollUserInputSchema } from '@stanfordbdhg/engagehf-models'
 import { https, logger } from 'firebase-functions'
-import { z } from 'zod'
 import { validatedOnCall } from './helpers.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
-import { enrollUserInputSchema } from '@stanfordbdhg/engagehf-models'
 
 export const enrollUser = validatedOnCall(
   'enrollUser',
