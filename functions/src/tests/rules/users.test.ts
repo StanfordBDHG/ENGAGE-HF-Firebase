@@ -126,7 +126,7 @@ describe('firestore.rules: users/{userId}', () => {
     await assertFails(userFirestore.doc(`users/${ownerId}`).get())
     await assertFails(userFirestore.doc(`users/${clinicianId}`).get())
     await assertFails(userFirestore.doc(`users/${patientId}`).get())
-    await assertFails(userFirestore.doc(`users/${userId}`).get())
+    await assertSucceeds(userFirestore.doc(`users/${userId}`).get())
   })
 
   it('lists users', async () => {
