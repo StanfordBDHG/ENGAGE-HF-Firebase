@@ -7,6 +7,7 @@
 //
 
 import {
+  advanceDateByDays,
   dateConverter,
   type Invitation,
   type Organization,
@@ -64,19 +65,23 @@ export class DatabaseUserService implements UserService {
   async updateClaims(userId: string): Promise<void> {
     try {
       const user = await this.getUser(userId)
-      if (!user) throw new https.HttpsError('not-found', 'User not found.')
-
-      const claims: UserClaims = {
-        type: user.content.type,
+      if (user !== undefined) {
+        const claims: UserClaims = {
+          type: user.content.type,
+        }
+        if (user.content.organization !== undefined)
+          claims.organization = user.content.organization
+        logger.info(
+          `Will set claims for user ${userId}: ${JSON.stringify(claims)}`,
+        )
+        await this.auth.setCustomUserClaims(userId, claims)
+        logger.info(`Successfully set claims for user ${userId}.`)
+      } else {
+        await this.auth.setCustomUserClaims(userId, {})
+        logger.info(
+          `Successfully set claims for not-yet-enrolled user ${userId}.`,
+        )
       }
-      if (user.content.organization !== undefined)
-        claims.organization = user.content.organization
-
-      logger.info(
-        `Will set claims for user ${userId}: ${JSON.stringify(claims)}`,
-      )
-      await this.auth.setCustomUserClaims(userId, claims)
-      logger.info(`Successfully set claims for user ${userId}.`)
     } catch (error) {
       logger.error(
         `Failed to update claims for user ${userId}: ${String(error)}`,
@@ -123,40 +128,6 @@ export class DatabaseUserService implements UserService {
     const result = await this.databaseService.getQuery<Invitation>(
       (collections) =>
         collections.invitations.where('code', '==', invitationCode).limit(1),
-    )
-    return result.at(0)
-  }
-
-  async setInvitationUserId(
-    invitationCode: string,
-    userId: string,
-  ): Promise<void> {
-    await this.databaseService.runTransaction(
-      async (collections, transaction) => {
-        const invitation = (
-          await collections.invitations
-            .where('code', '==', invitationCode)
-            .limit(1)
-            .get()
-        ).docs.at(0)
-        if (invitation === undefined) {
-          logger.error(`Invitation with code '${invitationCode}' not found.`)
-          throw new Error('Invitation not found')
-        }
-        logger.info(
-          `Setting userId '${userId}' for invitation with code '${invitationCode}' at id '${invitation.id}'.`,
-        )
-        transaction.update(invitation.ref, { userId: userId })
-      },
-    )
-  }
-
-  async getInvitationByUserId(
-    userId: string,
-  ): Promise<Document<Invitation> | undefined> {
-    const result = await this.databaseService.getQuery<Invitation>(
-      (collections) =>
-        collections.invitations.where('userId', '==', userId).limit(1),
     )
     return result.at(0)
   }
@@ -236,6 +207,13 @@ export class DatabaseUserService implements UserService {
       ),
     )
 
+    await this.databaseService.bulkWrite(async (collections, writer) => {
+      await collections.firestore.recursiveDelete(
+        collections.invitations.doc(invitation.id),
+        writer,
+      )
+    })
+
     await this.updateClaims(userId)
   }
 
@@ -308,5 +286,34 @@ export class DatabaseUserService implements UserService {
       await this.auth.deleteUser(userId)
       logger.info(`Deleted user auth with id '${userId}'.`)
     })
+  }
+
+  async deleteExpiredAccounts(): Promise<void> {
+    const oneDayAgo = advanceDateByDays(new Date(), -1)
+    const promises: Array<Promise<void>> = []
+    let pageToken: string | undefined = undefined
+    do {
+      const usersResult = await this.auth.listUsers(1_000, pageToken)
+      pageToken = usersResult.pageToken
+      for (const user of usersResult.users) {
+        if (
+          Object.keys(user.customClaims ?? {}).length === 0 &&
+          new Date(user.metadata.lastSignInTime) < oneDayAgo
+        ) {
+          logger.info(`Deleting expired account ${user.uid}`)
+          promises.push(
+            this.auth
+              .deleteUser(user.uid)
+              .catch((error: unknown) =>
+                console.error(
+                  `Failed to delete expired account ${user.uid}: ${String(error)}`,
+                ),
+              ),
+          )
+        }
+      }
+    } while (pageToken !== undefined)
+
+    await Promise.all(promises)
   }
 }

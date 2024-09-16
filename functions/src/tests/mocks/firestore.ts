@@ -49,6 +49,31 @@ export class MockFirestore {
   ) {
     return callback(new MockFirestoreTransaction())
   }
+
+  bulkWriter(): MockFirestoreBulkWriter {
+    return new MockFirestoreBulkWriter()
+  }
+
+  recursiveDelete(reference: MockFirestoreRef) {
+    if (reference instanceof MockFirestoreCollectionRef) {
+      this.collections.delete(reference.path)
+    } else if (reference instanceof MockFirestoreDocRef) {
+      reference.delete()
+    } else {
+      throw new Error('Unsupported reference type')
+    }
+    this.collections.forEach((_, key) => {
+      if (key.startsWith(reference.path + '/')) {
+        this.collections.delete(key)
+      }
+    })
+  }
+}
+
+class MockFirestoreBulkWriter {
+  close() {
+    return
+  }
 }
 
 class MockFirestoreTransaction {

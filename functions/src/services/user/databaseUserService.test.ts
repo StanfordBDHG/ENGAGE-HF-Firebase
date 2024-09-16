@@ -41,13 +41,9 @@ describe('DatabaseUserService', () => {
         invitations: {
           invitationId: {
             code: invitationCode,
+            userId,
             user: {
               type: UserType.admin,
-              messagesSettings: {
-                dailyRemindersAreActive: true,
-                textNotificationsAreActive: true,
-                medicationRemindersAreActive: true,
-              },
             },
             auth: {
               displayName: displayName,
@@ -83,13 +79,9 @@ describe('DatabaseUserService', () => {
         invitations: {
           invitationId: {
             code: invitationCode,
+            userId,
             user: {
               type: UserType.clinician,
-              messagesSettings: {
-                dailyRemindersAreActive: true,
-                textNotificationsAreActive: true,
-                medicationRemindersAreActive: true,
-              },
               organization: 'mockOrganization',
             },
             auth: {
@@ -130,15 +122,11 @@ describe('DatabaseUserService', () => {
         invitations: {
           invitationId: {
             code: invitationCode,
+            userId,
             user: {
               type: UserType.patient,
               clinician: 'mockClinician',
               dateOfBirth: new Date().toISOString(),
-              messagesSettings: {
-                dailyRemindersAreActive: true,
-                textNotificationsAreActive: true,
-                medicationRemindersAreActive: true,
-              },
               organization: 'mockOrganization',
             },
             auth: {

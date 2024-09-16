@@ -20,7 +20,6 @@ import firebaseFunctionsTest from 'firebase-functions-test'
 import { CollectionsService } from '../../services/database/collections.js'
 import { getServiceFactory } from '../../services/factory/getServiceFactory.js'
 import { type ServiceFactory } from '../../services/factory/serviceFactory.js'
-import { type UserClaims } from '../../services/user/databaseUserService.js'
 import { TestFlags } from '../testFlags.js'
 
 export function describeWithEmulators(
@@ -81,7 +80,7 @@ export class EmulatorTestEnvironment {
   async call<Input, Output>(
     func: CallableFunction<Input, Output>,
     input: Input,
-    auth: { uid: string; token?: Partial<UserClaims> },
+    auth: { uid: string; token?: object },
   ): Promise<Output> {
     const wrapped = this.wrapper.wrap(func)
     return wrapped({

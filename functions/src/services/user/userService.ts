@@ -32,10 +32,6 @@ export interface UserService {
   getInvitationByCode(
     invitationCode: string,
   ): Promise<Document<Invitation> | undefined>
-  setInvitationUserId(invitationCode: string, userId: string): Promise<void>
-  getInvitationByUserId(
-    userId: string,
-  ): Promise<Document<Invitation> | undefined>
   enrollUser(invitation: Document<Invitation>, userId: string): Promise<void>
   deleteInvitation(invitation: Document<Invitation>): Promise<void>
 
@@ -55,4 +51,5 @@ export interface UserService {
   getUser(userId: string): Promise<Document<User> | undefined>
   updateLastActiveDate(userId: string): Promise<void>
   deleteUser(userId: string): Promise<void>
+  deleteExpiredAccounts(): Promise<void>
 }

@@ -14,12 +14,12 @@ export {
   beforeUserCreatedFunction as beforeUserCreated,
   beforeUserSignedInFunction as beforeUserSignedIn,
 } from './functions/blocking.js'
-export * from './functions/checkInvitationCode.js'
 export * from './functions/createInvitation.js'
 export * from './functions/customSeed.js'
 export * from './functions/defaultSeed.js'
 export * from './functions/deleteUser.js'
 export * from './functions/dismissMessage.js'
+export * from './functions/enrollUser.js'
 export * from './functions/exportHealthSummary.js'
 export * from './functions/getUsersInformation.js'
 export * from './functions/onHistoryWritten.js'

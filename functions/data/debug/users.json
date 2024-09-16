@@ -10,7 +10,7 @@
       "type": "admin",
       "dateOfEnrollment": "1970-01-01T00:00:00.000Z",
       "lastActiveDate": "1970-01-01T00:00:00.000Z",
-      "invitationCode": ""
+      "invitationCode": "engagehf-admin0@stanford.edu"
     }
   },
   {
@@ -24,7 +24,7 @@
       "type": "admin",
       "dateOfEnrollment": "1970-01-01T00:00:00.000Z",
       "lastActiveDate": "1970-01-01T00:00:00.000Z",
-      "invitationCode": ""
+      "invitationCode": "engagehf-admin1@stanford.edu"
     }
   },
   {
@@ -39,7 +39,7 @@
       "organization": "stanford",
       "dateOfEnrollment": "1970-01-01T00:00:00.000Z",
       "lastActiveDate": "1970-01-01T00:00:00.000Z",
-      "invitationCode": ""
+      "invitationCode": "engagehf-owner0@stanford.edu"
     }
   },
   {
@@ -54,7 +54,7 @@
       "organization": "stanford",
       "dateOfEnrollment": "1970-01-01T00:00:00.000Z",
       "lastActiveDate": "1970-01-01T00:00:00.000Z",
-      "invitationCode": ""
+      "invitationCode": "engagehf-owner1@stanford.edu"
     }
   },
   {
@@ -69,7 +69,7 @@
       "organization": "jhu",
       "dateOfEnrollment": "1970-01-01T00:00:00.000Z",
       "lastActiveDate": "1970-01-01T00:00:00.000Z",
-      "invitationCode": ""
+      "invitationCode": "engagehf-owner0@jhu.edu"
     }
   },
   {
@@ -84,7 +84,7 @@
       "organization": "umich",
       "dateOfEnrollment": "1970-01-01T00:00:00.000Z",
       "lastActiveDate": "1970-01-01T00:00:00.000Z",
-      "invitationCode": ""
+      "invitationCode": "engagehf-owner0@umich.edu"
     }
   },
   {
@@ -99,7 +99,7 @@
       "organization": "uw",
       "dateOfEnrollment": "1970-01-01T00:00:00.000Z",
       "lastActiveDate": "1970-01-01T00:00:00.000Z",
-      "invitationCode": ""
+      "invitationCode": "engagehf-admin0@uw.edu"
     }
   },
   {
@@ -114,7 +114,7 @@
       "organization": "stanford",
       "dateOfEnrollment": "1970-01-01T00:00:00.000Z",
       "lastActiveDate": "1970-01-01T00:00:00.000Z",
-      "invitationCode": ""
+      "invitationCode": "engagehf-clinician0@stanford.edu"
     }
   },
   {
@@ -129,14 +129,14 @@
       "organization": "stanford",
       "dateOfEnrollment": "1970-01-01T00:00:00.000Z",
       "lastActiveDate": "1970-01-01T00:00:00.000Z",
-      "invitationCode": ""
+      "invitationCode": "engagehf-clinician1@stanford.edu"
     }
   },
   {
     "auth": {
-      "uid": "engagehf-clinician-jhu.edu",
+      "uid": "engagehf-clinician0-jhu.edu",
       "displayName": "JHU Clinician",
-      "email": "engagehf-clinician@jhu.edu",
+      "email": "engagehf-clinician0@jhu.edu",
       "password": "password"
     },
     "user": {
@@ -144,14 +144,14 @@
       "organization": "jhu",
       "dateOfEnrollment": "1970-01-01T00:00:00.000Z",
       "lastActiveDate": "1970-01-01T00:00:00.000Z",
-      "invitationCode": ""
+      "invitationCode": "engagehf-clinician0@jhu.edu"
     }
   },
   {
     "auth": {
-      "uid": "engagehf-clinician-umich.edu",
+      "uid": "engagehf-clinician0-umich.edu",
       "displayName": "UMich Clinician",
-      "email": "engagehf-clinician@umich.edu",
+      "email": "engagehf-clinician0@umich.edu",
       "password": "password"
     },
     "user": {
@@ -159,14 +159,14 @@
       "organization": "umich",
       "dateOfEnrollment": "1970-01-01T00:00:00.000Z",
       "lastActiveDate": "1970-01-01T00:00:00.000Z",
-      "invitationCode": ""
+      "invitationCode": "engagehf-clinician0@umich.edu"
     }
   },
   {
     "auth": {
-      "uid": "engagehf-clinician-uw.edu",
+      "uid": "engagehf-clinician0-uw.edu",
       "displayName": "UW Clinician",
-      "email": "engagehf-clinician@uw.edu",
+      "email": "engagehf-clinician0@uw.edu",
       "password": "password"
     },
     "user": {
@@ -174,7 +174,7 @@
       "organization": "uw",
       "dateOfEnrollment": "1970-01-01T00:00:00.000Z",
       "lastActiveDate": "1970-01-01T00:00:00.000Z",
-      "invitationCode": ""
+      "invitationCode": "engagehf-clinician0@uw.edu"
     }
   },
   {
@@ -189,7 +189,7 @@
       "organization": "stanford",
       "dateOfEnrollment": "1970-01-01T00:00:00.000Z",
       "lastActiveDate": "1970-01-01T00:00:00.000Z",
-      "invitationCode": ""
+      "invitationCode": "SEEDING0"
     }
   },
   {
@@ -204,7 +204,7 @@
       "organization": "stanford",
       "dateOfEnrollment": "1970-01-01T00:00:00.000Z",
       "lastActiveDate": "1970-01-01T00:00:00.000Z",
-      "invitationCode": ""
+      "invitationCode": "SEEDING1"
     }
   },
   {
@@ -219,7 +219,7 @@
       "organization": "stanford",
       "dateOfEnrollment": "1970-01-01T00:00:00.000Z",
       "lastActiveDate": "1970-01-01T00:00:00.000Z",
-      "invitationCode": ""
+      "invitationCode": "SEEDING2"
     }
   },
   {
@@ -234,7 +234,7 @@
       "organization": "jhu",
       "dateOfEnrollment": "1970-01-01T00:00:00.000Z",
       "lastActiveDate": "1970-01-01T00:00:00.000Z",
-      "invitationCode": ""
+      "invitationCode": "SEEDING3"
     }
   },
   {
@@ -249,7 +249,7 @@
       "organization": "jhu",
       "dateOfEnrollment": "1970-01-01T00:00:00.000Z",
       "lastActiveDate": "1970-01-01T00:00:00.000Z",
-      "invitationCode": ""
+      "invitationCode": "SEEDING4"
     }
   },
   {
@@ -264,7 +264,7 @@
       "organization": "jhu",
       "dateOfEnrollment": "1970-01-01T00:00:00.000Z",
       "lastActiveDate": "1970-01-01T00:00:00.000Z",
-      "invitationCode": ""
+      "invitationCode": "SEEDING5"
     }
   }
 ]

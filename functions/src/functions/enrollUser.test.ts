@@ -21,26 +21,26 @@ import {
   UserType,
 } from '@stanfordbdhg/engagehf-models'
 import { expect } from 'chai'
-import { checkInvitationCode } from './checkInvitationCode.js'
+import { enrollUser } from './enrollUser.js'
 import { UserObservationCollection } from '../services/database/collections.js'
 import { describeWithEmulators } from '../tests/functions/testEnvironment.js'
 import { expectError } from '../tests/helpers.js'
 
-describeWithEmulators('function: checkInvitationCode', (env) => {
-  it('should fail if the invitation code does not exist', async () => {
+describeWithEmulators('function: enrollUser', (env) => {
+  it('fails to enroll a user without an invitation code', async () => {
+    const authUser = await env.auth.createUser({})
     await expectError(
       async () =>
         env.call(
-          checkInvitationCode,
+          enrollUser,
           { invitationCode: 'TESTCODE' },
-          { uid: 'test' },
+          { uid: authUser.uid },
         ),
-      (error) =>
-        expect(error).to.have.property('message', 'Invitation not found'),
+      (error) => expect(error).to.have.property('code', 'not-found'),
     )
   })
 
-  it('should succeed if invitation code exists', async () => {
+  it('correctly enrolls a user', async () => {
     const invitation = new Invitation({
       auth: new UserAuth({
         email: 'engagehf-test@stanford.edu',
@@ -92,7 +92,7 @@ describeWithEmulators('function: checkInvitationCode', (env) => {
 
     const authUser = await env.auth.createUser({})
     await env.call(
-      checkInvitationCode,
+      enrollUser,
       { invitationCode: 'TESTCODE' },
       { uid: authUser.uid },
     )

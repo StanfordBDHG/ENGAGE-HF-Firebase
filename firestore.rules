@@ -2,7 +2,7 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{databaseId}/documents {
     function isAuthenticated() {
-      return request.auth != null;
+      return request.auth != null && ('type' in request.auth.token);
     }
 
     function isAdmin() {
@@ -115,7 +115,7 @@ service cloud.firestore {
       }
 
       allow read: if isAdmin()
-        || isUser(userId)
+        || (request.auth != null && request.auth.uid == userId)
         || isOwnerOrClinicianOf(resource.data.organization);
 
       allow create: if isAdmin()

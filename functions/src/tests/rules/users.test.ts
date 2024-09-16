@@ -199,7 +199,7 @@ describe('firestore.rules: users/{userId}', () => {
     await testEnvironment.withSecurityRulesDisabled(async (environment) => {
       await environment.firestore().doc(`users/${userId}`).delete()
     })
-    await assertSucceeds(userFirestore.doc(`users/${userId}`).set({}))
+    await assertFails(userFirestore.doc(`users/${userId}`).set({}))
   })
 
   it('updates users/{userId} as admin', async () => {

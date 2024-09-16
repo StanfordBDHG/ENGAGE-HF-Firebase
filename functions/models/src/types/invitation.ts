@@ -21,14 +21,12 @@ export const invitationConverter = new Lazy(
     new SchemaConverter({
       schema: z
         .object({
-          userId: optionalish(z.string()),
           code: z.string(),
           auth: optionalish(z.lazy(() => userAuthConverter.value.schema)),
           user: z.lazy(() => userRegistrationConverter.value.schema),
         })
         .transform((values) => new Invitation(values)),
       encode: (object) => ({
-        userId: object.userId ?? null,
         code: object.code,
         auth: object.auth ? userAuthConverter.value.encode(object.auth) : null,
         user: userRegistrationConverter.value.encode(object.user),
@@ -39,7 +37,6 @@ export const invitationConverter = new Lazy(
 export class Invitation {
   // Properties
 
-  readonly userId?: string
   readonly code: string
   readonly auth?: UserAuth
   readonly user: UserRegistration
@@ -47,12 +44,10 @@ export class Invitation {
   // Constructor
 
   constructor(input: {
-    userId?: string
     code: string
     auth?: UserAuth
     user: UserRegistration
   }) {
-    this.userId = input.userId
     this.code = input.code
     this.auth = input.auth
     this.user = input.user
