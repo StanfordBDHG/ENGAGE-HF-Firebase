@@ -413,6 +413,7 @@ export class DefaultMessageService implements MessageService {
       data.action = message.content.action
     data.type = message.content.type
     data.messageId = message.id
+    data.isDismissible = message.content.isDismissible ? 'true' : 'false'
 
     const title = message.content.title.localize(...options.languages)
     const body = message.content.description?.localize(...options.languages)
