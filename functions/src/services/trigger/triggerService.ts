@@ -546,9 +546,7 @@ export class TriggerService {
 
     const requestContexts = await Promise.all(
       requests.map(async (document) =>
-        medicationService.getContext(document.content, {
-          reference: `users/${userId}/medicationRequests/${document.id}`,
-        }),
+        medicationService.getContext(document),
       ),
     )
 

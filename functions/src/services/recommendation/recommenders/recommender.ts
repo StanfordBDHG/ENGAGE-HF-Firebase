@@ -20,6 +20,7 @@ import {
   type RecommendationInput,
   type RecommendationOutput,
 } from '../recommendationService.js'
+import { late } from 'zod'
 
 export abstract class Recommender {
   // Properties
@@ -55,7 +56,6 @@ export abstract class Recommender {
   protected isTargetDailyDoseReached(
     currentMedication: MedicationRequestContext[],
   ): boolean {
-    // TODO: Make sure that there is only one medication involved!
     const medication = currentMedication.at(0)?.medication
     if (!medication) throw new Error('Medication is missing')
 
@@ -77,11 +77,23 @@ export abstract class Recommender {
     requests: MedicationRequestContext[],
     references: MedicationClassReference[],
   ): MedicationRequestContext[] {
-    return requests.filter((request) =>
+    const validContexts = requests.filter((request) =>
       references.some(
         (reference) =>
           request.medicationClassReference.reference === reference.toString(),
       ),
+    )
+    const latestContext =
+      validContexts.length > 0 ?
+        validContexts.reduce(
+          (acc, context) =>
+            acc.lastUpdate < context.lastUpdate ? context : acc,
+          validContexts[0],
+        )
+      : undefined
+    return validContexts.filter(
+      (context) =>
+        context.medicationReference === latestContext?.medicationReference,
     )
   }
 

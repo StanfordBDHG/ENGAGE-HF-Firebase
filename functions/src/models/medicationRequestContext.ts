@@ -14,6 +14,7 @@ import {
 } from '@stanfordbdhg/engagehf-models'
 
 export interface MedicationRequestContext {
+  lastUpdate: Date
   request: FHIRMedicationRequest
   requestReference: FHIRReference
   drug: FHIRMedication

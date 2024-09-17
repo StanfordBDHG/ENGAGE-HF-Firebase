@@ -33,10 +33,9 @@ export class DatabaseMedicationService implements MedicationService {
   // Methods - Medication Request Context
 
   async getContext(
-    request: FHIRMedicationRequest,
-    reference: FHIRReference,
+    request: Document<FHIRMedicationRequest>,
   ): Promise<MedicationRequestContext> {
-    const drugReference = request.medicationReference
+    const drugReference = request.content.medicationReference
     if (drugReference === undefined) throw new Error('Drug reference not found')
     const drug = (await this.getReference(drugReference))?.content
     if (drug === undefined)
@@ -61,8 +60,9 @@ export class DatabaseMedicationService implements MedicationService {
         `Medication class not found at ${medicationClassReference.reference}`,
       )
     return {
-      requestReference: reference,
-      request,
+      lastUpdate: request.lastUpdate,
+      requestReference: { reference: request.path },
+      request: request.content,
       drugReference,
       drug,
       medicationReference,

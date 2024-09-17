@@ -19,8 +19,7 @@ export interface MedicationService {
   // Medication Request Context
 
   getContext(
-    request: FHIRMedicationRequest,
-    reference: FHIRReference,
+    request: Document<FHIRMedicationRequest>,
   ): Promise<MedicationRequestContext>
 
   // Medication Classes

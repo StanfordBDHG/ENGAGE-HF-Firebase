@@ -52,6 +52,7 @@ describe('DiureticRecommender', () => {
   describe('On furosemide', () => {
     it('correctly keeps existing medication request', async () => {
       const existingMedication: MedicationRequestContext = {
+        lastUpdate: new Date(),
         requestReference: {
           reference:
             'users/mockPatient/medicationRequests/mockMedicationRequest',
