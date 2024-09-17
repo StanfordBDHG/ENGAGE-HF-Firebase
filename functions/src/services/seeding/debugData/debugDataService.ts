@@ -152,6 +152,7 @@ export class DebugDataService extends SeedingService {
       }),
       UserMessage.createPreAppointment({
         creationDate: date,
+        reference: `users/${userId}/appointments/0`,
       }),
       UserMessage.createSymptomQuestionnaire({
         creationDate: date,

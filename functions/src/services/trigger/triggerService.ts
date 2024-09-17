@@ -74,9 +74,9 @@ export class TriggerService {
         if (clinicianId !== undefined) {
           await messageService.addMessage(
             clinicianId,
-            UserMessage.createPreAppointment({
+            UserMessage.createPreAppointmentForClinician({
+              userId: userId,
               reference: appointment.path,
-              isDismissible: true,
             }),
             { notify: true },
           )
@@ -179,9 +179,8 @@ export class TriggerService {
         if (user.content.clinician !== undefined) {
           await messageService.addMessage(
             user.content.clinician,
-            UserMessage.createInactive({
-              reference: `users/${user.id}`,
-              isDismissible: true,
+            UserMessage.createInactiveForClinician({
+              userId: user.id,
             }),
             { notify: true },
           )
@@ -328,8 +327,8 @@ export class TriggerService {
           if (clinicianId !== undefined) {
             await messageService.addMessage(
               clinicianId,
-              UserMessage.createWeightGain({
-                reference: `users/${userId}`,
+              UserMessage.createWeightGainForClinician({
+                userId: userId,
               }),
               { notify: true },
             )
