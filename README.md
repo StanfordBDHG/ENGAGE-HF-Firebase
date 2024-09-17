@@ -552,8 +552,8 @@ The following list describes all different types a message could have. Expiratio
 |Welcome|Server: When creating new user.|Tap|videoSections/$videoSectionId$/videos/$videoId$|
 |Vitals|Server: Daily at certain time (respect timezone!)|When receiving blood pressure and weight observations on the server from current day.|observations|
 |SymptomQuestionnaire|Server: Every 14 days.|After questionnaire responses received on server.|questionnaires/$questionnaireId$|
-|PreAppointment|Server: Day (24h) before appointment.|After appointment time or when it is cancelled.|patients: healthSummary, clinicians: users/$userId$/healthSummary|
-|Inactivity|Server: Daily when lastActiveDate of a user is older than 7 days.|When a user observation is modified.|null|
+|PreAppointment|Server: Day (24h) before appointment.|After appointment time or when it is cancelled.|patients: healthSummary, clinicians: users/$userId$/appointments|
+|Inactivity|Server: Daily when lastActiveDate of a user is older than 7 days.|When a user observation is modified.|patients: null, clinician: users/$userId$|
 
 ### users/$userId$/questionnaireResponses/$questionnaireResponseId$
 

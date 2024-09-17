@@ -99,7 +99,7 @@ export class UserMessage {
       description: new LocalizedText({
         en: 'This patient has been inactive for 7 days.',
       }),
-      action: undefined,
+      action: `users/${input.userId}`,
       type: UserMessageType.inactive,
       isDismissible: true,
       reference: `users/${input.userId}`,
@@ -161,7 +161,7 @@ export class UserMessage {
         en: 'This patient may be eligible for med changes. You can review med information on the user detail page.',
       }),
       reference: `users/${input.userId}`,
-      action: `users/${input.userId}/recommendations`,
+      action: `users/${input.userId}/medications`,
       type: UserMessageType.medicationUptitration,
       isDismissible: true,
     })
@@ -199,7 +199,7 @@ export class UserMessage {
       description: new LocalizedText({
         en: 'Appointment is coming up.',
       }),
-      action: `users/${input.userId}/healthSummary`,
+      action: `users/${input.userId}/appointments`,
       reference: input.reference,
       type: UserMessageType.preAppointment,
       isDismissible: true,
