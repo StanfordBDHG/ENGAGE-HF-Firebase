@@ -18,12 +18,7 @@ import {
 } from 'firebase-functions/v2/https'
 import { z } from 'zod'
 
-/* eslint-disable @typescript-eslint/no-redundant-type-constituents */
-
-export function validatedOnCall<
-  Schema extends z.ZodTypeAny,
-  Return = unknown | Promise<unknown>,
->(
+export function validatedOnCall<Schema extends z.ZodTypeAny, Return>(
   name: string,
   schema: Schema,
   handler: (request: CallableRequest<z.output<Schema>>) => Return,
