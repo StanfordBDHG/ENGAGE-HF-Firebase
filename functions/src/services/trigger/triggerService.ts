@@ -545,9 +545,7 @@ export class TriggerService {
     )
 
     const requestContexts = await Promise.all(
-      requests.map(async (document) =>
-        medicationService.getContext(document),
-      ),
+      requests.map(async (document) => medicationService.getContext(document)),
     )
 
     logger.debug(
