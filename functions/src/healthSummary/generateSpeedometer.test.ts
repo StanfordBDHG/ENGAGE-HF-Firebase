@@ -15,7 +15,7 @@ import { TestFlags } from '../tests/testFlags.js'
 
 describe('generateSpeedometer', () => {
   it('should generate the same chart on mock data', async () => {
-    const inputData = await mockHealthSummaryData()
+    const inputData = await mockHealthSummaryData('')
     const actualData = generateSpeedometerSvg(inputData.symptomScores, 258, {
       languages: ['en_US'],
     })
