@@ -90,7 +90,6 @@ export class UserMessage {
   static createInactiveForClinician(input: {
     creationDate?: Date
     userId: string
-    isDismissible?: boolean
   }): UserMessage {
     return new UserMessage({
       creationDate: input.creationDate ?? new Date(),
