@@ -9,6 +9,10 @@
 import fs from 'fs'
 import { Resvg, type ResvgRenderOptions } from '@resvg/resvg-js'
 import {
+  average,
+  percentage,
+  presortedMedian,
+  presortedPercentile,
   type Observation,
   UserMedicationRecommendationType,
 } from '@stanfordbdhg/engagehf-models'
@@ -23,12 +27,6 @@ import {
 import { healthSummaryLocalizations } from './generate+localizations.js'
 import { generateChartSvg } from './generateChart.js'
 import { generateSpeedometerSvg } from './generateSpeedometer.js'
-import {
-  average,
-  percentage,
-  presortedMedian,
-  presortedPercentile,
-} from '../extensions/array.js'
 import { type HealthSummaryData } from '../models/healthSummaryData.js'
 
 export interface HealthSummaryOptions {

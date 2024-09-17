@@ -11,6 +11,7 @@ import {
   advanceDateByMinutes,
   type FHIRMedicationRequest,
   type FHIRQuestionnaireResponse,
+  median,
   QuantityUnit,
   QuestionnaireReference,
   type UserMedicationRecommendation,
@@ -20,7 +21,6 @@ import {
   VideoReference,
 } from '@stanfordbdhg/engagehf-models'
 import { logger } from 'firebase-functions'
-import { median } from '../../extensions/array.js'
 import { UserObservationCollection } from '../database/collections.js'
 import { type ServiceFactory } from '../factory/serviceFactory.js'
 import { type PatientService } from '../patient/patientService.js'

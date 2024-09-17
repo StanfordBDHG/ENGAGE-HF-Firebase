@@ -9,6 +9,7 @@
 import { isDeepStrictEqual } from 'util'
 import {
   advanceDateByDays,
+  compactMap,
   type FHIRAllergyIntolerance,
   type FHIRAppointment,
   type FHIRMedicationRequest,
@@ -21,7 +22,6 @@ import {
   UserMedicationRecommendationType,
 } from '@stanfordbdhg/engagehf-models'
 import { type PatientService } from './patientService.js'
-import { compactMap } from '../../extensions/array.js'
 import { UserObservationCollection } from '../database/collections.js'
 import {
   type Document,

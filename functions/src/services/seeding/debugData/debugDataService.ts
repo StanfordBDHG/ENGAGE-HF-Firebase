@@ -8,6 +8,7 @@
 
 import {
   advanceDateByDays,
+  chunks,
   type CustomSeedingOptions,
   DrugReference,
   FHIRAppointment,
@@ -30,7 +31,6 @@ import { type Auth } from 'firebase-admin/auth'
 import { type CollectionReference } from 'firebase-admin/firestore'
 import { type Storage } from 'firebase-admin/storage'
 import { logger } from 'firebase-functions'
-import { chunks } from '../../../extensions/array.js'
 import {
   type CollectionsService,
   UserObservationCollection,
