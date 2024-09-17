@@ -623,10 +623,7 @@ class HealthSummaryPDFGenerator {
     this.addText(this.texts.header.providerLine(this.data.providerName ?? null))
     this.moveDown(4)
     this.addText(
-      this.texts.header.nextAppointmentLine(
-        this.data.nextAppointment ?? null,
-        this.data.providerName ?? null,
-      ),
+      this.texts.header.nextAppointmentLine(this.data.nextAppointment ?? null),
     )
 
     const innerWidth = this.pageWidth - this.margins.left - this.margins.right

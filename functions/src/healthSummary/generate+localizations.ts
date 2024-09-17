@@ -29,15 +29,13 @@ export function healthSummaryLocalizations(languages: string[]) {
           en: `Provider: ${name ?? '---'}`,
         }).localize(...languages)
       },
-      nextAppointmentLine(
-        appointment: FHIRAppointment | null,
-        providerName: string | null,
-      ) {
+      nextAppointmentLine(appointment: FHIRAppointment | null) {
         const date = appointment?.start
-        const clinicianName =
-          appointment?.providerNames.join(', ') ?? providerName ?? ''
+        const providerNames = appointment?.providerNames ?? []
+        const providerText =
+          providerNames.length === 0 ? '' : providerNames.join(', ') + ' '
         return new LocalizedText({
-          en: `Next Appointment: ${clinicianName} ${date !== undefined ? formatDate(date) : '---'}`,
+          en: `Next Appointment: ${providerText}${date !== undefined ? formatDate(date) : '---'}`,
         }).localize(...languages)
       },
       pageNumberTitle(number: number) {
