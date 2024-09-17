@@ -62,9 +62,9 @@ describe('RasiRecommender', () => {
   })
 
   beforeEach(async () => {
-    symptomScore = (await mockHealthSummaryData('', new Date())).symptomScores.at(
-      -1,
-    )
+    symptomScore = (
+      await mockHealthSummaryData('', new Date())
+    ).symptomScores.at(-1)
     vitals = mockRecommendationVitals({
       countBloodPressureBelow85: 0,
       medianSystolicBloodPressure: 110,
