@@ -90,6 +90,7 @@ export class UserMessage {
   static createInactiveForClinician(input: {
     creationDate?: Date
     userId: string
+    userName?: string
   }): UserMessage {
     return new UserMessage({
       creationDate: input.creationDate ?? new Date(),
@@ -97,7 +98,7 @@ export class UserMessage {
         en: 'Inactive',
       }),
       description: new LocalizedText({
-        en: 'This patient has been inactive for 7 days.',
+        en: `${input.userName ?? 'Patient'} has been inactive for 7 days.`,
       }),
       action: `users/${input.userId}`,
       type: UserMessageType.inactive,
@@ -150,6 +151,7 @@ export class UserMessage {
 
   static createMedicationUptitrationForClinician(input: {
     creationDate?: Date
+    userName?: string
     userId: string
   }): UserMessage {
     return new UserMessage({
@@ -158,7 +160,7 @@ export class UserMessage {
         en: 'Eligible Medication Change',
       }),
       description: new LocalizedText({
-        en: 'This patient may be eligible for med changes. You can review med information on the user detail page.',
+        en: `${input.userName ?? 'Patient'} may be eligible for med changes. You can review med information on the user detail page.`,
       }),
       reference: `users/${input.userId}`,
       action: `users/${input.userId}/medications`,
@@ -189,6 +191,7 @@ export class UserMessage {
   static createPreAppointmentForClinician(input: {
     creationDate?: Date
     userId: string
+    userName?: string
     reference: string
   }): UserMessage {
     return new UserMessage({
@@ -197,7 +200,7 @@ export class UserMessage {
         en: 'Appointment Reminder',
       }),
       description: new LocalizedText({
-        en: 'Appointment is coming up.',
+        en: `Appointment with ${input.userName ?? 'patient'} is coming up.`,
       }),
       action: `users/${input.userId}/appointments`,
       reference: input.reference,
@@ -266,6 +269,7 @@ export class UserMessage {
 
   static createWeightGainForClinician(input: {
     creationDate?: Date
+    userName?: string
     userId: string
   }): UserMessage {
     return new UserMessage({
@@ -274,7 +278,7 @@ export class UserMessage {
         en: 'Weight increase since last week',
       }),
       description: new LocalizedText({
-        en: 'Weight increased over 3 lbs.',
+        en: `Weight increase over 3 lbs for ${input.userName ?? 'patient'}.`,
       }),
       action: `users/${input.userId}/medications`,
       reference: `users/${input.userId}`,

@@ -72,10 +72,12 @@ export class TriggerService {
           `TriggerService.every15Minutes: About to add clinician message for clinician ${clinicianId} and appointment ${appointment.path}.`,
         )
         if (clinicianId !== undefined) {
+          const userAuth = await userService.getAuth(userId)
           await messageService.addMessage(
             clinicianId,
             UserMessage.createPreAppointmentForClinician({
               userId: userId,
+              userName: userAuth.displayName,
               reference: appointment.path,
             }),
             { notify: true },
@@ -177,10 +179,12 @@ export class TriggerService {
         )
 
         if (user.content.clinician !== undefined) {
+          const userAuth = await userService.getAuth(user.id)
           await messageService.addMessage(
             user.content.clinician,
             UserMessage.createInactiveForClinician({
               userId: user.id,
+              userName: userAuth.displayName,
             }),
             { notify: true },
           )
@@ -325,10 +329,12 @@ export class TriggerService {
           const clinicianId = user?.content.clinician
 
           if (clinicianId !== undefined) {
+            const userAuth = await userService.getAuth(userId)
             await messageService.addMessage(
               clinicianId,
               UserMessage.createWeightGainForClinician({
                 userId: userId,
+                userName: userAuth.displayName,
               }),
               { notify: true },
             )
@@ -635,10 +641,12 @@ export class TriggerService {
     const user = await this.factory.user().getUser(input.userId)
     const clinicianId = user?.content.clinician
     if (clinicianId !== undefined) {
+      const userAuth = await this.factory.user().getAuth(input.userId)
       await messageService.addMessage(
         clinicianId,
-        UserMessage.createMedicationUptitration({
-          reference: `users/${input.userId}`,
+        UserMessage.createMedicationUptitrationForClinician({
+          userName: userAuth.displayName,
+          userId: input.userId,
         }),
         { notify: true },
       )
