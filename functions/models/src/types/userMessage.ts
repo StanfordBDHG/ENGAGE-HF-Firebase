@@ -151,8 +151,8 @@ export class UserMessage {
 
   static createMedicationUptitrationForClinician(input: {
     creationDate?: Date
-    userName?: string
     userId: string
+    userName?: string
   }): UserMessage {
     return new UserMessage({
       creationDate: input.creationDate ?? new Date(),
@@ -269,8 +269,8 @@ export class UserMessage {
 
   static createWeightGainForClinician(input: {
     creationDate?: Date
-    userName?: string
     userId: string
+    userName?: string
   }): UserMessage {
     return new UserMessage({
       creationDate: input.creationDate ?? new Date(),
