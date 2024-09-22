@@ -616,26 +616,6 @@ Watch links for YouTube: `https://youtube.com/watch?v=${youtubeId}`.
 
 # Functions
 
-## checkInvitationCode
-
-Use `checkInvitationCode` to check if an invitation code is still available and connect the currently (anonymously) authenticated userId with the invitation.
-
-- Note: Currently, due to an issue with Firebase Authentication, the user is already enrolled after calling this function with a full user account and an invitation code may be used infinitely often. This should not be the case in the production system.
-
-### Security
-
-Any authenticated user may use this function, but it should only occur before that user has linked credentials or the user object has been created.
-
-### Input
-
-|Property|Type|Values|Comments|
-|-|-|-|-|
-|invitationCode|string|-|The invitation code provided to the user by the organization. It needs to be between 6-12 characters long and only use uppercase latin characters and arabic digits.|
-
-### Output
-
-None.
-
 ## createInvitation
 
 Use `createInvitation` to create invitations to be sent out to new patients, clinicians or owners.
@@ -725,6 +705,24 @@ Admins may dismiss messages for any user, otherwise users may only dismiss their
 |userId|optional string|-|The userId of the user whose message you are dismissing. May be omitted for users dismissing their own messages.|
 |messageId|string|-|The id of the message to dismiss. This message needs to have `isDismissible` set to `true`.|
 |didPerformAction|optional boolean|-|Whether the message action has actually been performed. Depending on this value, the server may decide to actually dismiss the message or not.|
+
+### Output
+
+None.
+
+## enrollUser
+
+Use `enrollUser` to enroll a user, i.e. use an invitation code to create a full user account.
+
+### Security
+
+Any authenticated, non-enrolled user may use this function.
+
+### Input
+
+|Property|Type|Values|Comments|
+|-|-|-|-|
+|invitationCode|string|-|The invitation code provided to the user by the organization. It needs to be between 6-12 characters long and only use uppercase latin characters and arabic digits.|
 
 ### Output
 
