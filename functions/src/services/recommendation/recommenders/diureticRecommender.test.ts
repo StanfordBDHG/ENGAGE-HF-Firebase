@@ -38,7 +38,7 @@ describe('DiureticRecommender', () => {
 
   describe('No treatment', () => {
     it('correctly does not recommend new medications', async () => {
-      const healthSummaryData = await mockHealthSummaryData()
+      const healthSummaryData = await mockHealthSummaryData('')
       const result = recommender.compute({
         requests: [],
         contraindications: [],
@@ -122,7 +122,7 @@ describe('DiureticRecommender', () => {
           reference: MedicationClassReference.diuretics,
         },
       }
-      const healthSummaryData = await mockHealthSummaryData()
+      const healthSummaryData = await mockHealthSummaryData('')
       const result = recommender.compute({
         requests: [existingMedication],
         contraindications: [],
