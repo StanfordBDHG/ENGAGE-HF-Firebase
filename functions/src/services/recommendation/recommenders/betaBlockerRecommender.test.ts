@@ -56,7 +56,7 @@ describe('BetaBlockerRecommender', () => {
   })
 
   beforeEach(async () => {
-    healthSummaryData = await mockHealthSummaryData(new Date())
+    healthSummaryData = await mockHealthSummaryData('', new Date())
     medicationContraindication = (_) => ContraindicationCategory.none
     medicationClassContraindication = (_) => ContraindicationCategory.none
   })

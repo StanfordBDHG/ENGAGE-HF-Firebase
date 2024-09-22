@@ -7,6 +7,7 @@
 //
 
 import {
+  type FHIRAppointment,
   type Observation,
   type SymptomScore,
   type UserMedicationRecommendation,
@@ -15,8 +16,8 @@ import {
 export interface HealthSummaryData {
   name?: string
   dateOfBirth?: Date
-  clinicianName?: string
-  nextAppointment?: Date
+  providerName?: string
+  nextAppointment?: FHIRAppointment
   recommendations: UserMedicationRecommendation[]
   vitals: HealthSummaryVitals
   symptomScores: SymptomScore[]

@@ -15,7 +15,7 @@ import { TestFlags } from '../tests/testFlags.js'
 
 describe('generateChart', () => {
   it('should generate the same chart on mock data', async () => {
-    const inputData = await mockHealthSummaryData()
+    const inputData = await mockHealthSummaryData('')
     const actualData = generateChartSvg(
       inputData.vitals.bodyWeight,
       { width: 258, height: 193.5 },

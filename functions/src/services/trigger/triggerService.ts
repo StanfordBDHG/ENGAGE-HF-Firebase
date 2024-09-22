@@ -11,6 +11,7 @@ import {
   advanceDateByMinutes,
   type FHIRMedicationRequest,
   type FHIRQuestionnaireResponse,
+  median,
   QuantityUnit,
   QuestionnaireReference,
   type UserMedicationRecommendation,
@@ -20,7 +21,6 @@ import {
   VideoReference,
 } from '@stanfordbdhg/engagehf-models'
 import { logger } from 'firebase-functions'
-import { median } from '../../extensions/array.js'
 import { UserObservationCollection } from '../database/collections.js'
 import { type ServiceFactory } from '../factory/serviceFactory.js'
 import { type PatientService } from '../patient/patientService.js'
@@ -72,11 +72,13 @@ export class TriggerService {
           `TriggerService.every15Minutes: About to add clinician message for clinician ${clinicianId} and appointment ${appointment.path}.`,
         )
         if (clinicianId !== undefined) {
+          const userAuth = await userService.getAuth(userId)
           await messageService.addMessage(
             clinicianId,
-            UserMessage.createPreAppointment({
+            UserMessage.createPreAppointmentForClinician({
+              userId: userId,
+              userName: userAuth.displayName,
               reference: appointment.path,
-              isDismissible: true,
             }),
             { notify: true },
           )
@@ -177,11 +179,12 @@ export class TriggerService {
         )
 
         if (user.content.clinician !== undefined) {
+          const userAuth = await userService.getAuth(user.id)
           await messageService.addMessage(
             user.content.clinician,
-            UserMessage.createInactive({
-              reference: `users/${user.id}`,
-              isDismissible: true,
+            UserMessage.createInactiveForClinician({
+              userId: user.id,
+              userName: userAuth.displayName,
             }),
             { notify: true },
           )
@@ -326,10 +329,12 @@ export class TriggerService {
           const clinicianId = user?.content.clinician
 
           if (clinicianId !== undefined) {
+            const userAuth = await userService.getAuth(userId)
             await messageService.addMessage(
               clinicianId,
-              UserMessage.createWeightGain({
-                reference: `users/${userId}`,
+              UserMessage.createWeightGainForClinician({
+                userId: userId,
+                userName: userAuth.displayName,
               }),
               { notify: true },
             )
@@ -632,10 +637,12 @@ export class TriggerService {
     const user = await this.factory.user().getUser(input.userId)
     const clinicianId = user?.content.clinician
     if (clinicianId !== undefined) {
+      const userAuth = await this.factory.user().getAuth(input.userId)
       await messageService.addMessage(
         clinicianId,
-        UserMessage.createMedicationUptitration({
-          reference: `users/${input.userId}`,
+        UserMessage.createMedicationUptitrationForClinician({
+          userName: userAuth.displayName,
+          userId: input.userId,
         }),
         { notify: true },
       )

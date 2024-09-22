@@ -68,11 +68,11 @@ export const userMessageConverter = new Lazy(
 export class UserMessage {
   // Static Functions
 
-  static createInactive(input: {
-    creationDate?: Date
-    reference?: string
-    isDismissible?: boolean
-  }): UserMessage {
+  static createInactive(
+    input: {
+      creationDate?: Date
+    } = {},
+  ): UserMessage {
     return new UserMessage({
       creationDate: input.creationDate ?? new Date(),
       title: new LocalizedText({
@@ -83,8 +83,27 @@ export class UserMessage {
       }),
       action: undefined,
       type: UserMessageType.inactive,
-      isDismissible: input.isDismissible ?? false,
-      reference: input.reference,
+      isDismissible: false,
+    })
+  }
+
+  static createInactiveForClinician(input: {
+    creationDate?: Date
+    userId: string
+    userName?: string
+  }): UserMessage {
+    return new UserMessage({
+      creationDate: input.creationDate ?? new Date(),
+      title: new LocalizedText({
+        en: 'Inactive',
+      }),
+      description: new LocalizedText({
+        en: `${input.userName ?? 'Patient'} has been inactive for 7 days.`,
+      }),
+      action: `users/${input.userId}`,
+      type: UserMessageType.inactive,
+      isDismissible: true,
+      reference: `users/${input.userId}`,
     })
   }
 
@@ -130,13 +149,30 @@ export class UserMessage {
     })
   }
 
-  static createPreAppointment(
-    input: {
-      creationDate?: Date
-      reference?: string
-      isDismissible?: boolean
-    } = {},
-  ): UserMessage {
+  static createMedicationUptitrationForClinician(input: {
+    creationDate?: Date
+    userId: string
+    userName?: string
+  }): UserMessage {
+    return new UserMessage({
+      creationDate: input.creationDate ?? new Date(),
+      title: new LocalizedText({
+        en: 'Eligible Medication Change',
+      }),
+      description: new LocalizedText({
+        en: `${input.userName ?? 'Patient'} may be eligible for med changes. You can review med information on the user detail page.`,
+      }),
+      reference: `users/${input.userId}`,
+      action: `users/${input.userId}/medications`,
+      type: UserMessageType.medicationUptitration,
+      isDismissible: true,
+    })
+  }
+
+  static createPreAppointment(input: {
+    creationDate?: Date
+    reference: string
+  }): UserMessage {
     return new UserMessage({
       creationDate: input.creationDate ?? new Date(),
       title: new LocalizedText({
@@ -147,8 +183,29 @@ export class UserMessage {
       }),
       action: 'healthSummary',
       type: UserMessageType.preAppointment,
-      isDismissible: input.isDismissible ?? false,
+      isDismissible: false,
       reference: input.reference,
+    })
+  }
+
+  static createPreAppointmentForClinician(input: {
+    creationDate?: Date
+    userId: string
+    userName?: string
+    reference: string
+  }): UserMessage {
+    return new UserMessage({
+      creationDate: input.creationDate ?? new Date(),
+      title: new LocalizedText({
+        en: 'Appointment Reminder',
+      }),
+      description: new LocalizedText({
+        en: `Appointment with ${input.userName ?? 'patient'} is coming up.`,
+      }),
+      action: `users/${input.userId}/appointments`,
+      reference: input.reference,
+      type: UserMessageType.preAppointment,
+      isDismissible: true,
     })
   }
 
@@ -194,7 +251,6 @@ export class UserMessage {
   static createWeightGain(
     input: {
       creationDate?: Date
-      reference?: string
     } = {},
   ): UserMessage {
     return new UserMessage({
@@ -206,7 +262,26 @@ export class UserMessage {
         en: 'Your weight increased over 3 lbs. Your care team will be informed. Please follow any instructions about diuretic changes after weight increase on the Medication page.',
       }),
       action: 'medications',
-      reference: input.reference,
+      type: UserMessageType.weightGain,
+      isDismissible: true,
+    })
+  }
+
+  static createWeightGainForClinician(input: {
+    creationDate?: Date
+    userId: string
+    userName?: string
+  }): UserMessage {
+    return new UserMessage({
+      creationDate: input.creationDate ?? new Date(),
+      title: new LocalizedText({
+        en: 'Weight increase since last week',
+      }),
+      description: new LocalizedText({
+        en: `Weight increase over 3 lbs for ${input.userName ?? 'patient'}.`,
+      }),
+      action: `users/${input.userId}/medications`,
+      reference: `users/${input.userId}`,
       type: UserMessageType.weightGain,
       isDismissible: true,
     })

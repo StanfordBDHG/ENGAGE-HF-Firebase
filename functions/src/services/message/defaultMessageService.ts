@@ -8,6 +8,7 @@
 
 import {
   advanceDateByDays,
+  compact,
   type User,
   type UserDevice,
   type UserDevicePlatform,
@@ -19,7 +20,6 @@ import { type QueryDocumentSnapshot } from 'firebase-admin/firestore'
 import { type Messaging, type TokenMessage } from 'firebase-admin/messaging'
 import { https, logger } from 'firebase-functions'
 import { type MessageService } from './messageService.js'
-import { compact } from '../../extensions/array.js'
 import {
   type Document,
   type DatabaseService,

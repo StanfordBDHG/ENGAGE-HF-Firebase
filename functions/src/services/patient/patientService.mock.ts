@@ -7,6 +7,7 @@
 //
 
 import {
+  advanceDateByDays,
   DrugReference,
   type FHIRAllergyIntolerance,
   FHIRAppointment,
@@ -26,6 +27,16 @@ import { type Document } from '../database/databaseService.js'
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 export class MockPatientService implements PatientService {
+  // Properties
+
+  private readonly startDate: Date
+
+  // Constructor
+
+  constructor(startDate: Date = new Date('2024-02-02')) {
+    this.startDate = startDate
+  }
+
   // Methods - Appointments
 
   async getEveryAppoinment(
@@ -45,13 +56,13 @@ export class MockPatientService implements PatientService {
     return {
       id: '123',
       lastUpdate: new Date(),
-      path: 'appointments/123',
-      content: new FHIRAppointment({
-        status: FHIRAppointmentStatus.pending,
-        created: new Date('2024-01-01'),
-        start: new Date('2024-02-03'),
-        end: new Date('2024-02-03'),
-        participant: [],
+      path: `users/${userId}/appointments/123`,
+      content: FHIRAppointment.create({
+        userId,
+        status: FHIRAppointmentStatus.booked,
+        created: advanceDateByDays(this.startDate, -10),
+        start: advanceDateByDays(this.startDate, 1),
+        durationInMinutes: 60,
       }),
     }
   }

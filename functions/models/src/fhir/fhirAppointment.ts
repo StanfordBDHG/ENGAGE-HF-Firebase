@@ -14,6 +14,8 @@ import {
   type FHIRResourceInput,
 } from './baseTypes/fhirElement.js'
 import { fhirReferenceConverter } from './baseTypes/fhirReference.js'
+import { FHIRExtensionUrl } from '../codes/codes.js'
+import { compactMap } from '../helpers/array.js'
 import { dateConverter } from '../helpers/dateConverter.js'
 import { Lazy } from '../helpers/lazy.js'
 import { optionalish } from '../helpers/optionalish.js'
@@ -119,7 +121,7 @@ export class FHIRAppointment extends FHIRResource {
     })
   }
 
-  // Properties
+  // Stored Properties
 
   readonly resourceType: string = 'Appointment'
   readonly status: FHIRAppointmentStatus
@@ -129,6 +131,15 @@ export class FHIRAppointment extends FHIRResource {
   readonly comment?: string
   readonly patientInstruction?: string
   readonly participant?: FHIRAppointmentParticipant[]
+
+  // Computed Properties
+
+  get providerNames(): string[] {
+    return compactMap(
+      this.extensionsWithUrl(FHIRExtensionUrl.providerName),
+      (extension) => extension.valueString,
+    )
+  }
 
   // Constructor
 
