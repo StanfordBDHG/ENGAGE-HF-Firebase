@@ -57,7 +57,7 @@
     },
     "action": "healthSummary",
     "isDismissible": false,
-    "reference": null
+    "reference": "users/0/appointments/0"
   },
   "4": {
     "creationDate": "2024-06-05T00:00:00.000Z",

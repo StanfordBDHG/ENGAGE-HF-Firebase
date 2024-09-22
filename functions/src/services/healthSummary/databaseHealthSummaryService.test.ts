@@ -26,7 +26,7 @@ describe('HealthSummaryService', () => {
       'mockUser',
       QuantityUnit.lbs,
     )
-    const expectedData = await mockHealthSummaryData()
+    const expectedData = await mockHealthSummaryData('mockUser')
     // TODO: Remove the next line to check whether medication optimizations also match the expected value.
     expectedData.recommendations = []
     expect(actualData).to.deep.equal(expectedData)

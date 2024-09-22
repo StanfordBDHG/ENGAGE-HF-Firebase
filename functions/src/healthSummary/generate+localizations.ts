@@ -10,6 +10,7 @@ import {
   LocalizedText,
   type UserMedicationRecommendationDoseSchedule,
   type QuantityUnit,
+  type FHIRAppointment,
 } from '@stanfordbdhg/engagehf-models'
 
 export function healthSummaryLocalizations(languages: string[]) {
@@ -23,14 +24,18 @@ export function healthSummaryLocalizations(languages: string[]) {
           en: `DOB: ${date !== null ? formatDate(date) : '---'}`,
         }).localize(...languages)
       },
-      clinicianLine(name: string | null) {
+      providerLine(name: string | null) {
         return new LocalizedText({
           en: `Provider: ${name ?? '---'}`,
         }).localize(...languages)
       },
-      nextAppointmentLine(date: Date | null) {
+      nextAppointmentLine(appointment: FHIRAppointment | null) {
+        const date = appointment?.start
+        const providerNames = appointment?.providerNames ?? []
+        const providerText =
+          providerNames.length === 0 ? '' : providerNames.join(', ') + ' '
         return new LocalizedText({
-          en: `Next Appointment: ${date !== null ? formatDate(date) : '---'}`,
+          en: `Next Appointment: ${providerText}${date !== undefined ? formatDate(date) : '---'}`,
         }).localize(...languages)
       },
       pageNumberTitle(number: number) {

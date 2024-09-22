@@ -7,13 +7,13 @@
 //
 
 import {
+  median,
   type MedicationClassReference,
   type MedicationReference,
   type Observation,
   QuantityUnit,
   type UserMedicationRecommendationType,
 } from '@stanfordbdhg/engagehf-models'
-import { median } from '../../../extensions/array.js'
 import { type MedicationRequestContext } from '../../../models/medicationRequestContext.js'
 import { type ContraindicationService } from '../../contraindication/contraindicationService.js'
 import {

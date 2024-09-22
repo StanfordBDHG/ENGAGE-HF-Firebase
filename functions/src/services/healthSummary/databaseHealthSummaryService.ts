@@ -58,13 +58,11 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
         await this.userService.getAuth(patient.content.clinician)
       : undefined
 
-    const dateOfBirth = patient?.content.dateOfBirth
-    const nextAppointmentStart = nextAppointment?.content.start
     return {
       name: auth.displayName,
-      dateOfBirth: dateOfBirth ?? undefined,
-      clinicianName: clinician?.displayName,
-      nextAppointment: nextAppointmentStart ?? undefined,
+      dateOfBirth: patient?.content.dateOfBirth,
+      providerName: clinician?.displayName,
+      nextAppointment: nextAppointment?.content,
       recommendations: recommendations.map((doc) => doc.content),
       vitals: vitals,
       symptomScores: symptomScores.map((doc) => doc.content),
