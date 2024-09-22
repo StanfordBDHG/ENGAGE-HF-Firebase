@@ -7,7 +7,6 @@
     "lint:fix": "eslint src --fix",
     "lint:strict": "eslint src --max-warnings=0",
     "build": "tsc",
-    "clean": "rm tsconfig.tsbuildinfo || true && rm -r lib || true",
     "test": "env TZ=UTC c8 mocha --reporter-option maxDiffSize=0",
     "test:emulators": "env EMULATORS_ACTIVE=true npm run test",
     "test:regenerate": "env REGENERATE_VALUES=true npm run test",

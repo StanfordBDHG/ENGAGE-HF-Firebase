@@ -10,8 +10,7 @@
     "lint": "eslint src",
     "lint:fix": "npm run lint -- --fix",
     "lint:strict": "npm run lint -- --max-warnings=0",
-    "build": "tsc",
-    "clean": "rm tsconfig.tsbuildinfo || true && rm -r lib || true"
+    "build": "tsc"
   },
   "engines": {
     "node": "22"

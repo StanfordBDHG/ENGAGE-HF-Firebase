@@ -8,7 +8,6 @@
     "lint:fix": "npm --prefix functions/models run lint:fix && npm --prefix functions run lint:fix",
     "lint:strict": "npm --prefix functions/models run lint:strict && npm --prefix functions run lint:strict",
     "build": "npm --prefix functions/models run build && npm --prefix functions run build",
-    "clean": "npm --prefix functions/models run clean && npm --prefix functions run clean",
     "prepare": "npm run clean && npm run install && npm run build",
     "test:ci": "firebase emulators:exec --only auth,firestore,storage 'npm --prefix functions run test:emulators'",
     "serve:seeded": "npm --prefix functions run serve:seeded"
