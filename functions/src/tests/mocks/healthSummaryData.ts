@@ -9,8 +9,9 @@ import { type HealthSummaryData } from '../../models/healthSummaryData.js'
 import { MockHealthSummaryService } from '../../services/healthSummary/healthSummaryService.mock.js'
 
 export function mockHealthSummaryData(
+  userId: string,
   startDate: Date = new Date('2024-02-02'),
 ): Promise<HealthSummaryData> {
   const service = new MockHealthSummaryService(startDate)
-  return service.getHealthSummaryData('')
+  return service.getHealthSummaryData(userId)
 }

@@ -8,6 +8,8 @@
 
 import {
   advanceDateByDays,
+  FHIRAppointment,
+  FHIRAppointmentStatus,
   LocalizedText,
   type Observation,
   QuantityUnit,
@@ -39,8 +41,14 @@ export class MockHealthSummaryService implements HealthSummaryService {
     return {
       name: 'John Doe',
       dateOfBirth: new Date('1970-01-02'),
-      clinicianName: 'Dr. XXX',
-      nextAppointment: this.startDateAdvancedByDays(1),
+      providerName: 'Dr. XXX',
+      nextAppointment: FHIRAppointment.create({
+        userId,
+        status: FHIRAppointmentStatus.booked,
+        created: this.startDateAdvancedByDays(-10),
+        start: this.startDateAdvancedByDays(1),
+        durationInMinutes: 60,
+      }),
       recommendations: [
         {
           currentMedication: [],

@@ -9,6 +9,10 @@
 import fs from 'fs'
 import { Resvg, type ResvgRenderOptions } from '@resvg/resvg-js'
 import {
+  average,
+  percentage,
+  presortedMedian,
+  presortedPercentile,
   type Observation,
   UserMedicationRecommendationType,
 } from '@stanfordbdhg/engagehf-models'
@@ -23,12 +27,6 @@ import {
 import { healthSummaryLocalizations } from './generate+localizations.js'
 import { generateChartSvg } from './generateChart.js'
 import { generateSpeedometerSvg } from './generateSpeedometer.js'
-import {
-  average,
-  percentage,
-  presortedMedian,
-  presortedPercentile,
-} from '../extensions/array.js'
 import { type HealthSummaryData } from '../models/healthSummaryData.js'
 
 export interface HealthSummaryOptions {
@@ -622,9 +620,7 @@ class HealthSummaryPDFGenerator {
       this.texts.header.dateOfBirthLine(this.data.dateOfBirth ?? null),
     )
     this.moveDown(4)
-    this.addText(
-      this.texts.header.clinicianLine(this.data.clinicianName ?? null),
-    )
+    this.addText(this.texts.header.providerLine(this.data.providerName ?? null))
     this.moveDown(4)
     this.addText(
       this.texts.header.nextAppointmentLine(this.data.nextAppointment ?? null),

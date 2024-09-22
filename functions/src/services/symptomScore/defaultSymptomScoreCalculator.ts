@@ -7,11 +7,11 @@
 //
 
 import {
+  average,
   type FHIRQuestionnaireResponse,
   SymptomScore,
 } from '@stanfordbdhg/engagehf-models'
 import { type SymptomScoreCalculator } from './symptomScoreCalculator.js'
-import { average } from '../../extensions/array.js'
 
 export class DefaultSymptomScoreCalculator implements SymptomScoreCalculator {
   // Methods

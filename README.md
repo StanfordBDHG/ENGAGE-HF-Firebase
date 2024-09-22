@@ -538,6 +538,7 @@ This data is used to display messages to a user (patient or clinician). For pati
 |description|optional LocalizedText|e.g. "The video shows how you will be able to use this app."|May be localized.|
 |action|optional string|e.g. "videoSections/1/videos/0"|See "Message types".|
 |isDismissible|boolean|true,false|Whether or not the message is dismissible by the user or is solely controlled by the server.|
+|reference|optional string|-|Do not use this property as it is solely used to group messages in functions.|
 
 #### Message types
 
@@ -546,12 +547,13 @@ The following list describes all different types a message could have. Expiratio
 |Type|Trigger|Expiration|Action|
 |-|-|-|-|
 |MedicationChange|Server: /users/$userId$/medicationRequests changed for a given user. Maximum 1 per day.|Tap|videoSections/$videoSectionId$/videos/$videoId$|
-|WeightGain|Server: New body weight observation received with 3 lbs increase over prior week's median. Do not trigger again for 7 days.|Tap|medications|
-|MedicationUptitration|Server: /users/$userId$/medicationRecommendations changed.|Tap|medications|
+|WeightGain|Server: New body weight observation received with 3 lbs increase over prior week's median. Do not trigger again for 7 days.|Tap|patients: medications, clinicians: users/$userId$/medications|
+|MedicationUptitration|Server: /users/$userId$/medicationRecommendations changed.|Tap|patients: medications, clinicians: users/$userId$/medications|
 |Welcome|Server: When creating new user.|Tap|videoSections/$videoSectionId$/videos/$videoId$|
 |Vitals|Server: Daily at certain time (respect timezone!)|When receiving blood pressure and weight observations on the server from current day.|observations|
 |SymptomQuestionnaire|Server: Every 14 days.|After questionnaire responses received on server.|questionnaires/$questionnaireId$|
-|PreAppointment|Server: Day (24h) before appointment.|After appointment time or when it is cancelled.|healthSummary|
+|PreAppointment|Server: Day (24h) before appointment.|After appointment time or when it is cancelled.|patients: healthSummary, clinicians: users/$userId$/appointments|
+|Inactivity|Server: Daily when lastActiveDate of a user is older than 7 days.|When a user observation is modified.|patients: null, clinician: users/$userId$|
 
 ### users/$userId$/questionnaireResponses/$questionnaireResponseId$
 
