@@ -23,6 +23,26 @@ import { type ServiceFactory } from '../services/factory/serviceFactory.js'
 import { type DebugDataService } from '../services/seeding/debugData/debugDataService.js'
 import { type TriggerService } from '../services/trigger/triggerService.js'
 
+async function _seedClinicianCollections(input: {
+  debugData: DebugDataService
+  trigger: TriggerService
+  userId: string
+  patientId: string
+  patientName: string | undefined
+  components: UserDebugDataComponent[]
+}): Promise<void> {
+  const promises: Array<Promise<void>> = []
+  if (input.components.includes(UserDebugDataComponent.messages))
+    promises.push(
+      input.debugData.seedClinicianMessages(
+        input.userId,
+        input.patientId,
+        input.patientName,
+      ),
+    )
+  await Promise.all(promises)
+}
+
 async function _seedPatientCollections(input: {
   debugData: DebugDataService
   trigger: TriggerService
@@ -105,17 +125,35 @@ export async function _defaultSeed(
     const userIds = await debugDataService.seedUsers()
     const userService = factory.user()
 
+    const allPatients = await userService.getAllPatients()
+
     for (const userId of userIds) {
       try {
         const user = await userService.getUser(userId)
-        if (user?.content.type !== UserType.patient) continue
-        await _seedPatientCollections({
-          debugData: debugDataService,
-          trigger: triggerService,
-          userId,
-          components: data.onlyUserCollections,
-          date: data.date,
-        })
+        if (user?.content.type === UserType.patient) {
+          await _seedPatientCollections({
+            debugData: debugDataService,
+            trigger: triggerService,
+            userId,
+            components: data.onlyUserCollections,
+            date: data.date,
+          })
+        } else if (user?.content.type === UserType.clinician) {
+          const patient = allPatients.find(
+            (patient) =>
+              patient.content.organization === user.content.organization,
+          )
+          if (!patient) continue
+          const patientAuth = await userService.getAuth(user.id)
+          await _seedClinicianCollections({
+            debugData: debugDataService,
+            trigger: triggerService,
+            userId,
+            components: data.onlyUserCollections,
+            patientName: patientAuth.displayName,
+            patientId: patient.id,
+          })
+        }
       } catch (error) {
         logger.error(`Failed to seed user ${userId}: ${String(error)}`)
       }

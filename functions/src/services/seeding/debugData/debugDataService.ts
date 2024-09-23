@@ -175,6 +175,36 @@ export class DebugDataService extends SeedingService {
     )
   }
 
+  async seedClinicianMessages(
+    userId: string,
+    patientId: string,
+    patientName: string | undefined,
+  ) {
+    const values = [
+      UserMessage.createInactiveForClinician({
+        userId: patientId,
+        userName: patientName,
+      }),
+      UserMessage.createMedicationUptitrationForClinician({
+        userId: patientId,
+        userName: patientName,
+      }),
+      UserMessage.createPreAppointmentForClinician({
+        userId: patientId,
+        userName: patientName,
+        reference: '',
+      }),
+      UserMessage.createWeightGainForClinician({
+        userId: patientId,
+        userName: patientName,
+      }),
+    ]
+    await this.replaceCollection(
+      (collections) => collections.userMessages(userId),
+      values,
+    )
+  }
+
   async seedUserBloodPressureObservations(userId: string, date: Date) {
     // This is just a list of pseudo-random numbers that is used to generate
     // the different user collections
