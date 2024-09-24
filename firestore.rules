@@ -41,9 +41,9 @@ service cloud.firestore {
     }
 
     function isEqualOptional(object0, property0, object1, property1) {
-      return ((property0 in object0 && object0[property0] != null)) 
-        ? ((property1 in object1 && object0[property0] != null) && object0[property0] == object1[property1])
-        : !(property1 in object1 && object1[property1] != null);
+      return (property0 in object0) 
+        ? ((property1 in object1) && object0[property0] == object1[property1])
+        : !(property1 in object1);
     }
 
     match /invitations/{invitationId} {
@@ -130,9 +130,7 @@ service cloud.firestore {
     match /users/{userId}/{collectionName}/{documentId} {
       function isOwnerOrClinicianOfSameOrganization() {
         let userDoc = getUser(userId);
-        return (userDoc != null)
-          && ('data' in userDoc)
-          && (userDoc.data != null)
+        return (userDoc.data != null)
           && ('organization' in userDoc.data) 
           && isOwnerOrClinicianOf(userDoc.data.organization);
       }
