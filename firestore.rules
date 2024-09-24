@@ -41,9 +41,9 @@ service cloud.firestore {
     }
 
     function isEqualOptional(object0, property0, object1, property1) {
-      return (property0 in object0) 
-        ? ((property1 in object1) && object0[property0] == object1[property1])
-        : !(property1 in object1);
+      return ((property0 in object0 && object0[property0] != null)) 
+        ? ((property1 in object1 && object0[property0] != null) && object0[property0] == object1[property1])
+        : !(property1 in object1 && object1[property1] != null);
     }
 
     match /invitations/{invitationId} {
@@ -129,8 +129,12 @@ service cloud.firestore {
 
     match /users/{userId}/{collectionName}/{documentId} {
       function isOwnerOrClinicianOfSameOrganization() {
-        let user = getUser(userId);
-        return isOwnerOrClinicianOf(user.organization);
+        let userDoc = getUser(userId);
+        return (userDoc != null)
+          && ('data' in userDoc)
+          && (userDoc.data != null)
+          && ('organization' in userDoc.data) 
+          && isOwnerOrClinicianOf(userDoc.data.organization);
       }
 
       function isPatientWritableCollectionName() {
@@ -143,8 +147,8 @@ service cloud.firestore {
           || collectionName in ['allergyIntolerances', 'appointments', 'medicationRequests'];
       }
 
-      allow read: if isAdmin() 
-        || isUser(userId) 
+      allow read: if isAdmin()
+        || isUser(userId)
         || isOwnerOrClinicianOfSameOrganization();
 
       allow write: if isAdmin() 
