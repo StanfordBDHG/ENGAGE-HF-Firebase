@@ -27,18 +27,16 @@ async function _seedClinicianCollections(input: {
   debugData: DebugDataService
   trigger: TriggerService
   userId: string
-  patientId: string
-  patientName: string | undefined
+  patients: Array<{
+    id: string
+    name: string | undefined
+  }>
   components: UserDebugDataComponent[]
 }): Promise<void> {
   const promises: Array<Promise<void>> = []
   if (input.components.includes(UserDebugDataComponent.messages))
     promises.push(
-      input.debugData.seedClinicianMessages(
-        input.userId,
-        input.patientId,
-        input.patientName,
-      ),
+      input.debugData.seedClinicianMessages(input.userId, input.patients),
     )
   await Promise.all(promises)
 }
@@ -139,19 +137,24 @@ export async function _defaultSeed(
             date: data.date,
           })
         } else if (user?.content.type === UserType.clinician) {
-          const patient = allPatients.find(
-            (patient) =>
-              patient.content.organization === user.content.organization,
+          const clinicianPatients = allPatients.filter(
+            (patient) => patient.content.clinician === user.id,
           )
-          if (!patient) continue
-          const patientAuth = await userService.getAuth(user.id)
+          const patients = await Promise.all(
+            clinicianPatients.map(async (patient) => {
+              const patientAuth = await userService.getAuth(patient.id)
+              return {
+                name: patientAuth.displayName,
+                id: patient.id,
+              }
+            }),
+          )
           await _seedClinicianCollections({
             debugData: debugDataService,
             trigger: triggerService,
             userId,
             components: data.onlyUserCollections,
-            patientName: patientAuth.displayName,
-            patientId: patient.id,
+            patients,
           })
         }
       } catch (error) {

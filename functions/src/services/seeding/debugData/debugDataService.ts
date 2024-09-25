@@ -177,28 +177,30 @@ export class DebugDataService extends SeedingService {
 
   async seedClinicianMessages(
     userId: string,
-    patientId: string,
-    patientName: string | undefined,
+    patients: Array<{
+      id: string
+      name: string | undefined
+    }>,
   ) {
-    const values = [
+    const values = patients.flatMap((patient) => [
       UserMessage.createInactiveForClinician({
-        userId: patientId,
-        userName: patientName,
+        userId: patient.id,
+        userName: patient.name,
       }),
       UserMessage.createMedicationUptitrationForClinician({
-        userId: patientId,
-        userName: patientName,
+        userId: patient.id,
+        userName: patient.name,
       }),
       UserMessage.createPreAppointmentForClinician({
-        userId: patientId,
-        userName: patientName,
+        userId: patient.id,
+        userName: patient.name,
         reference: '',
       }),
       UserMessage.createWeightGainForClinician({
-        userId: patientId,
-        userName: patientName,
+        userId: patient.id,
+        userName: patient.name,
       }),
-    ]
+    ])
     await this.replaceCollection(
       (collections) => collections.userMessages(userId),
       values,
