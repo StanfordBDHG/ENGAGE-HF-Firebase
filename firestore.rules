@@ -129,8 +129,10 @@ service cloud.firestore {
 
     match /users/{userId}/{collectionName}/{documentId} {
       function isOwnerOrClinicianOfSameOrganization() {
-        let user = getUser(userId);
-        return isOwnerOrClinicianOf(user.organization);
+        let userDoc = getUser(userId);
+        return (userDoc.data != null)
+          && ('organization' in userDoc.data) 
+          && isOwnerOrClinicianOf(userDoc.data.organization);
       }
 
       function isPatientWritableCollectionName() {
@@ -143,8 +145,8 @@ service cloud.firestore {
           || collectionName in ['allergyIntolerances', 'appointments', 'medicationRequests'];
       }
 
-      allow read: if isAdmin() 
-        || isUser(userId) 
+      allow read: if isAdmin()
+        || isUser(userId)
         || isOwnerOrClinicianOfSameOrganization();
 
       allow write: if isAdmin() 
