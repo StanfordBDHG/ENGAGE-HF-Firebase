@@ -850,6 +850,14 @@ To make this structure simpler to use, we provide different scripts as part of t
 
 For using the emulators for client applications, it is probably easiest to call `npm run prepare` whenever files could have changed (e.g. when changing branch or pulling new changes) and then calling `npm run serve:seeded` to start up the emulators in a seeded state. Both of these commands are performed in the root directory of this repository.
 
+Otherwise, you may want to use Docker to run the emulators.  For this, you can use the following command:
+
+```bash
+docker-compose up
+```
+
+This can be especially useful if you're using an operating system like Windows, as scripts contain OS-specific commands that may not work the same way across different platforms.
+
 # Resources
 
 - See [resources/algorithms](resources/algorithms) for diagrams describing the different algorithms for medication recommendations.
