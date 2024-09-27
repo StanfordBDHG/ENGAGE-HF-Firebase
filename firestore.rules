@@ -146,7 +146,7 @@ service cloud.firestore {
       }
 
       allow read: if isAdmin()
-        || isUser(userId)
+        || (request.auth != null && request.auth.uid == userId)
         || isOwnerOrClinicianOfSameOrganization();
 
       allow write: if isAdmin() 
