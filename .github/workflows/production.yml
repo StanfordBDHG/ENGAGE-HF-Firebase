@@ -22,7 +22,7 @@ jobs:
     name: Production Deployment
     uses: ./.github/workflows/deployment.yml
     permissions:
-      contents: read
+      contents: write
       actions: read
       security-events: write
     secrets: inherit
