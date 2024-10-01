@@ -23,6 +23,7 @@ jobs:
     uses: ./.github/workflows/deployment.yml
     permissions:
       contents: read
+      checks: write
       actions: read
       security-events: write
     secrets: inherit
