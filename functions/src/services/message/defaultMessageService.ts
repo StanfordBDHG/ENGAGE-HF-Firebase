@@ -164,6 +164,7 @@ export class DefaultMessageService implements MessageService {
           transaction.set(newMessageRef, message)
           const document: Document<UserMessage> = {
             id: newMessageRef.id,
+            lastUpdate: new Date(),
             path: newMessageRef.path,
             content: message,
           }

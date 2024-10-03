@@ -55,6 +55,7 @@ export class MockPatientService implements PatientService {
   ): Promise<Document<FHIRAppointment> | undefined> {
     return {
       id: '123',
+      lastUpdate: new Date(),
       path: `users/${userId}/appointments/123`,
       content: FHIRAppointment.create({
         userId,
@@ -82,6 +83,7 @@ export class MockPatientService implements PatientService {
     const values: UserMedicationRecommendation[] = []
     return values.map((value, index) => ({
       id: index.toString(),
+      lastUpdate: new Date(),
       path: `users/${userId}/medicationRecommendations/${index}`,
       content: value,
     }))
@@ -99,6 +101,7 @@ export class MockPatientService implements PatientService {
     ]
     return values.map((value, index) => ({
       id: index.toString(),
+      lastUpdate: new Date(),
       path: `users/${userId}/medicationRequests/${index}`,
       content: value,
     }))
@@ -243,6 +246,7 @@ export class MockPatientService implements PatientService {
   ): Promise<Array<Document<FHIRQuestionnaireResponse>>> {
     return [mockQuestionnaireResponse()].map((value, index) => ({
       id: index.toString(),
+      lastUpdate: new Date(),
       path: `users/${userId}/questionnaireResponses/${index}`,
       content: value,
     }))
@@ -296,6 +300,7 @@ export class MockPatientService implements PatientService {
     ]
     return values.map((value, index) => ({
       id: index.toString(),
+      lastUpdate: new Date(),
       path: `users/${userId}/symptomScores/${index}`,
       content: value,
     }))

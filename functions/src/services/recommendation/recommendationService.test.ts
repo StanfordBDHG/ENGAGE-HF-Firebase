@@ -81,9 +81,12 @@ describe('RecommendationService', () => {
         ].flatMap((x) => (x ? [x] : []))
 
         const requestContexts = await Promise.all(
-          medicationRequests.map(async (medicationRequest) =>
-            medicationService.getContext(medicationRequest, {
-              reference: '',
+          medicationRequests.map(async (medicationRequest, index) =>
+            medicationService.getContext({
+              id: index.toString(),
+              path: `users/0/medicationRequests/${index}`,
+              lastUpdate: new Date(),
+              content: medicationRequest,
             }),
           ),
         )

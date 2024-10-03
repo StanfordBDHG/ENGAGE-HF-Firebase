@@ -167,8 +167,11 @@ describe('MraRecommender', () => {
         frequencyPerDay: 1,
         quantity: 1,
       })
-      contextBelowTarget = await medicationService.getContext(request, {
-        reference: 'users/mockUser/medicationRequests/someMedicationRequest',
+      contextBelowTarget = await medicationService.getContext({
+        id: 'someMedicationRequest',
+        path: 'users/mockUser/medicationRequests/someMedicationRequest',
+        lastUpdate: new Date(),
+        content: request,
       })
     })
 
@@ -178,8 +181,11 @@ describe('MraRecommender', () => {
         frequencyPerDay: 2,
         quantity: 1,
       })
-      const contextAtTarget = await medicationService.getContext(request, {
-        reference: 'users/mockUser/medicationRequests/someMedicationRequest',
+      const contextAtTarget = await medicationService.getContext({
+        id: 'someMedicationRequest',
+        path: 'users/mockUser/medicationRequests/someMedicationRequest',
+        lastUpdate: new Date(),
+        content: request,
       })
       const result = recommender.compute({
         requests: [contextAtTarget],

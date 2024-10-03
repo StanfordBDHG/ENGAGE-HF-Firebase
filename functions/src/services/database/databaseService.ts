@@ -16,6 +16,7 @@ import { type CollectionsService } from './collections'
 export interface Document<Content> {
   id: string
   path: string
+  lastUpdate: Date
   content: Content
 }
 

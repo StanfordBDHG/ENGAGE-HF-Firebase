@@ -41,6 +41,7 @@ export class FirestoreService implements DatabaseService {
     return collection.docs.map((doc) => ({
       id: doc.id,
       path: doc.ref.path,
+      lastUpdate: doc.updateTime.toDate(),
       content: doc.data(),
     }))
   }
@@ -53,8 +54,14 @@ export class FirestoreService implements DatabaseService {
     const ref = reference(this.collectionsService.value)
     const doc = await ref.get()
     const data = doc.exists ? doc.data() : undefined
-    return doc.exists && data ?
-        { id: doc.id, path: doc.ref.path, content: data }
+    return doc.exists && data !== undefined ?
+        {
+          id: doc.id,
+          path: doc.ref.path,
+          // `lastUpdate` should not be undefined in this case
+          lastUpdate: doc.updateTime?.toDate() ?? doc.readTime.toDate(),
+          content: data,
+        }
       : undefined
   }
 
