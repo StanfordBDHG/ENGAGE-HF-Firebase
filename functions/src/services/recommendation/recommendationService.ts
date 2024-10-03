@@ -225,7 +225,7 @@ export class RecommendationService {
         if (recommendedMedication !== undefined) {
           const displayName = recommendedMedication.displayName
           return new LocalizedText(
-            `Discuss ${displayName} (more effective med) with your care team to help your heart.`,
+            `Discuss starting ${displayName} (more effective med) with your care team to help your heart.`,
           )
         } else {
           return new LocalizedText(
