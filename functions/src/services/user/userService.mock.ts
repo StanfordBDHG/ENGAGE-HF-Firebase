@@ -60,6 +60,7 @@ export class MockUserService implements UserService {
     return {
       id: '1',
       path: 'invitations/1',
+      lastUpdate: new Date(),
       content: new Invitation({
         user: new UserRegistration({
           type: UserType.patient,
@@ -105,6 +106,7 @@ export class MockUserService implements UserService {
     return {
       id: organizationId,
       path: 'organizations/' + organizationId,
+      lastUpdate: new Date(),
       content: new Organization({
         name: 'Stanford University',
         contactName: 'Alex Sandhu, MD',
@@ -129,6 +131,7 @@ export class MockUserService implements UserService {
     return {
       id: userId,
       path: 'users/' + userId,
+      lastUpdate: new Date(),
       content: new User({
         type: UserType.clinician,
         dateOfBirth: new Date('1970-01-02'),
