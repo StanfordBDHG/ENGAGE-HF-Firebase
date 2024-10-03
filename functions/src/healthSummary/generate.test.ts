@@ -23,7 +23,9 @@ describe('generateHealthSummary', () => {
         .split('\n')
         .filter(
           (line) =>
-            !line.startsWith('/CreationDate ') && !line.startsWith('/ID '),
+            !line.startsWith('/CreationDate ') &&
+            !line.startsWith('/ID ') &&
+            !line.startsWith('/Producer '),
         )
         .join('\n')
     }
