@@ -225,29 +225,39 @@ export class RecommendationService {
         if (recommendedMedication !== undefined) {
           const displayName = recommendedMedication.displayName
           return new LocalizedText(
-            `Discuss starting ${displayName} (more effective med)`,
+            `Discuss ${displayName} (more effective med) with your care team to help your heart.`,
           )
         } else {
-          return new LocalizedText('Discuss increasing')
+          return new LocalizedText(
+            'Discuss increasing the dose with your care team to get closer to target.',
+          )
         }
       }
       case UserMedicationRecommendationType.moreLabObservationsRequired: {
-        return new LocalizedText('Discuss lab check before med change')
+        return new LocalizedText(
+          'Discuss lab check with your care team before med change.',
+        )
       }
       case UserMedicationRecommendationType.morePatientObservationsRequired: {
-        return new LocalizedText('Measure blood pressure/heart rate')
+        return new LocalizedText(
+          'Need more blood pressure / heart rate checks to suggest a change.',
+        )
       }
       case UserMedicationRecommendationType.noActionRequired: {
-        return new LocalizedText('May not be eligible')
+        return new LocalizedText('')
       }
       case UserMedicationRecommendationType.notStarted: {
-        return new LocalizedText('Discuss starting')
+        return new LocalizedText(
+          'Discuss starting this med with your care team to help your heart.',
+        )
       }
       case UserMedicationRecommendationType.personalTargetDoseReached: {
-        return new LocalizedText('Possible personal target reached')
+        return new LocalizedText(
+          'Your current target dose was reached. Congrats!',
+        )
       }
       case UserMedicationRecommendationType.targetDoseReached: {
-        return new LocalizedText('Target dose reached')
+        return new LocalizedText(`You're on the target dose. Congrats!`)
       }
     }
   }
