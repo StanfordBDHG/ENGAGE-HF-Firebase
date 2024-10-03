@@ -7,6 +7,7 @@
 //
 
 import {
+  Timestamp,
   type FirestoreDataConverter,
   type QueryDocumentSnapshot,
 } from 'firebase-admin/firestore'
@@ -130,6 +131,7 @@ class MockFirestoreCollectionRef extends MockFirestoreRef {
         id: key,
         exists: true,
         ref: this.doc(key as string) as any,
+        updateTime: Timestamp.now(),
         data: () => value,
       })
     })
@@ -181,6 +183,7 @@ class MockFirestoreConvertedCollectionRef<
         exists: doc.exists,
         id: doc.id,
         ref: doc.ref,
+        updateTime: doc.updateTime,
         data: () => newData,
       }
     })
@@ -292,6 +295,7 @@ class MockFirestoreDocRef extends MockFirestoreRef {
       exists: result !== undefined,
       id: pathComponents[pathComponents.length - 1],
       ref: this as any,
+      updateTime: Timestamp.now(),
       data: () => result as any,
     }
   }
@@ -369,6 +373,7 @@ class MockFirestoreConvertedDocRef<T> extends MockFirestoreDocRef {
       exists: result.exists,
       id: result.id,
       ref: result.ref,
+      updateTime: result.updateTime,
       data: () => data,
     }
     result.data = () =>
