@@ -9,9 +9,9 @@
 import {
   fhirMedicationRequestConverter,
   fhirQuestionnaireResponseConverter,
+  UserObservationCollection,
 } from '@stanfordbdhg/engagehf-models'
 import { onDocumentWritten } from 'firebase-functions/v2/firestore'
-import { UserObservationCollection } from '../services/database/collections.js'
 import { DatabaseConverter } from '../services/database/databaseConverter.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 

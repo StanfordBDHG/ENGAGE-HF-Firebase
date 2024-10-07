@@ -30,6 +30,16 @@ import { optionalish } from '../helpers/optionalish.js'
 import { SchemaConverter } from '../helpers/schemaConverter.js'
 import { type Observation } from '../types/observation.js'
 
+export enum UserObservationCollection {
+  bodyWeight = 'bodyWeightObservations',
+  bloodPressure = 'bloodPressureObservations',
+  creatinine = 'creatinineObservations',
+  dryWeight = 'dryWeightObservations',
+  eGfr = 'eGfrObservations',
+  heartRate = 'heartRateObservations',
+  potassium = 'potassiumObservations',
+}
+
 export enum FHIRObservationStatus {
   registered = 'registered',
   preliminary = 'preliminary',

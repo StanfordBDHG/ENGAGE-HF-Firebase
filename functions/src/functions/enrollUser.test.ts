@@ -19,10 +19,10 @@ import {
   UserMessageType,
   UserRegistration,
   UserType,
+  UserObservationCollection,
 } from '@stanfordbdhg/engagehf-models'
 import { expect } from 'chai'
 import { enrollUser } from './enrollUser.js'
-import { UserObservationCollection } from '../services/database/collections.js'
 import { describeWithEmulators } from '../tests/functions/testEnvironment.js'
 import { expectError } from '../tests/helpers.js'
 

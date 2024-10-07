@@ -20,9 +20,9 @@ import {
   type SymptomScore,
   type UserMedicationRecommendation,
   UserMedicationRecommendationType,
+  UserObservationCollection,
 } from '@stanfordbdhg/engagehf-models'
 import { type PatientService } from './patientService.js'
-import { UserObservationCollection } from '../database/collections.js'
 import {
   type Document,
   type DatabaseService,
