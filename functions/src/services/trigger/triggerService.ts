@@ -19,9 +19,9 @@ import {
   UserMessage,
   UserMessageType,
   VideoReference,
+  UserObservationCollection,
 } from '@stanfordbdhg/engagehf-models'
 import { logger } from 'firebase-functions'
-import { UserObservationCollection } from '../database/collections.js'
 import { type ServiceFactory } from '../factory/serviceFactory.js'
 import { type PatientService } from '../patient/patientService.js'
 import { type RecommendationVitals } from '../recommendation/recommendationService.js'

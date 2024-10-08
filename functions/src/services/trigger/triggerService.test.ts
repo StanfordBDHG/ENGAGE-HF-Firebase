@@ -17,10 +17,10 @@ import {
   UserMessage,
   UserMessageType,
   UserType,
+  UserObservationCollection,
 } from '@stanfordbdhg/engagehf-models'
 import { expect } from 'chai'
 import { describeWithEmulators } from '../../tests/functions/testEnvironment.js'
-import { UserObservationCollection } from '../database/collections.js'
 
 describeWithEmulators('TriggerService', (env) => {
   describe('every15Minutes', () => {
