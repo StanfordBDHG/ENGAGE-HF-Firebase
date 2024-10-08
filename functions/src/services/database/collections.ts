@@ -24,7 +24,7 @@ import {
   userMessageConverter,
   videoConverter,
   videoSectionConverter,
-  UserObservationCollection,
+  type UserObservationCollection,
 } from '@stanfordbdhg/engagehf-models'
 import { type Firestore } from 'firebase-admin/firestore'
 import { DatabaseConverter } from './databaseConverter.js'
