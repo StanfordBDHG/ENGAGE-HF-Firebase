@@ -12,10 +12,10 @@ import {
   StaticDataComponent,
   UserDebugDataComponent,
   UserType,
+  UserObservationCollection,
 } from '@stanfordbdhg/engagehf-models'
 import { expect } from 'chai'
 import { _defaultSeed } from './defaultSeed.js'
-import { UserObservationCollection } from '../services/database/collections.js'
 import { describeWithEmulators } from '../tests/functions/testEnvironment.js'
 
 describeWithEmulators('function: defaultSeed', (env) => {

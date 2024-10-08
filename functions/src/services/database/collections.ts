@@ -24,20 +24,11 @@ import {
   userMessageConverter,
   videoConverter,
   videoSectionConverter,
+  type UserObservationCollection,
 } from '@stanfordbdhg/engagehf-models'
 import { type Firestore } from 'firebase-admin/firestore'
 import { DatabaseConverter } from './databaseConverter.js'
 import { historyChangeItemConverter } from '../history/historyService.js'
-
-export enum UserObservationCollection {
-  bodyWeight = 'bodyWeightObservations',
-  bloodPressure = 'bloodPressureObservations',
-  creatinine = 'creatinineObservations',
-  dryWeight = 'dryWeightObservations',
-  eGfr = 'eGfrObservations',
-  heartRate = 'heartRateObservations',
-  potassium = 'potassiumObservations',
-}
 
 export class CollectionsService {
   // Properties

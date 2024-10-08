@@ -26,15 +26,13 @@ import {
   type UserSeedingOptions,
   userSeedingOptionsSchema,
   VideoReference,
+  UserObservationCollection,
 } from '@stanfordbdhg/engagehf-models'
 import { type Auth } from 'firebase-admin/auth'
 import { type CollectionReference } from 'firebase-admin/firestore'
 import { type Storage } from 'firebase-admin/storage'
 import { logger } from 'firebase-functions'
-import {
-  type CollectionsService,
-  UserObservationCollection,
-} from '../../database/collections.js'
+import { type CollectionsService } from '../../database/collections.js'
 import { type DatabaseService } from '../../database/databaseService.js'
 import { SeedingService } from '../seedingService.js'
 
