@@ -12,14 +12,14 @@ SPDX-License-Identifier: MIT
 
 Firebase cloud hosting infrastructure for the ENGAGE-HF project.
 
-# Behavior
+## Behavior
 
 The base functionality of the ENGAGE-HF Firebase Functions revolve around three parts:
 - recommending medication changes to patients based on existing medication, vitals and symptom scores
 - calculating symptom scores from questionnaire responses of patients
 - generating Health Summary PDFs containing recommendations, vitals and symptom scores
 
-## Health Summary Generation
+### Health Summary Generation
 
 Health Summary PDFs contain four sections:
 - Medications & Recommendations
@@ -27,7 +27,7 @@ Health Summary PDFs contain four sections:
 - Symptom Score Report including a speedometer displaying the current score in relation to the previous one and a baseline, a table with the most recent symptom score results and a small personal summary
 - Detailed Vitals Page with graphs displaying body weight, heart rate and blood pressure measurements and important key figures
 
-## Recommendation Algorithms
+### Recommendation Algorithms
 
 ENGAGE-HF uses four different algorithms to recommend medication changes based on existing medication, vitals and symptom scores. Each recommendation algorithm corresponds to a medication class (Beta blockers, MRA, SGLT2i) or a group of medication classes (RASI including ACEI, ARB and ARNI).
 
@@ -41,7 +41,7 @@ Notes:
 - The codebase includes an additional recommender for diuretics, making a total of five recommenders. The diuretics recommender simply advises maintaining the current medication, assuming it is already at the patient’s personal target dose.
 - The algorithms are designed to handle one medication per class, not multiple medications within the same class.
 
-### Beta Blockers
+#### Beta Blockers
 
 ![Beta Blockers](resources/algorithms/BetaBlockers.png)
 
@@ -50,13 +50,13 @@ Depending on contraindications entered on the Web Dashboard, a different medicat
 - Metoprolol Succinate
 - Bisoprolol
 
-### RASI
+#### RASI
 
 ![RASI](resources/algorithms/RASI-0.png)
 ![RASI](resources/algorithms/RASI-1.png)
 ![RASI](resources/algorithms/RASI-2.png)
 
-### MRA
+#### MRA
 
 ![MRA](resources/algorithms/MRA.png)
 
@@ -64,7 +64,7 @@ Depending on contraindications entered on the Web Dashboard, a different medicat
 - Spironolactone
 - Eplerenone
 
-### SGLT2i
+#### SGLT2i
 
 ![SGLT2i](resources/algorithms/SGLT2i.png)
 
@@ -73,7 +73,7 @@ Depending on contraindications entered on the Web Dashboard, a different medicat
 - Dapagliflozin
 - Sotagliflozin
 
-### Contraindications
+#### Contraindications
 
 Contraindications are handled using FHIR AllergyIntolerance resources found in the users/$userId$/allergyIntolerances collections. In the `code` property, we use RxNorm codes as described in [functions/src/tests/resources/contraindications.csv](functions/src/tests/resources/contraindications.csv) for the different medications. Depending on the `type` and `criticality` properties, we identify each allergy as one of the following:
 
@@ -84,11 +84,11 @@ Contraindications are handled using FHIR AllergyIntolerance resources found in t
 
 In [the file](functions/src/tests/resources/contraindications.csv), we also describe how each of these cases relate to which medications are taken out of the recommendable options.
 
-## Symptom Score Calculation
+### Symptom Score Calculation
 
 The Kansas City Cardiomyopathy Questionnaire-12 (KCCQ-12) score assesses a patient’s physical limitations, symptom frequency, quality of life, and social limitations. Scores are normalized to a 0-100 scale, where higher values indicate better health status. ENGAGE-HF further adds one additional question about dizziness to the questionnaire used in the application.
 
-### Physical Limitations
+#### Physical Limitations
 
 Questions 1a, 1b, and 1c assess physical limitations. Responses are scored from 1 to 6, where:
 - 1 indicates severe limitations.
@@ -97,7 +97,7 @@ Questions 1a, 1b, and 1c assess physical limitations. Responses are scored from 
 
 The Physical Limitations score is the average of the applicable responses, normalized to a 0-100 scale. If fewer than two responses are valid, the score cannot be calculated.
 
-### Symptom Frequency
+#### Symptom Frequency
 
 Questions 2, 3, 4, and 5 evaluate symptom frequency, with responses scored from:
 - 1 to 4 for Questions 2 and 5.
@@ -105,31 +105,31 @@ Questions 2, 3, 4, and 5 evaluate symptom frequency, with responses scored from:
 
 Each response is normalized to a 0-100 scale. The Symptom Frequency score is the average of these normalized values.
 
-### Quality of Life
+#### Quality of Life
 
 Questions 6 and 7 measure quality of life, with responses scored from 1 to 4, where lower scores indicate worse quality of life. These scores are normalized to a 0-100 scale, and their average forms the Quality of Life score.
 
-### Social Limitations
+#### Social Limitations
 
 Questions 8a, 8b, and 8c address social limitations, scored similarly to the Physical Limitations questions (1 to 6 scale, excluding "Does not apply"). The Social Limitations score is the average of the applicable responses, normalized to 0-100, provided at least two valid responses are available.
 
-### Clinical Summary & Overall
+#### Clinical Summary & Overall
 
 The Clinical Summary Score is the average of the Physical Limitations and Symptom Frequency scores, whereas the Overall Total Score is calculated as the average of all four above-mentioned domain scores.
 
-### Dizziness
+#### Dizziness
 
 In addition to the KCCQ-12 questions, ENGAGE-HF uses question 9 to ask the patient about dizziness. Its responses are encoded as integers between 1 and 5.
 
-# Data Scheme
+## Data Scheme
 
 This document describes how data is stored in Firestore for the Engage-HF app.
 
-## Custom Types
+### Custom Types
 
 The following section describes custom types defined for this system to be later used
 
-### LocalizedText
+#### LocalizedText
 
 A LocalizedText object shall be used whenever text requires localization or may require in the future. The object may either simply be a single string (in the case of localizations not being available yet) or a dictionary with string keys and string values. If LocalizedText is represented by a string-string dictionary, the keys represent language-codes following the ISO 639-1 (or if necessary ISO 639-2) standard and the respective text in the given language as value.
 
@@ -137,7 +137,7 @@ Some localizations may require to include regions as well (e.g. Australian/Briti
 
 A LocalizedText object cannot be used in FHIR-conforming types due to its incompatibility with the standard. FHIR types commonly contain text in one language only to be specified using the `language` property.
 
-#### Example
+##### Example
 
 ```
 {
@@ -147,7 +147,9 @@ A LocalizedText object cannot be used in FHIR-conforming types due to its incomp
 }
 ```
 
-## invitations/$invitationId$
+### Invitations
+
+#### invitations/$invitationId$
 
 When a user joins Engage-HF, we first create an invitation code on demand of an operator of the web dashboard. 
 
@@ -166,11 +168,11 @@ For SSO users (e.g. clinicians,owners), upon the first login using SSO, the rela
 |auth>photoURL|optional string|URL for a photo of the user.|
 |user|optional User|See users/$userId$ for full specification. Will no longer be set once invitation has been redeemed.|
 
-## medications
+### Medications
 
 In this section, we describe information regarding all the medications to be specified in the Engage-HF context. These medications may be used by a clinician for medication requests to a patient (users/$userId$/medicationRequests) or contra-indications (users/$userId$/allergyIntolerances). The medications are generated from [functions/data/medicationCodes.json](functions/data/medicationCodes.json) file containing medications (incl. respective RxNorm SCD type codes) grouped by medication classes.
 
-### medications/$medicationId$
+#### medications/$medicationId$
 
 Based on [FHIR Medication](https://hl7.org/fhir/R4B/medication.html), the following properties may be used, while additional properties are ignored by the Engage-HF system.
 
@@ -188,7 +190,7 @@ Based on the [Extension](https://hl7.org/fhir/R4B/extensibility.html#Extension) 
 |minimumDailyDose|[SimpleQuantity](https://www.hl7.org/fhir/r4b/datatypes.html#SimpleQuantity)|-|Unit: mg/day. Occurs exactly once. Multi-ingredient tablets contain an array of double rather than a double.|
 |targetDailyDose|[SimpleQuantity](https://www.hl7.org/fhir/r4b/datatypes.html#SimpleQuantity)|-|Unit: mg/day. Occurs exactly once. Multi-ingredient tablets contain an array of double rather than a double.|
 
-### medications/$medicationId$/drugs/$drugId$
+#### medications/$medicationId$/drugs/$drugId$
 
 |Property|Type|Values|Comments|
 |-|-|-|-|
@@ -198,7 +200,7 @@ Based on the [Extension](https://hl7.org/fhir/R4B/extensibility.html#Extension) 
 |ingredient[x]>itemCodeableConcept|FHIRCodeableConcept|-|FHIRCodeableConcept containing an RxNorm code of the IN type, a display name and the RxNorm system url.|
 |ingredient[x]>strength|Ratio|-|Uses "mg" as numerator unit, no denominator unit and denominator value is always 1.|
 
-### medicationClasses/$medicationClassId$
+#### medicationClasses/$medicationClassId$
 
 |Property|Type|Values|Comments|
 |-|-|-|-|
@@ -206,7 +208,9 @@ Based on the [Extension](https://hl7.org/fhir/R4B/extensibility.html#Extension) 
 |name|LocalizedText|-|A name for a given medicationClass to be displayed to a user.|
 |videoPath|string|e.g. "/videoSectionId/1/videos/2"|The path to retrieve the respective video from Firestore.|
 
-## organizations/$organizationId$
+### Organizations
+
+#### organizations/$organizationId$
 
 |Property|Type|Values|Comments|
 |-|-|-|-|
@@ -216,11 +220,11 @@ Based on the [Extension](https://hl7.org/fhir/R4B/extensibility.html#Extension) 
 |emailAddress|string|e.g. "dothfteam@stanford.edu"|-|
 |ssoProviderId|string|-|The providerId as used for single sign-on.|
 
-## questionnaires
+### Questionnaires
 
 In this section, we describe all the information stored for questionnaires.
 
-### questionnaires/$questionnaireId$
+#### questionnaires/$questionnaireId$
 
 Based on [FHIR Questionnaire](https://hl7.org/fhir/R4B/questionnaire.html), the following properties may be used, while additional properties are ignored by the Engage-HF system.
 
@@ -242,7 +246,9 @@ Based on [FHIR Questionnaire](https://hl7.org/fhir/R4B/questionnaire.html), the 
 
 You can find an example KCCQ-12 questionnaire in [functions/data/questionnaires.json](functions/data/questionnaires.json).
 
-## users/$userId$
+### Users
+
+#### users/$userId$
 
 In this section, we describe all user-related data to be stored. The security rules shall be set up in a way to only allow for a patient to access its own information and a clinician to access all patients' information (or even more restrictive, if needed).
 
@@ -264,7 +270,7 @@ In this section, we describe all user-related data to be stored. The security ru
 |receivesWeightAlerts|optional boolean|true, false|Decides whether to send out alerts when drastic weight changes are observed.|
 |timeZone|string|e.g. "America/Los_Angeles"|The value needs to correspond to an identifier from [TZDB](https://nodatime.org/TimeZones). It must not be an offset to UTC/GMT, since that wouldn't work well with daylight-savings (even if there is no daylight-savings time at that location). Also, don't use common abbreviations like PST, PDT, CEST, etc (they may be ambiguous, e.g. CST). If the timeZone is unknown, then "America/Los_Angeles" should be used.|
 
-### users/$userId$/devices/$deviceId$
+#### users/$userId$/devices/$deviceId$
 
 This data is required to send push notifications over the [Firebase Cloud Messaging](https://firebase.google.com/docs/cloud-messaging) System.
 
@@ -280,13 +286,13 @@ This data is required to send push notifications over the [Firebase Cloud Messag
 
 Push notifications over APNS / FCM only contain text in a single language. For this, the device's `language` property shall be prioritized, falling back on the user's `language` property and using US-English if both are not present.
 
-#### Adding a new device or modifying information of an existing one
+##### Adding a new device or modifying information of an existing one
 
 A device can only be identified by its notification token. When updating a device's information, we therefore check if the notification token already exists in Firestore. If it already exists, we update all other existing fields' values - otherwise, we create a new device.
 
 A device may receive a different notification token at any time though. Therefore, we might create a new device, even though that device already exists in the table with a different (now inactive) notification token. Therefore, every time we send out a new notification and receive the information that a token is no longer active, we need to remove the device from this table.
 
-### users/$userId$/allergyIntolerances/$allergyIntoleranceId$
+#### users/$userId$/allergyIntolerances/$allergyIntoleranceId$
 
 Only users with a `patient` role assigned have values in this collection.
 
@@ -339,7 +345,7 @@ We use RxNorm codes to identify contraindications using the following rules:
 |Diuretic|Torsemide|-|-|-|-|-|
 |Diuretic|Ethacrynic Acid|-|-|-|-|-|
 
-### users/$userId$/appointments
+#### users/$userId$/appointments
 
 Only users with a `patient` role assigned have values in this collection. There is currently no easy way to check for appointments relevant to one clinician - if it happens to be a requirement in the future, we may need to restructure this.
 
@@ -357,7 +363,7 @@ Based on [FHIR Appointment](https://hl7.org/fhir/R4B/appointment.html), the foll
 |participant[x]>actor|Reference(User)|e.g. `users/123`|The Firestore path to the patient.|
 |participant[x]>status|[ParticipationStatus](https://hl7.org/fhir/R4B/valueset-participationstatus.html)|e.g. accepted, declined, tentative, needs-action|-|
 
-### users/$userId$/medicationRequests/$medicationRequestId$
+#### users/$userId$/medicationRequests/$medicationRequestId$
 
 Only users with a `patient` role assigned have values in this collection.
 
@@ -387,7 +393,7 @@ The `dosageInstruction` property may contain values with the following propertie
 
 There may be up to three intakes per day (morning, mid-day and evening) with either 0.5, 1 or 2 tablets. The dosages should always be grouped by medication, i.e. there should not be multiple medication elements concerning the same medication but different dosage instructions. Instead, one medication element shall be used for that medication with multiple dosage instructions.
 
-### users/$userId$/medicationRecommendations/$medicationRecommendationId$
+#### users/$userId$/medicationRecommendations/$medicationRecommendationId$
 
 Only users with a `patient` role assigned have values in this collection.
 
@@ -399,7 +405,7 @@ These are the output values of the recommendation algorithms. Depending on the t
 |recommendedMedication|optional Reference(FHIRMedication)|e.g. `{"reference":"medications/2"}`|Reference to the recommended medication, if applicable. This should always direct to a medication, not a drug.|
 |displayInformation|DisplayInformation|-|The information necessary for the client to display the medication recommendation.|
 
-#### Medication Recommendation Type
+##### Medication Recommendation Type
 
 |Type|Icon|Current Medication|Recommended Medication|Comments|
 |-|-|-|-|-|
@@ -413,7 +419,7 @@ These are the output values of the recommendation algorithms. Depending on the t
 
 Diuretics, if currently present as medication request, will be shown as a recommendation with `personalTargetDoseReached`, so that the logic on the client becomes easier.
 
-#### DisplayInformation
+##### DisplayInformation
 
 |Property|Type|Values|Comments|
 |-|-|-|-|
@@ -523,7 +529,7 @@ Potassium observations contain the following code and value.
 |-|-|-|-|-|-|-|
 |"http://loinc.org"|"6298-4"|"Potassium [Moles/volume] in Blood"|double|"http://unitsofmeasure.org"|"meq/L"|"mEq/L"|
 
-### users/$userId$/messages/$messageId$
+#### users/$userId$/messages/$messageId$
 
 All users are technically allowed to have values in this collection, although the requirements only contain patient-directed messages for now.
 
@@ -540,7 +546,7 @@ This data is used to display messages to a user (patient or clinician). For pati
 |isDismissible|boolean|true,false|Whether or not the message is dismissible by the user or is solely controlled by the server.|
 |reference|optional string|-|Do not use this property as it is solely used to group messages in functions.|
 
-#### Message types
+##### Message types
 
 The following list describes all different types a message could have. Expiration of messages should only be handled by the server, except for triggering the `dismissMessage` Firebase function call that adds a completion date when the message is dismissible and has been dismissed by the user. A client doesn't need to know about the `type` property, since we would otherwise need to check whether a new message type is supported by a client. It may also sort out message types unknown for the client's version.
 
@@ -555,7 +561,7 @@ The following list describes all different types a message could have. Expiratio
 |PreAppointment|Server: Day (24h) before appointment.|After appointment time or when it is cancelled.|patients: healthSummary, clinicians: users/$userId$/appointments|
 |Inactivity|Server: Daily when lastActiveDate of a user is older than 7 days.|When a user observation is modified.|patients: null, clinician: users/$userId$|
 
-### users/$userId$/questionnaireResponses/$questionnaireResponseId$
+#### users/$userId$/questionnaireResponses/$questionnaireResponseId$
 
 Only users with a `patient` role assigned have values in this collection.
 
@@ -575,7 +581,7 @@ Based on [FHIR QuestionnaireResponse](https://hl7.org/fhir/R4B/questionnaireresp
 |item[x]>answer|list of Answer|-|response(s) to the question|
 |item[x]>answer[y]>value|any|-|Value depending on the type of question in the survey, e.g. boolean, integer, date, string, etc|
 
-### users/$userId$/symptomScores/$symptomScoreId$
+#### users/$userId$/symptomScores/$symptomScoreId$
 
 Only users with a `patient` role assigned have values in this collection.
 
@@ -592,7 +598,7 @@ Whenever a new questionnaire response is uploaded to Firestore, we calculate the
 |qualityOfLifeScore|number|must be between 0 and 100|-|
 |dizzinessScore|number|must be between 0 and 100|-|
 
-## videoSections/$videoSectionId$
+#### videoSections/$videoSectionId$
 
 In this section, we describe all data related to educational videos to be shown in the Engage-HF mobile apps. The videos are grouped into different categories to be displayed as sections in the mobile apps.
 
@@ -602,7 +608,7 @@ In this section, we describe all data related to educational videos to be shown 
 |description|LocalizedText|e.g. "Helpful videos on the ENGAGE-HF mobile application."|May be localized. Are there different videos / videoSections for each platform?|
 |orderIndex|integer|e.g. 1|Since Firestore collections aren't necessarily ordered, we have this property to order the elements by on the clients. The list is supposed to be ordered ascending by `orderIndex`.|
 
-### videoSections/$videoSectionId$/videos/$videoId$
+#### videoSections/$videoSectionId$/videos/$videoId$
 
 |Property|Type|Values|Comments|
 |-|-|-|-|
@@ -614,17 +620,17 @@ Embed links for YouTube: `https://youtube.com/embed/${youtubeId}`.
 Short links for YouTube: `https://youtu.be/${youtubeId}`. 
 Watch links for YouTube: `https://youtube.com/watch?v=${youtubeId}`. 
 
-# Functions
+## Functions
 
-## createInvitation
+### createInvitation
 
 Use `createInvitation` to create invitations to be sent out to new patients, clinicians or owners.
 
-### Security
+#### Security
 
 An admin may create invitations for any user, an owner or clinician may only create invitations within their own organization and below or equal their own rank (i.e. clinicians cannot create owners, owners cannot create admins). Patients may not call this function.
 
-### Input
+#### Input
 
 |Property|Type|Values|Comments|
 |-|-|-|-|
@@ -635,21 +641,21 @@ An admin may create invitations for any user, an owner or clinician may only cre
 |auth>photoURL|optional string|-|A photo URL to use for the user.|
 |user|object|-|A prepared user object to use for the enrollment of the user when using the invitation. It may contain the same properties as in the [`users`](#users) collection, except for `dateOfEnrollment` and `invitationCode`.|
 
-### Output
+#### Output
 
 |Property|Type|Values|Comments|
 |-|-|-|-|
 |id|string|-|The Firestore document id of the created invitation.|
 
-## customSeed
+### customSeed
 
 Use `customSeed` to seed Firestore with your own custom data with little effort. It may also be used to create users, which is not possible with the client SDK or to circumvent security rules temporarily before running tests, etc.
 
-### Security
+#### Security
 
 This function may only be called by admins. On emulators, this function can easily be triggered without authentication using an HTTP POST request.
 
-### Input
+#### Input
 
 |Property|Type|Values|Comments|
 |-|-|-|-|
@@ -662,19 +668,19 @@ This function may only be called by admins. On emulators, this function can easi
 |users[x]>user|optional object|-|The user object that will be placed at `users/$userId$`. This may be useful, when the userId is not specified, since the seeding function will make use of the auto-generated id.|
 |users[x]>collections|optional object|-|Similar to the `firestore` property, this content will be placed at the given path prefixed by `users/$userId$/`.|
 
-### Output
+#### Output
 
 None.
 
-## defaultSeed
+### defaultSeed
 
 Use `defaultSeed` to seed Firestore with some default data. Depending on input, it may create users, invitations, static data (including videoSections, medications, etc) and/or fill existing user's collections.
 
-### Security
+#### Security
 
 This function may only be called by admins. On emulators, this function can easily be triggered without authentication using an HTTP POST request.
 
-### Input
+#### Input
 
 |Property|Type|Values|Comments|
 |-|-|-|-|
@@ -686,19 +692,19 @@ This function may only be called by admins. On emulators, this function can easi
 |userData[x]>userId|string|-|The userId for the user to create seeding data for.|
 |userData[x]>only|list of string|-|The user collections to create seeding data for. If not provided, all available collections will be seeded.|
 
-### Output
+#### Output
 
 None.
 
-## dismissMessage
+### dismissMessage
 
 Use `dismissMessage` to dismiss messages that are marked with `isDismissible` equals `true`. Using this function on non-dismissible functions results in an error. Clients may call this function either on deletion of the user (by displaying an x-mark tapped by the user to specifically remove this message) or on perform of the message (i.e. on tap of the message, if the action could successfully be decoded and performed).
 
-### Security
+#### Security
 
 Admins may dismiss messages for any user, otherwise users may only dismiss their own messages.
 
-### Input
+#### Input
 
 |Property|Type|Values|Comments|
 |-|-|-|-|
@@ -706,37 +712,37 @@ Admins may dismiss messages for any user, otherwise users may only dismiss their
 |messageId|string|-|The id of the message to dismiss. This message needs to have `isDismissible` set to `true`.|
 |didPerformAction|optional boolean|-|Whether the message action has actually been performed. Depending on this value, the server may decide to actually dismiss the message or not.|
 
-### Output
+#### Output
 
 None.
 
-## enrollUser
+### enrollUser
 
 Use `enrollUser` to enroll a user, i.e. use an invitation code to create a full user account.
 
-### Security
+#### Security
 
 Any authenticated, non-enrolled user may use this function.
 
-### Input
+#### Input
 
 |Property|Type|Values|Comments|
 |-|-|-|-|
 |invitationCode|string|-|The invitation code provided to the user by the organization. It needs to be between 6-12 characters long and only use uppercase latin characters and arabic digits.|
 
-### Output
+#### Output
 
 None.
 
-## exportHealthSummary
+### exportHealthSummary
 
 `exportHealthSummary` creates a health summary PDF and returns its data.
 
-### Security
+#### Security
 
 This function may be called by admins (for any patient), owners/clinicians (for patients of the same organization), or patients (for themselves).
 
-### Input
+#### Input
 
 |Property|Type|Values|Comments|
 |-|-|-|-|
@@ -744,21 +750,21 @@ This function may be called by admins (for any patient), owners/clinicians (for 
 |language|optional string|e.g. 'en-US'|See [`LocalizedText`](#localizedtext) for specification.|
 |weightUnit|optional string|e.g. '[lb_av]'|A loinc code for the weight unit to be used during generation of the health summary PDF|
 
-### Output
+#### Output
 
 |Property|Type|Values|Comments|
 |-|-|-|-|
 |content|string|-|Base64-encoded string of the PDF data.|
 
-## registerDevice
+### registerDevice
 
 Use `registerDevice` to register different client devices for receival of push notifications. Call this function on each fresh start of the app or whenever the push notification token (or any of the remaining data, including language/region settings) may have changed.
 
-### Security
+#### Security
 
 Any user can register devices for their own account. In the foreseeable future, the function is only relevant for patients though.
 
-### Input
+#### Input
 
 If a notification token could not be generated on the device (e.g. due to missing permissions), simply do not call this function rather than creating a device without token. For the remaining inputs, please provide all values that are available.
 
@@ -772,19 +778,19 @@ If a notification token could not be generated on the device (e.g. due to missin
 |language|optional string|'en-US'|The language and region setting as specified for [`LocalizedText`](#localizedtext).|
 |timeZone|optional string|e.g. "America/Los_Angeles"|The value needs to correspond to an identifier from [TZDB](https://nodatime.org/TimeZones). It must not be an offset to UTC/GMT, since that wouldn't work well with daylight-savings (even if there is no daylight-savings time at that location). Also, don't use common abbreviations like PST, PDT, CEST, etc (they may be ambiguous, e.g. CST). If the timeZone is unknown, then "America/Los_Angeles" should be used.|
 
-### Output
+#### Output
 
 None.
 
-## unregisterDevice
+### unregisterDevice
 
 Use `unregisterDevice` to remove a notification token associated to a user account. This will only remove it from the authenticated user.
 
-### Security
+#### Security
 
 Any user can unregister devices for their own account. In the foreseeable future, the function is only relevant for patients though.
 
-### Input
+#### Input
 
 If a notification token could not be generated on the device (e.g. due to missing permissions), simply do not call this function rather than creating a device without token. For the remaining inputs, please provide all values that are available.
 
@@ -793,30 +799,30 @@ If a notification token could not be generated on the device (e.g. due to missin
 |notificationToken|string|-|The notification token to be used for sending push notifications. This may either be an APNS token for iOS devices or a FCM registration token for Android.|
 |platform|string|'iOS' or 'Android'|The platform of the device.|
 
-### Output
+#### Output
 
 None.
 
-## updateStaticData
+### updateStaticData
 
 Use `updateStaticData` to update statically present data in Firestore. This function may either be called when the configuration of the static data has changed or when dynamically generated content needs an update (e.g. medication data is generated based on the RxNorm API).
 
-### Security
+#### Security
 
 This function may only be called by admins. On emulators, this function can easily be triggered without authentication using an HTTP POST request.
 
-### Input
+#### Input
 
 |Property|Type|Values|Comments|
 |-|-|-|-|
 |only|optional list of string|e.g. ["videoSections","medications"]|The static components to update. If omitted, all components will be updated.|
 |cachingStrategy|optional string|e.g. "expectCache"|Depending on this property static data may simply be updated in Firestore based on cached data or completely generated from scratch and not relying on cached information.|
 
-### Output 
+#### Output 
 
 None.
 
-# Indexes
+## Indexes
 
 To perform certain queries, ENGAGE-HF requires indexes on different properties. The following indexes need to be created:
 
@@ -827,7 +833,7 @@ To perform certain queries, ENGAGE-HF requires indexes on different properties. 
 |Single|group:appointments|start:asc|Querying appointments across all users (for appointment messages)|
 |Single|group:devices|notificationToken:asc|Querying devices across all users (for deleting existing notification tokens assigned to other users)|
 
-# Usage
+## Usage
 
 To use Firebase functions for your own project or to emulate them for client applications, this section will help to give an overview of the different packages in use and how to install, build, test and launch them.
 
@@ -858,12 +864,12 @@ docker-compose up
 
 This can be especially useful if you're using an operating system like Windows, as scripts contain OS-specific commands that may not work the same way across different platforms.
 
-# Resources
+## Resources
 
 - See [resources/algorithms](resources/algorithms) for diagrams describing the different algorithms for medication recommendations.
 - For definitions relevant for the setup of static data, including questionnaires, medication classes, medications and videoSections, have a look at [functions/data](functions/data).
 
-# Security
+## Security
 
 A user usually has one of these roles assigned (some combinations are technically allowed, but may be ignored, e.g. owner+clinician).
 
@@ -876,3 +882,39 @@ A user usually has one of these roles assigned (some combinations are technicall
 |User|Own data|R/W of `users/$userId$`|auth has same userId|
 
 For more detail, please consult the Firestore rules defined in [firestore.rules](firestore.rules).
+
+### Single sign-on (SSO) Setup
+
+The ENGAGE-HF web frontend uses single sign on (SSO) as a mechanism to allow clinicians and admins to log into the web page.
+
+For a Stanford deployment, the [Stanford SAML and OIDC Configuration Manager](https://spdb-prod.iam.stanford.edu) needs to be configured using an OIDC configuration.
+Other sites can obtain the OpenID Connect (OIDC) from other sites following a similiar setup.
+You will use the Client ID and Client secret from the configuration to set up the OIDC authentication in Firebase Authentication.
+
+- Subject Type: `public`
+- Token Endpoint Auth: `client_secret_basic`
+- Grant Type: `refresh_token (authorization_code always enabled)`
+- Scopes: `profile`, `email`.
+- Redirect URI(s): `https://FIREBASE_PROJECT_ID.firebaseapp.com/__/auth/handler`, replacing `FIREBASE_PROJECT_ID` with your Firebase project identifier.
+- Disable PKCE: `true`. This needs to be set as [Firebase doesn't support Proof Key for Code Exchange (PKCE) at this moment](https://github.com/firebase/firebase-js-sdk/issues/5935).
+
+You will need to configure [Firebase Authentication with Identity Platform to use OpenID connect in web apps](https://firebase.google.com/docs/auth/web/openid-connect).
+You need to configure the OpenID Connect Sign-in provider as follows:
+
+- Grant Type: `Code flow`
+- Name: e.g., `Stanford` (or the name of the other institutions)
+- Client ID: Client ID obtained from your OIDC configuration from the [Stanford SAML and OIDC Configuration Manager](https://spdb-prod.iam.stanford.edu).
+- Issuer (URL): e.g., `https://login.stanford.edu` (or the issues URL from the other institution)
+- Client secret: Client ID obtained from your OIDC configuration from the [Stanford SAML and OIDC Configuration Manager](https://spdb-prod.iam.stanford.edu).
+
+## License
+
+This project is licensed under the MIT License. See [Licenses](https://github.com/StanfordBDHG/ENGAGE-HF-Firebase/tree/main/LICENSES) for more information.
+
+## Contributors
+
+This project is developed as part of the Stanford Mussallem Center for Biodesign at Stanford University.
+See [CONTRIBUTORS.md](https://github.com/StanfordBDHG/ENGAGE-HF-Firebase/tree/main/CONTRIBUTORS.md) for a full list of all contributors.
+
+![Stanford Mussallem Center for Biodesign Logo](https://raw.githubusercontent.com/StanfordBDHG/.github/main/assets/biodesign-footer-light.png#gh-light-mode-only)
+![Stanford Mussallem Center for Biodesign Logo](https://raw.githubusercontent.com/StanfordBDHG/.github/main/assets/biodesign-footer-dark.png#gh-dark-mode-only)
