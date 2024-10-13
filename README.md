@@ -909,12 +909,12 @@ You need to configure the OpenID Connect Sign-in provider as follows:
 
 ## License
 
-This project is licensed under the MIT License. See [Licenses](https://github.com/StanfordBDHG/ENGAGE-HF-Web-Frontend/tree/main/LICENSES) for more information.
+This project is licensed under the MIT License. See [Licenses](https://github.com/StanfordBDHG/ENGAGE-HF-Firebase/tree/main/LICENSES) for more information.
 
 ## Contributors
 
 This project is developed as part of the Stanford Mussallem Center for Biodesign at Stanford University.
-See [CONTRIBUTORS.md](https://github.com/StanfordBDHG/ENGAGE-HF-Web-Frontend/tree/main/CONTRIBUTORS.md) for a full list of all contributors.
+See [CONTRIBUTORS.md](https://github.com/StanfordBDHG/ENGAGE-HF-Firebase/tree/main/CONTRIBUTORS.md) for a full list of all contributors.
 
 ![Stanford Mussallem Center for Biodesign Logo](https://raw.githubusercontent.com/StanfordBDHG/.github/main/assets/biodesign-footer-light.png#gh-light-mode-only)
 ![Stanford Mussallem Center for Biodesign Logo](https://raw.githubusercontent.com/StanfordBDHG/.github/main/assets/biodesign-footer-dark.png#gh-dark-mode-only)
