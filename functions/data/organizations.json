@@ -10,17 +10,17 @@
   "jhu": {
     "id": "jhu",
     "name": "Johns Hopkins University",
-    "contactName": "Someone from JHU",
-    "phoneNumber": "+1 (555) 123-4567",
-    "emailAddress": "engagehf@jhu.edu",
+    "contactName": "Henry Zhao",
+    "phoneNumber": "+1 (443) 605-8435",
+    "emailAddress": "hzhao34@jhu.edu",
     "ssoProviderId": ""
   },
   "umich": {
     "id": "umich",
     "name": "University of Michigan",
-    "contactName": "Someone from UMich",
-    "phoneNumber": "+1 (555) 123-4567",
-    "emailAddress": "engagehf@umich.edu",
+    "contactName": "Mike Dorsch",
+    "phoneNumber": "+1 (734) 998-0294",
+    "emailAddress": "ENGAGE-HF@med.umich.edu",
     "ssoProviderId": ""
   },
   "uw": {
