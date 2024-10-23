@@ -135,6 +135,7 @@ export class DatabaseUserService implements UserService {
   async enrollUser(
     invitation: Document<Invitation>,
     userId: string,
+    options: { isSingleSignOn: boolean },
   ): Promise<void> {
     logger.info(
       `About to enroll user ${userId} using invitation at '${invitation.id}' with code '${invitation.content.code}'.`,
@@ -150,12 +151,14 @@ export class DatabaseUserService implements UserService {
       )
     }
 
-    await this.auth.updateUser(userId, {
-      displayName: invitation.content.auth?.displayName ?? undefined,
-      email: invitation.content.auth?.email ?? undefined,
-      phoneNumber: invitation.content.auth?.phoneNumber ?? undefined,
-      photoURL: invitation.content.auth?.photoURL ?? undefined,
-    })
+    if (options.isSingleSignOn === false) {
+      await this.auth.updateUser(userId, {
+        displayName: invitation.content.auth?.displayName ?? undefined,
+        email: invitation.content.auth?.email ?? undefined,
+        phoneNumber: invitation.content.auth?.phoneNumber ?? undefined,
+        photoURL: invitation.content.auth?.photoURL ?? undefined,
+      })
+    }
 
     logger.info(
       `Updated auth information for user with id '${userId}' using invitation auth content.`,
