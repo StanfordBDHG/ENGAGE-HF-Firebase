@@ -151,7 +151,7 @@ export class DatabaseUserService implements UserService {
       )
     }
 
-    if (options.isSingleSignOn === false) {
+    if (!options.isSingleSignOn) {
       await this.auth.updateUser(userId, {
         displayName: invitation.content.auth?.displayName ?? undefined,
         email: invitation.content.auth?.email ?? undefined,
