@@ -60,7 +60,7 @@ export const beforeUserCreatedFunction = beforeUserCreated(
         'Organization does not match invitation code.',
       )
 
-    await userService.enrollUser(invitation, userId)
+    await userService.enrollUser(invitation, userId, { isSingleSignOn: true })
     await factory.trigger().userEnrolled(userId)
   },
 )

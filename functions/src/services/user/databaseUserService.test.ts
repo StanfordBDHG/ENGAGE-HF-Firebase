@@ -54,7 +54,9 @@ describe('DatabaseUserService', () => {
 
       const invitation = await userService.getInvitationByCode(invitationCode)
       if (!invitation) assert.fail('Invitation not found')
-      await userService.enrollUser(invitation, userId)
+      await userService.enrollUser(invitation, userId, {
+        isSingleSignOn: false,
+      })
 
       const auth = await admin.auth().getUser(userId)
       expect(auth.displayName).to.equal(displayName)
@@ -96,7 +98,9 @@ describe('DatabaseUserService', () => {
 
       const invitation = await userService.getInvitationByCode(invitationCode)
       if (!invitation) assert.fail('Invitation not found')
-      await userService.enrollUser(invitation, userId)
+      await userService.enrollUser(invitation, userId, {
+        isSingleSignOn: false,
+      })
 
       const auth = await admin.auth().getUser(userId)
       expect(auth.displayName).to.equal(displayName)
@@ -141,7 +145,9 @@ describe('DatabaseUserService', () => {
 
       const invitation = await userService.getInvitationByCode(invitationCode)
       if (!invitation) assert.fail('Invitation not found')
-      await userService.enrollUser(invitation, userId)
+      await userService.enrollUser(invitation, userId, {
+        isSingleSignOn: false,
+      })
 
       const auth = await admin.auth().getUser(userId)
       expect(auth.displayName).to.equal(displayName)

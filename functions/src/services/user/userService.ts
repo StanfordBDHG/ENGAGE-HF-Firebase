@@ -32,7 +32,11 @@ export interface UserService {
   getInvitationByCode(
     invitationCode: string,
   ): Promise<Document<Invitation> | undefined>
-  enrollUser(invitation: Document<Invitation>, userId: string): Promise<void>
+  enrollUser(
+    invitation: Document<Invitation>,
+    userId: string,
+    options: { isSingleSignOn: boolean },
+  ): Promise<void>
   deleteInvitation(invitation: Document<Invitation>): Promise<void>
 
   // Organizations
