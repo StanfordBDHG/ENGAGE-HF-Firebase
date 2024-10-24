@@ -217,7 +217,9 @@ export class DatabaseUserService implements UserService {
       )
     })
 
-    await this.updateClaims(userId)
+    if (!options.isSingleSignOn) {
+      await this.updateClaims(userId)
+    }
   }
 
   async deleteInvitation(invitation: Document<Invitation>): Promise<void> {
