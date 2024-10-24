@@ -12,58 +12,68 @@ import {
   beforeUserCreated,
   beforeUserSignedIn,
 } from 'firebase-functions/v2/identity'
+import { serviceAccount } from './helpers.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
-export const beforeUserCreatedFunction = beforeUserCreated(async (event) => {
-  const userId = event.data.uid
+export const beforeUserCreatedFunction = beforeUserCreated(
+  { serviceAccount: serviceAccount },
+  async (event) => {
+    const userId = event.data.uid
 
-  const factory = getServiceFactory()
-  const userService = factory.user()
-  const credential = event.credential
+    const factory = getServiceFactory()
+    const userService = factory.user()
+    const credential = event.credential
 
-  // Escape hatch for users using invitation code to enroll
-  if (!credential) return
+    // Escape hatch for users using invitation code to enroll
+    if (!credential) return
 
-  if (event.data.email === undefined)
-    throw new https.HttpsError(
-      'invalid-argument',
-      'Email address is required for user.',
+    if (event.data.email === undefined)
+      throw new https.HttpsError(
+        'invalid-argument',
+        'Email address is required for user.',
+      )
+
+    const organization = await userService.getOrganizationBySsoProviderId(
+      credential.providerId,
     )
 
-  const organization = await userService.getOrganizationBySsoProviderId(
-    credential.providerId,
-  )
+    if (organization === undefined)
+      throw new https.HttpsError(
+        'failed-precondition',
+        'Organization not found.',
+      )
 
-  if (organization === undefined)
-    throw new https.HttpsError('failed-precondition', 'Organization not found.')
+    const invitation = await userService.getInvitationByCode(event.data.email)
+    if (invitation?.content === undefined) {
+      throw new https.HttpsError(
+        'not-found',
+        'No valid invitation code found for user.',
+      )
+    }
 
-  const invitation = await userService.getInvitationByCode(event.data.email)
-  if (invitation?.content === undefined) {
-    throw new https.HttpsError(
-      'not-found',
-      'No valid invitation code found for user.',
+    if (
+      invitation.content.user.type === UserType.admin &&
+      invitation.content.user.organization !== organization.id
     )
-  }
+      throw new https.HttpsError(
+        'failed-precondition',
+        'Organization does not match invitation code.',
+      )
 
-  if (
-    invitation.content.user.type === UserType.admin &&
-    invitation.content.user.organization !== organization.id
-  )
-    throw new https.HttpsError(
-      'failed-precondition',
-      'Organization does not match invitation code.',
-    )
+    await userService.enrollUser(invitation, userId, { isSingleSignOn: true })
+    await factory.trigger().userEnrolled(userId)
+  },
+)
 
-  await userService.enrollUser(invitation, userId, { isSingleSignOn: true })
-  await factory.trigger().userEnrolled(userId)
-})
-
-export const beforeUserSignedInFunction = beforeUserSignedIn(async (event) => {
-  try {
-    const userService = getServiceFactory().user()
-    await userService.updateClaims(event.data.uid)
-    logger.info(`beforeUserSignedIn finished successfully.`)
-  } catch (error) {
-    logger.error(`beforeUserSignedIn finished with error: ${String(error)}`)
-  }
-})
+export const beforeUserSignedInFunction = beforeUserSignedIn(
+  { serviceAccount: serviceAccount },
+  async (event) => {
+    try {
+      const userService = getServiceFactory().user()
+      await userService.updateClaims(event.data.uid)
+      logger.info(`beforeUserSignedIn finished successfully.`)
+    } catch (error) {
+      logger.error(`beforeUserSignedIn finished with error: ${String(error)}`)
+    }
+  },
+)
