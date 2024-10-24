@@ -18,13 +18,15 @@ import {
 } from 'firebase-functions/v2/https'
 import { z } from 'zod'
 
+export const serviceAccount = `cloudfunctionsserviceaccount@${process.env.GCLOUD_PROJECT}.iam.gserviceaccount.com`
+
 export function validatedOnCall<Schema extends z.ZodTypeAny, Return>(
   name: string,
   schema: Schema,
   handler: (request: CallableRequest<z.output<Schema>>) => Return,
   options: CallableOptions = {
     invoker: 'public',
-    serviceAccount: `cloudfunctionsserviceaccount@${process.env.GCLOUD_PROJECT}.iam.gserviceaccount.com`,
+    serviceAccount: serviceAccount,
   },
 ): CallableFunction<
   z.input<Schema>,
@@ -63,7 +65,7 @@ export function validatedOnRequest<Schema extends z.ZodTypeAny>(
   ) => void | Promise<void>,
   options: https.HttpsOptions = {
     invoker: 'public',
-    serviceAccount: `cloudfunctionsserviceaccount@${process.env.GCLOUD_PROJECT}.iam.gserviceaccount.com`,
+    serviceAccount: serviceAccount,
   },
 ): https.HttpsFunction {
   return onRequest(options, async (request, response) => {
