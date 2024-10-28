@@ -20,11 +20,15 @@ import {
   UserMessageType,
   VideoReference,
   UserObservationCollection,
+  User,
 } from '@stanfordbdhg/engagehf-models'
 import { logger } from 'firebase-functions'
 import { type ServiceFactory } from '../factory/serviceFactory.js'
 import { type PatientService } from '../patient/patientService.js'
 import { type RecommendationVitals } from '../recommendation/recommendationService.js'
+import { Document } from '../database/databaseService.js'
+import { MessageService } from '../message/messageService.js'
+import { UserService } from '../user/userService.js'
 
 export class TriggerService {
   // Properties
@@ -59,7 +63,7 @@ export class TriggerService {
     await Promise.all(
       upcomingAppointments.map(async (appointment) => {
         const userId = appointment.path.split('/')[1]
-        await messageService.addMessage(
+        const messageDoc = await messageService.addMessage(
           userId,
           UserMessage.createPreAppointment({
             reference: appointment.path,
@@ -67,21 +71,23 @@ export class TriggerService {
           { notify: true },
         )
         const user = await userService.getUser(userId)
-        const clinicianId = user?.content.clinician
-        logger.debug(
-          `TriggerService.every15Minutes: About to add clinician message for clinician ${clinicianId} and appointment ${appointment.path}.`,
-        )
-        if (clinicianId !== undefined) {
+        if (user !== undefined && messageDoc !== undefined) {
           const userAuth = await userService.getAuth(userId)
-          await messageService.addMessage(
-            clinicianId,
-            UserMessage.createPreAppointmentForClinician({
+          const forwardedMessage = UserMessage.createPreAppointmentForClinician(
+            {
               userId: userId,
               userName: userAuth.displayName,
-              reference: appointment.path,
-            }),
-            { notify: true },
+              reference: messageDoc.path,
+            },
           )
+          await this.forwardMessageToOwnersAndClinician({
+            user,
+            userService,
+            message: forwardedMessage,
+            messageService,
+          })
+        } else {
+          logger.error(`Failed to forward message: ${user}, ${messageDoc}`)
         }
       }),
     )
@@ -172,22 +178,27 @@ export class TriggerService {
     )
     await Promise.all(
       inactivePatients.map(async (user) => {
-        await messageService.addMessage(
+        const messageDoc = await messageService.addMessage(
           user.id,
           UserMessage.createInactive({}),
           { notify: true },
         )
 
-        if (user.content.clinician !== undefined) {
+        if (messageDoc !== undefined) {
           const userAuth = await userService.getAuth(user.id)
-          await messageService.addMessage(
-            user.content.clinician,
-            UserMessage.createInactiveForClinician({
-              userId: user.id,
-              userName: userAuth.displayName,
-            }),
-            { notify: true },
-          )
+          const forwardedMessage = UserMessage.createInactiveForClinician({
+            userId: user.id,
+            userName: userAuth.displayName,
+            reference: messageDoc.path,
+          })
+          await this.forwardMessageToOwnersAndClinician({
+            user,
+            userService,
+            message: forwardedMessage,
+            messageService,
+          })
+        } else {
+          logger.error(`Failed to forward message: ${user}, ${messageDoc}`)
         }
       }),
     )
@@ -318,7 +329,7 @@ export class TriggerService {
         )
         if (mostRecentBodyWeight - bodyWeightMedian >= 7) {
           const messageService = this.factory.message()
-          await messageService.addMessage(
+          const messageDoc = await messageService.addMessage(
             userId,
             UserMessage.createWeightGain(),
             { notify: true },
@@ -326,18 +337,21 @@ export class TriggerService {
 
           const userService = this.factory.user()
           const user = await userService.getUser(userId)
-          const clinicianId = user?.content.clinician
-
-          if (clinicianId !== undefined) {
+          if (user !== undefined && messageDoc !== undefined) {
             const userAuth = await userService.getAuth(userId)
-            await messageService.addMessage(
-              clinicianId,
-              UserMessage.createWeightGainForClinician({
-                userId: userId,
-                userName: userAuth.displayName,
-              }),
-              { notify: true },
-            )
+            const forwardedMessage = UserMessage.createWeightGainForClinician({
+              userId: userId,
+              userName: userAuth.displayName,
+              reference: messageDoc.path,
+            })
+            await this.forwardMessageToOwnersAndClinician({
+              user,
+              userService,
+              message: forwardedMessage,
+              messageService,
+            })
+          } else {
+            logger.error(`Failed to forward message: ${user}, ${messageDoc}`)
           }
         }
       } catch (error) {
@@ -632,21 +646,56 @@ export class TriggerService {
     if (!hasImprovementAvailable) return false
     const message = UserMessage.createMedicationUptitration()
     const messageService = this.factory.message()
-    await messageService.addMessage(input.userId, message, { notify: true })
+    const messageDoc = await messageService.addMessage(input.userId, message, {
+      notify: true,
+    })
 
-    const user = await this.factory.user().getUser(input.userId)
-    const clinicianId = user?.content.clinician
-    if (clinicianId !== undefined) {
-      const userAuth = await this.factory.user().getAuth(input.userId)
-      await messageService.addMessage(
-        clinicianId,
+    const userService = this.factory.user()
+    const user = await userService.getUser(input.userId)
+    if (messageDoc !== undefined && user !== undefined) {
+      const userAuth = await userService.getAuth(input.userId)
+      const forwardedMessage =
         UserMessage.createMedicationUptitrationForClinician({
-          userName: userAuth.displayName,
           userId: input.userId,
-        }),
-        { notify: true },
-      )
+          userName: userAuth.displayName,
+          reference: messageDoc.path,
+        })
+      await this.forwardMessageToOwnersAndClinician({
+        user,
+        userService,
+        message: forwardedMessage,
+        messageService,
+      })
+      return true
+    } else {
+      logger.error(`Failed to forward message: ${user}, ${messageDoc}`)
+      return false
     }
-    return true
+  }
+
+  private async forwardMessageToOwnersAndClinician(input: {
+    user: Document<User>
+    message: UserMessage
+    userService: UserService
+    messageService: MessageService
+  }) {
+    const owners =
+      input.user.content.organization !== undefined ?
+        await input.userService.getAllOwners(input.user.content.organization)
+      : []
+    const clinican = input.user.content.clinician
+
+    const recipientIds = owners.map((owner) => owner.id)
+    if (clinican !== undefined) recipientIds.push(clinican)
+
+    logger.debug(
+      `TriggerService.forwardMessageToOwnersAndClinician(${input.user.id}): Found ${recipientIds.length} recipients (${recipientIds.join(', ')}).`,
+    )
+
+    for (const recipientId of recipientIds) {
+      await input.messageService.addMessage(recipientId, input.message, {
+        notify: true,
+      })
+    }
   }
 }

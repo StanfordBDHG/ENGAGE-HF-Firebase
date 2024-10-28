@@ -130,7 +130,7 @@ export class DefaultMessageService implements MessageService {
       notify: boolean
       user?: User | null
     },
-  ): Promise<void> {
+  ): Promise<Document<UserMessage> | undefined> {
     const newMessage = await this.databaseService.runTransaction(
       async (collections, transaction) => {
         logger.debug(
@@ -180,30 +180,13 @@ export class DefaultMessageService implements MessageService {
         `DatabaseMessageService.addMessage(user: ${userId}): System will notify user unless user settings prevent it`,
       )
 
-      const user =
-        options.user ?? (await this.userService.getUser(userId))?.content
-      if (!user) return
-
-      switch (message.type) {
-        case UserMessageType.medicationChange:
-          if (!user.receivesMedicationUpdates) return
-        case UserMessageType.weightGain:
-          if (!user.receivesWeightAlerts) return
-        case UserMessageType.medicationUptitration:
-          if (!user.receivesRecommendationUpdates) return
-        case UserMessageType.welcome:
-          break
-        case UserMessageType.vitals:
-          if (!user.receivesVitalsReminders) return
-        case UserMessageType.symptomQuestionnaire:
-          if (!user.receivesQuestionnaireReminders) return
-        case UserMessageType.preAppointment:
-          if (!user.receivesAppointmentReminders) return
-      }
-
-      await this.sendNotification(userId, newMessage, {
-        language: user.language,
+      await this.sendNotificationIfNeeded({
+        userId: userId,
+        user: options.user ?? null,
+        message: newMessage,
       })
+
+      return newMessage
     }
   }
 
@@ -339,6 +322,37 @@ export class DefaultMessageService implements MessageService {
   }
 
   // Helpers - Notifications
+
+  private async sendNotificationIfNeeded(input: {
+    userId: string
+    user: User | null
+    message: Document<UserMessage>
+  }) {
+    const user =
+      input.user ?? (await this.userService.getUser(input.userId))?.content
+    if (!user) return
+
+    switch (input.message.content.type) {
+      case UserMessageType.medicationChange:
+        if (!user.receivesMedicationUpdates) return
+      case UserMessageType.weightGain:
+        if (!user.receivesWeightAlerts) return
+      case UserMessageType.medicationUptitration:
+        if (!user.receivesRecommendationUpdates) return
+      case UserMessageType.welcome:
+        break
+      case UserMessageType.vitals:
+        if (!user.receivesVitalsReminders) return
+      case UserMessageType.symptomQuestionnaire:
+        if (!user.receivesQuestionnaireReminders) return
+      case UserMessageType.preAppointment:
+        if (!user.receivesAppointmentReminders) return
+    }
+
+    await this.sendNotification(input.userId, input.message, {
+      language: user.language,
+    })
+  }
 
   private async sendNotification(
     userId: string,

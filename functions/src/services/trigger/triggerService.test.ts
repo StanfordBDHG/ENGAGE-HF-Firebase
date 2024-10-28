@@ -25,6 +25,11 @@ import { describeWithEmulators } from '../../tests/functions/testEnvironment.js'
 describeWithEmulators('TriggerService', (env) => {
   describe('every15Minutes', () => {
     it('should create a message for an upcoming appointment', async () => {
+      const ownerId = await env.createUser({
+        type: UserType.owner,
+        organization: 'stanford',
+      })
+
       const clinicianId = await env.createUser({
         type: UserType.clinician,
         organization: 'stanford',
@@ -64,11 +69,22 @@ describeWithEmulators('TriggerService', (env) => {
       expect(clinicianMessages.docs).to.have.length(1)
       const clinicianMessage = clinicianMessages.docs.at(0)?.data()
       expect(clinicianMessage?.type).to.equal(UserMessageType.preAppointment)
-      expect(clinicianMessage?.reference).to.equal(appointmentRef.path)
+      expect(clinicianMessage?.reference).to.equal(
+        patientMessages.docs.at(0)?.ref.path,
+      )
       expect(clinicianMessage?.completionDate).to.be.undefined
+
+      const ownerMessages = await env.collections.userMessages(ownerId).get()
+      expect(ownerMessages.docs).to.have.length(1)
+      const ownerMessage = clinicianMessages.docs.at(0)?.data()
+      expect(ownerMessage?.type).to.equal(UserMessageType.preAppointment)
+      expect(ownerMessage?.reference).to.equal(
+        patientMessages.docs.at(0)?.ref.path,
+      )
+      expect(ownerMessage?.completionDate).to.be.undefined
     })
 
-    it('should create a complete a message for a past appointment', async () => {
+    it('should complete a message for a past appointment', async () => {
       const clinicianId = await env.createUser({
         type: UserType.clinician,
         organization: 'stanford',
@@ -91,16 +107,22 @@ describeWithEmulators('TriggerService', (env) => {
       const appointmentRef = env.collections.userAppointments(patientId).doc()
       await appointmentRef.set(appointment)
 
-      const message = UserMessage.createPreAppointment({
+      const patientMessage = UserMessage.createPreAppointment({
         reference: appointmentRef.path,
       })
       const patientMessageRef = env.collections.userMessages(patientId).doc()
-      await patientMessageRef.set(message)
+      await patientMessageRef.set(patientMessage)
+
+      const clinicianMessage = UserMessage.createPreAppointmentForClinician({
+        userId: patientId,
+        userName: 'Mock',
+        reference: patientMessageRef.path,
+      })
 
       const clinicianMessageRef = env.collections
         .userMessages(clinicianId)
         .doc()
-      await clinicianMessageRef.set(message)
+      await clinicianMessageRef.set(clinicianMessage)
 
       await env.factory.trigger().every15Minutes()
 
@@ -108,19 +130,21 @@ describeWithEmulators('TriggerService', (env) => {
         .userMessages(patientId)
         .get()
       expect(patientMessages.docs).to.have.length(1)
-      const patientMessage = patientMessages.docs.at(0)?.data()
-      expect(patientMessage?.type).to.equal(UserMessageType.preAppointment)
-      expect(patientMessage?.reference).to.equal(appointmentRef.path)
-      expect(patientMessage?.completionDate).to.exist
+      const patientMessageData = patientMessages.docs.at(0)?.data()
+      expect(patientMessageData?.type).to.equal(UserMessageType.preAppointment)
+      expect(patientMessageData?.reference).to.equal(appointmentRef.path)
+      expect(patientMessageData?.completionDate).to.exist
 
       const clinicianMessages = await env.collections
-        .userMessages(patientId)
+        .userMessages(clinicianId)
         .get()
       expect(clinicianMessages.docs).to.have.length(1)
-      const clinicianMessage = clinicianMessages.docs.at(0)?.data()
-      expect(clinicianMessage?.type).to.equal(UserMessageType.preAppointment)
-      expect(clinicianMessage?.reference).to.equal(appointmentRef.path)
-      expect(clinicianMessage?.completionDate).to.exist
+      const clinicianMessageData = clinicianMessages.docs.at(0)?.data()
+      expect(clinicianMessageData?.type).to.equal(
+        UserMessageType.preAppointment,
+      )
+      expect(clinicianMessageData?.reference).to.equal(patientMessageRef.path)
+      expect(clinicianMessageData?.completionDate).to.be.undefined // this message will need to be manually completed
     })
   })
 
@@ -182,6 +206,11 @@ describeWithEmulators('TriggerService', (env) => {
     })
 
     it('create a message about inactivity', async () => {
+      const ownerId = await env.createUser({
+        type: UserType.owner,
+        organization: 'stanford',
+      })
+
       const clinicianId = await env.createUser({
         type: UserType.clinician,
         organization: 'stanford',
@@ -221,11 +250,31 @@ describeWithEmulators('TriggerService', (env) => {
       expect(clinicianMessages.docs).to.have.length(1)
       const clinicianMessage = clinicianMessages.docs.at(0)?.data()
       expect(clinicianMessage?.type).to.equal(UserMessageType.inactive)
-      expect(clinicianMessage?.reference).to.equal(`users/${patientId}`)
+      expect(clinicianMessage?.reference).to.equal(
+        patientMessages.docs
+          .filter((doc) => doc.data().type === UserMessageType.inactive)
+          .at(0)?.ref.path,
+      )
       expect(clinicianMessage?.completionDate).to.be.undefined
+
+      const ownerMessages = await env.collections.userMessages(ownerId).get()
+      expect(ownerMessages.docs).to.have.length(1)
+      const ownerMessage = clinicianMessages.docs.at(0)?.data()
+      expect(ownerMessage?.type).to.equal(UserMessageType.inactive)
+      expect(ownerMessage?.reference).to.equal(
+        patientMessages.docs
+          .filter((doc) => doc.data().type === UserMessageType.inactive)
+          .at(0)?.ref.path,
+      )
+      expect(ownerMessage?.completionDate).to.be.undefined
     })
 
     it('create no message about inactivity', async () => {
+      const ownerId = await env.createUser({
+        type: UserType.owner,
+        organization: 'stanford',
+      })
+
       const clinicianId = await env.createUser({
         type: UserType.clinician,
         organization: 'stanford',
@@ -253,6 +302,9 @@ describeWithEmulators('TriggerService', (env) => {
         .userMessages(clinicianId)
         .get()
       expect(clinicianMessages.docs).to.have.length(0)
+
+      const ownerMessages = await env.collections.userMessages(ownerId).get()
+      expect(ownerMessages.docs).to.have.length(0)
     })
   })
 
@@ -260,6 +312,11 @@ describeWithEmulators('TriggerService', (env) => {
     describe('bodyWeightObservations', () => {
       it('should create a weight gain message for a user', async () => {
         const triggerService = env.factory.trigger()
+
+        const ownerId = await env.createUser({
+          type: UserType.owner,
+          organization: 'stanford',
+        })
 
         const clinicianId = await env.createUser({
           type: UserType.clinician,
@@ -304,6 +361,9 @@ describeWithEmulators('TriggerService', (env) => {
           .get()
         expect(clinicianMessages0.docs).to.have.length(0)
 
+        const ownerMessages0 = await env.collections.userMessages(ownerId).get()
+        expect(ownerMessages0.docs).to.have.length(0)
+
         const slightlyHigherWeight = FHIRObservation.createSimple({
           id: 'observation-10',
           code: LoincCode.bodyWeight,
@@ -328,12 +388,18 @@ describeWithEmulators('TriggerService', (env) => {
         expect(patientMessage1?.completionDate).to.be.undefined
 
         const clinicianMessages1 = await env.collections
-          .userMessages(patientId)
+          .userMessages(clinicianId)
           .get()
         expect(clinicianMessages1.docs, 'clinicianMessages1').to.have.length(1)
         const clinicianMessage1 = clinicianMessages1.docs.at(0)?.data()
         expect(clinicianMessage1?.type).to.equal(UserMessageType.weightGain)
         expect(clinicianMessage1?.completionDate).to.be.undefined
+
+        const ownerMessages1 = await env.collections.userMessages(ownerId).get()
+        expect(ownerMessages1.docs, 'ownerMessages1').to.have.length(1)
+        const ownerMessage1 = clinicianMessages1.docs.at(0)?.data()
+        expect(ownerMessage1?.type).to.equal(UserMessageType.weightGain)
+        expect(ownerMessage1?.completionDate).to.be.undefined
 
         const actuallyHigherWeight = FHIRObservation.createSimple({
           id: 'observation-11',
@@ -359,12 +425,18 @@ describeWithEmulators('TriggerService', (env) => {
         expect(patientMessage2?.completionDate).to.be.undefined
 
         const clinicianMessages2 = await env.collections
-          .userMessages(patientId)
+          .userMessages(clinicianId)
           .get()
         expect(clinicianMessages2.docs, 'clinicianMessages2').to.have.length(1)
         const clinicianMessage2 = clinicianMessages1.docs.at(0)?.data()
         expect(clinicianMessage2?.type).to.equal(UserMessageType.weightGain)
         expect(clinicianMessage2?.completionDate).to.be.undefined
+
+        const ownerMessages2 = await env.collections.userMessages(ownerId).get()
+        expect(ownerMessages2.docs, 'ownerMessages2').to.have.length(1)
+        const ownerMessage2 = ownerMessages2.docs.at(0)?.data()
+        expect(ownerMessage2?.type).to.equal(UserMessageType.weightGain)
+        expect(ownerMessage2?.completionDate).to.be.undefined
       })
     })
   })
