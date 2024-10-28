@@ -20,15 +20,15 @@ import {
   UserMessageType,
   VideoReference,
   UserObservationCollection,
-  User,
+  type User,
 } from '@stanfordbdhg/engagehf-models'
 import { logger } from 'firebase-functions'
+import { type Document } from '../database/databaseService.js'
 import { type ServiceFactory } from '../factory/serviceFactory.js'
+import { type MessageService } from '../message/messageService.js'
 import { type PatientService } from '../patient/patientService.js'
 import { type RecommendationVitals } from '../recommendation/recommendationService.js'
-import { Document } from '../database/databaseService.js'
-import { MessageService } from '../message/messageService.js'
-import { UserService } from '../user/userService.js'
+import { type UserService } from '../user/userService.js'
 
 export class TriggerService {
   // Properties
@@ -86,8 +86,6 @@ export class TriggerService {
             message: forwardedMessage,
             messageService,
           })
-        } else {
-          logger.error(`Failed to forward message: ${user}, ${messageDoc}`)
         }
       }),
     )
@@ -197,8 +195,6 @@ export class TriggerService {
             message: forwardedMessage,
             messageService,
           })
-        } else {
-          logger.error(`Failed to forward message: ${user}, ${messageDoc}`)
         }
       }),
     )
@@ -350,8 +346,6 @@ export class TriggerService {
               message: forwardedMessage,
               messageService,
             })
-          } else {
-            logger.error(`Failed to forward message: ${user}, ${messageDoc}`)
           }
         }
       } catch (error) {
@@ -668,7 +662,6 @@ export class TriggerService {
       })
       return true
     } else {
-      logger.error(`Failed to forward message: ${user}, ${messageDoc}`)
       return false
     }
   }
