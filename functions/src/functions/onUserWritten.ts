@@ -6,12 +6,12 @@
 // SPDX-License-Identifier: MIT
 //
 
+import { type User, userConverter } from '@stanfordbdhg/engagehf-models'
 import { logger } from 'firebase-functions'
 import { onDocumentWritten } from 'firebase-functions/v2/firestore'
-import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 import { DatabaseConverter } from '../services/database/databaseConverter.js'
-import { User, userConverter } from '@stanfordbdhg/engagehf-models'
-import { Document } from '../services/database/databaseService.js'
+import { type Document } from '../services/database/databaseService.js'
+import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
 export const onUserWritten = onDocumentWritten(
   'users/{userId}',

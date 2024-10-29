@@ -6,6 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
+import { setTimeout } from 'timers/promises'
 import {
   advanceDateByDays,
   dateConverter,
@@ -16,14 +17,13 @@ import {
   UserType,
 } from '@stanfordbdhg/engagehf-models'
 import { type Auth } from 'firebase-admin/auth'
+import { type UserRecord } from 'firebase-functions/v1/auth'
 import { https, logger } from 'firebase-functions/v2'
 import { type UserService } from './userService.js'
 import {
   type Document,
   type DatabaseService,
 } from '../database/databaseService.js'
-import { UserRecord } from 'firebase-functions/v1/auth'
-import { setTimeout } from 'timers/promises'
 
 export interface UserClaims {
   type: UserType
