@@ -97,6 +97,11 @@ describeWithEmulators('function: enrollUser', (env) => {
       { uid: authUser.uid },
     )
 
+    const userService = env.factory.user()
+    const dbUser = await userService.getUser(authUser.uid)
+    expect(dbUser).to.exist
+    if (dbUser !== undefined) await userService.finishUserEnrollment(dbUser)
+
     const users = await env.collections.users.get()
     expect(users.docs).to.have.length(1)
 
