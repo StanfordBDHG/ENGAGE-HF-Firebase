@@ -16,9 +16,9 @@ import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 export const onUserWritten = onDocumentWritten(
   'users/{userId}',
   async (event) => {
+    const factory = getServiceFactory()
+    const userService = factory.user()
     try {
-      const factory = getServiceFactory()
-      const userService = factory.user()
       if (
         event.data?.before.exists !== true &&
         event.data?.after.exists === true
@@ -32,6 +32,12 @@ export const onUserWritten = onDocumentWritten(
         }
         await userService.finishUserEnrollment(userDoc)
       }
+    } catch (error) {
+      logger.error(
+        `Error finishing enrollment for user with id '${event.params.userId}' on change of user: ${String(error)}`,
+      )
+    }
+    try {
       await userService.updateClaims(event.params.userId)
     } catch (error) {
       logger.error(
