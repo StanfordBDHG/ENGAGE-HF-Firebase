@@ -91,6 +91,7 @@ export class UserMessage {
     creationDate?: Date
     userId: string
     userName?: string
+    reference: string
   }): UserMessage {
     return new UserMessage({
       creationDate: input.creationDate ?? new Date(),
@@ -103,7 +104,7 @@ export class UserMessage {
       action: `users/${input.userId}`,
       type: UserMessageType.inactive,
       isDismissible: true,
-      reference: `users/${input.userId}`,
+      reference: input.reference,
     })
   }
 
@@ -153,6 +154,7 @@ export class UserMessage {
     creationDate?: Date
     userId: string
     userName?: string
+    reference: string
   }): UserMessage {
     return new UserMessage({
       creationDate: input.creationDate ?? new Date(),
@@ -162,7 +164,7 @@ export class UserMessage {
       description: new LocalizedText({
         en: `${input.userName ?? 'Patient'} may be eligible for med changes. You can review med information on the user detail page.`,
       }),
-      reference: `users/${input.userId}`,
+      reference: input.reference,
       action: `users/${input.userId}/medications`,
       type: UserMessageType.medicationUptitration,
       isDismissible: true,
@@ -271,6 +273,7 @@ export class UserMessage {
     creationDate?: Date
     userId: string
     userName?: string
+    reference: string
   }): UserMessage {
     return new UserMessage({
       creationDate: input.creationDate ?? new Date(),
@@ -281,7 +284,7 @@ export class UserMessage {
         en: `Weight increase over 3 lbs for ${input.userName ?? 'patient'}.`,
       }),
       action: `users/${input.userId}/medications`,
-      reference: `users/${input.userId}`,
+      reference: input.reference,
       type: UserMessageType.weightGain,
       isDismissible: true,
     })

@@ -13,6 +13,7 @@ import {
   type UserMessage,
   type UserMessageType,
 } from '@stanfordbdhg/engagehf-models'
+import { type Document } from '../database/databaseService'
 
 export interface MessageService {
   // Notifications
@@ -33,7 +34,7 @@ export interface MessageService {
       notify: boolean
       user?: User | null
     },
-  ): Promise<void>
+  ): Promise<Document<UserMessage> | undefined>
 
   completeMessages(
     userId: string,

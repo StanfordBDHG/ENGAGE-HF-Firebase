@@ -123,6 +123,10 @@ export class MockUserService implements UserService {
 
   // Methods - User
 
+  async getAllOwners(organizationId: string): Promise<Array<Document<User>>> {
+    return []
+  }
+
   async getAllPatients(): Promise<Array<Document<User>>> {
     return []
   }

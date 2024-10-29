@@ -261,6 +261,14 @@ export class DatabaseUserService implements UserService {
 
   // Users
 
+  async getAllOwners(organizationId: string): Promise<Array<Document<User>>> {
+    return this.databaseService.getQuery<User>((collections) =>
+      collections.users
+        .where('type', '==', UserType.owner)
+        .where('organization', '==', organizationId),
+    )
+  }
+
   async getAllPatients(): Promise<Array<Document<User>>> {
     return this.databaseService.getQuery<User>((collections) =>
       collections.users.where('type', '==', UserType.patient),

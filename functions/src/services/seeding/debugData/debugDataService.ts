@@ -184,10 +184,12 @@ export class DebugDataService extends SeedingService {
       UserMessage.createInactiveForClinician({
         userId: patient.id,
         userName: patient.name,
+        reference: '',
       }),
       UserMessage.createMedicationUptitrationForClinician({
         userId: patient.id,
         userName: patient.name,
+        reference: '',
       }),
       UserMessage.createPreAppointmentForClinician({
         userId: patient.id,
@@ -197,6 +199,7 @@ export class DebugDataService extends SeedingService {
       UserMessage.createWeightGainForClinician({
         userId: patient.id,
         userName: patient.name,
+        reference: '',
       }),
     ])
     await this.replaceCollection(

@@ -51,6 +51,7 @@ export interface UserService {
 
   // Users
 
+  getAllOwners(organizationId: string): Promise<Array<Document<User>>>
   getAllPatients(): Promise<Array<Document<User>>>
   getUser(userId: string): Promise<Document<User> | undefined>
   updateLastActiveDate(userId: string): Promise<void>
