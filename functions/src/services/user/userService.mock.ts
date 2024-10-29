@@ -85,7 +85,7 @@ export class MockUserService implements UserService {
     invitation: Document<Invitation>,
     userId: string,
   ): Promise<Document<User>> {
-    return await this.getUser(userId)
+    return this.getUser(userId)
   }
 
   // Methods - Organizations
