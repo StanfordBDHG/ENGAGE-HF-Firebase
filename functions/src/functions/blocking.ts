@@ -52,7 +52,7 @@ export const beforeUserCreatedFunction = beforeUserCreated(
     }
 
     if (
-      invitation.content.user.type === UserType.admin &&
+      invitation.content.user.type !== UserType.admin &&
       invitation.content.user.organization !== organization.id
     )
       throw new https.HttpsError(

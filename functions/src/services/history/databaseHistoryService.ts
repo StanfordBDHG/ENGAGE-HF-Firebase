@@ -25,6 +25,13 @@ export class DatabaseHistoryService implements HistoryService {
 
   // Methods
 
+  async isEmpty(): Promise<boolean> {
+    const result = await this.databaseService.getQuery((collections) =>
+      collections.history.limit(1),
+    )
+    return result.length === 0
+  }
+
   async recordChange(change: Change<DocumentSnapshot>): Promise<void> {
     if (isDeepStrictEqual(change.before.data(), change.after.data())) return
     const path = change.after.ref.path
