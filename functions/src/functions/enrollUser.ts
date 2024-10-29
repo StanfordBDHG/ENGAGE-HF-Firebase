@@ -27,13 +27,15 @@ export const enrollUser = validatedOnCall(
     if (invitation === undefined)
       throw new https.HttpsError('not-found', 'Invitation not found')
 
-    await userService.enrollUser(invitation, userId, { isSingleSignOn: false })
+    const userDoc = await userService.enrollUser(invitation, userId, {
+      isSingleSignOn: false,
+    })
 
     logger.debug(
       `setupUser: User '${userId}' successfully enrolled in the study with invitation code: ${invitationCode}`,
     )
 
-    await triggerService.userEnrolled(userId)
+    await triggerService.userEnrolled(userDoc)
 
     logger.debug(`setupUser: User '${userId}' enrollment triggers finished`)
   },

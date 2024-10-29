@@ -36,7 +36,7 @@ export interface UserService {
     invitation: Document<Invitation>,
     userId: string,
     options: { isSingleSignOn: boolean },
-  ): Promise<void>
+  ): Promise<Document<User>>
   deleteInvitation(invitation: Document<Invitation>): Promise<void>
 
   // Organizations

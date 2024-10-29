@@ -136,7 +136,7 @@ export class DatabaseUserService implements UserService {
     invitation: Document<Invitation>,
     userId: string,
     options: { isSingleSignOn: boolean },
-  ): Promise<void> {
+  ): Promise<Document<User>> {
     logger.info(
       `About to enroll user ${userId} using invitation at '${invitation.id}' with code '${invitation.content.code}'.`,
     )
@@ -164,24 +164,30 @@ export class DatabaseUserService implements UserService {
       `Updated auth information for user with id '${userId}' using invitation auth content.`,
     )
 
-    const invitationCollections = await this.databaseService.runTransaction(
-      async (collections, transaction) => {
-        const invitationRef = collections.invitations.doc(invitation.id)
-        const invitationCollections = await invitationRef.listCollections()
+    const { invitationCollections, userDoc } =
+      await this.databaseService.runTransaction(
+        async (collections, transaction) => {
+          const invitationRef = collections.invitations.doc(invitation.id)
+          const invitationCollections = await invitationRef.listCollections()
 
-        transaction.set(
-          collections.users.doc(userId),
-          new User({
+          const userRef = collections.users.doc(userId)
+          const userData = new User({
             ...invitation.content.user,
             lastActiveDate: new Date(),
             invitationCode: invitation.content.code,
             dateOfEnrollment: new Date(),
-          }),
-        )
+          })
+          const userDoc: Document<User> = {
+            id: userId,
+            path: userRef.path,
+            lastUpdate: new Date(),
+            content: userData,
+          }
+          transaction.set(userRef, userData)
 
-        return invitationCollections
-      },
-    )
+          return { invitationCollections, userDoc }
+        },
+      )
 
     logger.info(
       `Created user with id '${userId}' using invitation content. Will now copy invitation collections: [${invitationCollections.map((collection) => `'${collection.id}'`).join(', ')}].`,
@@ -220,6 +226,8 @@ export class DatabaseUserService implements UserService {
     if (!options.isSingleSignOn) {
       await this.updateClaims(userId)
     }
+
+    return userDoc
   }
 
   async deleteInvitation(invitation: Document<Invitation>): Promise<void> {

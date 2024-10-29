@@ -84,8 +84,8 @@ export class MockUserService implements UserService {
   async enrollUser(
     invitation: Document<Invitation>,
     userId: string,
-  ): Promise<void> {
-    return
+  ): Promise<Document<User>> {
+    return this.getUser(userId)
   }
 
   // Methods - Organizations

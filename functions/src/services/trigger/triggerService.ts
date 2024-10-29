@@ -284,18 +284,24 @@ export class TriggerService {
     })
   }
 
-  async userEnrolled(userId: string) {
+  async userEnrolled(user: Document<User>) {
+    if (user.content.type !== UserType.patient) {
+      logger.error(
+        `TriggerService.userEnrolled(${user.id}): Skipping user of type ${user.content.type}.`,
+      )
+      return
+    }
     try {
-      await this.updateRecommendationsForUser(userId)
+      await this.updateRecommendationsForUser(user.id)
     } catch (error) {
       logger.error(
-        `TriggerService.userEnrolled(${userId}): Updating recommendations failed due to ${String(error)}`,
+        `TriggerService.userEnrolled(${user.id}): Updating recommendations failed due to ${String(error)}`,
       )
     }
 
     try {
       await this.factory.message().addMessage(
-        userId,
+        user.id,
         UserMessage.createWelcome({
           videoReference: VideoReference.welcome,
         }),
@@ -303,7 +309,7 @@ export class TriggerService {
       )
     } catch (error) {
       logger.error(
-        `TriggerService.userEnrolled(${userId}): Adding welcome message failed due to ${String(error)}`,
+        `TriggerService.userEnrolled(${user.id}): Adding welcome message failed due to ${String(error)}`,
       )
     }
   }
