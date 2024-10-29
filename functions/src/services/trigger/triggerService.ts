@@ -27,10 +27,10 @@ import {
   UserRegistration,
 } from '@stanfordbdhg/engagehf-models'
 import { logger } from 'firebase-functions'
+import { _updateStaticData } from '../../functions/updateStaticData.js'
 import { type ServiceFactory } from '../factory/serviceFactory.js'
 import { type PatientService } from '../patient/patientService.js'
 import { type RecommendationVitals } from '../recommendation/recommendationService.js'
-import { _updateStaticData } from '../../functions/updateStaticData.js'
 
 export class TriggerService {
   // Properties
@@ -114,7 +114,7 @@ export class TriggerService {
     try {
       const isEmpty = await this.factory.history().isEmpty()
       if (isEmpty) {
-        this.factory.user().createInvitation(
+        await this.factory.user().createInvitation(
           new Invitation({
             code: '<your admin email>',
             user: new UserRegistration({
@@ -136,7 +136,7 @@ export class TriggerService {
       }
     } catch (error) {
       logger.error(
-        `TriggerService.every15Minutes: Error updating static data '${error}'.`,
+        `TriggerService.every15Minutes: Error updating static data '${String(error)}'.`,
       )
     }
   }
