@@ -41,6 +41,12 @@ export interface DatabaseService {
     options?: BulkWriterOptions,
   ): Promise<void>
 
+  listCollections<T>(
+    collection: (
+      collections: CollectionsService,
+    ) => FirebaseFirestore.DocumentReference<T>,
+  ): Promise<FirebaseFirestore.CollectionReference[]>
+
   runTransaction<T>(
     run: (
       collectionsService: CollectionsService,
