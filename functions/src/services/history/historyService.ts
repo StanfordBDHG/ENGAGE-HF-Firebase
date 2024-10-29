@@ -28,5 +28,6 @@ export type HistoryChangeItem = z.output<
 >
 
 export interface HistoryService {
+  isEmpty(): Promise<boolean>
   recordChange(change: Change<DocumentSnapshot>): Promise<void>
 }

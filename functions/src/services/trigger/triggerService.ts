@@ -20,8 +20,14 @@ import {
   UserMessageType,
   VideoReference,
   UserObservationCollection,
+  CachingStrategy,
+  StaticDataComponent,
+  UserType,
+  Invitation,
+  UserRegistration,
 } from '@stanfordbdhg/engagehf-models'
 import { logger } from 'firebase-functions'
+import { _updateStaticData } from '../../functions/updateStaticData.js'
 import { type ServiceFactory } from '../factory/serviceFactory.js'
 import { type PatientService } from '../patient/patientService.js'
 import { type RecommendationVitals } from '../recommendation/recommendationService.js'
@@ -92,7 +98,7 @@ export class TriggerService {
     )
 
     logger.debug(
-      `every15Minutes: Found ${upcomingAppointments.length} past appointments`,
+      `TriggerService.every15Minutes: Found ${upcomingAppointments.length} past appointments`,
     )
 
     await Promise.all(
@@ -104,6 +110,35 @@ export class TriggerService {
         ),
       ),
     )
+
+    try {
+      const isEmpty = await this.factory.history().isEmpty()
+      if (isEmpty) {
+        await this.factory.user().createInvitation(
+          new Invitation({
+            code: '<your admin email>',
+            user: new UserRegistration({
+              type: UserType.admin,
+              receivesAppointmentReminders: false,
+              receivesInactivityReminders: false,
+              receivesMedicationUpdates: false,
+              receivesQuestionnaireReminders: false,
+              receivesRecommendationUpdates: false,
+              receivesVitalsReminders: false,
+              receivesWeightAlerts: false,
+            }),
+          }),
+        )
+        await _updateStaticData(this.factory, {
+          only: Object.values(StaticDataComponent),
+          cachingStrategy: CachingStrategy.updateCacheIfNeeded,
+        })
+      }
+    } catch (error) {
+      logger.error(
+        `TriggerService.every15Minutes: Error updating static data '${String(error)}'.`,
+      )
+    }
   }
 
   async everyMorning() {
