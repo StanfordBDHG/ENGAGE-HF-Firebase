@@ -77,6 +77,14 @@ export class FirestoreService implements DatabaseService {
     await writer.close()
   }
 
+  async listCollections<T>(
+    docReference: (
+      collections: CollectionsService,
+    ) => FirebaseFirestore.DocumentReference<T>,
+  ): Promise<FirebaseFirestore.CollectionReference[]> {
+    return docReference(this.collectionsService.value).listCollections()
+  }
+
   async runTransaction<T>(
     run: (
       collectionsService: CollectionsService,

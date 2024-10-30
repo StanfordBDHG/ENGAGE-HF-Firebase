@@ -6,6 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
+import { setTimeout } from 'timers/promises'
 import {
   advanceDateByDays,
   dateConverter,
@@ -16,6 +17,7 @@ import {
   UserType,
 } from '@stanfordbdhg/engagehf-models'
 import { type Auth } from 'firebase-admin/auth'
+import { type UserRecord } from 'firebase-functions/v1/auth'
 import { https, logger } from 'firebase-functions/v2'
 import { type UserService } from './userService.js'
 import {
@@ -140,64 +142,110 @@ export class DatabaseUserService implements UserService {
     logger.info(
       `About to enroll user ${userId} using invitation at '${invitation.id}' with code '${invitation.content.code}'.`,
     )
-    const user = await this.databaseService.getDocument((collections) =>
-      collections.users.doc(userId),
-    )
-    if (user?.content !== undefined) {
-      logger.error(`User with id ${userId} already exists.`)
-      throw new https.HttpsError(
-        'already-exists',
-        'User is already enrolled in the study.',
-      )
-    }
 
-    if (!options.isSingleSignOn) {
-      await this.auth.updateUser(userId, {
-        displayName: invitation.content.auth?.displayName ?? undefined,
-        email: invitation.content.auth?.email ?? undefined,
-        phoneNumber: invitation.content.auth?.phoneNumber ?? undefined,
-        photoURL: invitation.content.auth?.photoURL ?? undefined,
-      })
-    }
+    const user = await this.databaseService.runTransaction(
+      async (collections, transaction) => {
+        const user = await transaction.get(collections.users.doc(userId))
 
-    logger.info(
-      `Updated auth information for user with id '${userId}' using invitation auth content.`,
-    )
+        if (user.exists) {
+          logger.error(`User with id ${userId} already exists.`)
+          throw new https.HttpsError(
+            'already-exists',
+            'User is already enrolled in the study.',
+          )
+        }
 
-    const { invitationCollections, userDoc } =
-      await this.databaseService.runTransaction(
-        async (collections, transaction) => {
-          const invitationRef = collections.invitations.doc(invitation.id)
-          const invitationCollections = await invitationRef.listCollections()
-
-          const userRef = collections.users.doc(userId)
-          const userData = new User({
-            ...invitation.content.user,
-            lastActiveDate: new Date(),
-            invitationCode: invitation.content.code,
-            dateOfEnrollment: new Date(),
+        if (!options.isSingleSignOn) {
+          await this.auth.updateUser(userId, {
+            displayName: invitation.content.auth?.displayName ?? undefined,
+            email: invitation.content.auth?.email ?? undefined,
+            phoneNumber: invitation.content.auth?.phoneNumber ?? undefined,
+            photoURL: invitation.content.auth?.photoURL ?? undefined,
           })
-          const userDoc: Document<User> = {
-            id: userId,
-            path: userRef.path,
-            lastUpdate: new Date(),
-            content: userData,
-          }
-          transaction.set(userRef, userData)
 
-          return { invitationCollections, userDoc }
-        },
-      )
+          logger.info(
+            `Updated auth information for user with id '${userId}' using invitation auth content.`,
+          )
+        }
+
+        const userRef = collections.users.doc(userId)
+        const userData = new User({
+          ...invitation.content.user,
+          lastActiveDate: new Date(),
+          invitationCode: invitation.content.code,
+          dateOfEnrollment: new Date(),
+        })
+        transaction.set(userRef, userData)
+
+        if (!options.isSingleSignOn) {
+          await this.updateClaims(userId)
+        }
+
+        return {
+          id: userId,
+          path: userRef.path,
+          lastUpdate: new Date(),
+          content: userData,
+        }
+      },
+    )
 
     logger.info(
-      `Created user with id '${userId}' using invitation content. Will now copy invitation collections: [${invitationCollections.map((collection) => `'${collection.id}'`).join(', ')}].`,
+      `DatabaseUserService.enrollUser(${userId}): Created user object using invitation content.`,
+    )
+
+    return user
+  }
+
+  async finishUserEnrollment(user: Document<User>): Promise<void> {
+    let authUser: UserRecord | undefined
+    let count = 0
+    do {
+      try {
+        authUser = await this.auth.getUser(user.id)
+      } catch {}
+      count = await setTimeout(1_000, count + 1)
+      // beforeUserCreated has a timeout of 7 seconds
+    } while (authUser === undefined && count < 7)
+
+    if (authUser === undefined) {
+      logger.error(
+        `DatabaseUserService.finishUserEnrollment(${user.id}): Auth user not found in auth after 7 seconds.`,
+      )
+      throw new https.HttpsError(
+        'not-found',
+        'User not found in authentication service.',
+      )
+    }
+
+    logger.info(
+      `DatabaseUserService.finishUserEnrollment(${user.id}): Auth user found.`,
+    )
+
+    const invitation = await this.getInvitationByCode(
+      user.content.invitationCode,
+    )
+
+    if (invitation?.content === undefined) {
+      logger.error(
+        `DatabaseUserService.finishUserEnrollment(${user.id}): Invitation not found for user.`,
+      )
+      throw new https.HttpsError('not-found', 'Invitation not found for user.')
+    }
+
+    const invitationCollections = await this.databaseService.listCollections(
+      (collections) => collections.invitations.doc(invitation.id),
+    )
+
+    logger.info(
+      `DatabaseUserService.finishUserEnrollment(${user.id}): Will copy invitation collections: [${invitationCollections.map((collection) => `'${collection.id}'`).join(', ')}].`,
     )
 
     await Promise.all(
       invitationCollections.map(async (invitationCollection) =>
         this.databaseService.runTransaction(
           async (collections, transaction) => {
-            const userRef = collections.users.doc(userId)
+            const userRef = collections.users.doc(user.id)
             const collectionId = invitationCollection.id
             const items = await transaction.get(invitationCollection)
             for (const item of items.docs) {
@@ -209,31 +257,20 @@ export class DatabaseUserService implements UserService {
             }
 
             logger.info(
-              `Copied invitation collection '${collectionId}' with ${items.size} items for user '${userId}'.`,
+              `DatabaseUserService.finishUserEnrollment(${user.id}): Copied invitation collection '${collectionId}' with ${items.size} items.`,
             )
           },
         ),
       ),
     )
 
-    await this.databaseService.bulkWrite(async (collections, writer) => {
-      await collections.firestore.recursiveDelete(
-        collections.invitations.doc(invitation.id),
-        writer,
-      )
-    })
-
-    if (!options.isSingleSignOn) {
-      await this.updateClaims(userId)
-    }
-
-    return userDoc
+    await this.deleteInvitation(invitation)
   }
 
   async deleteInvitation(invitation: Document<Invitation>): Promise<void> {
-    await this.databaseService.bulkWrite(async (collections, _) => {
+    await this.databaseService.bulkWrite(async (collections, writer) => {
       const ref = collections.invitations.doc(invitation.id)
-      await collections.firestore.recursiveDelete(ref)
+      await collections.firestore.recursiveDelete(ref, writer)
     })
 
     logger.info(`Deleted invitation with id '${invitation.id}' recursively.`)

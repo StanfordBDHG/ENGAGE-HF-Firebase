@@ -88,6 +88,10 @@ export class MockUserService implements UserService {
     return this.getUser(userId)
   }
 
+  async finishUserEnrollment(user: Document<User>): Promise<void> {
+    return
+  }
+
   // Methods - Organizations
 
   async getOrganizationBySsoProviderId(
