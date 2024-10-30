@@ -201,7 +201,9 @@ export class DatabaseUserService implements UserService {
     let authUser: UserRecord | undefined
     let count = 0
     do {
-      authUser = await this.auth.getUser(user.id)
+      try {
+        authUser = await this.auth.getUser(user.id)
+      } catch {}
       count = await setTimeout(1_000, count + 1)
       // beforeUserCreated has a timeout of 7 seconds
     } while (authUser === undefined && count < 7)
