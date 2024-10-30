@@ -23,25 +23,22 @@ export const serviceAccount = `cloudfunctionsserviceaccount@${process.env.GCLOUD
 export function validatedOnCall<Schema extends z.ZodTypeAny, Return>(
   name: string,
   schema: Schema,
-  handler: (request: CallableRequest<z.output<Schema>>) => Return,
+  handler: (request: CallableRequest<z.output<Schema>>) => Promise<Return>,
   options: CallableOptions = {
     invoker: 'public',
     serviceAccount: serviceAccount,
   },
-): CallableFunction<
-  z.input<Schema>,
-  Return extends Promise<unknown> ? Return : Promise<Return>
-> {
-  return onCall(options, (request) => {
+): CallableFunction<z.input<Schema>, Promise<Return>> {
+  return onCall(options, async (request) => {
     try {
       logger.debug(
-        `onCall(${name}) from user '${request.auth?.uid}' with ${JSON.stringify(request.data)}`,
+        `onCall(${name}) from user '${request.auth?.uid}' with '${JSON.stringify(request.data)}'`,
       )
       request.data = schema.parse(request.data) as z.output<Schema>
-      return handler(request)
+      return await handler(request)
     } catch (error) {
       logger.debug(
-        `onCall(${name}) from user '${request.auth?.uid}' failed with ${String(error)}.`,
+        `onCall(${name}) from user '${request.auth?.uid}' failed with '${String(error)}'.`,
       )
       if (error instanceof z.ZodError) {
         throw new https.HttpsError(
