@@ -16,13 +16,15 @@ service cloud.firestore {
     }
 
     function isOwnerOf(organizationId) {
-      return isAuthenticated()
+      return organizationId != null
+        && isAuthenticated()
         && request.auth.token.type == 'owner'
         && isPartOf(organizationId);
     }
 
     function isOwnerOrClinicianOf(organizationId) {
-      return isAuthenticated()
+      return organizationId != null
+        && isAuthenticated()
         && request.auth.token.type in ['owner', 'clinician']
         && isPartOf(organizationId);
     }
@@ -115,6 +117,7 @@ service cloud.firestore {
       }
 
       allow read: if isAdmin()
+        || (resource == null && isAuthenticated())
         || (request.auth != null && request.auth.uid == userId)
         || isOwnerOrClinicianOf(resource.data.organization);
 
