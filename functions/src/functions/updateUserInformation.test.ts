@@ -22,7 +22,6 @@ describeWithEmulators('function: updateUserInformation', (env) => {
         data: {
           auth: {
             displayName: 'Test User',
-            email: 'engagehf-test@stanford.edu',
           },
         },
       },
@@ -31,6 +30,5 @@ describeWithEmulators('function: updateUserInformation', (env) => {
 
     const updatedUser = await env.auth.getUser(authUser.uid)
     expect(updatedUser.displayName).to.equal('Test User')
-    expect(updatedUser.email).to.equal('engagehf-test@stanford.edu')
   })
 })
