@@ -63,7 +63,7 @@ service cloud.firestore {
     match /invitations/{invitationId}/{collectionName}/{documentId} {
       function isOwnerOrClinicianOfSameOrganization() {
         let invitation = getInvitation(invitationId);
-        return isOwnerOrClinicianOf(invitation.user.organization);
+        return invitation != null && isOwnerOrClinicianOf(invitation.data.user.organization);
       }
 
       function isPatientWritableCollectionName() {
