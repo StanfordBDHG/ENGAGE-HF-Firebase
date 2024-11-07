@@ -24,17 +24,4 @@ export class MockAuth {
   async updateUser(userId: string, record: UserRecord): Promise<void> {
     this.collections[userId] = record
   }
-
-  async setCustomUserClaims(userId: string, claims: Record<string, unknown>) {
-    const user = this.collections[userId]
-    if (user === undefined) {
-      throw new Error('User not found')
-    }
-    const updatedUser: UserRecord = {
-      ...user,
-      customClaims: claims,
-      toJSON: () => this,
-    }
-    this.collections[userId] = updatedUser
-  }
 }
