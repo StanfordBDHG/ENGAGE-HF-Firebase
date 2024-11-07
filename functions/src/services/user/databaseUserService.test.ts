@@ -67,9 +67,7 @@ describe('DatabaseUserService', () => {
       expect(userData).to.exist
       expect(userData?.invitationCode).to.equal(invitationCode)
       expect(userData?.dateOfEnrollment).to.exist
-
-      const claims = await userService.getClaims(userId)
-      expect(claims).to.deep.equal({
+      expect(userData?.claims).to.deep.equal({
         type: UserType.admin,
       })
     })
@@ -113,9 +111,7 @@ describe('DatabaseUserService', () => {
       expect(userData).to.exist
       expect(userData?.invitationCode).to.equal(invitationCode)
       expect(userData?.dateOfEnrollment).to.exist
-
-      const claims = await userService.getClaims(userId)
-      expect(claims).to.deep.equal({
+      expect(userData?.claims).to.deep.equal({
         type: UserType.clinician,
         organization: 'mockOrganization',
       })
@@ -162,9 +158,7 @@ describe('DatabaseUserService', () => {
       expect(userData).to.exist
       expect(userData?.invitationCode).to.equal(invitationCode)
       expect(userData?.dateOfEnrollment).to.exist
-
-      const claims = await userService.getClaims(userId)
-      expect(claims).to.deep.equal({
+      expect(userData?.claims).to.deep.equal({
         type: UserType.patient,
         organization: 'mockOrganization',
       })

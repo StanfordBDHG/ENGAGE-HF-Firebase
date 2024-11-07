@@ -60,8 +60,13 @@ export const userRegistrationConverter = new Lazy(
     }),
 )
 
+export interface UserClaims {
+  type: UserType
+  organization?: string
+}
+
 export class UserRegistration {
-  // Properties
+  // Stored Properties
 
   readonly type: UserType
   readonly organization?: string
@@ -79,6 +84,18 @@ export class UserRegistration {
 
   readonly language?: string
   readonly timeZone?: string
+
+  // Computed Properties
+
+  get claims(): UserClaims {
+    const result: UserClaims = {
+      type: this.type,
+    }
+    if (this.organization !== undefined) {
+      result.organization = this.organization
+    }
+    return result
+  }
 
   // Constructor
 

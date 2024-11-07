@@ -24,7 +24,6 @@ export interface UserService {
 
   getAuth(userId: string): Promise<UserAuth>
   updateAuth(userId: string, auth: UserAuth): Promise<void>
-  getClaims(userId: string): Promise<object>
 
   // Invitations
 

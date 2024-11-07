@@ -43,11 +43,7 @@ export class MockUserService implements UserService {
   async updateAuth(userId: string, user: UserAuth): Promise<void> {
     return
   }
-
-  async getClaims(userId: string): Promise<object> {
-    return {}
-  }
-
+  
   // Methods - Invitations
 
   async createInvitation(content: Invitation): Promise<{ id: string }> {

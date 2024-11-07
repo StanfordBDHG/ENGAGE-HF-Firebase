@@ -25,7 +25,7 @@ export const beforeUserCreatedFunction = beforeUserCreated(
     const credential = event.credential
 
     // Escape hatch for users using invitation code to enroll
-    if (!credential) return
+    if (!credential) return {}
 
     if (event.data.email === undefined)
       throw new https.HttpsError(
@@ -64,6 +64,8 @@ export const beforeUserCreatedFunction = beforeUserCreated(
       isSingleSignOn: true,
     })
     await factory.trigger().userEnrolled(userDoc)
+
+    return { customClaims: invitation.content.user.claims as object }
   },
 )
 
@@ -72,12 +74,16 @@ export const beforeUserSignedInFunction = beforeUserSignedIn(
   async (event) => {
     try {
       const userService = getServiceFactory().user()
-      const claims = await userService.getClaims(event.data.uid)
-      logger.info(`beforeUserSignedIn finished successfully.`)
-      return { sessionClaims: claims }
+      const user = await userService.getUser(event.data.uid)
+      if (user !== undefined) {
+        logger.info(`beforeUserSignedIn finished successfully.`)
+        return { customClaims: user.content.claims as object }
+      }
+      logger.info(`beforeUserSignedIn finished without user.`)
+      return { customClaims: {} }
     } catch (error) {
       logger.error(`beforeUserSignedIn finished with error: ${String(error)}`)
-      return { sessionClaims: {} }
+      return { customClaims: {} }
     }
   },
 )

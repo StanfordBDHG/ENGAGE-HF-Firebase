@@ -25,11 +25,6 @@ import {
   type DatabaseService,
 } from '../database/databaseService.js'
 
-export interface UserClaims {
-  type: UserType
-  organization?: string
-}
-
 export class DatabaseUserService implements UserService {
   // Properties
 
@@ -61,19 +56,6 @@ export class DatabaseUserService implements UserService {
       phoneNumber: auth.phoneNumber ?? undefined,
       photoURL: auth.photoURL ?? undefined,
     })
-  }
-
-  async getClaims(userId: string): Promise<object> {
-    const user = await this.getUser(userId)
-    if (user !== undefined) {
-      const claims: UserClaims = {
-        type: user.content.type,
-      }
-      if (user.content.organization !== undefined)
-        claims.organization = user.content.organization
-      return claims
-    }
-    return {}
   }
 
   // Invitations
