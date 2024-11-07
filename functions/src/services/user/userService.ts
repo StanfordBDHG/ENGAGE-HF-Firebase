@@ -7,7 +7,6 @@
 //
 
 import {
-  UserType,
   type Invitation,
   type Organization,
   type User,
