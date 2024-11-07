@@ -72,10 +72,12 @@ export const beforeUserSignedInFunction = beforeUserSignedIn(
   async (event) => {
     try {
       const userService = getServiceFactory().user()
-      await userService.updateClaims(event.data.uid)
+      const claims = await userService.getClaims(event.data.uid)
       logger.info(`beforeUserSignedIn finished successfully.`)
+      return { sessionClaims: claims }
     } catch (error) {
       logger.error(`beforeUserSignedIn finished with error: ${String(error)}`)
+      return { sessionClaims: {} }
     }
   },
 )

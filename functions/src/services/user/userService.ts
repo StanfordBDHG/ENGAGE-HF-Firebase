@@ -7,6 +7,7 @@
 //
 
 import {
+  UserType,
   type Invitation,
   type Organization,
   type User,
@@ -24,7 +25,7 @@ export interface UserService {
 
   getAuth(userId: string): Promise<UserAuth>
   updateAuth(userId: string, auth: UserAuth): Promise<void>
-  updateClaims(userId: string): Promise<void>
+  getClaims(userId: string): Promise<object>
 
   // Invitations
 

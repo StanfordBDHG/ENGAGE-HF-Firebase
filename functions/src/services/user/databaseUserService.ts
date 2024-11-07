@@ -63,36 +63,17 @@ export class DatabaseUserService implements UserService {
     })
   }
 
-  async updateClaims(userId: string): Promise<void> {
-    try {
-      const user = await this.getUser(userId)
-      if (user !== undefined) {
-        const claims: UserClaims = {
-          type: user.content.type,
-        }
-        if (user.content.organization !== undefined)
-          claims.organization = user.content.organization
-        logger.info(
-          `Will set claims for user ${userId}: ${JSON.stringify(claims)}`,
-        )
-        await this.auth.setCustomUserClaims(userId, claims)
-        logger.info(`Successfully set claims for user ${userId}.`)
-      } else {
-        await this.auth.setCustomUserClaims(userId, {})
-        logger.info(
-          `Successfully set claims for not-yet-enrolled user ${userId}.`,
-        )
+  async getClaims(userId: string): Promise<object> {
+    const user = await this.getUser(userId)
+    if (user !== undefined) {
+      const claims: UserClaims = {
+        type: user.content.type,
       }
-    } catch (error) {
-      logger.error(
-        `Failed to update claims for user ${userId}: ${String(error)}`,
-      )
-      await this.auth.setCustomUserClaims(userId, {})
-      logger.debug(
-        `Successfully reset claims for user ${userId} to empty object.`,
-      )
-      throw error
+      if (user.content.organization !== undefined)
+        claims.organization = user.content.organization
+      return claims
     }
+    return {}
   }
 
   // Invitations
@@ -157,7 +138,6 @@ export class DatabaseUserService implements UserService {
         if (!options.isSingleSignOn) {
           await this.auth.updateUser(userId, {
             displayName: invitation.content.auth?.displayName ?? undefined,
-            email: invitation.content.auth?.email ?? undefined,
             phoneNumber: invitation.content.auth?.phoneNumber ?? undefined,
             photoURL: invitation.content.auth?.photoURL ?? undefined,
           })
@@ -175,10 +155,6 @@ export class DatabaseUserService implements UserService {
           dateOfEnrollment: new Date(),
         })
         transaction.set(userRef, userData)
-
-        if (!options.isSingleSignOn) {
-          await this.updateClaims(userId)
-        }
 
         return {
           id: userId,
