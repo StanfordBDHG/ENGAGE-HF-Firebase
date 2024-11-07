@@ -25,7 +25,7 @@ export const beforeUserCreatedFunction = beforeUserCreated(
     const credential = event.credential
 
     // Escape hatch for users using invitation code to enroll
-    if (!credential) return {}
+    if (!credential) return { customClaims: {} }
 
     if (event.data.email === undefined)
       throw new https.HttpsError(
