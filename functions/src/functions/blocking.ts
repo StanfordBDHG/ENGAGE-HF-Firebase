@@ -65,7 +65,7 @@ export const beforeUserCreatedFunction = beforeUserCreated(
     })
     await factory.trigger().userEnrolled(userDoc)
 
-    return { customClaims: invitation.content.user.claims as object }
+    return { customClaims: invitation.content.user.claims }
   },
 )
 
@@ -77,7 +77,7 @@ export const beforeUserSignedInFunction = beforeUserSignedIn(
       const user = await userService.getUser(event.data.uid)
       if (user !== undefined) {
         logger.info(`beforeUserSignedIn finished successfully.`)
-        return { customClaims: user.content.claims as object }
+        return { customClaims: user.content.claims }
       }
       logger.info(`beforeUserSignedIn finished without user.`)
       return { customClaims: {} }
