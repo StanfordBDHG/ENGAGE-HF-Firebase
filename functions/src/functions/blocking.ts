@@ -77,7 +77,10 @@ export const beforeUserSignedInFunction = beforeUserSignedIn(
       const user = await userService.getUser(event.data.uid)
       if (user !== undefined) {
         logger.info(`beforeUserSignedIn finished successfully.`)
-        return { customClaims: user.content.claims }
+        return {
+          customClaims: user.content.claims,
+          sessionClaims: user.content.claims,
+        }
       }
       logger.info(`beforeUserSignedIn finished without user.`)
       return { customClaims: {} }
