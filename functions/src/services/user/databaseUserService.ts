@@ -138,6 +138,10 @@ export class DatabaseUserService implements UserService {
         })
         transaction.set(userRef, userData)
 
+        if (!options.isSingleSignOn) {
+          await this.auth.setCustomUserClaims(userId, userData.claims)
+        }
+
         return {
           id: userId,
           path: userRef.path,
