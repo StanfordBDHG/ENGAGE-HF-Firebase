@@ -670,6 +670,7 @@ In this section, we describe all data related to educational videos to be shown 
 |title|LocalizedText|e.g. "Beta Blockers for Heart Failure"|May be localized.|
 |youtubeId|LocalizedText|e.g. "XfgcXkq61k0"|Contains the video id from YouTube.|
 |orderIndex|integer|e.g. 1|Since Firestore collections aren't necessarily ordered, we have this property to order the elements by on the clients. The list is supposed to be ordered ascending by `orderIndex`.|
+|description|LocalizedText|-|Describes the content of the video; to be shown underneath the video.|
 
 Embed links for YouTube: `https://youtube.com/embed/${youtubeId}`.
 Short links for YouTube: `https://youtu.be/${youtubeId}`. 
