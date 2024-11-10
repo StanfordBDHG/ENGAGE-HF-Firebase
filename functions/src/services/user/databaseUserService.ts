@@ -66,8 +66,11 @@ export class DatabaseUserService implements UserService {
       )
       throw new https.HttpsError('not-found', 'User not found.')
     }
-    logger.info(`DatabaseUserService.updateClaims(${userId}): User found.`)
-    await this.auth.setCustomUserClaims(userId, user.content.claims)
+    const claims = user.content.claims
+    logger.info(
+      `DatabaseUserService.updateClaims(${userId}): Will set claims to ${JSON.stringify(claims)}.`,
+    )
+    await this.auth.setCustomUserClaims(userId, claims)
     logger.info(
       `DatabaseUserService.updateClaims(${userId}): User claims updated.`,
     )
