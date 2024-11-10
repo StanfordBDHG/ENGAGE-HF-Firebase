@@ -127,7 +127,7 @@ export class StaticDataService extends SeedingService {
                 title: localizedTextConverter.schema,
                 youtubeId: localizedTextConverter.schema,
                 orderIndex: z.number(),
-                description: z.string(),
+                description: localizedTextConverter.schema,
               })
               .array(),
           }),
