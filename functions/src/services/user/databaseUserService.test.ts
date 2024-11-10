@@ -60,9 +60,6 @@ describe('DatabaseUserService', () => {
 
       const auth = await admin.auth().getUser(userId)
       expect(auth.displayName).to.equal(displayName)
-      expect(auth.customClaims).to.deep.equal({
-        type: UserType.admin,
-      })
 
       const userSnapshot = await collectionsService.users.doc(userId).get()
       expect(userSnapshot.exists).to.be.true
@@ -70,6 +67,9 @@ describe('DatabaseUserService', () => {
       expect(userData).to.exist
       expect(userData?.invitationCode).to.equal(invitationCode)
       expect(userData?.dateOfEnrollment).to.exist
+      expect(userData?.claims).to.deep.equal({
+        type: UserType.admin,
+      })
     })
 
     it('enrolls a clinician', async () => {
@@ -104,10 +104,6 @@ describe('DatabaseUserService', () => {
 
       const auth = await admin.auth().getUser(userId)
       expect(auth.displayName).to.equal(displayName)
-      expect(auth.customClaims).to.deep.equal({
-        type: UserType.clinician,
-        organization: 'mockOrganization',
-      })
 
       const userSnapshot = await collectionsService.users.doc(userId).get()
       expect(userSnapshot.exists).to.be.true
@@ -115,6 +111,10 @@ describe('DatabaseUserService', () => {
       expect(userData).to.exist
       expect(userData?.invitationCode).to.equal(invitationCode)
       expect(userData?.dateOfEnrollment).to.exist
+      expect(userData?.claims).to.deep.equal({
+        type: UserType.clinician,
+        organization: 'mockOrganization',
+      })
     })
 
     it('enrolls a patient', async () => {
@@ -151,10 +151,6 @@ describe('DatabaseUserService', () => {
 
       const auth = await admin.auth().getUser(userId)
       expect(auth.displayName).to.equal(displayName)
-      expect(auth.customClaims).to.deep.equal({
-        type: UserType.patient,
-        organization: 'mockOrganization',
-      })
 
       const userSnapshot = await collectionsService.users.doc(userId).get()
       expect(userSnapshot.exists).to.be.true
@@ -162,6 +158,10 @@ describe('DatabaseUserService', () => {
       expect(userData).to.exist
       expect(userData?.invitationCode).to.equal(invitationCode)
       expect(userData?.dateOfEnrollment).to.exist
+      expect(userData?.claims).to.deep.equal({
+        type: UserType.patient,
+        organization: 'mockOrganization',
+      })
     })
   })
 })
