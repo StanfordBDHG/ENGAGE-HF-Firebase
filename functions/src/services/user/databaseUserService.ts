@@ -58,6 +58,21 @@ export class DatabaseUserService implements UserService {
     })
   }
 
+  async updateClaims(userId: string): Promise<void> {
+    const user = await this.getUser(userId)
+    if (user === undefined) {
+      logger.error(
+        `DatabaseUserService.updateClaims(${userId}): User not found.`,
+      )
+      throw new https.HttpsError('not-found', 'User not found.')
+    }
+    logger.info(`DatabaseUserService.updateClaims(${userId}): User found.`)
+    await this.auth.setCustomUserClaims(userId, user.content.claims)
+    logger.info(
+      `DatabaseUserService.updateClaims(${userId}): User claims updated.`,
+    )
+  }
+
   // Invitations
 
   async createInvitation(content: Invitation): Promise<{ id: string }> {
