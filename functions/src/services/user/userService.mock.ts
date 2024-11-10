@@ -44,7 +44,7 @@ export class MockUserService implements UserService {
     return
   }
 
-  async updateClaims(userId: String): Promise<void> {
+  async updateClaims(userId: string): Promise<void> {
     return
   }
 
