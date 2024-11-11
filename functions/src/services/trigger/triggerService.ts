@@ -8,7 +8,6 @@
 
 import {
   advanceDateByDays,
-  advanceDateByMinutes,
   type FHIRMedicationRequest,
   type FHIRQuestionnaireResponse,
   median,
@@ -36,7 +35,6 @@ import { type MessageService } from '../message/messageService.js'
 import { type PatientService } from '../patient/patientService.js'
 import { type RecommendationVitals } from '../recommendation/recommendationService.js'
 import { type UserService } from '../user/userService.js'
-import { Message } from 'firebase-admin/messaging'
 
 export class TriggerService {
   // Properties
@@ -576,7 +574,7 @@ export class TriggerService {
   }
 
   private async addDailyReminderMessages(options: {
-    patients: Document<User>[]
+    patients: Array<Document<User>>
     messageService: MessageService
     now: Date
   }) {
@@ -639,7 +637,7 @@ export class TriggerService {
   }
 
   private async addInactivityReminderMessages(options: {
-    patients: Document<User>[]
+    patients: Array<Document<User>>
     now: Date
     messageService: MessageService
     userService: UserService

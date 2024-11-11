@@ -23,7 +23,7 @@ import { expect } from 'chai'
 import { describeWithEmulators } from '../../tests/functions/testEnvironment.js'
 
 describeWithEmulators('TriggerService', (env) => {
-  describe('every15Minutes', () => {
+  describe('everyMorning', () => {
     it('should create a message for an upcoming appointment', async () => {
       const ownerId = await env.createUser({
         type: UserType.owner,
@@ -52,7 +52,7 @@ describeWithEmulators('TriggerService', (env) => {
       const appointmentRef = env.collections.userAppointments(patientId).doc()
       await appointmentRef.set(appointment)
 
-      await env.factory.trigger().every15Minutes()
+      await env.factory.trigger().everyMorning()
 
       const patientMessages = await env.collections
         .userMessages(patientId)
@@ -124,7 +124,7 @@ describeWithEmulators('TriggerService', (env) => {
         .doc()
       await clinicianMessageRef.set(clinicianMessage)
 
-      await env.factory.trigger().every15Minutes()
+      await env.factory.trigger().everyMorning()
 
       const patientMessages = await env.collections
         .userMessages(patientId)
@@ -146,9 +146,7 @@ describeWithEmulators('TriggerService', (env) => {
       expect(clinicianMessageData?.reference).to.equal(patientMessageRef.path)
       expect(clinicianMessageData?.completionDate).to.be.undefined // this message will need to be manually completed
     })
-  })
 
-  describe('everyMorning', () => {
     it('should create a message to remind about vitals', async () => {
       const userId = await env.createUser({
         type: UserType.patient,
