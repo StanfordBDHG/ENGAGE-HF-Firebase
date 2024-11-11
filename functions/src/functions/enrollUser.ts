@@ -8,7 +8,7 @@
 
 import { enrollUserInputSchema } from '@stanfordbdhg/engagehf-models'
 import { https, logger } from 'firebase-functions'
-import { validatedOnCall } from './helpers.js'
+import { privilegedServiceAccount, validatedOnCall } from './helpers.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
 export const enrollUser = validatedOnCall(
@@ -38,5 +38,8 @@ export const enrollUser = validatedOnCall(
     await triggerService.userEnrolled(userDoc)
 
     logger.debug(`setupUser: User '${userId}' enrollment triggers finished`)
+  },
+  {
+    serviceAccount: privilegedServiceAccount,
   },
 )

@@ -7,14 +7,14 @@
 //
 
 import { onSchedule } from 'firebase-functions/v2/scheduler'
-import { serviceAccount } from './helpers.js'
+import { defaultServiceAccount } from './helpers.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
 export const onScheduleEveryMorning = onSchedule(
   {
     schedule: '0 8 * * *',
     timeZone: 'America/Los_Angeles',
-    serviceAccount: serviceAccount,
+    serviceAccount: defaultServiceAccount,
   },
   async () => getServiceFactory().trigger().everyMorning(),
 )
@@ -23,7 +23,7 @@ export const onScheduleEvery15Minutes = onSchedule(
   {
     schedule: '*/15 * * * *',
     timeZone: 'America/Los_Angeles',
-    serviceAccount: serviceAccount,
+    serviceAccount: defaultServiceAccount,
   },
   async () => getServiceFactory().trigger().every15Minutes(),
 )
@@ -32,7 +32,7 @@ export const onScheduleUpdateMedicationRecommendations = onSchedule(
   {
     schedule: '0 0 * * *',
     timeZone: 'America/Los_Angeles',
-    serviceAccount: serviceAccount,
+    serviceAccount: defaultServiceAccount,
   },
   async () =>
     getServiceFactory().trigger().updateRecommendationsForAllPatients(),

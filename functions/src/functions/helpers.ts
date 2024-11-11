@@ -18,7 +18,8 @@ import {
 } from 'firebase-functions/v2/https'
 import { z } from 'zod'
 
-export const serviceAccount = `cloudfunctionsserviceaccount@${process.env.GCLOUD_PROJECT}.iam.gserviceaccount.com`
+export const privilegedServiceAccount = `cloudfunctionsserviceaccount@${process.env.GCLOUD_PROJECT}.iam.gserviceaccount.com`
+export const defaultServiceAccount = `limited-cloudfunctions-sa@${process.env.GCLOUD_PROJECT}.iam.gserviceaccount.com`
 
 export function validatedOnCall<Schema extends z.ZodTypeAny, Return>(
   name: string,
@@ -26,7 +27,7 @@ export function validatedOnCall<Schema extends z.ZodTypeAny, Return>(
   handler: (request: CallableRequest<z.output<Schema>>) => Promise<Return>,
   options: CallableOptions = {
     invoker: 'public',
-    serviceAccount: serviceAccount,
+    serviceAccount: defaultServiceAccount,
   },
 ): CallableFunction<z.input<Schema>, Promise<Return>> {
   return onCall(options, async (request) => {
@@ -62,7 +63,7 @@ export function validatedOnRequest<Schema extends z.ZodTypeAny>(
   ) => void | Promise<void>,
   options: https.HttpsOptions = {
     invoker: 'public',
-    serviceAccount: serviceAccount,
+    serviceAccount: defaultServiceAccount,
   },
 ): https.HttpsFunction {
   return onRequest(options, async (request, response) => {
