@@ -26,6 +26,7 @@ import {
   UserType,
   Invitation,
   UserRegistration,
+  advanceDateByHours,
 } from '@stanfordbdhg/engagehf-models'
 import { logger } from 'firebase-functions'
 import { _updateStaticData } from '../../functions/updateStaticData.js'
@@ -35,6 +36,7 @@ import { type MessageService } from '../message/messageService.js'
 import { type PatientService } from '../patient/patientService.js'
 import { type RecommendationVitals } from '../recommendation/recommendationService.js'
 import { type UserService } from '../user/userService.js'
+import { Message } from 'firebase-admin/messaging'
 
 export class TriggerService {
   // Properties
@@ -49,102 +51,6 @@ export class TriggerService {
 
   // Methods - Schedule
 
-  async every15Minutes() {
-    const now = new Date()
-    const tomorrow = advanceDateByDays(now, 1)
-    const yesterday = advanceDateByDays(now, -1)
-    const patientService = this.factory.patient()
-    const userService = this.factory.user()
-    const messageService = this.factory.message()
-
-    const upcomingAppointments = await patientService.getEveryAppoinment(
-      advanceDateByMinutes(tomorrow, -15),
-      advanceDateByMinutes(tomorrow, 15),
-    )
-
-    logger.debug(
-      `every15Minutes: Found ${upcomingAppointments.length} upcoming appointments`,
-    )
-
-    await Promise.all(
-      upcomingAppointments.map(async (appointment) => {
-        const userId = appointment.path.split('/')[1]
-        const messageDoc = await messageService.addMessage(
-          userId,
-          UserMessage.createPreAppointment({
-            reference: appointment.path,
-          }),
-          { notify: true },
-        )
-        const user = await userService.getUser(userId)
-        if (user !== undefined && messageDoc !== undefined) {
-          const userAuth = await userService.getAuth(userId)
-          const forwardedMessage = UserMessage.createPreAppointmentForClinician(
-            {
-              userId: userId,
-              userName: userAuth.displayName,
-              reference: messageDoc.path,
-            },
-          )
-          await this.forwardMessageToOwnersAndClinician({
-            user,
-            userService,
-            message: forwardedMessage,
-            messageService,
-          })
-        }
-      }),
-    )
-
-    const pastAppointments = await patientService.getEveryAppoinment(
-      advanceDateByMinutes(yesterday, -15),
-      advanceDateByMinutes(yesterday, 15),
-    )
-
-    logger.debug(
-      `TriggerService.every15Minutes: Found ${upcomingAppointments.length} past appointments`,
-    )
-
-    await Promise.all(
-      pastAppointments.map(async (appointment) =>
-        messageService.completeMessages(
-          appointment.path.split('/')[1],
-          UserMessageType.preAppointment,
-          (message) => message.reference === appointment.path,
-        ),
-      ),
-    )
-
-    try {
-      const isEmpty = await this.factory.history().isEmpty()
-      if (isEmpty) {
-        await this.factory.user().createInvitation(
-          new Invitation({
-            code: '<your admin email>',
-            user: new UserRegistration({
-              type: UserType.admin,
-              receivesAppointmentReminders: false,
-              receivesInactivityReminders: false,
-              receivesMedicationUpdates: false,
-              receivesQuestionnaireReminders: false,
-              receivesRecommendationUpdates: false,
-              receivesVitalsReminders: false,
-              receivesWeightAlerts: false,
-            }),
-          }),
-        )
-        await _updateStaticData(this.factory, {
-          only: Object.values(StaticDataComponent),
-          cachingStrategy: CachingStrategy.updateCacheIfNeeded,
-        })
-      }
-    } catch (error) {
-      logger.error(
-        `TriggerService.every15Minutes: Error updating static data '${String(error)}'.`,
-      )
-    }
-  }
-
   async everyMorning() {
     const now = new Date()
     const messageService = this.factory.message()
@@ -153,86 +59,22 @@ export class TriggerService {
 
     logger.debug(`everyMorning: Found ${patients.length} patients`)
 
-    const symptomReminderMessage = UserMessage.createSymptomQuestionnaire({
-      questionnaireReference: QuestionnaireReference.enUS,
-    })
-    const vitalsMessage = UserMessage.createVitals()
-
-    await Promise.all(
-      patients.map(async (user) => {
-        try {
-          await messageService.addMessage(user.id, vitalsMessage, {
-            notify: true,
-            user: user.content,
-          })
-
-          const enrollmentDuration = Math.abs(
-            user.content.dateOfEnrollment.getTime() - now.getTime(),
-          )
-          const durationOfOneDayInMilliseconds = 24 * 60 * 60 * 1000
-
-          logger.debug(
-            `everyMorning(user: ${user.id}): enrolled on ${user.content.dateOfEnrollment.toISOString()}, which was ${enrollmentDuration} ms ago`,
-          )
-          if (
-            enrollmentDuration % (durationOfOneDayInMilliseconds * 14) <
-            durationOfOneDayInMilliseconds
-          ) {
-            await messageService.addMessage(user.id, symptomReminderMessage, {
-              notify: true,
-              user: user.content,
-            })
-          }
-
-          if (
-            enrollmentDuration % (durationOfOneDayInMilliseconds * 14) >
-              durationOfOneDayInMilliseconds * 2 &&
-            enrollmentDuration % (durationOfOneDayInMilliseconds * 14) <
-              durationOfOneDayInMilliseconds * 3
-          ) {
-            const recommendations = await this.factory
-              .patient()
-              .getMedicationRecommendations(user.id)
-            await this.addMedicationUptitrationMessageIfNeeded({
-              userId: user.id,
-              recommendations: recommendations.map((doc) => doc.content),
-            })
-          }
-        } catch (error) {
-          logger.error(
-            `everyMorning(user: ${user.id}): Failed due to ${String(error)}`,
-          )
-        }
+    await Promise.all([
+      this.addDailyReminderMessages({
+        patients,
+        messageService,
+        now,
       }),
-    )
-
-    const inactivePatients = patients.filter(
-      (patient) => advanceDateByDays(patient.content.lastActiveDate, 7) < now,
-    )
-    await Promise.all(
-      inactivePatients.map(async (user) => {
-        const messageDoc = await messageService.addMessage(
-          user.id,
-          UserMessage.createInactive({}),
-          { notify: true },
-        )
-
-        if (messageDoc !== undefined) {
-          const userAuth = await userService.getAuth(user.id)
-          const forwardedMessage = UserMessage.createInactiveForClinician({
-            userId: user.id,
-            userName: userAuth.displayName,
-            reference: messageDoc.path,
-          })
-          await this.forwardMessageToOwnersAndClinician({
-            user,
-            userService,
-            message: forwardedMessage,
-            messageService,
-          })
-        }
+      this.addInactivityReminderMessages({
+        patients,
+        now,
+        messageService,
+        userService,
       }),
-    )
+      this.addAppointmentReminderMessages(now),
+      this.completeAppointmentReminderMessages(now),
+      this.seedStaticDataIfNeeded(),
+    ])
   }
 
   // Methods - Triggers
@@ -730,6 +572,217 @@ export class TriggerService {
       await input.messageService.addMessage(recipientId, input.message, {
         notify: true,
       })
+    }
+  }
+
+  private async addDailyReminderMessages(options: {
+    patients: Document<User>[]
+    messageService: MessageService
+    now: Date
+  }) {
+    const symptomReminderMessage = UserMessage.createSymptomQuestionnaire({
+      questionnaireReference: QuestionnaireReference.enUS,
+    })
+    const vitalsMessage = UserMessage.createVitals()
+
+    await Promise.all(
+      options.patients.map(async (user) => {
+        try {
+          await options.messageService.addMessage(user.id, vitalsMessage, {
+            notify: true,
+            user: user.content,
+          })
+
+          const enrollmentDuration = Math.abs(
+            user.content.dateOfEnrollment.getTime() - options.now.getTime(),
+          )
+          const durationOfOneDayInMilliseconds = 24 * 60 * 60 * 1000
+
+          logger.debug(
+            `everyMorning(user: ${user.id}): enrolled on ${user.content.dateOfEnrollment.toISOString()}, which was ${enrollmentDuration} ms ago`,
+          )
+          if (
+            enrollmentDuration % (durationOfOneDayInMilliseconds * 14) <
+            durationOfOneDayInMilliseconds
+          ) {
+            await options.messageService.addMessage(
+              user.id,
+              symptomReminderMessage,
+              {
+                notify: true,
+                user: user.content,
+              },
+            )
+          }
+
+          if (
+            enrollmentDuration % (durationOfOneDayInMilliseconds * 14) >
+              durationOfOneDayInMilliseconds * 2 &&
+            enrollmentDuration % (durationOfOneDayInMilliseconds * 14) <
+              durationOfOneDayInMilliseconds * 3
+          ) {
+            const recommendations = await this.factory
+              .patient()
+              .getMedicationRecommendations(user.id)
+            await this.addMedicationUptitrationMessageIfNeeded({
+              userId: user.id,
+              recommendations: recommendations.map((doc) => doc.content),
+            })
+          }
+        } catch (error) {
+          logger.error(
+            `everyMorning(user: ${user.id}): Failed due to ${String(error)}`,
+          )
+        }
+      }),
+    )
+  }
+
+  private async addInactivityReminderMessages(options: {
+    patients: Document<User>[]
+    now: Date
+    messageService: MessageService
+    userService: UserService
+  }) {
+    const inactivePatients = options.patients.filter(
+      (patient) =>
+        advanceDateByDays(patient.content.lastActiveDate, 7) < options.now,
+    )
+    await Promise.all(
+      inactivePatients.map(async (user) => {
+        const messageDoc = await options.messageService.addMessage(
+          user.id,
+          UserMessage.createInactive({}),
+          { notify: true },
+        )
+
+        if (messageDoc !== undefined) {
+          const userAuth = await options.userService.getAuth(user.id)
+          const forwardedMessage = UserMessage.createInactiveForClinician({
+            userId: user.id,
+            userName: userAuth.displayName,
+            reference: messageDoc.path,
+          })
+          await this.forwardMessageToOwnersAndClinician({
+            user,
+            userService: options.userService,
+            message: forwardedMessage,
+            messageService: options.messageService,
+          })
+        }
+      }),
+    )
+  }
+
+  private async addAppointmentReminderMessages(now: Date) {
+    const patientService = this.factory.patient()
+    const userService = this.factory.user()
+    const messageService = this.factory.message()
+
+    const tomorrow = advanceDateByDays(now, 1)
+    const upcomingAppointments = await patientService.getEveryAppoinment(
+      advanceDateByHours(tomorrow, -8),
+      advanceDateByHours(tomorrow, 16),
+    )
+
+    logger.debug(
+      `TriggerService.addAppointmentReminderMessages: Found ${upcomingAppointments.length} upcoming appointments`,
+    )
+
+    await Promise.all(
+      upcomingAppointments.map(async (appointment) => {
+        try {
+          const userId = appointment.path.split('/')[1]
+          const messageDoc = await messageService.addMessage(
+            userId,
+            UserMessage.createPreAppointment({
+              reference: appointment.path,
+            }),
+            { notify: true },
+          )
+          const user = await userService.getUser(userId)
+          if (user !== undefined && messageDoc !== undefined) {
+            const userAuth = await userService.getAuth(userId)
+            const forwardedMessage =
+              UserMessage.createPreAppointmentForClinician({
+                userId: userId,
+                userName: userAuth.displayName,
+                reference: messageDoc.path,
+              })
+            await this.forwardMessageToOwnersAndClinician({
+              user,
+              userService,
+              message: forwardedMessage,
+              messageService,
+            })
+          }
+        } catch (error) {
+          logger.error(
+            `TriggerService.addAppointmentReminderMessages: Error adding messages for appointment ${appointment.path}: ${String(error)}`,
+          )
+        }
+      }),
+    )
+  }
+
+  private async completeAppointmentReminderMessages(now: Date) {
+    const patientService = this.factory.patient()
+    const messageService = this.factory.message()
+    const yesterday = advanceDateByDays(now, -1)
+    const pastAppointments = await patientService.getEveryAppoinment(
+      advanceDateByHours(yesterday, -8),
+      advanceDateByHours(yesterday, 16),
+    )
+
+    logger.debug(
+      `TriggerService.completeAppointmentReminderMessages: Found ${pastAppointments.length} past appointments`,
+    )
+
+    await Promise.all(
+      pastAppointments.map(async (appointment) => {
+        try {
+          await messageService.completeMessages(
+            appointment.path.split('/')[1],
+            UserMessageType.preAppointment,
+            (message) => message.reference === appointment.path,
+          )
+        } catch (error) {
+          logger.error(
+            `TriggerService.completeAppointmentReminderMessages: Error completing messages for appointment ${appointment.path}: ${String(error)}`,
+          )
+        }
+      }),
+    )
+  }
+
+  private async seedStaticDataIfNeeded() {
+    try {
+      const isEmpty = await this.factory.history().isEmpty()
+      if (isEmpty) {
+        await this.factory.user().createInvitation(
+          new Invitation({
+            code: '<your admin email>',
+            user: new UserRegistration({
+              type: UserType.admin,
+              receivesAppointmentReminders: false,
+              receivesInactivityReminders: false,
+              receivesMedicationUpdates: false,
+              receivesQuestionnaireReminders: false,
+              receivesRecommendationUpdates: false,
+              receivesVitalsReminders: false,
+              receivesWeightAlerts: false,
+            }),
+          }),
+        )
+        await _updateStaticData(this.factory, {
+          only: Object.values(StaticDataComponent),
+          cachingStrategy: CachingStrategy.updateCacheIfNeeded,
+        })
+      }
+    } catch (error) {
+      logger.error(
+        `TriggerService.updateStaticData: Error updating static data '${String(error)}'.`,
+      )
     }
   }
 }

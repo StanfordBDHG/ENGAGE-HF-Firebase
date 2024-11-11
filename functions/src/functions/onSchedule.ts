@@ -19,15 +19,6 @@ export const onScheduleEveryMorning = onSchedule(
   async () => getServiceFactory().trigger().everyMorning(),
 )
 
-export const onScheduleEvery15Minutes = onSchedule(
-  {
-    schedule: '*/15 * * * *',
-    timeZone: 'America/Los_Angeles',
-    serviceAccount: serviceAccount,
-  },
-  async () => getServiceFactory().trigger().every15Minutes(),
-)
-
 export const onScheduleUpdateMedicationRecommendations = onSchedule(
   {
     schedule: '0 0 * * *',
