@@ -57,8 +57,12 @@ describeWithEmulators('TriggerService', (env) => {
       const patientMessages = await env.collections
         .userMessages(patientId)
         .get()
-      expect(patientMessages.docs).to.have.length(1)
-      const patientMessage = patientMessages.docs.at(0)?.data()
+      expect(patientMessages.docs).to.have.length(3)
+      const preAppointmentMessages = patientMessages.docs.filter(
+        (doc) => doc.data().type === UserMessageType.preAppointment,
+      )
+      expect(preAppointmentMessages).to.have.length(1)
+      const patientMessage = preAppointmentMessages.at(0)?.data()
       expect(patientMessage?.type).to.equal(UserMessageType.preAppointment)
       expect(patientMessage?.reference).to.equal(appointmentRef.path)
       expect(patientMessage?.completionDate).to.be.undefined
@@ -70,7 +74,7 @@ describeWithEmulators('TriggerService', (env) => {
       const clinicianMessage = clinicianMessages.docs.at(0)?.data()
       expect(clinicianMessage?.type).to.equal(UserMessageType.preAppointment)
       expect(clinicianMessage?.reference).to.equal(
-        patientMessages.docs.at(0)?.ref.path,
+        preAppointmentMessages.at(0)?.ref.path,
       )
       expect(clinicianMessage?.completionDate).to.be.undefined
 
@@ -79,7 +83,7 @@ describeWithEmulators('TriggerService', (env) => {
       const ownerMessage = clinicianMessages.docs.at(0)?.data()
       expect(ownerMessage?.type).to.equal(UserMessageType.preAppointment)
       expect(ownerMessage?.reference).to.equal(
-        patientMessages.docs.at(0)?.ref.path,
+        preAppointmentMessages.at(0)?.ref.path,
       )
       expect(ownerMessage?.completionDate).to.be.undefined
     })
@@ -129,8 +133,12 @@ describeWithEmulators('TriggerService', (env) => {
       const patientMessages = await env.collections
         .userMessages(patientId)
         .get()
-      expect(patientMessages.docs).to.have.length(1)
-      const patientMessageData = patientMessages.docs.at(0)?.data()
+      expect(patientMessages.docs).to.have.length(3)
+      const preAppointmentMessages = patientMessages.docs.filter(
+        (doc) => doc.data().type === UserMessageType.preAppointment,
+      )
+      expect(preAppointmentMessages).to.have.length(1)
+      const patientMessageData = preAppointmentMessages.at(0)?.data()
       expect(patientMessageData?.type).to.equal(UserMessageType.preAppointment)
       expect(patientMessageData?.reference).to.equal(appointmentRef.path)
       expect(patientMessageData?.completionDate).to.exist
