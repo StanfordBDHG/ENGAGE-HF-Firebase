@@ -15,6 +15,24 @@
       ]
     },
     {
+      "collectionGroup": "invitations",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "user.clinician",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "user.organization",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "user.type",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
       "collectionGroup": "users",
       "queryScope": "COLLECTION",
       "fields": [
