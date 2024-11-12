@@ -212,7 +212,10 @@ export class RecommendationService {
         (previous, current) => previous + (current.doseQuantity?.value ?? 0),
         0,
       )
-      return { frequency: frequency * count, quantity: ingredients }
+      return {
+        frequency: frequency,
+        quantity: ingredients.map((ingredient) => ingredient * count),
+      }
     })
   }
 
