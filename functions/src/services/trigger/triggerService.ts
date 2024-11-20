@@ -487,7 +487,7 @@ export class TriggerService {
     return {
       systolicBloodPressure: (
         await patientService.getBloodPressureObservations(userId, cutoffDate)
-      ).map((value) => value[0]),
+      )[0],
       heartRate: await patientService.getHeartRateObservations(
         userId,
         cutoffDate,
