@@ -615,7 +615,8 @@ export class TriggerService {
           )
           if (
             enrollmentDuration % (durationOfOneDayInMilliseconds * 14) <
-            durationOfOneDayInMilliseconds
+              durationOfOneDayInMilliseconds &&
+            enrollmentDuration > durationOfOneDayInMilliseconds
           ) {
             await options.messageService.addMessage(
               user.id,
