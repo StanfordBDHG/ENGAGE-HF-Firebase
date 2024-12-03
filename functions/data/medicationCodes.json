@@ -36,7 +36,7 @@
         },
         "targetDailyDose": {
           "drug": "200033",
-          "frequency": 1,
+          "frequency": 2,
           "quantity": 1
         },
         "drugs": ["200031", "200032", "200033", "686924"]
@@ -285,7 +285,7 @@
           "quantity": 1.5
         },
         "targetDailyDose": {
-          "drug": "308962",
+          "drug": "308964",
           "frequency": 3,
           "quantity": 1
         },
@@ -485,9 +485,9 @@
           "quantity": 1
         },
         "targetDailyDose": {
-          "drug": "310140",
+          "drug": "310139",
           "frequency": 1,
-          "quantity": 1
+          "quantity": 2
         },
         "drugs": ["310139", "310140"],
         "fallbackTerms": {
