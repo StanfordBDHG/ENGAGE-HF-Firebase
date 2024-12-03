@@ -143,9 +143,17 @@ describeWithEmulators('function: enrollUser', (env) => {
     }
 
     const userMessages = await env.collections.userMessages(authUser.uid).get()
-    expect(userMessages.docs.length).to.equal(1)
-    expect(userMessages.docs.at(0)?.data().type).to.equal(
-      UserMessageType.welcome,
-    )
+    expect(userMessages.docs.length).to.equal(2)
+    expect(
+      userMessages.docs.find(
+        (message) => message.data().type == UserMessageType.welcome,
+      ),
+    ).to.exist
+    expect(
+      userMessages.docs.find(
+        (message) =>
+          message.data().type == UserMessageType.symptomQuestionnaire,
+      ),
+    ).to.exist
   })
 })

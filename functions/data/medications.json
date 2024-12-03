@@ -90,14 +90,14 @@
                   "unit": "mg",
                   "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 300
+                  "value": 150
                 }
               ]
             }
           ],
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/1998/drugs/308962",
+            "reference": "medications/1998/drugs/308964",
             "display": "Captopril (Oral Pill)"
           },
           "dosageInstruction": [
@@ -712,7 +712,7 @@
                   "unit": "mg",
                   "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 25
+                  "value": 50
                 }
               ]
             }
@@ -726,7 +726,7 @@
             {
               "timing": {
                 "repeat": {
-                  "frequency": 1,
+                  "frequency": 2,
                   "period": 1,
                   "periodUnit": "d"
                 }
@@ -1764,14 +1764,14 @@
                   "unit": "mg",
                   "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 600
+                  "value": 800
                 }
               ]
             }
           ],
           "resourceType": "MedicationRequest",
           "medicationReference": {
-            "reference": "medications/83515/drugs/310140",
+            "reference": "medications/83515/drugs/310139",
             "display": "Eprosartan (Oral Pill)"
           },
           "dosageInstruction": [
@@ -1789,7 +1789,7 @@
                     "unit": "tbl.",
                     "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 1
+                    "value": 2
                   }
                 }
               ]

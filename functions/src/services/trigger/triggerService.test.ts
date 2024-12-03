@@ -57,7 +57,7 @@ describeWithEmulators('TriggerService', (env) => {
       const patientMessages = await env.collections
         .userMessages(patientId)
         .get()
-      expect(patientMessages.docs).to.have.length(3)
+      expect(patientMessages.docs).to.have.length(2)
       const preAppointmentMessages = patientMessages.docs.filter(
         (doc) => doc.data().type === UserMessageType.preAppointment,
       )
@@ -133,7 +133,7 @@ describeWithEmulators('TriggerService', (env) => {
       const patientMessages = await env.collections
         .userMessages(patientId)
         .get()
-      expect(patientMessages.docs).to.have.length(3)
+      expect(patientMessages.docs).to.have.length(2)
       const preAppointmentMessages = patientMessages.docs.filter(
         (doc) => doc.data().type === UserMessageType.preAppointment,
       )

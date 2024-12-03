@@ -152,6 +152,20 @@ export class TriggerService {
         `TriggerService.userEnrolled(${user.id}): Adding welcome message failed due to ${String(error)}`,
       )
     }
+
+    try {
+      await this.factory.message().addMessage(
+        user.id,
+        UserMessage.createSymptomQuestionnaire({
+          questionnaireReference: QuestionnaireReference.enUS,
+        }),
+        { notify: true },
+      )
+    } catch (error) {
+      logger.error(
+        `TriggerService.userEnrolled(${user.id}): Adding symptom questionnaire message failed due to ${String(error)}`,
+      )
+    }
   }
 
   async userAllergyIntoleranceWritten(userId: string): Promise<void> {
@@ -487,7 +501,7 @@ export class TriggerService {
     return {
       systolicBloodPressure: (
         await patientService.getBloodPressureObservations(userId, cutoffDate)
-      ).map((value) => value[0]),
+      )[0],
       heartRate: await patientService.getHeartRateObservations(
         userId,
         cutoffDate,
@@ -601,7 +615,8 @@ export class TriggerService {
           )
           if (
             enrollmentDuration % (durationOfOneDayInMilliseconds * 14) <
-            durationOfOneDayInMilliseconds
+              durationOfOneDayInMilliseconds &&
+            enrollmentDuration > durationOfOneDayInMilliseconds
           ) {
             await options.messageService.addMessage(
               user.id,
