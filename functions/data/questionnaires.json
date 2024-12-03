@@ -729,7 +729,7 @@
           {
             "valueCoding": {
               "id": "80df26e0-55a6-4d50-90de-b60cd851c4fb",
-              "code": "1",
+              "code": "5",
               "system": "urn:uuid:2b2f9a9a-e721-495a-82d6-fbc1b22a27b2",
               "display": "Extremely bothersome"
             }
@@ -737,7 +737,7 @@
           {
             "valueCoding": {
               "id": "473f99f2-b9d2-4e92-85ed-ca78f3e0141c",
-              "code": "2",
+              "code": "4",
               "system": "urn:uuid:2b2f9a9a-e721-495a-82d6-fbc1b22a27b2",
               "display": "Quite a bit bothersome"
             }
@@ -753,7 +753,7 @@
           {
             "valueCoding": {
               "id": "253f487a-f26b-442f-8757-8a2401465fed",
-              "code": "4",
+              "code": "2",
               "system": "urn:uuid:2b2f9a9a-e721-495a-82d6-fbc1b22a27b2",
               "display": "Slightly bothersome"
             }
@@ -761,7 +761,7 @@
           {
             "valueCoding": {
               "id": "7de45367-76b2-4b9b-8e4e-050bae6b309c",
-              "code": "5",
+              "code": "1",
               "system": "urn:uuid:2b2f9a9a-e721-495a-82d6-fbc1b22a27b2",
               "display": "Not at all bothersome"
             }
@@ -769,7 +769,7 @@
           {
             "valueCoding": {
               "id": "3d1a8f9b-e666-4ad4-9202-571313a2b5d1",
-              "code": "6",
+              "code": "0",
               "system": "urn:uuid:2b2f9a9a-e721-495a-82d6-fbc1b22a27b2",
               "display": "I've had no dizziness"
             }
