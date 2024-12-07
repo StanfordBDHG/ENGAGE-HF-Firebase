@@ -50,7 +50,11 @@ export interface FHIRQuestionnaireResponseItemValue
     typeof fhirQuestionnaireResponseItemBaseConverter.value.schema
   > {
   item?:
+<<<<<<< Updated upstream
     | Array<z.input<typeof fhirQuestionnaireResponseItemConverter.value.schema>>
+=======
+    | z.input<typeof fhirQuestionnaireResponseItemConverter.value.schema>[]
+>>>>>>> Stashed changes
     | null
     | undefined
 }
@@ -324,10 +328,17 @@ export class FHIRQuestionnaireResponse extends FHIRResource {
     linkId: string,
     item: FHIRQuestionnaireResponseItem,
   ): number | undefined {
+<<<<<<< Updated upstream
     for (const child of item.item ?? []) {
       if (child.linkId === linkId) {
         return this.numericSingleAnswerForItem(child, linkId)
       }
+=======
+    if (item.linkId === linkId) {
+      return this.numericSingleAnswerForItem(linkId, item)
+    }
+    for (const child of item.item ?? []) {
+>>>>>>> Stashed changes
       const childAnswer = this.numericSingleAnswerForLinkItem(linkId, child)
       if (childAnswer !== undefined) return childAnswer
     }
@@ -335,10 +346,17 @@ export class FHIRQuestionnaireResponse extends FHIRResource {
   }
 
   private numericSingleAnswerForItem(
+<<<<<<< Updated upstream
     item: FHIRQuestionnaireResponseItem,
     linkId: string,
   ): number {
     const answers = item.answer ?? []
+=======
+    linkId: string,
+    item: FHIRQuestionnaireResponseItem,
+  ): number {
+    const answers = item?.answer ?? []
+>>>>>>> Stashed changes
     if (answers.length !== 1)
       throw new Error(`Zero or multiple answers found for linkId ${linkId}.`)
     const code = answers[0].valueCoding?.code
