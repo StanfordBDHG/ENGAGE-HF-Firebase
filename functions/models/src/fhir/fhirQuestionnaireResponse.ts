@@ -50,7 +50,7 @@ export interface FHIRQuestionnaireResponseItemValue
     typeof fhirQuestionnaireResponseItemBaseConverter.value.schema
   > {
   item?:
-    | z.input<typeof fhirQuestionnaireResponseItemConverter.value.schema>[]
+    | Array<z.input<typeof fhirQuestionnaireResponseItemConverter.value.schema>>
     | null
     | undefined
 }
@@ -338,7 +338,7 @@ export class FHIRQuestionnaireResponse extends FHIRResource {
     item: FHIRQuestionnaireResponseItem,
     linkId: string,
   ): number {
-    const answers = item?.answer ?? []
+    const answers = item.answer ?? []
     if (answers.length !== 1)
       throw new Error(`Zero or multiple answers found for linkId ${linkId}.`)
     const code = answers[0].valueCoding?.code
