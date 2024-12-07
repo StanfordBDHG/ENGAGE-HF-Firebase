@@ -20,37 +20,76 @@ import { optionalish } from '../helpers/optionalish.js'
 import { SchemaConverter } from '../helpers/schemaConverter.js'
 import { type SymptomQuestionnaireResponse } from '../types/symptomQuestionnaireResponse.js'
 
-export const fhirQuestionnaireResponseItemConverter = new Lazy(
-  () =>
-    new SchemaConverter({
-      schema: z.object({
-        answer: optionalish(
-          z
-            .object({
-              valueCoding: optionalish(
-                z.lazy(() => fhirCodingConverter.value.schema),
-              ),
-            })
-            .array(),
-        ),
-        linkId: optionalish(z.string()),
-      }),
-      encode: (object) => ({
-        answer:
-          object.answer?.flatMap((value) => ({
-            valueCoding:
-              value.valueCoding ?
-                fhirCodingConverter.value.encode(value.valueCoding)
-              : null,
-          })) ?? null,
-        linkId: object.linkId ?? null,
-      }),
-    }),
-)
+const fhirQuestionnaireResponseItemBaseConverter = new SchemaConverter({
+  schema: z.object({
+    answer: optionalish(
+      z
+        .object({
+          valueCoding: optionalish(
+            z.lazy(() => fhirCodingConverter.value.schema),
+          ),
+        })
+        .array(),
+    ),
+    linkId: optionalish(z.string()),
+  }),
+  encode: (object) => ({
+    answer:
+      object.answer?.flatMap((value) => ({
+        valueCoding:
+          value.valueCoding ?
+            fhirCodingConverter.value.encode(value.valueCoding)
+          : null,
+      })) ?? null,
+    linkId: object.linkId ?? null,
+  }),
+})
 
-export type FHIRQuestionnaireResponseItem = z.output<
-  typeof fhirQuestionnaireResponseItemConverter.value.schema
->
+export interface FHIRQuestionnaireResponseItemValue
+  extends z.input<
+    typeof fhirQuestionnaireResponseItemBaseConverter.value.schema
+  > {
+  item?:
+    | z.input<typeof fhirQuestionnaireResponseItemConverter.value.schema>[]
+    | null
+    | undefined
+}
+
+export const fhirQuestionnaireResponseItemConverter = (() => {
+  const fhirQuestionnaireResponseItemSchema: z.ZodType<
+    FHIRQuestionnaireResponseItem,
+    z.ZodTypeDef,
+    FHIRQuestionnaireResponseItemValue
+  > = fhirQuestionnaireResponseItemBaseConverter.value.schema.extend({
+    item: optionalish(
+      z.array(z.lazy(() => fhirQuestionnaireResponseItemSchema)),
+    ),
+  })
+
+  function fhirQuestionnaireResponseItemEncode(
+    object: z.output<typeof fhirQuestionnaireResponseItemSchema>,
+  ): z.input<typeof fhirQuestionnaireResponseItemSchema> {
+    return {
+      ...fhirQuestionnaireResponseItemBaseConverter.value.encode(object),
+      item:
+        object.item ?
+          object.item.map(fhirQuestionnaireResponseItemConverter.value.encode)
+        : null,
+    }
+  }
+
+  return new SchemaConverter({
+    schema: fhirQuestionnaireResponseItemSchema,
+    encode: fhirQuestionnaireResponseItemEncode,
+  })
+})()
+
+export interface FHIRQuestionnaireResponseItem
+  extends z.output<
+    typeof fhirQuestionnaireResponseItemBaseConverter.value.schema
+  > {
+  item?: FHIRQuestionnaireResponseItem[]
+}
 
 export const fhirQuestionnaireResponseConverter = new Lazy(
   () =>
@@ -274,8 +313,32 @@ export class FHIRQuestionnaireResponse extends FHIRResource {
   // Methods
 
   numericSingleAnswerForLink(linkId: string): number {
-    const answers =
-      this.item?.find((item) => item.linkId === linkId)?.answer ?? []
+    for (const item of this.item ?? []) {
+      const answer = this.numericSingleAnswerForLinkItem(linkId, item)
+      if (answer !== undefined) return answer
+    }
+    throw new Error(`No answer found for linkId ${linkId}.`)
+  }
+
+  private numericSingleAnswerForLinkItem(
+    linkId: string,
+    item: FHIRQuestionnaireResponseItem,
+  ): number | undefined {
+    for (const child of item.item ?? []) {
+      if (child.linkId === linkId) {
+        return this.numericSingleAnswerForItem(child, linkId)
+      }
+      const childAnswer = this.numericSingleAnswerForLinkItem(linkId, child)
+      if (childAnswer !== undefined) return childAnswer
+    }
+    return undefined
+  }
+
+  private numericSingleAnswerForItem(
+    item: FHIRQuestionnaireResponseItem,
+    linkId: string,
+  ): number {
+    const answers = item?.answer ?? []
     if (answers.length !== 1)
       throw new Error(`Zero or multiple answers found for linkId ${linkId}.`)
     const code = answers[0].valueCoding?.code
