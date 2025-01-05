@@ -12,8 +12,8 @@ import {
 } from '@stanfordbdhg/engagehf-models'
 import { type HealthSummaryService } from './healthSummaryService.js'
 import {
+  HealthSummaryData,
   type HealthSummaryVitals,
-  type HealthSummaryData,
 } from '../../models/healthSummaryData.js'
 import { type PatientService } from '../patient/patientService.js'
 import { type UserService } from '../user/userService.js'
@@ -58,7 +58,7 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
         await this.userService.getAuth(patient.content.clinician)
       : undefined
 
-    return {
+    return new HealthSummaryData({
       name: auth.displayName,
       dateOfBirth: patient?.content.dateOfBirth,
       providerName: clinician?.displayName,
@@ -66,7 +66,7 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
       recommendations: recommendations.map((doc) => doc.content),
       vitals: vitals,
       symptomScores: symptomScores.map((doc) => doc.content),
-    }
+    })
   }
 
   // Helpers

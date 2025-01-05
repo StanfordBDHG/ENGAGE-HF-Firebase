@@ -10,7 +10,7 @@ import { MockHealthSummaryService } from '../../services/healthSummary/healthSum
 
 export function mockHealthSummaryData(
   userId: string,
-  startDate: Date = new Date('2024-02-02'),
+  startDate: Date = new Date(2024, 2, 2, 12, 30),
 ): Promise<HealthSummaryData> {
   const service = new MockHealthSummaryService(startDate)
   return service.getHealthSummaryData(userId)

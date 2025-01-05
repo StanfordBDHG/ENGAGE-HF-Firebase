@@ -17,8 +17,8 @@ import {
 } from '@stanfordbdhg/engagehf-models'
 import { type HealthSummaryService } from './healthSummaryService.js'
 import {
+  HealthSummaryData,
   type HealthSummaryVitals,
-  type HealthSummaryData,
 } from '../../models/healthSummaryData.js'
 
 /* eslint-disable @typescript-eslint/require-await */
@@ -38,7 +38,7 @@ export class MockHealthSummaryService implements HealthSummaryService {
   // Methods
 
   async getHealthSummaryData(userId: string): Promise<HealthSummaryData> {
-    return {
+    return new HealthSummaryData({
       name: 'John Doe',
       dateOfBirth: new Date('1970-01-02'),
       providerName: 'Dr. XXX',
@@ -141,7 +141,7 @@ export class MockHealthSummaryService implements HealthSummaryService {
           date: this.startDateAdvancedByDays(-49),
         },
       ],
-    }
+    })
   }
 
   async getVitals(userId: string): Promise<HealthSummaryVitals> {
