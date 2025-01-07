@@ -9,9 +9,13 @@
 import fs from 'fs'
 import { assert, expect } from 'chai'
 import { generateHealthSummary } from './generate.js'
-import { type HealthSummaryData } from '../models/healthSummaryData.js'
+import {
+  HealthSummaryKeyPointMessage,
+  type HealthSummaryData,
+} from '../models/healthSummaryData.js'
 import { mockHealthSummaryData } from '../tests/mocks/healthSummaryData.js'
 import { TestFlags } from '../tests/testFlags.js'
+import { readCsv } from '../tests/helpers/csv.js'
 
 describe('generateHealthSummary', () => {
   function comparePdf(actual: Buffer, expected: Buffer): boolean {
@@ -78,4 +82,70 @@ describe('generateHealthSummary', () => {
       comparePdf(actualData, expectedData)
     }
   })
+
+  it('should generate the correct key point messages', () => {
+    const allMessages = new Set<string>()
+    readCsv('src/tests/resources/keyPointMessages.csv', 55, (line, index) => {
+      if (index === 0) return
+
+      switch (line[0]) {
+        case 'Eligible meds for optimization':
+          break
+        case 'No eligible meds at optimization; measure BP':
+          break
+        case 'No eligible meds at optimization; at target doses':
+          break
+        default:
+          console.log('Unknown item at 0:', line[0])
+      }
+
+      switch (line[1]) {
+        case 'Change >-10 and KCCQ<90':
+          break
+        case 'Change >-10 and KCCQ>=90':
+          break
+        case 'Change <-10':
+          break
+        default:
+          console.log('Unknown item at 1:', line[1])
+      }
+
+      switch (line[2]) {
+        case 'No decrease <-25':
+          break
+        case 'Decrease <-25':
+          break
+        default:
+          console.log('Unknown item at 2:', line[2])
+      }
+
+      switch (line[3]) {
+        case 'No weight gain but weight measured':
+          break
+        case 'Weight increase':
+          break
+        case 'No weight measured':
+          break
+        default:
+          console.log('Unknown item at 3:', line[3])
+      }
+
+      const newMessages = separateKeyPointMessages(line[4])
+      for (const newMessage of newMessages) {
+        allMessages.add(newMessage)
+      }
+      // console.log(line)
+    })
+    console.log(Array.from(allMessages.values()).sort())
+  })
 })
+
+function separateKeyPointMessages(string: string): string[] {
+  return string
+    .split('\n')
+    .map((line) =>
+      (line.match(/[0-9]\.\) .*/g) ? line.substring(4) : line)
+        .replace(/\s+/g, ' ')
+        .trim(),
+    )
+}

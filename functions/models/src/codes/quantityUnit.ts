@@ -7,6 +7,7 @@
 //
 
 import { type FHIRQuantity } from '../fhir/baseTypes/fhirQuantity.js'
+import { Observation } from '../types/observation.js'
 
 export class QuantityUnit {
   // Static Properties
@@ -72,14 +73,17 @@ export class QuantityUnit {
     )
   }
 
-  convert(value: number, target: QuantityUnit): number | undefined {
-    return QuantityUnitConverter.allValues
+  convert(observation: Observation): Observation | undefined {
+    const value = QuantityUnitConverter.allValues
       .find(
         (converter) =>
-          converter.sourceUnit.equals(this) &&
-          converter.targetUnit.equals(target),
+          converter.sourceUnit.equals(observation.unit) &&
+          converter.targetUnit.equals(this),
       )
-      ?.convert(value)
+      ?.convert(observation.value)
+    return value !== undefined ?
+        { ...observation, value, unit: this }
+      : undefined
   }
 
   fhirQuantity(value: number): FHIRQuantity {

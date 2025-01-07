@@ -8,8 +8,6 @@
 
 import {
   average,
-  compactMap,
-  QuantityUnit,
   UserMedicationRecommendationType,
   type FHIRAppointment,
   type Observation,
@@ -42,7 +40,17 @@ export enum HealthSummaryMedicationRecommendationCategory {
 export enum HealthSummaryWeightCategory {
   INCREASING,
   MISSING,
-  STABLE,
+  STABLE_OR_DECREASING,
+}
+
+export enum HealthSummaryKeyPointMessage {
+  OPTIMIZATIONS_AVAILABLE,
+  MISSING_HEART_OBSERVATIONS,
+  ON_TARGET_DOSE,
+  SYMPTOMS_WORSENED,
+  WEIGHT_INCREASED,
+  DIZZINESS_WORSENED,
+  MISSING_ALL_OBSERVATIONS,
 }
 
 export class HealthSummaryData {
@@ -56,7 +64,48 @@ export class HealthSummaryData {
   vitals: HealthSummaryVitals
   symptomScores: SymptomScore[]
 
-  // Computed Properties
+  // Computed Properties - Key Points
+
+  get keyPointMessages(): HealthSummaryKeyPointMessage[] {
+    return []
+  }
+
+  // Computed Properties - Body Weight
+
+  get latestBodyWeight(): number | null {
+    return this.vitals.bodyWeight.at(0)?.value ?? null
+  }
+
+  get averageBodyWeight(): number | null {
+    return (
+      average(this.vitals.bodyWeight.map((observation) => observation.value)) ??
+      null
+    )
+  }
+
+  get bodyWeightRange(): number | null {
+    const bodyWeightValues = this.vitals.bodyWeight.map(
+      (observation) => observation.value,
+    )
+    const minWeight = Math.min(...bodyWeightValues)
+    const maxWeight = Math.max(...bodyWeightValues)
+    return isFinite(minWeight) && isFinite(maxWeight) ?
+        maxWeight - minWeight
+      : null
+  }
+
+  get weightCategory(): HealthSummaryWeightCategory {
+    const averageWeight = this.averageBodyWeight
+    const latestWeight = this.latestBodyWeight
+    if (averageWeight === null || latestWeight === null)
+      return HealthSummaryWeightCategory.MISSING
+
+    return latestWeight - averageWeight > 1 ?
+        HealthSummaryWeightCategory.INCREASING
+      : HealthSummaryWeightCategory.STABLE_OR_DECREASING
+  }
+
+  // Computed Properties - Symptom Scores
 
   get latestSymptomScore(): SymptomScore | null {
     return this.symptomScores.at(0) ?? null
@@ -85,16 +134,16 @@ export class HealthSummaryData {
     }
   }
 
-  get weightCategory(): HealthSummaryWeightCategory {
-    const weight = average(
-      compactMap(this.vitals.bodyWeight, (observation) =>
-        observation.unit.convert(observation.value, QuantityUnit.lbs),
-      ),
-    )
-    if (weight.length < 2) return HealthSummaryWeightCategory.MISSING
+  get dizzinessWorsened(): boolean {
+    const latestScore = this.latestSymptomScore?.dizzinessScore
+    const secondLatestScore = this.secondLatestSymptomScore?.dizzinessScore
 
-    return true
+    return latestScore !== undefined && secondLatestScore !== undefined ?
+        latestScore - secondLatestScore < -1
+      : false
   }
+
+  // Computed Properties - Medication Recommendations
 
   get recommendationCategory(): HealthSummaryMedicationRecommendationCategory {
     const hasOptimizations = this.recommendations.some((recommendation) =>
@@ -117,15 +166,6 @@ export class HealthSummaryData {
       return HealthSummaryMedicationRecommendationCategory.OBSERVATIONS_REQUIRED
 
     return HealthSummaryMedicationRecommendationCategory.AT_TARGET
-  }
-
-  get dizzinessWorsened(): boolean {
-    const latestScore = this.latestSymptomScore?.dizzinessScore
-    const secondLatestScore = this.secondLatestSymptomScore?.dizzinessScore
-
-    return latestScore !== undefined && secondLatestScore !== undefined ?
-        latestScore - secondLatestScore < -1
-      : false
   }
 
   // Initialization

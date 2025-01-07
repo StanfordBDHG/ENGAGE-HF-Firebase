@@ -13,6 +13,7 @@ import {
   presortedPercentile,
   type Observation,
   UserMedicationRecommendationType,
+  QuantityUnit,
 } from '@stanfordbdhg/engagehf-models'
 import { logger } from 'firebase-functions'
 import 'jspdf-autotable' /* eslint-disable-line */
@@ -119,10 +120,8 @@ class HealthSummaryPdfGenerator extends PdfGenerator {
   addKeyPointsSection() {
     this.addSectionTitle(this.texts.keyPointsSection.title)
 
-    const messages = this.texts.keyPointsSection.messages(this.data)
-    messages.forEach((message, index) => {
-      this.addText(`    ${index + 1}. ${message}`, this.textStyles.bodyColored)
-    })
+    const text = this.texts.keyPointsSection.text(this.data.keyPointMessages)
+    this.addText(text, this.textStyles.bodyColored)
   }
 
   addCurrentMedicationSection() {
@@ -334,12 +333,10 @@ class HealthSummaryPdfGenerator extends PdfGenerator {
             ].map((title) => this.cell(title)),
             [
               this.texts.vitalsSection.bodyWeightTable.rowTitle,
-              this.data.vitals.bodyWeight.at(0)?.value.toFixed(0) ?? '---',
-              avgWeight?.toFixed(0) ?? '---',
+              this.data.latestBodyWeight?.toFixed(0) ?? '---',
+              this.data.averageBodyWeight?.toFixed(0) ?? '---',
               '-',
-              isFinite(maxWeight) && isFinite(minWeight) ?
-                (maxWeight - minWeight).toFixed(0)
-              : '---',
+              this.data.bodyWeightRange?.toFixed(0) ?? '---',
             ].map((title) => this.cell(title)),
           ],
           columnWidth,

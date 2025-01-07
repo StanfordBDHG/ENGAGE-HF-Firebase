@@ -13,7 +13,7 @@ import {
   SymptomScore,
   UserMedicationRecommendationType,
 } from '@stanfordbdhg/engagehf-models'
-import { HealthSummaryData } from '../models/healthSummaryData'
+import { HealthSummaryKeyPointMessage } from '../models/healthSummaryData.js'
 
 export function healthSummaryLocalizations(languages: string[]) {
   function localize(strings: Record<string, string>): string {
@@ -53,86 +53,45 @@ export function healthSummaryLocalizations(languages: string[]) {
       title: localize({
         en: 'KEY POINTS',
       }),
-      messageTexts: {
-        optimizationsAvailable: localize({
-          en: 'There are possible options to improve your heart medicines. See the list of "Potential Med Changes" below to discuss these options with your care team. These meds can help you feel better and strengthen your heart.',
-        }),
-        missingHeartObservations: localize({
-          en: 'We are missing blood pressure and heart rate checks in the last two weeks. Try to check your blood pressure and heart rate multiple times a week to understand if your medications can be adjusted to help you feel better and strengthen your heart.',
-        }),
-        onTargetDose: localize({
-          en: 'Great news! You are on the target dose for your heart medicines at this time. Your symptoms are stable, and your weight is not rising. Make sure to keep taking your heart meds to help you feel better and strengthen your heart.',
-        }),
-        symptomsWorsened: localize({
-          en: 'Your heart symptoms worsened (see symptom report). Discuss with your care team how adjusting your medications can help you feel better.',
-        }),
-        weightIncreased: localize({
-          en: 'Your weight is increasing. This is a sign that you may be retaining fluid. Discuss with your care team and watch the weight educational video. Changing your heart medicines can lower your risk of having fluid gain in the future by strengthening your heart.',
-        }),
-        dizzinessIncreased: localize({
-          en: 'Your dizziness is more bothersome. Discuss with your care team options to improve your dizziness, and watch the dizziness educational video.',
-        }),
-        missingAllObservations: localize({
-          en: 'Check your blood pressure, heart rate, and weight more frequently and discuss with your care team how adjusting your medicines can help you feel better.',
-        }),
-      },
-      messages(data: HealthSummaryData): string[] {
-        const currentScore = data.symptomScores.at(0)
-        const previousScore = data.symptomScores.at(1)
-        const scoreAbove90 =
-          currentScore !== undefined ?
-            currentScore.overallScore >= 90
-          : undefined
-        const scoreDecreased =
-          currentScore !== undefined && previousScore !== undefined ?
-            currentScore.overallScore - previousScore.overallScore < -10
-          : undefined
-        const dizzinessScoreIncreased =
-          currentScore !== undefined && previousScore !== undefined ?
-            currentScore.dizzinessScore - previousScore.dizzinessScore > 1
-          : undefined
+      text(keyPoints: HealthSummaryKeyPointMessage[]): string {
+        const messages = keyPoints.map((keyPoint) => {
+          switch (keyPoint) {
+            case HealthSummaryKeyPointMessage.OPTIMIZATIONS_AVAILABLE:
+              return localize({
+                en: 'There are possible options to improve your heart medicines. See the list of "Potential Med Changes" below to discuss these options with your care team. These meds can help you feel better and strengthen your heart.',
+              })
+            case HealthSummaryKeyPointMessage.MISSING_HEART_OBSERVATIONS:
+              return localize({
+                en: 'We are missing blood pressure and heart rate checks in the last two weeks. Try to check your blood pressure and heart rate multiple times a week to understand if your medications can be adjusted to help you feel better and strengthen your heart.',
+              })
+            case HealthSummaryKeyPointMessage.ON_TARGET_DOSE:
+              return localize({
+                en: 'Great news! You are on the target dose for your heart medicines at this time. Your symptoms are stable, and your weight is not rising. Make sure to keep taking your heart meds to help you feel better and strengthen your heart.',
+              })
+            case HealthSummaryKeyPointMessage.SYMPTOMS_WORSENED:
+              return localize({
+                en: 'Your heart symptoms worsened (see symptom report). Discuss with your care team how adjusting your medications can help you feel better.',
+              })
+            case HealthSummaryKeyPointMessage.WEIGHT_INCREASED:
+              return localize({
+                en: 'Your weight is increasing. This is a sign that you may be retaining fluid. Discuss with your care team and watch the weight educational video. Changing your heart medicines can lower your risk of having fluid gain in the future by strengthening your heart.',
+              })
+            case HealthSummaryKeyPointMessage.DIZZINESS_WORSENED:
+              return localize({
+                en: 'Your dizziness is more bothersome. Discuss with your care team options to improve your dizziness, and watch the dizziness educational video.',
+              })
+            case HealthSummaryKeyPointMessage.MISSING_ALL_OBSERVATIONS:
+              return localize({
+                en: 'Check your blood pressure, heart rate, and weight more frequently and discuss with your care team how adjusting your medicines can help you feel better.',
+              })
+          }
+        })
 
-        const optimizingRecommendations = data.recommendations.filter(
-          (recommendation) =>
-            [
-              UserMedicationRecommendationType.notStarted,
-              UserMedicationRecommendationType.improvementAvailable,
-            ].includes(recommendation.displayInformation.type),
-        )
-        const observationsRequiredRecommendations = data.recommendations.filter(
-          (recommendation) =>
-            [
-              UserMedicationRecommendationType.moreLabObservationsRequired,
-              UserMedicationRecommendationType.morePatientObservationsRequired,
-            ].includes(recommendation.displayInformation.type),
-        )
-        const recommendationsAtTargetDose = data.recommendations.filter(
-          (recommendation) =>
-            recommendation.displayInformation.type ===
-            UserMedicationRecommendationType.targetDoseReached,
-        )
-
-        const result: string[] = []
-
-        if (optimizingRecommendations.length > 0) {
-          result.push(this.messageTexts.optimizationsAvailable)
-        } else if (observationsRequiredRecommendations.length > 0) {
-          result.push(this.messageTexts.missingHeartObservations)
-        }
-
-        if (scoreDecreased === true) {
-          result.push(this.messageTexts.symptomsWorsened)
-        } else if (scoreDecreased === false && scoreAbove90 === true) {
-          result.push(this.messageTexts.weightIncreased)
-        } else if (scoreDecreased === false && scoreAbove90 === false) {
-          result.push(this.messageTexts.onTargetDose)
-        }
-
-        if (result.length === 0) {
-          result.push(this.messageTexts.onTargetDose)
-        }
-
-        return []
+        return messages.length > 1 ?
+            messages
+              .map((message, index) => `     ${index + 1}. ${message}`)
+              .join('\n')
+          : messages.join('\n')
       },
     },
     currentMedicationsSection: {
