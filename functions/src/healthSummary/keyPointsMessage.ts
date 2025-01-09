@@ -8,7 +8,7 @@
 
 import {
   Lazy,
-  LocalizedText,
+  type LocalizedText,
   localizedTextConverter,
 } from '@stanfordbdhg/engagehf-models'
 import { z } from 'zod'

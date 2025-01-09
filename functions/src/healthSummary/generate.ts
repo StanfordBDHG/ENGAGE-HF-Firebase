@@ -7,13 +7,11 @@
 //
 
 import {
-  average,
   percentage,
   presortedMedian,
   presortedPercentile,
   type Observation,
   UserMedicationRecommendationType,
-  QuantityUnit,
 } from '@stanfordbdhg/engagehf-models'
 import { logger } from 'firebase-functions'
 import 'jspdf-autotable' /* eslint-disable-line */
@@ -21,8 +19,8 @@ import { type CellDef } from 'jspdf-autotable' /* eslint-disable-line */
 import { healthSummaryLocalizations } from './generate+localizations.js'
 import { generateChartSvg } from './generateChart.js'
 import { generateSpeedometerSvg } from './generateSpeedometer.js'
-import { type HealthSummaryData } from '../models/healthSummaryData.js'
 import { PdfGenerator } from './pdfGenerator.js'
+import { type HealthSummaryData } from '../models/healthSummaryData.js'
 
 export interface HealthSummaryOptions {
   languages: string[]

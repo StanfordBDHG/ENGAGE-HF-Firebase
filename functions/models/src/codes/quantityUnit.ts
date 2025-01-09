@@ -7,7 +7,7 @@
 //
 
 import { type FHIRQuantity } from '../fhir/baseTypes/fhirQuantity.js'
-import { Observation } from '../types/observation.js'
+import { type Observation } from '../types/observation.js'
 
 export class QuantityUnit {
   // Static Properties

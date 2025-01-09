@@ -12,15 +12,6 @@ import { generateHealthSummary } from './generate.js'
 import { type HealthSummaryData } from '../models/healthSummaryData.js'
 import { mockHealthSummaryData } from '../tests/mocks/healthSummaryData.js'
 import { TestFlags } from '../tests/testFlags.js'
-import { readCsv } from '../tests/helpers/csv.js'
-import {
-  HealthSummaryDizzinessCategory,
-  HealthSummaryKeyPointMessage,
-  HealthSummaryMedicationRecommendationsCategory,
-  HealthSummarySymptomScoreCategory,
-  HealthSummaryWeightCategory,
-} from './keyPointsMessage.js'
-import { LocalizedText } from '@stanfordbdhg/engagehf-models'
 
 describe('generateHealthSummary', () => {
   function comparePdf(actual: Buffer, expected: Buffer): boolean {

@@ -7,17 +7,17 @@
 //
 
 import { LocalizedText } from '@stanfordbdhg/engagehf-models'
-import { readCsv } from '../tests/helpers/csv.js'
+import { expect } from 'chai'
 import {
   HealthSummaryDizzinessCategory,
-  HealthSummaryKeyPointMessage,
+  type HealthSummaryKeyPointMessage,
   healthSummaryKeyPointMessages,
   healthSummaryKeyPointTexts,
   HealthSummaryMedicationRecommendationsCategory,
   HealthSummarySymptomScoreCategory,
   HealthSummaryWeightCategory,
 } from './keyPointsMessage.js'
-import { expect } from 'chai'
+import { readCsv } from '../tests/helpers/csv.js'
 
 describe('keyPointsMessage', () => {
   it('should generate the key point message json', () => {

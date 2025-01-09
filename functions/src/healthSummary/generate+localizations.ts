@@ -10,14 +10,14 @@ import {
   LocalizedText,
   type UserMedicationRecommendationDoseSchedule,
   type FHIRAppointment,
-  SymptomScore,
+  type SymptomScore,
 } from '@stanfordbdhg/engagehf-models'
 import {
-  HealthSummaryDizzinessCategory,
+  type HealthSummaryDizzinessCategory,
   healthSummaryKeyPointTexts,
-  HealthSummaryMedicationRecommendationsCategory,
-  HealthSummarySymptomScoreCategory,
-  HealthSummaryWeightCategory,
+  type HealthSummaryMedicationRecommendationsCategory,
+  type HealthSummarySymptomScoreCategory,
+  type HealthSummaryWeightCategory,
 } from './keyPointsMessage.js'
 
 export function healthSummaryLocalizations(languages: string[]) {
