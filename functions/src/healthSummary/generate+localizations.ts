@@ -239,9 +239,6 @@ export function healthSummaryLocalizations(languages: string[]) {
         sevenDayAverageHeader: localize({
           en: '7-Day Average',
         }),
-        lastVisitHeader: localize({
-          en: 'Last Visit',
-        }),
         rangeHeader: localize({
           en: 'Range',
         }),
