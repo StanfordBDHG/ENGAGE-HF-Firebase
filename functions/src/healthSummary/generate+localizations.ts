@@ -66,7 +66,7 @@ export function healthSummaryLocalizations(languages: string[]) {
         symptomScore: HealthSummarySymptomScoreCategory | null
         dizziness: HealthSummaryDizzinessCategory | null
         weight: HealthSummaryWeightCategory | null
-      }): string | null {
+      }): string[] | null {
         if (
           input.recommendations === null ||
           input.symptomScore === null ||
@@ -81,18 +81,11 @@ export function healthSummaryLocalizations(languages: string[]) {
             symptomScore: input.symptomScore,
             dizziness: input.dizziness,
             weight: input.weight,
-          })?.map((text) => text.localize(...languages)) ?? []
+          }) ?? []
 
-        switch (messages.length) {
-          case 0:
-            return null
-          case 1:
-            return messages[0]
-          default:
-            return messages
-              .map((message, index) => `     ${index + 1}. ${message}`)
-              .join('\n')
-        }
+        if (messages.length === 0) return null
+
+        return messages.map((text) => text.localize(...languages))
       },
     },
     currentMedicationsSection: {

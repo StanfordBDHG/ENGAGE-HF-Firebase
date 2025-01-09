@@ -118,14 +118,18 @@ class HealthSummaryPdfGenerator extends PdfGenerator {
   addKeyPointsSection() {
     this.addSectionTitle(this.texts.keyPointsSection.title)
 
-    const text = this.texts.keyPointsSection.text({
+    const texts = this.texts.keyPointsSection.text({
       recommendations: this.data.recommendationsCategory,
       symptomScore: this.data.symptomScoreCategory,
       dizziness: this.data.dizzinessCategory,
       weight: this.data.weightCategory,
     })
-    if (text !== null) {
-      this.addText(text, this.textStyles.bodyColored)
+    if (texts !== null) {
+      if (texts.length === 1) {
+        this.addText(texts[0], this.textStyles.bodyColored)
+      } else {
+        this.addList(texts, this.textStyles.bodyColored)
+      }
     } else {
       this.addText(
         this.texts.keyPointsSection.defaultText,
@@ -197,19 +201,20 @@ class HealthSummaryPdfGenerator extends PdfGenerator {
     if (optimizations.length === 0) return
     this.addSectionTitle(this.texts.medicationRecommendationsSection.title)
 
-    optimizations.forEach((recommendation, index) => {
-      const title = recommendation.displayInformation.title.localize(
-        ...this.options.languages,
-      )
-      const description =
-        recommendation.displayInformation.description.localize(
+    this.addList(
+      optimizations.map((recommendation) => {
+        const title = recommendation.displayInformation.title.localize(
           ...this.options.languages,
         )
-      this.addText(
-        `    ${index + 1}. ${title}: ${description}`,
-        this.textStyles.bodyColored,
-      )
-    })
+        const description =
+          recommendation.displayInformation.description.localize(
+            ...this.options.languages,
+          )
+        return `${title}: ${description}`
+      }),
+      this.textStyles.bodyColored,
+    )
+
     this.moveDown(this.textStyles.body.fontSize / 2)
     this.addText(
       this.texts.medicationRecommendationsSection.description,

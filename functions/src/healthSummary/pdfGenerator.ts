@@ -258,6 +258,17 @@ export class PdfGenerator {
     }
   }
 
+  addList(texts: string[], textStyle: TextStyle) {
+    texts.forEach((text, index) => {
+      this.indent(1, textStyle)
+      this.addText(`${index + 1}.`, textStyle)
+      this.moveDown(-textStyle.fontSize * 1.5)
+      this.indent(1.5, textStyle)
+      this.addText(text, textStyle)
+      this.indent(-2.5, textStyle)
+    })
+  }
+
   addLine(
     start: { x: number; y: number },
     end: { x: number; y: number },
@@ -314,5 +325,9 @@ export class PdfGenerator {
       styles: styles,
       title: title,
     }
+  }
+
+  private indent(amount: number, textStyle: TextStyle) {
+    this.cursor.x += amount * textStyle.fontSize
   }
 }
