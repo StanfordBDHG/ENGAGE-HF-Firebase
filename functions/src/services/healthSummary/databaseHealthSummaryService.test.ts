@@ -26,6 +26,7 @@ describe('HealthSummaryService', () => {
       'mockUser',
       QuantityUnit.lbs,
     )
+    console.log('actualData:', actualData.nextAppointment?.start.toString())
     const expectedData = await mockHealthSummaryData('mockUser')
     // TODO: Remove the next line to check whether medication optimizations also match the expected value.
     expectedData.recommendations = []

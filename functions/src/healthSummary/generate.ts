@@ -120,8 +120,20 @@ class HealthSummaryPdfGenerator extends PdfGenerator {
   addKeyPointsSection() {
     this.addSectionTitle(this.texts.keyPointsSection.title)
 
-    const text = this.texts.keyPointsSection.text(this.data.keyPointMessages)
-    this.addText(text, this.textStyles.bodyColored)
+    const text = this.texts.keyPointsSection.text({
+      recommendations: this.data.recommendationsCategory,
+      symptomScore: this.data.symptomScoreCategory,
+      dizziness: this.data.dizzinessCategory,
+      weight: this.data.weightCategory,
+    })
+    if (text !== null) {
+      this.addText(text, this.textStyles.bodyColored)
+    } else {
+      this.addText(
+        this.texts.keyPointsSection.defaultText,
+        this.textStyles.bodyItalic,
+      )
+    }
   }
 
   addCurrentMedicationSection() {
@@ -315,13 +327,6 @@ class HealthSummaryPdfGenerator extends PdfGenerator {
           columnWidth,
           this.data.vitals.dryWeight?.value,
         )
-        const bodyWeightValues = this.data.vitals.bodyWeight.map(
-          (observation) => observation.value,
-        )
-        const avgWeight = average(bodyWeightValues)
-        const maxWeight = Math.max(...bodyWeightValues)
-        const minWeight = Math.min(...bodyWeightValues)
-
         this.addTable(
           [
             [

@@ -31,7 +31,7 @@ export class MockHealthSummaryService implements HealthSummaryService {
 
   // Constructor
 
-  constructor(startDate: Date = new Date('2024-02-02')) {
+  constructor(startDate: Date = new Date(2024, 2, 2, 12, 30)) {
     this.startDate = startDate
   }
 

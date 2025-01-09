@@ -14,6 +14,12 @@ import {
   type SymptomScore,
   type UserMedicationRecommendation,
 } from '@stanfordbdhg/engagehf-models'
+import {
+  HealthSummaryDizzinessCategory,
+  HealthSummaryMedicationRecommendationsCategory,
+  HealthSummarySymptomScoreCategory,
+  HealthSummaryWeightCategory,
+} from '../healthSummary/keyPointsMessage.js'
 
 export interface HealthSummaryVitals {
   systolicBloodPressure: Observation[]
@@ -22,35 +28,6 @@ export interface HealthSummaryVitals {
   bodyWeight: Observation[]
 
   dryWeight?: Observation
-}
-
-export enum HealthSummarySymptomScoreCategory {
-  ABOVE_90_STABLE_OR_IMPROVING,
-  ABOVE_90_WORSENING,
-  BELOW_90_STABLE_OR_IMPROVING,
-  BELOW_90_WORSENING,
-}
-
-export enum HealthSummaryMedicationRecommendationCategory {
-  OPTIMIZATIONS_AVAILABLE,
-  OBSERVATIONS_REQUIRED,
-  AT_TARGET,
-}
-
-export enum HealthSummaryWeightCategory {
-  INCREASING,
-  MISSING,
-  STABLE_OR_DECREASING,
-}
-
-export enum HealthSummaryKeyPointMessage {
-  OPTIMIZATIONS_AVAILABLE,
-  MISSING_HEART_OBSERVATIONS,
-  ON_TARGET_DOSE,
-  SYMPTOMS_WORSENED,
-  WEIGHT_INCREASED,
-  DIZZINESS_WORSENED,
-  MISSING_ALL_OBSERVATIONS,
 }
 
 export class HealthSummaryData {
@@ -63,12 +40,6 @@ export class HealthSummaryData {
   recommendations: UserMedicationRecommendation[]
   vitals: HealthSummaryVitals
   symptomScores: SymptomScore[]
-
-  // Computed Properties - Key Points
-
-  get keyPointMessages(): HealthSummaryKeyPointMessage[] {
-    return []
-  }
 
   // Computed Properties - Body Weight
 
@@ -94,17 +65,6 @@ export class HealthSummaryData {
       : null
   }
 
-  get weightCategory(): HealthSummaryWeightCategory {
-    const averageWeight = this.averageBodyWeight
-    const latestWeight = this.latestBodyWeight
-    if (averageWeight === null || latestWeight === null)
-      return HealthSummaryWeightCategory.MISSING
-
-    return latestWeight - averageWeight > 1 ?
-        HealthSummaryWeightCategory.INCREASING
-      : HealthSummaryWeightCategory.STABLE_OR_DECREASING
-  }
-
   // Computed Properties - Symptom Scores
 
   get latestSymptomScore(): SymptomScore | null {
@@ -115,37 +75,21 @@ export class HealthSummaryData {
     return this.symptomScores.at(1) ?? null
   }
 
-  get symptomScoreCategory(): HealthSummarySymptomScoreCategory | null {
-    const latestScore = this.latestSymptomScore
-    const secondLatestScore = this.secondLatestSymptomScore
+  // Computed Properties - KeyPoints
 
-    if (latestScore === null || secondLatestScore === null) {
-      return null
-    }
+  get dizzinessCategory(): HealthSummaryDizzinessCategory | null {
+    const latestScore = this.latestSymptomScore?.dizzinessScore ?? null
+    const secondLatestScore =
+      this.secondLatestSymptomScore?.dizzinessScore ?? null
 
-    if (latestScore.overallScore >= 90) {
-      return latestScore.overallScore - secondLatestScore.overallScore > -10 ?
-          HealthSummarySymptomScoreCategory.ABOVE_90_STABLE_OR_IMPROVING
-        : HealthSummarySymptomScoreCategory.ABOVE_90_WORSENING
-    } else {
-      return latestScore.overallScore - secondLatestScore.overallScore > -10 ?
-          HealthSummarySymptomScoreCategory.BELOW_90_STABLE_OR_IMPROVING
-        : HealthSummarySymptomScoreCategory.BELOW_90_WORSENING
-    }
+    if (latestScore === null || secondLatestScore === null) return null
+
+    return latestScore - secondLatestScore < 0 ?
+        HealthSummaryDizzinessCategory.WORSENING
+      : HealthSummaryDizzinessCategory.STABLE_OR_IMPROVING
   }
 
-  get dizzinessWorsened(): boolean {
-    const latestScore = this.latestSymptomScore?.dizzinessScore
-    const secondLatestScore = this.secondLatestSymptomScore?.dizzinessScore
-
-    return latestScore !== undefined && secondLatestScore !== undefined ?
-        latestScore - secondLatestScore < -1
-      : false
-  }
-
-  // Computed Properties - Medication Recommendations
-
-  get recommendationCategory(): HealthSummaryMedicationRecommendationCategory {
+  get recommendationsCategory(): HealthSummaryMedicationRecommendationsCategory | null {
     const hasOptimizations = this.recommendations.some((recommendation) =>
       [
         UserMedicationRecommendationType.improvementAvailable,
@@ -153,7 +97,7 @@ export class HealthSummaryData {
       ].includes(recommendation.displayInformation.type),
     )
     if (hasOptimizations)
-      return HealthSummaryMedicationRecommendationCategory.OPTIMIZATIONS_AVAILABLE
+      return HealthSummaryMedicationRecommendationsCategory.OPTIMIZATIONS_AVAILABLE
 
     const hasObservationsRequired = this.recommendations.some(
       (recommendation) =>
@@ -163,9 +107,43 @@ export class HealthSummaryData {
         ].includes(recommendation.displayInformation.type),
     )
     if (hasObservationsRequired)
-      return HealthSummaryMedicationRecommendationCategory.OBSERVATIONS_REQUIRED
+      return HealthSummaryMedicationRecommendationsCategory.OBSERVATIONS_REQUIRED
 
-    return HealthSummaryMedicationRecommendationCategory.AT_TARGET
+    const hasAtTarget = this.recommendations.some((recommendation) =>
+      [
+        UserMedicationRecommendationType.personalTargetDoseReached,
+        UserMedicationRecommendationType.targetDoseReached,
+      ].includes(recommendation.displayInformation.type),
+    )
+    return hasAtTarget ?
+        HealthSummaryMedicationRecommendationsCategory.AT_TARGET
+      : null
+  }
+
+  get symptomScoreCategory(): HealthSummarySymptomScoreCategory | null {
+    const latestScore = this.latestSymptomScore
+    const secondLatestScore = this.secondLatestSymptomScore
+
+    if (latestScore === null || secondLatestScore === null) return null
+
+    if (latestScore.overallScore - secondLatestScore.overallScore <= -10)
+      return HealthSummarySymptomScoreCategory.WORSENING
+
+    if (latestScore.overallScore < 90)
+      return HealthSummarySymptomScoreCategory.LOW_STABLE_OR_IMPROVING
+
+    return HealthSummarySymptomScoreCategory.HIGH_STABLE_OR_IMPROVING
+  }
+
+  get weightCategory(): HealthSummaryWeightCategory {
+    const averageWeight = this.averageBodyWeight
+    const latestWeight = this.latestBodyWeight
+    if (averageWeight === null || latestWeight === null)
+      return HealthSummaryWeightCategory.MISSING
+
+    return latestWeight - averageWeight > 1 ?
+        HealthSummaryWeightCategory.INCREASING
+      : HealthSummaryWeightCategory.STABLE_OR_DECREASING
   }
 
   // Initialization

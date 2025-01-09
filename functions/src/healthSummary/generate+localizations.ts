@@ -11,9 +11,14 @@ import {
   type UserMedicationRecommendationDoseSchedule,
   type FHIRAppointment,
   SymptomScore,
-  UserMedicationRecommendationType,
 } from '@stanfordbdhg/engagehf-models'
-import { HealthSummaryKeyPointMessage } from '../models/healthSummaryData.js'
+import {
+  HealthSummaryDizzinessCategory,
+  healthSummaryKeyPointTexts,
+  HealthSummaryMedicationRecommendationsCategory,
+  HealthSummarySymptomScoreCategory,
+  HealthSummaryWeightCategory,
+} from './keyPointsMessage.js'
 
 export function healthSummaryLocalizations(languages: string[]) {
   function localize(strings: Record<string, string>): string {
@@ -53,45 +58,41 @@ export function healthSummaryLocalizations(languages: string[]) {
       title: localize({
         en: 'KEY POINTS',
       }),
-      text(keyPoints: HealthSummaryKeyPointMessage[]): string {
-        const messages = keyPoints.map((keyPoint) => {
-          switch (keyPoint) {
-            case HealthSummaryKeyPointMessage.OPTIMIZATIONS_AVAILABLE:
-              return localize({
-                en: 'There are possible options to improve your heart medicines. See the list of "Potential Med Changes" below to discuss these options with your care team. These meds can help you feel better and strengthen your heart.',
-              })
-            case HealthSummaryKeyPointMessage.MISSING_HEART_OBSERVATIONS:
-              return localize({
-                en: 'We are missing blood pressure and heart rate checks in the last two weeks. Try to check your blood pressure and heart rate multiple times a week to understand if your medications can be adjusted to help you feel better and strengthen your heart.',
-              })
-            case HealthSummaryKeyPointMessage.ON_TARGET_DOSE:
-              return localize({
-                en: 'Great news! You are on the target dose for your heart medicines at this time. Your symptoms are stable, and your weight is not rising. Make sure to keep taking your heart meds to help you feel better and strengthen your heart.',
-              })
-            case HealthSummaryKeyPointMessage.SYMPTOMS_WORSENED:
-              return localize({
-                en: 'Your heart symptoms worsened (see symptom report). Discuss with your care team how adjusting your medications can help you feel better.',
-              })
-            case HealthSummaryKeyPointMessage.WEIGHT_INCREASED:
-              return localize({
-                en: 'Your weight is increasing. This is a sign that you may be retaining fluid. Discuss with your care team and watch the weight educational video. Changing your heart medicines can lower your risk of having fluid gain in the future by strengthening your heart.',
-              })
-            case HealthSummaryKeyPointMessage.DIZZINESS_WORSENED:
-              return localize({
-                en: 'Your dizziness is more bothersome. Discuss with your care team options to improve your dizziness, and watch the dizziness educational video.',
-              })
-            case HealthSummaryKeyPointMessage.MISSING_ALL_OBSERVATIONS:
-              return localize({
-                en: 'Check your blood pressure, heart rate, and weight more frequently and discuss with your care team how adjusting your medicines can help you feel better.',
-              })
-          }
-        })
+      defaultText: localize({
+        en: 'No key points available. Please discuss with your care team for more information.',
+      }),
+      text(input: {
+        recommendations: HealthSummaryMedicationRecommendationsCategory | null
+        symptomScore: HealthSummarySymptomScoreCategory | null
+        dizziness: HealthSummaryDizzinessCategory | null
+        weight: HealthSummaryWeightCategory | null
+      }): string | null {
+        if (
+          input.recommendations === null ||
+          input.symptomScore === null ||
+          input.dizziness === null ||
+          input.weight === null
+        )
+          return null
 
-        return messages.length > 1 ?
-            messages
+        const messages =
+          healthSummaryKeyPointTexts({
+            recommendations: input.recommendations,
+            symptomScore: input.symptomScore,
+            dizziness: input.dizziness,
+            weight: input.weight,
+          })?.map((text) => text.localize(...languages)) ?? []
+
+        switch (messages.length) {
+          case 0:
+            return null
+          case 1:
+            return messages[0]
+          default:
+            return messages
               .map((message, index) => `     ${index + 1}. ${message}`)
               .join('\n')
-          : messages.join('\n')
+        }
       },
     },
     currentMedicationsSection: {
