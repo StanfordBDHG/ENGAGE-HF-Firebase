@@ -7,6 +7,7 @@
 //
 
 import {
+  advanceDateByDays,
   average,
   UserMedicationRecommendationType,
   type FHIRAppointment,
@@ -40,6 +41,7 @@ export class HealthSummaryData {
   recommendations: UserMedicationRecommendation[]
   vitals: HealthSummaryVitals
   symptomScores: SymptomScore[]
+  now: Date
 
   // Computed Properties - Body Weight
 
@@ -47,7 +49,16 @@ export class HealthSummaryData {
     return this.vitals.bodyWeight.at(0)?.value ?? null
   }
 
-  get averageBodyWeight(): number | null {
+  get lastSevenDayAverageBodyWeight(): number | null {
+    const bodyWeightValues = this.vitals.bodyWeight
+      .filter(
+        (observation) => observation.date >= advanceDateByDays(this.now, -7),
+      )
+      .map((observation) => observation.value)
+    return average(bodyWeightValues) ?? null
+  }
+
+  get medianBodyWeight(): number | null {
     return (
       average(this.vitals.bodyWeight.map((observation) => observation.value)) ??
       null
@@ -136,12 +147,12 @@ export class HealthSummaryData {
   }
 
   get weightCategory(): HealthSummaryWeightCategory {
-    const averageWeight = this.averageBodyWeight
+    const medianWeight = this.medianBodyWeight
     const latestWeight = this.latestBodyWeight
-    if (averageWeight === null || latestWeight === null)
+    if (medianWeight === null || latestWeight === null)
       return HealthSummaryWeightCategory.MISSING
 
-    return latestWeight - averageWeight > 1 ?
+    return latestWeight - medianWeight >= 3 ?
         HealthSummaryWeightCategory.INCREASING
       : HealthSummaryWeightCategory.STABLE_OR_DECREASING
   }
@@ -156,6 +167,7 @@ export class HealthSummaryData {
     recommendations: UserMedicationRecommendation[]
     vitals: HealthSummaryVitals
     symptomScores: SymptomScore[]
+    now: Date
   }) {
     this.name = input.name
     this.dateOfBirth = input.dateOfBirth
@@ -164,5 +176,6 @@ export class HealthSummaryData {
     this.recommendations = input.recommendations
     this.vitals = input.vitals
     this.symptomScores = input.symptomScores
+    this.now = input.now
   }
 }

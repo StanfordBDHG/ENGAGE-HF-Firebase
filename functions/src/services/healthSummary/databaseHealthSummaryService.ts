@@ -35,6 +35,7 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
 
   async getHealthSummaryData(
     userId: string,
+    date: Date,
     weightUnit: QuantityUnit,
   ): Promise<HealthSummaryData> {
     const [
@@ -50,7 +51,7 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
       this.patientService.getNextAppointment(userId),
       this.patientService.getMedicationRecommendations(userId),
       this.patientService.getSymptomScores(userId, { limit: 5 }),
-      this.getVitals(userId, advanceDateByDays(new Date(), -14), weightUnit),
+      this.getVitals(userId, advanceDateByDays(date, -14), weightUnit),
     ])
 
     const clinician =
@@ -66,6 +67,7 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
       recommendations: recommendations.map((doc) => doc.content),
       vitals: vitals,
       symptomScores: symptomScores.map((doc) => doc.content),
+      now: date,
     })
   }
 

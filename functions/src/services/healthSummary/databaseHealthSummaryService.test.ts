@@ -24,6 +24,7 @@ describe('HealthSummaryService', () => {
   it('should fetch health summary data', async () => {
     const actualData = await healthSummaryService.getHealthSummaryData(
       'mockUser',
+      new Date(2024, 2, 2, 12, 30),
       QuantityUnit.lbs,
     )
     console.log('actualData:', actualData.nextAppointment?.start.toString())

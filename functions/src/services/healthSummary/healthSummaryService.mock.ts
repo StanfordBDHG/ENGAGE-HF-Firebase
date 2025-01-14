@@ -8,6 +8,7 @@
 
 import {
   advanceDateByDays,
+  advanceDateBySeconds,
   FHIRAppointment,
   FHIRAppointmentStatus,
   LocalizedText,
@@ -25,19 +26,12 @@ import {
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 export class MockHealthSummaryService implements HealthSummaryService {
-  // Properties
-
-  private readonly startDate: Date
-
-  // Constructor
-
-  constructor(startDate: Date = new Date(2024, 2, 2, 12, 30)) {
-    this.startDate = startDate
-  }
-
   // Methods
 
-  async getHealthSummaryData(userId: string): Promise<HealthSummaryData> {
+  async getHealthSummaryData(
+    userId: string,
+    date: Date,
+  ): Promise<HealthSummaryData> {
     return new HealthSummaryData({
       name: 'John Doe',
       dateOfBirth: new Date('1970-01-02'),
@@ -45,8 +39,8 @@ export class MockHealthSummaryService implements HealthSummaryService {
       nextAppointment: FHIRAppointment.create({
         userId,
         status: FHIRAppointmentStatus.booked,
-        created: this.startDateAdvancedByDays(-10),
-        start: this.startDateAdvancedByDays(1),
+        created: advanceDateByDays(date, -10),
+        start: advanceDateByDays(date, 1),
         durationInMinutes: 60,
       }),
       recommendations: [
@@ -98,7 +92,7 @@ export class MockHealthSummaryService implements HealthSummaryService {
           },
         },
       ],
-      vitals: await this.getVitals(userId),
+      vitals: await this.getVitals(date),
       symptomScores: [
         {
           questionnaireResponseId: '4',
@@ -108,7 +102,7 @@ export class MockHealthSummaryService implements HealthSummaryService {
           qualityOfLifeScore: 20,
           symptomFrequencyScore: 60,
           dizzinessScore: 3,
-          date: this.startDateAdvancedByDays(-9),
+          date: advanceDateByDays(date, -9),
         },
         {
           questionnaireResponseId: '3',
@@ -118,7 +112,7 @@ export class MockHealthSummaryService implements HealthSummaryService {
           qualityOfLifeScore: 37,
           symptomFrequencyScore: 72,
           dizzinessScore: 2,
-          date: this.startDateAdvancedByDays(-18),
+          date: advanceDateByDays(date, -18),
         },
         {
           questionnaireResponseId: '2',
@@ -128,7 +122,7 @@ export class MockHealthSummaryService implements HealthSummaryService {
           qualityOfLifeScore: 25,
           symptomFrequencyScore: 60,
           dizzinessScore: 1,
-          date: this.startDateAdvancedByDays(-34),
+          date: advanceDateByDays(date, -34),
         },
         {
           questionnaireResponseId: '1',
@@ -138,123 +132,121 @@ export class MockHealthSummaryService implements HealthSummaryService {
           qualityOfLifeScore: 60,
           symptomFrequencyScore: 80,
           dizzinessScore: 1,
-          date: this.startDateAdvancedByDays(-49),
+          date: advanceDateByDays(date, -49),
         },
       ],
+      now: date,
     })
   }
 
-  async getVitals(userId: string): Promise<HealthSummaryVitals> {
+  // Helpers
+
+  private async getVitals(date: Date): Promise<HealthSummaryVitals> {
     const [systolicBloodPressure, diastolicBloodPressure] =
-      await this.getBloodPressureObservations(userId, this.startDate)
+      await this.getBloodPressureObservations(date)
     return {
       systolicBloodPressure: systolicBloodPressure,
       diastolicBloodPressure: diastolicBloodPressure,
-      heartRate: await this.getHeartRateObservations(userId, this.startDate),
-      bodyWeight: await this.getBodyWeightObservations(
-        userId,
-        this.startDate,
-        QuantityUnit.lbs,
-      ),
-      dryWeight: await this.getMostRecentDryWeightObservation(userId),
+      heartRate: await this.getHeartRateObservations(date),
+      bodyWeight: await this.getBodyWeightObservations(date),
+      dryWeight: await this.getMostRecentDryWeightObservation(date),
     }
   }
 
-  async getBloodPressureObservations(
-    userId: string,
-    cutoffDate: Date,
+  private async getBloodPressureObservations(
+    date: Date,
   ): Promise<[Observation[], Observation[]]> {
     return [
       [
         {
-          date: this.startDateAdvancedByDays(-1),
+          date: advanceDateByDays(date, -1),
           value: 110,
           unit: QuantityUnit.mmHg,
         },
         {
-          date: this.startDateAdvancedByDays(-2),
+          date: advanceDateByDays(date, -2),
           value: 114,
           unit: QuantityUnit.mmHg,
         },
         {
-          date: this.startDateAdvancedByDays(-3),
+          date: advanceDateByDays(date, -3),
           value: 123,
           unit: QuantityUnit.mmHg,
         },
         {
-          date: this.startDateAdvancedByDays(-4),
+          date: advanceDateByDays(date, -4),
           value: 109,
           unit: QuantityUnit.mmHg,
         },
         {
-          date: this.startDateAdvancedByDays(-5),
+          date: advanceDateByDays(date, -5),
           value: 105,
           unit: QuantityUnit.mmHg,
         },
         {
-          date: this.startDateAdvancedByDays(-6),
+          date: advanceDateByDays(date, -6),
           value: 98,
           unit: QuantityUnit.mmHg,
         },
         {
-          date: this.startDateAdvancedByDays(-7),
+          date: advanceDateByDays(date, -7),
           value: 94,
           unit: QuantityUnit.mmHg,
         },
         {
-          date: this.startDateAdvancedByDays(-8),
+          date: advanceDateByDays(date, -8),
           value: 104,
           unit: QuantityUnit.mmHg,
         },
         {
-          date: this.startDateAdvancedByDays(-9),
+          date: advanceDateByDays(date, -9),
           value: 102,
           unit: QuantityUnit.mmHg,
         },
       ],
       [
         {
-          date: this.startDateAdvancedByDays(-1),
+          date: advanceDateByDays(date, -1),
           value: 70,
           unit: QuantityUnit.mmHg,
         },
         {
-          date: this.startDateAdvancedByDays(-2),
+          date: advanceDateByDays(date, -2),
           value: 82,
           unit: QuantityUnit.mmHg,
         },
         {
-          date: this.startDateAdvancedByDays(-3),
+          date: advanceDateByDays(date, -3),
           value: 75,
           unit: QuantityUnit.mmHg,
         },
         {
-          date: this.startDateAdvancedByDays(-4),
+          date: advanceDateByDays(date, -4),
           value: 77,
           unit: QuantityUnit.mmHg,
         },
         {
-          date: this.startDateAdvancedByDays(-5),
+          date: advanceDateByDays(date, -5),
           value: 72,
           unit: QuantityUnit.mmHg,
         },
         {
-          date: this.startDateAdvancedByDays(-6),
+          date: advanceDateByDays(date, -6),
           value: 68,
           unit: QuantityUnit.mmHg,
         },
         {
-          date: this.startDateAdvancedByDays(-7),
+          date: advanceDateByDays(date, -7),
           value: 65,
           unit: QuantityUnit.mmHg,
         },
         {
-          date: this.startDateAdvancedByDays(-8),
+          date: advanceDateByDays(date, -8),
           value: 72,
           unit: QuantityUnit.mmHg,
         },
         {
-          date: this.startDateAdvancedByDays(-9),
+          date: advanceDateByDays(date, -9),
           value: 80,
           unit: QuantityUnit.mmHg,
         },
@@ -262,156 +254,113 @@ export class MockHealthSummaryService implements HealthSummaryService {
     ]
   }
 
-  async getHeartRateObservations(
-    userId: string,
-    cutoffDate: Date,
-  ): Promise<Observation[]> {
+  private async getHeartRateObservations(date: Date): Promise<Observation[]> {
     return [
       {
-        date: this.startDateAdvancedByDays(-1),
+        date: advanceDateByDays(date, -1),
         value: 79,
         unit: QuantityUnit.bpm,
       },
       {
-        date: this.startDateAdvancedByDays(-2),
+        date: advanceDateByDays(date, -2),
         value: 62,
         unit: QuantityUnit.bpm,
       },
       {
-        date: this.startDateAdvancedByDays(-3),
+        date: advanceDateByDays(date, -3),
         value: 77,
         unit: QuantityUnit.bpm,
       },
       {
-        date: this.startDateAdvancedByDays(-4),
+        date: advanceDateByDays(date, -4),
         value: 63,
         unit: QuantityUnit.bpm,
       },
       {
-        date: this.startDateAdvancedByDays(-5),
+        date: advanceDateByDays(date, -5),
         value: 61,
         unit: QuantityUnit.bpm,
       },
       {
-        date: this.startDateAdvancedByDays(-6),
+        date: advanceDateByDays(date, -6),
         value: 70,
         unit: QuantityUnit.bpm,
       },
       {
-        date: this.startDateAdvancedByDays(-7),
+        date: advanceDateByDays(date, -7),
         value: 67,
         unit: QuantityUnit.bpm,
       },
       {
-        date: this.startDateAdvancedByDays(-8),
+        date: advanceDateByDays(date, -8),
         value: 80,
         unit: QuantityUnit.bpm,
       },
       {
-        date: this.startDateAdvancedByDays(-9),
+        date: advanceDateByDays(date, -9),
         value: 65,
         unit: QuantityUnit.bpm,
       },
     ]
   }
 
-  async getBodyWeightObservations(
-    userId: string,
-    cutoffDate: Date,
-    unit: QuantityUnit,
-  ): Promise<Observation[]> {
+  private async getBodyWeightObservations(date: Date): Promise<Observation[]> {
     return [
       {
-        date: this.startDateAdvancedByDays(-1),
+        date: advanceDateByDays(date, -1),
         value: 269,
         unit: QuantityUnit.lbs,
       },
       {
-        date: this.startDateAdvancedByDays(-2),
+        date: advanceDateByDays(date, -2),
         value: 267,
         unit: QuantityUnit.lbs,
       },
       {
-        date: this.startDateAdvancedByDays(-3),
+        date: advanceDateByDays(date, -3),
         value: 267,
         unit: QuantityUnit.lbs,
       },
       {
-        date: this.startDateAdvancedByDays(-4),
+        date: advanceDateByDays(date, -4),
         value: 265,
         unit: QuantityUnit.lbs,
       },
       {
-        date: this.startDateAdvancedByDays(-5),
+        date: advanceDateByDays(date, -5),
         value: 268,
         unit: QuantityUnit.lbs,
       },
       {
-        date: this.startDateAdvancedByDays(-6),
+        date: advanceDateByDays(date, -6),
         value: 268,
         unit: QuantityUnit.lbs,
       },
       {
-        date: this.startDateAdvancedByDays(-7),
+        date: advanceDateByDays(date, -7),
         value: 266,
         unit: QuantityUnit.lbs,
       },
       {
-        date: this.startDateAdvancedByDays(-8),
+        date: advanceDateByDays(date, -8),
         value: 266,
         unit: QuantityUnit.lbs,
       },
       {
-        date: this.startDateAdvancedByDays(-9),
+        date: advanceDateByDays(date, -9),
         value: 267,
         unit: QuantityUnit.lbs,
       },
     ]
   }
 
-  async getMostRecentDryWeightObservation(
-    userId: string,
+  private async getMostRecentDryWeightObservation(
+    date: Date,
   ): Promise<Observation | undefined> {
     return {
-      date: this.startDateAdvancedByDays(-4),
+      date: advanceDateByDays(date, -4),
       value: 267.5,
       unit: QuantityUnit.lbs,
     }
-  }
-
-  async getMostRecentCreatinineObservation(
-    userId: string,
-  ): Promise<Observation | undefined> {
-    return {
-      date: this.startDateAdvancedByDays(-4),
-      value: 1.1,
-      unit: QuantityUnit.mg_dL,
-    }
-  }
-
-  async getMostRecentPotassiumObservation(
-    userId: string,
-  ): Promise<Observation | undefined> {
-    return {
-      date: this.startDateAdvancedByDays(-4),
-      value: 4.2,
-      unit: QuantityUnit.mEq_L,
-    }
-  }
-
-  async getMostRecentEstimatedGlomerularFiltrationRateObservation(
-    userId: string,
-  ): Promise<Observation | undefined> {
-    return {
-      date: this.startDateAdvancedByDays(-4),
-      value: 60,
-      unit: QuantityUnit.mL_min_173m2,
-    }
-  }
-
-  // Helpers
-
-  private startDateAdvancedByDays(days: number): Date {
-    return advanceDateByDays(this.startDate, days)
   }
 }
