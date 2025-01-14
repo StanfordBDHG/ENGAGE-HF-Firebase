@@ -276,11 +276,6 @@ describeWithEmulators('TriggerService', (env) => {
     })
 
     it('should complete inactivity messages', async () => {
-      const ownerId = await env.createUser({
-        type: UserType.owner,
-        organization: 'stanford',
-      })
-
       const clinicianId = await env.createUser({
         type: UserType.clinician,
         organization: 'stanford',
