@@ -57,3 +57,6 @@ export const defaultSeedInputSchema = z.object({
     [],
   ),
 })
+
+export type DefaultSeedInput = z.input<typeof defaultSeedInputSchema>
+export type DefaultSeedOutput = Record<string, never>
