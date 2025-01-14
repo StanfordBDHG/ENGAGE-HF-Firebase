@@ -9,6 +9,7 @@
 import {
   StaticDataComponent,
   updateStaticDataInputSchema,
+  type UpdateStaticDataOutput,
 } from '@stanfordbdhg/engagehf-models'
 import { type z } from 'zod'
 import { validatedOnCall, validatedOnRequest } from './helpers.js'
@@ -43,17 +44,17 @@ export const updateStaticData =
       updateStaticDataInputSchema,
       async (_, data, response) => {
         await _updateStaticData(getServiceFactory(), data)
-        response.write('Success', 'utf8')
-        response.end()
+        const result: UpdateStaticDataOutput = {}
+        response.send({ result })
       },
     )
   : validatedOnCall(
       'updateStaticData',
       updateStaticDataInputSchema,
-      async (request) => {
+      async (request): Promise<UpdateStaticDataOutput> => {
         const factory = getServiceFactory()
         factory.credential(request.auth).check(UserRole.admin)
         await _updateStaticData(factory, request.data)
-        return 'Success'
+        return {}
       },
     )
