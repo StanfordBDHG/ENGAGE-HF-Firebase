@@ -47,6 +47,7 @@ export class User extends UserRegistration {
 
   constructor(input: {
     type: UserType
+    disabled: boolean
     organization?: string
     dateOfBirth?: Date
     clinician?: string

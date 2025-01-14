@@ -6,7 +6,11 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { UserType } from '@stanfordbdhg/engagehf-models'
+import {
+  UserClaims,
+  userClaimsSchema,
+  UserType,
+} from '@stanfordbdhg/engagehf-models'
 import { https } from 'firebase-functions/v2'
 import { type AuthData } from 'firebase-functions/v2/tasks'
 
@@ -67,13 +71,8 @@ export class UserRole {
 export class Credential {
   // Stored Properties
 
-  private readonly authData: AuthData
-
-  // Computed Properties
-
-  get userId(): string {
-    return this.authData.uid
-  }
+  readonly userId: string
+  private readonly claims: UserClaims
 
   // Constructor
 
@@ -83,7 +82,12 @@ export class Credential {
         'unauthenticated',
         'User is not authenticated.',
       )
-    this.authData = authData
+    try {
+      this.claims = userClaimsSchema.parse(authData.token)
+    } catch {
+      throw this.permissionDeniedError()
+    }
+    this.userId = authData.uid
   }
 
   // Methods
@@ -112,33 +116,39 @@ export class Credential {
     )
   }
 
+  disabledError(): https.HttpsError {
+    return new https.HttpsError('permission-denied', 'User is disabled.')
+  }
+
   // Helpers
 
   private checkSingle(role: UserRole): boolean {
+    if (this.claims.disabled) throw this.disabledError()
+
     switch (role.type) {
       case UserRoleType.admin: {
-        return this.authData.token.type === UserType.admin
+        return this.claims.type === UserType.admin
       }
       case UserRoleType.owner: {
         return (
-          this.authData.token.type === UserType.owner &&
-          this.authData.token.organization === role.organization
+          this.claims.type === UserType.owner &&
+          this.claims.organization === role.organization
         )
       }
       case UserRoleType.clinician: {
         return (
-          this.authData.token.type === UserType.clinician &&
-          this.authData.token.organization === role.organization
+          this.claims.type === UserType.clinician &&
+          this.claims.organization === role.organization
         )
       }
       case UserRoleType.patient: {
         return (
-          this.authData.token.type === UserType.patient &&
-          this.authData.token.organization === role.organization
+          this.claims.type === UserType.patient &&
+          this.claims.organization === role.organization
         )
       }
       case UserRoleType.user: {
-        return this.authData.uid === role.userId
+        return this.userId === role.userId
       }
     }
   }
