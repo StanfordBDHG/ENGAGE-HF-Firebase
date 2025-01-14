@@ -9,6 +9,7 @@
 import {
   DebugDataComponent,
   defaultSeedInputSchema,
+  type DefaultSeedOutput,
   UserDebugDataComponent,
   UserType,
 } from '@stanfordbdhg/engagehf-models'
@@ -187,13 +188,17 @@ export const defaultSeed =
       defaultSeedInputSchema,
       async (_, data, response) => {
         await _defaultSeed(getServiceFactory(), data)
-        response.write('Success', 'utf8')
-        response.end()
+        const result: DefaultSeedOutput = {}
+        response.send({ result })
       },
     )
-  : validatedOnCall('defaultSeed', defaultSeedInputSchema, async (request) => {
-      const factory = getServiceFactory()
-      factory.credential(request.auth).check(UserRole.admin)
-      await _defaultSeed(factory, request.data)
-      return 'Success'
-    })
+  : validatedOnCall(
+      'defaultSeed',
+      defaultSeedInputSchema,
+      async (request): Promise<DefaultSeedOutput> => {
+        const factory = getServiceFactory()
+        factory.credential(request.auth).check(UserRole.admin)
+        await _defaultSeed(factory, request.data)
+        return {}
+      },
+    )
