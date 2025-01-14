@@ -13,7 +13,7 @@
     "contactName": "Henry Zhao",
     "phoneNumber": "+1 (443) 605-8435",
     "emailAddress": "hzhao34@jhu.edu",
-    "ssoProviderId": ""
+    "ssoProviderId": "oidc.johnshopkins"
   },
   "umich": {
     "id": "umich",
@@ -21,7 +21,7 @@
     "contactName": "Mike Dorsch",
     "phoneNumber": "+1 (734) 998-0294",
     "emailAddress": "ENGAGE-HF@med.umich.edu",
-    "ssoProviderId": ""
+    "ssoProviderId": "oidc.michigan"
   },
   "uw": {
     "id": "uw",
