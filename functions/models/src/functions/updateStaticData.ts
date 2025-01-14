@@ -35,3 +35,4 @@ export const updateStaticDataInputSchema = z.object({
   ),
 })
 export type UpdateStaticDataInput = z.input<typeof updateStaticDataInputSchema>
+export type UpdateStaticDataOutput = Record<string, never>
