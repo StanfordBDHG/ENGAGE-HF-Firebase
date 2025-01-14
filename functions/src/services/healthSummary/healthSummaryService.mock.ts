@@ -8,7 +8,6 @@
 
 import {
   advanceDateByDays,
-  advanceDateBySeconds,
   FHIRAppointment,
   FHIRAppointmentStatus,
   LocalizedText,
