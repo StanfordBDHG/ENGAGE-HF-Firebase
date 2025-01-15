@@ -218,7 +218,7 @@ export class TriggerService {
         logger.debug(
           `TriggerService.userObservationWritten(${userId}, ${collection}): Most recent body weight is ${mostRecentBodyWeight} compared to a median of ${bodyWeightMedian}`,
         )
-        if (mostRecentBodyWeight - bodyWeightMedian >= 7) {
+        if (mostRecentBodyWeight - bodyWeightMedian >= 3) {
           const messageService = this.factory.message()
           const messageDoc = await messageService.addMessage(
             userId,
