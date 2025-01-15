@@ -2,7 +2,12 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{databaseId}/documents {
     function isAuthenticated() {
-      return request.auth != null && ('type' in request.auth.token);
+      return request.auth != null 
+        && ('type' in request.auth.token)
+        && (
+          !('disabled' in request.auth.token) 
+          || request.auth.token == false
+        );
     }
 
     function isAdmin() {
@@ -42,10 +47,14 @@ service cloud.firestore {
       return get(/databases/$(databaseId)/documents/invitations/$(invitationId));
     }
 
+    function valueExists(object, property) {
+      return (property in object) && object[property] == null;
+    }
+
     function isEqualOptional(object0, property0, object1, property1) {
-      return (property0 in object0) 
-        ? ((property1 in object1) && object0[property0] == object1[property1])
-        : !(property1 in object1);
+      return valueExists(object0, property0)
+        ? (valueExists(object) && object0[property0] == object1[property1])
+        : !valueExists(object1, property1);
     }
 
     match /invitations/{invitationId} {
@@ -107,6 +116,7 @@ service cloud.firestore {
     match /users/{userId} {
       function securityRelatedFieldsDidNotChange() {
         return isEqualOptional(request.resource.data, 'type', resource.data, 'type')
+          && isEqualOptional(request.resource.data, 'disabled', resource.data, 'disabled')
           && isEqualOptional(request.resource.data, 'organization', resource.data, 'organization');
       }
 
