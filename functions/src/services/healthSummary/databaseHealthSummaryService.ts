@@ -12,8 +12,8 @@ import {
 } from '@stanfordbdhg/engagehf-models'
 import { type HealthSummaryService } from './healthSummaryService.js'
 import {
+  HealthSummaryData,
   type HealthSummaryVitals,
-  type HealthSummaryData,
 } from '../../models/healthSummaryData.js'
 import { type PatientService } from '../patient/patientService.js'
 import { type UserService } from '../user/userService.js'
@@ -35,6 +35,7 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
 
   async getHealthSummaryData(
     userId: string,
+    date: Date,
     weightUnit: QuantityUnit,
   ): Promise<HealthSummaryData> {
     const [
@@ -50,7 +51,7 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
       this.patientService.getNextAppointment(userId),
       this.patientService.getMedicationRecommendations(userId),
       this.patientService.getSymptomScores(userId, { limit: 5 }),
-      this.getVitals(userId, advanceDateByDays(new Date(), -14), weightUnit),
+      this.getVitals(userId, advanceDateByDays(date, -14), weightUnit),
     ])
 
     const clinician =
@@ -58,7 +59,7 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
         await this.userService.getAuth(patient.content.clinician)
       : undefined
 
-    return {
+    return new HealthSummaryData({
       name: auth.displayName,
       dateOfBirth: patient?.content.dateOfBirth,
       providerName: clinician?.displayName,
@@ -66,7 +67,8 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
       recommendations: recommendations.map((doc) => doc.content),
       vitals: vitals,
       symptomScores: symptomScores.map((doc) => doc.content),
-    }
+      now: date,
+    })
   }
 
   // Helpers
