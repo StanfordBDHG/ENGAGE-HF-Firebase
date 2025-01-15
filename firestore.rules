@@ -1,12 +1,22 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{databaseId}/documents {
+    function valueExists(object, property) {
+      return (property in object) && object[property] != null;
+    }
+
+    function isEqualOptional(object0, property0, object1, property1) {
+      return valueExists(object0, property0)
+        ? (valueExists(object) && object0[property0] == object1[property1])
+        : !valueExists(object1, property1);
+    }
+
     function isAuthenticated() {
       return request.auth != null 
         && ('type' in request.auth.token)
         && (
-          !('disabled' in request.auth.token) 
-          || request.auth.token == false
+          !valueExists(request.auth.token, 'disabled')
+          || request.auth.token.disabled == false
         );
     }
 
@@ -45,16 +55,6 @@ service cloud.firestore {
 
     function getInvitation(invitationId) {
       return get(/databases/$(databaseId)/documents/invitations/$(invitationId));
-    }
-
-    function valueExists(object, property) {
-      return (property in object) && object[property] != null;
-    }
-
-    function isEqualOptional(object0, property0, object1, property1) {
-      return valueExists(object0, property0)
-        ? (valueExists(object) && object0[property0] == object1[property1])
-        : !valueExists(object1, property1);
     }
 
     match /invitations/{invitationId} {
