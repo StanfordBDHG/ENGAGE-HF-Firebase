@@ -7,7 +7,7 @@
 //
 
 import {
-  UserClaims,
+  type UserClaims,
   userClaimsSchema,
   UserType,
 } from '@stanfordbdhg/engagehf-models'

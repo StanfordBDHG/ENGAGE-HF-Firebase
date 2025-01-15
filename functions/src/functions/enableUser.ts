@@ -8,11 +8,11 @@
 
 import {
   enableUserInputSchema,
-  EnableUserOutput,
+  type EnableUserOutput,
 } from '@stanfordbdhg/engagehf-models'
+import { validatedOnCall } from './helpers.js'
 import { UserRole } from '../services/credential/credential.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
-import { validatedOnCall } from './helpers.js'
 
 export const enableUser = validatedOnCall(
   'enableUser',
