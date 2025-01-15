@@ -72,7 +72,7 @@ export class Credential {
   // Stored Properties
 
   readonly userId: string
-  private readonly claims: UserClaims
+  private readonly claims: Partial<UserClaims>
 
   // Constructor
 
@@ -83,7 +83,7 @@ export class Credential {
         'User is not authenticated.',
       )
     try {
-      this.claims = userClaimsSchema.parse(authData.token)
+      this.claims = userClaimsSchema.partial().parse(authData.token)
     } catch {
       throw this.permissionDeniedError()
     }
@@ -123,7 +123,7 @@ export class Credential {
   // Helpers
 
   private checkSingle(role: UserRole): boolean {
-    if (this.claims.disabled) throw this.disabledError()
+    if (this.claims.disabled === true) throw this.disabledError()
 
     switch (role.type) {
       case UserRoleType.admin: {

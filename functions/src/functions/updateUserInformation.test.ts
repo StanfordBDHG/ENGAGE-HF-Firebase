@@ -25,7 +25,7 @@ describeWithEmulators('function: updateUserInformation', (env) => {
           },
         },
       },
-      { uid: authUser.uid, token: { disabled: false } },
+      { uid: authUser.uid },
     )
 
     const updatedUser = await env.auth.getUser(authUser.uid)
