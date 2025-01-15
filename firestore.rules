@@ -48,7 +48,7 @@ service cloud.firestore {
     }
 
     function valueExists(object, property) {
-      return (property in object) && object[property] == null;
+      return (property in object) && object[property] != null;
     }
 
     function isEqualOptional(object0, property0, object1, property1) {
