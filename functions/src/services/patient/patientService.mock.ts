@@ -33,7 +33,7 @@ export class MockPatientService implements PatientService {
 
   // Constructor
 
-  constructor(startDate: Date = new Date('2024-02-02')) {
+  constructor(startDate: Date = new Date(2024, 2, 2, 12, 30)) {
     this.startDate = startDate
   }
 
@@ -120,15 +120,15 @@ export class MockPatientService implements PatientService {
     userId: string,
   ): Promise<[Observation[], Observation[]]> {
     const values = [
-      this.bloodPressureObservations(110, 70, new Date('2024-02-01')),
-      this.bloodPressureObservations(114, 82, new Date('2024-01-31')),
-      this.bloodPressureObservations(123, 75, new Date('2024-01-30')),
-      this.bloodPressureObservations(109, 77, new Date('2024-01-29')),
-      this.bloodPressureObservations(105, 72, new Date('2024-01-28')),
-      this.bloodPressureObservations(98, 68, new Date('2024-01-27')),
-      this.bloodPressureObservations(94, 65, new Date('2024-01-26')),
-      this.bloodPressureObservations(104, 72, new Date('2024-01-25')),
-      this.bloodPressureObservations(102, 80, new Date('2024-01-24')),
+      this.bloodPressureObservations(110, 70, new Date(2024, 1, 30, 12, 30)),
+      this.bloodPressureObservations(114, 82, new Date(2024, 1, 29, 12, 30)),
+      this.bloodPressureObservations(123, 75, new Date(2024, 1, 28, 12, 30)),
+      this.bloodPressureObservations(109, 77, new Date(2024, 1, 27, 12, 30)),
+      this.bloodPressureObservations(105, 72, new Date(2024, 1, 26, 12, 30)),
+      this.bloodPressureObservations(98, 68, new Date(2024, 1, 25, 12, 30)),
+      this.bloodPressureObservations(94, 65, new Date(2024, 1, 24, 12, 30)),
+      this.bloodPressureObservations(104, 72, new Date(2024, 1, 23, 12, 30)),
+      this.bloodPressureObservations(102, 80, new Date(2024, 1, 22, 12, 30)),
     ]
     return [values.map((value) => value[0]), values.map((value) => value[1])]
   }
@@ -154,15 +154,51 @@ export class MockPatientService implements PatientService {
 
   async getBodyWeightObservations(userId: string): Promise<Observation[]> {
     return [
-      this.bodyWeightObservation(269, QuantityUnit.lbs, new Date('2024-02-01')),
-      this.bodyWeightObservation(267, QuantityUnit.lbs, new Date('2024-01-31')),
-      this.bodyWeightObservation(267, QuantityUnit.lbs, new Date('2024-01-30')),
-      this.bodyWeightObservation(265, QuantityUnit.lbs, new Date('2024-01-29')),
-      this.bodyWeightObservation(268, QuantityUnit.lbs, new Date('2024-01-28')),
-      this.bodyWeightObservation(268, QuantityUnit.lbs, new Date('2024-01-27')),
-      this.bodyWeightObservation(266, QuantityUnit.lbs, new Date('2024-01-26')),
-      this.bodyWeightObservation(266, QuantityUnit.lbs, new Date('2024-01-25')),
-      this.bodyWeightObservation(267, QuantityUnit.lbs, new Date('2024-01-24')),
+      this.bodyWeightObservation(
+        269,
+        QuantityUnit.lbs,
+        new Date(2024, 1, 30, 12, 30),
+      ),
+      this.bodyWeightObservation(
+        267,
+        QuantityUnit.lbs,
+        new Date(2024, 1, 29, 12, 30),
+      ),
+      this.bodyWeightObservation(
+        267,
+        QuantityUnit.lbs,
+        new Date(2024, 1, 28, 12, 30),
+      ),
+      this.bodyWeightObservation(
+        265,
+        QuantityUnit.lbs,
+        new Date(2024, 1, 27, 12, 30),
+      ),
+      this.bodyWeightObservation(
+        268,
+        QuantityUnit.lbs,
+        new Date(2024, 1, 26, 12, 30),
+      ),
+      this.bodyWeightObservation(
+        268,
+        QuantityUnit.lbs,
+        new Date(2024, 1, 25, 12, 30),
+      ),
+      this.bodyWeightObservation(
+        266,
+        QuantityUnit.lbs,
+        new Date(2024, 1, 24, 12, 30),
+      ),
+      this.bodyWeightObservation(
+        266,
+        QuantityUnit.lbs,
+        new Date(2024, 1, 23, 12, 30),
+      ),
+      this.bodyWeightObservation(
+        267,
+        QuantityUnit.lbs,
+        new Date(2024, 1, 22, 12, 30),
+      ),
     ]
   }
 
@@ -180,15 +216,15 @@ export class MockPatientService implements PatientService {
 
   async getHeartRateObservations(userId: string): Promise<Observation[]> {
     return [
-      this.heartRateObservation(79, new Date('2024-02-01')),
-      this.heartRateObservation(62, new Date('2024-01-31')),
-      this.heartRateObservation(77, new Date('2024-01-30')),
-      this.heartRateObservation(63, new Date('2024-01-29')),
-      this.heartRateObservation(61, new Date('2024-01-28')),
-      this.heartRateObservation(70, new Date('2024-01-27')),
-      this.heartRateObservation(67, new Date('2024-01-26')),
-      this.heartRateObservation(80, new Date('2024-01-25')),
-      this.heartRateObservation(65, new Date('2024-01-24')),
+      this.heartRateObservation(79, new Date(2024, 1, 30, 12, 30)),
+      this.heartRateObservation(62, new Date(2024, 1, 29, 12, 30)),
+      this.heartRateObservation(77, new Date(2024, 1, 28, 12, 30)),
+      this.heartRateObservation(63, new Date(2024, 1, 27, 12, 30)),
+      this.heartRateObservation(61, new Date(2024, 1, 26, 12, 30)),
+      this.heartRateObservation(70, new Date(2024, 1, 25, 12, 30)),
+      this.heartRateObservation(67, new Date(2024, 1, 24, 12, 30)),
+      this.heartRateObservation(80, new Date(2024, 1, 23, 12, 30)),
+      this.heartRateObservation(65, new Date(2024, 1, 22, 12, 30)),
     ]
   }
 
@@ -215,7 +251,7 @@ export class MockPatientService implements PatientService {
     unit: QuantityUnit,
   ): Promise<Observation | undefined> {
     return {
-      date: new Date('2024-01-29'),
+      date: new Date(2024, 1, 27, 12, 30),
       value: 267.5,
       unit: QuantityUnit.lbs,
     }
@@ -265,7 +301,7 @@ export class MockPatientService implements PatientService {
         qualityOfLifeScore: 20,
         symptomFrequencyScore: 60,
         dizzinessScore: 3,
-        date: new Date('2024-01-24'),
+        date: new Date(2024, 1, 22, 12, 30),
       }),
       new SymptomScore({
         questionnaireResponseId: '3',
@@ -275,7 +311,7 @@ export class MockPatientService implements PatientService {
         qualityOfLifeScore: 37,
         symptomFrequencyScore: 72,
         dizzinessScore: 2,
-        date: new Date('2024-01-15'),
+        date: new Date(2024, 1, 13, 12, 30),
       }),
       new SymptomScore({
         questionnaireResponseId: '2',
@@ -285,7 +321,7 @@ export class MockPatientService implements PatientService {
         qualityOfLifeScore: 25,
         symptomFrequencyScore: 60,
         dizzinessScore: 1,
-        date: new Date('2023-12-30'),
+        date: new Date(2023, 12, 28, 12, 30),
       }),
       new SymptomScore({
         questionnaireResponseId: '1',
@@ -295,7 +331,7 @@ export class MockPatientService implements PatientService {
         qualityOfLifeScore: 60,
         symptomFrequencyScore: 80,
         dizzinessScore: 1,
-        date: new Date('2023-12-15'),
+        date: new Date(2023, 12, 13, 12, 30),
       }),
     ]
     return values.map((value, index) => ({

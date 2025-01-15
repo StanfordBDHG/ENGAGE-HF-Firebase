@@ -45,9 +45,11 @@ export const exportHealthSummary = validatedOnCall(
     if (request.data.weightUnit !== undefined && weightUnit === undefined)
       throw new https.HttpsError('invalid-argument', 'Invalid weight unit')
 
+    const now = new Date()
     const healthSummaryService = factory.healthSummary()
     const data = await healthSummaryService.getHealthSummaryData(
       request.data.userId,
+      now,
       weightUnit ?? QuantityUnit.lbs,
     )
     const pdf = generateHealthSummary(data, {
