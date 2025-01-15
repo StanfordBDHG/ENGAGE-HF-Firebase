@@ -9,297 +9,294 @@
 import {
   LocalizedText,
   type UserMedicationRecommendationDoseSchedule,
-  type QuantityUnit,
   type FHIRAppointment,
+  type SymptomScore,
 } from '@stanfordbdhg/engagehf-models'
+import {
+  type HealthSummaryDizzinessCategory,
+  healthSummaryKeyPointTexts,
+  type HealthSummaryMedicationRecommendationsCategory,
+  type HealthSummarySymptomScoreCategory,
+  type HealthSummaryWeightCategory,
+} from './keyPointsMessage.js'
 
 export function healthSummaryLocalizations(languages: string[]) {
+  function localize(strings: Record<string, string>): string {
+    return new LocalizedText(strings).localize(...languages)
+  }
   return {
     header: {
-      title: new LocalizedText({
-        en: 'ENGAGE-HF Mobile App Health Summary',
-      }).localize(...languages),
+      title: localize({
+        en: 'ENGAGE-HF Health Summary',
+      }),
       dateOfBirthLine(date: Date | null) {
-        return new LocalizedText({
+        return localize({
           en: `DOB: ${date !== null ? formatDate(date) : '---'}`,
-        }).localize(...languages)
+        })
       },
       providerLine(name: string | null) {
-        return new LocalizedText({
+        return localize({
           en: `Provider: ${name ?? '---'}`,
-        }).localize(...languages)
+        })
       },
       nextAppointmentLine(appointment: FHIRAppointment | null) {
         const date = appointment?.start
         const providerNames = appointment?.providerNames ?? []
         const providerText =
           providerNames.length === 0 ? '' : providerNames.join(', ') + ' '
-        return new LocalizedText({
-          en: `Next Appointment: ${providerText}${date !== undefined ? formatDate(date) : '---'}`,
-        }).localize(...languages)
+        return localize({
+          en: `Next Appointment: ${providerText}${date !== undefined ? `${formatDate(date)} at ${formatTime(date)}` : '---'}`,
+        })
       },
       pageNumberTitle(number: number) {
-        return new LocalizedText({
+        return localize({
           en: `Page ${number}`,
-        }).localize(...languages)
+        })
       },
     },
-    medicationsSection: {
-      title: new LocalizedText({
-        en: 'MEDICATIONS',
-      }).localize(...languages),
-      currentTitle: new LocalizedText({
-        en: 'Current Medications',
-      }).localize(...languages),
-      currentText: new LocalizedText({
-        en: 'Before your next clinic appointment, check off which medications you have been taking below:',
-      }).localize(...languages),
-      recommendationsTitle: new LocalizedText({
-        en: 'Potential Positive Changes',
-      }).localize(...languages),
-      recommendationsText: new LocalizedText({
-        en: 'Please discuss optimizing these medications with your care them at your next clinic appointment.',
-      }).localize(...languages),
-      recommendationsHint: new LocalizedText({
+    keyPointsSection: {
+      title: localize({
+        en: 'KEY POINTS',
+      }),
+      defaultText: localize({
+        en: 'No key points available. Please discuss with your care team for more information.',
+      }),
+      text(input: {
+        recommendations: HealthSummaryMedicationRecommendationsCategory | null
+        symptomScore: HealthSummarySymptomScoreCategory | null
+        dizziness: HealthSummaryDizzinessCategory | null
+        weight: HealthSummaryWeightCategory | null
+      }): string[] | null {
+        if (
+          input.recommendations === null ||
+          input.symptomScore === null ||
+          input.dizziness === null ||
+          input.weight === null
+        )
+          return null
+
+        const messages =
+          healthSummaryKeyPointTexts({
+            recommendations: input.recommendations,
+            symptomScore: input.symptomScore,
+            dizziness: input.dizziness,
+            weight: input.weight,
+          }) ?? []
+
+        if (messages.length === 0) return null
+
+        return messages.map((text) => text.localize(...languages))
+      },
+    },
+    currentMedicationsSection: {
+      title: localize({
+        en: 'CURRENT HEART MEDICATIONS',
+      }),
+      description: localize({
+        en: 'Here are meds you are taking for your heart function, your current dose, and the target dose that we aim to get to. The target dose is the dose we know best helps strengthen your heart.',
+      }),
+      table: {
+        nameHeader: localize({
+          en: 'My Medications',
+        }),
+        currentDoseHeader: localize({
+          en: 'Current Dose',
+        }),
+        targetDoseHeader: localize({
+          en: 'Target Dose',
+        }),
+        doseSchedule(
+          schedule: UserMedicationRecommendationDoseSchedule,
+          unit: string,
+        ): string {
+          const prefix =
+            schedule.quantity.map((quantity) => quantity.toString()).join('/') +
+            ' ' +
+            unit +
+            ' '
+          switch (schedule.frequency) {
+            case 1:
+              return localize({
+                en: prefix + 'daily',
+              })
+            case 2:
+              return localize({
+                en: prefix + 'twice daily',
+              })
+            default:
+              return localize({
+                en: prefix + `${schedule.frequency}x daily`,
+              })
+          }
+        },
+      },
+    },
+    medicationRecommendationsSection: {
+      title: localize({
+        en: 'POTENTIAL MED CHANGES TO HELP HEART',
+      }),
+      description: localize({
+        en: 'These potential changes are based on your meds, vital signs, and lab values. These changes are expected to help your heart work better. Discuss these potential changes with your care team at your next clinic appointment.',
+      }),
+      hint: localize({
         en: 'Aim to make one positive change!',
-      }).localize(...languages),
+      }),
     },
-    medicationsTable: {
-      nameHeader: new LocalizedText({
-        en: 'My medications',
-      }).localize(...languages),
-      doseHeader: new LocalizedText({
-        en: 'Dose',
-      }).localize(...languages),
-      targetDoseHeader: new LocalizedText({
-        en: 'Target dose',
-      }).localize(...languages),
-      recommendationHeader: new LocalizedText({
-        en: 'Potential Positive Change',
-      }).localize(...languages),
-      commentsHeader: new LocalizedText({
-        en: 'Questions/Comments',
-      }).localize(...languages),
-      doseSchedule(
-        schedule: UserMedicationRecommendationDoseSchedule,
-        unit: string,
-      ): string {
-        const prefix =
-          schedule.quantity.map((quantity) => quantity.toString()).join('/') +
-          ' ' +
-          unit +
-          ' '
-        switch (schedule.frequency) {
-          case 1:
-            return new LocalizedText({
-              en: prefix + 'daily',
-            }).localize(...languages)
-          case 2:
-            return new LocalizedText({
-              en: prefix + 'twice daily',
-            }).localize(...languages)
-          default:
-            return new LocalizedText({
-              en: prefix + `${schedule.frequency}x daily`,
-            }).localize(...languages)
+    symptomScoresSummarySection: {
+      title: localize({
+        en: 'SYMPTOM [KCCQ-12] REPORT',
+      }),
+      description: localize({
+        en: 'These symptom scores range from 0-100. 0 indicates severe symptoms. 100 indicates you are doing extremely well. Blue line is current and grey line is previous. This is the overall score. The Overall Score is an average of physical limits, social limits, quality of life, and symptoms. Detailed results for each are on the Table on page 2.',
+      }),
+      personalSummary(input: {
+        previousScore: SymptomScore | null
+        currentScore: SymptomScore | null
+      }): string | undefined {
+        const currentScore = input.currentScore
+        const previousScore = input.previousScore
+        if (currentScore !== null && previousScore !== null) {
+          const currentScoreText = currentScore.overallScore.toString() + '%'
+          const previousScoreText = previousScore.overallScore.toString() + '%'
+
+          if (currentScore.overallScore >= 90) {
+            if (currentScore.overallScore - previousScore.overallScore >= 10) {
+              return localize({
+                en: `Your heart symptoms score increased from ${previousScoreText} to ${currentScoreText}. This means you are feeling better. Your score is overall very good. Continuing to take your meds will be important for keeping you feeling well.`,
+              })
+            } else {
+              return localize({
+                en: 'Your heart symptom score remains very good. Continuing to take your meds will be important for keeping you feeling well.',
+              })
+            }
+          } else {
+            const improvement =
+              currentScore.overallScore - previousScore.overallScore
+            if (improvement >= 10) {
+              return localize({
+                en: `Your heart symptoms score increased from ${previousScoreText} to ${currentScoreText}. This means you have been feeling better. There is still room to continue improving how you feel. Getting on the best doses of heart failure medicines can help you feeling better. Consider discussing further with your care team.`,
+              })
+            } else if (improvement > -10) {
+              return localize({
+                en: 'Your heart symptom score is stable. There is still room to continue improving how you feel. Getting on the best doses of heart failure medicines can help you feeling better. Consider discussing further with your care team.',
+              })
+            } else {
+              return localize({
+                en: `Your heart symptoms score decreased from ${previousScoreText} to ${currentScoreText}. This means you are feeling worse. Consider talking to your care team about adjusting your heart failure medications as these have been shown to decrease symptoms long term.`,
+              })
+            }
+          }
         }
+        return undefined
       },
     },
-    vitalsSection: {
-      title: new LocalizedText({
-        en: 'VITALS OVER LAST 2 WEEKS',
-      }).localize(...languages),
-      averageSystolicText(number: number | null) {
-        const observationText = formatValue(number, null, {
-          fractionalDigitCount: 0,
-        })
-        return new LocalizedText({
-          en: `Average Systolic Blood Pressure: ${observationText}`,
-        }).localize(...languages)
-      },
-      averageDiastolicText(number: number | null) {
-        const observationText = formatValue(number, null, {
-          fractionalDigitCount: 0,
-        })
-        return new LocalizedText({
-          en: `Average Diastolic Blood Pressure: ${observationText}`,
-        }).localize(...languages)
-      },
-      averageHeartRateText(number: number | null) {
-        const observationText = formatValue(number, null, {
-          fractionalDigitCount: 0,
-        })
-        return new LocalizedText({
-          en: `Average Heart Rate: ${observationText}`,
-        }).localize(...languages)
-      },
-      currentBodyWeightText(
-        observation: { value: number; unit: QuantityUnit } | null,
-      ) {
-        const observationText = formatValue(
-          observation?.value ?? null,
-          observation?.unit ?? null,
-          { fractionalDigitCount: 0 },
-        )
-        return new LocalizedText({
-          en: `Current Weight: ${observationText}`,
-        }).localize(...languages)
-      },
-      averageBodyWeightText(
-        observation: { value: number; unit: QuantityUnit } | null,
-      ) {
-        const observationText = formatValue(
-          observation?.value ?? null,
-          observation?.unit ?? null,
-          { fractionalDigitCount: 0 },
-        )
-        return new LocalizedText({
-          en: `Last Week Average Weight: ${observationText}`,
-        }).localize(...languages)
-      },
-      dryWeightText(observation: { value: number; unit: QuantityUnit } | null) {
-        const observationText = formatValue(
-          observation?.value ?? null,
-          observation?.unit ?? null,
-          { fractionalDigitCount: 0 },
-        )
-        return new LocalizedText({
-          en: `Prior Dry Weight: ${observationText}`,
-        }).localize(...languages)
-      },
-    },
-    symptomScoresSection: {
-      title: new LocalizedText({
-        en: 'SYMPTOM SURVEY [KCCQ-12] REPORT',
-      }).localize(...languages),
-      description: new LocalizedText({
-        en: 'These symptom scores range from 0-100.\nA score of 0 indicates severe symptoms.\nA score of 100 indicates you are doing extremely well.',
-      }).localize(...languages),
-      personalSummary: {
-        title: new LocalizedText({
-          en: 'Personal Summary:',
-        }).localize(...languages),
-        above90Improving: new LocalizedText({
-          en: 'Your heart symptoms score has increased. This means you are feeling better. Your score is overall very good. Continuing to take your meds will be important for keeping you feeling well.',
-        }).localize(...languages),
-        above90NotImproving: new LocalizedText({
-          en: 'Your heart symptom score remains very good. Continuing to take your meds will be important for keeping you feeling well.',
-        }).localize(...languages),
-        below90Improving: new LocalizedText({
-          en: 'Your heart symptoms score has increased. This means you have been feeling better. There is still room to continue improving how you feel. Getting on the best doses of heart failure medicines can help you feeling better. Consider discussing further with your care team.',
-        }).localize(...languages),
-        below90Stable: new LocalizedText({
-          en: 'Your heart symptom score is stable. There is still room to continue improving how you feel. Getting on the best doses of heart failure medicines can help you feeling better. Consider discussing further with your care team.',
-        }).localize(...languages),
-        below90Worsening: new LocalizedText({
-          en: 'Your heart symptoms score has decreased. This means you are feeling worse. Consider talking to your care team about adjusting your heart failure medications as these have been shown to improve symptoms long term.',
-        }).localize(...languages),
-      },
-    },
-    symptomScoresTable: {
-      dateHeader: new LocalizedText({
+    symptomScoresTableSection: {
+      title: localize({
+        en: 'Symptom Scores [KCCQ-12] Over Time',
+      }),
+      description: localize({
+        en: 'This is a detailed report of your symptom scores over time. The graph above shows the overall score. 100 is better and 0 is worse. Each KCCQ-12 question is from one of these categories. Your Overall Score is the average of the other categories.',
+      }),
+      dateHeader: localize({
         en: '',
-      }).localize(...languages),
-      overallScoreHeader: new LocalizedText({
+      }),
+      overallScoreHeader: localize({
         en: 'Overall Score',
-      }).localize(...languages),
-      physicalLimitsScoreHeader: new LocalizedText({
+      }),
+      physicalLimitsScoreHeader: localize({
         en: 'Physical Limits',
-      }).localize(...languages),
-      socialLimitsScoreHeader: new LocalizedText({
+      }),
+      socialLimitsScoreHeader: localize({
         en: 'Social Limits',
-      }).localize(...languages),
-      qualityOfLifeScoreHeader: new LocalizedText({
+      }),
+      qualityOfLifeScoreHeader: localize({
         en: 'Quality of Life',
-      }).localize(...languages),
-      symptomFrequencyScoreHeader: new LocalizedText({
+      }),
+      symptomFrequencyScoreHeader: localize({
         en: 'Heart Failure Symptoms',
-      }).localize(...languages),
-      dizzinessScoreHeader: new LocalizedText({
+      }),
+      dizzinessScoreHeader: localize({
         en: 'Dizziness',
-      }).localize(...languages),
+      }),
       formatDate(date: Date) {
         return formatDate(date)
       },
     },
-    detailedVitalsSection: {
-      title: new LocalizedText({
-        en: 'DETAILS OF VITALS',
-      }).localize(...languages),
-      bodyWeightTitle: new LocalizedText({
+    vitalsSection: {
+      title: localize({
+        en: 'VITALS OVER LAST 2 WEEKS',
+      }),
+      bodyWeightTitle: localize({
         en: 'Weight',
-      }).localize(...languages),
+      }),
       bodyWeightTable: {
-        titleHeader: new LocalizedText({
+        titleHeader: localize({
           en: '',
-        }).localize(...languages),
-        currentHeader: new LocalizedText({
+        }),
+        currentHeader: localize({
           en: 'Current',
-        }).localize(...languages),
-        sevenDayAverageHeader: new LocalizedText({
+        }),
+        sevenDayAverageHeader: localize({
           en: '7-Day Average',
-        }).localize(...languages),
-        lastVisitHeader: new LocalizedText({
-          en: 'Last Visit',
-        }).localize(...languages),
-        rangeHeader: new LocalizedText({
+        }),
+        rangeHeader: localize({
           en: 'Range',
-        }).localize(...languages),
-        rowTitle: new LocalizedText({
+        }),
+        rowTitle: localize({
           en: 'Weight',
-        }).localize(...languages),
+        }),
       },
-      heartRateTitle: new LocalizedText({
+      heartRateTitle: localize({
         en: 'Heart Rate',
-      }).localize(...languages),
+      }),
       heartRateTable: {
-        titleHeader: new LocalizedText({
+        titleHeader: localize({
           en: '',
-        }).localize(...languages),
-        medianHeader: new LocalizedText({
+        }),
+        medianHeader: localize({
           en: 'Median',
-        }).localize(...languages),
-        iqrHeader: new LocalizedText({
+        }),
+        iqrHeader: localize({
           en: 'IQR',
-        }).localize(...languages),
-        percentageUnder50Header: new LocalizedText({
+        }),
+        percentageUnder50Header: localize({
           en: '% Under 50',
-        }).localize(...languages),
-        percentageOver120Header: new LocalizedText({
+        }),
+        percentageOver120Header: localize({
           en: '% Over 120',
-        }).localize(...languages),
-        rowTitle: new LocalizedText({
+        }),
+        rowTitle: localize({
           en: 'Heart Rate',
-        }).localize(...languages),
+        }),
       },
-      systolicBloodPressureTitle: new LocalizedText({
+      systolicBloodPressureTitle: localize({
         en: 'Systolic Blood Pressure',
-      }).localize(...languages),
-      diastolicBloodPressureTitle: new LocalizedText({
+      }),
+      diastolicBloodPressureTitle: localize({
         en: 'Diastolic Blood Pressure',
-      }).localize(...languages),
+      }),
       bloodPressureTable: {
-        titleHeader: new LocalizedText({
+        titleHeader: localize({
           en: '',
-        }).localize(...languages),
-        medianHeader: new LocalizedText({
+        }),
+        medianHeader: localize({
           en: 'Median',
-        }).localize(...languages),
-        iqrHeader: new LocalizedText({
+        }),
+        iqrHeader: localize({
           en: 'IQR',
-        }).localize(...languages),
-        percentageUnder90Header: new LocalizedText({
+        }),
+        percentageUnder90Header: localize({
           en: '% Under 90 mmHg',
-        }).localize(...languages),
-        percentageOver180Header: new LocalizedText({
+        }),
+        percentageOver180Header: localize({
           en: '% Over 180 mmHg',
-        }).localize(...languages),
-        systolicRowTitle: new LocalizedText({
+        }),
+        systolicRowTitle: localize({
           en: 'Systolic',
-        }).localize(...languages),
-        diastolicRowTitle: new LocalizedText({
+        }),
+        diastolicRowTitle: localize({
           en: 'Diastolic',
-        }).localize(...languages),
+        }),
       },
     },
   }
@@ -313,15 +310,9 @@ function formatDate(date: Date): string {
   })
 }
 
-function formatValue(
-  value: number | null,
-  unit: QuantityUnit | null,
-  options: { fractionalDigitCount: number } = {
-    fractionalDigitCount: 0,
-  },
-): string {
-  if (value === null) return '---'
-  const valueString = value.toFixed(options.fractionalDigitCount)
-  if (unit === null) return valueString
-  return `${valueString} ${unit.unit}`
+function formatTime(date: Date): string {
+  return date.toLocaleTimeString('en-US', {
+    hour: '2-digit',
+    minute: '2-digit',
+  })
 }
