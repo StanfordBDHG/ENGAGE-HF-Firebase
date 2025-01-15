@@ -16,15 +16,27 @@ export function readCsv(
 ) {
   const fileContent = fs.readFileSync(path, 'utf8')
   const lines = fileContent
-    .replace(/"(.*?)"/g, (str) =>
-      str.slice(1, -1).split(',').join('###COMMA###'),
+    .replace(/"([\s\S]*?)"/g, (str) =>
+      str
+        .slice(1, -1)
+        .split(',')
+        .join('###COMMA###')
+        .split('\n')
+        .join('###NEWLINE###'),
     )
     .split('\n')
   expect(lines).to.have.length(expectedLines)
   lines.forEach((line, index) => {
     const values = line
       .split(',')
-      .map((x) => x.split('###COMMA###').join(',').trim())
+      .map((x) =>
+        x
+          .split('###COMMA###')
+          .join(',')
+          .split('###NEWLINE###')
+          .join('\n')
+          .trim(),
+      )
     perform(values, index)
   })
 }

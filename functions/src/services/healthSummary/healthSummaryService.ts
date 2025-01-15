@@ -12,6 +12,7 @@ import { type HealthSummaryData } from '../../models/healthSummaryData.js'
 export interface HealthSummaryService {
   getHealthSummaryData(
     userId: string,
+    date: Date,
     weightUnit: QuantityUnit,
   ): Promise<HealthSummaryData>
 }
