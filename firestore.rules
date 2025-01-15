@@ -7,7 +7,7 @@ service cloud.firestore {
 
     function isEqualOptional(object0, property0, object1, property1) {
       return valueExists(object0, property0)
-        ? (valueExists(object) && object0[property0] == object1[property1])
+        ? (valueExists(object1, property1) && object0[property0] == object1[property1])
         : !valueExists(object1, property1);
     }
 
@@ -132,7 +132,7 @@ service cloud.firestore {
         || isOwnerOrClinicianOf(resource.data.organization);
 
       allow create: if isAdmin()
-        || (isUser(userId) && !('organization' in request.resource.data) && !('type' in request.resource.data));
+        || (isUser(userId) && !valueExists(request.resource.data, 'organization') && !valueExists(request.resource.data, 'type'));
 
       allow update: if isAdmin()
         || (securityRelatedFieldsDidNotChange() && (isUser(userId) || isAllowedUpdateWithinOrganization()));
