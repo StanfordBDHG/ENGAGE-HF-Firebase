@@ -121,15 +121,18 @@ service cloud.firestore {
       }
 
       function isAllowedUpdateWithinOrganization() {
-        return resource.data.type in ['patient']
-          ? isOwnerOf(resource.data.organization)
-          : isOwnerOrClinicianOf(resource.data.organization) && resource.data.type in ['clinician'];
+        return valueExists(resource.data, 'type') ? 
+          (
+            resource.data.type in ['patient']
+            ? isOwnerOf(resource.data.organization)
+            : isOwnerOrClinicianOf(resource.data.organization) && resource.data.type in ['clinician']
+          ) : false;
       }
 
       allow read: if isAdmin()
-        || (resource == null && isAuthenticated())
         || (request.auth != null && request.auth.uid == userId)
-        || isOwnerOrClinicianOf(resource.data.organization);
+        || (resource == null && isAuthenticated())
+        || (resource != null && valueExists(resource.data, 'organization') && isOwnerOrClinicianOf(resource.data.organization));
 
       allow create: if isAdmin()
         || (isUser(userId) && !valueExists(request.resource.data, 'organization') && !valueExists(request.resource.data, 'type'));
