@@ -54,15 +54,16 @@ export class DefaultHealthSummaryService implements HealthSummaryService {
       this.getVitals(userId, advanceDateByDays(date, -14), weightUnit),
     ])
 
-    const clinician =
-      patient?.content.clinician ?
-        await this.userService.getAuth(patient.content.clinician)
-      : undefined
+    const providerName =
+      patient?.content.providerName ??
+      (patient?.content.clinician ?
+        (await this.userService.getAuth(patient.content.clinician)).displayName
+      : undefined)
 
     return new HealthSummaryData({
       name: auth.displayName,
       dateOfBirth: patient?.content.dateOfBirth,
-      providerName: clinician?.displayName,
+      providerName: providerName,
       nextAppointment: nextAppointment?.content,
       recommendations: recommendations.map((doc) => doc.content),
       vitals: vitals,

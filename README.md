@@ -314,6 +314,8 @@ In this section, we describe all user-related data to be stored. The security ru
 |dateOfEnrollment|Date|-|The date when the invitation code was used to create this user.|
 |dateOfBirth|optional Date|-|The date when the user was born.|
 |genderIdentity|optional string|"female","male","transgender","nonBinary","preferNotToState"|The gender identity chosen when a patient redeemed the invitation.|
+|clinician|optional string|The identifier of the clinician assigned to a patient. For all other users, this property either is nonexistant or null.|
+|providerName|optional string|Text description of the provider of a patient. This value takes precedence over the `clinician` property during health summary generation. For all other users, this property either is nonexistant or null.|
 |organization|optional string|-|The id of the organization a clinician, patient or owner is associated with.|
 |invitationCode|string|-|The invitationCode to be used when logging in to the app for the first time.|
 |language|optional string|e.g. "en"|Following IETF BCP-47 / [FHIR ValueSet languages](https://hl7.org/fhir/R4B/valueset-languages.html).|
