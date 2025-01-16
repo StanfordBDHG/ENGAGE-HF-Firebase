@@ -21,6 +21,7 @@ export const userRegistrationInputConverter = new Lazy(
         organization: optionalish(z.string()),
         dateOfBirth: optionalish(dateConverter.schema),
         clinician: optionalish(z.string()),
+        providerName: optionalish(z.string()),
         receivesAppointmentReminders: optionalishDefault(z.boolean(), true),
         receivesInactivityReminders: optionalishDefault(z.boolean(), true),
         receivesMedicationUpdates: optionalishDefault(z.boolean(), true),
@@ -37,6 +38,7 @@ export const userRegistrationInputConverter = new Lazy(
         dateOfBirth:
           object.dateOfBirth ? dateConverter.encode(object.dateOfBirth) : null,
         clinician: object.clinician ?? null,
+        providerName: object.providerName ?? null,
         receivesAppointmentReminders: object.receivesAppointmentReminders,
         receivesInactivityReminders: object.receivesInactivityReminders,
         receivesMedicationUpdates: object.receivesMedicationUpdates,
@@ -73,6 +75,7 @@ export class UserRegistration {
 
   readonly dateOfBirth?: Date
   readonly clinician?: string
+  readonly providerName?: string
 
   readonly receivesAppointmentReminders: boolean
   readonly receivesInactivityReminders: boolean
@@ -104,6 +107,7 @@ export class UserRegistration {
     organization?: string
     dateOfBirth?: Date
     clinician?: string
+    providerName?: string
     receivesAppointmentReminders: boolean
     receivesInactivityReminders: boolean
     receivesMedicationUpdates: boolean
@@ -118,6 +122,7 @@ export class UserRegistration {
     this.organization = input.organization
     this.dateOfBirth = input.dateOfBirth
     this.clinician = input.clinician
+    this.providerName = input.providerName
     this.receivesAppointmentReminders = input.receivesAppointmentReminders
     this.receivesInactivityReminders = input.receivesInactivityReminders
     this.receivesMedicationUpdates = input.receivesMedicationUpdates
