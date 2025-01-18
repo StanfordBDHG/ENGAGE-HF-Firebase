@@ -7,9 +7,9 @@
 //
 
 import { UserType } from '@stanfordbdhg/engagehf-models'
-import { describeWithEmulators } from '../tests/functions/testEnvironment.js'
-import { enableUser } from './enableUser.js'
 import { expect } from 'chai'
+import { enableUser } from './enableUser.js'
+import { describeWithEmulators } from '../tests/functions/testEnvironment.js'
 
 describeWithEmulators('function: enableUser', (env) => {
   it('enables a disabled user', async () => {

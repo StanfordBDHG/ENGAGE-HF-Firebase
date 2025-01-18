@@ -85,7 +85,9 @@ export class Credential {
     try {
       this.claims = userClaimsSchema.partial().parse(authData.token)
     } catch (error: unknown) {
-      logger.error(`Credential.constructor: Failed to parse user claims due to: ${String(error)}.`)
+      logger.error(
+        `Credential.constructor: Failed to parse user claims due to: ${String(error)}.`,
+      )
       throw this.permissionDeniedError()
     }
     this.userId = authData.uid
