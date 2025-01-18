@@ -11,7 +11,7 @@ import {
   userClaimsSchema,
   UserType,
 } from '@stanfordbdhg/engagehf-models'
-import { https } from 'firebase-functions/v2'
+import { https, logger } from 'firebase-functions/v2'
 import { type AuthData } from 'firebase-functions/v2/tasks'
 
 enum UserRoleType {
@@ -84,7 +84,8 @@ export class Credential {
       )
     try {
       this.claims = userClaimsSchema.partial().parse(authData.token)
-    } catch {
+    } catch (error: unknown) {
+      logger.error(`Credential.constructor: Failed to parse user claims due to: ${String(error)}.`)
       throw this.permissionDeniedError()
     }
     this.userId = authData.uid
