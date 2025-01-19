@@ -310,6 +310,7 @@ In this section, we describe all user-related data to be stored. The security ru
 |Property|Type|Values|Comments|
 |-|-|-|-|
 |type|string|e.g. "admin", "owners", "clinician", "patient"|The type of the user.|
+|disabled|optional boolean|If set to `true`, the users looses permission to perform any action except reading its own data stored in `users/$userId$`.|
 |dateOfEnrollment|Date|-|The date when the invitation code was used to create this user.|
 |dateOfBirth|optional Date|-|The date when the user was born.|
 |genderIdentity|optional string|"female","male","transgender","nonBinary","preferNotToState"|The gender identity chosen when a patient redeemed the invitation.|

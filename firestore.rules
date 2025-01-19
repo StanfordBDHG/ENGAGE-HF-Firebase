@@ -1,8 +1,23 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{databaseId}/documents {
+    function valueExists(object, property) {
+      return (property in object) && object[property] != null;
+    }
+
+    function isEqualOptional(object0, property0, object1, property1) {
+      return valueExists(object0, property0)
+        ? (valueExists(object1, property1) && object0[property0] == object1[property1])
+        : !valueExists(object1, property1);
+    }
+
     function isAuthenticated() {
-      return request.auth != null && ('type' in request.auth.token);
+      return request.auth != null 
+        && ('type' in request.auth.token)
+        && (
+          !valueExists(request.auth.token, 'disabled')
+          || request.auth.token.disabled == false
+        );
     }
 
     function isAdmin() {
@@ -40,12 +55,6 @@ service cloud.firestore {
 
     function getInvitation(invitationId) {
       return get(/databases/$(databaseId)/documents/invitations/$(invitationId));
-    }
-
-    function isEqualOptional(object0, property0, object1, property1) {
-      return (property0 in object0) 
-        ? ((property1 in object1) && object0[property0] == object1[property1])
-        : !(property1 in object1);
     }
 
     match /invitations/{invitationId} {
@@ -107,22 +116,26 @@ service cloud.firestore {
     match /users/{userId} {
       function securityRelatedFieldsDidNotChange() {
         return isEqualOptional(request.resource.data, 'type', resource.data, 'type')
+          && isEqualOptional(request.resource.data, 'disabled', resource.data, 'disabled')
           && isEqualOptional(request.resource.data, 'organization', resource.data, 'organization');
       }
 
       function isAllowedUpdateWithinOrganization() {
-        return resource.data.type in ['patient']
-          ? isOwnerOf(resource.data.organization)
-          : isOwnerOrClinicianOf(resource.data.organization) && resource.data.type in ['clinician'];
+        return valueExists(resource.data, 'type') ? 
+          (
+            resource.data.type in ['patient']
+            ? isOwnerOf(resource.data.organization)
+            : isOwnerOrClinicianOf(resource.data.organization) && resource.data.type in ['clinician']
+          ) : false;
       }
 
       allow read: if isAdmin()
-        || (resource == null && isAuthenticated())
         || (request.auth != null && request.auth.uid == userId)
-        || isOwnerOrClinicianOf(resource.data.organization);
+        || (resource == null && isAuthenticated())
+        || (resource != null && valueExists(resource.data, 'organization') && isOwnerOrClinicianOf(resource.data.organization));
 
       allow create: if isAdmin()
-        || (isUser(userId) && !('organization' in request.resource.data) && !('type' in request.resource.data));
+        || (isUser(userId) && !valueExists(request.resource.data, 'organization') && !valueExists(request.resource.data, 'type'));
 
       allow update: if isAdmin()
         || (securityRelatedFieldsDidNotChange() && (isUser(userId) || isAllowedUpdateWithinOrganization()));

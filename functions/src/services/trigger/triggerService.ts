@@ -786,6 +786,7 @@ export class TriggerService {
             code: '<your admin email>',
             user: new UserRegistration({
               type: UserType.admin,
+              disabled: false,
               receivesAppointmentReminders: false,
               receivesInactivityReminders: false,
               receivesMedicationUpdates: false,

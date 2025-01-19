@@ -18,6 +18,7 @@ export const userRegistrationInputConverter = new Lazy(
     new SchemaConverter({
       schema: z.object({
         type: z.nativeEnum(UserType),
+        disabled: optionalishDefault(z.boolean(), false),
         organization: optionalish(z.string()),
         dateOfBirth: optionalish(dateConverter.schema),
         clinician: optionalish(z.string()),
@@ -34,6 +35,7 @@ export const userRegistrationInputConverter = new Lazy(
       }),
       encode: (object) => ({
         type: object.type,
+        disabled: object.disabled,
         organization: object.organization ?? null,
         dateOfBirth:
           object.dateOfBirth ? dateConverter.encode(object.dateOfBirth) : null,
@@ -62,15 +64,19 @@ export const userRegistrationConverter = new Lazy(
     }),
 )
 
-export interface UserClaims {
-  type: UserType
-  organization?: string
-}
+export const userClaimsSchema = z.object({
+  type: z.nativeEnum(UserType),
+  organization: optionalish(z.string()),
+  disabled: optionalishDefault(z.boolean(), false),
+})
+
+export type UserClaims = z.output<typeof userClaimsSchema>
 
 export class UserRegistration {
   // Stored Properties
 
   readonly type: UserType
+  readonly disabled: boolean
   readonly organization?: string
 
   readonly dateOfBirth?: Date
@@ -93,6 +99,7 @@ export class UserRegistration {
   get claims(): UserClaims {
     const result: UserClaims = {
       type: this.type,
+      disabled: this.disabled,
     }
     if (this.organization !== undefined) {
       result.organization = this.organization
@@ -104,6 +111,7 @@ export class UserRegistration {
 
   constructor(input: {
     type: UserType
+    disabled: boolean
     organization?: string
     dateOfBirth?: Date
     clinician?: string
@@ -119,6 +127,7 @@ export class UserRegistration {
     timeZone?: string
   }) {
     this.type = input.type
+    this.disabled = input.disabled
     this.organization = input.organization
     this.dateOfBirth = input.dateOfBirth
     this.clinician = input.clinician

@@ -127,6 +127,7 @@ export class EmulatorTestEnvironment {
   async createUser(
     options: {
       type: UserType
+      disabled?: boolean
       organization?: string
       clinician?: string
       dateOfEnrollment?: Date
@@ -145,6 +146,7 @@ export class EmulatorTestEnvironment {
     await this.collections.users.doc(authUser.uid).set(
       new User({
         type: options.type,
+        disabled: options.disabled ?? false,
         organization: options.organization,
         dateOfEnrollment: options.dateOfEnrollment ?? new Date(),
         clinician: options.clinician,

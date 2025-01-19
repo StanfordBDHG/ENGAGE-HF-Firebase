@@ -28,6 +28,7 @@ describe('firestore.rules: users/{userId}', () => {
   const patientId = 'mockPatient'
   const userId = 'mockUser'
   const unknownId = 'mockUnknown'
+  const disabledUserId = 'disabledMockUser'
 
   let testEnvironment: RulesTestEnvironment
   let adminFirestore: firebase.firestore.Firestore
@@ -35,6 +36,7 @@ describe('firestore.rules: users/{userId}', () => {
   let clinicianFirestore: firebase.firestore.Firestore
   let patientFirestore: firebase.firestore.Firestore
   let userFirestore: firebase.firestore.Firestore
+  let disabledUserFirestore: firebase.firestore.Firestore
 
   before(async () => {
     testEnvironment = await initializeTestEnvironment({
@@ -72,6 +74,14 @@ describe('firestore.rules: users/{userId}', () => {
       .firestore()
 
     userFirestore = testEnvironment.authenticatedContext(userId, {}).firestore()
+
+    disabledUserFirestore = testEnvironment
+      .authenticatedContext(disabledUserId, {
+        type: UserType.patient,
+        organization: organizationId,
+        disabled: true,
+      })
+      .firestore()
   })
 
   beforeEach(async () => {
@@ -91,6 +101,11 @@ describe('firestore.rules: users/{userId}', () => {
         .doc(`users/${patientId}`)
         .set({ type: UserType.patient, organization: organizationId })
       await firestore.doc(`users/${userId}`).set({})
+      await firestore.doc(`users/${disabledUserId}`).set({
+        type: UserType.patient,
+        organization: organizationId,
+        disabled: true,
+      })
     })
   })
 
@@ -99,45 +114,57 @@ describe('firestore.rules: users/{userId}', () => {
   })
 
   it('gets users/{userId}', async () => {
-    console.log('admin')
     await assertSucceeds(adminFirestore.doc(`users/${adminId}`).get())
     await assertSucceeds(adminFirestore.doc(`users/${ownerId}`).get())
     await assertSucceeds(adminFirestore.doc(`users/${clinicianId}`).get())
     await assertSucceeds(adminFirestore.doc(`users/${patientId}`).get())
     await assertSucceeds(adminFirestore.doc(`users/${userId}`).get())
     await assertSucceeds(adminFirestore.doc(`users/${unknownId}`).get())
+    await assertSucceeds(adminFirestore.doc(`users/${disabledUserId}`).get())
 
-    console.log('owner')
     await assertFails(ownerFirestore.doc(`users/${adminId}`).get())
     await assertSucceeds(ownerFirestore.doc(`users/${ownerId}`).get())
     await assertSucceeds(ownerFirestore.doc(`users/${clinicianId}`).get())
     await assertSucceeds(ownerFirestore.doc(`users/${patientId}`).get())
     await assertFails(ownerFirestore.doc(`users/${userId}`).get())
     await assertSucceeds(ownerFirestore.doc(`users/${unknownId}`).get())
+    await assertSucceeds(ownerFirestore.doc(`users/${disabledUserId}`).get())
 
-    console.log('clinician')
     await assertFails(clinicianFirestore.doc(`users/${adminId}`).get())
     await assertSucceeds(clinicianFirestore.doc(`users/${ownerId}`).get())
     await assertSucceeds(clinicianFirestore.doc(`users/${clinicianId}`).get())
     await assertSucceeds(clinicianFirestore.doc(`users/${patientId}`).get())
     await assertFails(clinicianFirestore.doc(`users/${userId}`).get())
     await assertSucceeds(clinicianFirestore.doc(`users/${unknownId}`).get())
+    await assertSucceeds(
+      clinicianFirestore.doc(`users/${disabledUserId}`).get(),
+    )
 
-    console.log('patient')
     await assertFails(patientFirestore.doc(`users/${adminId}`).get())
     await assertFails(patientFirestore.doc(`users/${ownerId}`).get())
     await assertFails(patientFirestore.doc(`users/${clinicianId}`).get())
     await assertSucceeds(patientFirestore.doc(`users/${patientId}`).get())
     await assertFails(patientFirestore.doc(`users/${userId}`).get())
     await assertSucceeds(patientFirestore.doc(`users/${unknownId}`).get())
+    await assertFails(patientFirestore.doc(`users/${disabledUserId}`).get())
 
-    console.log('user')
     await assertFails(userFirestore.doc(`users/${adminId}`).get())
     await assertFails(userFirestore.doc(`users/${ownerId}`).get())
     await assertFails(userFirestore.doc(`users/${clinicianId}`).get())
     await assertFails(userFirestore.doc(`users/${patientId}`).get())
     await assertSucceeds(userFirestore.doc(`users/${userId}`).get())
     await assertFails(userFirestore.doc(`users/${unknownId}`).get())
+    await assertFails(userFirestore.doc(`users/${disabledUserId}`).get())
+
+    await assertFails(disabledUserFirestore.doc(`users/${adminId}`).get())
+    await assertFails(disabledUserFirestore.doc(`users/${ownerId}`).get())
+    await assertFails(disabledUserFirestore.doc(`users/${clinicianId}`).get())
+    await assertFails(disabledUserFirestore.doc(`users/${patientId}`).get())
+    await assertFails(disabledUserFirestore.doc(`users/${userId}`).get())
+    await assertFails(disabledUserFirestore.doc(`users/${unknownId}`).get())
+    await assertSucceeds(
+      disabledUserFirestore.doc(`users/${disabledUserId}`).get(),
+    )
   })
 
   it('lists users', async () => {
@@ -211,6 +238,9 @@ describe('firestore.rules: users/{userId}', () => {
       await environment.firestore().doc(`users/${userId}`).delete()
     })
     await assertFails(userFirestore.doc(`users/${userId}`).set({}))
+    await assertFails(
+      disabledUserFirestore.doc(`users/${disabledUserId}`).set({}),
+    )
   })
 
   it('updates users/{userId} as admin', async () => {
