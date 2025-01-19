@@ -64,6 +64,7 @@ export class MockUserService implements UserService {
       content: new Invitation({
         user: new UserRegistration({
           type: UserType.patient,
+          disabled: false,
           dateOfBirth: new Date('1970-01-02'),
           clinician: 'mockPatient',
           receivesAppointmentReminders: true,
@@ -127,6 +128,14 @@ export class MockUserService implements UserService {
 
   // Methods - User
 
+  async disableUser(userId: string): Promise<void> {
+    return
+  }
+
+  async enableUser(userId: string): Promise<void> {
+    return
+  }
+
   async getAllOwners(organizationId: string): Promise<Array<Document<User>>> {
     return []
   }
@@ -142,6 +151,7 @@ export class MockUserService implements UserService {
       lastUpdate: new Date(),
       content: new User({
         type: UserType.clinician,
+        disabled: false,
         dateOfBirth: new Date('1970-01-02'),
         clinician: 'mockClinician',
         lastActiveDate: new Date('2024-04-04'),

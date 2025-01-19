@@ -69,6 +69,7 @@ describe('DatabaseUserService', () => {
       expect(userData?.dateOfEnrollment).to.exist
       expect(userData?.claims).to.deep.equal({
         type: UserType.admin,
+        disabled: false,
       })
     })
 
@@ -114,6 +115,7 @@ describe('DatabaseUserService', () => {
       expect(userData?.claims).to.deep.equal({
         type: UserType.clinician,
         organization: 'mockOrganization',
+        disabled: false,
       })
     })
 
@@ -161,6 +163,7 @@ describe('DatabaseUserService', () => {
       expect(userData?.claims).to.deep.equal({
         type: UserType.patient,
         organization: 'mockOrganization',
+        disabled: false,
       })
     })
   })
