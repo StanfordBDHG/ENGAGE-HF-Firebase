@@ -186,6 +186,15 @@ export class TriggerService {
     }
 
     try {
+      const messageSevice = this.factory.message()
+      await messageSevice.completeMessages(userId, UserMessageType.inactive)
+    } catch (error) {
+      logger.error(
+        `TriggerService.userObservationWritten(${userId}, ${collection}): Completing inactive messages failed due to ${String(error)}`,
+      )
+    }
+
+    try {
       await this.updateRecommendationsForUser(userId)
     } catch (error) {
       logger.error(
