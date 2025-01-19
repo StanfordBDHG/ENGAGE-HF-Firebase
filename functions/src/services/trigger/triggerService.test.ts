@@ -244,7 +244,7 @@ describeWithEmulators('TriggerService', (env) => {
       expect(vitalsMessage?.reference).to.be.undefined
       expect(vitalsMessage?.completionDate).to.be.undefined
       const inactiveMessage = patientMessagesData
-        .filter((message) => message.type === UserMessageType.vitals)
+        .filter((message) => message.type === UserMessageType.inactive)
         .at(0)
       expect(inactiveMessage).to.exist
       expect(inactiveMessage?.reference).to.be.undefined
@@ -273,6 +273,68 @@ describeWithEmulators('TriggerService', (env) => {
           .at(0)?.ref.path,
       )
       expect(ownerMessage?.completionDate).to.be.undefined
+    })
+
+    it('should complete inactivity messages', async () => {
+      const clinicianId = await env.createUser({
+        type: UserType.clinician,
+        organization: 'stanford',
+      })
+
+      const patientId = await env.createUser({
+        type: UserType.patient,
+        organization: 'stanford',
+        clinician: clinicianId,
+        dateOfEnrollment: advanceDateByDays(new Date(), -2),
+        lastActiveDate: advanceDateByDays(new Date(), -8),
+      })
+
+      const triggerService = env.factory.trigger()
+      await triggerService.everyMorning()
+
+      const patientMessages = await env.collections
+        .userMessages(patientId)
+        .get()
+      expect(patientMessages.docs).to.have.length(2)
+      const patientMessagesData = patientMessages.docs.map((doc) => doc.data())
+      const vitalsMessage = patientMessagesData
+        .filter((message) => message.type === UserMessageType.vitals)
+        .at(0)
+      expect(vitalsMessage).to.exist
+      expect(vitalsMessage?.reference).to.be.undefined
+      expect(vitalsMessage?.completionDate).to.be.undefined
+      const inactiveMessage = patientMessagesData
+        .filter((message) => message.type === UserMessageType.inactive)
+        .at(0)
+      expect(inactiveMessage).to.exist
+      expect(inactiveMessage?.reference).to.be.undefined
+      expect(inactiveMessage?.completionDate).to.be.undefined
+
+      await triggerService.userObservationWritten(
+        patientId,
+        UserObservationCollection.heartRate,
+      )
+
+      const updatedPatientMessages = await env.collections
+        .userMessages(patientId)
+        .get()
+      expect(patientMessages.docs).to.have.length(2)
+      const updatedPatientMessagesData = updatedPatientMessages.docs.map(
+        (doc) => doc.data(),
+      )
+      const updatedVitalsMessage = updatedPatientMessagesData
+        .filter((message) => message.type === UserMessageType.vitals)
+        .at(0)
+      expect(updatedVitalsMessage).to.exist
+      expect(updatedVitalsMessage?.reference).to.be.undefined
+      expect(updatedVitalsMessage?.completionDate).to.be.undefined
+
+      const updatedInactiveMessage = updatedPatientMessagesData
+        .filter((message) => message.type === UserMessageType.inactive)
+        .at(0)
+      expect(updatedInactiveMessage).to.exist
+      expect(updatedInactiveMessage?.reference).to.be.undefined
+      expect(updatedInactiveMessage?.completionDate).to.exist
     })
 
     it('create no message about inactivity', async () => {
