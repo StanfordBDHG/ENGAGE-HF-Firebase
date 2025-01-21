@@ -53,6 +53,20 @@
         "type": "group",
         "item": [
           {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                "valueCodeableConcept": {
+                  "coding": [
+                    {
+                      "system": "http://hl7.org/fhir/questionnaire-item-control",
+                      "code": "radio-button",
+                      "display": "Radio Button"
+                    }
+                  ]
+                }
+              }
+            ],
             "linkId": "a459b804-35bf-4792-f1eb-0b52c4e176e1",
             "type": "choice",
             "text": "Showering/bathing",
@@ -109,6 +123,20 @@
             ]
           },
           {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                "valueCodeableConcept": {
+                  "coding": [
+                    {
+                      "system": "http://hl7.org/fhir/questionnaire-item-control",
+                      "code": "radio-button",
+                      "display": "Radio Button"
+                    }
+                  ]
+                }
+              }
+            ],
             "linkId": "cf9c5031-1ed5-438a-fc7d-dc69234015a0",
             "type": "choice",
             "text": "Walking 1 block on level ground",
@@ -165,6 +193,20 @@
             ]
           },
           {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                "valueCodeableConcept": {
+                  "coding": [
+                    {
+                      "system": "http://hl7.org/fhir/questionnaire-item-control",
+                      "code": "radio-button",
+                      "display": "Radio Button"
+                    }
+                  ]
+                }
+              }
+            ],
             "linkId": "1fad0f81-b2a9-4c8f-9a78-4b2a5d7aef07",
             "type": "choice",
             "text": "Hurrying or jogging (as if to catch a bus)",
@@ -225,6 +267,20 @@
         "text": "Heart failure affects different people in different ways. Some feel shortness of breath while others feel fatigue. Please indicate how much you are limited by heart failure (shortness of breath or fatigue) in your ability to do the following activities over the past 2 weeks."
       },
       {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/questionnaire-item-control",
+                  "code": "radio-button",
+                  "display": "Radio Button"
+                }
+              ]
+            }
+          }
+        ],
         "linkId": "692bda7d-a616-43d1-8dc6-8291f6460ab2",
         "type": "choice",
         "text": "Over the past 2 weeks, how many times did you have swelling in your feet, ankles or legs when you woke up in the morning?",
@@ -273,6 +329,20 @@
         ]
       },
       {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/questionnaire-item-control",
+                  "code": "radio-button",
+                  "display": "Radio Button"
+                }
+              ]
+            }
+          }
+        ],
         "linkId": "b1734b9e-1d16-4238-8556-5ae3fa0ba913",
         "type": "choice",
         "text": "Over the past 2 weeks, on average, how many times has fatigue limited your ability to do what you wanted",
@@ -337,6 +407,20 @@
         ]
       },
       {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/questionnaire-item-control",
+                  "code": "radio-button",
+                  "display": "Radio Button"
+                }
+              ]
+            }
+          }
+        ],
         "linkId": "57f37fb3-a0ad-4b1f-844e-3f67d9b76946",
         "type": "choice",
         "text": "Over the past 2 weeks, on average, how many times has shortness of breath limited your ability to do what you wanted",
@@ -401,6 +485,20 @@
         ]
       },
       {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/questionnaire-item-control",
+                  "code": "radio-button",
+                  "display": "Radio Button"
+                }
+              ]
+            }
+          }
+        ],
         "linkId": "396164df-d045-4c56-d710-513297bdc6f2",
         "type": "choice",
         "text": "Over the past 2 weeks, on average, how many times have you been forced to sleep sitting up in a chair or with at least 3 pillows to prop you up because of shortness of breath?",
@@ -449,6 +547,20 @@
         ]
       },
       {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/questionnaire-item-control",
+                  "code": "radio-button",
+                  "display": "Radio Button"
+                }
+              ]
+            }
+          }
+        ],
         "linkId": "75e3f62e-e37d-48a2-f4d9-af2db8922da0",
         "type": "choice",
         "text": "Over the past 2 weeks, how much has your heart failure limited your enjoyment of life?",
@@ -497,6 +609,20 @@
         ]
       },
       {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/questionnaire-item-control",
+                  "code": "radio-button",
+                  "display": "Radio Button"
+                }
+              ]
+            }
+          }
+        ],
         "linkId": "fce3a16e-c6d8-4bac-8ab5-8f4aee4adc08",
         "type": "choice",
         "text": "If you had to spend the rest of your life with your heart failure the way it is right now, how would you feel about this?",
@@ -549,6 +675,20 @@
         "type": "group",
         "item": [
           {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                "valueCodeableConcept": {
+                  "coding": [
+                    {
+                      "system": "http://hl7.org/fhir/questionnaire-item-control",
+                      "code": "radio-button",
+                      "display": "Radio Button"
+                    }
+                  ]
+                }
+              }
+            ],
             "linkId": "8b022e69-127d-4447-8190-39ac645e60e1",
             "type": "choice",
             "text": "Hobbies, recreational activities",
@@ -605,6 +745,20 @@
             ]
           },
           {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                "valueCodeableConcept": {
+                  "coding": [
+                    {
+                      "system": "http://hl7.org/fhir/questionnaire-item-control",
+                      "code": "radio-button",
+                      "display": "Radio Button"
+                    }
+                  ]
+                }
+              }
+            ],
             "linkId": "1eee7259-da1c-4cba-80a9-e67e684573a1",
             "type": "choice",
             "text": "Working or doing household chores",
@@ -661,6 +815,20 @@
             ]
           },
           {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                "valueCodeableConcept": {
+                  "coding": [
+                    {
+                      "system": "http://hl7.org/fhir/questionnaire-item-control",
+                      "code": "radio-button",
+                      "display": "Radio Button"
+                    }
+                  ]
+                }
+              }
+            ],
             "linkId": "883a22a8-2f6e-4b41-84b7-0028ed543192",
             "type": "choice",
             "text": "Visiting family or friends out of your home",
@@ -721,6 +889,20 @@
         "text": "How much does your heart failure affect your lifestyle? Please indicate how your heart failure may have limited your participation in the following activities over the past 2 weeks."
       },
       {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/questionnaire-item-control",
+                  "code": "radio-button",
+                  "display": "Radio Button"
+                }
+              ]
+            }
+          }
+        ],
         "linkId": "24108967-2ff3-40d0-c54f-a7b97bb84d05",
         "type": "choice",
         "text": "In the last two weeks, how much has your dizziness affected you?",
