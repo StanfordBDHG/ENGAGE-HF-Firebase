@@ -15,6 +15,7 @@ export const userSeedingOptionsSchema = z.object({
     uid: optionalish(z.string()),
     email: z.string(),
     password: z.string(),
+    displayName: z.string(),
   }),
   user: optionalish(z.lazy(() => userConverter.value.schema)),
   collections: optionalish(z.record(z.record(z.any()))),
