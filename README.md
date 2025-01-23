@@ -484,12 +484,12 @@ Diuretics, if currently present as medication request, will be shown as a recomm
 |title|LocalizedText|e.g. "Carvedilol"|The name of the medication (not the tablet), e.g. coming from `medications/1998`.|
 |subtitle|LocalizedText|e.g. "Beta Blockers"|The medication class name, e.g. coming from `medicationClasses/0`.|
 |description|LocalizedText|e.g. "Personal target dose reached. No action required."|The explanation of the recommendation, displayed along with a summary of the medication.|
-|type|[Medication Recommendation Type](#Medication-Recommendation-Type)|e.g. "personalTargetDoseReached"|See [Medication Recommendation Type](#Medication-Recommendation-Type) for more information.|
+|type|[Medication Recommendation Type](#medication-recommendation-type)|e.g. "personalTargetDoseReached"|See [Medication Recommendation Type](#medication-recommendation-type) for more information.|
 |videoPath|optional string|e.g. `videoSections/1/videos/3`|This is the video to show when the recommendation is tapped. The clients may want to hide the icon to get to the video when this value is not present.|
-|dosageInformation|DosageInformation|See [Dosage Information](#Dosage-Information)|A description of the current, minimum, and target doses for a given medication. 
+|dosageInformation|DosageInformation|See description below|A description of the current, minimum, and target doses for a given medication. 
 When the patient is not yet taking the medication, its currentSchedule will be an empty list.|
 
-The `DosageInformation` property contains the following information:
+The `dosageInformation` property contains the following information:
 
 |Property|Type|Values|Comments|
 |-|-|-|-|
