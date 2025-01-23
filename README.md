@@ -698,7 +698,7 @@ An admin may create invitations for any user, an owner or clinician may only cre
 |auth>email|optional string|-|An email address to use for the user. This is non-optional for invitations for owners and clinicians, since this email address is used as the invitation code for SSO.|
 |auth>phoneNumber|optional string|-|A phone number to use for the user.|
 |auth>photoURL|optional string|-|A photo URL to use for the user.|
-|user|object|-|A prepared user object to use for the enrollment of the user when using the invitation. It may contain the same properties as in the [`users`](#users%2F%24userid%24) collection, except for `dateOfEnrollment` and `invitationCode`.|
+|user|object|-|A prepared user object to use for the enrollment of the user when using the invitation. It may contain the same properties as in the [`users`](#users) collection, except for `dateOfEnrollment` and `invitationCode`.|
 
 #### Output
 
