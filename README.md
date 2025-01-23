@@ -486,10 +486,10 @@ Diuretics, if currently present as medication request, will be shown as a recomm
 |description|LocalizedText|e.g. "Personal target dose reached. No action required."|The explanation of the recommendation, displayed along with a summary of the medication.|
 |type|[Medication Recommendation Type](#medication-recommendation-type)|e.g. "personalTargetDoseReached"|See [Medication Recommendation Type](#medication-recommendation-type) for more information.|
 |videoPath|optional string|e.g. `videoSections/1/videos/3`|This is the video to show when the recommendation is tapped. The clients may want to hide the icon to get to the video when this value is not present.|
-|dosageInformation|DosageInformation|See [Dosage Information](#dosage-information)|A description of the current, minimum, and target doses for a given medication. 
+|dosageInformation|DosageInformation|See description below|A description of the current, minimum, and target doses for a given medication. 
 When the patient is not yet taking the medication, its currentSchedule will be an empty list.|
 
-The `DosageInformation` property contains the following information:
+The `dosageInformation` property contains the following information:
 
 |Property|Type|Values|Comments|
 |-|-|-|-|
@@ -698,7 +698,7 @@ An admin may create invitations for any user, an owner or clinician may only cre
 |auth>email|optional string|-|An email address to use for the user. This is non-optional for invitations for owners and clinicians, since this email address is used as the invitation code for SSO.|
 |auth>phoneNumber|optional string|-|A phone number to use for the user.|
 |auth>photoURL|optional string|-|A photo URL to use for the user.|
-|user|object|-|A prepared user object to use for the enrollment of the user when using the invitation. It may contain the same properties as in the [`users`](#%2F%0Ausers%2F%24userId%24%0A) collection, except for `dateOfEnrollment` and `invitationCode`.|
+|user|object|-|A prepared user object to use for the enrollment of the user when using the invitation. It may contain the same properties as in the [`users`](#users%2F%24userId%24%0A) collection, except for `dateOfEnrollment` and `invitationCode`.|
 
 #### Output
 
