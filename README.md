@@ -484,9 +484,9 @@ Diuretics, if currently present as medication request, will be shown as a recomm
 |title|LocalizedText|e.g. "Carvedilol"|The name of the medication (not the tablet), e.g. coming from `medications/1998`.|
 |subtitle|LocalizedText|e.g. "Beta Blockers"|The medication class name, e.g. coming from `medicationClasses/0`.|
 |description|LocalizedText|e.g. "Personal target dose reached. No action required."|The explanation of the recommendation, displayed along with a summary of the medication.|
-|type|[Medication Recommendation Type](#Medication-Recommendation-Type)|e.g. "personalTargetDoseReached"|See [Medication Recommendation Type](#Medication-Recommendation-Type) for more information.|
+|type|[Medication Recommendation Type](README.md#Medication-Recommendation-Type)|e.g. "personalTargetDoseReached"|See [Medication Recommendation Type](README.md#Medication-Recommendation-Type) for more information.|
 |videoPath|optional string|e.g. `videoSections/1/videos/3`|This is the video to show when the recommendation is tapped. The clients may want to hide the icon to get to the video when this value is not present.|
-|dosageInformation|DosageInformation|See [Dosage Information](#Dosage-Information)|A description of the current, minimum, and target doses for a given medication. 
+|dosageInformation|DosageInformation|See [Dosage Information](README.md#Dosage-Information)|A description of the current, minimum, and target doses for a given medication. 
 When the patient is not yet taking the medication, its currentSchedule will be an empty list.|
 
 The `DosageInformation` property contains the following information:
@@ -698,7 +698,7 @@ An admin may create invitations for any user, an owner or clinician may only cre
 |auth>email|optional string|-|An email address to use for the user. This is non-optional for invitations for owners and clinicians, since this email address is used as the invitation code for SSO.|
 |auth>phoneNumber|optional string|-|A phone number to use for the user.|
 |auth>photoURL|optional string|-|A photo URL to use for the user.|
-|user|object|-|A prepared user object to use for the enrollment of the user when using the invitation. It may contain the same properties as in the [`users`](#users) collection, except for `dateOfEnrollment` and `invitationCode`.|
+|user|object|-|A prepared user object to use for the enrollment of the user when using the invitation. It may contain the same properties as in the [`users`](README.md#%2F%0Ausers%2F%24userId%24%0A) collection, except for `dateOfEnrollment` and `invitationCode`.|
 
 #### Output
 
@@ -746,7 +746,7 @@ This function may only be called by admins. On emulators, this function can easi
 |date|string|-|An ISO 8601 formatted string of the date to seed data relative to. May be omitted, which will generate data relative to now.|
 |only|list of string|e.g. ["users","invitations"]|Allows to limit seeding data to the provided collections.|
 |onlyUserCollections|list of string|e.g. ["appointments","bodyWeightObservations"]|Allows to limit the creation of user collections for the created users to the provided collections.|
-|staticData|object|-|Allows to seed static data without calling [`updateStaticData`](#updatestaticdata) separately. If not provided, static data will not be updated.|
+|staticData|object|-|Allows to seed static data without calling [`updateStaticData`](README.md#updatestaticdata) separately. If not provided, static data will not be updated.|
 |userData|list of object|-|Allows to seed user collections to existing users.|
 |userData[x]>userId|string|-|The userId for the user to create seeding data for.|
 |userData[x]>only|list of string|-|The user collections to create seeding data for. If not provided, all available collections will be seeded.|
@@ -806,7 +806,7 @@ This function may be called by admins (for any patient), owners/clinicians (for 
 |Property|Type|Values|Comments|
 |-|-|-|-|
 |userId|string|-|The patient's user id. Needs to be specified, even if a patient is requesting the health summary for themselves.|
-|language|optional string|e.g. 'en-US'|See [`LocalizedText`](#localizedtext) for specification.|
+|language|optional string|e.g. 'en-US'|See [`LocalizedText`](README.md#LocalizedText) for specification.|
 |weightUnit|optional string|e.g. '[lb_av]'|A loinc code for the weight unit to be used during generation of the health summary PDF|
 
 #### Output
@@ -834,7 +834,7 @@ If a notification token could not be generated on the device (e.g. due to missin
 |osVersion|optional string|'15.4.3'|The OS version of the device using semantic versioning separated by dots. Minor and patch version may be omitted.|
 |appVersion|optional string|'1.0.1'|The app version as shown in the App Store or Play Store using semantic versioning. Minor and patch version may be omitted.|
 |appBuild|optional string|'43'|The app build version as used internally to identify individual builds within the same marketing version (i.e. the one shown in App Store / Play Store).|
-|language|optional string|'en-US'|The language and region setting as specified for [`LocalizedText`](#localizedtext).|
+|language|optional string|'en-US'|The language and region setting as specified for [`LocalizedText`](README.md#LocalizedText).|
 |timeZone|optional string|e.g. "America/Los_Angeles"|The value needs to correspond to an identifier from [TZDB](https://nodatime.org/TimeZones). It must not be an offset to UTC/GMT, since that wouldn't work well with daylight-savings (even if there is no daylight-savings time at that location). Also, don't use common abbreviations like PST, PDT, CEST, etc (they may be ambiguous, e.g. CST). If the timeZone is unknown, then "America/Los_Angeles" should be used.|
 
 #### Output
