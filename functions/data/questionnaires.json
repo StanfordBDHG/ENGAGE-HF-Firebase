@@ -51,6 +51,21 @@
       {
         "linkId": "c0b3bef6-1e2d-4621-d82e-b73069574dc4",
         "type": "group",
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/questionnaire-item-control",
+                  "code": "page",
+                  "display": "Page"
+                }
+              ],
+              "text": "Page"
+            }
+          }
+        ],
         "item": [
           {
             "extension": [
@@ -673,6 +688,21 @@
       {
         "linkId": "8649bc8c-f908-487d-87a4-a97106b1a4c3",
         "type": "group",
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/questionnaire-item-control",
+                  "code": "page",
+                  "display": "Page"
+                }
+              ],
+              "text": "Page"
+            }
+          }
+        ],
         "item": [
           {
             "extension": [
