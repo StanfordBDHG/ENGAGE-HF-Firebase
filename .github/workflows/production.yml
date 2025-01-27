@@ -31,29 +31,14 @@ jobs:
       environment: production
   publishpackage:
     name: Publish Package
-    runs-on: ubuntu-latest
+    uses: StanfordBDHG/.github/.github/workflows/npm-publish-package.yml@v2
     permissions:
       contents: read
       id-token: write
       packages: write
-    defaults:
-      run:
-        working-directory: ./functions/models
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22.x'
-          cache-dependency-path: ./functions/models/package-lock.json
-          registry-url: 'https://registry.npmjs.org'
-          scope: '@stanfordbdhg'
-      - name: Clean Install
-        run: npm ci
-      - name: Set version
-        run: npm version ${{ github.event.release.tag_name }}
-      - name: Build
-        run: npm run build
-      - name: Publish
-        run: npm publish --provenance --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+    secrets:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+    with:
+      packageVersion: ${{ github.event.release.tag_name }}
+      cacheDependencyPath: ./functions/models/package-lock.json
+      workingDirectory: ./functions/models
