@@ -10,4 +10,5 @@
 
 export namespace Flags {
   export const isEmulator = process.env.FUNCTIONS_EMULATOR === 'true'
+  export const requireInvitationOrganizationToMatchSsoProviderId = false
 }

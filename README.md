@@ -242,8 +242,8 @@ Based on the [Extension](https://hl7.org/fhir/R4B/extensibility.html#Extension) 
 |Property|Type|Values|Comments|
 |-|-|-|-|
 |medicationClass|string|-|A `medicationClassId` referring to a medicationClass specified in /medicationClasses/$medicationClassId$. One medication object may contain multiple medicationClass extension properties.|
-|minimumDailyDose|[SimpleQuantity](https://www.hl7.org/fhir/r4b/datatypes.html#SimpleQuantity)|-|Unit: mg/day. Occurs exactly once. Multi-ingredient tablets contain an array of double rather than a double.|
-|targetDailyDose|[SimpleQuantity](https://www.hl7.org/fhir/r4b/datatypes.html#SimpleQuantity)|-|Unit: mg/day. Occurs exactly once. Multi-ingredient tablets contain an array of double rather than a double.|
+|minimumDailyDose|[SimpleQuantity](https://www.hl7.org/fhir/R4B/datatypes.html#SimpleQuantity)|-|Unit: mg/day. Occurs exactly once. Multi-ingredient tablets contain an array of double rather than a double.|
+|targetDailyDose|[SimpleQuantity](https://www.hl7.org/fhir/R4B/datatypes.html#SimpleQuantity)|-|Unit: mg/day. Occurs exactly once. Multi-ingredient tablets contain an array of double rather than a double.|
 
 #### medications/$medicationId$/drugs/$drugId$
 
