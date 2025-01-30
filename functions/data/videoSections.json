@@ -10,13 +10,13 @@
     "videos": [
       {
         "title": "Welcome Video",
-        "youtubeId": "y2ziZVWossE",
+        "youtubeId": "EcwB48zjGXM",
         "orderIndex": 1,
         "description": "The ENGAGE-HF app helps you and your care team track your heart and your heart failure medicines.  Every day, measure your blood pressure and weight and check for messages. Every two weeks, fill out a survey about your symptoms and receive a summary of your heart health and your medicines. This summary will be shared with your care team when there are opportunities to improve your meds and before your visits. This information will help them know how you have been doing. You can also review these educational videos to learn how to best care for your heart."
       },
       {
         "title": "How to Install the App and Connect Omron Devices",
-        "youtubeId": "VUImvk3CNik",
+        "youtubeId": "wW03MCNngGA",
         "orderIndex": 2,
         "description": "This video contains information about how to connect your blood pressure cuff and scale to the ENGAGE-HF app."
       }
@@ -35,7 +35,7 @@
           "en": "Importance of Heart Meds",
           "de": "Wichtigkeit von Herzmedikamenten"
         },
-        "youtubeId": "2scYfWSFkAc",
+        "youtubeId": "RDWYlyAMRAo",
         "orderIndex": 1,
         "description": "There are 4 types of medications that can help people with heart failure feel better, live longer, and avoid hospitalization. These medicines are often called guideline-directed medical therapy, or GDMT. Your heart care team will aim to get you on these medications. They will then increase the dose to target levels every 1 to 2 weeks. These are the doses that helped patients live longer and feel better in clinical studies. Your care team will help you monitor closely for side effects. If you have side effects, the dose may need to be reduced or the medication may need to be changed."
       },
@@ -87,19 +87,19 @@
     "videos": [
       {
         "title": "Introduction to Heart Failure",
-        "youtubeId": "mRPNY5-Px5g",
+        "youtubeId": "-uMPchtoxWQ",
         "orderIndex": 1,
         "description": "This video explains what heart failure is. The heart works like a pump, pushing blood to the rest of the body. In heart failure, this pump is not working effectively. It is a serious condition. It is treatable with lifelong medications discussed in other videos. The main symptoms of heart failure are shortness of breath, swelling in legs and abdomen, weight gain, and fatigue. Heart failure also increases the risk of abnormal heart rhythms or arrhythmias."
       },
       {
         "title": "Blood Pressure Monitoring",
-        "youtubeId": "3EMV3nqIajE",
+        "youtubeId": "KBbePdLbwUE",
         "orderIndex": 2,
         "description": "Monitoring blood pressure is a key part of caring for your heart failure. High blood pressure can worsen your heart function. Many of the heart failure medicines can also lower blood pressure as a side effect. This lower blood pressure can lead to dizziness. You should check your blood pressure daily after your diagnosis or when your medicines are being adjusted. Your blood pressure numbers can guide you and your care team on improving your heart medicines. In the ENGAGE-HF app, you can see your blood pressure trend in the heart health section."
       },
       {
         "title": "Weight Monitoring",
-        "youtubeId": "OGyf_jMI4IM",
+        "youtubeId": "p1fHRIt8Sxc",
         "orderIndex": 3,
         "description": "A sudden increase in weight is usually related to fluid retention from your heart. You should check your weight at the same time every day. In the ENGAGE-HF app, you can see your weight trend in the heart health section. An increase in weight of more than 3 pounds in one day or 5 pounds in one week might require a change in your care. This can include a change in your diuretics or your water pill. Talk to your care team about what you should do if your weight suddenly increases."
       },
@@ -118,13 +118,13 @@
     "videos": [
       {
         "title": "Health Status",
-        "youtubeId": "-TV8T8LDFTE",
+        "youtubeId": "5TqT6OMnCbE",
         "orderIndex": 1,
         "description": "The KCCQ-12 is a set of 12 questions that measure how your heart affects how you feel. There are four different categories. First, how your heart affects what you can do physically (physical limitations). Second, how frequently you have symptoms from your heart (symptom frequency). Third, how your heart affects how you feel overall (qualify of life). Finally, how your heart affects what you can do socially (social limitations). For each question, it asks you to think back about how you felt over the prior 2 weeks. Your answers lead to a score in each category and a combined score. Scores go from 0% (poor status) to 100% (ideal status). Scores on the KCCQ-12 every 2 weeks can help you and your care team track how you are doing over time. Also, the scores on the KCCQ-12 are strong predictors for your risk with your heart. Scores of over 80 indicate lower risk of ending up in the hospital."
       },
       {
         "title": "Dizziness",
-        "youtubeId": "3dsWVdo6jLo",
+        "youtubeId": "d_MVN08JdTs",
         "orderIndex": 2,
         "description": "Dizziness is a common symptom in heart failure. Dizziness can happen for multiple reasons. First, it can be related to the heart’s weakness. Second, it could be related to the medicines being used to treat the heart. Third, it could be related to abnormal heart rhythms. Finally, it could be related to other conditions other than the heart. The ENGAGE-HF app tracks the severity of your dizziness every 2 weeks to help you and your care team make decisions about your medicines. There are multiple tips to control your dizziness. First, you can try to change positions slowly and steady yourself before walking. Second, you can also try to pump your legs up and down before standing. Third, you can spread your medications over the day rather than taking them at one time."
       }
