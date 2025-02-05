@@ -7,9 +7,13 @@
 //
 
 import { z } from 'zod'
-import { type FHIRCodeableConcept } from './fhirCodeableConcept.js'
+import {
+  fhirCodeableConceptConverter,
+  type FHIRCodeableConcept,
+} from './fhirCodeableConcept.js'
 import { type FHIRCoding } from './fhirCoding.js'
 import { type FHIRDosage, fhirDosageConverter } from './fhirDosage.js'
+import { type FHIRMeta, fhirMetaConverter } from './fhirMeta.js'
 import { fhirQuantityConverter } from './fhirQuantity.js'
 import { type FHIRReference, fhirReferenceConverter } from './fhirReference.js'
 import { type FHIRExtensionUrl } from '../../codes/codes.js'
@@ -32,9 +36,7 @@ const fhirExtensionBaseConverter = new SchemaConverter({
   encode: (object) => ({
     url: object.url,
     valueQuantities:
-      object.valueQuantities ?
-        object.valueQuantities.map(fhirQuantityConverter.value.encode)
-      : null,
+      object.valueQuantities?.map(fhirQuantityConverter.value.encode) ?? null,
     valueReference:
       object.valueReference ?
         fhirReferenceConverter.value.encode(object.valueReference)
@@ -45,6 +47,10 @@ const fhirExtensionBaseConverter = new SchemaConverter({
 
 export interface FHIRExtensionInput
   extends z.input<typeof fhirExtensionBaseConverter.value.schema> {
+  valueCodeableConcept?:
+    | z.input<typeof fhirCodeableConceptConverter.value.schema>
+    | null
+    | undefined
   valueMedicationRequest?:
     | z.input<typeof fhirMedicationRequestConverter.value.schema>
     | null
@@ -53,6 +59,7 @@ export interface FHIRExtensionInput
 
 export interface FHIRExtension
   extends z.output<typeof fhirExtensionBaseConverter.value.schema> {
+  valueCodeableConcept?: FHIRCodeableConcept
   valueMedicationRequest?: FHIRMedicationRequest
 }
 
@@ -62,6 +69,9 @@ export const fhirExtensionConverter = (() => {
     z.ZodTypeDef,
     FHIRExtensionInput
   > = fhirExtensionBaseConverter.value.schema.extend({
+    valueCodeableConcept: optionalish(
+      z.lazy(() => fhirCodeableConceptConverter.value.schema),
+    ),
     valueMedicationRequest: optionalish(
       z.lazy(() => fhirMedicationRequestConverter.value.schema),
     ),
@@ -72,6 +82,10 @@ export const fhirExtensionConverter = (() => {
   ): z.input<typeof fhirExtensionSchema> {
     return {
       ...fhirExtensionBaseConverter.value.encode(object),
+      valueCodeableConcept:
+        object.valueCodeableConcept ?
+          fhirCodeableConceptConverter.value.encode(object.valueCodeableConcept)
+        : null,
       valueMedicationRequest:
         object.valueMedicationRequest ?
           fhirMedicationRequestConverter.value.encode(
@@ -127,21 +141,31 @@ export abstract class FHIRElement {
 export const fhirResourceConverter = new SchemaConverter({
   schema: fhirElementConverter.value.schema.extend({
     resourceType: z.string(),
+    meta: optionalish(fhirMetaConverter.schema),
   }),
   encode: (object) => ({
     ...fhirElementConverter.value.encode(object),
     resourceType: object.resourceType,
+    meta: object.meta ? fhirMetaConverter.encode(object.meta) : null,
   }),
 })
 
-export type FHIRResourceInput = z.output<
-  typeof fhirElementConverter.value.schema
->
+export type FHIRResourceInput = z.output<typeof fhirElementConverter.schema> & {
+  meta?: FHIRMeta
+}
 
 export abstract class FHIRResource extends FHIRElement {
   // Properties
 
   abstract get resourceType(): string
+  readonly meta?: FHIRMeta
+
+  // Constructor
+
+  constructor(input: FHIRResourceInput) {
+    super(input)
+    this.meta = input.meta
+  }
 
   // Methods
 
