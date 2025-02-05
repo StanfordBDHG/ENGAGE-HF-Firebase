@@ -22,10 +22,7 @@ export const fhirCodeableConceptConverter = new Lazy(
         text: optionalish(z.string()),
       }),
       encode: (object) => ({
-        coding:
-          object.coding ?
-            object.coding.map(fhirCodingConverter.value.encode)
-          : null,
+        coding: object.coding?.map(fhirCodingConverter.value.encode) ?? null,
         text: object.text ?? null,
       }),
     }),
