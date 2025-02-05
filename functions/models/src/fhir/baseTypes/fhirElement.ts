@@ -13,6 +13,7 @@ import {
 } from './fhirCodeableConcept.js'
 import { type FHIRCoding } from './fhirCoding.js'
 import { type FHIRDosage, fhirDosageConverter } from './fhirDosage.js'
+import { type FHIRMeta, fhirMetaConverter } from './fhirMeta.js'
 import { fhirQuantityConverter } from './fhirQuantity.js'
 import { type FHIRReference, fhirReferenceConverter } from './fhirReference.js'
 import { type FHIRExtensionUrl } from '../../codes/codes.js'
@@ -20,7 +21,6 @@ import { QuantityUnit } from '../../codes/quantityUnit.js'
 import { type DrugReference } from '../../codes/references.js'
 import { optionalish } from '../../helpers/optionalish.js'
 import { SchemaConverter } from '../../helpers/schemaConverter.js'
-import { FHIRMeta, fhirMetaConverter } from './fhirMeta.js'
 
 const fhirExtensionBaseConverter = new SchemaConverter({
   schema: z.object({

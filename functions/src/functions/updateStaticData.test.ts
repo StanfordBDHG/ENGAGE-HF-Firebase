@@ -6,6 +6,10 @@
 // SPDX-License-Identifier: MIT
 //
 
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+
+import fs from 'fs'
 import {
   CachingStrategy,
   LocalizedText,
@@ -15,7 +19,6 @@ import { expect } from 'chai'
 import { it } from 'mocha'
 import { _updateStaticData } from './updateStaticData.js'
 import { describeWithEmulators } from '../tests/functions/testEnvironment.js'
-import fs from 'fs'
 
 describeWithEmulators('function: updateStaticData', (env) => {
   it('updates static data successfully', async () => {
@@ -66,7 +69,7 @@ describeWithEmulators('function: updateStaticData', (env) => {
 
 function simplify(data: unknown): unknown {
   return JSON.parse(
-    JSON.stringify(data, (_, value) => {
+    JSON.stringify(data, (_, value): unknown => {
       if (value instanceof LocalizedText) {
         return value.content
       }

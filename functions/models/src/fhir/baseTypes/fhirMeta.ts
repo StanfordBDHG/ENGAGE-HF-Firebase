@@ -7,10 +7,10 @@
 //
 
 import { z } from 'zod'
-import { SchemaConverter } from '../../helpers/schemaConverter.js'
-import { optionalish } from '../../helpers/optionalish.js'
 import { fhirCodingConverter } from './fhirCoding.js'
 import { dateConverter } from '../../helpers/dateConverter.js'
+import { optionalish } from '../../helpers/optionalish.js'
+import { SchemaConverter } from '../../helpers/schemaConverter.js'
 
 export const fhirMetaConverter = new SchemaConverter({
   schema: z.object({

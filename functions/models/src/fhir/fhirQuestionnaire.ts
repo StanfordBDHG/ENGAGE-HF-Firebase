@@ -20,7 +20,7 @@ import { Lazy } from '../helpers/lazy.js'
 import { optionalish } from '../helpers/optionalish.js'
 import { SchemaConverter } from '../helpers/schemaConverter.js'
 import {
-  FHIRUsageContext,
+  type FHIRUsageContext,
   fhirUsageContextConverter,
 } from './baseTypes/fhirUsageContext.js'
 
