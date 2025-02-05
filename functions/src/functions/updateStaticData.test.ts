@@ -37,11 +37,34 @@ describeWithEmulators('function: updateStaticData', (env) => {
         medicationClassesJson[medicationClass.id],
       )
     }
+
     const medications = await env.collections.medications.get()
     expect(medications.docs).to.have.length(35)
+    const medicationsJson = JSON.parse(
+      fs.readFileSync('data/medications.json', 'utf8'),
+    )
+    for (const medication of medications.docs) {
+      expect(simplify(medication.data())).to.deep.equal(
+        medicationsJson[medication.id],
+      )
+    }
 
     const videoSections = await env.collections.videoSections.get()
     expect(videoSections.docs).to.have.length(4)
+    const videoSectionsJson = JSON.parse(
+      fs.readFileSync('data/videoSections.json', 'utf8'),
+    )
+    for (const videoSection of videoSections.docs) {
+      const jsonVideoSection = videoSectionsJson[videoSection.id]
+      const jsonVideos = jsonVideoSection.videos
+      delete jsonVideoSection.videos
+      expect(simplify(videoSection.data())).to.deep.equal(jsonVideoSection)
+
+      const videos = await env.collections.videos(videoSection.id).get()
+      for (const video of videos.docs) {
+        expect(simplify(video.data())).to.deep.equal(jsonVideos[video.id])
+      }
+    }
 
     const organizations = await env.collections.organizations.get()
     expect(organizations.docs).to.have.length(4)
@@ -69,7 +92,7 @@ describeWithEmulators('function: updateStaticData', (env) => {
 
 function simplify(data: unknown): unknown {
   return JSON.parse(
-    JSON.stringify(data, (_, value): unknown => {
+    JSON.stringify(data, (key, value): unknown => {
       if (value instanceof LocalizedText) {
         return value.content
       }
