@@ -3,6 +3,7 @@
     "id": "0",
     "extension": null,
     "resourceType": "Observation",
+    "meta": null,
     "status": "final",
     "code": {
       "coding": [

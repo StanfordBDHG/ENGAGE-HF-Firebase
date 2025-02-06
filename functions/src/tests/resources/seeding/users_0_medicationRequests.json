@@ -3,6 +3,7 @@
     "id": null,
     "extension": null,
     "resourceType": "MedicationRequest",
+    "meta": null,
     "medicationReference": {
       "reference": "medications/298869/drugs/351256",
       "type": null,

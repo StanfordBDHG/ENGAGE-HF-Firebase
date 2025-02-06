@@ -8,6 +8,7 @@
 
 import { z } from 'zod'
 import { fhirCodingConverter } from './fhirCoding.js'
+import { fhirExtensionConverter } from './fhirElement.js'
 import { Lazy } from '../../helpers/lazy.js'
 import { optionalish } from '../../helpers/optionalish.js'
 import { SchemaConverter } from '../../helpers/schemaConverter.js'
@@ -35,6 +36,9 @@ const fhirQuestionnaireItemBaseConverter = new Lazy(
             })
             .array(),
         ),
+        extension: z.lazy(() =>
+          optionalish(fhirExtensionConverter.schema.array()),
+        ),
       }),
       encode: (object) => ({
         linkId: object.linkId ?? null,
@@ -48,6 +52,10 @@ const fhirQuestionnaireItemBaseConverter = new Lazy(
                 fhirCodingConverter.value.encode(option.valueCoding)
               : null,
           })) ?? null,
+        extension:
+          object.extension ?
+            object.extension.map(fhirExtensionConverter.encode)
+          : null,
       }),
     }),
 )

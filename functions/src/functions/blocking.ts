@@ -13,6 +13,7 @@ import {
   beforeUserSignedIn,
 } from 'firebase-functions/v2/identity'
 import { privilegedServiceAccount } from './helpers.js'
+import { Flags } from '../flags.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
 export const beforeUserCreatedFunction = beforeUserCreated(
@@ -52,6 +53,8 @@ export const beforeUserCreatedFunction = beforeUserCreated(
     }
 
     if (
+      /* eslint-disable-next-line @typescript-eslint/no-unnecessary-condition */
+      Flags.requireInvitationOrganizationToMatchSsoProviderId &&
       invitation.content.user.type !== UserType.admin &&
       invitation.content.user.organization !== organization.id
     )
