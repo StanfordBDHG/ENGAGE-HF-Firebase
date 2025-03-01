@@ -17,6 +17,7 @@ export enum HealthSummarySymptomScoreCategory {
   HIGH_STABLE_OR_IMPROVING = 'Change >-10 and KCCQ>=90',
   LOW_STABLE_OR_IMPROVING = 'Change >-10 and KCCQ<90',
   WORSENING = 'Change <-10',
+  INADEQUATE = 'Inadequate KCCQ data',
 }
 
 export enum HealthSummaryMedicationRecommendationsCategory {
@@ -34,6 +35,7 @@ export enum HealthSummaryWeightCategory {
 export enum HealthSummaryDizzinessCategory {
   WORSENING = 'Decrease <-25',
   STABLE_OR_IMPROVING = 'No decrease <-25',
+  INADEQUATE = 'Inadequate dizziness data',
 }
 
 export interface HealthSummaryKeyPointMessage {
@@ -76,6 +78,117 @@ export const healthSummaryKeyPointMessages = new Lazy<
     })
     .array()
     .parse([
+      {
+        recommendationsCategory: 'Eligible meds for optimization',
+        symptomScoreCategory: 'Inadequate KCCQ data',
+        dizzinessCategory: 'Inadequate dizziness data',
+        weightCategory: 'No weight gain but weight measured',
+        texts: [
+          {
+            en: "There are possible options to improve your heart medicines. See the list of 'Potential Med Changes' below to discuss these options with your care team. These meds can help you feel better and strengthen your heart. Do not forget to keep doing your symptom checks.",
+          },
+        ],
+      },
+      {
+        recommendationsCategory: 'No eligible meds at optimization; measure BP',
+        symptomScoreCategory: 'Inadequate KCCQ data',
+        dizzinessCategory: 'Inadequate dizziness data',
+        weightCategory: 'No weight gain but weight measured',
+        texts: [
+          {
+            en: 'We are missing blood pressure and heart rate checks in the last two weeks. Try to check your blood pressure and heart rate multiple times a week to understand if your medications can be adjusted to help you feel better and strengthen your heart. Do not forget to keep doing your symptom checks.',
+          },
+        ],
+      },
+      {
+        recommendationsCategory:
+          'No eligible meds at optimization; at target doses',
+        symptomScoreCategory: 'Inadequate KCCQ data',
+        dizzinessCategory: 'Inadequate dizziness data',
+        weightCategory: 'No weight gain but weight measured',
+        texts: [
+          {
+            en: 'Great news! You are on the target dose for your heart medicines at this time. Your weight is not rising. Make sure to keep taking your heart meds to help you feel better and strengthen your heart. Do not forget to keep doing your symptom checks.',
+          },
+        ],
+      },
+      {
+        recommendationsCategory: 'Eligible meds for optimization',
+        symptomScoreCategory: 'Inadequate KCCQ data',
+        dizzinessCategory: 'Inadequate dizziness data',
+        weightCategory: 'Weight increase',
+        texts: [
+          {
+            en: "There are possible options to improve your heart medicines. See the list of 'Potential Med Changes' below to discuss these options with your care team. These meds can help you feel better and strengthen your heart.",
+          },
+          {
+            en: 'Your weight is increasing. This is a sign that you may be retaining fluid. Discuss with your care team and watch the weight educational video. Changing your heart medicines can lower your risk of having fluid gain in the future by strengthening your heart. Do not forget to keep doing your symptom checks.',
+          },
+        ],
+      },
+      {
+        recommendationsCategory: 'No eligible meds at optimization; measure BP',
+        symptomScoreCategory: 'Inadequate KCCQ data',
+        dizzinessCategory: 'Inadequate dizziness data',
+        weightCategory: 'Weight increase',
+        texts: [
+          {
+            en: 'We are missing blood pressure and heart rate checks in the last two weeks. Try to check your blood pressure and heart rate multiple times a week to understand if your medications can be adjusted to help you feel better and strengthen your heart.',
+          },
+          {
+            en: 'Your weight is increasing. This is a sign that you may be retaining fluid. Discuss with your care team and watch the weight educational video. Changing your heart medicines can lower your risk of having fluid gain in the future by strengthening your heart. Do not forget to keep doing your symptom checks.',
+          },
+        ],
+      },
+      {
+        recommendationsCategory:
+          'No eligible meds at optimization; at target doses',
+        symptomScoreCategory: 'Inadequate KCCQ data',
+        dizzinessCategory: 'Inadequate dizziness data',
+        weightCategory: 'Weight increase',
+        texts: [
+          {
+            en: 'Great news! You are on the target dose for your heart medicines at this time. Your symptoms are stable and your weight is not rising. Make sure to keep taking your heart meds to help you feel better and strengthen your heart.',
+          },
+          {
+            en: 'Your weight is increasing. This is a sign that you may be retaining fluid. Discuss with your care team and watch the weight educational video. Taking your heart medicines can lower your risk of having fluid gain in the future by strengthening your heart. Do not forget to keep doing your symptom checks.',
+          },
+        ],
+      },
+      {
+        recommendationsCategory: 'Eligible meds for optimization',
+        symptomScoreCategory: 'Inadequate KCCQ data',
+        dizzinessCategory: 'Inadequate dizziness data',
+        weightCategory: 'No weight measured',
+        texts: [
+          {
+            en: "There are possible options to improve your heart medicines. See the list of 'Potential Med Changes' below to discuss these options with your care team. These meds can help you feel better and strengthen your heart. Do not forget to keep doing your symptom checks.",
+          },
+        ],
+      },
+      {
+        recommendationsCategory: 'No eligible meds at optimization; measure BP',
+        symptomScoreCategory: 'Inadequate KCCQ data',
+        dizzinessCategory: 'Inadequate dizziness data',
+        weightCategory: 'No weight measured',
+        texts: [
+          {
+            en: 'We are missing blood pressure and heart rate checks in the last two weeks. Try to check your blood pressure and heart rate multiple times a week to understand if your medications can be adjusted to help you feel better and strengthen your heart. Do not forget to keep doing your symptom checks.',
+          },
+        ],
+      },
+      {
+        recommendationsCategory:
+          'No eligible meds at optimization; at target doses',
+        symptomScoreCategory: 'Inadequate KCCQ data',
+        dizzinessCategory: 'Inadequate dizziness data',
+        weightCategory: 'No weight measured',
+        texts: [
+          {
+            en: 'Great news! You are on the target dose for your heart medicines at this time. Your symptoms are stable and your weight is not rising. Make sure to keep taking your heart meds to help you feel better and strengthen your heart. Do not forget to keep doing your symptom checks.',
+          },
+        ],
+      },
       {
         recommendationsCategory: 'Eligible meds for optimization',
         symptomScoreCategory: 'Change >-10 and KCCQ<90',
