@@ -63,17 +63,11 @@ export function healthSummaryLocalizations(languages: string[]) {
       }),
       text(input: {
         recommendations: HealthSummaryMedicationRecommendationsCategory | null
-        symptomScore: HealthSummarySymptomScoreCategory | null
-        dizziness: HealthSummaryDizzinessCategory | null
-        weight: HealthSummaryWeightCategory | null
+        symptomScore: HealthSummarySymptomScoreCategory
+        dizziness: HealthSummaryDizzinessCategory
+        weight: HealthSummaryWeightCategory
       }): string[] | null {
-        if (
-          input.recommendations === null ||
-          input.symptomScore === null ||
-          input.dizziness === null ||
-          input.weight === null
-        )
-          return null
+        if (input.recommendations === null) return null
 
         const messages =
           healthSummaryKeyPointTexts({

@@ -22,7 +22,7 @@ import { readCsv } from '../tests/helpers/csv.js'
 describe('keyPointsMessage', () => {
   it('should generate the key point message json', () => {
     const keyPointMessages: HealthSummaryKeyPointMessage[] = []
-    readCsv('src/tests/resources/keyPointMessages.csv', 55, (line, index) => {
+    readCsv('src/tests/resources/keyPointMessages.csv', 64, (line, index) => {
       if (index === 0) return
 
       const recommendations =
@@ -92,6 +92,12 @@ describe('keyPointsMessage', () => {
         HealthSummarySymptomScoreCategory,
       )) {
         for (const dizziness of Object.values(HealthSummaryDizzinessCategory)) {
+          if (
+            (symptomScore === HealthSummarySymptomScoreCategory.INADEQUATE) !==
+            (dizziness === HealthSummaryDizzinessCategory.INADEQUATE)
+          ) {
+            continue
+          }
           for (const weight of Object.values(HealthSummaryWeightCategory)) {
             const texts = healthSummaryKeyPointTexts({
               recommendations,
