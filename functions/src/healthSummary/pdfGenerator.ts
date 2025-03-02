@@ -10,12 +10,14 @@ import fs from 'fs'
 import { Resvg, type ResvgRenderOptions } from '@resvg/resvg-js'
 import { logger } from 'firebase-functions'
 import { jsPDF } from 'jspdf'
-import 'jspdf-autotable' /* eslint-disable-line */
-import {
+import autoTable, {
+  applyPlugin,
   type Styles,
   type CellDef,
   type UserOptions,
-} from 'jspdf-autotable' /* eslint-disable-line */
+} from 'jspdf-autotable'
+
+applyPlugin(jsPDF)
 
 enum FontStyle {
   normal = 'normal',
@@ -220,7 +222,7 @@ export class PdfGenerator {
         fontSize: textStyle.fontSize,
       },
     }
-    ;(this.doc as any).autoTable(options) // eslint-disable-line
+    autoTable(this.doc, options)
     this.cursor.y = (this.doc as any).lastAutoTable.finalY // eslint-disable-line
   }
 
@@ -323,7 +325,7 @@ export class PdfGenerator {
     styles.lineColor = styles.lineColor ?? this.colors.black
     return {
       styles: styles,
-      title: title,
+      content: title,
     }
   }
 
