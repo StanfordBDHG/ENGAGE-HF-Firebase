@@ -65,14 +65,14 @@ export class HealthSummaryData {
     )
   }
 
-  get bodyWeightRange(): number | null {
+  get bodyWeightRange(): [number, number] | null {
     const bodyWeightValues = this.vitals.bodyWeight.map(
       (observation) => observation.value,
     )
     const minWeight = Math.min(...bodyWeightValues)
     const maxWeight = Math.max(...bodyWeightValues)
     return isFinite(minWeight) && isFinite(maxWeight) ?
-        maxWeight - minWeight
+        [minWeight, maxWeight]
       : null
   }
 
