@@ -256,6 +256,83 @@ export class DefaultMessageService implements MessageService {
     )
   }
 
+  async dismissMessages(
+    userId: string,
+    options: {
+      messageIds?: string[]
+      dismissAll?: boolean
+      didPerformAction: boolean
+    },
+  ): Promise<number> {
+    logger.info(
+      `dismissMessages for user/${userId} with options: ${JSON.stringify(options)}`,
+    )
+    
+    return await this.databaseService.runTransaction(
+      async (collections, transaction) => {
+        // If specific message IDs were provided
+        if (options.messageIds && options.messageIds.length > 0) {
+          logger.debug(
+            `dismissMessages: Processing ${options.messageIds.length} specific messages for user/${userId}`,
+          )
+          
+          let dismissedCount = 0
+          for (const messageId of options.messageIds) {
+            const messageRef = collections.userMessages(userId).doc(messageId)
+            const message = await transaction.get(messageRef)
+            const messageContent = message.data()
+            
+            if (message.exists && messageContent && messageContent.isDismissible) {
+              transaction.set(
+                messageRef,
+                new UserMessage({
+                  ...messageContent,
+                  completionDate: new Date(),
+                }),
+              )
+              dismissedCount++
+            }
+          }
+          
+          return dismissedCount
+        }
+        
+        // If dismissAll was requested
+        if (options.dismissAll) {
+          logger.debug(
+            `dismissMessages: Dismissing all dismissible messages for user/${userId}`,
+          )
+          
+          const messages = await transaction.get(
+            collections
+              .userMessages(userId)
+              .where('completionDate', '==', null)
+              .where('isDismissible', '==', true),
+          )
+          
+          logger.debug(
+            `dismissMessages: Found ${messages.size} dismissible messages for user/${userId}`,
+          )
+          
+          messages.forEach(message => {
+            transaction.set(
+              message.ref,
+              new UserMessage({
+                ...message.data(),
+                completionDate: new Date(),
+              }),
+            )
+          })
+          
+          return messages.size
+        }
+        
+        // If neither options were provided, return 0
+        return 0
+      },
+    )
+  }
+
   // Helpers - Messages
 
   /// returns whether to save the new message or throw it away
