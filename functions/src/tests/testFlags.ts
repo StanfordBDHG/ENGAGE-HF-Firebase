@@ -16,4 +16,5 @@ export namespace TestFlags {
   export const isEmulator = process.env.FUNCTIONS_EMULATOR === 'true'
   export const regenerateValues = process.env.REGENERATE_VALUES === 'true'
   export const connectsToEmulator = process.env.EMULATORS_ACTIVE == 'true'
+  export const connectsToRxNormApi = process.env.USE_RXNORM_API === 'true'
 }
