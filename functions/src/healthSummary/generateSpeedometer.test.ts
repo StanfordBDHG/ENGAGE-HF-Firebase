@@ -51,7 +51,7 @@ describe('generateSpeedometer', () => {
     const actualData = generateSpeedometerSvg([], 258, {
       localizer: enLocalizer,
     })
-    const expectedPath = 'src/tests/resources/emptySpeedometer.svg'
+    const expectedPath = 'src/tests/resources/emptySpeedometer-en.svg'
     if (TestFlags.regenerateValues) {
       fs.writeFileSync(expectedPath, actualData)
     } else {
