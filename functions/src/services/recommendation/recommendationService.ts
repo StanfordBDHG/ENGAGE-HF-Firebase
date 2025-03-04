@@ -26,6 +26,7 @@ import { Sglt2iRecommender } from './recommenders/sglt2iRecommender.js'
 import { type MedicationRequestContext } from '../../models/medicationRequestContext.js'
 import { type ContraindicationService } from '../contraindication/contraindicationService.js'
 import { type MedicationService } from '../medication/medicationService.js'
+import { recommendationLocalization } from './recommendationService+localization.js'
 
 export interface RecommendationInput {
   requests: MedicationRequestContext[]
@@ -225,42 +226,45 @@ export class RecommendationService {
   ): LocalizedText {
     switch (output.type) {
       case UserMedicationRecommendationType.improvementAvailable: {
-        if (recommendedMedication !== undefined) {
-          const displayName = recommendedMedication.displayName
-          return new LocalizedText(
-            `Discuss starting ${displayName} (more effective med) with your care team to help your heart.`,
+        const recommendedMedicationName = recommendedMedication?.displayName
+        if (recommendedMedicationName !== undefined) {
+          return LocalizedText.parametrized(
+            recommendationLocalization.improvementAvailableMoreEffectiveMed,
+            recommendedMedicationName,
           )
         } else {
-          return new LocalizedText(
-            'Discuss increasing the dose with your care team to get closer to target.',
+          return LocalizedText.parametrized(
+            recommendationLocalization.improvementAvailableIncreasing,
           )
         }
       }
       case UserMedicationRecommendationType.moreLabObservationsRequired: {
-        return new LocalizedText(
-          'Discuss lab check with your care team before med change.',
+        return LocalizedText.parametrized(
+          recommendationLocalization.moreLabObservationsRequired,
         )
       }
       case UserMedicationRecommendationType.morePatientObservationsRequired: {
-        return new LocalizedText(
-          'Need more blood pressure / heart rate checks to suggest a change.',
+        return LocalizedText.parametrized(
+          recommendationLocalization.morePatientObservationsRequired,
         )
       }
       case UserMedicationRecommendationType.noActionRequired: {
-        return new LocalizedText('')
-      }
-      case UserMedicationRecommendationType.notStarted: {
-        return new LocalizedText(
-          'Discuss starting this med with your care team to help your heart.',
+        return LocalizedText.parametrized(
+          recommendationLocalization.noActionRequired,
         )
       }
+      case UserMedicationRecommendationType.notStarted: {
+        return LocalizedText.parametrized(recommendationLocalization.notStarted)
+      }
       case UserMedicationRecommendationType.personalTargetDoseReached: {
-        return new LocalizedText(
-          'Your current target dose was reached. Congrats!',
+        return LocalizedText.parametrized(
+          recommendationLocalization.personalTargetDoseReached,
         )
       }
       case UserMedicationRecommendationType.targetDoseReached: {
-        return new LocalizedText(`You're on the target dose. Congrats!`)
+        return LocalizedText.parametrized(
+          recommendationLocalization.targetDoseReached,
+        )
       }
     }
   }

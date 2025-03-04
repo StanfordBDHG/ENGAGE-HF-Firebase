@@ -17,6 +17,7 @@ import { dateConverter } from '../helpers/dateConverter.js'
 import { Lazy } from '../helpers/lazy.js'
 import { optionalish } from '../helpers/optionalish.js'
 import { SchemaConverter } from '../helpers/schemaConverter.js'
+import { messagesLocalization } from '../localization/messages.js'
 
 export enum UserMessageType {
   medicationChange = 'MedicationChange',
@@ -75,12 +76,8 @@ export class UserMessage {
   ): UserMessage {
     return new UserMessage({
       creationDate: input.creationDate ?? new Date(),
-      title: new LocalizedText({
-        en: 'Inactive',
-      }),
-      description: new LocalizedText({
-        en: 'You have been inactive for 7 days. Please log in to continue your care.',
-      }),
+      title: new LocalizedText(messagesLocalization.inactiveTitle),
+      description: new LocalizedText(messagesLocalization.inactiveDescription),
       action: undefined,
       type: UserMessageType.inactive,
       isDismissible: false,
@@ -95,12 +92,16 @@ export class UserMessage {
   }): UserMessage {
     return new UserMessage({
       creationDate: input.creationDate ?? new Date(),
-      title: new LocalizedText({
-        en: 'Inactive',
-      }),
-      description: new LocalizedText({
-        en: `${input.userName ?? 'Patient'} has been inactive for 7 days.`,
-      }),
+      title: new LocalizedText(messagesLocalization.inactiveTitle),
+      description:
+        input.userName !== undefined ?
+          LocalizedText.parametrized(
+            messagesLocalization.inactiveDescriptionForClinician,
+            input.userName,
+          )
+        : new LocalizedText(
+            messagesLocalization.inactiveDescriptionForClinicianNoName,
+          ),
       action: `users/${input.userId}`,
       type: UserMessageType.inactive,
       isDismissible: true,
@@ -116,12 +117,11 @@ export class UserMessage {
   }): UserMessage {
     return new UserMessage({
       creationDate: input.creationDate ?? new Date(),
-      title: new LocalizedText({
-        en: 'Medication Change',
-      }),
-      description: new LocalizedText({
-        en: `Your dose of ${input.medicationName} was changed. You can review medication information on the Education Page.`,
-      }),
+      title: new LocalizedText(messagesLocalization.medicationChangeTitle),
+      description: LocalizedText.parametrized(
+        messagesLocalization.medicationChangeDescription,
+        input.medicationName,
+      ),
       action: input.videoReference,
       type: UserMessageType.medicationChange,
       isDismissible: true,
@@ -137,12 +137,10 @@ export class UserMessage {
   ): UserMessage {
     return new UserMessage({
       creationDate: input.creationDate ?? new Date(),
-      title: new LocalizedText({
-        en: 'Eligible Medication Change',
-      }),
-      description: new LocalizedText({
-        en: 'You may be eligible for med changes that may help your heart. Your care team will be sent this information. You can review med information on the Education Page.',
-      }),
+      title: new LocalizedText(messagesLocalization.medicationUptitrationTitle),
+      description: new LocalizedText(
+        messagesLocalization.medicationUptitrationDescription,
+      ),
       reference: input.reference,
       action: 'medications',
       type: UserMessageType.medicationUptitration,
@@ -158,12 +156,18 @@ export class UserMessage {
   }): UserMessage {
     return new UserMessage({
       creationDate: input.creationDate ?? new Date(),
-      title: new LocalizedText({
-        en: 'Eligible Medication Change',
-      }),
-      description: new LocalizedText({
-        en: `${input.userName ?? 'Patient'} may be eligible for med changes. You can review med information on the user detail page.`,
-      }),
+      title: new LocalizedText(
+        messagesLocalization.medicationUptitrationTitleForClinician,
+      ),
+      description:
+        input.userName !== undefined ?
+          LocalizedText.parametrized(
+            messagesLocalization.medicationUptitrationDescriptionForClinician,
+            input.userName,
+          )
+        : new LocalizedText(
+            messagesLocalization.medicationUptitrationDescriptionForClinicianNoName,
+          ),
       reference: input.reference,
       action: `users/${input.userId}/medications`,
       type: UserMessageType.medicationUptitration,
@@ -177,12 +181,10 @@ export class UserMessage {
   }): UserMessage {
     return new UserMessage({
       creationDate: input.creationDate ?? new Date(),
-      title: new LocalizedText({
-        en: 'Appointment Reminder',
-      }),
-      description: new LocalizedText({
-        en: 'Your appointment is coming up. Review your Health Summary before your visit.',
-      }),
+      title: new LocalizedText(messagesLocalization.preAppointmentTitle),
+      description: new LocalizedText(
+        messagesLocalization.preAppointmentDescription,
+      ),
       action: 'healthSummary',
       type: UserMessageType.preAppointment,
       isDismissible: false,
@@ -198,12 +200,18 @@ export class UserMessage {
   }): UserMessage {
     return new UserMessage({
       creationDate: input.creationDate ?? new Date(),
-      title: new LocalizedText({
-        en: 'Appointment Reminder',
-      }),
-      description: new LocalizedText({
-        en: `Appointment with ${input.userName ?? 'patient'} is coming up.`,
-      }),
+      title: new LocalizedText(
+        messagesLocalization.preAppointmentTitleForClinician,
+      ),
+      description:
+        input.userName !== undefined ?
+          LocalizedText.parametrized(
+            messagesLocalization.preAppointmentDescriptionForClinician,
+            input.userName,
+          )
+        : new LocalizedText(
+            messagesLocalization.preAppointmentDescriptionForClinicianNoName,
+          ),
       action: `users/${input.userId}/appointments`,
       reference: input.reference,
       type: UserMessageType.preAppointment,
@@ -217,12 +225,10 @@ export class UserMessage {
   }): UserMessage {
     return new UserMessage({
       creationDate: input.creationDate ?? new Date(),
-      title: new LocalizedText({
-        en: 'Symptom Questionnaire',
-      }),
-      description: new LocalizedText({
-        en: 'Complete your Symptom Survey for your care team.',
-      }),
+      title: new LocalizedText(messagesLocalization.symptomQuestionnaireTitle),
+      description: new LocalizedText(
+        messagesLocalization.symptomQuestionnaireDescription,
+      ),
       action: input.questionnaireReference,
       type: UserMessageType.symptomQuestionnaire,
       isDismissible: false,
@@ -238,12 +244,8 @@ export class UserMessage {
     return new UserMessage({
       creationDate: creationDate,
       dueDate: advanceDateByDays(creationDate, 1),
-      title: new LocalizedText({
-        en: 'Vitals',
-      }),
-      description: new LocalizedText({
-        en: 'Check your blood pressure and weight daily.',
-      }),
+      title: new LocalizedText(messagesLocalization.vitalsTitle),
+      description: new LocalizedText(messagesLocalization.vitalsDescription),
       action: 'observations',
       type: UserMessageType.vitals,
       isDismissible: false,
@@ -257,12 +259,10 @@ export class UserMessage {
   ): UserMessage {
     return new UserMessage({
       creationDate: input.creationDate ?? new Date(),
-      title: new LocalizedText({
-        en: 'Weight increase since last week',
-      }),
-      description: new LocalizedText({
-        en: 'Your weight increased over 3 lbs. Your care team will be informed. Please follow any instructions about diuretic changes after weight increase on the Medication page.',
-      }),
+      title: new LocalizedText(messagesLocalization.weightGainTitle),
+      description: new LocalizedText(
+        messagesLocalization.weightGainDescription,
+      ),
       action: 'medications',
       type: UserMessageType.weightGain,
       isDismissible: true,
@@ -277,12 +277,18 @@ export class UserMessage {
   }): UserMessage {
     return new UserMessage({
       creationDate: input.creationDate ?? new Date(),
-      title: new LocalizedText({
-        en: 'Weight increase since last week',
-      }),
-      description: new LocalizedText({
-        en: `Weight increase over 3 lbs for ${input.userName ?? 'patient'}.`,
-      }),
+      title: new LocalizedText(
+        messagesLocalization.weightGainTitleForClinician,
+      ),
+      description:
+        input.userName !== undefined ?
+          LocalizedText.parametrized(
+            messagesLocalization.weightGainDescriptionForClinician,
+            input.userName,
+          )
+        : new LocalizedText(
+            messagesLocalization.weightGainDescriptionForClinicianNoName,
+          ),
       action: `users/${input.userId}/medications`,
       reference: input.reference,
       type: UserMessageType.weightGain,
@@ -296,12 +302,8 @@ export class UserMessage {
   }): UserMessage {
     return new UserMessage({
       creationDate: input.creationDate ?? new Date(),
-      title: new LocalizedText({
-        en: 'Welcome',
-      }),
-      description: new LocalizedText({
-        en: 'Watch Welcome Video on the Education Page.',
-      }),
+      title: new LocalizedText(messagesLocalization.welcomeTitle),
+      description: new LocalizedText(messagesLocalization.welcomeDescription),
       action: input.videoReference,
       type: UserMessageType.welcome,
       isDismissible: true,

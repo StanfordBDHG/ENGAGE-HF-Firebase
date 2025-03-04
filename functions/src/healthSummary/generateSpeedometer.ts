@@ -9,7 +9,8 @@
 import { type SymptomScore } from '@stanfordbdhg/engagehf-models'
 import * as d3 from 'd3'
 import { JSDOM } from 'jsdom'
-import { symptomScoreSpeedometerLocalizations } from './generateSpeedometer+localizations.js'
+import { Localizer } from '../services/localization/localizer.js'
+import { healthSummaryLocalization } from './generate+localizations.js'
 
 interface SpeedometerMarker {
   percentage: number
@@ -26,7 +27,7 @@ interface SpeedometerMarker {
 export function generateSpeedometerSvg(
   scores: SymptomScore[],
   width: number,
-  options: { languages: string[] },
+  options: { localizer: Localizer<typeof healthSummaryLocalization> },
 ): string {
   const baselineScore = scores.at(scores.length - 1)
   const recentScore = scores.at(0)
@@ -71,7 +72,7 @@ class SpeedometerSvgGenerator {
   negativeColor = 'rgb(255,0,31)'
   trendFontSize = 10
 
-  texts: ReturnType<typeof symptomScoreSpeedometerLocalizations>
+  localizer: Localizer<typeof healthSummaryLocalization>
 
   dom = new JSDOM('<!DOCTYPE html><html><body></body></html>')
   body = d3.select(this.dom.window.document).select('body')
@@ -87,8 +88,11 @@ class SpeedometerSvgGenerator {
   outerArcRadius: number
   markerLineWidth: number
 
-  constructor(width: number, options: { languages: string[] }) {
-    this.texts = symptomScoreSpeedometerLocalizations(options.languages)
+  constructor(
+    width: number,
+    options: { localizer: Localizer<typeof healthSummaryLocalization> },
+  ) {
+    this.localizer = options.localizer
 
     this.margins = {
       top: width * 0.025,
@@ -216,7 +220,9 @@ class SpeedometerSvgGenerator {
       .append('tspan')
       .style('fill', trend >= 0 ? this.positiveColor : this.negativeColor)
       .text((trend >= 0 ? '+' : '-') + Math.abs(trend).toFixed(0) + '%')
-    trendText.append('tspan').text(' ' + this.texts.trendSuffix)
+    trendText
+      .append('tspan')
+      .text(' ' + this.localizer.text('symptomScoresSpeedometerTrendSuffix'))
   }
 
   addZeroLabel() {
@@ -235,15 +241,25 @@ class SpeedometerSvgGenerator {
     this.addLegendItem(
       0,
       3,
-      this.texts.legend.baseline,
+      this.localizer.text('symptomScoresSpeedometerLegendBaseline'),
       this.secondaryColor,
       true,
     )
-    this.addLegendItem(1, 3, this.texts.legend.previous, this.secondaryColor)
-    this.addLegendItem(2, 3, this.texts.legend.current, this.primaryColor)
+    this.addLegendItem(
+      1,
+      3,
+      this.localizer.text('symptomScoresSpeedometerLegendPrevious'),
+      this.secondaryColor,
+    )
+    this.addLegendItem(
+      2,
+      3,
+      this.localizer.text('symptomScoresSpeedometerLegendCurrent'),
+      this.primaryColor,
+    )
   }
 
-  addLegendItem(
+  private addLegendItem(
     index: number,
     count: number,
     title: string,

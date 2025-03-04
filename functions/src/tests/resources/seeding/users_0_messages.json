@@ -5,10 +5,12 @@
     "completionDate": null,
     "type": "Inactive",
     "title": {
-      "en": "Inactive"
+      "en": "Inactive",
+      "es": "Inactivo"
     },
     "description": {
-      "en": "You have been inactive for 7 days. Please log in to continue your care."
+      "en": "You have been inactive for 7 days. Please log in to continue your care.",
+      "es": "Has estado inactivo durante 7 días. Por favor, inicie sesión para continuar su atención."
     },
     "action": null,
     "isDismissible": false,
@@ -20,10 +22,12 @@
     "completionDate": null,
     "type": "MedicationChange",
     "title": {
-      "en": "Medication Change"
+      "en": "Medication Change",
+      "es": "Cambio de medicación"
     },
     "description": {
-      "en": "Your dose of Losartan Potassium was changed. You can review medication information on the Education Page."
+      "en": "Your dose of Losartan Potassium was changed. You can review medication information on the Education Page.",
+      "es": "Su dosis de Losartan Potassium fue cambiada. Puede revisar la información de la medicación en la página de Educación."
     },
     "action": "videoSections/1/videos/2",
     "isDismissible": true,
@@ -35,10 +39,12 @@
     "completionDate": null,
     "type": "MedicationUptitration",
     "title": {
-      "en": "Eligible Medication Change"
+      "en": "Eligible Medication Change",
+      "es": "Cambio de medicación elegible"
     },
     "description": {
-      "en": "You may be eligible for med changes that may help your heart. Your care team will be sent this information. You can review med information on the Education Page."
+      "en": "You may be eligible for med changes that may help your heart. Your care team will be sent this information. You can review med information on the Education Page.",
+      "es": "Puede ser elegible para cambios en la medicación que pueden ayudar a su corazón. Su equipo de atención recibirá esta información. Puede revisar la información de la medicación en la página de Educación."
     },
     "action": "medications",
     "isDismissible": true,
@@ -50,10 +56,12 @@
     "completionDate": null,
     "type": "PreAppointment",
     "title": {
-      "en": "Appointment Reminder"
+      "en": "Appointment Reminder",
+      "es": "Recordatorio de cita"
     },
     "description": {
-      "en": "Your appointment is coming up. Review your Health Summary before your visit."
+      "en": "Your appointment is coming up. Review your Health Summary before your visit.",
+      "es": "Su cita se acerca. Revise su Resumen de Salud antes de su visita."
     },
     "action": "healthSummary",
     "isDismissible": false,
@@ -65,10 +73,12 @@
     "completionDate": null,
     "type": "SymptomQuestionnaire",
     "title": {
-      "en": "Symptom Questionnaire"
+      "en": "Symptom Questionnaire",
+      "es": "Cuestionario de síntomas"
     },
     "description": {
-      "en": "Complete your Symptom Survey for your care team."
+      "en": "Complete your Symptom Survey for your care team.",
+      "es": "Complete su Encuesta de Síntomas para su equipo de atención."
     },
     "action": "questionnaires/0",
     "isDismissible": false,
@@ -80,10 +90,12 @@
     "completionDate": null,
     "type": "Vitals",
     "title": {
-      "en": "Vitals"
+      "en": "Vitals",
+      "es": "Signos vitales"
     },
     "description": {
-      "en": "Check your blood pressure and weight daily."
+      "en": "Check your blood pressure and weight daily.",
+      "es": "Revise su presión arterial y peso diariamente."
     },
     "action": "observations",
     "isDismissible": false,
@@ -95,10 +107,12 @@
     "completionDate": null,
     "type": "WeightGain",
     "title": {
-      "en": "Weight increase since last week"
+      "en": "Weight increase since last week",
+      "es": "Aumento de peso desde la semana pasada"
     },
     "description": {
-      "en": "Your weight increased over 3 lbs. Your care team will be informed. Please follow any instructions about diuretic changes after weight increase on the Medication page."
+      "en": "Your weight increased over 3 lbs. Your care team will be informed. Please follow any instructions about diuretic changes after weight increase on the Medication page.",
+      "es": "Su peso aumentó más de 3 libras. Su equipo de atención será informado. Siga cualquier instrucción sobre cambios diuréticos después del aumento de peso en la página de Medicación."
     },
     "action": "medications",
     "isDismissible": true,
@@ -110,10 +124,12 @@
     "completionDate": null,
     "type": "Welcome",
     "title": {
-      "en": "Welcome"
+      "en": "Welcome",
+      "es": "Bienvenido"
     },
     "description": {
-      "en": "Watch Welcome Video on the Education Page."
+      "en": "Watch Welcome Video on the Education Page.",
+      "es": "Vea el video de bienvenida en la página de Educación."
     },
     "action": "videoSections/0/videos/0",
     "isDismissible": true,

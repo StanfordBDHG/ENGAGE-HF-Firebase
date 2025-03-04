@@ -17,6 +17,13 @@ export const localizedTextConverter = new SchemaConverter({
   encode: (object) => object.content,
 })
 
+export type LocalizedTextParams<S extends string, Acc extends unknown[] = []> =
+  S extends `${string}@${infer N}${infer Rest}` ?
+    N extends `${number}` ?
+      LocalizedTextParams<Rest, [...Acc, string | LocalizedText]>
+    : LocalizedTextParams<Rest, Acc>
+  : Acc
+
 export class LocalizedText {
   // Properties
 
@@ -26,6 +33,28 @@ export class LocalizedText {
 
   constructor(input: string | Record<string, string>) {
     this.content = input
+  }
+
+  static parametrized<L extends Record<string, string>>(
+    input: L,
+    ...params: L['en'] extends string ? LocalizedTextParams<L['en']> : never
+  ): LocalizedText {
+    const copy: Record<string, string> = {}
+
+    for (const language of Object.keys(input)) {
+      copy[language] = params.reduce(
+        (previousValue, currentValue, index) =>
+          previousValue.replace(
+            `@${index}`,
+            (currentValue as any) instanceof LocalizedText ?
+              (currentValue as LocalizedText).localize(language)
+            : currentValue,
+          ),
+        input[language],
+      )
+    }
+
+    return new LocalizedText(copy)
   }
 
   // Methods
