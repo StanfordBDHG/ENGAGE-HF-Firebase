@@ -9,8 +9,8 @@
 import { type SymptomScore } from '@stanfordbdhg/engagehf-models'
 import * as d3 from 'd3'
 import { JSDOM } from 'jsdom'
-import { Localizer } from '../services/localization/localizer.js'
-import { healthSummaryLocalization } from './generate+localizations.js'
+import { type healthSummaryLocalization } from './generate+localizations.js'
+import { type Localizer } from '../services/localization/localizer.js'
 
 interface SpeedometerMarker {
   percentage: number

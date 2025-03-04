@@ -9,11 +9,11 @@
 import assert from 'assert'
 import fs from 'fs'
 import { describe, it } from 'mocha'
+import { healthSummaryLocalization } from './generate+localizations.js'
 import { generateSpeedometerSvg } from './generateSpeedometer.js'
+import { Localizer } from '../services/localization/localizer.js'
 import { mockHealthSummaryData } from '../tests/mocks/healthSummaryData.js'
 import { TestFlags } from '../tests/testFlags.js'
-import { Localizer } from '../services/localization/localizer.js'
-import { healthSummaryLocalization } from './generate+localizations.js'
 
 describe('generateSpeedometer', () => {
   const enLocalizer = new Localizer(healthSummaryLocalization, ['en-US'])

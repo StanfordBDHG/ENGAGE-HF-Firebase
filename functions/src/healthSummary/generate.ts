@@ -19,10 +19,10 @@ import { type CellDef } from 'jspdf-autotable' /* eslint-disable-line */
 import { healthSummaryLocalization } from './generate+localizations.js'
 import { generateChartSvg } from './generateChart.js'
 import { generateSpeedometerSvg } from './generateSpeedometer.js'
+import { healthSummaryKeyPointTexts } from './keyPointsMessage.js'
 import { PdfGenerator } from './pdfGenerator.js'
 import { type HealthSummaryData } from '../models/healthSummaryData.js'
 import { Localizer } from '../services/localization/localizer.js'
-import { healthSummaryKeyPointTexts } from './keyPointsMessage.js'
 
 export interface HealthSummaryOptions {
   languages: string[]

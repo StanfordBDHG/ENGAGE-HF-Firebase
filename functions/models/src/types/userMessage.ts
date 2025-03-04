@@ -8,6 +8,7 @@
 
 import { z } from 'zod'
 import { LocalizedText, localizedTextConverter } from './localizedText.js'
+import { messagesLocalization } from './userMesage+localization.js'
 import {
   type QuestionnaireReference,
   type VideoReference,
@@ -17,7 +18,6 @@ import { dateConverter } from '../helpers/dateConverter.js'
 import { Lazy } from '../helpers/lazy.js'
 import { optionalish } from '../helpers/optionalish.js'
 import { SchemaConverter } from '../helpers/schemaConverter.js'
-import { messagesLocalization } from '../localization/messages.js'
 
 export enum UserMessageType {
   medicationChange = 'MedicationChange',

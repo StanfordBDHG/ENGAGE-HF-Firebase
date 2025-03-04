@@ -8,7 +8,7 @@
 
 import {
   LocalizedText,
-  LocalizedTextParams,
+  type LocalizedTextParams,
 } from '@stanfordbdhg/engagehf-models'
 
 export class Localizer<

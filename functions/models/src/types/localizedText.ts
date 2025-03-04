@@ -46,6 +46,7 @@ export class LocalizedText {
         (previousValue, currentValue, index) =>
           previousValue.replace(
             `@${index}`,
+            /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
             (currentValue as any) instanceof LocalizedText ?
               (currentValue as LocalizedText).localize(language)
             : currentValue,

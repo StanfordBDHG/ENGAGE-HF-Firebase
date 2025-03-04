@@ -17,6 +17,7 @@ import {
   type UserMedicationRecommendationDoseSchedule,
   UserMedicationRecommendationType,
 } from '@stanfordbdhg/engagehf-models'
+import { recommendationLocalization } from './recommendationService+localization.js'
 import { BetaBlockerRecommender } from './recommenders/betaBlockerRecommender.js'
 import { DiureticRecommender } from './recommenders/diureticRecommender.js'
 import { MraRecommender } from './recommenders/mraRecommender.js'
@@ -26,7 +27,6 @@ import { Sglt2iRecommender } from './recommenders/sglt2iRecommender.js'
 import { type MedicationRequestContext } from '../../models/medicationRequestContext.js'
 import { type ContraindicationService } from '../contraindication/contraindicationService.js'
 import { type MedicationService } from '../medication/medicationService.js'
-import { recommendationLocalization } from './recommendationService+localization.js'
 
 export interface RecommendationInput {
   requests: MedicationRequestContext[]
