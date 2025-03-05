@@ -9,6 +9,7 @@
 import { isDeepStrictEqual } from 'util'
 import {
   advanceDateByDays,
+  advanceDateByMinutes,
   compactMap,
   type FHIRAllergyIntolerance,
   type FHIRAppointment,
@@ -21,12 +22,20 @@ import {
   type UserMedicationRecommendation,
   UserMedicationRecommendationType,
   UserObservationCollection,
+  UserShareCode,
 } from '@stanfordbdhg/engagehf-models'
 import { type PatientService } from './patientService.js'
 import {
   type Document,
   type DatabaseService,
 } from '../database/databaseService.js'
+import { CollectionsService } from '../database/collections.js'
+import {
+  DocumentData,
+  QueryDocumentSnapshot,
+  QuerySnapshot,
+  Transaction,
+} from 'firebase-admin/firestore'
 
 export class DatabasePatientService implements PatientService {
   // Properties
@@ -340,5 +349,66 @@ export class DatabasePatientService implements PatientService {
       case UserMedicationRecommendationType.noActionRequired:
         return 7
     }
+  }
+
+  // Share Code
+
+  async createShareCode(userId: string): Promise<UserShareCode> {
+    const now = new Date()
+    const object: UserShareCode = {
+      code: Math.random().toString(36).substring(2, 10),
+      expiresAt: advanceDateByMinutes(now, 10),
+    }
+
+    await this.runShareCodeTransaction(
+      userId,
+      now,
+      async (collections, transaction) => {
+        transaction.create(collections.userShareCodes(userId).doc(), object)
+      },
+    )
+
+    return object
+  }
+
+  async validateShareCode(userId: string, code: string): Promise<boolean> {
+    const now = new Date()
+
+    return await this.runShareCodeTransaction(
+      userId,
+      now,
+      async (_, __, codes) => codes.some((doc) => doc.data().code === code),
+    )
+  }
+
+  private async runShareCodeTransaction<T>(
+    userId: string,
+    now: Date,
+    perform: (
+      collections: CollectionsService,
+      transaction: Transaction,
+      codes: QueryDocumentSnapshot<UserShareCode, DocumentData>[],
+    ) => Promise<T>,
+  ): Promise<T> {
+    return await this.databaseService.runTransaction(
+      async (collections, transaction) => {
+        const existingCodes = await collections.userShareCodes(userId).get()
+        const nonExpiredCodes: QueryDocumentSnapshot<
+          UserShareCode,
+          DocumentData
+        >[] = []
+
+        for (const existingDoc of existingCodes.docs) {
+          const existingCode = existingDoc.data()
+          if (existingCode.expiresAt < now) {
+            transaction.delete(existingDoc.ref)
+          } else {
+            nonExpiredCodes.push(existingDoc)
+          }
+        }
+
+        return await perform(collections, transaction, nonExpiredCodes)
+      },
+    )
   }
 }

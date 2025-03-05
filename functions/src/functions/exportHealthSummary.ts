@@ -22,21 +22,34 @@ export const exportHealthSummary = validatedOnCall(
   exportHealthSummaryInputSchema,
   async (request): Promise<ExportHealthSummaryOutput> => {
     const factory = getServiceFactory()
-    const credential = factory.credential(request.auth)
 
     const userService = factory.user()
     const user = await userService.getUser(request.data.userId)
 
-    credential.check(
-      UserRole.admin,
-      UserRole.user(request.data.userId),
-      ...(user?.content.organization ?
-        [
-          UserRole.owner(user.content.organization),
-          UserRole.clinician(user.content.organization),
-        ]
-      : []),
-    )
+    try {
+      const credential = factory.credential(request.auth)
+      credential.check(
+        UserRole.admin,
+        UserRole.user(request.data.userId),
+        ...(user?.content.organization ?
+          [
+            UserRole.owner(user.content.organization),
+            UserRole.clinician(user.content.organization),
+          ]
+        : []),
+      )
+    } catch (error: unknown) {
+      if (request.data.shareCode !== undefined) {
+        const patientService = factory.patient()
+        const isValid = await patientService.validateShareCode(
+          request.data.userId,
+          request.data.shareCode,
+        )
+        if (!isValid) throw error
+      } else {
+        throw error
+      }
+    }
 
     const weightUnit = [QuantityUnit.lbs, QuantityUnit.kg].find(
       (unit) => unit.code === request.data.weightUnit,

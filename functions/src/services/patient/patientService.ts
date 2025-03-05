@@ -15,6 +15,7 @@ import {
   type FHIRQuestionnaireResponse,
   type SymptomScore,
   type UserMedicationRecommendation,
+  UserShareCode,
 } from '@stanfordbdhg/engagehf-models'
 import { type Document } from '../database/databaseService.js'
 
@@ -98,4 +99,9 @@ export interface PatientService {
     symptomScoreId: string,
     symptomScore: SymptomScore | undefined,
   ): Promise<void>
+
+  // Share Code
+
+  createShareCode(userId: string): Promise<UserShareCode>
+  validateShareCode(userId: string, code: string): Promise<boolean>
 }

@@ -18,6 +18,7 @@ import {
   QuantityUnit,
   SymptomScore,
   type UserMedicationRecommendation,
+  UserShareCode,
 } from '@stanfordbdhg/engagehf-models'
 import { type PatientService } from './patientService.js'
 import { mockQuestionnaireResponse } from '../../tests/mocks/questionnaireResponse.js'
@@ -354,5 +355,18 @@ export class MockPatientService implements PatientService {
     symptomScore: SymptomScore | undefined,
   ): Promise<void> {
     return
+  }
+
+  // Share Code
+
+  async createShareCode(userId: string): Promise<UserShareCode> {
+    return {
+      code: '12345678',
+      expiresAt: new Date(2024, 2, 2, 12, 30),
+    }
+  }
+
+  async validateShareCode(userId: string, code: string): Promise<boolean> {
+    return false
   }
 }

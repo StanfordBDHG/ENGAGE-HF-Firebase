@@ -13,11 +13,12 @@ export const exportHealthSummaryInputSchema = z.object({
   userId: z.string(),
   languages: optionalish(z.array(z.string())),
   weightUnit: optionalish(z.string()),
+  shareCode: optionalish(z.string()),
 })
+
 export type ExportHealthSummaryInput = z.input<
   typeof exportHealthSummaryInputSchema
 >
-
 export interface ExportHealthSummaryOutput {
   content: string
 }
