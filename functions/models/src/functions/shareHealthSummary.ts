@@ -7,8 +7,8 @@
 //
 
 import { z } from 'zod'
-import { userShareCodeConverter } from '../types/userShareCode.js'
 import { optionalish } from '../helpers/optionalish.js'
+import { type userShareCodeConverter } from '../types/userShareCode.js'
 
 export const shareHealthSummaryInputSchema = z.object({
   userId: optionalish(z.string()),

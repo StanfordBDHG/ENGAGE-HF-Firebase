@@ -22,20 +22,18 @@ import {
   type UserMedicationRecommendation,
   UserMedicationRecommendationType,
   UserObservationCollection,
-  UserShareCode,
+  type UserShareCode,
 } from '@stanfordbdhg/engagehf-models'
+import {
+  type QueryDocumentSnapshot,
+  type Transaction,
+} from 'firebase-admin/firestore'
 import { type PatientService } from './patientService.js'
+import { type CollectionsService } from '../database/collections.js'
 import {
   type Document,
   type DatabaseService,
 } from '../database/databaseService.js'
-import { CollectionsService } from '../database/collections.js'
-import {
-  DocumentData,
-  QueryDocumentSnapshot,
-  QuerySnapshot,
-  Transaction,
-} from 'firebase-admin/firestore'
 
 export class DatabasePatientService implements PatientService {
   // Properties
@@ -363,7 +361,7 @@ export class DatabasePatientService implements PatientService {
     await this.runShareCodeTransaction(
       userId,
       now,
-      async (collections, transaction) => {
+      (collections, transaction) => {
         transaction.create(collections.userShareCodes(userId).doc(), object)
       },
     )
@@ -374,10 +372,8 @@ export class DatabasePatientService implements PatientService {
   async validateShareCode(userId: string, code: string): Promise<boolean> {
     const now = new Date()
 
-    return await this.runShareCodeTransaction(
-      userId,
-      now,
-      async (_, __, codes) => codes.some((doc) => doc.data().code === code),
+    return this.runShareCodeTransaction(userId, now, (_, __, codes) =>
+      codes.some((doc) => doc.data().code === code),
     )
   }
 
@@ -387,16 +383,13 @@ export class DatabasePatientService implements PatientService {
     perform: (
       collections: CollectionsService,
       transaction: Transaction,
-      codes: QueryDocumentSnapshot<UserShareCode, DocumentData>[],
-    ) => Promise<T>,
+      codes: Array<QueryDocumentSnapshot<UserShareCode>>,
+    ) => Promise<T> | T,
   ): Promise<T> {
-    return await this.databaseService.runTransaction(
+    return this.databaseService.runTransaction(
       async (collections, transaction) => {
         const existingCodes = await collections.userShareCodes(userId).get()
-        const nonExpiredCodes: QueryDocumentSnapshot<
-          UserShareCode,
-          DocumentData
-        >[] = []
+        const nonExpiredCodes: Array<QueryDocumentSnapshot<UserShareCode>> = []
 
         for (const existingDoc of existingCodes.docs) {
           const existingCode = existingDoc.data()
@@ -407,7 +400,7 @@ export class DatabasePatientService implements PatientService {
           }
         }
 
-        return await perform(collections, transaction, nonExpiredCodes)
+        return perform(collections, transaction, nonExpiredCodes)
       },
     )
   }

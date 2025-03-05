@@ -8,11 +8,11 @@
 
 import {
   shareHealthSummaryInputSchema,
-  ShareHealthSummaryOutput,
+  type ShareHealthSummaryOutput,
 } from '@stanfordbdhg/engagehf-models'
 import { validatedOnCall } from './helpers.js'
-import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 import { UserRole } from '../services/credential/credential.js'
+import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
 export const shareHealthSummary = validatedOnCall(
   'shareHealthSummary',
@@ -35,6 +35,6 @@ export const shareHealthSummary = validatedOnCall(
       },
     )
 
-    return await factory.patient().createShareCode(userId)
+    return factory.patient().createShareCode(userId)
   },
 )

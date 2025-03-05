@@ -7,8 +7,8 @@
 //
 
 import { z } from 'zod'
-import { SchemaConverter } from '../helpers/schemaConverter.js'
 import { dateConverter } from '../helpers/dateConverter.js'
+import { SchemaConverter } from '../helpers/schemaConverter.js'
 
 export const userShareCodeConverter = new SchemaConverter({
   schema: z.object({

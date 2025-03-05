@@ -18,7 +18,7 @@ import {
   QuantityUnit,
   SymptomScore,
   type UserMedicationRecommendation,
-  UserShareCode,
+  type UserShareCode,
 } from '@stanfordbdhg/engagehf-models'
 import { type PatientService } from './patientService.js'
 import { mockQuestionnaireResponse } from '../../tests/mocks/questionnaireResponse.js'

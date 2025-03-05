@@ -15,7 +15,7 @@ import {
   type FHIRQuestionnaireResponse,
   type SymptomScore,
   type UserMedicationRecommendation,
-  UserShareCode,
+  type UserShareCode,
 } from '@stanfordbdhg/engagehf-models'
 import { type Document } from '../database/databaseService.js'
 

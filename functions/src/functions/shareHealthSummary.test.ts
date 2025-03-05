@@ -8,10 +8,10 @@
 
 import { UserType } from '@stanfordbdhg/engagehf-models'
 import { expect } from 'chai'
-import { it } from 'mocha'
-import { describeWithEmulators } from '../tests/functions/testEnvironment.js'
-import { shareHealthSummary } from './shareHealthSummary.js'
 import { logger } from 'firebase-functions'
+import { it } from 'mocha'
+import { shareHealthSummary } from './shareHealthSummary.js'
+import { describeWithEmulators } from '../tests/functions/testEnvironment.js'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
