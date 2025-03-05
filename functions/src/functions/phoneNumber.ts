@@ -8,11 +8,11 @@
 
 import {
   checkPhoneNumberVerificationInputSchema,
-  CheckPhoneNumberVerificationOutput,
+  type CheckPhoneNumberVerificationOutput,
   deletePhoneNumberInputSchema,
-  DeletePhoneNumberOutput,
+  type DeletePhoneNumberOutput,
   startPhoneNumberVerificationInputSchema,
-  StartPhoneNumberVerificationOutput,
+  type StartPhoneNumberVerificationOutput,
 } from '@stanfordbdhg/engagehf-models'
 import { validatedOnCall } from './helpers.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'

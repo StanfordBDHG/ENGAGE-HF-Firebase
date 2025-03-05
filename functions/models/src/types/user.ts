@@ -15,8 +15,8 @@ import {
 import { type UserType } from './userType.js'
 import { dateConverter } from '../helpers/dateConverter.js'
 import { Lazy } from '../helpers/lazy.js'
-import { SchemaConverter } from '../helpers/schemaConverter.js'
 import { optionalishDefault } from '../helpers/optionalish.js'
+import { SchemaConverter } from '../helpers/schemaConverter.js'
 
 export const userConverter = new Lazy(
   () =>
@@ -34,7 +34,7 @@ export const userConverter = new Lazy(
         lastActiveDate: dateConverter.encode(object.lastActiveDate),
         dateOfEnrollment: dateConverter.encode(object.dateOfEnrollment),
         invitationCode: object.invitationCode,
-        phoneNumbers: object.phoneNumbers ?? [],
+        phoneNumbers: object.phoneNumbers,
       }),
     }),
 )

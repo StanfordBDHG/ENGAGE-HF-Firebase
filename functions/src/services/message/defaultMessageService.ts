@@ -28,7 +28,7 @@ import {
   type DatabaseService,
 } from '../database/databaseService.js'
 import { type UserService } from '../user/userService.js'
-import { PhoneService } from './phone/phoneService.js'
+import { type PhoneService } from './phone/phoneService.js'
 
 export class DefaultMessageService implements MessageService {
   // Properties
@@ -150,17 +150,15 @@ export class DefaultMessageService implements MessageService {
       { locale: user?.content.language },
     )
 
-    await this.databaseService.runTransaction(
-      async (collections, transaction) => {
-        const verificationRef = collections
-          .userPhoneNumberVerifications(userId)
-          .doc()
-        transaction.set(verificationRef, {
-          phoneNumber: phoneNumber,
-          verificationId: verificationId,
-        })
-      },
-    )
+    await this.databaseService.runTransaction((collections, transaction) => {
+      const verificationRef = collections
+        .userPhoneNumberVerifications(userId)
+        .doc()
+      transaction.set(verificationRef, {
+        phoneNumber: phoneNumber,
+        verificationId: verificationId,
+      })
+    })
   }
 
   async checkPhoneNumberVerification(
@@ -184,7 +182,7 @@ export class DefaultMessageService implements MessageService {
           .userPhoneNumberVerifications(userId)
           .where('phoneNumber', '==', phoneNumber),
       )
-    )?.at(0)
+    ).at(0)
 
     if (verification === undefined) {
       logger.error(
@@ -196,19 +194,17 @@ export class DefaultMessageService implements MessageService {
     const verificationId = verification.content.verificationId
     await this.phoneService.checkVerification(verificationId, code)
 
-    await this.databaseService.runTransaction(
-      async (collections, transaction) => {
-        const userRef = collections.users.doc(userId)
-        transaction.update(userRef, {
-          phoneNumbers: FieldValue.arrayUnion(phoneNumber),
-        })
+    await this.databaseService.runTransaction((collections, transaction) => {
+      const userRef = collections.users.doc(userId)
+      transaction.update(userRef, {
+        phoneNumbers: FieldValue.arrayUnion(phoneNumber),
+      })
 
-        const verificationRef = collections
-          .userPhoneNumberVerifications(userId)
-          .doc(verification.id)
-        transaction.delete(verificationRef)
-      },
-    )
+      const verificationRef = collections
+        .userPhoneNumberVerifications(userId)
+        .doc(verification.id)
+      transaction.delete(verificationRef)
+    })
   }
 
   async deletePhoneNumber(userId: string, phoneNumber: string): Promise<void> {

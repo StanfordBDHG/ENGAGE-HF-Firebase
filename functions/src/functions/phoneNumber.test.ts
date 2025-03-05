@@ -8,7 +8,20 @@
 
 import { describeWithEmulators } from '../tests/functions/testEnvironment.js'
 
-describeWithEmulators('Phone number verification', (env) => {
-  describe('startPhoneNumberVerification', () => {})
-  describe('checkPhoneNumberVerification', () => {})
+describeWithEmulators('Phone number verification', (_) => {
+  describe('startPhoneNumberVerification', () => {
+    it('should start phone number verification', () => {
+      console.log('startPhoneNumberVerification')
+    })
+  })
+  describe('checkPhoneNumberVerification', () => {
+    it('should check phone number verification', () => {
+      console.log('checkPhoneNumberVerification')
+    })
+  })
+  describe('deletePhoneNumber', () => {
+    it('should delete phone number', () => {
+      console.log('deletePhoneNumber')
+    })
+  })
 })

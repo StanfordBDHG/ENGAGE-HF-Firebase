@@ -8,6 +8,7 @@
 
 import { Lazy } from '@stanfordbdhg/engagehf-models'
 import admin from 'firebase-admin'
+import { logger } from 'firebase-functions'
 import { type AuthData } from 'firebase-functions/v2/tasks'
 import { type ServiceFactoryOptions } from './getServiceFactory.js'
 import { type ServiceFactory } from './serviceFactory.js'
@@ -22,6 +23,7 @@ import { DatabaseMedicationService } from '../medication/databaseMedicationServi
 import { type MedicationService } from '../medication/medicationService.js'
 import { DefaultMessageService } from '../message/defaultMessageService.js'
 import { type MessageService } from '../message/messageService.js'
+import { TwilioPhoneService } from '../message/phone/twilioPhoneService.js'
 import { DatabasePatientService } from '../patient/databasePatientService.js'
 import { type PatientService } from '../patient/patientService.js'
 import { RecommendationService } from '../recommendation/recommendationService.js'
@@ -33,8 +35,6 @@ import { type SymptomScoreCalculator } from '../symptomScore/symptomScoreCalcula
 import { TriggerService } from '../trigger/triggerService.js'
 import { DatabaseUserService } from '../user/databaseUserService.js'
 import { type UserService } from '../user/userService.js'
-import { TwilioPhoneService } from '../message/phone/twilioPhoneService.js'
-import { logger } from 'firebase-functions'
 
 export class DefaultServiceFactory implements ServiceFactory {
   // Properties - Options

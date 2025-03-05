@@ -6,9 +6,9 @@
 // SPDX-License-Identifier: MIT
 //
 
-import twilio from 'twilio'
-import { PhoneService } from './phoneService.js'
 import { https } from 'firebase-functions'
+import twilio from 'twilio'
+import { type PhoneService } from './phoneService.js'
 
 export class TwilioPhoneService implements PhoneService {
   // Properties
