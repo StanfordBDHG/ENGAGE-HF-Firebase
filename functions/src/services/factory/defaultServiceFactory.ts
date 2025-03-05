@@ -8,10 +8,10 @@
 
 import { Lazy } from '@stanfordbdhg/engagehf-models'
 import admin from 'firebase-admin'
-import { logger } from 'firebase-functions'
 import { type AuthData } from 'firebase-functions/v2/tasks'
 import { type ServiceFactoryOptions } from './getServiceFactory.js'
 import { type ServiceFactory } from './serviceFactory.js'
+import { Env } from '../../env.js'
 import { DefaultContraindicationService } from '../contraindication/defaultContraindicationService.js'
 import { Credential } from '../credential/credential.js'
 import { FirestoreService } from '../database/firestoreService.js'
@@ -35,7 +35,6 @@ import { type SymptomScoreCalculator } from '../symptomScore/symptomScoreCalcula
 import { TriggerService } from '../trigger/triggerService.js'
 import { DatabaseUserService } from '../user/databaseUserService.js'
 import { type UserService } from '../user/userService.js'
-import { Env } from '../../env.js'
 
 export class DefaultServiceFactory implements ServiceFactory {
   // Properties - Options

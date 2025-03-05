@@ -8,6 +8,8 @@
 
 import { defineSecret } from 'firebase-functions/params'
 
+/* eslint-disable @typescript-eslint/no-extraneous-class */
+
 const twilioPhoneNumber = defineSecret('TWILIO_PHONE_NUMBER')
 const twilioAccountSid = defineSecret('TWILIO_ACCOUNT_SID')
 const twilioAuthToken = defineSecret('TWILIO_AUTH_TOKEN')
