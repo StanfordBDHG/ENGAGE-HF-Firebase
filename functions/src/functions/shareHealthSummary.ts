@@ -12,7 +12,7 @@ import {
   type ShareHealthSummaryOutput,
 } from '@stanfordbdhg/engagehf-models'
 import { validatedOnCall } from './helpers.js'
-import { Constants } from '../flags.js'
+import { Env } from '../env.js'
 import { UserRole } from '../services/credential/credential.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
@@ -38,7 +38,7 @@ export const shareHealthSummary = validatedOnCall(
     )
 
     const shareCodeDocument = await factory.patient().createShareCode(userId)
-    const url = `${Constants.webFrontendBaseUrl}/${shareCodeDocument.path}`
+    const url = `${Env.WEB_FRONTEND_BASE_URL}/${shareCodeDocument.path}`
     const fullUrl = `${url}?code=${shareCodeDocument.content.code}`
     return {
       code: shareCodeDocument.content.code,
