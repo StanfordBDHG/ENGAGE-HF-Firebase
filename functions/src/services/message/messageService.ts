@@ -25,6 +25,21 @@ export interface MessageService {
     platform: UserDevicePlatform,
   ): Promise<void>
 
+  // Text Messages
+
+  startPhoneNumberVerification(
+    userId: string,
+    phoneNumber: string,
+  ): Promise<void>
+
+  checkPhoneNumberVerification(
+    userId: string,
+    phoneNumber: string,
+    code: string,
+  ): Promise<void>
+
+  deletePhoneNumber(userId: string, phoneNumber: string): Promise<void>
+
   // Messages
 
   addMessage(

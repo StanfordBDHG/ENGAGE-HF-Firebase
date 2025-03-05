@@ -133,6 +133,7 @@ export class EmulatorTestEnvironment {
       dateOfEnrollment?: Date
       lastActiveDate?: Date
       invitationCode?: string
+      phoneNumbers?: string[]
       receivesAppointmentReminders?: boolean
       receivesInactivityReminders?: boolean
       receivesMedicationUpdates?: boolean
@@ -163,6 +164,7 @@ export class EmulatorTestEnvironment {
           options.receivesRecommendationUpdates ?? true,
         receivesVitalsReminders: options.receivesVitalsReminders ?? true,
         receivesWeightAlerts: options.receivesWeightAlerts ?? true,
+        phoneNumbers: options.phoneNumbers ?? [],
       }),
     )
     return authUser.uid

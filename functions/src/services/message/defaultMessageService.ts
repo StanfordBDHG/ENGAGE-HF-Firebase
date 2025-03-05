@@ -16,7 +16,10 @@ import {
   userMessageConverter,
   UserMessageType,
 } from '@stanfordbdhg/engagehf-models'
-import { type QueryDocumentSnapshot } from 'firebase-admin/firestore'
+import {
+  FieldValue,
+  type QueryDocumentSnapshot,
+} from 'firebase-admin/firestore'
 import { type Messaging, type TokenMessage } from 'firebase-admin/messaging'
 import { https, logger } from 'firebase-functions'
 import { type MessageService } from './messageService.js'
@@ -25,12 +28,14 @@ import {
   type DatabaseService,
 } from '../database/databaseService.js'
 import { type UserService } from '../user/userService.js'
+import { PhoneService } from './phone/phoneService.js'
 
 export class DefaultMessageService implements MessageService {
   // Properties
 
   private readonly databaseService: DatabaseService
   private readonly messaging: Messaging
+  private readonly phoneService?: PhoneService
   private readonly userService: UserService
 
   // Constructor
@@ -38,10 +43,12 @@ export class DefaultMessageService implements MessageService {
   constructor(
     messaging: Messaging,
     databaseService: DatabaseService,
+    phoneService: PhoneService | null,
     userService: UserService,
   ) {
     this.databaseService = databaseService
     this.messaging = messaging
+    this.phoneService = phoneService ?? undefined
     this.userService = userService
   }
 
@@ -119,6 +126,112 @@ export class DefaultMessageService implements MessageService {
       },
     )
     return
+  }
+
+  // Methods - Phone Numbers
+
+  async startPhoneNumberVerification(
+    userId: string,
+    phoneNumber: string,
+  ): Promise<void> {
+    if (!this.phoneService) {
+      logger.error(
+        `DefaultMessageService.startPhoneNumberVerification(userId: ${userId}, phoneNumber: ${phoneNumber}): Phone verification is not implemented.`,
+      )
+      throw new https.HttpsError(
+        'unimplemented',
+        'Phone verification is not implemented.',
+      )
+    }
+
+    const user = await this.userService.getUser(userId)
+    const verificationId = await this.phoneService.startVerification(
+      phoneNumber,
+      { locale: user?.content.language },
+    )
+
+    await this.databaseService.runTransaction(
+      async (collections, transaction) => {
+        const verificationRef = collections
+          .userPhoneNumberVerifications(userId)
+          .doc()
+        transaction.set(verificationRef, {
+          phoneNumber: phoneNumber,
+          verificationId: verificationId,
+        })
+      },
+    )
+  }
+
+  async checkPhoneNumberVerification(
+    userId: string,
+    phoneNumber: string,
+    code: string,
+  ): Promise<void> {
+    if (!this.phoneService) {
+      logger.error(
+        `DefaultMessageService.checkPhoneNumberVerification(userId: ${userId}, phoneNumber: ${phoneNumber}): Phone verification is not implemented.`,
+      )
+      throw new https.HttpsError(
+        'unimplemented',
+        'Phone verification is not implemented.',
+      )
+    }
+
+    const verification = (
+      await this.databaseService.getQuery((collections) =>
+        collections
+          .userPhoneNumberVerifications(userId)
+          .where('phoneNumber', '==', phoneNumber),
+      )
+    )?.at(0)
+
+    if (verification === undefined) {
+      logger.error(
+        `DefaultMessageService.checkPhoneNumberVerification(userId: ${userId}, phoneNumber: ${phoneNumber}): Phone verification not found.`,
+      )
+      throw new https.HttpsError('not-found', 'Phone verification not found.')
+    }
+
+    const verificationId = verification.content.verificationId
+    await this.phoneService.checkVerification(verificationId, code)
+
+    await this.databaseService.runTransaction(
+      async (collections, transaction) => {
+        const userRef = collections.users.doc(userId)
+        transaction.update(userRef, {
+          phoneNumbers: FieldValue.arrayUnion(phoneNumber),
+        })
+
+        const verificationRef = collections
+          .userPhoneNumberVerifications(userId)
+          .doc(verification.id)
+        transaction.delete(verificationRef)
+      },
+    )
+  }
+
+  async deletePhoneNumber(userId: string, phoneNumber: string): Promise<void> {
+    await this.databaseService.runTransaction(
+      async (collections, transaction) => {
+        const verifications = await transaction.get(
+          collections
+            .userPhoneNumberVerifications(userId)
+            .where('phoneNumber', '==', phoneNumber),
+        )
+        for (const verification of verifications.docs) {
+          logger.debug(
+            `DefaultMessageService.deletePhoneNumber(user: ${userId}, phoneNumber: ${phoneNumber}): Deleting verification at ${verification.ref.path}`,
+          )
+          transaction.delete(verification.ref)
+        }
+
+        const userRef = collections.users.doc(userId)
+        transaction.update(userRef, {
+          phoneNumbers: FieldValue.arrayRemove(phoneNumber),
+        })
+      },
+    )
   }
 
   // Methods - Messages
@@ -349,12 +462,44 @@ export class DefaultMessageService implements MessageService {
         if (!user.receivesAppointmentReminders) return
     }
 
-    await this.sendNotification(input.userId, input.message, {
+    await this.sendTextNotification(input.userId, user, input.message)
+    await this.sendPushNotification(input.userId, input.message, {
       language: user.language,
     })
   }
 
-  private async sendNotification(
+  private async sendTextNotification(
+    userId: string,
+    user: User,
+    message: Document<UserMessage>,
+  ): Promise<void> {
+    if (!this.phoneService) {
+      logger.warn(
+        `DefaultMessageService.sendTextNotification(userId: ${userId}): Phone service is not implemented.`,
+      )
+      return
+    }
+
+    const languages = compact([user.language])
+    for (const phoneNumber of user.phoneNumbers) {
+      const title = message.content.title.localize(...languages)
+      const description =
+        message.content.description?.localize(...languages) ?? ''
+      try {
+        await this.phoneService.sendTextMessage(
+          phoneNumber,
+          [title, description].filter((text) => text.length > 0).join(': '),
+        )
+      } catch (error: unknown) {
+        logger.error(
+          `DefaultMessageService.sendTextNotification(userId: ${userId}): Failed to send message to ${phoneNumber}: ${String(error)}`,
+        )
+        continue
+      }
+    }
+  }
+
+  private async sendPushNotification(
     userId: string,
     message: Document<UserMessage>,
     options: {
