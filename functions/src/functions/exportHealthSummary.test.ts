@@ -39,6 +39,7 @@ describeWithEmulators('function: exportHealthSummary', (env) => {
       exportHealthSummary,
       {
         userId: patientId,
+        shareCodeId: shareCode.url.split('/').at(-1),
         shareCode: shareCode.code,
       },
       {},
