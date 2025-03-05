@@ -344,7 +344,7 @@ class HealthSummaryPdfGenerator extends PdfGenerator {
               this.data.latestBodyWeight?.toFixed(0) ?? '---',
               this.data.lastSevenDayAverageBodyWeight?.toFixed(0) ?? '---',
               bodyWeightRange !== null ?
-                `${bodyWeightRange[0].toFixed(0)}-${bodyWeightRange[1]}`
+                `${bodyWeightRange[0].toFixed(0)}-${bodyWeightRange[1].toFixed(0)}`
               : '---',
             ].map((title) => this.cell(title)),
           ],

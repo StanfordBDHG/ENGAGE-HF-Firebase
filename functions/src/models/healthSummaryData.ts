@@ -9,6 +9,7 @@
 import {
   advanceDateByDays,
   average,
+  median,
   UserMedicationRecommendationType,
   type FHIRAppointment,
   type Observation,
@@ -60,7 +61,7 @@ export class HealthSummaryData {
 
   get medianBodyWeight(): number | null {
     return (
-      average(this.vitals.bodyWeight.map((observation) => observation.value)) ??
+      median(this.vitals.bodyWeight.map((observation) => observation.value)) ??
       null
     )
   }
