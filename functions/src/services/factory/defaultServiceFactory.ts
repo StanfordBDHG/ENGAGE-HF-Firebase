@@ -35,6 +35,7 @@ import { type SymptomScoreCalculator } from '../symptomScore/symptomScoreCalcula
 import { TriggerService } from '../trigger/triggerService.js'
 import { DatabaseUserService } from '../user/databaseUserService.js'
 import { type UserService } from '../user/userService.js'
+import { Env } from '../../env.js'
 
 export class DefaultServiceFactory implements ServiceFactory {
   // Properties - Options
@@ -95,26 +96,15 @@ export class DefaultServiceFactory implements ServiceFactory {
     () => new DatabasePatientService(this.databaseService.value),
   )
 
-  private readonly phoneService = new Lazy(() => {
-    if (
-      !process.env.TWILIO_ACCOUNT_SID ||
-      !process.env.TWILIO_AUTH_TOKEN ||
-      !process.env.TWILIO_PHONE_NUMBER ||
-      !process.env.TWILIO_VERIFY_SERVICE_ID
-    ) {
-      logger.warn(
-        'Twilio environment variables are incomplete. Continuing without Twilio.',
-      )
-      return null
-    }
-
-    return new TwilioPhoneService({
-      accountSid: process.env.TWILIO_ACCOUNT_SID,
-      authToken: process.env.TWILIO_AUTH_TOKEN,
-      phoneNumber: process.env.TWILIO_PHONE_NUMBER,
-      verifyServiceId: process.env.TWILIO_VERIFY_SERVICE_ID,
-    })
-  })
+  private readonly phoneService = new Lazy(
+    () =>
+      new TwilioPhoneService({
+        accountSid: Env.TWILIO_ACCOUNT_SID,
+        authToken: Env.TWILIO_AUTH_TOKEN,
+        phoneNumber: Env.TWILIO_PHONE_NUMBER,
+        verifyServiceId: Env.TWILIO_VERIFY_SERVICE_ID,
+      }),
+  )
 
   private readonly recommendationService = new Lazy(
     () =>
