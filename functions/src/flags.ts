@@ -12,3 +12,8 @@ export namespace Flags {
   export const isEmulator = process.env.FUNCTIONS_EMULATOR === 'true'
   export const requireInvitationOrganizationToMatchSsoProviderId = false
 }
+
+export namespace Constants {
+  export const webFrontendBaseUrl =
+    process.env.WEB_FRONTEND_BASE_URL ?? 'https://engagehf-mock-base-url.com'
+}

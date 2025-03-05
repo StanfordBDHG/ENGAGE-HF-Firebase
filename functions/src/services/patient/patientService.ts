@@ -102,6 +102,10 @@ export interface PatientService {
 
   // Share Code
 
-  createShareCode(userId: string): Promise<UserShareCode>
-  validateShareCode(userId: string, code: string): Promise<boolean>
+  createShareCode(userId: string): Promise<Document<UserShareCode>>
+  validateShareCode(
+    userId: string,
+    documentId: string,
+    code: string,
+  ): Promise<boolean>
 }

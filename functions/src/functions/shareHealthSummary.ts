@@ -7,10 +7,12 @@
 //
 
 import {
+  dateConverter,
   shareHealthSummaryInputSchema,
   type ShareHealthSummaryOutput,
 } from '@stanfordbdhg/engagehf-models'
 import { validatedOnCall } from './helpers.js'
+import { Constants } from '../flags.js'
 import { UserRole } from '../services/credential/credential.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
@@ -35,6 +37,14 @@ export const shareHealthSummary = validatedOnCall(
       },
     )
 
-    return factory.patient().createShareCode(userId)
+    const shareCodeDocument = await factory.patient().createShareCode(userId)
+    const url = `${Constants.webFrontendBaseUrl}/${shareCodeDocument.path}`
+    const fullUrl = `${url}?code=${shareCodeDocument.content.code}`
+    return {
+      code: shareCodeDocument.content.code,
+      expiresAt: dateConverter.encode(shareCodeDocument.content.expiresAt),
+      url: url,
+      fullUrl: fullUrl,
+    }
   },
 )

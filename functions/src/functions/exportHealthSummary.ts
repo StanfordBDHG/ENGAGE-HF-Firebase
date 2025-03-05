@@ -39,10 +39,14 @@ export const exportHealthSummary = validatedOnCall(
         : []),
       )
     } catch (error: unknown) {
-      if (request.data.shareCode !== undefined) {
+      if (
+        request.data.shareCode !== undefined &&
+        request.data.shareCodeId !== undefined
+      ) {
         const patientService = factory.patient()
         const isValid = await patientService.validateShareCode(
           request.data.userId,
+          request.data.shareCodeId,
           request.data.shareCode,
         )
         if (!isValid) throw error

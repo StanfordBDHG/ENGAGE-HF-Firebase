@@ -25,6 +25,7 @@ import {
   type UserShareCode,
 } from '@stanfordbdhg/engagehf-models'
 import {
+  FieldValue,
   type QueryDocumentSnapshot,
   type Transaction,
 } from 'firebase-admin/firestore'
@@ -351,30 +352,55 @@ export class DatabasePatientService implements PatientService {
 
   // Share Code
 
-  async createShareCode(userId: string): Promise<UserShareCode> {
+  async createShareCode(userId: string): Promise<Document<UserShareCode>> {
     const now = new Date()
     const object: UserShareCode = {
       code: Math.random().toString(36).substring(2, 10),
+      tries: 0,
       expiresAt: advanceDateByMinutes(now, 10),
     }
 
-    await this.runShareCodeTransaction(
+    const ref = await this.runShareCodeTransaction(
       userId,
       now,
       (collections, transaction) => {
-        transaction.create(collections.userShareCodes(userId).doc(), object)
+        const ref = collections.userShareCodes(userId).doc()
+        transaction.create(ref, object)
+        return ref
       },
     )
 
-    return object
+    return {
+      id: ref.id,
+      path: ref.path,
+      lastUpdate: now,
+      content: object,
+    }
   }
 
-  async validateShareCode(userId: string, code: string): Promise<boolean> {
+  async validateShareCode(
+    userId: string,
+    documentId: string,
+    code: string,
+  ): Promise<boolean> {
     const now = new Date()
 
-    return this.runShareCodeTransaction(userId, now, (_, __, codes) =>
-      codes.some((doc) => doc.data().code === code),
-    )
+    return this.runShareCodeTransaction(userId, now, (_, transaction, docs) => {
+      const shareCodeDoc = docs.find((doc) => doc.id === documentId)
+      if (shareCodeDoc === undefined) return false
+      const shareCodeData = shareCodeDoc.data()
+      if (shareCodeData.code !== code) {
+        if (shareCodeData.tries <= 3) {
+          transaction.update(shareCodeDoc.ref, {
+            tries: FieldValue.increment(1),
+          })
+        } else {
+          transaction.delete(shareCodeDoc.ref)
+        }
+        return false
+      }
+      return true
+    })
   }
 
   private async runShareCodeTransaction<T>(

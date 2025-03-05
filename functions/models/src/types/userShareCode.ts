@@ -13,10 +13,12 @@ import { SchemaConverter } from '../helpers/schemaConverter.js'
 export const userShareCodeConverter = new SchemaConverter({
   schema: z.object({
     code: z.string(),
+    tries: z.number(),
     expiresAt: dateConverter.schema,
   }),
   encode: (object) => ({
     code: object.code,
+    tries: object.tries,
     expiresAt: dateConverter.encode(object.expiresAt),
   }),
 })

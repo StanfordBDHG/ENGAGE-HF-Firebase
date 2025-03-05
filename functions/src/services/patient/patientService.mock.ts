@@ -359,14 +359,24 @@ export class MockPatientService implements PatientService {
 
   // Share Code
 
-  async createShareCode(userId: string): Promise<UserShareCode> {
+  async createShareCode(userId: string): Promise<Document<UserShareCode>> {
     return {
-      code: '12345678',
-      expiresAt: new Date(2024, 2, 2, 12, 30),
+      id: '123',
+      lastUpdate: new Date(),
+      path: 'users/123/shareCode/123',
+      content: {
+        code: '12345678',
+        tries: 0,
+        expiresAt: new Date(2024, 2, 2, 12, 30),
+      },
     }
   }
 
-  async validateShareCode(userId: string, code: string): Promise<boolean> {
+  async validateShareCode(
+    userId: string,
+    documentId: string,
+    code: string,
+  ): Promise<boolean> {
     return false
   }
 }

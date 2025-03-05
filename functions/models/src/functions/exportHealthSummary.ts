@@ -14,6 +14,7 @@ export const exportHealthSummaryInputSchema = z.object({
   languages: optionalish(z.array(z.string())),
   weightUnit: optionalish(z.string()),
   shareCode: optionalish(z.string()),
+  shareCodeId: optionalish(z.string()),
 })
 
 export type ExportHealthSummaryInput = z.input<
