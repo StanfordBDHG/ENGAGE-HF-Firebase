@@ -8,8 +8,11 @@
 
 import { z } from 'zod'
 
+const phoneNumberRegex = /^\+?[1-9]\d{1,14}$/
+const codeRegex = /^\d{6}$/
+
 export const startPhoneNumberVerificationInputSchema = z.object({
-  phoneNumber: z.string().regex(/^\+?[1-9]\d{1,14}$/),
+  phoneNumber: z.string().regex(phoneNumberRegex),
 })
 export type StartPhoneNumberVerificationInput = z.input<
   typeof startPhoneNumberVerificationInputSchema
@@ -17,8 +20,8 @@ export type StartPhoneNumberVerificationInput = z.input<
 export type StartPhoneNumberVerificationOutput = undefined
 
 export const checkPhoneNumberVerificationInputSchema = z.object({
-  phoneNumber: z.string().regex(/^\+?[1-9]\d{1,14}$/),
-  code: z.string().regex(/^\d{6}$/),
+  phoneNumber: z.string().regex(phoneNumberRegex),
+  code: z.string().regex(codeRegex),
 })
 export type CheckPhoneNumberVerificationInput = z.input<
   typeof checkPhoneNumberVerificationInputSchema
@@ -26,7 +29,7 @@ export type CheckPhoneNumberVerificationInput = z.input<
 export type CheckPhoneNumberVerificationOutput = undefined
 
 export const deletePhoneNumberInputSchema = z.object({
-  phoneNumber: z.string().regex(/^\+?[1-9]\d{1,14}$/),
+  phoneNumber: z.string().regex(phoneNumberRegex),
 })
 export type DeletePhoneNumberInput = z.input<
   typeof deletePhoneNumberInputSchema
