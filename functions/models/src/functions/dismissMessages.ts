@@ -17,6 +17,6 @@ export const dismissMessagesInputSchema = z.object({
 })
 export type DismissMessagesInput = z.input<typeof dismissMessagesInputSchema>
 
-export type DismissMessagesOutput = {
+export interface DismissMessagesOutput {
   dismissedCount: number
 }
