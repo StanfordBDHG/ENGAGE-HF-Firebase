@@ -23,17 +23,12 @@ export const dismissMessages = validatedOnCall(
     const userId = request.data.userId ?? credential.userId
     credential.check(UserRole.admin, UserRole.user(userId))
 
-    const dismissedCount = await factory
-      .message()
-      .dismissMessages(
-        userId,
-        {
-          messageIds: request.data.messageIds,
-          dismissAll: request.data.dismissAll,
-          didPerformAction: request.data.didPerformAction,
-        },
-      )
-      
+    const dismissedCount = await factory.message().dismissMessages(userId, {
+      messageIds: request.data.messageIds,
+      dismissAll: request.data.dismissAll,
+      didPerformAction: request.data.didPerformAction,
+    })
+
     return { dismissedCount }
   },
 )

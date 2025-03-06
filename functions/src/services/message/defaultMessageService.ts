@@ -267,31 +267,31 @@ export class DefaultMessageService implements MessageService {
     logger.info(
       `dismissMessages for user/${userId} with options: ${JSON.stringify(options)}`,
     )
-    
-    return await this.databaseService.runTransaction(
+
+    return this.databaseService.runTransaction(
       async (collections, transaction) => {
         // If specific message IDs were provided
         if (options.messageIds && options.messageIds.length > 0) {
           logger.debug(
             `dismissMessages: Processing ${options.messageIds.length} specific messages for user/${userId}`,
           )
-          
-          // Get all messages in a batch 
-          const messageRefs = options.messageIds.map(messageId => 
-            collections.userMessages(userId).doc(messageId)
+
+          // Get all messages in a batch
+          const messageRefs = options.messageIds.map((messageId) =>
+            collections.userMessages(userId).doc(messageId),
           )
-          
+
           const messageSnapshots = await Promise.all(
-            messageRefs.map(ref => transaction.get(ref))
+            messageRefs.map((ref) => transaction.get(ref)),
           )
-          
+
           let dismissedCount = 0
-          
+
           // Then process and write updates after all reads are complete
           messageSnapshots.forEach((message, index) => {
             const messageContent = message.data()
-            
-            if (message.exists && messageContent && messageContent.isDismissible) {
+
+            if (message.exists && messageContent?.isDismissible) {
               transaction.set(
                 messageRefs[index],
                 new UserMessage({
@@ -302,28 +302,28 @@ export class DefaultMessageService implements MessageService {
               dismissedCount++
             }
           })
-          
+
           return dismissedCount
         }
-        
+
         // If dismissAll was requested
         if (options.dismissAll) {
           logger.debug(
             `dismissMessages: Dismissing all dismissible messages for user/${userId}`,
           )
-          
+
           const messages = await transaction.get(
             collections
               .userMessages(userId)
               .where('completionDate', '==', null)
               .where('isDismissible', '==', true),
           )
-          
+
           logger.debug(
             `dismissMessages: Found ${messages.size} dismissible messages for user/${userId}`,
           )
-          
-          messages.forEach(message => {
+
+          messages.forEach((message) => {
             transaction.set(
               message.ref,
               new UserMessage({
@@ -332,10 +332,10 @@ export class DefaultMessageService implements MessageService {
               }),
             )
           })
-          
+
           return messages.size
         }
-        
+
         // If neither options were provided, return 0
         return 0
       },
