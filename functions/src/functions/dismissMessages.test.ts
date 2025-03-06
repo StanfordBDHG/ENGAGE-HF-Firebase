@@ -14,13 +14,8 @@ import {
 } from '@stanfordbdhg/engagehf-models'
 import { expect } from 'chai'
 import { it } from 'mocha'
-import { DefaultServiceFactory } from '../services/factory/defaultServiceFactory.js'
-import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 import { describeWithEmulators } from '../tests/functions/testEnvironment.js'
 import { dismissMessages } from './dismissMessages.js'
-
-// No need to mock in the Mocha/Chai testing environment
-// The project uses real emulators instead of mocks
 
 describeWithEmulators('function: dismissMessages', (env) => {
   it('should dismiss multiple messages when messageIds are provided', async () => {
@@ -67,7 +62,6 @@ describeWithEmulators('function: dismissMessages', (env) => {
       }
     )
     
-    // Verify both messages were dismissed
     expect(result).to.have.property('dismissedCount')
     expect(result.dismissedCount).to.be.at.least(1)
     
@@ -163,7 +157,7 @@ describeWithEmulators('function: dismissMessages', (env) => {
       },
       {
         uid: admin.uid,
-        token: { role: UserType.admin, organization: 'stanford' },
+        token: { type: UserType.admin, organization: 'stanford' },
       }
     )
     

@@ -276,15 +276,24 @@ export class DefaultMessageService implements MessageService {
             `dismissMessages: Processing ${options.messageIds.length} specific messages for user/${userId}`,
           )
           
+          // Get all messages in a batch 
+          const messageRefs = options.messageIds.map(messageId => 
+            collections.userMessages(userId).doc(messageId)
+          )
+          
+          const messageSnapshots = await Promise.all(
+            messageRefs.map(ref => transaction.get(ref))
+          )
+          
           let dismissedCount = 0
-          for (const messageId of options.messageIds) {
-            const messageRef = collections.userMessages(userId).doc(messageId)
-            const message = await transaction.get(messageRef)
+          
+          // Then process and write updates after all reads are complete
+          messageSnapshots.forEach((message, index) => {
             const messageContent = message.data()
             
             if (message.exists && messageContent && messageContent.isDismissible) {
               transaction.set(
-                messageRef,
+                messageRefs[index],
                 new UserMessage({
                   ...messageContent,
                   completionDate: new Date(),
@@ -292,7 +301,7 @@ export class DefaultMessageService implements MessageService {
               )
               dismissedCount++
             }
-          }
+          })
           
           return dismissedCount
         }
