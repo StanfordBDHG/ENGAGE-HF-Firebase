@@ -9,6 +9,7 @@
 import {
   advanceDateByDays,
   average,
+  median,
   UserMedicationRecommendationType,
   type FHIRAppointment,
   type Observation,
@@ -60,19 +61,19 @@ export class HealthSummaryData {
 
   get medianBodyWeight(): number | null {
     return (
-      average(this.vitals.bodyWeight.map((observation) => observation.value)) ??
+      median(this.vitals.bodyWeight.map((observation) => observation.value)) ??
       null
     )
   }
 
-  get bodyWeightRange(): number | null {
+  get bodyWeightRange(): [number, number] | null {
     const bodyWeightValues = this.vitals.bodyWeight.map(
       (observation) => observation.value,
     )
     const minWeight = Math.min(...bodyWeightValues)
     const maxWeight = Math.max(...bodyWeightValues)
     return isFinite(minWeight) && isFinite(maxWeight) ?
-        maxWeight - minWeight
+        [minWeight, maxWeight]
       : null
   }
 

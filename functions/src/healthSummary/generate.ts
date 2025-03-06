@@ -330,6 +330,7 @@ class HealthSummaryPdfGenerator extends PdfGenerator {
           columnWidth,
           this.data.vitals.dryWeight?.value,
         )
+        const bodyWeightRange = this.data.bodyWeightRange
         this.addTable(
           [
             [
@@ -342,7 +343,9 @@ class HealthSummaryPdfGenerator extends PdfGenerator {
               this.texts.vitalsSection.bodyWeightTable.rowTitle,
               this.data.latestBodyWeight?.toFixed(0) ?? '---',
               this.data.lastSevenDayAverageBodyWeight?.toFixed(0) ?? '---',
-              this.data.bodyWeightRange?.toFixed(0) ?? '---',
+              bodyWeightRange !== null ?
+                `${bodyWeightRange[0].toFixed(0)}-${bodyWeightRange[1].toFixed(0)}`
+              : '---',
             ].map((title) => this.cell(title)),
           ],
           columnWidth,
@@ -374,7 +377,7 @@ class HealthSummaryPdfGenerator extends PdfGenerator {
               this.texts.vitalsSection.heartRateTable.rowTitle,
               presortedMedian(values)?.toFixed(0) ?? '---',
               upperMedian && lowerMedian ?
-                (upperMedian - lowerMedian).toFixed(0)
+                `${lowerMedian.toFixed(0)}-${upperMedian.toFixed(0)}`
               : '---',
               percentage(values, (value) => value < 50)?.toFixed(0) ?? '---',
               percentage(values, (value) => value > 120)?.toFixed(0) ?? '---',
@@ -441,7 +444,7 @@ class HealthSummaryPdfGenerator extends PdfGenerator {
           this.texts.vitalsSection.bloodPressureTable.systolicRowTitle,
           presortedMedian(systolicValues)?.toFixed(0) ?? '---',
           systolicUpperMedian && systolicLowerMedian ?
-            (systolicUpperMedian - systolicLowerMedian).toFixed(0)
+            `${systolicLowerMedian.toFixed(0)}-${systolicUpperMedian.toFixed(0)}`
           : '---',
           percentage(systolicValues, (value) => value < 90)?.toFixed(0) ??
             '---',
@@ -455,7 +458,7 @@ class HealthSummaryPdfGenerator extends PdfGenerator {
           this.texts.vitalsSection.bloodPressureTable.diastolicRowTitle,
           presortedMedian(diastolicValues)?.toFixed(0) ?? '---',
           diastolicUpperMedian && diastolicLowerMedian ?
-            (diastolicUpperMedian - diastolicLowerMedian).toFixed(0)
+            `${diastolicLowerMedian.toFixed(0)}-${diastolicUpperMedian.toFixed(0)}`
           : '---',
           '-',
           '-',
