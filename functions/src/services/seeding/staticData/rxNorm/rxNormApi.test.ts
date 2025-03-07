@@ -9,8 +9,11 @@
 import { expect } from 'chai'
 import { describe } from 'mocha'
 import { RxNormApi } from './rxNormApi.js'
+import { TestFlags } from '../../../../tests/testFlags.js'
 
 describe('RxNormApi', () => {
+  if (!TestFlags.connectsToRxNormApi) return
+
   const api = new RxNormApi()
 
   it('getAllRxTermInfo: Medication', async () => {

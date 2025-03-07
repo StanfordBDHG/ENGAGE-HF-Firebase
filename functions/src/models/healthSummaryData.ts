@@ -9,6 +9,7 @@
 import {
   advanceDateByDays,
   average,
+  median,
   UserMedicationRecommendationType,
   type FHIRAppointment,
   type Observation,
@@ -60,19 +61,19 @@ export class HealthSummaryData {
 
   get medianBodyWeight(): number | null {
     return (
-      average(this.vitals.bodyWeight.map((observation) => observation.value)) ??
+      median(this.vitals.bodyWeight.map((observation) => observation.value)) ??
       null
     )
   }
 
-  get bodyWeightRange(): number | null {
+  get bodyWeightRange(): [number, number] | null {
     const bodyWeightValues = this.vitals.bodyWeight.map(
       (observation) => observation.value,
     )
     const minWeight = Math.min(...bodyWeightValues)
     const maxWeight = Math.max(...bodyWeightValues)
     return isFinite(minWeight) && isFinite(maxWeight) ?
-        maxWeight - minWeight
+        [minWeight, maxWeight]
       : null
   }
 
@@ -88,12 +89,13 @@ export class HealthSummaryData {
 
   // Computed Properties - KeyPoints
 
-  get dizzinessCategory(): HealthSummaryDizzinessCategory | null {
+  get dizzinessCategory(): HealthSummaryDizzinessCategory {
     const latestScore = this.latestSymptomScore?.dizzinessScore ?? null
     const secondLatestScore =
       this.secondLatestSymptomScore?.dizzinessScore ?? null
 
-    if (latestScore === null || secondLatestScore === null) return null
+    if (latestScore === null || secondLatestScore === null)
+      return HealthSummaryDizzinessCategory.INADEQUATE
 
     return latestScore - secondLatestScore < 0 ?
         HealthSummaryDizzinessCategory.WORSENING
@@ -131,11 +133,12 @@ export class HealthSummaryData {
       : null
   }
 
-  get symptomScoreCategory(): HealthSummarySymptomScoreCategory | null {
+  get symptomScoreCategory(): HealthSummarySymptomScoreCategory {
     const latestScore = this.latestSymptomScore
     const secondLatestScore = this.secondLatestSymptomScore
 
-    if (latestScore === null || secondLatestScore === null) return null
+    if (latestScore === null || secondLatestScore === null)
+      return HealthSummarySymptomScoreCategory.INADEQUATE
 
     if (latestScore.overallScore - secondLatestScore.overallScore <= -10)
       return HealthSummarySymptomScoreCategory.WORSENING
