@@ -47,4 +47,13 @@ export interface MessageService {
     messageId: string,
     didPerformAction: boolean,
   ): Promise<void>
+
+  dismissMessages(
+    userId: string,
+    options: {
+      messageIds?: string[]
+      dismissAll?: boolean
+      didPerformAction: boolean
+    },
+  ): Promise<number>
 }
