@@ -11,8 +11,7 @@ import { optionalish, optionalishDefault } from '../helpers/optionalish.js'
 
 export const dismissMessagesInputSchema = z.object({
   userId: optionalish(z.string()),
-  messageIds: z.array(z.string()).optional(),
-  dismissAll: optionalishDefault(z.boolean(), false),
+  messageIds: optionalish(z.array(z.string())),
   didPerformAction: optionalishDefault(z.boolean(), false),
 })
 export type DismissMessagesInput = z.input<typeof dismissMessagesInputSchema>

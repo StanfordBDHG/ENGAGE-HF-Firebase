@@ -18,7 +18,7 @@ import { dismissMessages } from './dismissMessages.js'
 import { describeWithEmulators } from '../tests/functions/testEnvironment.js'
 
 describeWithEmulators('function: dismissMessages', (env) => {
-  it('should dismiss multiple messages when messageIds are provided', async () => {
+  it('should dismiss only specified messages when messageIds are provided', async () => {
     // Create test user
     const user = await env.auth.createUser({})
     // Create dismissible messages
@@ -40,12 +40,23 @@ describeWithEmulators('function: dismissMessages', (env) => {
       completionDate: undefined,
       isDismissible: true,
     })
+    const message3 = new UserMessage({
+      type: UserMessageType.medicationChange,
+      title: new LocalizedText({ text: 'Test Title 3' }),
+      description: new LocalizedText({ text: 'Test Description 3' }),
+      reference: 'test-reference-3',
+      creationDate: new Date(),
+      completionDate: undefined,
+      isDismissible: true,
+    })
 
     // Save messages to the database
     const messageRef1 = env.collections.userMessages(user.uid).doc()
     const messageRef2 = env.collections.userMessages(user.uid).doc()
+    const messageRef3 = env.collections.userMessages(user.uid).doc()
     await messageRef1.set(message1)
     await messageRef2.set(message2)
+    await messageRef3.set(message3)
 
     // Call the dismissMessages function
     const result = await env.call(
@@ -61,16 +72,20 @@ describeWithEmulators('function: dismissMessages', (env) => {
     )
 
     expect(result).to.have.property('dismissedCount')
-    expect(result.dismissedCount).to.be.at.least(1)
+    expect(result.dismissedCount).to.equal(2)
 
-    // Check the messages have completion dates
+    // Check that the specified messages have completion dates
     const actualMessage1 = await messageRef1.get()
     const actualMessage2 = await messageRef2.get()
     expect(actualMessage1.data()?.completionDate).to.exist
     expect(actualMessage2.data()?.completionDate).to.exist
+
+    // Check that the unspecified message does NOT have a completion date
+    const actualMessage3 = await messageRef3.get()
+    expect(actualMessage3.data()?.completionDate).to.not.exist
   })
 
-  it('should dismiss all dismissible messages when dismissAll is true', async () => {
+  it('should dismiss all dismissible messages when no messageIds are provided', async () => {
     // Create test user
     const user = await env.auth.createUser({})
 
@@ -103,11 +118,10 @@ describeWithEmulators('function: dismissMessages', (env) => {
     await dismissibleRef.set(dismissibleMessage)
     await nonDismissibleRef.set(nonDismissibleMessage)
 
-    // Call the dismissMessages function with dismissAll=true
+    // Call the dismissMessages function without messageIds
     const result = await env.call(
       dismissMessages,
       {
-        dismissAll: true,
         didPerformAction: false,
       },
       {

@@ -260,7 +260,6 @@ export class DefaultMessageService implements MessageService {
     userId: string,
     options: {
       messageIds?: string[]
-      dismissAll?: boolean
       didPerformAction: boolean
     },
   ): Promise<number> {
@@ -306,38 +305,35 @@ export class DefaultMessageService implements MessageService {
           return dismissedCount
         }
 
-        // If dismissAll was requested
-        if (options.dismissAll) {
-          logger.debug(
-            `dismissMessages: Dismissing all dismissible messages for user/${userId}`,
+        // If no messageIds were provided, dismiss all dismissible messages
+        logger.debug(
+          `dismissMessages: Dismissing all dismissible messages for user/${userId}`,
+        )
+
+        const messagesSnapshot = await transaction.get(
+          collections.userMessages(userId).where('completionDate', '==', null),
+        )
+
+        // Filter in memory to get only dismissible messages
+        const messages = messagesSnapshot.docs.filter(
+          (doc) => doc.data().isDismissible,
+        )
+
+        logger.debug(
+          `dismissMessages: Found ${messages.length} dismissible messages for user/${userId}`,
+        )
+
+        messages.forEach((message) => {
+          transaction.set(
+            message.ref,
+            new UserMessage({
+              ...message.data(),
+              completionDate: new Date(),
+            }),
           )
+        })
 
-          const messages = await transaction.get(
-            collections
-              .userMessages(userId)
-              .where('completionDate', '==', null)
-              .where('isDismissible', '==', true),
-          )
-
-          logger.debug(
-            `dismissMessages: Found ${messages.size} dismissible messages for user/${userId}`,
-          )
-
-          messages.forEach((message) => {
-            transaction.set(
-              message.ref,
-              new UserMessage({
-                ...message.data(),
-                completionDate: new Date(),
-              }),
-            )
-          })
-
-          return messages.size
-        }
-
-        // If neither options were provided, return 0
-        return 0
+        return messages.length
       },
     )
   }

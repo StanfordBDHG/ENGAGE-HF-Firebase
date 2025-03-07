@@ -25,7 +25,6 @@ export const dismissMessages = validatedOnCall(
 
     const dismissedCount = await factory.message().dismissMessages(userId, {
       messageIds: request.data.messageIds,
-      dismissAll: request.data.dismissAll,
       didPerformAction: request.data.didPerformAction,
     })
 
