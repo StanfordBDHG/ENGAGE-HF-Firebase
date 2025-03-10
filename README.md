@@ -40,6 +40,9 @@ To make this structure simpler to use, we provide different scripts as part of t
 |npm run test:ci|Tests the Firebase functions with emulators running and with test coverage collection active.|
 |npm run serve:seeded|Starts up the relevant emulators for ENGAGE-HF and seeds them. Make sure to build the project first before executing this command.|
 
+
+### Using the emulator for client applications
+
 For using the emulators for client applications, it is probably easiest to call `npm run prepare` whenever files could have changed (e.g. when changing branch or pulling new changes) and then calling `npm run serve:seeded` to start up the emulators in a seeded state. Both of these commands are performed in the root directory of this repository.
 
 Otherwise, you may want to use Docker to run the emulators.  For this, you can use the following command:
