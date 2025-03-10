@@ -38,7 +38,7 @@ export const shareHealthSummary = validatedOnCall(
     )
 
     const shareCodeDocument = await factory.patient().createShareCode(userId)
-    const url = `${Env.WEB_FRONTEND_BASE_URL}/${shareCodeDocument.path}`
+    const url = `${Env.WEB_FRONTEND_BASE_URL}/users/${userId}/healthSummary/${shareCodeDocument.id}`
     const fullUrl = `${url}?code=${shareCodeDocument.content.code}`
     return {
       code: shareCodeDocument.content.code,
