@@ -210,7 +210,7 @@ export class TriggerService {
           await patientService.getBodyWeightObservations(
             userId,
             QuantityUnit.lbs,
-            advanceDateByDays(date, -14),
+            advanceDateByDays(date, -7),
           )
 
         const bodyWeightMedian = median(
