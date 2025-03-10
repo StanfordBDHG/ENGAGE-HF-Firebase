@@ -392,7 +392,7 @@ export class DatabasePatientService implements PatientService {
         const shareCodeDoc = docs.find((doc) => doc.id === documentId)
         if (shareCodeDoc === undefined) return false
         const shareCodeData = shareCodeDoc.data()
-        if (shareCodeData.code !== code) {
+        if (shareCodeData.code.toLowerCase() !== code.toLowerCase()) {
           if (shareCodeData.tries > 1) {
             transaction.update(
               shareCodeDoc.ref,
