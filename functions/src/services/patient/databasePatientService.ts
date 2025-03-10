@@ -385,28 +385,24 @@ export class DatabasePatientService implements PatientService {
   ): Promise<boolean> {
     const now = new Date()
 
-    return await this.runShareCodeTransaction(
-      userId,
-      now,
-      (_, transaction, docs) => {
-        const shareCodeDoc = docs.find((doc) => doc.id === documentId)
-        if (shareCodeDoc === undefined) return false
-        const shareCodeData = shareCodeDoc.data()
-        if (shareCodeData.code.toLowerCase() !== code.toLowerCase()) {
-          if (shareCodeData.tries > 1) {
-            transaction.update(
-              shareCodeDoc.ref,
-              'tries',
-              FieldValue.increment(-1),
-            )
-          } else {
-            transaction.delete(shareCodeDoc.ref)
-          }
-          return false
+    return this.runShareCodeTransaction(userId, now, (_, transaction, docs) => {
+      const shareCodeDoc = docs.find((doc) => doc.id === documentId)
+      if (shareCodeDoc === undefined) return false
+      const shareCodeData = shareCodeDoc.data()
+      if (shareCodeData.code.toLowerCase() !== code.toLowerCase()) {
+        if (shareCodeData.tries > 1) {
+          transaction.update(
+            shareCodeDoc.ref,
+            'tries',
+            FieldValue.increment(-1),
+          )
+        } else {
+          transaction.delete(shareCodeDoc.ref)
         }
-        return true
-      },
-    )
+        return false
+      }
+      return true
+    })
   }
 
   private async runShareCodeTransaction<T>(
@@ -418,7 +414,7 @@ export class DatabasePatientService implements PatientService {
       codes: Array<QueryDocumentSnapshot<UserShareCode>>,
     ) => Promise<T> | T,
   ): Promise<T> {
-    return await this.databaseService.runTransaction(
+    return this.databaseService.runTransaction(
       async (collections, transaction) => {
         const existingCodes = await collections.userShareCodes(userId).get()
         const nonExpiredCodes: Array<QueryDocumentSnapshot<UserShareCode>> = []
@@ -432,7 +428,7 @@ export class DatabasePatientService implements PatientService {
           }
         }
 
-        return await perform(collections, transaction, nonExpiredCodes)
+        return perform(collections, transaction, nonExpiredCodes)
       },
     )
   }
