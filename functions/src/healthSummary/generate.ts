@@ -119,7 +119,7 @@ class HealthSummaryPdfGenerator extends PdfGenerator {
     const innerWidth = this.pageWidth - this.margins.left - this.margins.right
     const pageNumberText = this.localizer.text(
       'headerPageNumber',
-      this.doc.getNumberOfPages().toString(),
+      this.doc.getNumberOfPages().toFixed(0),
     )
     const pageNumberWidth = this.doc.getTextWidth(pageNumberText)
     this.cursor.x = this.margins.left + innerWidth - pageNumberWidth
@@ -555,8 +555,8 @@ class HealthSummaryPdfGenerator extends PdfGenerator {
     const currentScore = this.data.latestSymptomScore?.overallScore
     const previousScore = this.data.secondLatestSymptomScore?.overallScore
     if (currentScore === undefined || previousScore === undefined) return null
-    const currentScoreText = currentScore.toString() + '%'
-    const previousScoreText = previousScore.toString() + '%'
+    const currentScoreText = currentScore.toFixed(0) + '%'
+    const previousScoreText = previousScore.toFixed(0) + '%'
     const improvement = currentScore - previousScore
 
     if (currentScore >= 90) {
