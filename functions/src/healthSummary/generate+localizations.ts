@@ -230,8 +230,8 @@ export function healthSummaryLocalizations(languages: string[]) {
         currentHeader: localize({
           en: 'Current',
         }),
-        sevenDayAverageHeader: localize({
-          en: '7-Day Average',
+        sevenDayMedianHeader: localize({
+          en: '7-Day Median',
         }),
         rangeHeader: localize({
           en: 'Range',
