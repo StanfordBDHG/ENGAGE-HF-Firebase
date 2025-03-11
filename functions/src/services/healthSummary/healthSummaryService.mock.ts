@@ -47,9 +47,9 @@ export class MockHealthSummaryService implements HealthSummaryService {
         {
           currentMedication: [],
           displayInformation: {
-            title: new LocalizedText('Losartan (Cozaar)'),
-            subtitle: new LocalizedText(''),
-            description: LocalizedText.parametrized(
+            title: LocalizedText.raw('Losartan (Cozaar)'),
+            subtitle: LocalizedText.raw(''),
+            description: LocalizedText.create(
               recommendationLocalization.improvementAvailableMoreEffectiveMed,
               'Sacubitril-Valsartan',
             ),
@@ -65,9 +65,9 @@ export class MockHealthSummaryService implements HealthSummaryService {
         {
           currentMedication: [],
           displayInformation: {
-            title: new LocalizedText('Dapagliflozin (Farxiga)'),
-            subtitle: new LocalizedText(''),
-            description: new LocalizedText(
+            title: LocalizedText.raw('Dapagliflozin (Farxiga)'),
+            subtitle: LocalizedText.raw(''),
+            description: LocalizedText.create(
               recommendationLocalization.targetDoseReached,
             ),
             type: UserMedicationRecommendationType.targetDoseReached,
@@ -82,9 +82,9 @@ export class MockHealthSummaryService implements HealthSummaryService {
         {
           currentMedication: [],
           displayInformation: {
-            title: new LocalizedText('Carvedilol (Coreg)'),
-            subtitle: new LocalizedText(''),
-            description: new LocalizedText(
+            title: LocalizedText.raw('Carvedilol (Coreg)'),
+            subtitle: LocalizedText.raw(''),
+            description: LocalizedText.create(
               recommendationLocalization.notStarted,
             ),
             type: UserMedicationRecommendationType.notStarted,

@@ -76,8 +76,10 @@ export class UserMessage {
   ): UserMessage {
     return new UserMessage({
       creationDate: input.creationDate ?? new Date(),
-      title: new LocalizedText(messagesLocalization.inactiveTitle),
-      description: new LocalizedText(messagesLocalization.inactiveDescription),
+      title: LocalizedText.create(messagesLocalization.inactiveTitle),
+      description: LocalizedText.create(
+        messagesLocalization.inactiveDescription,
+      ),
       action: undefined,
       type: UserMessageType.inactive,
       isDismissible: false,
@@ -92,14 +94,14 @@ export class UserMessage {
   }): UserMessage {
     return new UserMessage({
       creationDate: input.creationDate ?? new Date(),
-      title: new LocalizedText(messagesLocalization.inactiveTitle),
+      title: LocalizedText.create(messagesLocalization.inactiveTitle),
       description:
         input.userName !== undefined ?
-          LocalizedText.parametrized(
+          LocalizedText.create(
             messagesLocalization.inactiveDescriptionForClinician,
             input.userName,
           )
-        : new LocalizedText(
+        : LocalizedText.create(
             messagesLocalization.inactiveDescriptionForClinicianNoName,
           ),
       action: `users/${input.userId}`,
@@ -117,8 +119,8 @@ export class UserMessage {
   }): UserMessage {
     return new UserMessage({
       creationDate: input.creationDate ?? new Date(),
-      title: new LocalizedText(messagesLocalization.medicationChangeTitle),
-      description: LocalizedText.parametrized(
+      title: LocalizedText.create(messagesLocalization.medicationChangeTitle),
+      description: LocalizedText.create(
         messagesLocalization.medicationChangeDescription,
         input.medicationName,
       ),
@@ -137,8 +139,10 @@ export class UserMessage {
   ): UserMessage {
     return new UserMessage({
       creationDate: input.creationDate ?? new Date(),
-      title: new LocalizedText(messagesLocalization.medicationUptitrationTitle),
-      description: new LocalizedText(
+      title: LocalizedText.create(
+        messagesLocalization.medicationUptitrationTitle,
+      ),
+      description: LocalizedText.create(
         messagesLocalization.medicationUptitrationDescription,
       ),
       reference: input.reference,
@@ -156,16 +160,16 @@ export class UserMessage {
   }): UserMessage {
     return new UserMessage({
       creationDate: input.creationDate ?? new Date(),
-      title: new LocalizedText(
+      title: LocalizedText.create(
         messagesLocalization.medicationUptitrationTitleForClinician,
       ),
       description:
         input.userName !== undefined ?
-          LocalizedText.parametrized(
+          LocalizedText.create(
             messagesLocalization.medicationUptitrationDescriptionForClinician,
             input.userName,
           )
-        : new LocalizedText(
+        : LocalizedText.create(
             messagesLocalization.medicationUptitrationDescriptionForClinicianNoName,
           ),
       reference: input.reference,
@@ -181,8 +185,8 @@ export class UserMessage {
   }): UserMessage {
     return new UserMessage({
       creationDate: input.creationDate ?? new Date(),
-      title: new LocalizedText(messagesLocalization.preAppointmentTitle),
-      description: new LocalizedText(
+      title: LocalizedText.create(messagesLocalization.preAppointmentTitle),
+      description: LocalizedText.create(
         messagesLocalization.preAppointmentDescription,
       ),
       action: 'healthSummary',
@@ -200,16 +204,16 @@ export class UserMessage {
   }): UserMessage {
     return new UserMessage({
       creationDate: input.creationDate ?? new Date(),
-      title: new LocalizedText(
+      title: LocalizedText.create(
         messagesLocalization.preAppointmentTitleForClinician,
       ),
       description:
         input.userName !== undefined ?
-          LocalizedText.parametrized(
+          LocalizedText.create(
             messagesLocalization.preAppointmentDescriptionForClinician,
             input.userName,
           )
-        : new LocalizedText(
+        : LocalizedText.create(
             messagesLocalization.preAppointmentDescriptionForClinicianNoName,
           ),
       action: `users/${input.userId}/appointments`,
@@ -225,8 +229,10 @@ export class UserMessage {
   }): UserMessage {
     return new UserMessage({
       creationDate: input.creationDate ?? new Date(),
-      title: new LocalizedText(messagesLocalization.symptomQuestionnaireTitle),
-      description: new LocalizedText(
+      title: LocalizedText.create(
+        messagesLocalization.symptomQuestionnaireTitle,
+      ),
+      description: LocalizedText.create(
         messagesLocalization.symptomQuestionnaireDescription,
       ),
       action: input.questionnaireReference,
@@ -244,8 +250,8 @@ export class UserMessage {
     return new UserMessage({
       creationDate: creationDate,
       dueDate: advanceDateByDays(creationDate, 1),
-      title: new LocalizedText(messagesLocalization.vitalsTitle),
-      description: new LocalizedText(messagesLocalization.vitalsDescription),
+      title: LocalizedText.create(messagesLocalization.vitalsTitle),
+      description: LocalizedText.create(messagesLocalization.vitalsDescription),
       action: 'observations',
       type: UserMessageType.vitals,
       isDismissible: false,
@@ -259,8 +265,8 @@ export class UserMessage {
   ): UserMessage {
     return new UserMessage({
       creationDate: input.creationDate ?? new Date(),
-      title: new LocalizedText(messagesLocalization.weightGainTitle),
-      description: new LocalizedText(
+      title: LocalizedText.create(messagesLocalization.weightGainTitle),
+      description: LocalizedText.create(
         messagesLocalization.weightGainDescription,
       ),
       action: 'medications',
@@ -277,16 +283,16 @@ export class UserMessage {
   }): UserMessage {
     return new UserMessage({
       creationDate: input.creationDate ?? new Date(),
-      title: new LocalizedText(
+      title: LocalizedText.create(
         messagesLocalization.weightGainTitleForClinician,
       ),
       description:
         input.userName !== undefined ?
-          LocalizedText.parametrized(
+          LocalizedText.create(
             messagesLocalization.weightGainDescriptionForClinician,
             input.userName,
           )
-        : new LocalizedText(
+        : LocalizedText.create(
             messagesLocalization.weightGainDescriptionForClinicianNoName,
           ),
       action: `users/${input.userId}/medications`,
@@ -302,8 +308,10 @@ export class UserMessage {
   }): UserMessage {
     return new UserMessage({
       creationDate: input.creationDate ?? new Date(),
-      title: new LocalizedText(messagesLocalization.welcomeTitle),
-      description: new LocalizedText(messagesLocalization.welcomeDescription),
+      title: LocalizedText.create(messagesLocalization.welcomeTitle),
+      description: LocalizedText.create(
+        messagesLocalization.welcomeDescription,
+      ),
       action: input.videoReference,
       type: UserMessageType.welcome,
       isDismissible: true,

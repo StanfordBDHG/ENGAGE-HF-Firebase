@@ -13,7 +13,7 @@ export const localizedTextConverter = new SchemaConverter({
   schema: z
     .string()
     .or(z.record(z.string()))
-    .transform((content) => new LocalizedText(content)),
+    .transform((content) => LocalizedText.raw(content)),
   encode: (object) => object.content,
 })
 
@@ -31,11 +31,15 @@ export class LocalizedText {
 
   // Constructor
 
-  constructor(input: string | Record<string, string>) {
+  private constructor(input: string | Record<string, string>) {
     this.content = input
   }
 
-  static parametrized<L extends Record<string, string>>(
+  static raw(input: string | Record<string, string>): LocalizedText {
+    return new LocalizedText(input)
+  }
+
+  static create<L extends Record<string, string>>(
     input: L,
     ...params: L['en'] extends string ? LocalizedTextParams<L['en']> : never
   ): LocalizedText {

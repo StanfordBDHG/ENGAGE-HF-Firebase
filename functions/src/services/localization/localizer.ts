@@ -34,7 +34,7 @@ export class Localizer<
       LocalizedTextParams<Localization[Key]['en']>
     : never
   ): string {
-    return LocalizedText.parametrized(this.values[id], ...params).localize(
+    return LocalizedText.create(this.values[id], ...params).localize(
       ...this.languages,
     )
   }

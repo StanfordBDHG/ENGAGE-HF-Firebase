@@ -177,11 +177,11 @@ export class RecommendationService {
           }
         : undefined,
       displayInformation: {
-        title: new LocalizedText(title),
+        title: LocalizedText.raw(title),
         subtitle:
           currentMedicationClass?.name ??
           recommendedMedicationClass?.name ??
-          new LocalizedText(''),
+          LocalizedText.raw(''),
         description: this.recommendationDescription(
           output,
           recommendedMedication?.content ?? undefined,
@@ -228,41 +228,39 @@ export class RecommendationService {
       case UserMedicationRecommendationType.improvementAvailable: {
         const recommendedMedicationName = recommendedMedication?.displayName
         if (recommendedMedicationName !== undefined) {
-          return LocalizedText.parametrized(
+          return LocalizedText.create(
             recommendationLocalization.improvementAvailableMoreEffectiveMed,
             recommendedMedicationName,
           )
         } else {
-          return LocalizedText.parametrized(
+          return LocalizedText.create(
             recommendationLocalization.improvementAvailableIncreasing,
           )
         }
       }
       case UserMedicationRecommendationType.moreLabObservationsRequired: {
-        return LocalizedText.parametrized(
+        return LocalizedText.create(
           recommendationLocalization.moreLabObservationsRequired,
         )
       }
       case UserMedicationRecommendationType.morePatientObservationsRequired: {
-        return LocalizedText.parametrized(
+        return LocalizedText.create(
           recommendationLocalization.morePatientObservationsRequired,
         )
       }
       case UserMedicationRecommendationType.noActionRequired: {
-        return LocalizedText.parametrized(
-          recommendationLocalization.noActionRequired,
-        )
+        return LocalizedText.create(recommendationLocalization.noActionRequired)
       }
       case UserMedicationRecommendationType.notStarted: {
-        return LocalizedText.parametrized(recommendationLocalization.notStarted)
+        return LocalizedText.create(recommendationLocalization.notStarted)
       }
       case UserMedicationRecommendationType.personalTargetDoseReached: {
-        return LocalizedText.parametrized(
+        return LocalizedText.create(
           recommendationLocalization.personalTargetDoseReached,
         )
       }
       case UserMedicationRecommendationType.targetDoseReached: {
-        return LocalizedText.parametrized(
+        return LocalizedText.create(
           recommendationLocalization.targetDoseReached,
         )
       }
