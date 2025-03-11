@@ -8,7 +8,6 @@
 
 import {
   advanceDateByDays,
-  average,
   median,
   UserMedicationRecommendationType,
   type FHIRAppointment,
@@ -50,20 +49,13 @@ export class HealthSummaryData {
     return this.vitals.bodyWeight.at(0)?.value ?? null
   }
 
-  get lastSevenDayAverageBodyWeight(): number | null {
+  get lastSevenDayMedianBodyWeight(): number | null {
     const bodyWeightValues = this.vitals.bodyWeight
       .filter(
         (observation) => observation.date >= advanceDateByDays(this.now, -7),
       )
       .map((observation) => observation.value)
-    return average(bodyWeightValues) ?? null
-  }
-
-  get medianBodyWeight(): number | null {
-    return (
-      median(this.vitals.bodyWeight.map((observation) => observation.value)) ??
-      null
-    )
+    return median(bodyWeightValues) ?? null
   }
 
   get bodyWeightRange(): [number, number] | null {
@@ -150,7 +142,7 @@ export class HealthSummaryData {
   }
 
   get weightCategory(): HealthSummaryWeightCategory {
-    const medianWeight = this.medianBodyWeight
+    const medianWeight = this.lastSevenDayMedianBodyWeight
     const latestWeight = this.latestBodyWeight
     if (medianWeight === null || latestWeight === null)
       return HealthSummaryWeightCategory.MISSING

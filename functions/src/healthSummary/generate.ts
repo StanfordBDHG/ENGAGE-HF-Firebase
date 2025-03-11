@@ -356,13 +356,13 @@ class HealthSummaryPdfGenerator extends PdfGenerator {
             [
               '',
               this.localizer.text('vitalsBodyWeightTableCurrentHeader'),
-              this.localizer.text('vitalsBodyWeightTableSevenDayAverageHeader'),
+              this.localizer.text('vitalsBodyWeightTableSevenDayMedianHeader'),
               this.localizer.text('vitalsBodyWeightTableRangeHeader'),
             ].map((title) => this.cell(title)),
             [
               this.localizer.text('vitalsBodyWeightTableRowTitle'),
               this.data.latestBodyWeight?.toFixed(0) ?? '---',
-              this.data.lastSevenDayAverageBodyWeight?.toFixed(0) ?? '---',
+              this.data.lastSevenDayMedianBodyWeight?.toFixed(0) ?? '---',
               bodyWeightRange !== null ?
                 `${bodyWeightRange[0].toFixed(0)}-${bodyWeightRange[1].toFixed(0)}`
               : '---',

@@ -171,9 +171,9 @@ export const healthSummaryLocalization = {
     en: 'Current',
     es: 'Actual',
   },
-  vitalsBodyWeightTableSevenDayAverageHeader: {
-    en: '7-Day Average',
-    es: 'Promedio de 7 días',
+  vitalsBodyWeightTableSevenDayMedianHeader: {
+    en: '7-Day Median',
+    es: 'Mediana de 7 días',
   },
   vitalsBodyWeightTableRangeHeader: {
     en: 'Range',
