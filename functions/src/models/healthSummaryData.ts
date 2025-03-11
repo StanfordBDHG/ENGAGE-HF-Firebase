@@ -8,7 +8,6 @@
 
 import {
   advanceDateByDays,
-  average,
   median,
   UserMedicationRecommendationType,
   type FHIRAppointment,
@@ -56,7 +55,7 @@ export class HealthSummaryData {
         (observation) => observation.date >= advanceDateByDays(this.now, -7),
       )
       .map((observation) => observation.value)
-    return average(bodyWeightValues) ?? null
+    return median(bodyWeightValues) ?? null
   }
 
   get bodyWeightRange(): [number, number] | null {
