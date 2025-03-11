@@ -336,13 +336,13 @@ class HealthSummaryPdfGenerator extends PdfGenerator {
             [
               this.texts.vitalsSection.bodyWeightTable.titleHeader,
               this.texts.vitalsSection.bodyWeightTable.currentHeader,
-              this.texts.vitalsSection.bodyWeightTable.sevenDayAverageHeader,
+              this.texts.vitalsSection.bodyWeightTable.sevenDayMedianHeader,
               this.texts.vitalsSection.bodyWeightTable.rangeHeader,
             ].map((title) => this.cell(title)),
             [
               this.texts.vitalsSection.bodyWeightTable.rowTitle,
               this.data.latestBodyWeight?.toFixed(0) ?? '---',
-              this.data.lastSevenDayAverageBodyWeight?.toFixed(0) ?? '---',
+              this.data.lastSevenDayMedianBodyWeight?.toFixed(0) ?? '---',
               bodyWeightRange !== null ?
                 `${bodyWeightRange[0].toFixed(0)}-${bodyWeightRange[1].toFixed(0)}`
               : '---',
