@@ -41,7 +41,7 @@ export class LocalizedText {
 
   static create<L extends Record<string, string>>(
     input: L,
-    ...params: L['en'] extends string ? LocalizedTextParams<L['en']> : never
+    ...params: LocalizedTextParams<L['en']>
   ): LocalizedText {
     const copy: Record<string, string> = {}
 
