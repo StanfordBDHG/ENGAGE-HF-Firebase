@@ -28,11 +28,12 @@ import { RecommendationService } from '../recommendation/recommendationService.j
 import { DebugDataService } from '../seeding/debugData/debugDataService.js'
 import { RxNormService } from '../seeding/staticData/rxNorm/rxNormService.js'
 import { StaticDataService } from '../seeding/staticData/staticDataService.js'
-import { DefaultSymptomScoreCalculator } from '../symptomScore/defaultSymptomScoreCalculator.js'
-import { type SymptomScoreCalculator } from '../symptomScore/symptomScoreCalculator.js'
+import { DefaultSymptomScoreCalculator } from '../questionnaireResponse/symptomScore/defaultSymptomScoreCalculator.js'
 import { TriggerService } from '../trigger/triggerService.js'
 import { DatabaseUserService } from '../user/databaseUserService.js'
 import { type UserService } from '../user/userService.js'
+import { QuestionnaireResponseService } from '../questionnaireResponse/questionnaireResponseService.js'
+import { DefaultQuestionnaireResponseService } from '../questionnaireResponse/defaultQuestionnaireResponseService.js'
 
 export class DefaultServiceFactory implements ServiceFactory {
   // Properties - Options
@@ -90,6 +91,13 @@ export class DefaultServiceFactory implements ServiceFactory {
 
   private readonly patientService = new Lazy(
     () => new DatabasePatientService(this.databaseService.value),
+  )
+
+  private readonly questionnaireResponseService = new Lazy(
+    () =>
+      new DefaultQuestionnaireResponseService(
+        this.symptomScoreCalculator.value,
+      ),
   )
 
   private readonly recommendationService = new Lazy(
@@ -163,8 +171,8 @@ export class DefaultServiceFactory implements ServiceFactory {
     return this.recommendationService.value
   }
 
-  symptomScore(): SymptomScoreCalculator {
-    return this.symptomScoreCalculator.value
+  questionnaireResponse(): QuestionnaireResponseService {
+    return this.questionnaireResponseService.value
   }
 
   // Methods - Trigger

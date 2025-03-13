@@ -16,9 +16,9 @@ import { type PatientService } from '../patient/patientService.js'
 import { type RecommendationService } from '../recommendation/recommendationService.js'
 import { type DebugDataService } from '../seeding/debugData/debugDataService.js'
 import { type StaticDataService } from '../seeding/staticData/staticDataService.js'
-import { type SymptomScoreCalculator } from '../symptomScore/symptomScoreCalculator.js'
 import { type TriggerService } from '../trigger/triggerService.js'
 import { type UserService } from '../user/userService.js'
+import { QuestionnaireResponseService } from '../questionnaireResponse/questionnaireResponseService.js'
 
 export interface ServiceFactory {
   // Users
@@ -38,7 +38,7 @@ export interface ServiceFactory {
   healthSummary(): HealthSummaryService
   patient(): PatientService
   recommendation(): RecommendationService
-  symptomScore(): SymptomScoreCalculator
+  questionnaireResponse(): QuestionnaireResponseService
 
   // Trigger
 

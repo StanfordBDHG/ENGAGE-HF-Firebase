@@ -88,19 +88,23 @@ export class TriggerService {
     )
 
     const patientService = this.factory.patient()
-    const symptomScoreCalculator = this.factory.symptomScore()
+    const questionnaireResponseService = this.factory.questionnaireResponse()
 
-    const newScore =
-      afterData ? symptomScoreCalculator.calculate(afterData) : undefined
+    const extractedResponse =
+      afterData ?
+        await questionnaireResponseService.extract(afterData)
+      : undefined
 
     logger.debug(
-      `questionnaireResponseWritten(${userId}, ${questionnaireResponseId}): Calculated new score ${newScore?.overallScore}`,
+      `questionnaireResponseWritten(${userId}, ${questionnaireResponseId}): Extracted new questionnaire response: ${JSON.stringify(extractedResponse)}.`,
     )
     await patientService.updateSymptomScore(
       userId,
       questionnaireResponseId,
-      newScore,
+      extractedResponse?.symptomScore,
     )
+
+    // TODO: Handle remaining questionaire response data
 
     const messageService = this.factory.message()
     if (beforeData === undefined && afterData !== undefined) {

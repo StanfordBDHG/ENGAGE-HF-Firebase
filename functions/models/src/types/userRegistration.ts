@@ -32,6 +32,7 @@ export const userRegistrationInputConverter = new Lazy(
         receivesWeightAlerts: optionalishDefault(z.boolean(), true),
         language: optionalish(z.string()),
         timeZone: optionalish(z.string()),
+        selfManaged: optionalishDefault(z.boolean(), false),
       }),
       encode: (object) => ({
         type: object.type,
@@ -50,6 +51,7 @@ export const userRegistrationInputConverter = new Lazy(
         receivesWeightAlerts: object.receivesWeightAlerts,
         language: object.language ?? null,
         timeZone: object.timeZone ?? null,
+        selfManaged: object.selfManaged,
       }),
     }),
 )
@@ -78,6 +80,7 @@ export class UserRegistration {
   readonly type: UserType
   readonly disabled: boolean
   readonly organization?: string
+  readonly selfManaged: boolean
 
   readonly dateOfBirth?: Date
   readonly clinician?: string
@@ -113,6 +116,7 @@ export class UserRegistration {
     type: UserType
     disabled: boolean
     organization?: string
+    selfManaged: boolean
     dateOfBirth?: Date
     clinician?: string
     providerName?: string
@@ -129,6 +133,7 @@ export class UserRegistration {
     this.type = input.type
     this.disabled = input.disabled
     this.organization = input.organization
+    this.selfManaged = input.selfManaged
     this.dateOfBirth = input.dateOfBirth
     this.clinician = input.clinician
     this.providerName = input.providerName

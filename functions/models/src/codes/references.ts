@@ -116,7 +116,8 @@ export enum DrugReference {
 }
 
 export enum QuestionnaireReference {
-  enUS = 'questionnaires/0',
+  default_en_US = 'questionnaires/0',
+  extended_en_US = 'questionnaires/1',
 }
 
 export enum VideoReference {
