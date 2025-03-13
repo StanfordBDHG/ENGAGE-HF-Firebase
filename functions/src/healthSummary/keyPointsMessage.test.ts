@@ -22,7 +22,7 @@ import { readCsv } from '../tests/helpers/csv.js'
 describe('keyPointsMessage', () => {
   it('should generate the key point message json', () => {
     const keyPointMessages: HealthSummaryKeyPointMessage[] = []
-    readCsv('src/tests/resources/keyPointMessages.csv', 64, (line, index) => {
+    readCsv('src/tests/resources/keyPointMessages.csv', 106, (line, index) => {
       if (index === 0) return
 
       const recommendations =
