@@ -883,7 +883,6 @@ This function may be called by admins (for any patient), owners/clinicians (for 
 |code|string|-|An 8 character alphanumeric code. It is only checked case-insensitively, so you may change its casing when displaying it to the user.|
 |expiresAt|Date|-|The date the share code expires at. Exporting a health summary with an expired share code will fail. Currently, the expiration date is 5 minutes after requesting the share code.|
 |url|string|-|A url directing at the web frontend to display the health summary that requires input of the code (e.g. to be used for displaying it in the app).|
-|fullUrl|string|-|A url directing at the web frontend to display the health summary that includes the code (e.g. to be used for the QR code generation).|
 
 ### unregisterDevice
 
