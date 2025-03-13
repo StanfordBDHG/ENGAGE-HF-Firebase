@@ -104,15 +104,24 @@ export class HealthSummaryData {
     if (hasOptimizations)
       return HealthSummaryMedicationRecommendationsCategory.OPTIMIZATIONS_AVAILABLE
 
-    const hasObservationsRequired = this.recommendations.some(
+    const hasLabObservationsRequired = this.recommendations.some(
+      (recommendation) =>
+        [UserMedicationRecommendationType.moreLabObservationsRequired].includes(
+          recommendation.displayInformation.type,
+        ),
+    )
+    const hasPatientObservationsRequired = this.recommendations.some(
       (recommendation) =>
         [
-          UserMedicationRecommendationType.moreLabObservationsRequired,
           UserMedicationRecommendationType.morePatientObservationsRequired,
         ].includes(recommendation.displayInformation.type),
     )
-    if (hasObservationsRequired)
+    if (hasLabObservationsRequired && hasPatientObservationsRequired)
       return HealthSummaryMedicationRecommendationsCategory.OBSERVATIONS_REQUIRED
+    if (hasLabObservationsRequired)
+      return HealthSummaryMedicationRecommendationsCategory.LAB_OBSERVATIONS_REQUIRED
+    if (hasPatientObservationsRequired)
+      return HealthSummaryMedicationRecommendationsCategory.PATIENT_OBSERVATIONS_REQUIRED
 
     const hasAtTarget = this.recommendations.some((recommendation) =>
       [
