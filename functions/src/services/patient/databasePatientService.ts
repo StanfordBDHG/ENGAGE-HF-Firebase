@@ -357,7 +357,7 @@ export class DatabasePatientService implements PatientService {
     const object: UserShareCode = {
       code: Math.random().toString(36).substring(2, 10),
       tries: 3,
-      expiresAt: advanceDateByMinutes(now, 10),
+      expiresAt: advanceDateByMinutes(now, 5),
     }
 
     const ref = await this.runShareCodeTransaction(

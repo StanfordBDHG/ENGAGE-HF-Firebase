@@ -20,5 +20,4 @@ export interface ShareHealthSummaryOutput {
   code: string
   expiresAt: string
   url: string
-  fullUrl: string
 }
