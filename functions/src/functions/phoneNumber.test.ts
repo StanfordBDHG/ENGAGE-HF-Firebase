@@ -7,14 +7,14 @@
 //
 
 import { UserType } from '@stanfordbdhg/engagehf-models'
-import { MockPhoneService } from '../services/message/phone/phoneService.mock.js'
-import { describeWithEmulators } from '../tests/functions/testEnvironment.js'
+import { expect } from 'chai'
 import {
   checkPhoneNumberVerification,
   deletePhoneNumber,
   startPhoneNumberVerification,
 } from './phoneNumber.js'
-import { expect } from 'chai'
+import { MockPhoneService } from '../services/message/phone/phoneService.mock.js'
+import { describeWithEmulators } from '../tests/functions/testEnvironment.js'
 import { expectError } from '../tests/helpers.js'
 
 describeWithEmulators('PhoneNumber', (env) => {
@@ -140,7 +140,7 @@ describeWithEmulators('PhoneNumber', (env) => {
     )
 
     const user = await env.collections.users.doc(patientId).get()
-    const userData = user?.data()
+    const userData = user.data()
     expect(userData?.phoneNumbers).to.not.contain(phoneNumber0)
     expect(userData?.phoneNumbers).to.contain(phoneNumber1)
     expect(userData?.phoneNumbers).to.have.length(1)

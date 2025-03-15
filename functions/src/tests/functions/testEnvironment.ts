@@ -21,7 +21,6 @@ import { CollectionsService } from '../../services/database/collections.js'
 import { getServiceFactory } from '../../services/factory/getServiceFactory.js'
 import { type ServiceFactory } from '../../services/factory/serviceFactory.js'
 import { TestFlags } from '../testFlags.js'
-import { Flags } from '../../flags.js'
 
 export function describeWithEmulators(
   title: string,

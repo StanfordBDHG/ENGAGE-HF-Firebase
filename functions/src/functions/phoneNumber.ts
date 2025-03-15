@@ -15,8 +15,8 @@ import {
   type StartPhoneNumberVerificationOutput,
 } from '@stanfordbdhg/engagehf-models'
 import { validatedOnCall } from './helpers.js'
-import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 import { TwilioSecrets } from '../env.js'
+import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
 export const startPhoneNumberVerification = validatedOnCall(
   'startPhoneNumberVerification',

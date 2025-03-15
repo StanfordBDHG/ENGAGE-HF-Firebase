@@ -6,9 +6,12 @@
 // SPDX-License-Identifier: MIT
 //
 
+/* eslint-disable @typescript-eslint/require-await */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { randomUUID } from 'crypto'
-import { PhoneService } from './phoneService.js'
 import { Lazy } from '@stanfordbdhg/engagehf-models'
+import { type PhoneService } from './phoneService.js'
 
 interface MockPhoneMessage {
   phoneNumber: string
@@ -44,7 +47,9 @@ export class MockPhoneService implements PhoneService {
 
   // Constructors
 
-  private constructor() {}
+  private constructor() {
+    return
+  }
 
   // Methods
 

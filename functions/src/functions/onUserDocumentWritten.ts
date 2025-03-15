@@ -12,9 +12,9 @@ import {
   UserObservationCollection,
 } from '@stanfordbdhg/engagehf-models'
 import { onDocumentWritten } from 'firebase-functions/v2/firestore'
+import { TwilioSecrets } from '../env.js'
 import { DatabaseConverter } from '../services/database/databaseConverter.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
-import { TwilioSecrets } from '../env.js'
 
 export const onUserAllergyIntoleranceWritten = onDocumentWritten(
   {
