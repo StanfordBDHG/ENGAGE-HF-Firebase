@@ -8,7 +8,7 @@
 
 import { z } from 'zod'
 import { optionalishDefault } from '../helpers/optionalish.js'
-import { type InferEncoded } from '../helpers/schemaConverter'
+import { type InferEncoded } from '../helpers/schemaConverter.js'
 import { type userConverter } from '../types/user.js'
 import { type userAuthConverter } from '../types/userAuth.js'
 

@@ -320,6 +320,7 @@ describe('BetaBlockerRecommender', () => {
       healthSummaryData.symptomScores = healthSummaryData.symptomScores.map(
         (scores) =>
           new SymptomScore({
+            // eslint-disable-next-line @typescript-eslint/no-misused-spread
             ...scores,
             dizzinessScore: 2,
           }),

@@ -248,10 +248,7 @@ export class FHIRMedicationRequest extends FHIRResource {
           },
           doseAndRate: [
             {
-              doseQuantity: {
-                ...QuantityUnit.tablet,
-                value: input.quantity,
-              },
+              doseQuantity: QuantityUnit.tablet.fhirQuantity(input.quantity),
             },
           ],
         },

@@ -6,9 +6,6 @@
 // SPDX-License-Identifier: MIT
 //
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-
 import {
   CachingStrategy,
   DrugReference,
@@ -75,6 +72,7 @@ describe('RasiRecommender', () => {
     })
     if (symptomScore !== undefined) {
       symptomScore = new SymptomScore({
+        // eslint-disable-next-line @typescript-eslint/no-misused-spread
         ...symptomScore,
         dizzinessScore: 0,
       })
