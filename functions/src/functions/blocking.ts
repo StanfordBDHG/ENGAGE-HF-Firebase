@@ -18,7 +18,10 @@ import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 import { Env } from '../env.js'
 
 export const beforeUserCreatedFunction = beforeUserCreated(
-  { serviceAccount: serviceAccount, secrets: Env.twilioSecretKeys },
+  {
+    serviceAccount: serviceAccount,
+    secrets: Env.twilioSecretKeys,
+  },
   async (event) => {
     const userId = event.data.uid
     logger.info(`${userId}: Start.`)

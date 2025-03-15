@@ -18,8 +18,8 @@ import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
 export const onUserAllergyIntoleranceWritten = onDocumentWritten(
   {
-    secrets: Env.twilioSecretKeys,
     document: 'users/{userId}/allergyIntolerances/{allergyIntoleranceId}',
+    secrets: Env.twilioSecretKeys,
   },
   async (event) =>
     getServiceFactory()
@@ -29,8 +29,8 @@ export const onUserAllergyIntoleranceWritten = onDocumentWritten(
 
 export const onUserCreatinineObservationWritten = onDocumentWritten(
   {
-    secrets: Env.twilioSecretKeys,
     document: 'users/{userId}/creatinineObservations/{observationId}',
+    secrets: Env.twilioSecretKeys,
   },
   async (event) =>
     getServiceFactory()
@@ -43,8 +43,8 @@ export const onUserCreatinineObservationWritten = onDocumentWritten(
 
 export const onUserBloodPressureObservationWritten = onDocumentWritten(
   {
-    secrets: Env.twilioSecretKeys,
     document: 'users/{userId}/bloodPressureObservations/{observationId}',
+    secrets: Env.twilioSecretKeys,
   },
   async (event) =>
     getServiceFactory()
@@ -57,8 +57,8 @@ export const onUserBloodPressureObservationWritten = onDocumentWritten(
 
 export const onUserBodyWeightObservationWritten = onDocumentWritten(
   {
-    secrets: Env.twilioSecretKeys,
     document: 'users/{userId}/bodyWeightObservations/{observationId}',
+    secrets: Env.twilioSecretKeys,
   },
   async (event) =>
     getServiceFactory()
@@ -71,8 +71,8 @@ export const onUserBodyWeightObservationWritten = onDocumentWritten(
 
 export const onUserDryWeightObservationWritten = onDocumentWritten(
   {
-    secrets: Env.twilioSecretKeys,
     document: 'users/{userId}/dryWeightObservations/{observationId}',
+    secrets: Env.twilioSecretKeys,
   },
   async (event) =>
     getServiceFactory()
@@ -85,8 +85,8 @@ export const onUserDryWeightObservationWritten = onDocumentWritten(
 
 export const onUserEgfrObservationWritten = onDocumentWritten(
   {
-    secrets: Env.twilioSecretKeys,
     document: 'users/{userId}/eGfrObservations/{observationId}',
+    secrets: Env.twilioSecretKeys,
   },
   async (event) =>
     getServiceFactory()
@@ -99,8 +99,8 @@ export const onUserEgfrObservationWritten = onDocumentWritten(
 
 export const onUserHeartRateObservationWritten = onDocumentWritten(
   {
-    secrets: Env.twilioSecretKeys,
     document: 'users/{userId}/heartRateObservations/{observationId}',
+    secrets: Env.twilioSecretKeys,
   },
   async (event) =>
     getServiceFactory()
@@ -113,8 +113,8 @@ export const onUserHeartRateObservationWritten = onDocumentWritten(
 
 export const onUserMedicationRequestWritten = onDocumentWritten(
   {
-    secrets: Env.twilioSecretKeys,
     document: 'users/{userId}/medicationRequests/{medicationRequestId}',
+    secrets: Env.twilioSecretKeys,
   },
   async (event) => {
     const beforeData = event.data?.before
@@ -135,8 +135,8 @@ export const onUserMedicationRequestWritten = onDocumentWritten(
 
 export const onUserPotassiumObservationWritten = onDocumentWritten(
   {
-    secrets: Env.twilioSecretKeys,
     document: 'users/{userId}/potassiumObservations/{observationId}',
+    secrets: Env.twilioSecretKeys,
   },
   async (event) =>
     getServiceFactory()
@@ -149,8 +149,8 @@ export const onUserPotassiumObservationWritten = onDocumentWritten(
 
 export const onUserQuestionnaireResponseWritten = onDocumentWritten(
   {
-    secrets: Env.twilioSecretKeys,
     document: 'users/{userId}/questionnaireResponses/{questionnaireResponseId}',
+    secrets: Env.twilioSecretKeys,
   },
   async (event) => {
     const beforeData = event.data?.before
