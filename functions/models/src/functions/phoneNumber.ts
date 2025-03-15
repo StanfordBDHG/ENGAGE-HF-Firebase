@@ -9,7 +9,7 @@
 import { z } from 'zod'
 
 const phoneNumberRegex = /^\+?[1-9]\d{1,14}$/
-const codeRegex = /^\d{6}$/
+const codeRegex = /^\d{4,10}$/
 
 export const startPhoneNumberVerificationInputSchema = z.object({
   phoneNumber: z.string().regex(phoneNumberRegex),
