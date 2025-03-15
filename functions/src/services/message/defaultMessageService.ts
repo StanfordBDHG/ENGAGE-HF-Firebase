@@ -153,7 +153,7 @@ export class DefaultMessageService implements MessageService {
     await this.databaseService.runTransaction((collections, transaction) => {
       const verificationRef = collections
         .userPhoneNumberVerifications(userId)
-        .doc()
+        .doc(phoneNumber)
       transaction.set(verificationRef, {
         phoneNumber: phoneNumber,
         verificationId: verificationId,
