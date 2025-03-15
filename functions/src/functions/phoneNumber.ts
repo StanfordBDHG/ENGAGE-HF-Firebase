@@ -16,6 +16,7 @@ import {
 } from '@stanfordbdhg/engagehf-models'
 import { validatedOnCall } from './helpers.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
+import { TwilioSecrets } from '../env.js'
 
 export const startPhoneNumberVerification = validatedOnCall(
   'startPhoneNumberVerification',
@@ -26,6 +27,9 @@ export const startPhoneNumberVerification = validatedOnCall(
     await factory
       .message()
       .startPhoneNumberVerification(credential.userId, request.data.phoneNumber)
+  },
+  {
+    secrets: Object.values(TwilioSecrets),
   },
 )
 
@@ -42,6 +46,9 @@ export const checkPhoneNumberVerification = validatedOnCall(
         request.data.phoneNumber,
         request.data.code,
       )
+  },
+  {
+    secrets: Object.values(TwilioSecrets),
   },
 )
 

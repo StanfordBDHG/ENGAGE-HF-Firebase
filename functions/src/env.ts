@@ -10,10 +10,19 @@ import { defineSecret } from 'firebase-functions/params'
 
 /* eslint-disable @typescript-eslint/no-extraneous-class */
 
-const twilioPhoneNumber = defineSecret('TWILIO_PHONE_NUMBER')
-const twilioAccountSid = defineSecret('TWILIO_ACCOUNT_SID')
-const twilioAuthToken = defineSecret('TWILIO_AUTH_TOKEN')
-const twilioVerifyServiceId = defineSecret('TWILIO_VERIFY_SERVICE_ID')
+export enum TwilioSecrets {
+  TWILIO_PHONE_NUMBER = 'TWILIO_PHONE_NUMBER',
+  TWILIO_ACCOUNT_SID = 'TWILIO_ACCOUNT_SID',
+  TWILIO_AUTH_TOKEN = 'TWILIO_AUTH_TOKEN',
+  TWILIO_VERIFY_SERVICE_ID = 'TWILIO_VERIFY_SERVICE_ID',
+}
+
+const twilioPhoneNumber = defineSecret(TwilioSecrets.TWILIO_PHONE_NUMBER)
+const twilioAccountSid = defineSecret(TwilioSecrets.TWILIO_ACCOUNT_SID)
+const twilioAuthToken = defineSecret(TwilioSecrets.TWILIO_AUTH_TOKEN)
+const twilioVerifyServiceId = defineSecret(
+  TwilioSecrets.TWILIO_VERIFY_SERVICE_ID,
+)
 
 export class Env {
   static get TWILIO_ACCOUNT_SID() {

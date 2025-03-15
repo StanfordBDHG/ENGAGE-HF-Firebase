@@ -35,6 +35,8 @@ import { type SymptomScoreCalculator } from '../symptomScore/symptomScoreCalcula
 import { TriggerService } from '../trigger/triggerService.js'
 import { DatabaseUserService } from '../user/databaseUserService.js'
 import { type UserService } from '../user/userService.js'
+import { MockPhoneService } from '../message/phone/phoneService.mock.js'
+import { Flags } from '../../flags.js'
 
 export class DefaultServiceFactory implements ServiceFactory {
   // Properties - Options
@@ -95,9 +97,10 @@ export class DefaultServiceFactory implements ServiceFactory {
     () => new DatabasePatientService(this.databaseService.value),
   )
 
-  private readonly phoneService = new Lazy(
-    () =>
-      new TwilioPhoneService({
+  private readonly phoneService = new Lazy(() =>
+    Flags.disableTwilio ?
+      MockPhoneService.instance
+    : new TwilioPhoneService({
         accountSid: Env.TWILIO_ACCOUNT_SID,
         authToken: Env.TWILIO_AUTH_TOKEN,
         phoneNumber: Env.TWILIO_PHONE_NUMBER,
