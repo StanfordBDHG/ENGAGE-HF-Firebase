@@ -888,6 +888,8 @@ None.
 
 Use `startPhoneNumberVerification` to start phone number verification, ultimately leading to adding a phone number to an existing user account. When this function is called, a verification code will be sent to the given phone number. Once that verification code is received by the user, `checkPhoneNumberVerification` will need to be called with the given verification code. Until `checkPhoneNumberVerification` has not finished successfully, the phone number is not active.
 
+A client application may call this function multiple times to request a new verification code. Whether or not a previous verification code is still valid after requesting a new one is unspecified, so one may assume that only the most recent one can be used.
+
 #### Security
 
 Any user performs phone number verification for their own account. In the foreseeable future, the function is only relevant for patients though.
