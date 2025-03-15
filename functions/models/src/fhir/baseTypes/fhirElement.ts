@@ -249,6 +249,7 @@ export class FHIRMedicationRequest extends FHIRResource {
           doseAndRate: [
             {
               doseQuantity: {
+                // eslint-disable-next-line @typescript-eslint/no-misused-spread
                 ...QuantityUnit.tablet,
                 value: input.quantity,
               },
