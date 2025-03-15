@@ -8,8 +8,8 @@
 
 import { onSchedule } from 'firebase-functions/v2/scheduler'
 import { serviceAccount } from './helpers.js'
-import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 import { Env } from '../env.js'
+import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
 export const onScheduleEveryMorning = onSchedule(
   {

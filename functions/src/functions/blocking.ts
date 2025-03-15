@@ -13,9 +13,9 @@ import {
   beforeUserSignedIn,
 } from 'firebase-functions/v2/identity'
 import { serviceAccount } from './helpers.js'
+import { Env } from '../env.js'
 import { Flags } from '../flags.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
-import { Env } from '../env.js'
 
 export const beforeUserCreatedFunction = beforeUserCreated(
   {

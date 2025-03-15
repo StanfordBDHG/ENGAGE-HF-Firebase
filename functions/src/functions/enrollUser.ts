@@ -9,8 +9,8 @@
 import { enrollUserInputSchema } from '@stanfordbdhg/engagehf-models'
 import { https, logger } from 'firebase-functions'
 import { validatedOnCall } from './helpers.js'
-import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 import { Env } from '../env.js'
+import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
 export const enrollUser = validatedOnCall(
   'enrollUser',
