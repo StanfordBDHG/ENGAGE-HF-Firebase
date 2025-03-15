@@ -22,7 +22,6 @@ import {
   userDeviceConverter,
   userMedicationRecommendationConverter,
   userMessageConverter,
-  userPhoneNumberVerificationConverter,
   videoConverter,
   videoSectionConverter,
   type UserObservationCollection,
@@ -261,16 +260,6 @@ export class CollectionsService {
       .doc(userId)
       .collection(collection)
       .withConverter(new DatabaseConverter(fhirObservationConverter.value))
-  }
-
-  userPhoneNumberVerifications(userId: string) {
-    return this.firestore
-      .collection('users')
-      .doc(userId)
-      .collection('phoneNumberVerifications')
-      .withConverter(
-        new DatabaseConverter(userPhoneNumberVerificationConverter.value),
-      )
   }
 
   userQuestionnaireResponses(userId: string) {

@@ -12,7 +12,7 @@ export interface PhoneService {
     options: {
       locale?: string
     },
-  ): Promise<string>
+  ): Promise<void>
 
   checkVerification(verificationId: string, code: string): Promise<void>
 

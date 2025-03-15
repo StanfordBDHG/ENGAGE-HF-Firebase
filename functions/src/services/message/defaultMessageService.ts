@@ -145,19 +145,8 @@ export class DefaultMessageService implements MessageService {
     }
 
     const user = await this.userService.getUser(userId)
-    const verificationId = await this.phoneService.startVerification(
-      phoneNumber,
-      { locale: user?.content.language },
-    )
-
-    await this.databaseService.runTransaction((collections, transaction) => {
-      const verificationRef = collections
-        .userPhoneNumberVerifications(userId)
-        .doc(phoneNumber)
-      transaction.set(verificationRef, {
-        phoneNumber: phoneNumber,
-        verificationId: verificationId,
-      })
+    await this.phoneService.startVerification(phoneNumber, {
+      locale: user?.content.language,
     })
   }
 
@@ -176,58 +165,23 @@ export class DefaultMessageService implements MessageService {
       )
     }
 
-    const verification = (
-      await this.databaseService.getQuery((collections) =>
-        collections
-          .userPhoneNumberVerifications(userId)
-          .where('phoneNumber', '==', phoneNumber),
-      )
-    ).at(0)
-
-    if (verification === undefined) {
-      logger.error(
-        `DefaultMessageService.checkPhoneNumberVerification(userId: ${userId}, phoneNumber: ${phoneNumber}): Phone verification not found.`,
-      )
-      throw new https.HttpsError('not-found', 'Phone verification not found.')
-    }
-
-    const verificationId = verification.content.verificationId
-    await this.phoneService.checkVerification(verificationId, code)
+    await this.phoneService.checkVerification(phoneNumber, code)
 
     await this.databaseService.runTransaction((collections, transaction) => {
       const userRef = collections.users.doc(userId)
       transaction.update(userRef, {
         phoneNumbers: FieldValue.arrayUnion(phoneNumber),
       })
-
-      const verificationRef = collections
-        .userPhoneNumberVerifications(userId)
-        .doc(verification.id)
-      transaction.delete(verificationRef)
     })
   }
 
   async deletePhoneNumber(userId: string, phoneNumber: string): Promise<void> {
-    await this.databaseService.runTransaction(
-      async (collections, transaction) => {
-        const verifications = await transaction.get(
-          collections
-            .userPhoneNumberVerifications(userId)
-            .where('phoneNumber', '==', phoneNumber),
-        )
-        for (const verification of verifications.docs) {
-          logger.debug(
-            `DefaultMessageService.deletePhoneNumber(user: ${userId}, phoneNumber: ${phoneNumber}): Deleting verification at ${verification.ref.path}`,
-          )
-          transaction.delete(verification.ref)
-        }
-
-        const userRef = collections.users.doc(userId)
-        transaction.update(userRef, {
-          phoneNumbers: FieldValue.arrayRemove(phoneNumber),
-        })
-      },
-    )
+    await this.databaseService.runTransaction((collections, transaction) => {
+      const userRef = collections.users.doc(userId)
+      transaction.update(userRef, {
+        phoneNumbers: FieldValue.arrayRemove(phoneNumber),
+      })
+    })
   }
 
   // Methods - Messages

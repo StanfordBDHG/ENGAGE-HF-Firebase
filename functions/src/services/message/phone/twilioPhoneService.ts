@@ -38,7 +38,7 @@ export class TwilioPhoneService implements PhoneService {
     options: {
       locale?: string
     },
-  ): Promise<string> {
+  ): Promise<void> {
     const response = await this.client.verify.v2
       .services(this.verifyServiceId)
       .verifications.create({
@@ -47,15 +47,38 @@ export class TwilioPhoneService implements PhoneService {
         locale: options.locale,
       })
 
-    return response.sid
+    switch (response.status) {
+      case 'pending':
+        return
+      case 'approved':
+        throw new https.HttpsError(
+          'internal',
+          'Phone Number Verification was already approved.',
+        )
+      case 'canceled':
+        throw new https.HttpsError(
+          'internal',
+          'Phone Number Verification was canceled.',
+        )
+      case 'expired':
+        throw new https.HttpsError(
+          'internal',
+          'Phone Number Verification has expired.',
+        )
+      default:
+        throw new https.HttpsError(
+          'internal',
+          'Phone Number Verification failed.',
+        )
+    }
   }
 
-  async checkVerification(verificationId: string, code: string): Promise<void> {
+  async checkVerification(phoneNumber: string, code: string): Promise<void> {
     const response = await this.client.verify.v2
       .services(this.verifyServiceId)
       .verificationChecks.create({
+        to: phoneNumber,
         code,
-        verificationSid: verificationId,
       })
     switch (response.status) {
       case 'approved':

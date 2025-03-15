@@ -56,20 +56,21 @@ export class MockPhoneService implements PhoneService {
   async startVerification(
     phoneNumber: string,
     options: { locale?: string },
-  ): Promise<string> {
-    const verificationId = randomUUID()
-    this.verifications.set(verificationId, {
+  ): Promise<void> {
+    this.verifications.set(phoneNumber, {
       phoneNumber,
       code: MockPhoneService.correctCode,
     })
-    return verificationId
   }
 
-  async checkVerification(verificationId: string, code: string): Promise<void> {
-    const verification = this.verifications.get(verificationId)
-    if (verification === undefined || verification.code !== code) {
+  async checkVerification(phoneNumber: string, code: string): Promise<void> {
+    const verification = this.verifications.get(phoneNumber)
+    if (verification === undefined) {
+      throw new Error('Phone verification not found.')
+    } else if (verification.code !== code) {
       throw new Error('Invalid verification code')
     } else {
+      this.verifications.delete(phoneNumber)
       this.verifiedPhoneNumbers.add(verification.phoneNumber)
     }
   }

@@ -25,11 +25,6 @@ describeWithEmulators('PhoneNumber', (env) => {
       organization: 'stanford',
     })
 
-    const verifications0 = await env.collections
-      .userPhoneNumberVerifications(patientId)
-      .get()
-    expect(verifications0.docs).to.have.length(0)
-
     await env.call(
       startPhoneNumberVerification,
       { phoneNumber },
@@ -39,14 +34,6 @@ describeWithEmulators('PhoneNumber', (env) => {
       },
     )
 
-    const verifications1 = await env.collections
-      .userPhoneNumberVerifications(patientId)
-      .where('phoneNumber', '==', phoneNumber)
-      .get()
-    expect(verifications1.docs).to.have.length(1)
-    const verification1 = verifications1.docs[0].data()
-    expect(verification1.phoneNumber).to.equal(phoneNumber)
-
     await env.call(
       checkPhoneNumberVerification,
       { phoneNumber, code: MockPhoneService.correctCode },
@@ -55,11 +42,6 @@ describeWithEmulators('PhoneNumber', (env) => {
         token: { type: UserType.patient, organization: 'stanford' },
       },
     )
-
-    const verifications2 = await env.collections
-      .userPhoneNumberVerifications(patientId)
-      .get()
-    expect(verifications2.docs).to.have.length(0)
 
     const user = await env.collections.users.doc(patientId).get()
     expect(user.data()?.phoneNumbers).to.contain(phoneNumber)
