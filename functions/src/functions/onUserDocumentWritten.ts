@@ -12,13 +12,13 @@ import {
   UserObservationCollection,
 } from '@stanfordbdhg/engagehf-models'
 import { onDocumentWritten } from 'firebase-functions/v2/firestore'
-import { TwilioSecrets } from '../env.js'
+import { Env } from '../env.js'
 import { DatabaseConverter } from '../services/database/databaseConverter.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
 export const onUserAllergyIntoleranceWritten = onDocumentWritten(
   {
-    secrets: Object.values(TwilioSecrets),
+    secrets: Env.twilioSecretKeys,
     document: 'users/{userId}/allergyIntolerances/{allergyIntoleranceId}',
   },
   async (event) =>
@@ -29,7 +29,7 @@ export const onUserAllergyIntoleranceWritten = onDocumentWritten(
 
 export const onUserCreatinineObservationWritten = onDocumentWritten(
   {
-    secrets: Object.values(TwilioSecrets),
+    secrets: Env.twilioSecretKeys,
     document: 'users/{userId}/creatinineObservations/{observationId}',
   },
   async (event) =>
@@ -43,7 +43,7 @@ export const onUserCreatinineObservationWritten = onDocumentWritten(
 
 export const onUserBloodPressureObservationWritten = onDocumentWritten(
   {
-    secrets: Object.values(TwilioSecrets),
+    secrets: Env.twilioSecretKeys,
     document: 'users/{userId}/bloodPressureObservations/{observationId}',
   },
   async (event) =>
@@ -57,7 +57,7 @@ export const onUserBloodPressureObservationWritten = onDocumentWritten(
 
 export const onUserBodyWeightObservationWritten = onDocumentWritten(
   {
-    secrets: Object.values(TwilioSecrets),
+    secrets: Env.twilioSecretKeys,
     document: 'users/{userId}/bodyWeightObservations/{observationId}',
   },
   async (event) =>
@@ -71,7 +71,7 @@ export const onUserBodyWeightObservationWritten = onDocumentWritten(
 
 export const onUserDryWeightObservationWritten = onDocumentWritten(
   {
-    secrets: Object.values(TwilioSecrets),
+    secrets: Env.twilioSecretKeys,
     document: 'users/{userId}/dryWeightObservations/{observationId}',
   },
   async (event) =>
@@ -85,7 +85,7 @@ export const onUserDryWeightObservationWritten = onDocumentWritten(
 
 export const onUserEgfrObservationWritten = onDocumentWritten(
   {
-    secrets: Object.values(TwilioSecrets),
+    secrets: Env.twilioSecretKeys,
     document: 'users/{userId}/eGfrObservations/{observationId}',
   },
   async (event) =>
@@ -99,7 +99,7 @@ export const onUserEgfrObservationWritten = onDocumentWritten(
 
 export const onUserHeartRateObservationWritten = onDocumentWritten(
   {
-    secrets: Object.values(TwilioSecrets),
+    secrets: Env.twilioSecretKeys,
     document: 'users/{userId}/heartRateObservations/{observationId}',
   },
   async (event) =>
@@ -113,7 +113,7 @@ export const onUserHeartRateObservationWritten = onDocumentWritten(
 
 export const onUserMedicationRequestWritten = onDocumentWritten(
   {
-    secrets: Object.values(TwilioSecrets),
+    secrets: Env.twilioSecretKeys,
     document: 'users/{userId}/medicationRequests/{medicationRequestId}',
   },
   async (event) => {
@@ -135,7 +135,7 @@ export const onUserMedicationRequestWritten = onDocumentWritten(
 
 export const onUserPotassiumObservationWritten = onDocumentWritten(
   {
-    secrets: Object.values(TwilioSecrets),
+    secrets: Env.twilioSecretKeys,
     document: 'users/{userId}/potassiumObservations/{observationId}',
   },
   async (event) =>
@@ -149,7 +149,7 @@ export const onUserPotassiumObservationWritten = onDocumentWritten(
 
 export const onUserQuestionnaireResponseWritten = onDocumentWritten(
   {
-    secrets: Object.values(TwilioSecrets),
+    secrets: Env.twilioSecretKeys,
     document: 'users/{userId}/questionnaireResponses/{questionnaireResponseId}',
   },
   async (event) => {

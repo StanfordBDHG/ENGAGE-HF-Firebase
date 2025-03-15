@@ -15,7 +15,7 @@ import {
   type StartPhoneNumberVerificationOutput,
 } from '@stanfordbdhg/engagehf-models'
 import { validatedOnCall } from './helpers.js'
-import { TwilioSecrets } from '../env.js'
+import { Env } from '../env.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
 export const startPhoneNumberVerification = validatedOnCall(
@@ -29,7 +29,7 @@ export const startPhoneNumberVerification = validatedOnCall(
       .startPhoneNumberVerification(credential.userId, request.data.phoneNumber)
   },
   {
-    secrets: Object.values(TwilioSecrets),
+    secrets: Env.twilioSecretKeys,
   },
 )
 
@@ -48,7 +48,7 @@ export const checkPhoneNumberVerification = validatedOnCall(
       )
   },
   {
-    secrets: Object.values(TwilioSecrets),
+    secrets: Env.twilioSecretKeys,
   },
 )
 

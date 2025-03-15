@@ -9,12 +9,14 @@
 import { onSchedule } from 'firebase-functions/v2/scheduler'
 import { serviceAccount } from './helpers.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
+import { Env } from '../env.js'
 
 export const onScheduleEveryMorning = onSchedule(
   {
     schedule: '0 8 * * *',
     timeZone: 'America/Los_Angeles',
     serviceAccount: serviceAccount,
+    secrets: Env.twilioSecretKeys,
   },
   async () => getServiceFactory().trigger().everyMorning(),
 )
@@ -24,6 +26,7 @@ export const onScheduleUpdateMedicationRecommendations = onSchedule(
     schedule: '0 0 * * *',
     timeZone: 'America/Los_Angeles',
     serviceAccount: serviceAccount,
+    secrets: Env.twilioSecretKeys,
   },
   async () =>
     getServiceFactory().trigger().updateRecommendationsForAllPatients(),
