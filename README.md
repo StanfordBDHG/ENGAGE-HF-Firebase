@@ -318,6 +318,7 @@ In this section, we describe all user-related data to be stored. The security ru
 |clinician|optional string|The identifier of the clinician assigned to a patient. For all other users, this property either is nonexistant or null.|
 |providerName|optional string|Text description of the provider of a patient. This value takes precedence over the `clinician` property during health summary generation. For all other users, this property either is nonexistant or null.|
 |organization|optional string|-|The id of the organization a clinician, patient or owner is associated with.|
+|phoneNumbers|optional string list|e.g. ['+15551234567']|The phone numbers used to send out text messages for notifications, in [E.164 format](https://www.itu.int/rec/T-REC-E.164/).|
 |invitationCode|string|-|The invitationCode to be used when logging in to the app for the first time.|
 |language|optional string|e.g. "en"|Following IETF BCP-47 / [FHIR ValueSet languages](https://hl7.org/fhir/R4B/valueset-languages.html).|
 |receivesAppointmentReminders|optional boolean|true, false|Decides whether to send out appointment reminders one day before each appointment.|
@@ -682,6 +683,27 @@ Watch links for YouTube: `https://youtube.com/watch?v=${youtubeId}`.
 
 ## Functions
 
+### checkPhoneNumberVerification
+
+Use `checkPhoneNumberVerification` to finish the phone number verification, leading to the phone number ultimately being added to a user's account. Make sure to call `startPhoneNumberVerification` first, to receive a verification code via the given phone number.
+
+When successfully finished, the phone number is included in a user's `phoneNumbers` property.
+
+#### Security
+
+Any user performs phone number verification for their own account. In the foreseeable future, the function is only relevant for patients though.
+
+#### Input
+
+|Property|Type|Values|Comments|
+|-|-|-|-|
+|phoneNumber|string|e.g. `+15551234567`|The phone number in [E.164 format](https://www.itu.int/rec/T-REC-E.164/), i.e. no whitespace, no parantheses/brackets, and including country code.|
+|code|string|e.g. `012345`|The 6-digit verification code received via text message.|
+
+#### Output
+
+None.
+
 ### createInvitation
 
 Use `createInvitation` to create invitations to be sent out to new patients, clinicians or owners.
@@ -751,6 +773,26 @@ This function may only be called by admins. On emulators, this function can easi
 |userData|list of object|-|Allows to seed user collections to existing users.|
 |userData[x]>userId|string|-|The userId for the user to create seeding data for.|
 |userData[x]>only|list of string|-|The user collections to create seeding data for. If not provided, all available collections will be seeded.|
+
+#### Output
+
+None.
+
+### deletePhoneNumber
+
+Use `deletePhoneNumber` to remove a phone number from a user's `phoneNumbers` property. Since we want to ensure that phone numbers are verified before adding them to a user, the user cannot manually change the `phoneNumbers` property, which is why this function exists.
+
+When successfully finished, the phone number is removed from a user's `phoneNumbers` property.
+
+#### Security
+
+Any user performs phone number deletion for their own account. In the foreseeable future, the function is only relevant for patients though.
+
+#### Input
+
+|Property|Type|Values|Comments|
+|-|-|-|-|
+|phoneNumber|string|e.g. `+15551234567`|The phone number in [E.164 format](https://www.itu.int/rec/T-REC-E.164/), i.e. no whitespace, no parantheses/brackets, and including country code.|
 
 #### Output
 
@@ -837,6 +879,26 @@ If a notification token could not be generated on the device (e.g. due to missin
 |appBuild|optional string|'43'|The app build version as used internally to identify individual builds within the same marketing version (i.e. the one shown in App Store / Play Store).|
 |language|optional string|'en-US'|The language and region setting as specified for [`LocalizedText`](#localizedtext).|
 |timeZone|optional string|e.g. "America/Los_Angeles"|The value needs to correspond to an identifier from [TZDB](https://nodatime.org/TimeZones). It must not be an offset to UTC/GMT, since that wouldn't work well with daylight-savings (even if there is no daylight-savings time at that location). Also, don't use common abbreviations like PST, PDT, CEST, etc (they may be ambiguous, e.g. CST). If the timeZone is unknown, then "America/Los_Angeles" should be used.|
+
+#### Output
+
+None.
+
+### startPhoneNumberVerification
+
+Use `startPhoneNumberVerification` to start phone number verification, ultimately leading to adding a phone number to an existing user account. When this function is called, a verification code will be sent to the given phone number. Once that verification code is received by the user, `checkPhoneNumberVerification` will need to be called with the given verification code. Until `checkPhoneNumberVerification` has not finished successfully, the phone number is not active.
+
+#### Security
+
+Any user performs phone number verification for their own account. In the foreseeable future, the function is only relevant for patients though.
+
+#### Input
+
+If a notification token could not be generated on the device (e.g. due to missing permissions), simply do not call this function rather than creating a device without token. For the remaining inputs, please provide all values that are available.
+
+|Property|Type|Values|Comments|
+|-|-|-|-|
+|phoneNumber|string|e.g. `+15551234567`|The phone number in [E.164 format](https://www.itu.int/rec/T-REC-E.164/), i.e. no whitespace, no parantheses/brackets, and including country code.|
 
 #### Output
 

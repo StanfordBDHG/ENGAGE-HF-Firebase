@@ -12,9 +12,13 @@ import { onDocumentWritten } from 'firebase-functions/v2/firestore'
 import { DatabaseConverter } from '../services/database/databaseConverter.js'
 import { type Document } from '../services/database/databaseService.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
+import { Env } from '../env.js'
 
 export const onUserWritten = onDocumentWritten(
-  'users/{userId}',
+  {
+    document: 'users/{userId}',
+    secrets: Env.twilioSecretKeys,
+  },
   async (event) => {
     const factory = getServiceFactory()
     const userService = factory.user()

@@ -1,0 +1,84 @@
+//
+// This source file is part of the ENGAGE-HF project based on the Stanford Spezi Template Application project
+//
+// SPDX-FileCopyrightText: 2023 Stanford University
+//
+// SPDX-License-Identifier: MIT
+//
+
+/* eslint-disable @typescript-eslint/require-await */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
+import { randomUUID } from 'crypto'
+import { Lazy } from '@stanfordbdhg/engagehf-models'
+import { type PhoneService } from './phoneService.js'
+
+interface MockPhoneMessage {
+  phoneNumber: string
+  message: string
+  date: Date
+}
+
+interface MockPhoneVerification {
+  phoneNumber: string
+  code: string
+}
+
+export class MockPhoneService implements PhoneService {
+  // Static Properties
+
+  // Unfortunately, there doesn't seem to be a way to realistically mock verification codes,
+  // since the tests couldn't access randomly generated ones,
+  // which is why it's always using this static code.
+  static readonly correctCode = '012345'
+  static readonly incorrectCode = '543210'
+
+  private static readonly lazyInstance = new Lazy(() => new MockPhoneService())
+
+  static get instance(): MockPhoneService {
+    return this.lazyInstance.value
+  }
+
+  // Properties
+
+  private verifications = new Map<string, MockPhoneVerification>()
+  private verifiedPhoneNumbers = new Set<string>()
+  private messages: MockPhoneMessage[] = []
+
+  // Constructors
+
+  private constructor() {
+    return
+  }
+
+  // Methods
+
+  async startVerification(
+    phoneNumber: string,
+    options: { locale?: string },
+  ): Promise<void> {
+    this.verifications.set(phoneNumber, {
+      phoneNumber,
+      code: MockPhoneService.correctCode,
+    })
+  }
+
+  async checkVerification(phoneNumber: string, code: string): Promise<void> {
+    const verification = this.verifications.get(phoneNumber)
+    if (verification === undefined) {
+      throw new Error('Phone verification not found.')
+    } else if (verification.code !== code) {
+      throw new Error('Invalid verification code')
+    } else {
+      this.verifications.delete(phoneNumber)
+      this.verifiedPhoneNumbers.add(verification.phoneNumber)
+    }
+  }
+
+  async sendTextMessage(phoneNumber: string, message: string): Promise<void> {
+    if (!this.verifiedPhoneNumbers.has(phoneNumber)) {
+      throw new Error('Phone number not verified')
+    }
+    this.messages.push({ phoneNumber, message, date: new Date() })
+  }
+}
