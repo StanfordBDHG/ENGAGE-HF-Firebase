@@ -19,6 +19,13 @@ import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 export const beforeUserCreatedFunction = beforeUserCreated(
   { serviceAccount: privilegedServiceAccount },
   async (event) => {
+    if (event.data === undefined) {
+      logger.error(`No user data provided.`)
+      throw new https.HttpsError(
+        'invalid-argument',
+        'User data is required for user.',
+      )
+    }
     const userId = event.data.uid
     logger.info(`${userId}: Start.`)
 
@@ -114,6 +121,13 @@ export const beforeUserSignedInFunction = beforeUserSignedIn(
   { serviceAccount: privilegedServiceAccount },
   async (event) => {
     try {
+      if (event.data === undefined) {
+        logger.error(`No user data provided.`)
+        throw new https.HttpsError(
+          'invalid-argument',
+          'User data is required for user.',
+        )
+      }
       const userService = getServiceFactory().user()
       const user = await userService.getUser(event.data.uid)
       if (user !== undefined) {

@@ -31,6 +31,7 @@ export class MockAuth {
       throw new Error('User not found')
     }
     const updatedUser: UserRecord = {
+      /* eslint-disable-next-line @typescript-eslint/no-misused-spread */
       ...user,
       customClaims: claims,
       toJSON: () => this,
