@@ -26,7 +26,7 @@ export function validatedOnCall<Schema extends z.ZodTypeAny, Return, Stream>(
   schema: Schema,
   handler: (request: CallableRequest<z.output<Schema>>) => Promise<Return>,
   options: CallableOptions<z.input<Schema>> = {},
-): CallableFunction<z.input<Schema>, Promise<Return>> {
+): CallableFunction<z.input<Schema>, Promise<Return>, Stream> {
   return onCall(
     {
       invoker: 'public',
