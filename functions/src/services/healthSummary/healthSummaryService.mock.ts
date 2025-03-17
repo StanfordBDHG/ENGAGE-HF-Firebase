@@ -23,7 +23,6 @@ import {
 import { recommendationLocalization } from '../recommendation/recommendationService+localization.js'
 
 /* eslint-disable @typescript-eslint/require-await */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 
 export class MockHealthSummaryService implements HealthSummaryService {
   // Methods
