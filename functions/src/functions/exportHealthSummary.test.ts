@@ -15,9 +15,6 @@ import { shareHealthSummary } from './shareHealthSummary.js'
 import { describeWithEmulators } from '../tests/functions/testEnvironment.js'
 import { expectError } from '../tests/helpers.js'
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-
 describeWithEmulators('function: exportHealthSummary', (env) => {
   it('exports health summary for authenticated user', async () => {
     const patientId = await env.createUser({
