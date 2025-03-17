@@ -23,6 +23,13 @@ export const beforeUserCreatedFunction = beforeUserCreated(
     secrets: Env.twilioSecretKeys,
   },
   async (event) => {
+    if (event.data === undefined) {
+      logger.error(`No user data provided.`)
+      throw new https.HttpsError(
+        'invalid-argument',
+        'User data is required for user.',
+      )
+    }
     const userId = event.data.uid
     logger.info(`${userId}: Start.`)
 
@@ -118,6 +125,13 @@ export const beforeUserSignedInFunction = beforeUserSignedIn(
   { serviceAccount: serviceAccount, secrets: Env.twilioSecretKeys },
   async (event) => {
     try {
+      if (event.data === undefined) {
+        logger.error(`No user data provided.`)
+        throw new https.HttpsError(
+          'invalid-argument',
+          'User data is required for user.',
+        )
+      }
       const userService = getServiceFactory().user()
       const user = await userService.getUser(event.data.uid)
       if (user !== undefined) {

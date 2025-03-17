@@ -6,7 +6,8 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { logger, type Response } from 'firebase-functions'
+import type express from 'express'
+import { logger } from 'firebase-functions'
 import { https } from 'firebase-functions/v2'
 import {
   type CallableFunction,
@@ -20,11 +21,11 @@ import { z } from 'zod'
 
 export const serviceAccount = `cloudfunctionsserviceaccount@${process.env.GCLOUD_PROJECT}.iam.gserviceaccount.com`
 
-export function validatedOnCall<Schema extends z.ZodTypeAny, Return>(
+export function validatedOnCall<Schema extends z.ZodTypeAny, Return, Stream>(
   name: string,
   schema: Schema,
   handler: (request: CallableRequest<z.output<Schema>>) => Promise<Return>,
-  options: CallableOptions = {},
+  options: CallableOptions<z.input<Schema>> = {},
 ): CallableFunction<z.input<Schema>, Promise<Return>> {
   return onCall(
     {
@@ -38,7 +39,7 @@ export function validatedOnCall<Schema extends z.ZodTypeAny, Return>(
           `onCall(${name}) from user '${request.auth?.uid}' with '${JSON.stringify(request.data)}'`,
         )
         request.data = schema.parse(request.data) as z.output<Schema>
-        return await handler(request)
+        return await handler(request as CallableRequest<z.output<Schema>>)
       } catch (error) {
         logger.debug(
           `onCall(${name}) from user '${request.auth?.uid}' failed with '${String(error)}'.`,
@@ -62,7 +63,7 @@ export function validatedOnRequest<Schema extends z.ZodTypeAny>(
   handler: (
     request: Request,
     data: z.output<Schema>,
-    response: Response,
+    response: express.Response,
   ) => void | Promise<void>,
   options: https.HttpsOptions = {},
 ): https.HttpsFunction {
