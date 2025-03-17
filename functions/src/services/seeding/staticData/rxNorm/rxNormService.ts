@@ -232,13 +232,11 @@ export class RxNormService {
                 (ingredient) => {
                   const value =
                     QuantityUnit.mg.valueOf(ingredient.strength?.numerator) ?? 0
-                  return {
-                    ...QuantityUnit.mg,
-                    value:
-                      value *
+                  return QuantityUnit.mg.fhirQuantity(
+                    value *
                       minimumDailyDose.quantity *
                       minimumDailyDose.frequency,
-                  }
+                  )
                 },
               ),
             },
@@ -254,10 +252,9 @@ export class RxNormService {
               },
               doseAndRate: [
                 {
-                  doseQuantity: {
-                    ...QuantityUnit.tablet,
-                    value: minimumDailyDose.quantity,
-                  },
+                  doseQuantity: QuantityUnit.tablet.fhirQuantity(
+                    minimumDailyDose.quantity,
+                  ),
                 },
               ],
             },
@@ -280,13 +277,11 @@ export class RxNormService {
                 (ingredient) => {
                   const value =
                     QuantityUnit.mg.valueOf(ingredient.strength?.numerator) ?? 0
-                  return {
-                    ...QuantityUnit.mg,
-                    value:
-                      value *
+                  return QuantityUnit.mg.fhirQuantity(
+                    value *
                       targetDailyDose.quantity *
                       targetDailyDose.frequency,
-                  }
+                  )
                 },
               ),
             },
@@ -302,10 +297,9 @@ export class RxNormService {
               },
               doseAndRate: [
                 {
-                  doseQuantity: {
-                    ...QuantityUnit.tablet,
-                    value: targetDailyDose.quantity,
-                  },
+                  doseQuantity: QuantityUnit.tablet.fhirQuantity(
+                    targetDailyDose.quantity,
+                  ),
                 },
               ],
             },
@@ -374,10 +368,7 @@ export class RxNormService {
           ],
         },
         strength: {
-          numerator: {
-            ...QuantityUnit.mg,
-            value: amounts[index],
-          },
+          numerator: QuantityUnit.mg.fhirQuantity(amounts[index]),
           denominator: {
             value: 1,
           },

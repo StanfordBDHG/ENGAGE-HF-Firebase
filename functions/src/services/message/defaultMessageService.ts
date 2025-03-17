@@ -9,10 +9,11 @@
 import {
   advanceDateByDays,
   compact,
+  dateConverter,
   type User,
   type UserDevice,
   type UserDevicePlatform,
-  UserMessage,
+  type UserMessage,
   userMessageConverter,
   UserMessageType,
 } from '@stanfordbdhg/engagehf-models'
@@ -211,13 +212,7 @@ export class DefaultMessageService implements MessageService {
           `DefaultMessageService.completeMessages(user: ${userId}, type: ${type}): Completing ${messages.length} messages (${messages.map((message) => message.ref.path).join(', ')})`,
         )
         for (const message of messages) {
-          transaction.set(
-            message.ref,
-            new UserMessage({
-              ...message.data(),
-              completionDate: new Date(),
-            }),
-          )
+          this.updateCompletionDate(message.ref, transaction)
         }
       },
     )
@@ -245,13 +240,7 @@ export class DefaultMessageService implements MessageService {
             'Message is not dismissible.',
           )
 
-        transaction.set(
-          messageRef,
-          new UserMessage({
-            ...messageContent,
-            completionDate: new Date(),
-          }),
-        )
+        this.updateCompletionDate(messageRef, transaction)
       },
     )
   }
@@ -291,13 +280,7 @@ export class DefaultMessageService implements MessageService {
             const messageContent = message.data()
 
             if (message.exists && messageContent?.isDismissible) {
-              transaction.set(
-                messageRefs[index],
-                new UserMessage({
-                  ...messageContent,
-                  completionDate: new Date(),
-                }),
-              )
+              this.updateCompletionDate(messageRefs[index], transaction)
               dismissedCount++
             }
           })
@@ -323,15 +306,9 @@ export class DefaultMessageService implements MessageService {
           `dismissMessages: Found ${messages.length} dismissible messages for user/${userId}`,
         )
 
-        messages.forEach((message) => {
-          transaction.set(
-            message.ref,
-            new UserMessage({
-              ...message.data(),
-              completionDate: new Date(),
-            }),
-          )
-        })
+        messages.forEach((message) =>
+          this.updateCompletionDate(message.ref, transaction),
+        )
 
         return messages.length
       },
@@ -357,13 +334,7 @@ export class DefaultMessageService implements MessageService {
             logger.debug(
               `DefaultMessageService.handleOldMessages(weightGain): Completing old message ${oldMessage.ref.path}`,
             )
-            transaction.set(
-              oldMessage.ref,
-              new UserMessage({
-                ...oldMessage.data(),
-                completionDate: new Date(),
-              }),
-            )
+            this.updateCompletionDate(oldMessage.ref, transaction)
           } else {
             logger.debug(
               `DefaultMessageService.handleOldMessages(${newMessage.type}): Contains newish message at: ${oldMessage.ref.path}`,
@@ -382,13 +353,7 @@ export class DefaultMessageService implements MessageService {
           logger.debug(
             `DefaultMessageService.handleOldMessages(${newMessage.type}): Completing message ${oldMessage.ref.path}`,
           )
-          transaction.set(
-            oldMessage.ref,
-            new UserMessage({
-              ...oldMessage.data(),
-              completionDate: new Date(),
-            }),
-          )
+          this.updateCompletionDate(oldMessage.ref, transaction)
         }
         return true
       case UserMessageType.welcome:
@@ -401,6 +366,15 @@ export class DefaultMessageService implements MessageService {
         )
         return oldMessages.length === 0
     }
+  }
+
+  private updateCompletionDate(
+    ref: FirebaseFirestore.DocumentReference<UserMessage>,
+    transaction: FirebaseFirestore.Transaction,
+  ) {
+    transaction.update(ref, {
+      completionDate: dateConverter.encode(new Date()),
+    })
   }
 
   // Helpers - Notifications
@@ -474,7 +448,7 @@ export class DefaultMessageService implements MessageService {
       batchResponse.responses.map(async (individualResponse, index) => {
         if (!individualResponse.success) {
           logger.error(
-            `DatabaseMessageService.sendNotification(user: ${userId}): Tried sending message to ${devices[index].content.notificationToken} but failed: ${String(individualResponse.error)}`,
+            `DatabaseMessageService.sendNotification(user: ${userId}): Tried sending message to ${devices[index].content.notificationToken} but failed: ${JSON.stringify(individualResponse.error)}`,
           )
         }
         if (

@@ -12,15 +12,12 @@ import {
   type QueryDocumentSnapshot,
 } from 'firebase-admin/firestore'
 
-/* eslint-disable @typescript-eslint/no-dynamic-delete */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unnecessary-condition */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 
 export class MockFirestore {
   collections = new Map<string, Map<string, unknown>>()
@@ -339,8 +336,20 @@ class MockFirestoreDocRef extends MockFirestoreRef {
   }
 
   update(data: any) {
-    const value = this.get().data()
-    this.set({ ...value, ...data })
+    const pathComponents = this.path.split('/')
+    const collectionPath = pathComponents.slice(0, -1).join('/')
+    if (this.firestore.collections.get(collectionPath) === undefined)
+      this.firestore.collections.set(collectionPath, new Map())
+    const existingData =
+      this.firestore.collections
+        .get(collectionPath)
+        ?.get(pathComponents[pathComponents.length - 1]) ?? new Map()
+    this.firestore.collections
+      .get(collectionPath)
+      ?.set(pathComponents[pathComponents.length - 1], {
+        ...existingData,
+        ...data,
+      })
   }
 
   delete() {
@@ -390,7 +399,6 @@ class MockFirestoreConvertedDocRef<T> extends MockFirestoreDocRef {
   }
 
   update(data: any) {
-    const value = this.get().data()
-    this.set({ ...value, ...data })
+    super.update(data)
   }
 }
