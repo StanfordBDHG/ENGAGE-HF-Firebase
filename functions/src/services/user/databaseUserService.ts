@@ -149,6 +149,7 @@ export class DatabaseUserService implements UserService {
 
         const userRef = collections.users.doc(userId)
         const userData = new User({
+          // eslint-disable-next-line @typescript-eslint/no-misused-spread
           ...invitation.content.user,
           lastActiveDate: new Date(),
           invitationCode: invitation.content.code,

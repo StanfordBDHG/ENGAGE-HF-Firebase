@@ -22,7 +22,6 @@ import {
 } from '../../models/healthSummaryData.js'
 
 /* eslint-disable @typescript-eslint/require-await */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 
 export class MockHealthSummaryService implements HealthSummaryService {
   // Methods
