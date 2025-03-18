@@ -650,7 +650,7 @@ This collection may only be used by the functions themselves and should neither 
 
 |Property|Type|Values|Comments|
 |-|-|-|-|
-|code|string|-|An 8-character alphanumeric string.|
+|code|string|-|A 4 character alphanumeric string.|
 |expiresAt|Date|-|An expiration date .|
 |tries|number|-|The amount of REMAINING tries to request a health summary using this share code.|
 
@@ -825,7 +825,7 @@ Additionally, unauthenticated users can request a health summary using a `shareC
 |userId|string|-|The patient's user id. Needs to be specified, even if a patient is requesting the health summary for themselves.|
 |language|optional string|e.g. 'en-US'|See [`LocalizedText`](#localizedtext) for specification.|
 |weightUnit|optional string|e.g. '[lb_av]'|A loinc code for the weight unit to be used during generation of the health summary PDF|
-|shareCode|optional string|-|An 8-character alphanumeric code.|
+|shareCode|optional string|-|A 4 character alphanumeric code.|
 |shareCodeId|optional string|-|An id identifying the `shareCode`.|
 
 #### Output
@@ -878,7 +878,7 @@ This function may be called by admins (for any patient), owners/clinicians (for 
 
 |Property|Type|Values|Comments|
 |-|-|-|-|
-|code|string|-|An 8 character alphanumeric code. It is only checked case-insensitively, so you may change its casing when displaying it to the user.|
+|code|string|-|A 4 character alphanumeric code. It is only checked case-insensitively, so you may change its casing when displaying it to the user.|
 |expiresAt|Date|-|The date the share code expires at. Exporting a health summary with an expired share code will fail. Currently, the expiration date is 5 minutes after requesting the share code.|
 |url|string|-|A url directing at the web frontend to display the health summary that requires input of the code (e.g. to be used for displaying it in the app).|
 
