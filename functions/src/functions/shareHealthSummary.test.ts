@@ -33,7 +33,7 @@ describeWithEmulators('function: shareHealthSummary', (env) => {
     expect(shareCode).to.exist
     expect(shareCode).to.have.property('code')
     expect(shareCode.code).to.be.a('string')
-    expect(shareCode.code).to.have.length(8)
+    expect(shareCode.code).to.have.length(4)
     expect(shareCode).to.have.property('expiresAt')
   })
 
@@ -62,7 +62,7 @@ describeWithEmulators('function: shareHealthSummary', (env) => {
     expect(shareCode).to.exist
     expect(shareCode).to.have.property('code')
     expect(shareCode.code).to.be.a('string')
-    expect(shareCode.code).to.have.length(8)
+    expect(shareCode.code).to.have.length(4)
     expect(shareCode).to.have.property('expiresAt')
   })
 })
