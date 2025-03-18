@@ -11,7 +11,6 @@ import {
   type ExportHealthSummaryOutput,
   QuantityUnit,
 } from '@stanfordbdhg/engagehf-models'
-import { https } from 'firebase-functions/v2'
 import { validatedOnCall } from './helpers.js'
 import { generateHealthSummary } from '../healthSummary/generate.js'
 import { UserRole } from '../services/credential/credential.js'
