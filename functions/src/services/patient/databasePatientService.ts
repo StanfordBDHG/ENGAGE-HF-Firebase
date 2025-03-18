@@ -355,7 +355,7 @@ export class DatabasePatientService implements PatientService {
   async createShareCode(userId: string): Promise<Document<UserShareCode>> {
     const now = new Date()
     const object: UserShareCode = {
-      code: Math.random().toString(36).substring(2, 10),
+      code: Math.random().toString(36).substring(2, 6),
       tries: 3,
       expiresAt: advanceDateByMinutes(now, 5),
     }
