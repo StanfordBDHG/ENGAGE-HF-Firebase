@@ -52,19 +52,12 @@ export const exportHealthSummary = validatedOnCall(
       }
     }
 
-    const weightUnit = [QuantityUnit.lbs, QuantityUnit.kg].find(
-      (unit) => unit.code === request.data.weightUnit,
-    )
-
-    if (request.data.weightUnit !== undefined && weightUnit === undefined)
-      throw new https.HttpsError('invalid-argument', 'Invalid weight unit')
-
     const now = new Date()
     const healthSummaryService = factory.healthSummary()
     const data = await healthSummaryService.getHealthSummaryData(
       request.data.userId,
       now,
-      weightUnit ?? QuantityUnit.lbs,
+      request.data.weightUnit ?? QuantityUnit.lbs,
     )
     const pdf = generateHealthSummary(data, {
       languages:
