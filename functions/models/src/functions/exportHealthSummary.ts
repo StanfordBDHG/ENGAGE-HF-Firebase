@@ -8,12 +8,12 @@
 
 import { z } from 'zod'
 import { QuantityUnit } from '../codes/quantityUnit.js'
-import { optionalish } from '../helpers/optionalish.js'
+import { optionalish, optionalishDefault } from '../helpers/optionalish.js'
 
 export const exportHealthSummaryInputSchema = z.object({
   userId: z.string(),
   languages: optionalish(z.array(z.string())),
-  weightUnit: optionalish(
+  weightUnit: optionalishDefault(
     z.string().transform((value, context) => {
       const availableWeightUnits = [QuantityUnit.lbs, QuantityUnit.kg]
       const unit = availableWeightUnits.find((u) => u.code === value)
@@ -32,6 +32,7 @@ export const exportHealthSummaryInputSchema = z.object({
       }
       return unit
     }),
+    QuantityUnit.lbs,
   ),
   shareCode: optionalish(z.string()),
   shareCodeId: optionalish(z.string()),

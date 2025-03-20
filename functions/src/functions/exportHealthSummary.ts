@@ -56,7 +56,7 @@ export const exportHealthSummary = validatedOnCall(
     const data = await healthSummaryService.getHealthSummaryData(
       request.data.userId,
       now,
-      request.data.weightUnit ?? QuantityUnit.lbs,
+      request.data.weightUnit,
     )
     const pdf = generateHealthSummary(data, {
       languages:

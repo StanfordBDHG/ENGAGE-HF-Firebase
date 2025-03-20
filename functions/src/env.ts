@@ -6,14 +6,10 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { defineSecret } from 'firebase-functions/params'
-
 /* eslint-disable @typescript-eslint/no-extraneous-class */
-
-const webFrontendBaseUrl = defineSecret('WEB_FRONTEND_BASE_URL')
 
 export class Env {
   static get WEB_FRONTEND_BASE_URL() {
-    return webFrontendBaseUrl.value()
+    return `https://${process.env.GOOGLE_PROJECT_ID}.web.app`
   }
 }
