@@ -31,7 +31,7 @@
     "firebase-admin": "^13.2",
     "firebase-functions": "^6.3.2",
     "jsdom": "^24.1.0",
-    "jspdf": "^3.0.0",
+    "jspdf": "^3.0.1",
     "jspdf-autotable": "^5.0.2",
     "twilio": "^5.4.5",
     "zod": "^3.23.8"
