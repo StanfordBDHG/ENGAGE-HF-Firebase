@@ -10,6 +10,6 @@
 
 export class Env {
   static get WEB_FRONTEND_BASE_URL() {
-    return `https://${process.env.GOOGLE_PROJECT_ID}.web.app`
+    return `https://${process.env.GCLOUD_PROJECT}.web.app`
   }
 }
