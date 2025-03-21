@@ -9,6 +9,7 @@
 import { isDeepStrictEqual } from 'util'
 import {
   advanceDateByDays,
+  advanceDateByMinutes,
   compactMap,
   type FHIRAllergyIntolerance,
   type FHIRAppointment,
@@ -21,8 +22,15 @@ import {
   type UserMedicationRecommendation,
   UserMedicationRecommendationType,
   UserObservationCollection,
+  type UserShareCode,
 } from '@stanfordbdhg/engagehf-models'
+import {
+  FieldValue,
+  type QueryDocumentSnapshot,
+  type Transaction,
+} from 'firebase-admin/firestore'
 import { type PatientService } from './patientService.js'
+import { type CollectionsService } from '../database/collections.js'
 import {
   type Document,
   type DatabaseService,
@@ -340,5 +348,88 @@ export class DatabasePatientService implements PatientService {
       case UserMedicationRecommendationType.noActionRequired:
         return 7
     }
+  }
+
+  // Share Code
+
+  async createShareCode(userId: string): Promise<Document<UserShareCode>> {
+    const now = new Date()
+    const object: UserShareCode = {
+      code: Math.random().toString(36).substring(2, 6),
+      tries: 3,
+      expiresAt: advanceDateByMinutes(now, 5),
+    }
+
+    const ref = await this.runShareCodeTransaction(
+      userId,
+      now,
+      (collections, transaction) => {
+        const ref = collections.userShareCodes(userId).doc()
+        transaction.create(ref, object)
+        return ref
+      },
+    )
+
+    return {
+      id: ref.id,
+      path: ref.path,
+      lastUpdate: now,
+      content: object,
+    }
+  }
+
+  async validateShareCode(
+    userId: string,
+    documentId: string,
+    code: string,
+  ): Promise<boolean> {
+    const now = new Date()
+
+    return this.runShareCodeTransaction(userId, now, (_, transaction, docs) => {
+      const shareCodeDoc = docs.find((doc) => doc.id === documentId)
+      if (shareCodeDoc === undefined) return false
+      const shareCodeData = shareCodeDoc.data()
+      if (shareCodeData.code.toLowerCase() !== code.toLowerCase()) {
+        if (shareCodeData.tries > 1) {
+          transaction.update(
+            shareCodeDoc.ref,
+            'tries',
+            FieldValue.increment(-1),
+          )
+        } else {
+          transaction.delete(shareCodeDoc.ref)
+        }
+        return false
+      }
+      return true
+    })
+  }
+
+  private async runShareCodeTransaction<T>(
+    userId: string,
+    now: Date,
+    perform: (
+      collections: CollectionsService,
+      transaction: Transaction,
+      codes: Array<QueryDocumentSnapshot<UserShareCode>>,
+    ) => Promise<T> | T,
+  ): Promise<T> {
+    return this.databaseService.runTransaction(
+      async (collections, transaction) => {
+        const existingCodes = await collections.userShareCodes(userId).get()
+        const nonExpiredCodes: Array<QueryDocumentSnapshot<UserShareCode>> = []
+
+        for (const existingDoc of existingCodes.docs) {
+          const existingCode = existingDoc.data()
+          if (existingCode.expiresAt < now) {
+            transaction.delete(existingDoc.ref)
+          } else {
+            nonExpiredCodes.push(existingDoc)
+          }
+        }
+
+        return perform(collections, transaction, nonExpiredCodes)
+      },
+    )
   }
 }

@@ -9,9 +9,7 @@
 import {
   exportHealthSummaryInputSchema,
   type ExportHealthSummaryOutput,
-  QuantityUnit,
 } from '@stanfordbdhg/engagehf-models'
-import { https } from 'firebase-functions/v2'
 import { validatedOnCall } from './helpers.js'
 import { generateHealthSummary } from '../healthSummary/generate.js'
 import { UserRole } from '../services/credential/credential.js'
@@ -22,35 +20,42 @@ export const exportHealthSummary = validatedOnCall(
   exportHealthSummaryInputSchema,
   async (request): Promise<ExportHealthSummaryOutput> => {
     const factory = getServiceFactory()
-    const credential = factory.credential(request.auth)
 
     const userService = factory.user()
     const user = await userService.getUser(request.data.userId)
 
-    credential.check(
-      UserRole.admin,
-      UserRole.user(request.data.userId),
-      ...(user?.content.organization ?
-        [
-          UserRole.owner(user.content.organization),
-          UserRole.clinician(user.content.organization),
-        ]
-      : []),
-    )
-
-    const weightUnit = [QuantityUnit.lbs, QuantityUnit.kg].find(
-      (unit) => unit.code === request.data.weightUnit,
-    )
-
-    if (request.data.weightUnit !== undefined && weightUnit === undefined)
-      throw new https.HttpsError('invalid-argument', 'Invalid weight unit')
+    try {
+      const credential = factory.credential(request.auth)
+      credential.check(
+        UserRole.admin,
+        UserRole.user(request.data.userId),
+        ...(user?.content.organization ?
+          [
+            UserRole.owner(user.content.organization),
+            UserRole.clinician(user.content.organization),
+          ]
+        : []),
+      )
+    } catch (error: unknown) {
+      if (request.data.shareCodeId !== undefined) {
+        const patientService = factory.patient()
+        const isValid = await patientService.validateShareCode(
+          request.data.userId,
+          request.data.shareCodeId,
+          request.data.shareCode ?? '',
+        )
+        if (!isValid) throw error
+      } else {
+        throw error
+      }
+    }
 
     const now = new Date()
     const healthSummaryService = factory.healthSummary()
     const data = await healthSummaryService.getHealthSummaryData(
       request.data.userId,
       now,
-      weightUnit ?? QuantityUnit.lbs,
+      request.data.weightUnit,
     )
     const pdf = generateHealthSummary(data, {
       languages:

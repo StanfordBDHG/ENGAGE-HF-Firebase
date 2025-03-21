@@ -28,6 +28,10 @@ export class Env {
   static get twilioSecretKeys() {
     return Object.values(TwilioSecrets)
   }
+  
+  static get WEB_FRONTEND_BASE_URL() {
+    return `https://${process.env.GCLOUD_PROJECT}.web.app`
+  }
 
   static get TWILIO_ACCOUNT_SID() {
     return twilioAccountSid.value()
