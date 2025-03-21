@@ -23,10 +23,7 @@ export const exportHealthSummaryInputSchema = z.object({
           .join(', ')
         context.addIssue({
           code: z.ZodIssueCode.custom,
-          message:
-            'Invalid weight unit. Must be one of the following: ' +
-            availableUnitsString +
-            '.',
+          message: `Invalid weight unit. Must be one of the following: ${availableUnitsString}.`,
         })
         return z.NEVER
       }
