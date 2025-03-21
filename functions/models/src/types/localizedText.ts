@@ -13,9 +13,16 @@ export const localizedTextConverter = new SchemaConverter({
   schema: z
     .string()
     .or(z.record(z.string()))
-    .transform((content) => new LocalizedText(content)),
+    .transform((content) => LocalizedText.raw(content)),
   encode: (object) => object.content,
 })
+
+export type LocalizedTextParams<S extends string, Acc extends unknown[] = []> =
+  S extends `${string}@${infer N}${infer Rest}` ?
+    N extends `${number}` ?
+      LocalizedTextParams<Rest, [...Acc, string | LocalizedText]>
+    : LocalizedTextParams<Rest, Acc>
+  : Acc
 
 export class LocalizedText {
   // Properties
@@ -24,8 +31,35 @@ export class LocalizedText {
 
   // Constructor
 
-  constructor(input: string | Record<string, string>) {
+  private constructor(input: string | Record<string, string>) {
     this.content = input
+  }
+
+  static raw(input: string | Record<string, string>): LocalizedText {
+    return new LocalizedText(input)
+  }
+
+  static create<L extends Record<string, string>>(
+    input: L,
+    ...params: LocalizedTextParams<L['en']>
+  ): LocalizedText {
+    const copy: Record<string, string> = {}
+
+    for (const language of Object.keys(input)) {
+      copy[language] = params.reduce(
+        (previousValue, currentValue, index) =>
+          previousValue.replace(
+            `@${index}`,
+            /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+            (currentValue as any) instanceof LocalizedText ?
+              (currentValue as LocalizedText).localize(language)
+            : currentValue,
+          ),
+        input[language],
+      )
+    }
+
+    return new LocalizedText(copy)
   }
 
   // Methods
