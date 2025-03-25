@@ -99,7 +99,7 @@ export class DefaultServiceFactory implements ServiceFactory {
 
   private readonly phoneService = new Lazy(() =>
     Flags.disableTwilio ?
-      MockPhoneService.instance
+      new MockPhoneService(this.databaseService.value)
     : new TwilioPhoneService({
         accountSid: Env.TWILIO_ACCOUNT_SID,
         authToken: Env.TWILIO_AUTH_TOKEN,

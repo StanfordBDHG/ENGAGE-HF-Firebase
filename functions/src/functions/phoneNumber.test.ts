@@ -67,7 +67,7 @@ describeWithEmulators('PhoneNumber', (env) => {
       (error) =>
         expect(error).to.have.property(
           'message',
-          'Phone verification not found.',
+          'Phone number verification not found.',
         ),
     )
   })
@@ -99,7 +99,7 @@ describeWithEmulators('PhoneNumber', (env) => {
           },
         ),
       (error) =>
-        expect(error).to.have.property('message', 'Invalid verification code'),
+        expect(error).to.have.property('message', 'Invalid verification code.'),
     )
   })
 

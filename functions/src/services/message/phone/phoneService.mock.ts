@@ -9,13 +9,14 @@
 /* eslint-disable @typescript-eslint/require-await */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import { Lazy } from '@stanfordbdhg/engagehf-models'
 import { type PhoneService } from './phoneService.js'
+import { DatabaseService } from '../../database/databaseService.js'
+import { dateConverter } from '@stanfordbdhg/engagehf-models'
 
 interface MockPhoneMessage {
   phoneNumber: string
   message: string
-  date: Date
+  date: String
 }
 
 interface MockPhoneVerification {
@@ -32,22 +33,14 @@ export class MockPhoneService implements PhoneService {
   static readonly correctCode = '012345'
   static readonly incorrectCode = '543210'
 
-  private static readonly lazyInstance = new Lazy(() => new MockPhoneService())
-
-  static get instance(): MockPhoneService {
-    return this.lazyInstance.value
-  }
-
   // Properties
 
-  private verifications = new Map<string, MockPhoneVerification>()
-  private verifiedPhoneNumbers = new Set<string>()
-  private messages: MockPhoneMessage[] = []
+  private readonly databaseService: DatabaseService
 
   // Constructors
 
-  private constructor() {
-    return
+  constructor(databaseService: DatabaseService) {
+    this.databaseService = databaseService
   }
 
   // Methods
@@ -56,26 +49,54 @@ export class MockPhoneService implements PhoneService {
     phoneNumber: string,
     options: { locale?: string },
   ): Promise<void> {
-    this.verifications.set(phoneNumber, {
+    const verification: MockPhoneVerification = {
       phoneNumber,
       code: MockPhoneService.correctCode,
+    }
+    this.databaseService.runTransaction(async (collections, transaction) => {
+      transaction.set(
+        collections.firestore
+          .collection('mockPhoneNumberVerifications')
+          .doc(phoneNumber),
+        verification,
+      )
     })
   }
 
   async checkVerification(phoneNumber: string, code: string): Promise<void> {
-    // TODO: Check if verification exists in `verifications` property
-    if (code === MockPhoneService.correctCode) {
-      this.verifications.delete(phoneNumber)
-      this.verifiedPhoneNumbers.add(phoneNumber)
-    } else if (MockPhoneService.correctCode !== code) {
-      throw new Error('Invalid verification code')
-    }
+    await this.databaseService.runTransaction(
+      async (collections, transaction) => {
+        const query = collections.firestore
+          .collection('mockPhoneNumberVerifications')
+          .where('phoneNumber', '==', phoneNumber)
+        const snapshot = await transaction.get(query)
+        if (snapshot.docs.length === 0) {
+          throw new Error('Phone number verification not found.')
+        } else if (snapshot.docs.length > 1) {
+          throw new Error('Multiple phone number verifications found.')
+        }
+        const verificationDoc = snapshot.docs[0]
+        const verification = verificationDoc.data() as MockPhoneVerification
+        if (verification.code === code) {
+          transaction.delete(verificationDoc.ref)
+        } else {
+          throw new Error('Invalid verification code.')
+        }
+      },
+    )
   }
 
   async sendTextMessage(phoneNumber: string, message: string): Promise<void> {
-    if (!this.verifiedPhoneNumbers.has(phoneNumber)) {
-      throw new Error('Phone number not verified')
+    const mockPhoneMessage: MockPhoneMessage = {
+      phoneNumber,
+      message,
+      date: dateConverter.encode(new Date()),
     }
-    this.messages.push({ phoneNumber, message, date: new Date() })
+    this.databaseService.runTransaction(async (collections, transaction) => {
+      transaction.set(
+        collections.firestore.collection('mockPhoneMessages').doc(),
+        mockPhoneMessage,
+      )
+    })
   }
 }
