@@ -9,14 +9,14 @@
 /* eslint-disable @typescript-eslint/require-await */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import { type PhoneService } from './phoneService.js'
-import { DatabaseService } from '../../database/databaseService.js'
 import { dateConverter } from '@stanfordbdhg/engagehf-models'
+import { type PhoneService } from './phoneService.js'
+import { type DatabaseService } from '../../database/databaseService.js'
 
 interface MockPhoneMessage {
   phoneNumber: string
   message: string
-  date: String
+  date: string
 }
 
 interface MockPhoneVerification {
@@ -53,14 +53,16 @@ export class MockPhoneService implements PhoneService {
       phoneNumber,
       code: MockPhoneService.correctCode,
     }
-    this.databaseService.runTransaction(async (collections, transaction) => {
-      transaction.set(
-        collections.firestore
-          .collection('mockPhoneNumberVerifications')
-          .doc(phoneNumber),
-        verification,
-      )
-    })
+    await this.databaseService.runTransaction(
+      async (collections, transaction) => {
+        transaction.set(
+          collections.firestore
+            .collection('mockPhoneNumberVerifications')
+            .doc(phoneNumber),
+          verification,
+        )
+      },
+    )
   }
 
   async checkVerification(phoneNumber: string, code: string): Promise<void> {
@@ -92,11 +94,13 @@ export class MockPhoneService implements PhoneService {
       message,
       date: dateConverter.encode(new Date()),
     }
-    this.databaseService.runTransaction(async (collections, transaction) => {
-      transaction.set(
-        collections.firestore.collection('mockPhoneMessages').doc(),
-        mockPhoneMessage,
-      )
-    })
+    await this.databaseService.runTransaction(
+      async (collections, transaction) => {
+        transaction.set(
+          collections.firestore.collection('mockPhoneMessages').doc(),
+          mockPhoneMessage,
+        )
+      },
+    )
   }
 }
