@@ -81,7 +81,7 @@ export class DatabasePatientService implements PatientService {
       (collections) =>
         collections
           .userAppointments(userId)
-          .where('start', '>', new Date())
+          .where('start', '>', new Date().toISOString())
           .orderBy('start', 'asc')
           .limit(1),
     )
