@@ -49,6 +49,7 @@ describeWithEmulators('function: enrollUser', (env) => {
       user: new UserRegistration({
         type: UserType.patient,
         disabled: false,
+        selfManaged: false,
         organization: 'stanford',
         receivesAppointmentReminders: true,
         receivesInactivityReminders: true,

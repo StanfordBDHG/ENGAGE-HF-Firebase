@@ -154,7 +154,7 @@ export class DebugDataService extends SeedingService {
       }),
       UserMessage.createSymptomQuestionnaire({
         creationDate: date,
-        questionnaireReference: QuestionnaireReference.default_en_US,
+        questionnaireReference: QuestionnaireReference.kccq_en_US,
       }),
       UserMessage.createVitals({
         creationDate: date,

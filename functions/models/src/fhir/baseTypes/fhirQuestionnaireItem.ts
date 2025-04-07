@@ -16,8 +16,41 @@ import { SchemaConverter } from '../../helpers/schemaConverter.js'
 export enum FHIRQuestionnaireItemType {
   group = 'group',
   display = 'display',
+  boolean = 'boolean',
   choice = 'choice',
+  decimal = 'decimal',
+  integer = 'integer',
+  date = 'date',
+  dateTime = 'dateTime',
+  time = 'time',
+  string = 'string',
+  text = 'text',
+  url = 'url',
+  coding = 'coding',
+  quantity = 'quantity',
+  reference = 'reference',
 }
+
+const fhirQuestionnaireItemAnswerOptionConverter = new Lazy(
+  () =>
+    new SchemaConverter({
+      schema: z.object({
+        valueCoding: optionalish(
+          z.lazy(() => fhirCodingConverter.value.schema),
+        ),
+      }),
+      encode: (object) => ({
+        valueCoding:
+          object.valueCoding ?
+            fhirCodingConverter.value.encode(object.valueCoding)
+          : null,
+      }),
+    }),
+)
+
+export type FHIRQuestionnaireItemAnswerOption = z.output<
+  typeof fhirQuestionnaireItemAnswerOptionConverter.value.schema
+>
 
 const fhirQuestionnaireItemBaseConverter = new Lazy(
   () =>
@@ -27,14 +60,9 @@ const fhirQuestionnaireItemBaseConverter = new Lazy(
         type: optionalish(z.nativeEnum(FHIRQuestionnaireItemType)),
         text: optionalish(z.string()),
         required: optionalish(z.boolean()),
+        unit: optionalish(z.string()),
         answerOption: optionalish(
-          z
-            .object({
-              valueCoding: optionalish(
-                z.lazy(() => fhirCodingConverter.value.schema),
-              ),
-            })
-            .array(),
+          fhirQuestionnaireItemAnswerOptionConverter.value.schema.array(),
         ),
         extension: z.lazy(() =>
           optionalish(fhirExtensionConverter.schema.array()),
@@ -45,13 +73,11 @@ const fhirQuestionnaireItemBaseConverter = new Lazy(
         type: object.type ?? null,
         text: object.text ?? null,
         required: object.required ?? null,
+        unit: object.unit ?? null,
         answerOption:
-          object.answerOption?.map((option) => ({
-            valueCoding:
-              option.valueCoding ?
-                fhirCodingConverter.value.encode(option.valueCoding)
-              : null,
-          })) ?? null,
+          object.answerOption?.map((option) =>
+            fhirQuestionnaireItemAnswerOptionConverter.value.encode(option),
+          ) ?? null,
         extension:
           object.extension ?
             object.extension.map(fhirExtensionConverter.encode)

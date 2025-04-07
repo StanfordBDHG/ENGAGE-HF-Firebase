@@ -48,6 +48,7 @@ export class User extends UserRegistration {
   constructor(input: {
     type: UserType
     disabled: boolean
+    selfManaged: boolean
     organization?: string
     dateOfBirth?: Date
     clinician?: string

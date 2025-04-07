@@ -128,6 +128,7 @@ export class EmulatorTestEnvironment {
     options: {
       type: UserType
       disabled?: boolean
+      selfManaged?: boolean
       organization?: string
       clinician?: string
       dateOfEnrollment?: Date
@@ -146,6 +147,7 @@ export class EmulatorTestEnvironment {
     await this.collections.users.doc(authUser.uid).set(
       new User({
         type: options.type,
+        selfManaged: options.selfManaged ?? false,
         disabled: options.disabled ?? false,
         organization: options.organization,
         dateOfEnrollment: options.dateOfEnrollment ?? new Date(),

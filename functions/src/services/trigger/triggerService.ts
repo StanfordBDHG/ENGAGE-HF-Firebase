@@ -161,7 +161,7 @@ export class TriggerService {
       await this.factory.message().addMessage(
         user.id,
         UserMessage.createSymptomQuestionnaire({
-          questionnaireReference: QuestionnaireReference.enUS,
+          questionnaireReference: QuestionnaireReference.kccq_en_US,
         }),
         { notify: true },
       )
@@ -606,7 +606,7 @@ export class TriggerService {
     now: Date
   }) {
     const symptomReminderMessage = UserMessage.createSymptomQuestionnaire({
-      questionnaireReference: QuestionnaireReference.enUS,
+      questionnaireReference: QuestionnaireReference.kccq_en_US,
     })
     const vitalsMessage = UserMessage.createVitals()
 
@@ -790,6 +790,7 @@ export class TriggerService {
             code: '<your admin email>',
             user: new UserRegistration({
               type: UserType.admin,
+              selfManaged: false,
               disabled: false,
               receivesAppointmentReminders: false,
               receivesInactivityReminders: false,

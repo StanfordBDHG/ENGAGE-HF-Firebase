@@ -362,6 +362,7 @@ export class RxNormService {
             display: rxTermInfo.rxnormDoseForm,
           },
         ],
+        text: rxTermInfo.rxnormDoseForm,
       },
       ingredient: ingredients.map((ingredient, index) => ({
         itemCodeableConcept: {

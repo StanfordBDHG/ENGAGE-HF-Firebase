@@ -65,6 +65,7 @@ export class MockUserService implements UserService {
         user: new UserRegistration({
           type: UserType.patient,
           disabled: false,
+          selfManaged: false,
           dateOfBirth: new Date('1970-01-02'),
           clinician: 'mockPatient',
           receivesAppointmentReminders: true,
@@ -152,6 +153,7 @@ export class MockUserService implements UserService {
       content: new User({
         type: UserType.clinician,
         disabled: false,
+        selfManaged: false,
         dateOfBirth: new Date('1970-01-02'),
         clinician: 'mockClinician',
         lastActiveDate: new Date('2024-04-04'),

@@ -7,14 +7,16 @@
 //
 
 import {
-  type CachingStrategy,
+  CachingStrategy,
   type FHIRMedication,
   fhirMedicationConverter,
+  FHIRQuestionnaire,
   fhirQuestionnaireConverter,
   localizedTextConverter,
   type MedicationClass,
   medicationClassConverter,
   organizationConverter,
+  QuestionnaireReference,
   Video,
   VideoSection,
 } from '@stanfordbdhg/engagehf-models'
@@ -25,6 +27,9 @@ import {
 } from './rxNorm/rxNormService.js'
 import { type DatabaseService } from '../../database/databaseService.js'
 import { SeedingService } from '../seedingService.js'
+import { KccqQuestionnaireFactory } from './questionnaireFactory/KccqQuestionnaireFactory.js'
+import { RegistrationQuestionnaireFactory } from './questionnaireFactory/RegistrationQuestionnaireFactory.js'
+import { DataUpdateQuestionnaireFactory } from './questionnaireFactory/DataUpdateQuestionnaireFactory.js'
 
 export class StaticDataService extends SeedingService {
   // Properties
@@ -94,17 +99,14 @@ export class StaticDataService extends SeedingService {
     )
   }
 
-  /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
   async updateQuestionnaires(strategy: CachingStrategy) {
+    const questionnaires = await this.retrieveQuestionnaires(strategy)
     await this.databaseService.runTransaction(
       async (collections, transaction) => {
         await this.deleteCollection(collections.questionnaires, transaction)
         this.setCollection(
           collections.questionnaires,
-          this.readJSONArray(
-            'questionnaires.json',
-            fhirQuestionnaireConverter.value.schema,
-          ),
+          questionnaires,
           transaction,
         )
       },
@@ -157,6 +159,62 @@ export class StaticDataService extends SeedingService {
   }
 
   // Helpers
+
+  private async retrieveQuestionnaires(
+    strategy: CachingStrategy,
+  ): Promise<Record<string, FHIRQuestionnaire>> {
+    const questionnairesFile = 'questionnaires.json'
+
+    return await this.cache(
+      strategy,
+      () =>
+        this.readJSONRecord(
+          questionnairesFile,
+          fhirQuestionnaireConverter.value.schema,
+        ),
+      async () => await this.generateQuestionnaires(),
+      (result) =>
+        this.writeJSON(
+          'questionnaires.json',
+          Object.fromEntries(
+            Object.entries(result).map(([key, value]) => [
+              key,
+              fhirQuestionnaireConverter.value.encode(value),
+            ]),
+          ),
+        ),
+    )
+  }
+
+  private async generateQuestionnaires(): Promise<
+    Record<string, FHIRQuestionnaire>
+  > {
+    const { medications, drugs } = await this.retrieveMedicationsInformation(
+      CachingStrategy.expectCache,
+    )
+
+    return {
+      [QuestionnaireReference.kccq_en_US.split('/').at(-1)!]:
+        new KccqQuestionnaireFactory().create({}),
+      [QuestionnaireReference.registration_en_US.split('/').at(-1)!]:
+        new RegistrationQuestionnaireFactory().create({
+          medications,
+          drugs,
+        }),
+      [QuestionnaireReference.dataUpdate_en_US.split('/').at(-1)!]:
+        new DataUpdateQuestionnaireFactory().create({
+          medications,
+          drugs,
+          isPostVisit: false,
+        }),
+      [QuestionnaireReference.postVisit_en_US.split('/').at(-1)!]:
+        new DataUpdateQuestionnaireFactory().create({
+          medications,
+          drugs,
+          isPostVisit: true,
+        }),
+    }
+  }
 
   private async retrieveMedicationsInformation(
     strategy: CachingStrategy,
