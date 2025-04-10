@@ -150,8 +150,8 @@ export function healthSummaryLocalizations(languages: string[]) {
         const currentScore = input.currentScore
         const previousScore = input.previousScore
         if (currentScore !== null && previousScore !== null) {
-          const currentScoreText = currentScore.overallScore.toString() + '%'
-          const previousScoreText = previousScore.overallScore.toString() + '%'
+          const currentScoreText = currentScore.overallScore.toFixed(0) + '%'
+          const previousScoreText = previousScore.overallScore.toFixed(0) + '%'
 
           if (currentScore.overallScore >= 90) {
             if (currentScore.overallScore - previousScore.overallScore >= 10) {
