@@ -60,14 +60,13 @@ export class EmulatorTestEnvironment {
 
   readonly auth = admin.auth()
   readonly firestore = admin.firestore()
+  readonly messaging = admin.messaging()
   readonly storage = admin.storage()
 
   readonly collections = new CollectionsService(this.firestore)
   readonly factory: ServiceFactory
 
   private readonly wrapper = firebaseFunctionsTest()
-
-  private areTriggersEnabled = true
 
   // Constructor
 
@@ -95,13 +94,13 @@ export class EmulatorTestEnvironment {
   }
 
   async cleanup() {
-    const collections = await admin.firestore().listCollections()
+    const collections = await this.firestore.listCollections()
     for (const collection of collections) {
-      await admin.firestore().recursiveDelete(collection)
+      await this.firestore.recursiveDelete(collection)
     }
-    const usersResult = await admin.auth().listUsers()
+    const usersResult = await this.auth.listUsers()
     for (const user of usersResult.users) {
-      await admin.auth().deleteUser(user.uid)
+      await this.auth.deleteUser(user.uid)
     }
   }
 
@@ -133,6 +132,7 @@ export class EmulatorTestEnvironment {
       dateOfEnrollment?: Date
       lastActiveDate?: Date
       invitationCode?: string
+      phoneNumbers?: string[]
       receivesAppointmentReminders?: boolean
       receivesInactivityReminders?: boolean
       receivesMedicationUpdates?: boolean
@@ -163,6 +163,7 @@ export class EmulatorTestEnvironment {
           options.receivesRecommendationUpdates ?? true,
         receivesVitalsReminders: options.receivesVitalsReminders ?? true,
         receivesWeightAlerts: options.receivesWeightAlerts ?? true,
+        phoneNumbers: options.phoneNumbers ?? [],
       }),
     )
     return authUser.uid

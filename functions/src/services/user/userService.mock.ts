@@ -166,6 +166,7 @@ export class MockUserService implements UserService {
         dateOfEnrollment: new Date('2024-04-02'),
         invitationCode: '123',
         timeZone: 'America/Los_Angeles',
+        phoneNumbers: [],
       }),
     }
   }
