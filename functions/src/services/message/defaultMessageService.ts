@@ -324,6 +324,7 @@ export class DefaultMessageService implements MessageService {
     transaction: FirebaseFirestore.Transaction,
   ): boolean {
     switch (newMessage.type) {
+      case UserMessageType.medicationUptitration:
       case UserMessageType.weightGain:
         // Keep message from the last week, replace if older
         let containsNewishMessage = false
@@ -357,7 +358,6 @@ export class DefaultMessageService implements MessageService {
         }
         return true
       case UserMessageType.welcome:
-      case UserMessageType.medicationUptitration:
       case UserMessageType.medicationChange:
       case UserMessageType.preAppointment:
       case UserMessageType.inactive:
