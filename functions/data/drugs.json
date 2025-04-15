@@ -25,10 +25,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 0.5
+              "code": "mg",
+              "value": 0.5,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -71,10 +71,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 1
+              "code": "mg",
+              "value": 1,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -117,10 +117,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 2
+              "code": "mg",
+              "value": 2,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -165,10 +165,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 100
+              "code": "mg",
+              "value": 100,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -211,10 +211,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 12.5
+              "code": "mg",
+              "value": 12.5,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -257,10 +257,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 50
+              "code": "mg",
+              "value": 50,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -303,10 +303,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 25
+              "code": "mg",
+              "value": 25,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -351,10 +351,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 2.5
+              "code": "mg",
+              "value": 2.5,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -397,10 +397,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 20
+              "code": "mg",
+              "value": 20,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -443,10 +443,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 5
+              "code": "mg",
+              "value": 5,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -489,10 +489,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 10
+              "code": "mg",
+              "value": 10,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -537,10 +537,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 25
+              "code": "mg",
+              "value": 25,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -583,10 +583,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 50
+              "code": "mg",
+              "value": 50,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -631,10 +631,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 80
+              "code": "mg",
+              "value": 80,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -677,10 +677,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 20
+              "code": "mg",
+              "value": 20,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -723,10 +723,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 40
+              "code": "mg",
+              "value": 40,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -771,10 +771,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 100
+              "code": "mg",
+              "value": 100,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -817,10 +817,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 50
+              "code": "mg",
+              "value": 50,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -863,10 +863,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 25
+              "code": "mg",
+              "value": 25,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -911,10 +911,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 10
+              "code": "mg",
+              "value": 10,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -957,10 +957,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 20
+              "code": "mg",
+              "value": 20,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -1003,10 +1003,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 40
+              "code": "mg",
+              "value": 40,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -1049,10 +1049,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 5
+              "code": "mg",
+              "value": 5,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -1097,10 +1097,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 10
+              "code": "mg",
+              "value": 10,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -1143,10 +1143,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 5
+              "code": "mg",
+              "value": 5,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -1191,10 +1191,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 6.25
+              "code": "mg",
+              "value": 6.25,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -1237,10 +1237,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 12.5
+              "code": "mg",
+              "value": 12.5,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -1283,10 +1283,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 25
+              "code": "mg",
+              "value": 25,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -1329,10 +1329,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 3.125
+              "code": "mg",
+              "value": 3.125,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -1377,10 +1377,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 40
+              "code": "mg",
+              "value": 40,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -1423,10 +1423,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 30
+              "code": "mg",
+              "value": 30,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -1469,10 +1469,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 2.5
+              "code": "mg",
+              "value": 2.5,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -1515,10 +1515,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 5
+              "code": "mg",
+              "value": 5,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -1561,10 +1561,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 10
+              "code": "mg",
+              "value": 10,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -1607,10 +1607,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 20
+              "code": "mg",
+              "value": 20,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -1655,10 +1655,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 15
+              "code": "mg",
+              "value": 15,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -1701,10 +1701,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 7.5
+              "code": "mg",
+              "value": 7.5,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -1749,10 +1749,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 10
+              "code": "mg",
+              "value": 10,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -1795,10 +1795,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 20
+              "code": "mg",
+              "value": 20,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -1841,10 +1841,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 5
+              "code": "mg",
+              "value": 5,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -1887,10 +1887,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 40
+              "code": "mg",
+              "value": 40,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -1935,10 +1935,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 2.5
+              "code": "mg",
+              "value": 2.5,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -1981,10 +1981,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 5
+              "code": "mg",
+              "value": 5,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -2027,10 +2027,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 2.5
+              "code": "mg",
+              "value": 2.5,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -2073,10 +2073,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 5
+              "code": "mg",
+              "value": 5,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -2119,10 +2119,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 10
+              "code": "mg",
+              "value": 10,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -2165,10 +2165,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 1.25
+              "code": "mg",
+              "value": 1.25,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -2211,10 +2211,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 10
+              "code": "mg",
+              "value": 10,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -2257,10 +2257,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 1.25
+              "code": "mg",
+              "value": 1.25,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -2305,10 +2305,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 10
+              "code": "mg",
+              "value": 10,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -2351,10 +2351,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 100
+              "code": "mg",
+              "value": 100,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -2397,10 +2397,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 20
+              "code": "mg",
+              "value": 20,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -2443,10 +2443,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 5
+              "code": "mg",
+              "value": 5,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -2489,10 +2489,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 40
+              "code": "mg",
+              "value": 40,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -2535,10 +2535,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 60
+              "code": "mg",
+              "value": 60,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -2583,10 +2583,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 2
+              "code": "mg",
+              "value": 2,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -2629,10 +2629,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 4
+              "code": "mg",
+              "value": 4,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -2675,10 +2675,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 1
+              "code": "mg",
+              "value": 1,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -2723,10 +2723,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 8
+              "code": "mg",
+              "value": 8,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -2769,10 +2769,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 2
+              "code": "mg",
+              "value": 2,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -2815,10 +2815,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 4
+              "code": "mg",
+              "value": 4,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -2863,10 +2863,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 80
+              "code": "mg",
+              "value": 80,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -2909,10 +2909,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 320
+              "code": "mg",
+              "value": 320,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -2955,10 +2955,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 160
+              "code": "mg",
+              "value": 160,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -3001,10 +3001,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 40
+              "code": "mg",
+              "value": 40,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -3049,10 +3049,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 40
+              "code": "mg",
+              "value": 40,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -3095,10 +3095,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 80
+              "code": "mg",
+              "value": 80,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -3141,10 +3141,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 20
+              "code": "mg",
+              "value": 20,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -3189,10 +3189,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 400
+              "code": "mg",
+              "value": 400,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -3235,10 +3235,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 600
+              "code": "mg",
+              "value": 600,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -3283,10 +3283,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 75
+              "code": "mg",
+              "value": 75,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -3329,10 +3329,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 150
+              "code": "mg",
+              "value": 150,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -3375,10 +3375,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 300
+              "code": "mg",
+              "value": 300,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -3423,10 +3423,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 5
+              "code": "mg",
+              "value": 5,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -3469,10 +3469,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 20
+              "code": "mg",
+              "value": 20,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -3515,10 +3515,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 40
+              "code": "mg",
+              "value": 40,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -3563,10 +3563,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 100
+              "code": "mg",
+              "value": 100,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -3609,10 +3609,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 25
+              "code": "mg",
+              "value": 25,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -3655,10 +3655,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 50
+              "code": "mg",
+              "value": 50,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -3703,10 +3703,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 4
+              "code": "mg",
+              "value": 4,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -3749,10 +3749,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 8
+              "code": "mg",
+              "value": 8,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -3795,10 +3795,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 16
+              "code": "mg",
+              "value": 16,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -3841,10 +3841,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 32
+              "code": "mg",
+              "value": 32,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -3889,10 +3889,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 100
+              "code": "mg",
+              "value": 100,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -3935,10 +3935,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 200
+              "code": "mg",
+              "value": 200,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -3981,10 +3981,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 25
+              "code": "mg",
+              "value": 25,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -4027,10 +4027,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 50
+              "code": "mg",
+              "value": 50,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -4073,10 +4073,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 100
+              "code": "mg",
+              "value": 100,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -4119,10 +4119,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 200
+              "code": "mg",
+              "value": 200,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -4165,10 +4165,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 25
+              "code": "mg",
+              "value": 25,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -4211,10 +4211,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 50
+              "code": "mg",
+              "value": 50,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -4259,10 +4259,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 10
+              "code": "mg",
+              "value": 10,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -4305,10 +4305,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 20
+              "code": "mg",
+              "value": 20,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -4351,10 +4351,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 40
+              "code": "mg",
+              "value": 40,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -4399,10 +4399,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 25
+              "code": "mg",
+              "value": 25,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -4445,10 +4445,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 50
+              "code": "mg",
+              "value": 50,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -4493,10 +4493,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 10
+              "code": "mg",
+              "value": 10,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -4539,10 +4539,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 20
+              "code": "mg",
+              "value": 20,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -4585,10 +4585,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 40
+              "code": "mg",
+              "value": 40,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -4631,10 +4631,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 80
+              "code": "mg",
+              "value": 80,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -4679,10 +4679,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 40
+              "code": "mg",
+              "value": 40,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -4725,10 +4725,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 80
+              "code": "mg",
+              "value": 80,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -4773,10 +4773,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 100
+              "code": "mg",
+              "value": 100,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -4819,10 +4819,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 300
+              "code": "mg",
+              "value": 300,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -4867,10 +4867,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 10
+              "code": "mg",
+              "value": 10,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -4913,10 +4913,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 5
+              "code": "mg",
+              "value": 5,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -4961,10 +4961,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 10
+              "code": "mg",
+              "value": 10,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -5007,10 +5007,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 25
+              "code": "mg",
+              "value": 25,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -5055,10 +5055,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 24
+              "code": "mg",
+              "value": 24,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -5077,10 +5077,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 26
+              "code": "mg",
+              "value": 26,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -5123,10 +5123,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 49
+              "code": "mg",
+              "value": 49,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -5145,10 +5145,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 51
+              "code": "mg",
+              "value": 51,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -5191,10 +5191,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 97
+              "code": "mg",
+              "value": 97,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -5213,10 +5213,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 103
+              "code": "mg",
+              "value": 103,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -5259,10 +5259,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 15
+              "code": "mg",
+              "value": 15,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -5281,10 +5281,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 16
+              "code": "mg",
+              "value": 16,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -5327,10 +5327,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 6
+              "code": "mg",
+              "value": 6,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -5349,10 +5349,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 6
+              "code": "mg",
+              "value": 6,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -5397,10 +5397,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 5
+              "code": "mg",
+              "value": 5,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -5443,10 +5443,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 15
+              "code": "mg",
+              "value": 15,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -5491,10 +5491,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 20
+              "code": "mg",
+              "value": 20,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -5539,10 +5539,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 200
+              "code": "mg",
+              "value": 200,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
@@ -5585,10 +5585,10 @@
           },
           "strength": {
             "numerator": {
-              "unit": "mg",
-              "code": "mg",
               "system": "http://unitsofmeasure.org",
-              "value": 400
+              "code": "mg",
+              "value": 400,
+              "unit": "mg"
             },
             "denominator": {
               "value": 1
