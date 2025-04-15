@@ -502,7 +502,7 @@ class HealthSummaryPdfGenerator extends PdfGenerator {
     const svg = generateChartSvg(
       data,
       { width: width, height: height },
-      { top: 10, right: 20, bottom: 40, left: 20 },
+      { top: 10, right: 1, bottom: 40, left: 24 },
       baseline,
     )
     this.addSvg(svg, width)

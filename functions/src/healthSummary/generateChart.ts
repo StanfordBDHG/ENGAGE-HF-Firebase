@@ -67,7 +67,11 @@ export function generateChartSvg(
       yAxisExtentMax + yAxisExtentSize * 0.2,
     ])
     .range([innerHeight, 0])
-  const yAxis = d3.axisLeft(yAxisScale).ticks(5).tickSize(-innerWidth)
+  const yAxis = d3
+    .axisLeft(yAxisScale)
+    .tickFormat(d3.format('~d'))
+    .ticks(5)
+    .tickSize(-innerWidth)
   svg
     .append('g')
     .attr('class', 'y axis')
