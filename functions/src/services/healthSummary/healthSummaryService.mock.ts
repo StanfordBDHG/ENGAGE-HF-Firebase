@@ -20,6 +20,7 @@ import {
   HealthSummaryData,
   type HealthSummaryVitals,
 } from '../../models/healthSummaryData.js'
+import { recommendationLocalization } from '../recommendation/recommendationService+localization.js'
 
 /* eslint-disable @typescript-eslint/require-await */
 
@@ -45,10 +46,11 @@ export class MockHealthSummaryService implements HealthSummaryService {
         {
           currentMedication: [],
           displayInformation: {
-            title: new LocalizedText('Losartan (Cozaar)'),
-            subtitle: new LocalizedText(''),
-            description: new LocalizedText(
-              'Switch to Sacubitril-Valsartan (More Effective Medication)',
+            title: LocalizedText.raw('Losartan (Cozaar)'),
+            subtitle: LocalizedText.raw(''),
+            description: LocalizedText.create(
+              recommendationLocalization.improvementAvailableMoreEffectiveMed,
+              'Sacubitril-Valsartan',
             ),
             type: UserMedicationRecommendationType.improvementAvailable,
             dosageInformation: {
@@ -62,9 +64,11 @@ export class MockHealthSummaryService implements HealthSummaryService {
         {
           currentMedication: [],
           displayInformation: {
-            title: new LocalizedText('Dapagliflozin (Farxiga)'),
-            subtitle: new LocalizedText(''),
-            description: new LocalizedText('Continue Dose'),
+            title: LocalizedText.raw('Dapagliflozin (Farxiga)'),
+            subtitle: LocalizedText.raw(''),
+            description: LocalizedText.create(
+              recommendationLocalization.targetDoseReached,
+            ),
             type: UserMedicationRecommendationType.targetDoseReached,
             dosageInformation: {
               minimumSchedule: [{ frequency: 1, quantity: [5] }],
@@ -77,9 +81,11 @@ export class MockHealthSummaryService implements HealthSummaryService {
         {
           currentMedication: [],
           displayInformation: {
-            title: new LocalizedText('Carvedilol (Coreg)'),
-            subtitle: new LocalizedText(''),
-            description: new LocalizedText('Start Medication'),
+            title: LocalizedText.raw('Carvedilol (Coreg)'),
+            subtitle: LocalizedText.raw(''),
+            description: LocalizedText.create(
+              recommendationLocalization.notStarted,
+            ),
             type: UserMedicationRecommendationType.notStarted,
             dosageInformation: {
               minimumSchedule: [{ frequency: 1, quantity: [5] }],
