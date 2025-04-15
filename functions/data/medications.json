@@ -43,10 +43,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 18.75
+                  "code": "mg",
+                  "value": 18.75,
+                  "unit": "mg"
                 }
               ]
             }
@@ -68,10 +68,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 1.5
+                    "code": "{tbl}",
+                    "value": 1.5,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -87,10 +87,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 150
+                  "code": "mg",
+                  "value": 150,
+                  "unit": "mg"
                 }
               ]
             }
@@ -112,10 +112,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 1
+                    "code": "{tbl}",
+                    "value": 1,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -157,10 +157,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 5
+                  "code": "mg",
+                  "value": 5,
+                  "unit": "mg"
                 }
               ]
             }
@@ -182,10 +182,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 1
+                    "code": "{tbl}",
+                    "value": 1,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -201,10 +201,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 40
+                  "code": "mg",
+                  "value": 40,
+                  "unit": "mg"
                 }
               ]
             }
@@ -226,10 +226,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 1
+                    "code": "{tbl}",
+                    "value": 1,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -323,10 +323,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 12.5
+                  "code": "mg",
+                  "value": 12.5,
+                  "unit": "mg"
                 }
               ]
             }
@@ -348,10 +348,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 0.5
+                    "code": "{tbl}",
+                    "value": 0.5,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -367,10 +367,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 25
+                  "code": "mg",
+                  "value": 25,
+                  "unit": "mg"
                 }
               ]
             }
@@ -392,10 +392,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 1
+                    "code": "{tbl}",
+                    "value": 1,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -437,10 +437,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 5
+                  "code": "mg",
+                  "value": 5,
+                  "unit": "mg"
                 }
               ]
             }
@@ -462,10 +462,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 1
+                    "code": "{tbl}",
+                    "value": 1,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -481,10 +481,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 40
+                  "code": "mg",
+                  "value": 40,
+                  "unit": "mg"
                 }
               ]
             }
@@ -506,10 +506,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 1
+                    "code": "{tbl}",
+                    "value": 1,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -551,10 +551,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 1.25
+                  "code": "mg",
+                  "value": 1.25,
+                  "unit": "mg"
                 }
               ]
             }
@@ -576,10 +576,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 0.25
+                    "code": "{tbl}",
+                    "value": 0.25,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -595,10 +595,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 10
+                  "code": "mg",
+                  "value": 10,
+                  "unit": "mg"
                 }
               ]
             }
@@ -620,10 +620,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 1
+                    "code": "{tbl}",
+                    "value": 1,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -665,10 +665,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 6.25
+                  "code": "mg",
+                  "value": 6.25,
+                  "unit": "mg"
                 }
               ]
             }
@@ -690,10 +690,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 1
+                    "code": "{tbl}",
+                    "value": 1,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -709,10 +709,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 50
+                  "code": "mg",
+                  "value": 50,
+                  "unit": "mg"
                 }
               ]
             }
@@ -734,10 +734,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 1
+                    "code": "{tbl}",
+                    "value": 1,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -779,10 +779,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 2.5
+                  "code": "mg",
+                  "value": 2.5,
+                  "unit": "mg"
                 }
               ]
             }
@@ -804,10 +804,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 1
+                    "code": "{tbl}",
+                    "value": 1,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -823,10 +823,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 40
+                  "code": "mg",
+                  "value": 40,
+                  "unit": "mg"
                 }
               ]
             }
@@ -848,10 +848,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 1
+                    "code": "{tbl}",
+                    "value": 1,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -893,10 +893,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 7.5
+                  "code": "mg",
+                  "value": 7.5,
+                  "unit": "mg"
                 }
               ]
             }
@@ -918,10 +918,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 1
+                    "code": "{tbl}",
+                    "value": 1,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -937,10 +937,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 15
+                  "code": "mg",
+                  "value": 15,
+                  "unit": "mg"
                 }
               ]
             }
@@ -962,10 +962,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 1
+                    "code": "{tbl}",
+                    "value": 1,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -1007,10 +1007,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 10
+                  "code": "mg",
+                  "value": 10,
+                  "unit": "mg"
                 }
               ]
             }
@@ -1032,10 +1032,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 1
+                    "code": "{tbl}",
+                    "value": 1,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -1051,10 +1051,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 40
+                  "code": "mg",
+                  "value": 40,
+                  "unit": "mg"
                 }
               ]
             }
@@ -1076,10 +1076,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 1
+                    "code": "{tbl}",
+                    "value": 1,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -1121,10 +1121,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 1.25
+                  "code": "mg",
+                  "value": 1.25,
+                  "unit": "mg"
                 }
               ]
             }
@@ -1146,10 +1146,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 1
+                    "code": "{tbl}",
+                    "value": 1,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -1165,10 +1165,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 10
+                  "code": "mg",
+                  "value": 10,
+                  "unit": "mg"
                 }
               ]
             }
@@ -1190,10 +1190,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 1
+                    "code": "{tbl}",
+                    "value": 1,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -1261,10 +1261,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 1
+                  "code": "mg",
+                  "value": 1,
+                  "unit": "mg"
                 }
               ]
             }
@@ -1286,10 +1286,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 1
+                    "code": "{tbl}",
+                    "value": 1,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -1305,10 +1305,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 4
+                  "code": "mg",
+                  "value": 4,
+                  "unit": "mg"
                 }
               ]
             }
@@ -1330,10 +1330,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 1
+                    "code": "{tbl}",
+                    "value": 1,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -1375,10 +1375,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 2
+                  "code": "mg",
+                  "value": 2,
+                  "unit": "mg"
                 }
               ]
             }
@@ -1400,10 +1400,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 1
+                    "code": "{tbl}",
+                    "value": 1,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -1419,10 +1419,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 16
+                  "code": "mg",
+                  "value": 16,
+                  "unit": "mg"
                 }
               ]
             }
@@ -1444,10 +1444,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 2
+                    "code": "{tbl}",
+                    "value": 2,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -1489,10 +1489,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 20
+                  "code": "mg",
+                  "value": 20,
+                  "unit": "mg"
                 }
               ]
             }
@@ -1514,10 +1514,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 0.5
+                    "code": "{tbl}",
+                    "value": 0.5,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -1533,10 +1533,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 320
+                  "code": "mg",
+                  "value": 320,
+                  "unit": "mg"
                 }
               ]
             }
@@ -1558,10 +1558,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 1
+                    "code": "{tbl}",
+                    "value": 1,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -1603,10 +1603,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 40
+                  "code": "mg",
+                  "value": 40,
+                  "unit": "mg"
                 }
               ]
             }
@@ -1628,10 +1628,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 1
+                    "code": "{tbl}",
+                    "value": 1,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -1647,10 +1647,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 80
+                  "code": "mg",
+                  "value": 80,
+                  "unit": "mg"
                 }
               ]
             }
@@ -1672,10 +1672,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 1
+                    "code": "{tbl}",
+                    "value": 1,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -1717,10 +1717,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 400
+                  "code": "mg",
+                  "value": 400,
+                  "unit": "mg"
                 }
               ]
             }
@@ -1742,10 +1742,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 1
+                    "code": "{tbl}",
+                    "value": 1,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -1761,10 +1761,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 800
+                  "code": "mg",
+                  "value": 800,
+                  "unit": "mg"
                 }
               ]
             }
@@ -1786,10 +1786,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 2
+                    "code": "{tbl}",
+                    "value": 2,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -1831,10 +1831,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 75
+                  "code": "mg",
+                  "value": 75,
+                  "unit": "mg"
                 }
               ]
             }
@@ -1856,10 +1856,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 1
+                    "code": "{tbl}",
+                    "value": 1,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -1875,10 +1875,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 300
+                  "code": "mg",
+                  "value": 300,
+                  "unit": "mg"
                 }
               ]
             }
@@ -1900,10 +1900,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 1
+                    "code": "{tbl}",
+                    "value": 1,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -1945,10 +1945,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 10
+                  "code": "mg",
+                  "value": 10,
+                  "unit": "mg"
                 }
               ]
             }
@@ -1970,10 +1970,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 2
+                    "code": "{tbl}",
+                    "value": 2,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -1989,10 +1989,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 40
+                  "code": "mg",
+                  "value": 40,
+                  "unit": "mg"
                 }
               ]
             }
@@ -2014,10 +2014,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 1
+                    "code": "{tbl}",
+                    "value": 1,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -2059,10 +2059,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 25
+                  "code": "mg",
+                  "value": 25,
+                  "unit": "mg"
                 }
               ]
             }
@@ -2084,10 +2084,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 1
+                    "code": "{tbl}",
+                    "value": 1,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -2103,10 +2103,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 150
+                  "code": "mg",
+                  "value": 150,
+                  "unit": "mg"
                 }
               ]
             }
@@ -2128,10 +2128,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 1.5
+                    "code": "{tbl}",
+                    "value": 1.5,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -2173,10 +2173,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 4
+                  "code": "mg",
+                  "value": 4,
+                  "unit": "mg"
                 }
               ]
             }
@@ -2198,10 +2198,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 1
+                    "code": "{tbl}",
+                    "value": 1,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -2217,10 +2217,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 32
+                  "code": "mg",
+                  "value": 32,
+                  "unit": "mg"
                 }
               ]
             }
@@ -2242,10 +2242,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 1
+                    "code": "{tbl}",
+                    "value": 1,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -2287,10 +2287,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 12.5
+                  "code": "mg",
+                  "value": 12.5,
+                  "unit": "mg"
                 }
               ]
             }
@@ -2312,10 +2312,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 0.5
+                    "code": "{tbl}",
+                    "value": 0.5,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -2331,10 +2331,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 200
+                  "code": "mg",
+                  "value": 200,
+                  "unit": "mg"
                 }
               ]
             }
@@ -2356,10 +2356,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 1
+                    "code": "{tbl}",
+                    "value": 1,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -2401,10 +2401,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 5
+                  "code": "mg",
+                  "value": 5,
+                  "unit": "mg"
                 }
               ]
             }
@@ -2426,10 +2426,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 0.5
+                    "code": "{tbl}",
+                    "value": 0.5,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -2445,10 +2445,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 40
+                  "code": "mg",
+                  "value": 40,
+                  "unit": "mg"
                 }
               ]
             }
@@ -2470,10 +2470,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 1
+                    "code": "{tbl}",
+                    "value": 1,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -2515,10 +2515,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 12.5
+                  "code": "mg",
+                  "value": 12.5,
+                  "unit": "mg"
                 }
               ]
             }
@@ -2540,10 +2540,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 0.5
+                    "code": "{tbl}",
+                    "value": 0.5,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -2559,10 +2559,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 50
+                  "code": "mg",
+                  "value": 50,
+                  "unit": "mg"
                 }
               ]
             }
@@ -2584,10 +2584,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 1
+                    "code": "{tbl}",
+                    "value": 1,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -2629,10 +2629,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 10
+                  "code": "mg",
+                  "value": 10,
+                  "unit": "mg"
                 }
               ]
             }
@@ -2654,10 +2654,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 1
+                    "code": "{tbl}",
+                    "value": 1,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -2673,10 +2673,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 80
+                  "code": "mg",
+                  "value": 80,
+                  "unit": "mg"
                 }
               ]
             }
@@ -2698,10 +2698,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 1
+                    "code": "{tbl}",
+                    "value": 1,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -2743,10 +2743,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 40
+                  "code": "mg",
+                  "value": 40,
+                  "unit": "mg"
                 }
               ]
             }
@@ -2768,10 +2768,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 1
+                    "code": "{tbl}",
+                    "value": 1,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -2787,10 +2787,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 80
+                  "code": "mg",
+                  "value": 80,
+                  "unit": "mg"
                 }
               ]
             }
@@ -2812,10 +2812,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 1
+                    "code": "{tbl}",
+                    "value": 1,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -2857,10 +2857,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 100
+                  "code": "mg",
+                  "value": 100,
+                  "unit": "mg"
                 }
               ]
             }
@@ -2882,10 +2882,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 1
+                    "code": "{tbl}",
+                    "value": 1,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -2901,10 +2901,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 100
+                  "code": "mg",
+                  "value": 100,
+                  "unit": "mg"
                 }
               ]
             }
@@ -2926,10 +2926,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 1
+                    "code": "{tbl}",
+                    "value": 1,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -2971,10 +2971,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 5
+                  "code": "mg",
+                  "value": 5,
+                  "unit": "mg"
                 }
               ]
             }
@@ -2996,10 +2996,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 1
+                    "code": "{tbl}",
+                    "value": 1,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -3015,10 +3015,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 10
+                  "code": "mg",
+                  "value": 10,
+                  "unit": "mg"
                 }
               ]
             }
@@ -3040,10 +3040,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 1
+                    "code": "{tbl}",
+                    "value": 1,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -3085,10 +3085,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 5
+                  "code": "mg",
+                  "value": 5,
+                  "unit": "mg"
                 }
               ]
             }
@@ -3110,10 +3110,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 0.5
+                    "code": "{tbl}",
+                    "value": 0.5,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -3129,10 +3129,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 10
+                  "code": "mg",
+                  "value": 10,
+                  "unit": "mg"
                 }
               ]
             }
@@ -3154,10 +3154,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 1
+                    "code": "{tbl}",
+                    "value": 1,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -3199,16 +3199,16 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 48
+                  "code": "mg",
+                  "value": 48,
+                  "unit": "mg"
                 },
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 52
+                  "code": "mg",
+                  "value": 52,
+                  "unit": "mg"
                 }
               ]
             }
@@ -3230,10 +3230,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 1
+                    "code": "{tbl}",
+                    "value": 1,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -3249,16 +3249,16 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 194
+                  "code": "mg",
+                  "value": 194,
+                  "unit": "mg"
                 },
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 206
+                  "code": "mg",
+                  "value": 206,
+                  "unit": "mg"
                 }
               ]
             }
@@ -3280,10 +3280,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 1
+                    "code": "{tbl}",
+                    "value": 1,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -3349,10 +3349,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 5
+                  "code": "mg",
+                  "value": 5,
+                  "unit": "mg"
                 }
               ]
             }
@@ -3374,10 +3374,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 1
+                    "code": "{tbl}",
+                    "value": 1,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -3393,10 +3393,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 15
+                  "code": "mg",
+                  "value": 15,
+                  "unit": "mg"
                 }
               ]
             }
@@ -3418,10 +3418,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 1
+                    "code": "{tbl}",
+                    "value": 1,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -3463,10 +3463,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 20
+                  "code": "mg",
+                  "value": 20,
+                  "unit": "mg"
                 }
               ]
             }
@@ -3488,10 +3488,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 1
+                    "code": "{tbl}",
+                    "value": 1,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -3507,10 +3507,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 20
+                  "code": "mg",
+                  "value": 20,
+                  "unit": "mg"
                 }
               ]
             }
@@ -3532,10 +3532,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 1
+                    "code": "{tbl}",
+                    "value": 1,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -3577,10 +3577,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 200
+                  "code": "mg",
+                  "value": 200,
+                  "unit": "mg"
                 }
               ]
             }
@@ -3602,10 +3602,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 1
+                    "code": "{tbl}",
+                    "value": 1,
+                    "unit": "tbl."
                   }
                 }
               ]
@@ -3621,10 +3621,10 @@
               "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
-                  "unit": "mg",
-                  "code": "mg",
                   "system": "http://unitsofmeasure.org",
-                  "value": 400
+                  "code": "mg",
+                  "value": 400,
+                  "unit": "mg"
                 }
               ]
             }
@@ -3646,10 +3646,10 @@
               "doseAndRate": [
                 {
                   "doseQuantity": {
-                    "unit": "tbl.",
-                    "code": "{tbl}",
                     "system": "http://unitsofmeasure.org",
-                    "value": 1
+                    "code": "{tbl}",
+                    "value": 1,
+                    "unit": "tbl."
                   }
                 }
               ]
