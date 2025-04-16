@@ -14,7 +14,9 @@ export interface ServiceFactoryOptions {
 }
 
 export function getServiceFactory(
-  options: ServiceFactoryOptions = { allowCaching: true },
+  options: Partial<ServiceFactoryOptions> = {},
 ): ServiceFactory {
-  return new DefaultServiceFactory(options)
+  return new DefaultServiceFactory({
+    allowCaching: options.allowCaching ?? true,
+  })
 }
