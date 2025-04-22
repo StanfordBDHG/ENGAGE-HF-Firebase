@@ -196,7 +196,7 @@ export class DefaultMessageService implements MessageService {
     type: UserMessageType,
     filter?: (message: UserMessage) => boolean,
   ): Promise<string[]> {
-    return await this.databaseService.runTransaction(
+    return this.databaseService.runTransaction(
       async (collections, transaction) => {
         const messages = (
           await transaction.get(
