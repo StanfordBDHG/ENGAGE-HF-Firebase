@@ -72,6 +72,8 @@
         "required": false,
         "unit": null,
         "answerOption": null,
+        "enableWhen": null,
+        "enableBehavior": null,
         "extension": null,
         "item": null
       },
@@ -82,6 +84,8 @@
         "required": false,
         "unit": null,
         "answerOption": null,
+        "enableWhen": null,
+        "enableBehavior": null,
         "extension": [
           {
             "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
@@ -180,6 +184,8 @@
                 }
               }
             ],
+            "enableWhen": null,
+            "enableBehavior": null,
             "extension": [
               {
                 "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
@@ -279,6 +285,8 @@
                 }
               }
             ],
+            "enableWhen": null,
+            "enableBehavior": null,
             "extension": [
               {
                 "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
@@ -378,6 +386,8 @@
                 }
               }
             ],
+            "enableWhen": null,
+            "enableBehavior": null,
             "extension": [
               {
                 "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
@@ -468,6 +478,8 @@
             }
           }
         ],
+        "enableWhen": null,
+        "enableBehavior": null,
         "extension": [
           {
             "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
@@ -578,6 +590,8 @@
             }
           }
         ],
+        "enableWhen": null,
+        "enableBehavior": null,
         "extension": [
           {
             "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
@@ -688,6 +702,8 @@
             }
           }
         ],
+        "enableWhen": null,
+        "enableBehavior": null,
         "extension": [
           {
             "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
@@ -776,6 +792,8 @@
             }
           }
         ],
+        "enableWhen": null,
+        "enableBehavior": null,
         "extension": [
           {
             "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
@@ -864,6 +882,8 @@
             }
           }
         ],
+        "enableWhen": null,
+        "enableBehavior": null,
         "extension": [
           {
             "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
@@ -952,6 +972,8 @@
             }
           }
         ],
+        "enableWhen": null,
+        "enableBehavior": null,
         "extension": [
           {
             "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
@@ -984,6 +1006,8 @@
         "required": false,
         "unit": null,
         "answerOption": null,
+        "enableWhen": null,
+        "enableBehavior": null,
         "extension": [
           {
             "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
@@ -1082,6 +1106,8 @@
                 }
               }
             ],
+            "enableWhen": null,
+            "enableBehavior": null,
             "extension": [
               {
                 "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
@@ -1181,6 +1207,8 @@
                 }
               }
             ],
+            "enableWhen": null,
+            "enableBehavior": null,
             "extension": [
               {
                 "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
@@ -1280,6 +1308,8 @@
                 }
               }
             ],
+            "enableWhen": null,
+            "enableBehavior": null,
             "extension": [
               {
                 "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
@@ -1381,6 +1411,8 @@
             }
           }
         ],
+        "enableWhen": null,
+        "enableBehavior": null,
         "extension": [
           {
             "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
@@ -1448,22 +1480,26 @@
     "url": "http://spezi.health/fhir/questionnaire/e2b0c756-b321-481a-b14a-b839bfd7db4f",
     "item": [
       {
-        "linkId": "4b377764-8b4a-4dea-b678-1ad490ce4590",
+        "linkId": "7ac7f2b8-7ab5-4ede-b7fd-eae59b0a50f1",
         "type": "display",
         "text": "Welcome to the ENGAGE-HF study! Please complete the following survey to help us understand your health and well-being.",
         "required": false,
         "unit": null,
         "answerOption": null,
+        "enableWhen": null,
+        "enableBehavior": null,
         "extension": null,
         "item": null
       },
       {
-        "linkId": "e96ccfd7-e5ff-41a2-98e5-8154bbb66f66",
+        "linkId": "2a9933ad-466e-48c9-98cd-694fb96fb36c",
         "type": "group",
         "text": "Personal information",
         "required": false,
         "unit": null,
         "answerOption": null,
+        "enableWhen": null,
+        "enableBehavior": null,
         "extension": [
           {
             "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
@@ -1489,7 +1525,31 @@
         ],
         "item": [
           {
-            "linkId": "e40e65dc-138d-481e-89e5-b07dcc036078",
+            "linkId": "8011429b-320d-4fa8-8636-fb66d0381e69",
+            "type": "display",
+            "text": "Please provide the following information to help us understand your health and well-being.",
+            "required": false,
+            "unit": null,
+            "answerOption": null,
+            "enableWhen": null,
+            "enableBehavior": null,
+            "extension": null,
+            "item": null
+          },
+          {
+            "linkId": "02ec773e-da14-4d7d-aeb1-ec4858bef1ba",
+            "type": "date",
+            "text": "Date of Birth",
+            "required": true,
+            "unit": null,
+            "answerOption": null,
+            "enableWhen": null,
+            "enableBehavior": null,
+            "extension": null,
+            "item": null
+          },
+          {
+            "linkId": "7acc65c2-828c-471a-a5e8-a51b3176a651",
             "type": "choice",
             "text": "Select your sex:",
             "required": true,
@@ -1497,9 +1557,9 @@
             "answerOption": [
               {
                 "valueCoding": {
-                  "id": "2c95c205-11db-4a0d-8b54-8af09ef68a0d",
+                  "id": "3ee8b69f-ea48-4f71-aa98-c759e9be044c",
                   "extension": null,
-                  "system": "urn:uuid:d6362549-39fa-41c0-8c38-f101e79aebe8",
+                  "system": "urn:uuid:9f5a64f5-a7cf-460c-b27c-078ed39c30ec",
                   "version": null,
                   "code": "male",
                   "display": "Male",
@@ -1508,9 +1568,9 @@
               },
               {
                 "valueCoding": {
-                  "id": "06caf7d3-dd25-4056-9012-711427aab614",
+                  "id": "6e281ba7-eef7-4107-80f9-489b7b50ed5d",
                   "extension": null,
-                  "system": "urn:uuid:d6362549-39fa-41c0-8c38-f101e79aebe8",
+                  "system": "urn:uuid:9f5a64f5-a7cf-460c-b27c-078ed39c30ec",
                   "version": null,
                   "code": "female",
                   "display": "Female",
@@ -1519,9 +1579,9 @@
               },
               {
                 "valueCoding": {
-                  "id": "0432f72a-dd9c-40f7-bd14-036d4e17838f",
+                  "id": "a24e31e6-16a5-4857-9fa8-528bfe4d29b5",
                   "extension": null,
-                  "system": "urn:uuid:d6362549-39fa-41c0-8c38-f101e79aebe8",
+                  "system": "urn:uuid:9f5a64f5-a7cf-460c-b27c-078ed39c30ec",
                   "version": null,
                   "code": "other",
                   "display": "Other",
@@ -1529,6 +1589,8 @@
                 }
               }
             ],
+            "enableWhen": null,
+            "enableBehavior": null,
             "extension": [
               {
                 "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
@@ -1553,32 +1615,155 @@
               }
             ],
             "item": null
+          }
+        ]
+      },
+      {
+        "linkId": "a2d57e73-0707-45b2-9c65-33265de0e1e2-page0",
+        "type": "group",
+        "text": "Beta Blockers",
+        "required": false,
+        "unit": null,
+        "answerOption": null,
+        "enableWhen": null,
+        "enableBehavior": null,
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueQuantities": null,
+            "valueReference": null,
+            "valueString": null,
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "id": null,
+                  "extension": null,
+                  "system": "http://hl7.org/fhir/questionnaire-item-control",
+                  "version": null,
+                  "code": "page",
+                  "display": "Page",
+                  "userSelected": null
+                }
+              ],
+              "text": "Page"
+            },
+            "valueMedicationRequest": null
+          }
+        ],
+        "item": [
+          {
+            "linkId": "a2d57e73-0707-45b2-9c65-33265de0e1e2-exists-display",
+            "type": "display",
+            "text": "Do you take any of the following medications?\n\nBisoprolol (Zebeta)\nCarvedilol (Coreg)\nMetoprolol Succinate (Toprol XL)\nCarvedilol Phosphate (Coreg CR)",
+            "required": false,
+            "unit": null,
+            "answerOption": null,
+            "enableWhen": null,
+            "enableBehavior": null,
+            "extension": null,
+            "item": null
           },
           {
-            "linkId": "25b65a08-7441-411c-8993-67d867ab38fd",
-            "type": "date",
-            "text": "Date of Birth",
+            "linkId": "a2d57e73-0707-45b2-9c65-33265de0e1e2-exists",
+            "type": "boolean",
+            "text": "Do you take any medication from the above list?",
             "required": true,
             "unit": null,
             "answerOption": null,
+            "enableWhen": null,
+            "enableBehavior": null,
             "extension": null,
             "item": null
           }
         ]
       },
       {
-        "linkId": "5ca28a9e-ca4d-4bb2-9ca8-e3295ea09c0f",
+        "linkId": "a2d57e73-0707-45b2-9c65-33265de0e1e2-page1",
         "type": "group",
         "text": "Beta Blockers",
-        "required": null,
+        "required": false,
         "unit": null,
         "answerOption": null,
-        "extension": null,
+        "enableWhen": [
+          {
+            "question": "a2d57e73-0707-45b2-9c65-33265de0e1e2-exists",
+            "operator": "=",
+            "answerBoolean": true,
+            "answerDecimal": null,
+            "answerInteger": null,
+            "answerDate": null,
+            "answerDateTime": null,
+            "answerString": null,
+            "answerCoding": null,
+            "answerQuantity": null,
+            "answerReference": null
+          }
+        ],
+        "enableBehavior": null,
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueQuantities": null,
+            "valueReference": null,
+            "valueString": null,
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "id": null,
+                  "extension": null,
+                  "system": "http://hl7.org/fhir/questionnaire-item-control",
+                  "version": null,
+                  "code": "page",
+                  "display": "Page",
+                  "userSelected": null
+                }
+              ],
+              "text": "Page"
+            },
+            "valueMedicationRequest": null
+          }
+        ],
         "item": [
           {
-            "linkId": "5ca28a9e-ca4d-4bb2-9ca8-e3295ea09c0f-drug",
+            "linkId": "a2d57e73-0707-45b2-9c65-33265de0e1e2-page1-description",
+            "type": "display",
+            "text": "Please enter which drug you are taking, how often you take it per day and how many pills/tablets you take per intake. Do not enter the total amount of pills/tablets you take per day.",
+            "required": false,
+            "unit": null,
+            "answerOption": null,
+            "enableWhen": null,
+            "enableBehavior": null,
+            "extension": null,
+            "item": null
+          },
+          {
+            "linkId": "a2d57e73-0707-45b2-9c65-33265de0e1e2-frequency",
+            "type": "decimal",
+            "text": "How often do you take your meds per day?",
+            "required": true,
+            "unit": null,
+            "answerOption": null,
+            "enableWhen": null,
+            "enableBehavior": null,
+            "extension": null,
+            "item": null
+          },
+          {
+            "linkId": "a2d57e73-0707-45b2-9c65-33265de0e1e2-quantity",
+            "type": "decimal",
+            "text": "How many pills/tablets do you use per intake?",
+            "required": true,
+            "unit": null,
+            "answerOption": null,
+            "enableWhen": null,
+            "enableBehavior": null,
+            "extension": null,
+            "item": null
+          },
+          {
+            "linkId": "a2d57e73-0707-45b2-9c65-33265de0e1e2-drug",
             "type": "choice",
-            "text": "Select the medication you are taking",
+            "text": "Which pill/tablet do you take?",
             "required": true,
             "unit": null,
             "answerOption": [
@@ -1781,44 +1966,181 @@
                 }
               }
             ],
+            "enableWhen": null,
+            "enableBehavior": null,
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                "valueQuantities": null,
+                "valueReference": null,
+                "valueString": null,
+                "valueCodeableConcept": {
+                  "coding": [
+                    {
+                      "id": null,
+                      "extension": null,
+                      "system": "http://hl7.org/fhir/questionnaire-item-control",
+                      "version": null,
+                      "code": "radio-button",
+                      "display": "Radio Button",
+                      "userSelected": null
+                    }
+                  ],
+                  "text": null
+                },
+                "valueMedicationRequest": null
+              }
+            ],
+            "item": null
+          }
+        ]
+      },
+      {
+        "linkId": "1a8893a5-e45b-4cb5-ba10-1856186f4a08-page0",
+        "type": "group",
+        "text": "RASI",
+        "required": false,
+        "unit": null,
+        "answerOption": null,
+        "enableWhen": null,
+        "enableBehavior": null,
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueQuantities": null,
+            "valueReference": null,
+            "valueString": null,
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "id": null,
+                  "extension": null,
+                  "system": "http://hl7.org/fhir/questionnaire-item-control",
+                  "version": null,
+                  "code": "page",
+                  "display": "Page",
+                  "userSelected": null
+                }
+              ],
+              "text": "Page"
+            },
+            "valueMedicationRequest": null
+          }
+        ],
+        "item": [
+          {
+            "linkId": "1a8893a5-e45b-4cb5-ba10-1856186f4a08-exists-display",
+            "type": "display",
+            "text": "Do you take any of the following medications?\n\nCaptopril (Capoten)\nEnalapril (Vasotec)\nBenazepril (Lotensin)\nLisinopril (Zestril)\nMoexipril (Univasc)\nQuinapril (Accupril)\nRamipril (Altace)\nTrandolapril (Mavik)\nPerindopril (Aceon)\nFosinopril Sodium (Monopril)\nSacubitril / Valsartan (Entresto)",
+            "required": false,
+            "unit": null,
+            "answerOption": null,
+            "enableWhen": null,
+            "enableBehavior": null,
             "extension": null,
             "item": null
           },
           {
-            "linkId": "5ca28a9e-ca4d-4bb2-9ca8-e3295ea09c0f-quantity",
-            "type": "decimal",
-            "text": "Quantity per intake",
+            "linkId": "1a8893a5-e45b-4cb5-ba10-1856186f4a08-exists",
+            "type": "boolean",
+            "text": "Do you take any medication from the above list?",
             "required": true,
             "unit": null,
             "answerOption": null,
-            "extension": null,
-            "item": null
-          },
-          {
-            "linkId": "5ca28a9e-ca4d-4bb2-9ca8-e3295ea09c0f-frequency",
-            "type": "decimal",
-            "text": "Number of intakes per day",
-            "required": true,
-            "unit": null,
-            "answerOption": null,
+            "enableWhen": null,
+            "enableBehavior": null,
             "extension": null,
             "item": null
           }
         ]
       },
       {
-        "linkId": "f0418224-9a5f-4c0d-a875-2a51b28dbb9b",
+        "linkId": "1a8893a5-e45b-4cb5-ba10-1856186f4a08-page1",
         "type": "group",
         "text": "RASI",
-        "required": null,
+        "required": false,
         "unit": null,
         "answerOption": null,
-        "extension": null,
+        "enableWhen": [
+          {
+            "question": "1a8893a5-e45b-4cb5-ba10-1856186f4a08-exists",
+            "operator": "=",
+            "answerBoolean": true,
+            "answerDecimal": null,
+            "answerInteger": null,
+            "answerDate": null,
+            "answerDateTime": null,
+            "answerString": null,
+            "answerCoding": null,
+            "answerQuantity": null,
+            "answerReference": null
+          }
+        ],
+        "enableBehavior": null,
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueQuantities": null,
+            "valueReference": null,
+            "valueString": null,
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "id": null,
+                  "extension": null,
+                  "system": "http://hl7.org/fhir/questionnaire-item-control",
+                  "version": null,
+                  "code": "page",
+                  "display": "Page",
+                  "userSelected": null
+                }
+              ],
+              "text": "Page"
+            },
+            "valueMedicationRequest": null
+          }
+        ],
         "item": [
           {
-            "linkId": "f0418224-9a5f-4c0d-a875-2a51b28dbb9b-drug",
+            "linkId": "1a8893a5-e45b-4cb5-ba10-1856186f4a08-page1-description",
+            "type": "display",
+            "text": "Please enter which drug you are taking, how often you take it per day and how many pills/tablets you take per intake. Do not enter the total amount of pills/tablets you take per day.",
+            "required": false,
+            "unit": null,
+            "answerOption": null,
+            "enableWhen": null,
+            "enableBehavior": null,
+            "extension": null,
+            "item": null
+          },
+          {
+            "linkId": "1a8893a5-e45b-4cb5-ba10-1856186f4a08-frequency",
+            "type": "decimal",
+            "text": "How often do you take your meds per day?",
+            "required": true,
+            "unit": null,
+            "answerOption": null,
+            "enableWhen": null,
+            "enableBehavior": null,
+            "extension": null,
+            "item": null
+          },
+          {
+            "linkId": "1a8893a5-e45b-4cb5-ba10-1856186f4a08-quantity",
+            "type": "decimal",
+            "text": "How many pills/tablets do you use per intake?",
+            "required": true,
+            "unit": null,
+            "answerOption": null,
+            "enableWhen": null,
+            "enableBehavior": null,
+            "extension": null,
+            "item": null
+          },
+          {
+            "linkId": "1a8893a5-e45b-4cb5-ba10-1856186f4a08-drug",
             "type": "choice",
-            "text": "Select the medication you are taking",
+            "text": "Which pill/tablet do you take?",
             "required": true,
             "unit": null,
             "answerOption": [
@@ -2329,44 +2651,181 @@
                 }
               }
             ],
+            "enableWhen": null,
+            "enableBehavior": null,
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                "valueQuantities": null,
+                "valueReference": null,
+                "valueString": null,
+                "valueCodeableConcept": {
+                  "coding": [
+                    {
+                      "id": null,
+                      "extension": null,
+                      "system": "http://hl7.org/fhir/questionnaire-item-control",
+                      "version": null,
+                      "code": "radio-button",
+                      "display": "Radio Button",
+                      "userSelected": null
+                    }
+                  ],
+                  "text": null
+                },
+                "valueMedicationRequest": null
+              }
+            ],
+            "item": null
+          }
+        ]
+      },
+      {
+        "linkId": "7914abf7-c694-4168-bb93-88375cdef62d-page0",
+        "type": "group",
+        "text": "MRA",
+        "required": false,
+        "unit": null,
+        "answerOption": null,
+        "enableWhen": null,
+        "enableBehavior": null,
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueQuantities": null,
+            "valueReference": null,
+            "valueString": null,
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "id": null,
+                  "extension": null,
+                  "system": "http://hl7.org/fhir/questionnaire-item-control",
+                  "version": null,
+                  "code": "page",
+                  "display": "Page",
+                  "userSelected": null
+                }
+              ],
+              "text": "Page"
+            },
+            "valueMedicationRequest": null
+          }
+        ],
+        "item": [
+          {
+            "linkId": "7914abf7-c694-4168-bb93-88375cdef62d-exists-display",
+            "type": "display",
+            "text": "Do you take any of the following medications?\n\nSpironolactone (Aldactone)\nEplerenone (Inspra)",
+            "required": false,
+            "unit": null,
+            "answerOption": null,
+            "enableWhen": null,
+            "enableBehavior": null,
             "extension": null,
             "item": null
           },
           {
-            "linkId": "f0418224-9a5f-4c0d-a875-2a51b28dbb9b-quantity",
-            "type": "decimal",
-            "text": "Quantity per intake",
+            "linkId": "7914abf7-c694-4168-bb93-88375cdef62d-exists",
+            "type": "boolean",
+            "text": "Do you take any medication from the above list?",
             "required": true,
             "unit": null,
             "answerOption": null,
-            "extension": null,
-            "item": null
-          },
-          {
-            "linkId": "f0418224-9a5f-4c0d-a875-2a51b28dbb9b-frequency",
-            "type": "decimal",
-            "text": "Number of intakes per day",
-            "required": true,
-            "unit": null,
-            "answerOption": null,
+            "enableWhen": null,
+            "enableBehavior": null,
             "extension": null,
             "item": null
           }
         ]
       },
       {
-        "linkId": "79f46ef6-753f-4690-998b-e7b2c987ae03",
+        "linkId": "7914abf7-c694-4168-bb93-88375cdef62d-page1",
         "type": "group",
         "text": "MRA",
-        "required": null,
+        "required": false,
         "unit": null,
         "answerOption": null,
-        "extension": null,
+        "enableWhen": [
+          {
+            "question": "7914abf7-c694-4168-bb93-88375cdef62d-exists",
+            "operator": "=",
+            "answerBoolean": true,
+            "answerDecimal": null,
+            "answerInteger": null,
+            "answerDate": null,
+            "answerDateTime": null,
+            "answerString": null,
+            "answerCoding": null,
+            "answerQuantity": null,
+            "answerReference": null
+          }
+        ],
+        "enableBehavior": null,
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueQuantities": null,
+            "valueReference": null,
+            "valueString": null,
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "id": null,
+                  "extension": null,
+                  "system": "http://hl7.org/fhir/questionnaire-item-control",
+                  "version": null,
+                  "code": "page",
+                  "display": "Page",
+                  "userSelected": null
+                }
+              ],
+              "text": "Page"
+            },
+            "valueMedicationRequest": null
+          }
+        ],
         "item": [
           {
-            "linkId": "79f46ef6-753f-4690-998b-e7b2c987ae03-drug",
+            "linkId": "7914abf7-c694-4168-bb93-88375cdef62d-page1-description",
+            "type": "display",
+            "text": "Please enter which drug you are taking, how often you take it per day and how many pills/tablets you take per intake. Do not enter the total amount of pills/tablets you take per day.",
+            "required": false,
+            "unit": null,
+            "answerOption": null,
+            "enableWhen": null,
+            "enableBehavior": null,
+            "extension": null,
+            "item": null
+          },
+          {
+            "linkId": "7914abf7-c694-4168-bb93-88375cdef62d-frequency",
+            "type": "decimal",
+            "text": "How often do you take your meds per day?",
+            "required": true,
+            "unit": null,
+            "answerOption": null,
+            "enableWhen": null,
+            "enableBehavior": null,
+            "extension": null,
+            "item": null
+          },
+          {
+            "linkId": "7914abf7-c694-4168-bb93-88375cdef62d-quantity",
+            "type": "decimal",
+            "text": "How many pills/tablets do you use per intake?",
+            "required": true,
+            "unit": null,
+            "answerOption": null,
+            "enableWhen": null,
+            "enableBehavior": null,
+            "extension": null,
+            "item": null
+          },
+          {
+            "linkId": "7914abf7-c694-4168-bb93-88375cdef62d-drug",
             "type": "choice",
-            "text": "Select the medication you are taking",
+            "text": "Which pill/tablet do you take?",
             "required": true,
             "unit": null,
             "answerOption": [
@@ -2426,44 +2885,181 @@
                 }
               }
             ],
+            "enableWhen": null,
+            "enableBehavior": null,
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                "valueQuantities": null,
+                "valueReference": null,
+                "valueString": null,
+                "valueCodeableConcept": {
+                  "coding": [
+                    {
+                      "id": null,
+                      "extension": null,
+                      "system": "http://hl7.org/fhir/questionnaire-item-control",
+                      "version": null,
+                      "code": "radio-button",
+                      "display": "Radio Button",
+                      "userSelected": null
+                    }
+                  ],
+                  "text": null
+                },
+                "valueMedicationRequest": null
+              }
+            ],
+            "item": null
+          }
+        ]
+      },
+      {
+        "linkId": "becb01d4-fc31-41e2-b5b8-7df4be86e793-page0",
+        "type": "group",
+        "text": "SGLT2i",
+        "required": false,
+        "unit": null,
+        "answerOption": null,
+        "enableWhen": null,
+        "enableBehavior": null,
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueQuantities": null,
+            "valueReference": null,
+            "valueString": null,
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "id": null,
+                  "extension": null,
+                  "system": "http://hl7.org/fhir/questionnaire-item-control",
+                  "version": null,
+                  "code": "page",
+                  "display": "Page",
+                  "userSelected": null
+                }
+              ],
+              "text": "Page"
+            },
+            "valueMedicationRequest": null
+          }
+        ],
+        "item": [
+          {
+            "linkId": "becb01d4-fc31-41e2-b5b8-7df4be86e793-exists-display",
+            "type": "display",
+            "text": "Do you take any of the following medications?\n\nCanagliflozin (Invokana)\nDapagliflozin (Farxiga)\nEmpagliflozin (Jardiance)\nErtugliflozin (Steglatro)\nBexagliflozin (Brenzavvy)\nSotagliflozin (Inpefa)",
+            "required": false,
+            "unit": null,
+            "answerOption": null,
+            "enableWhen": null,
+            "enableBehavior": null,
             "extension": null,
             "item": null
           },
           {
-            "linkId": "79f46ef6-753f-4690-998b-e7b2c987ae03-quantity",
-            "type": "decimal",
-            "text": "Quantity per intake",
+            "linkId": "becb01d4-fc31-41e2-b5b8-7df4be86e793-exists",
+            "type": "boolean",
+            "text": "Do you take any medication from the above list?",
             "required": true,
             "unit": null,
             "answerOption": null,
-            "extension": null,
-            "item": null
-          },
-          {
-            "linkId": "79f46ef6-753f-4690-998b-e7b2c987ae03-frequency",
-            "type": "decimal",
-            "text": "Number of intakes per day",
-            "required": true,
-            "unit": null,
-            "answerOption": null,
+            "enableWhen": null,
+            "enableBehavior": null,
             "extension": null,
             "item": null
           }
         ]
       },
       {
-        "linkId": "12a22f76-1588-46e6-8bcf-924bdf890308",
+        "linkId": "becb01d4-fc31-41e2-b5b8-7df4be86e793-page1",
         "type": "group",
         "text": "SGLT2i",
-        "required": null,
+        "required": false,
         "unit": null,
         "answerOption": null,
-        "extension": null,
+        "enableWhen": [
+          {
+            "question": "becb01d4-fc31-41e2-b5b8-7df4be86e793-exists",
+            "operator": "=",
+            "answerBoolean": true,
+            "answerDecimal": null,
+            "answerInteger": null,
+            "answerDate": null,
+            "answerDateTime": null,
+            "answerString": null,
+            "answerCoding": null,
+            "answerQuantity": null,
+            "answerReference": null
+          }
+        ],
+        "enableBehavior": null,
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueQuantities": null,
+            "valueReference": null,
+            "valueString": null,
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "id": null,
+                  "extension": null,
+                  "system": "http://hl7.org/fhir/questionnaire-item-control",
+                  "version": null,
+                  "code": "page",
+                  "display": "Page",
+                  "userSelected": null
+                }
+              ],
+              "text": "Page"
+            },
+            "valueMedicationRequest": null
+          }
+        ],
         "item": [
           {
-            "linkId": "12a22f76-1588-46e6-8bcf-924bdf890308-drug",
+            "linkId": "becb01d4-fc31-41e2-b5b8-7df4be86e793-page1-description",
+            "type": "display",
+            "text": "Please enter which drug you are taking, how often you take it per day and how many pills/tablets you take per intake. Do not enter the total amount of pills/tablets you take per day.",
+            "required": false,
+            "unit": null,
+            "answerOption": null,
+            "enableWhen": null,
+            "enableBehavior": null,
+            "extension": null,
+            "item": null
+          },
+          {
+            "linkId": "becb01d4-fc31-41e2-b5b8-7df4be86e793-frequency",
+            "type": "decimal",
+            "text": "How often do you take your meds per day?",
+            "required": true,
+            "unit": null,
+            "answerOption": null,
+            "enableWhen": null,
+            "enableBehavior": null,
+            "extension": null,
+            "item": null
+          },
+          {
+            "linkId": "becb01d4-fc31-41e2-b5b8-7df4be86e793-quantity",
+            "type": "decimal",
+            "text": "How many pills/tablets do you use per intake?",
+            "required": true,
+            "unit": null,
+            "answerOption": null,
+            "enableWhen": null,
+            "enableBehavior": null,
+            "extension": null,
+            "item": null
+          },
+          {
+            "linkId": "becb01d4-fc31-41e2-b5b8-7df4be86e793-drug",
             "type": "choice",
-            "text": "Select the medication you are taking",
+            "text": "Which pill/tablet do you take?",
             "required": true,
             "unit": null,
             "answerOption": [
@@ -2589,44 +3185,181 @@
                 }
               }
             ],
+            "enableWhen": null,
+            "enableBehavior": null,
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                "valueQuantities": null,
+                "valueReference": null,
+                "valueString": null,
+                "valueCodeableConcept": {
+                  "coding": [
+                    {
+                      "id": null,
+                      "extension": null,
+                      "system": "http://hl7.org/fhir/questionnaire-item-control",
+                      "version": null,
+                      "code": "radio-button",
+                      "display": "Radio Button",
+                      "userSelected": null
+                    }
+                  ],
+                  "text": null
+                },
+                "valueMedicationRequest": null
+              }
+            ],
+            "item": null
+          }
+        ]
+      },
+      {
+        "linkId": "f542f637-d5de-4e50-b616-2d8418d1dafd-page0",
+        "type": "group",
+        "text": "Diuretics",
+        "required": false,
+        "unit": null,
+        "answerOption": null,
+        "enableWhen": null,
+        "enableBehavior": null,
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueQuantities": null,
+            "valueReference": null,
+            "valueString": null,
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "id": null,
+                  "extension": null,
+                  "system": "http://hl7.org/fhir/questionnaire-item-control",
+                  "version": null,
+                  "code": "page",
+                  "display": "Page",
+                  "userSelected": null
+                }
+              ],
+              "text": "Page"
+            },
+            "valueMedicationRequest": null
+          }
+        ],
+        "item": [
+          {
+            "linkId": "f542f637-d5de-4e50-b616-2d8418d1dafd-exists-display",
+            "type": "display",
+            "text": "Do you take any of the following medications?\n\nBumetanide (Bumex)\nEthacrynic Acid (Edecrin)\nFurosemide (Lasix)\nTorsemide (Soaanz)",
+            "required": false,
+            "unit": null,
+            "answerOption": null,
+            "enableWhen": null,
+            "enableBehavior": null,
             "extension": null,
             "item": null
           },
           {
-            "linkId": "12a22f76-1588-46e6-8bcf-924bdf890308-quantity",
-            "type": "decimal",
-            "text": "Quantity per intake",
+            "linkId": "f542f637-d5de-4e50-b616-2d8418d1dafd-exists",
+            "type": "boolean",
+            "text": "Do you take any medication from the above list?",
             "required": true,
             "unit": null,
             "answerOption": null,
-            "extension": null,
-            "item": null
-          },
-          {
-            "linkId": "12a22f76-1588-46e6-8bcf-924bdf890308-frequency",
-            "type": "decimal",
-            "text": "Number of intakes per day",
-            "required": true,
-            "unit": null,
-            "answerOption": null,
+            "enableWhen": null,
+            "enableBehavior": null,
             "extension": null,
             "item": null
           }
         ]
       },
       {
-        "linkId": "1aa4100d-92c2-409a-915d-b308e1afca9a",
+        "linkId": "f542f637-d5de-4e50-b616-2d8418d1dafd-page1",
         "type": "group",
         "text": "Diuretics",
-        "required": null,
+        "required": false,
         "unit": null,
         "answerOption": null,
-        "extension": null,
+        "enableWhen": [
+          {
+            "question": "f542f637-d5de-4e50-b616-2d8418d1dafd-exists",
+            "operator": "=",
+            "answerBoolean": true,
+            "answerDecimal": null,
+            "answerInteger": null,
+            "answerDate": null,
+            "answerDateTime": null,
+            "answerString": null,
+            "answerCoding": null,
+            "answerQuantity": null,
+            "answerReference": null
+          }
+        ],
+        "enableBehavior": null,
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueQuantities": null,
+            "valueReference": null,
+            "valueString": null,
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "id": null,
+                  "extension": null,
+                  "system": "http://hl7.org/fhir/questionnaire-item-control",
+                  "version": null,
+                  "code": "page",
+                  "display": "Page",
+                  "userSelected": null
+                }
+              ],
+              "text": "Page"
+            },
+            "valueMedicationRequest": null
+          }
+        ],
         "item": [
           {
-            "linkId": "1aa4100d-92c2-409a-915d-b308e1afca9a-drug",
+            "linkId": "f542f637-d5de-4e50-b616-2d8418d1dafd-page1-description",
+            "type": "display",
+            "text": "Please enter which drug you are taking, how often you take it per day and how many pills/tablets you take per intake. Do not enter the total amount of pills/tablets you take per day.",
+            "required": false,
+            "unit": null,
+            "answerOption": null,
+            "enableWhen": null,
+            "enableBehavior": null,
+            "extension": null,
+            "item": null
+          },
+          {
+            "linkId": "f542f637-d5de-4e50-b616-2d8418d1dafd-frequency",
+            "type": "decimal",
+            "text": "How often do you take your meds per day?",
+            "required": true,
+            "unit": null,
+            "answerOption": null,
+            "enableWhen": null,
+            "enableBehavior": null,
+            "extension": null,
+            "item": null
+          },
+          {
+            "linkId": "f542f637-d5de-4e50-b616-2d8418d1dafd-quantity",
+            "type": "decimal",
+            "text": "How many pills/tablets do you use per intake?",
+            "required": true,
+            "unit": null,
+            "answerOption": null,
+            "enableWhen": null,
+            "enableBehavior": null,
+            "extension": null,
+            "item": null
+          },
+          {
+            "linkId": "f542f637-d5de-4e50-b616-2d8418d1dafd-drug",
             "type": "choice",
-            "text": "Select the medication you are taking",
+            "text": "Which pill/tablet do you take?",
             "required": true,
             "unit": null,
             "answerOption": [
@@ -2785,38 +3518,44 @@
                 }
               }
             ],
-            "extension": null,
-            "item": null
-          },
-          {
-            "linkId": "1aa4100d-92c2-409a-915d-b308e1afca9a-quantity",
-            "type": "decimal",
-            "text": "Quantity per intake",
-            "required": true,
-            "unit": null,
-            "answerOption": null,
-            "extension": null,
-            "item": null
-          },
-          {
-            "linkId": "1aa4100d-92c2-409a-915d-b308e1afca9a-frequency",
-            "type": "decimal",
-            "text": "Number of intakes per day",
-            "required": true,
-            "unit": null,
-            "answerOption": null,
-            "extension": null,
+            "enableWhen": null,
+            "enableBehavior": null,
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                "valueQuantities": null,
+                "valueReference": null,
+                "valueString": null,
+                "valueCodeableConcept": {
+                  "coding": [
+                    {
+                      "id": null,
+                      "extension": null,
+                      "system": "http://hl7.org/fhir/questionnaire-item-control",
+                      "version": null,
+                      "code": "radio-button",
+                      "display": "Radio Button",
+                      "userSelected": null
+                    }
+                  ],
+                  "text": null
+                },
+                "valueMedicationRequest": null
+              }
+            ],
             "item": null
           }
         ]
       },
       {
-        "linkId": "d98aa5c1-69e4-4538-9b99-0b5e78411929",
+        "linkId": "4c05c8cb-0e75-4e06-b6c5-ae58f2a8da1a-page0",
         "type": "group",
         "text": "Creatinine",
         "required": false,
         "unit": null,
         "answerOption": null,
+        "enableWhen": null,
+        "enableBehavior": null,
         "extension": [
           {
             "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
@@ -2842,34 +3581,125 @@
         ],
         "item": [
           {
-            "linkId": "73c42d4d-9002-4929-bd89-3d2ebc4837a9",
-            "type": "date",
-            "text": "Date",
-            "required": true,
+            "linkId": "4c05c8cb-0e75-4e06-b6c5-ae58f2a8da1a-exists-description",
+            "type": "display",
+            "text": "The creatinine level in your body helps understand how your liver handles the drugs you are taking.",
+            "required": false,
             "unit": null,
             "answerOption": null,
+            "enableWhen": null,
+            "enableBehavior": null,
             "extension": null,
             "item": null
           },
           {
-            "linkId": "9e66f6be-23f6-45ca-b8f6-1bac62969d18",
-            "type": "decimal",
-            "text": "Creatinine",
+            "linkId": "4c05c8cb-0e75-4e06-b6c5-ae58f2a8da1a-exists",
+            "type": "boolean",
+            "text": "Do you have a new lab value for creatinine?",
             "required": true,
-            "unit": "mg/dL",
+            "unit": null,
             "answerOption": null,
+            "enableWhen": null,
+            "enableBehavior": null,
             "extension": null,
             "item": null
           }
         ]
       },
       {
-        "linkId": "4d6e0f65-7508-49a7-a341-5767e9c02116",
+        "linkId": "4c05c8cb-0e75-4e06-b6c5-ae58f2a8da1a-page1",
+        "type": "group",
+        "text": "Creatinine",
+        "required": false,
+        "unit": null,
+        "answerOption": null,
+        "enableWhen": [
+          {
+            "question": "4c05c8cb-0e75-4e06-b6c5-ae58f2a8da1a-exists",
+            "operator": "=",
+            "answerBoolean": true,
+            "answerDecimal": null,
+            "answerInteger": null,
+            "answerDate": null,
+            "answerDateTime": null,
+            "answerString": null,
+            "answerCoding": null,
+            "answerQuantity": null,
+            "answerReference": null
+          }
+        ],
+        "enableBehavior": null,
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueQuantities": null,
+            "valueReference": null,
+            "valueString": null,
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "id": null,
+                  "extension": null,
+                  "system": "http://hl7.org/fhir/questionnaire-item-control",
+                  "version": null,
+                  "code": "page",
+                  "display": "Page",
+                  "userSelected": null
+                }
+              ],
+              "text": "Page"
+            },
+            "valueMedicationRequest": null
+          }
+        ],
+        "item": [
+          {
+            "linkId": "4c05c8cb-0e75-4e06-b6c5-ae58f2a8da1a-value-description",
+            "type": "display",
+            "text": "The creatinine level in your body helps understand how your liver handles the drugs you are taking.",
+            "required": false,
+            "unit": null,
+            "answerOption": null,
+            "enableWhen": null,
+            "enableBehavior": null,
+            "extension": null,
+            "item": null
+          },
+          {
+            "linkId": "4c05c8cb-0e75-4e06-b6c5-ae58f2a8da1a-value",
+            "type": "decimal",
+            "text": "Creatinine (mg/dL):",
+            "required": true,
+            "unit": "mg/dL",
+            "answerOption": null,
+            "enableWhen": null,
+            "enableBehavior": null,
+            "extension": null,
+            "item": null
+          },
+          {
+            "linkId": "4c05c8cb-0e75-4e06-b6c5-ae58f2a8da1a-date",
+            "type": "date",
+            "text": "Date:",
+            "required": true,
+            "unit": null,
+            "answerOption": null,
+            "enableWhen": null,
+            "enableBehavior": null,
+            "extension": null,
+            "item": null
+          }
+        ]
+      },
+      {
+        "linkId": "e036bb5a-b0dc-485e-bfd5-51907bdc1259-page0",
         "type": "group",
         "text": "Potassium",
         "required": false,
         "unit": null,
         "answerOption": null,
+        "enableWhen": null,
+        "enableBehavior": null,
         "extension": [
           {
             "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
@@ -2895,34 +3725,54 @@
         ],
         "item": [
           {
-            "linkId": "5c44dc9c-7bdf-4d1a-b9d2-26f6411bb65c",
-            "type": "date",
-            "text": "Date",
-            "required": true,
+            "linkId": "e036bb5a-b0dc-485e-bfd5-51907bdc1259-exists-description",
+            "type": "display",
+            "text": "The potassium level in your body helps understand how your liver handles the drugs you are taking.",
+            "required": false,
             "unit": null,
             "answerOption": null,
+            "enableWhen": null,
+            "enableBehavior": null,
             "extension": null,
             "item": null
           },
           {
-            "linkId": "7d5a5e4e-958f-4865-b595-f1982a057a99",
-            "type": "decimal",
-            "text": "Potassium",
+            "linkId": "e036bb5a-b0dc-485e-bfd5-51907bdc1259-exists",
+            "type": "boolean",
+            "text": "Do you have a new lab value for potassium?",
             "required": true,
-            "unit": "mEq/L",
+            "unit": null,
             "answerOption": null,
+            "enableWhen": null,
+            "enableBehavior": null,
             "extension": null,
             "item": null
           }
         ]
       },
       {
-        "linkId": "21ed6135-27b0-45c6-b59d-06094b555cce",
+        "linkId": "e036bb5a-b0dc-485e-bfd5-51907bdc1259-page1",
         "type": "group",
-        "text": "Dry Weight",
+        "text": "Potassium",
         "required": false,
         "unit": null,
         "answerOption": null,
+        "enableWhen": [
+          {
+            "question": "e036bb5a-b0dc-485e-bfd5-51907bdc1259-exists",
+            "operator": "=",
+            "answerBoolean": true,
+            "answerDecimal": null,
+            "answerInteger": null,
+            "answerDate": null,
+            "answerDateTime": null,
+            "answerString": null,
+            "answerCoding": null,
+            "answerQuantity": null,
+            "answerReference": null
+          }
+        ],
+        "enableBehavior": null,
         "extension": [
           {
             "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
@@ -2948,22 +3798,182 @@
         ],
         "item": [
           {
-            "linkId": "476d88ae-dae8-4cb8-b2cf-bb81464f4092",
-            "type": "date",
-            "text": "Date",
-            "required": true,
+            "linkId": "e036bb5a-b0dc-485e-bfd5-51907bdc1259-value-description",
+            "type": "display",
+            "text": "The potassium level in your body helps understand how your liver handles the drugs you are taking.",
+            "required": false,
             "unit": null,
             "answerOption": null,
+            "enableWhen": null,
+            "enableBehavior": null,
             "extension": null,
             "item": null
           },
           {
-            "linkId": "a864aad6-83b9-45df-a657-a41f7551c93b",
+            "linkId": "e036bb5a-b0dc-485e-bfd5-51907bdc1259-value",
             "type": "decimal",
-            "text": "Dry weight",
+            "text": "Potassium (mEq/L):",
+            "required": true,
+            "unit": "mEq/L",
+            "answerOption": null,
+            "enableWhen": null,
+            "enableBehavior": null,
+            "extension": null,
+            "item": null
+          },
+          {
+            "linkId": "e036bb5a-b0dc-485e-bfd5-51907bdc1259-date",
+            "type": "date",
+            "text": "Date:",
+            "required": true,
+            "unit": null,
+            "answerOption": null,
+            "enableWhen": null,
+            "enableBehavior": null,
+            "extension": null,
+            "item": null
+          }
+        ]
+      },
+      {
+        "linkId": "2e4cad34-e891-4fea-b775-bd7985a1942b-page0",
+        "type": "group",
+        "text": "Dry Weight",
+        "required": false,
+        "unit": null,
+        "answerOption": null,
+        "enableWhen": null,
+        "enableBehavior": null,
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueQuantities": null,
+            "valueReference": null,
+            "valueString": null,
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "id": null,
+                  "extension": null,
+                  "system": "http://hl7.org/fhir/questionnaire-item-control",
+                  "version": null,
+                  "code": "page",
+                  "display": "Page",
+                  "userSelected": null
+                }
+              ],
+              "text": "Page"
+            },
+            "valueMedicationRequest": null
+          }
+        ],
+        "item": [
+          {
+            "linkId": "2e4cad34-e891-4fea-b775-bd7985a1942b-exists-description",
+            "type": "display",
+            "text": "The dry weight is useful to set a baseline to check that your weight does not increase unnoticed.",
+            "required": false,
+            "unit": null,
+            "answerOption": null,
+            "enableWhen": null,
+            "enableBehavior": null,
+            "extension": null,
+            "item": null
+          },
+          {
+            "linkId": "2e4cad34-e891-4fea-b775-bd7985a1942b-exists",
+            "type": "boolean",
+            "text": "Do you have a new lab value for dry weight?",
+            "required": true,
+            "unit": null,
+            "answerOption": null,
+            "enableWhen": null,
+            "enableBehavior": null,
+            "extension": null,
+            "item": null
+          }
+        ]
+      },
+      {
+        "linkId": "2e4cad34-e891-4fea-b775-bd7985a1942b-page1",
+        "type": "group",
+        "text": "Dry Weight",
+        "required": false,
+        "unit": null,
+        "answerOption": null,
+        "enableWhen": [
+          {
+            "question": "2e4cad34-e891-4fea-b775-bd7985a1942b-exists",
+            "operator": "=",
+            "answerBoolean": true,
+            "answerDecimal": null,
+            "answerInteger": null,
+            "answerDate": null,
+            "answerDateTime": null,
+            "answerString": null,
+            "answerCoding": null,
+            "answerQuantity": null,
+            "answerReference": null
+          }
+        ],
+        "enableBehavior": null,
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueQuantities": null,
+            "valueReference": null,
+            "valueString": null,
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "id": null,
+                  "extension": null,
+                  "system": "http://hl7.org/fhir/questionnaire-item-control",
+                  "version": null,
+                  "code": "page",
+                  "display": "Page",
+                  "userSelected": null
+                }
+              ],
+              "text": "Page"
+            },
+            "valueMedicationRequest": null
+          }
+        ],
+        "item": [
+          {
+            "linkId": "2e4cad34-e891-4fea-b775-bd7985a1942b-value-description",
+            "type": "display",
+            "text": "The dry weight is useful to set a baseline to check that your weight does not increase unnoticed.",
+            "required": false,
+            "unit": null,
+            "answerOption": null,
+            "enableWhen": null,
+            "enableBehavior": null,
+            "extension": null,
+            "item": null
+          },
+          {
+            "linkId": "2e4cad34-e891-4fea-b775-bd7985a1942b-value",
+            "type": "decimal",
+            "text": "Dry Weight (lbs):",
             "required": true,
             "unit": "lbs",
             "answerOption": null,
+            "enableWhen": null,
+            "enableBehavior": null,
+            "extension": null,
+            "item": null
+          },
+          {
+            "linkId": "2e4cad34-e891-4fea-b775-bd7985a1942b-date",
+            "type": "date",
+            "text": "Date:",
+            "required": true,
+            "unit": null,
+            "answerOption": null,
+            "enableWhen": null,
+            "enableBehavior": null,
             "extension": null,
             "item": null
           }
@@ -2972,7 +3982,7 @@
     ]
   },
   "dataUpdate_en_US": {
-    "id": "00fed38d-f621-440c-a918-539077ac9110",
+    "id": "f8b5df2d-3391-43d1-8cdc-ef5ec1f89c91",
     "extension": null,
     "resourceType": "Questionnaire",
     "meta": {
@@ -3008,11 +4018,11 @@
         "telecom": null
       }
     ],
-    "url": "http://spezi.health/fhir/questionnaire/00fed38d-f621-440c-a918-539077ac9110",
+    "url": "http://spezi.health/fhir/questionnaire/f8b5df2d-3391-43d1-8cdc-ef5ec1f89c91",
     "item": []
   },
   "postVisit_en_US": {
-    "id": "7cd11302-7b17-43b5-96c7-2fefdf265cbf",
+    "id": "2cdb0732-4bfe-4954-9b1a-5497340f1563",
     "extension": null,
     "resourceType": "Questionnaire",
     "meta": {
@@ -3048,7 +4058,7 @@
         "telecom": null
       }
     ],
-    "url": "http://spezi.health/fhir/questionnaire/7cd11302-7b17-43b5-96c7-2fefdf265cbf",
+    "url": "http://spezi.health/fhir/questionnaire/2cdb0732-4bfe-4954-9b1a-5497340f1563",
     "item": []
   }
 }

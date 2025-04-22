@@ -10,6 +10,7 @@ import {
   FHIRMedication,
   FHIRQuestionnaire,
   MedicationClassReference,
+  QuantityUnit,
 } from '@stanfordbdhg/engagehf-models'
 import { QuestionnaireFactory } from './QuestionnaireFactory.js'
 import { randomUUID } from 'crypto'
@@ -31,6 +32,13 @@ export class RegistrationQuestionnaireFactory extends QuestionnaireFactory<Regis
         this.pageItem({
           text: 'Personal information',
           item: [
+            this.displayItem({
+              text: 'Please provide the following information to help us understand your health and well-being.',
+            }),
+            this.dateItem({
+              linkId: randomUUID(),
+              text: 'Date of Birth',
+            }),
             this.radioButtonItem({
               linkId: randomUUID(),
               text: 'Select your sex:',
@@ -42,20 +50,16 @@ export class RegistrationQuestionnaireFactory extends QuestionnaireFactory<Regis
                 ],
               }),
             }),
-            this.dateItem({
-              linkId: randomUUID(),
-              text: 'Date of Birth',
-            }),
           ],
         }),
-        this.medicationClassPageItem({
+        ...this.medicationClassPageItems({
           medications: input.medications,
           drugs: input.drugs,
           medicationClasses: [MedicationClassReference.betaBlockers],
           text: 'Beta Blockers',
           linkId: randomUUID(),
         }),
-        this.medicationClassPageItem({
+        ...this.medicationClassPageItems({
           medications: input.medications,
           drugs: input.drugs,
           medicationClasses: [
@@ -65,7 +69,7 @@ export class RegistrationQuestionnaireFactory extends QuestionnaireFactory<Regis
           text: 'RASI',
           linkId: randomUUID(),
         }),
-        this.medicationClassPageItem({
+        ...this.medicationClassPageItems({
           medications: input.medications,
           drugs: input.drugs,
           medicationClasses: [
@@ -74,61 +78,40 @@ export class RegistrationQuestionnaireFactory extends QuestionnaireFactory<Regis
           text: 'MRA',
           linkId: randomUUID(),
         }),
-        this.medicationClassPageItem({
+        ...this.medicationClassPageItems({
           medications: input.medications,
           drugs: input.drugs,
           medicationClasses: [MedicationClassReference.sglt2inhibitors],
           text: 'SGLT2i',
           linkId: randomUUID(),
         }),
-        this.medicationClassPageItem({
+        ...this.medicationClassPageItems({
           medications: input.medications,
           drugs: input.drugs,
           medicationClasses: [MedicationClassReference.diuretics],
           text: 'Diuretics',
           linkId: randomUUID(),
         }),
-        this.pageItem({
+        ...this.labInputPages({
+          linkId: randomUUID(),
           text: 'Creatinine',
-          item: [
-            this.dateItem({
-              linkId: randomUUID(),
-              text: 'Date',
-            }),
-            this.decimalItem({
-              linkId: randomUUID(),
-              text: 'Creatinine',
-              unit: 'mg/dL',
-            }),
-          ],
+          description:
+            'The creatinine level in your body helps understand how your liver handles the drugs you are taking.',
+          unit: QuantityUnit.mg_dL,
         }),
-        this.pageItem({
+        ...this.labInputPages({
+          linkId: randomUUID(),
           text: 'Potassium',
-          item: [
-            this.dateItem({
-              linkId: randomUUID(),
-              text: 'Date',
-            }),
-            this.decimalItem({
-              linkId: randomUUID(),
-              text: 'Potassium',
-              unit: 'mEq/L',
-            }),
-          ],
+          description:
+            'The potassium level in your body helps understand how your liver handles the drugs you are taking.',
+          unit: QuantityUnit.mEq_L,
         }),
-        this.pageItem({
+        ...this.labInputPages({
+          linkId: randomUUID(),
           text: 'Dry Weight',
-          item: [
-            this.dateItem({
-              linkId: randomUUID(),
-              text: 'Date',
-            }),
-            this.decimalItem({
-              linkId: randomUUID(),
-              text: 'Dry weight',
-              unit: 'lbs',
-            }),
-          ],
+          description:
+            'The dry weight is useful to set a baseline to check that your weight does not increase unnoticed.',
+          unit: QuantityUnit.lbs,
         }),
       ],
     })
