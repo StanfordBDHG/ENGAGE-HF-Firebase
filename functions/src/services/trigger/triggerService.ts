@@ -243,7 +243,7 @@ export class TriggerService {
             { notify: true },
           )
 
-          if (user !== undefined && messageDoc !== undefined) {
+          if (messageDoc !== undefined) {
             const userAuth = await userService.getAuth(userId)
             const forwardedMessage = UserMessage.createWeightGainForClinician({
               userId: userId,
