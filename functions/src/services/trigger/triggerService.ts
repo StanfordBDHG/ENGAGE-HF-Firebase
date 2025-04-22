@@ -176,8 +176,8 @@ export class TriggerService {
     userId: string,
     collection: UserObservationCollection,
   ): Promise<void> {
+    const userService = this.factory.user()
     try {
-      const userService = this.factory.user()
       await userService.updateLastActiveDate(userId)
     } catch (error) {
       logger.error(
@@ -227,16 +227,22 @@ export class TriggerService {
         logger.debug(
           `TriggerService.userObservationWritten(${userId}, ${collection}): Most recent body weight is ${mostRecentBodyWeight} compared to a median of ${bodyWeightMedian}`,
         )
+        const user = await userService.getUser(userId)
+        if (user === undefined) {
+          logger.error(
+            `TriggerService.userObservationWritten(${userId}, ${collection}): User not found`,
+          )
+          return
+        }
+
+        const messageService = this.factory.message()
         if (mostRecentBodyWeight - bodyWeightMedian >= 3) {
-          const messageService = this.factory.message()
           const messageDoc = await messageService.addMessage(
             userId,
             UserMessage.createWeightGain(),
             { notify: true },
           )
 
-          const userService = this.factory.user()
-          const user = await userService.getUser(userId)
           if (user !== undefined && messageDoc !== undefined) {
             const userAuth = await userService.getAuth(userId)
             const forwardedMessage = UserMessage.createWeightGainForClinician({
@@ -251,6 +257,13 @@ export class TriggerService {
               messageService,
             })
           }
+        } else {
+          await this.completeMessagesIncludingOwnersAndClinician({
+            user: user,
+            messageType: UserMessageType.weightGain,
+            userService,
+            messageService,
+          })
         }
       } catch (error) {
         logger.error(
@@ -593,6 +606,42 @@ export class TriggerService {
       await input.messageService.addMessage(recipientId, input.message, {
         notify: true,
       })
+    }
+  }
+
+  private async completeMessagesIncludingOwnersAndClinician(input: {
+    user: Document<User>
+    messageType: UserMessageType
+    userService: UserService
+    messageService: MessageService
+  }) {
+    const owners =
+      input.user.content.organization !== undefined ?
+        await input.userService.getAllOwners(input.user.content.organization)
+      : []
+    const clinican = input.user.content.clinician
+
+    const messageIds = await input.messageService.completeMessages(
+      input.user.id,
+      input.messageType,
+    )
+
+    const recipientIds = owners.map((owner) => owner.id)
+    if (clinican !== undefined) recipientIds.push(clinican)
+
+    logger.debug(
+      `TriggerService.completeMessagesIncludingOwnersAndClinician(${input.user.id}): Found ${recipientIds.length} previous recipients (${recipientIds.join(', ')}).`,
+    )
+
+    for (const recipientId of recipientIds) {
+      await input.messageService.completeMessages(
+        recipientId,
+        input.messageType,
+        (message) =>
+          message.reference !== undefined ?
+            messageIds.includes(message.reference)
+          : false,
+      )
     }
   }
 
