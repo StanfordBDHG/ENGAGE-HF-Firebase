@@ -1480,7 +1480,7 @@
     "url": "http://spezi.health/fhir/questionnaire/e2b0c756-b321-481a-b14a-b839bfd7db4f",
     "item": [
       {
-        "linkId": "7ac7f2b8-7ab5-4ede-b7fd-eae59b0a50f1",
+        "linkId": "b1983180-c1e0-41c8-a9f2-b3ed9f81d696",
         "type": "display",
         "text": "Welcome to the ENGAGE-HF study! Please complete the following survey to help us understand your health and well-being.",
         "required": false,
@@ -1492,7 +1492,7 @@
         "item": null
       },
       {
-        "linkId": "2a9933ad-466e-48c9-98cd-694fb96fb36c",
+        "linkId": "48965a74-4a1d-400b-8814-0f6418a2078f",
         "type": "group",
         "text": "Personal information",
         "required": false,
@@ -1525,7 +1525,7 @@
         ],
         "item": [
           {
-            "linkId": "8011429b-320d-4fa8-8636-fb66d0381e69",
+            "linkId": "2d8dccc7-c6a5-42f8-941e-4822146f939c",
             "type": "display",
             "text": "Please provide the following information to help us understand your health and well-being.",
             "required": false,
@@ -1537,7 +1537,7 @@
             "item": null
           },
           {
-            "linkId": "02ec773e-da14-4d7d-aeb1-ec4858bef1ba",
+            "linkId": "29bee58b-d753-405f-95c0-f951a97c21cc",
             "type": "date",
             "text": "Date of Birth",
             "required": true,
@@ -1549,7 +1549,7 @@
             "item": null
           },
           {
-            "linkId": "7acc65c2-828c-471a-a5e8-a51b3176a651",
+            "linkId": "e6c022e4-0355-42f1-a605-9ea55337a9cd",
             "type": "choice",
             "text": "Select your sex:",
             "required": true,
@@ -1557,9 +1557,9 @@
             "answerOption": [
               {
                 "valueCoding": {
-                  "id": "3ee8b69f-ea48-4f71-aa98-c759e9be044c",
+                  "id": "cb575671-0f7b-499c-bbc2-e58cb8b43891",
                   "extension": null,
-                  "system": "urn:uuid:9f5a64f5-a7cf-460c-b27c-078ed39c30ec",
+                  "system": "urn:uuid:4b8252d3-1c6a-4494-a9f2-fdd20ad65eea",
                   "version": null,
                   "code": "male",
                   "display": "Male",
@@ -1568,9 +1568,9 @@
               },
               {
                 "valueCoding": {
-                  "id": "6e281ba7-eef7-4107-80f9-489b7b50ed5d",
+                  "id": "386e8159-f692-4e8f-aebb-e96a4c939fb6",
                   "extension": null,
-                  "system": "urn:uuid:9f5a64f5-a7cf-460c-b27c-078ed39c30ec",
+                  "system": "urn:uuid:4b8252d3-1c6a-4494-a9f2-fdd20ad65eea",
                   "version": null,
                   "code": "female",
                   "display": "Female",
@@ -1579,9 +1579,9 @@
               },
               {
                 "valueCoding": {
-                  "id": "a24e31e6-16a5-4857-9fa8-528bfe4d29b5",
+                  "id": "90b7b1c0-4a9a-4e96-a5a9-72fa6c3f89f9",
                   "extension": null,
-                  "system": "urn:uuid:9f5a64f5-a7cf-460c-b27c-078ed39c30ec",
+                  "system": "urn:uuid:4b8252d3-1c6a-4494-a9f2-fdd20ad65eea",
                   "version": null,
                   "code": "other",
                   "display": "Other",
@@ -1619,7 +1619,7 @@
         ]
       },
       {
-        "linkId": "a2d57e73-0707-45b2-9c65-33265de0e1e2-page0",
+        "linkId": "d3921689-0982-4e37-bc67-c8c144cf52a0-exists",
         "type": "group",
         "text": "Beta Blockers",
         "required": false,
@@ -1652,7 +1652,7 @@
         ],
         "item": [
           {
-            "linkId": "a2d57e73-0707-45b2-9c65-33265de0e1e2-exists-display",
+            "linkId": "d3921689-0982-4e37-bc67-c8c144cf52a0-exists-display",
             "type": "display",
             "text": "Do you take any of the following medications?\n\nBisoprolol (Zebeta)\nCarvedilol (Coreg)\nMetoprolol Succinate (Toprol XL)\nCarvedilol Phosphate (Coreg CR)",
             "required": false,
@@ -1664,7 +1664,7 @@
             "item": null
           },
           {
-            "linkId": "a2d57e73-0707-45b2-9c65-33265de0e1e2-exists",
+            "linkId": "d3921689-0982-4e37-bc67-c8c144cf52a0-exists",
             "type": "boolean",
             "text": "Do you take any medication from the above list?",
             "required": true,
@@ -1678,7 +1678,7 @@
         ]
       },
       {
-        "linkId": "a2d57e73-0707-45b2-9c65-33265de0e1e2-page1",
+        "linkId": "d3921689-0982-4e37-bc67-c8c144cf52a0-page1",
         "type": "group",
         "text": "Beta Blockers",
         "required": false,
@@ -1686,7 +1686,7 @@
         "answerOption": null,
         "enableWhen": [
           {
-            "question": "a2d57e73-0707-45b2-9c65-33265de0e1e2-exists",
+            "question": "d3921689-0982-4e37-bc67-c8c144cf52a0-exists",
             "operator": "=",
             "answerBoolean": true,
             "answerDecimal": null,
@@ -1725,9 +1725,9 @@
         ],
         "item": [
           {
-            "linkId": "a2d57e73-0707-45b2-9c65-33265de0e1e2-page1-description",
+            "linkId": "d3921689-0982-4e37-bc67-c8c144cf52a0-page1-description",
             "type": "display",
-            "text": "Please enter which drug you are taking, how often you take it per day and how many pills/tablets you take per intake. Do not enter the total amount of pills/tablets you take per day.",
+            "text": "Please enter which drug you are taking, how often you take it per day and how many pills/tablets you take per intake.\n\nDo not enter the total amount of pills/tablets you take per day.",
             "required": false,
             "unit": null,
             "answerOption": null,
@@ -1737,9 +1737,9 @@
             "item": null
           },
           {
-            "linkId": "a2d57e73-0707-45b2-9c65-33265de0e1e2-frequency",
+            "linkId": "d3921689-0982-4e37-bc67-c8c144cf52a0-frequency",
             "type": "decimal",
-            "text": "How often do you take your meds per day?",
+            "text": "Intake frequency (per day):",
             "required": true,
             "unit": null,
             "answerOption": null,
@@ -1749,9 +1749,9 @@
             "item": null
           },
           {
-            "linkId": "a2d57e73-0707-45b2-9c65-33265de0e1e2-quantity",
+            "linkId": "d3921689-0982-4e37-bc67-c8c144cf52a0-quantity",
             "type": "decimal",
-            "text": "How many pills/tablets do you use per intake?",
+            "text": "Pills/tablets per intake:",
             "required": true,
             "unit": null,
             "answerOption": null,
@@ -1761,7 +1761,7 @@
             "item": null
           },
           {
-            "linkId": "a2d57e73-0707-45b2-9c65-33265de0e1e2-drug",
+            "linkId": "d3921689-0982-4e37-bc67-c8c144cf52a0-drug",
             "type": "choice",
             "text": "Which pill/tablet do you take?",
             "required": true,
@@ -1996,7 +1996,7 @@
         ]
       },
       {
-        "linkId": "1a8893a5-e45b-4cb5-ba10-1856186f4a08-page0",
+        "linkId": "10836fa6-71d7-4a60-802c-519c27161627-exists",
         "type": "group",
         "text": "RASI",
         "required": false,
@@ -2029,7 +2029,7 @@
         ],
         "item": [
           {
-            "linkId": "1a8893a5-e45b-4cb5-ba10-1856186f4a08-exists-display",
+            "linkId": "10836fa6-71d7-4a60-802c-519c27161627-exists-display",
             "type": "display",
             "text": "Do you take any of the following medications?\n\nCaptopril (Capoten)\nEnalapril (Vasotec)\nBenazepril (Lotensin)\nLisinopril (Zestril)\nMoexipril (Univasc)\nQuinapril (Accupril)\nRamipril (Altace)\nTrandolapril (Mavik)\nPerindopril (Aceon)\nFosinopril Sodium (Monopril)\nSacubitril / Valsartan (Entresto)",
             "required": false,
@@ -2041,7 +2041,7 @@
             "item": null
           },
           {
-            "linkId": "1a8893a5-e45b-4cb5-ba10-1856186f4a08-exists",
+            "linkId": "10836fa6-71d7-4a60-802c-519c27161627-exists",
             "type": "boolean",
             "text": "Do you take any medication from the above list?",
             "required": true,
@@ -2055,7 +2055,7 @@
         ]
       },
       {
-        "linkId": "1a8893a5-e45b-4cb5-ba10-1856186f4a08-page1",
+        "linkId": "10836fa6-71d7-4a60-802c-519c27161627-page1",
         "type": "group",
         "text": "RASI",
         "required": false,
@@ -2063,7 +2063,7 @@
         "answerOption": null,
         "enableWhen": [
           {
-            "question": "1a8893a5-e45b-4cb5-ba10-1856186f4a08-exists",
+            "question": "10836fa6-71d7-4a60-802c-519c27161627-exists",
             "operator": "=",
             "answerBoolean": true,
             "answerDecimal": null,
@@ -2102,9 +2102,9 @@
         ],
         "item": [
           {
-            "linkId": "1a8893a5-e45b-4cb5-ba10-1856186f4a08-page1-description",
+            "linkId": "10836fa6-71d7-4a60-802c-519c27161627-page1-description",
             "type": "display",
-            "text": "Please enter which drug you are taking, how often you take it per day and how many pills/tablets you take per intake. Do not enter the total amount of pills/tablets you take per day.",
+            "text": "Please enter which drug you are taking, how often you take it per day and how many pills/tablets you take per intake.\n\nDo not enter the total amount of pills/tablets you take per day.",
             "required": false,
             "unit": null,
             "answerOption": null,
@@ -2114,9 +2114,9 @@
             "item": null
           },
           {
-            "linkId": "1a8893a5-e45b-4cb5-ba10-1856186f4a08-frequency",
+            "linkId": "10836fa6-71d7-4a60-802c-519c27161627-frequency",
             "type": "decimal",
-            "text": "How often do you take your meds per day?",
+            "text": "Intake frequency (per day):",
             "required": true,
             "unit": null,
             "answerOption": null,
@@ -2126,9 +2126,9 @@
             "item": null
           },
           {
-            "linkId": "1a8893a5-e45b-4cb5-ba10-1856186f4a08-quantity",
+            "linkId": "10836fa6-71d7-4a60-802c-519c27161627-quantity",
             "type": "decimal",
-            "text": "How many pills/tablets do you use per intake?",
+            "text": "Pills/tablets per intake:",
             "required": true,
             "unit": null,
             "answerOption": null,
@@ -2138,7 +2138,7 @@
             "item": null
           },
           {
-            "linkId": "1a8893a5-e45b-4cb5-ba10-1856186f4a08-drug",
+            "linkId": "10836fa6-71d7-4a60-802c-519c27161627-drug",
             "type": "choice",
             "text": "Which pill/tablet do you take?",
             "required": true,
@@ -2681,7 +2681,7 @@
         ]
       },
       {
-        "linkId": "7914abf7-c694-4168-bb93-88375cdef62d-page0",
+        "linkId": "21d7d367-af85-437a-b429-f32e65699542-exists",
         "type": "group",
         "text": "MRA",
         "required": false,
@@ -2714,7 +2714,7 @@
         ],
         "item": [
           {
-            "linkId": "7914abf7-c694-4168-bb93-88375cdef62d-exists-display",
+            "linkId": "21d7d367-af85-437a-b429-f32e65699542-exists-display",
             "type": "display",
             "text": "Do you take any of the following medications?\n\nSpironolactone (Aldactone)\nEplerenone (Inspra)",
             "required": false,
@@ -2726,7 +2726,7 @@
             "item": null
           },
           {
-            "linkId": "7914abf7-c694-4168-bb93-88375cdef62d-exists",
+            "linkId": "21d7d367-af85-437a-b429-f32e65699542-exists",
             "type": "boolean",
             "text": "Do you take any medication from the above list?",
             "required": true,
@@ -2740,7 +2740,7 @@
         ]
       },
       {
-        "linkId": "7914abf7-c694-4168-bb93-88375cdef62d-page1",
+        "linkId": "21d7d367-af85-437a-b429-f32e65699542-page1",
         "type": "group",
         "text": "MRA",
         "required": false,
@@ -2748,7 +2748,7 @@
         "answerOption": null,
         "enableWhen": [
           {
-            "question": "7914abf7-c694-4168-bb93-88375cdef62d-exists",
+            "question": "21d7d367-af85-437a-b429-f32e65699542-exists",
             "operator": "=",
             "answerBoolean": true,
             "answerDecimal": null,
@@ -2787,9 +2787,9 @@
         ],
         "item": [
           {
-            "linkId": "7914abf7-c694-4168-bb93-88375cdef62d-page1-description",
+            "linkId": "21d7d367-af85-437a-b429-f32e65699542-page1-description",
             "type": "display",
-            "text": "Please enter which drug you are taking, how often you take it per day and how many pills/tablets you take per intake. Do not enter the total amount of pills/tablets you take per day.",
+            "text": "Please enter which drug you are taking, how often you take it per day and how many pills/tablets you take per intake.\n\nDo not enter the total amount of pills/tablets you take per day.",
             "required": false,
             "unit": null,
             "answerOption": null,
@@ -2799,9 +2799,9 @@
             "item": null
           },
           {
-            "linkId": "7914abf7-c694-4168-bb93-88375cdef62d-frequency",
+            "linkId": "21d7d367-af85-437a-b429-f32e65699542-frequency",
             "type": "decimal",
-            "text": "How often do you take your meds per day?",
+            "text": "Intake frequency (per day):",
             "required": true,
             "unit": null,
             "answerOption": null,
@@ -2811,9 +2811,9 @@
             "item": null
           },
           {
-            "linkId": "7914abf7-c694-4168-bb93-88375cdef62d-quantity",
+            "linkId": "21d7d367-af85-437a-b429-f32e65699542-quantity",
             "type": "decimal",
-            "text": "How many pills/tablets do you use per intake?",
+            "text": "Pills/tablets per intake:",
             "required": true,
             "unit": null,
             "answerOption": null,
@@ -2823,7 +2823,7 @@
             "item": null
           },
           {
-            "linkId": "7914abf7-c694-4168-bb93-88375cdef62d-drug",
+            "linkId": "21d7d367-af85-437a-b429-f32e65699542-drug",
             "type": "choice",
             "text": "Which pill/tablet do you take?",
             "required": true,
@@ -2915,7 +2915,7 @@
         ]
       },
       {
-        "linkId": "becb01d4-fc31-41e2-b5b8-7df4be86e793-page0",
+        "linkId": "7067538f-9870-43fa-a78b-e0c2dd0c11db-exists",
         "type": "group",
         "text": "SGLT2i",
         "required": false,
@@ -2948,7 +2948,7 @@
         ],
         "item": [
           {
-            "linkId": "becb01d4-fc31-41e2-b5b8-7df4be86e793-exists-display",
+            "linkId": "7067538f-9870-43fa-a78b-e0c2dd0c11db-exists-display",
             "type": "display",
             "text": "Do you take any of the following medications?\n\nCanagliflozin (Invokana)\nDapagliflozin (Farxiga)\nEmpagliflozin (Jardiance)\nErtugliflozin (Steglatro)\nBexagliflozin (Brenzavvy)\nSotagliflozin (Inpefa)",
             "required": false,
@@ -2960,7 +2960,7 @@
             "item": null
           },
           {
-            "linkId": "becb01d4-fc31-41e2-b5b8-7df4be86e793-exists",
+            "linkId": "7067538f-9870-43fa-a78b-e0c2dd0c11db-exists",
             "type": "boolean",
             "text": "Do you take any medication from the above list?",
             "required": true,
@@ -2974,7 +2974,7 @@
         ]
       },
       {
-        "linkId": "becb01d4-fc31-41e2-b5b8-7df4be86e793-page1",
+        "linkId": "7067538f-9870-43fa-a78b-e0c2dd0c11db-page1",
         "type": "group",
         "text": "SGLT2i",
         "required": false,
@@ -2982,7 +2982,7 @@
         "answerOption": null,
         "enableWhen": [
           {
-            "question": "becb01d4-fc31-41e2-b5b8-7df4be86e793-exists",
+            "question": "7067538f-9870-43fa-a78b-e0c2dd0c11db-exists",
             "operator": "=",
             "answerBoolean": true,
             "answerDecimal": null,
@@ -3021,9 +3021,9 @@
         ],
         "item": [
           {
-            "linkId": "becb01d4-fc31-41e2-b5b8-7df4be86e793-page1-description",
+            "linkId": "7067538f-9870-43fa-a78b-e0c2dd0c11db-page1-description",
             "type": "display",
-            "text": "Please enter which drug you are taking, how often you take it per day and how many pills/tablets you take per intake. Do not enter the total amount of pills/tablets you take per day.",
+            "text": "Please enter which drug you are taking, how often you take it per day and how many pills/tablets you take per intake.\n\nDo not enter the total amount of pills/tablets you take per day.",
             "required": false,
             "unit": null,
             "answerOption": null,
@@ -3033,9 +3033,9 @@
             "item": null
           },
           {
-            "linkId": "becb01d4-fc31-41e2-b5b8-7df4be86e793-frequency",
+            "linkId": "7067538f-9870-43fa-a78b-e0c2dd0c11db-frequency",
             "type": "decimal",
-            "text": "How often do you take your meds per day?",
+            "text": "Intake frequency (per day):",
             "required": true,
             "unit": null,
             "answerOption": null,
@@ -3045,9 +3045,9 @@
             "item": null
           },
           {
-            "linkId": "becb01d4-fc31-41e2-b5b8-7df4be86e793-quantity",
+            "linkId": "7067538f-9870-43fa-a78b-e0c2dd0c11db-quantity",
             "type": "decimal",
-            "text": "How many pills/tablets do you use per intake?",
+            "text": "Pills/tablets per intake:",
             "required": true,
             "unit": null,
             "answerOption": null,
@@ -3057,7 +3057,7 @@
             "item": null
           },
           {
-            "linkId": "becb01d4-fc31-41e2-b5b8-7df4be86e793-drug",
+            "linkId": "7067538f-9870-43fa-a78b-e0c2dd0c11db-drug",
             "type": "choice",
             "text": "Which pill/tablet do you take?",
             "required": true,
@@ -3215,7 +3215,7 @@
         ]
       },
       {
-        "linkId": "f542f637-d5de-4e50-b616-2d8418d1dafd-page0",
+        "linkId": "8cf6f066-f873-41f0-a030-b1c5de4a2457-exists",
         "type": "group",
         "text": "Diuretics",
         "required": false,
@@ -3248,7 +3248,7 @@
         ],
         "item": [
           {
-            "linkId": "f542f637-d5de-4e50-b616-2d8418d1dafd-exists-display",
+            "linkId": "8cf6f066-f873-41f0-a030-b1c5de4a2457-exists-display",
             "type": "display",
             "text": "Do you take any of the following medications?\n\nBumetanide (Bumex)\nEthacrynic Acid (Edecrin)\nFurosemide (Lasix)\nTorsemide (Soaanz)",
             "required": false,
@@ -3260,7 +3260,7 @@
             "item": null
           },
           {
-            "linkId": "f542f637-d5de-4e50-b616-2d8418d1dafd-exists",
+            "linkId": "8cf6f066-f873-41f0-a030-b1c5de4a2457-exists",
             "type": "boolean",
             "text": "Do you take any medication from the above list?",
             "required": true,
@@ -3274,7 +3274,7 @@
         ]
       },
       {
-        "linkId": "f542f637-d5de-4e50-b616-2d8418d1dafd-page1",
+        "linkId": "8cf6f066-f873-41f0-a030-b1c5de4a2457-page1",
         "type": "group",
         "text": "Diuretics",
         "required": false,
@@ -3282,7 +3282,7 @@
         "answerOption": null,
         "enableWhen": [
           {
-            "question": "f542f637-d5de-4e50-b616-2d8418d1dafd-exists",
+            "question": "8cf6f066-f873-41f0-a030-b1c5de4a2457-exists",
             "operator": "=",
             "answerBoolean": true,
             "answerDecimal": null,
@@ -3321,9 +3321,9 @@
         ],
         "item": [
           {
-            "linkId": "f542f637-d5de-4e50-b616-2d8418d1dafd-page1-description",
+            "linkId": "8cf6f066-f873-41f0-a030-b1c5de4a2457-page1-description",
             "type": "display",
-            "text": "Please enter which drug you are taking, how often you take it per day and how many pills/tablets you take per intake. Do not enter the total amount of pills/tablets you take per day.",
+            "text": "Please enter which drug you are taking, how often you take it per day and how many pills/tablets you take per intake.\n\nDo not enter the total amount of pills/tablets you take per day.",
             "required": false,
             "unit": null,
             "answerOption": null,
@@ -3333,9 +3333,9 @@
             "item": null
           },
           {
-            "linkId": "f542f637-d5de-4e50-b616-2d8418d1dafd-frequency",
+            "linkId": "8cf6f066-f873-41f0-a030-b1c5de4a2457-frequency",
             "type": "decimal",
-            "text": "How often do you take your meds per day?",
+            "text": "Intake frequency (per day):",
             "required": true,
             "unit": null,
             "answerOption": null,
@@ -3345,9 +3345,9 @@
             "item": null
           },
           {
-            "linkId": "f542f637-d5de-4e50-b616-2d8418d1dafd-quantity",
+            "linkId": "8cf6f066-f873-41f0-a030-b1c5de4a2457-quantity",
             "type": "decimal",
-            "text": "How many pills/tablets do you use per intake?",
+            "text": "Pills/tablets per intake:",
             "required": true,
             "unit": null,
             "answerOption": null,
@@ -3357,7 +3357,7 @@
             "item": null
           },
           {
-            "linkId": "f542f637-d5de-4e50-b616-2d8418d1dafd-drug",
+            "linkId": "8cf6f066-f873-41f0-a030-b1c5de4a2457-drug",
             "type": "choice",
             "text": "Which pill/tablet do you take?",
             "required": true,
@@ -3548,7 +3548,7 @@
         ]
       },
       {
-        "linkId": "4c05c8cb-0e75-4e06-b6c5-ae58f2a8da1a-page0",
+        "linkId": "e0dc1a24-c610-4362-8a50-f5f31bf94d03-exists",
         "type": "group",
         "text": "Creatinine",
         "required": false,
@@ -3581,7 +3581,7 @@
         ],
         "item": [
           {
-            "linkId": "4c05c8cb-0e75-4e06-b6c5-ae58f2a8da1a-exists-description",
+            "linkId": "e0dc1a24-c610-4362-8a50-f5f31bf94d03-exists-description",
             "type": "display",
             "text": "The creatinine level in your body helps understand how your liver handles the drugs you are taking.",
             "required": false,
@@ -3593,7 +3593,7 @@
             "item": null
           },
           {
-            "linkId": "4c05c8cb-0e75-4e06-b6c5-ae58f2a8da1a-exists",
+            "linkId": "e0dc1a24-c610-4362-8a50-f5f31bf94d03-exists",
             "type": "boolean",
             "text": "Do you have a new lab value for creatinine?",
             "required": true,
@@ -3607,7 +3607,7 @@
         ]
       },
       {
-        "linkId": "4c05c8cb-0e75-4e06-b6c5-ae58f2a8da1a-page1",
+        "linkId": "e0dc1a24-c610-4362-8a50-f5f31bf94d03-page1",
         "type": "group",
         "text": "Creatinine",
         "required": false,
@@ -3615,7 +3615,7 @@
         "answerOption": null,
         "enableWhen": [
           {
-            "question": "4c05c8cb-0e75-4e06-b6c5-ae58f2a8da1a-exists",
+            "question": "e0dc1a24-c610-4362-8a50-f5f31bf94d03-exists",
             "operator": "=",
             "answerBoolean": true,
             "answerDecimal": null,
@@ -3654,7 +3654,7 @@
         ],
         "item": [
           {
-            "linkId": "4c05c8cb-0e75-4e06-b6c5-ae58f2a8da1a-value-description",
+            "linkId": "e0dc1a24-c610-4362-8a50-f5f31bf94d03-value-description",
             "type": "display",
             "text": "The creatinine level in your body helps understand how your liver handles the drugs you are taking.",
             "required": false,
@@ -3666,7 +3666,7 @@
             "item": null
           },
           {
-            "linkId": "4c05c8cb-0e75-4e06-b6c5-ae58f2a8da1a-value",
+            "linkId": "e0dc1a24-c610-4362-8a50-f5f31bf94d03-value",
             "type": "decimal",
             "text": "Creatinine (mg/dL):",
             "required": true,
@@ -3678,7 +3678,7 @@
             "item": null
           },
           {
-            "linkId": "4c05c8cb-0e75-4e06-b6c5-ae58f2a8da1a-date",
+            "linkId": "e0dc1a24-c610-4362-8a50-f5f31bf94d03-date",
             "type": "date",
             "text": "Date:",
             "required": true,
@@ -3692,7 +3692,7 @@
         ]
       },
       {
-        "linkId": "e036bb5a-b0dc-485e-bfd5-51907bdc1259-page0",
+        "linkId": "5fbad247-6064-4520-be67-041d62f61af9-exists",
         "type": "group",
         "text": "Potassium",
         "required": false,
@@ -3725,7 +3725,7 @@
         ],
         "item": [
           {
-            "linkId": "e036bb5a-b0dc-485e-bfd5-51907bdc1259-exists-description",
+            "linkId": "5fbad247-6064-4520-be67-041d62f61af9-exists-description",
             "type": "display",
             "text": "The potassium level in your body helps understand how your liver handles the drugs you are taking.",
             "required": false,
@@ -3737,7 +3737,7 @@
             "item": null
           },
           {
-            "linkId": "e036bb5a-b0dc-485e-bfd5-51907bdc1259-exists",
+            "linkId": "5fbad247-6064-4520-be67-041d62f61af9-exists",
             "type": "boolean",
             "text": "Do you have a new lab value for potassium?",
             "required": true,
@@ -3751,7 +3751,7 @@
         ]
       },
       {
-        "linkId": "e036bb5a-b0dc-485e-bfd5-51907bdc1259-page1",
+        "linkId": "5fbad247-6064-4520-be67-041d62f61af9-page1",
         "type": "group",
         "text": "Potassium",
         "required": false,
@@ -3759,7 +3759,7 @@
         "answerOption": null,
         "enableWhen": [
           {
-            "question": "e036bb5a-b0dc-485e-bfd5-51907bdc1259-exists",
+            "question": "5fbad247-6064-4520-be67-041d62f61af9-exists",
             "operator": "=",
             "answerBoolean": true,
             "answerDecimal": null,
@@ -3798,7 +3798,7 @@
         ],
         "item": [
           {
-            "linkId": "e036bb5a-b0dc-485e-bfd5-51907bdc1259-value-description",
+            "linkId": "5fbad247-6064-4520-be67-041d62f61af9-value-description",
             "type": "display",
             "text": "The potassium level in your body helps understand how your liver handles the drugs you are taking.",
             "required": false,
@@ -3810,7 +3810,7 @@
             "item": null
           },
           {
-            "linkId": "e036bb5a-b0dc-485e-bfd5-51907bdc1259-value",
+            "linkId": "5fbad247-6064-4520-be67-041d62f61af9-value",
             "type": "decimal",
             "text": "Potassium (mEq/L):",
             "required": true,
@@ -3822,7 +3822,7 @@
             "item": null
           },
           {
-            "linkId": "e036bb5a-b0dc-485e-bfd5-51907bdc1259-date",
+            "linkId": "5fbad247-6064-4520-be67-041d62f61af9-date",
             "type": "date",
             "text": "Date:",
             "required": true,
@@ -3836,7 +3836,7 @@
         ]
       },
       {
-        "linkId": "2e4cad34-e891-4fea-b775-bd7985a1942b-page0",
+        "linkId": "b7947a3b-f825-4a46-8653-0597f13f6b97-exists",
         "type": "group",
         "text": "Dry Weight",
         "required": false,
@@ -3869,7 +3869,7 @@
         ],
         "item": [
           {
-            "linkId": "2e4cad34-e891-4fea-b775-bd7985a1942b-exists-description",
+            "linkId": "b7947a3b-f825-4a46-8653-0597f13f6b97-exists-description",
             "type": "display",
             "text": "The dry weight is useful to set a baseline to check that your weight does not increase unnoticed.",
             "required": false,
@@ -3881,7 +3881,7 @@
             "item": null
           },
           {
-            "linkId": "2e4cad34-e891-4fea-b775-bd7985a1942b-exists",
+            "linkId": "b7947a3b-f825-4a46-8653-0597f13f6b97-exists",
             "type": "boolean",
             "text": "Do you have a new lab value for dry weight?",
             "required": true,
@@ -3895,7 +3895,7 @@
         ]
       },
       {
-        "linkId": "2e4cad34-e891-4fea-b775-bd7985a1942b-page1",
+        "linkId": "b7947a3b-f825-4a46-8653-0597f13f6b97-page1",
         "type": "group",
         "text": "Dry Weight",
         "required": false,
@@ -3903,7 +3903,7 @@
         "answerOption": null,
         "enableWhen": [
           {
-            "question": "2e4cad34-e891-4fea-b775-bd7985a1942b-exists",
+            "question": "b7947a3b-f825-4a46-8653-0597f13f6b97-exists",
             "operator": "=",
             "answerBoolean": true,
             "answerDecimal": null,
@@ -3942,7 +3942,7 @@
         ],
         "item": [
           {
-            "linkId": "2e4cad34-e891-4fea-b775-bd7985a1942b-value-description",
+            "linkId": "b7947a3b-f825-4a46-8653-0597f13f6b97-value-description",
             "type": "display",
             "text": "The dry weight is useful to set a baseline to check that your weight does not increase unnoticed.",
             "required": false,
@@ -3954,7 +3954,7 @@
             "item": null
           },
           {
-            "linkId": "2e4cad34-e891-4fea-b775-bd7985a1942b-value",
+            "linkId": "b7947a3b-f825-4a46-8653-0597f13f6b97-value",
             "type": "decimal",
             "text": "Dry Weight (lbs):",
             "required": true,
@@ -3966,7 +3966,7 @@
             "item": null
           },
           {
-            "linkId": "2e4cad34-e891-4fea-b775-bd7985a1942b-date",
+            "linkId": "b7947a3b-f825-4a46-8653-0597f13f6b97-date",
             "type": "date",
             "text": "Date:",
             "required": true,
@@ -3982,7 +3982,7 @@
     ]
   },
   "dataUpdate_en_US": {
-    "id": "f8b5df2d-3391-43d1-8cdc-ef5ec1f89c91",
+    "id": "35163213-790c-4a6d-9aee-a1fba0e1a340",
     "extension": null,
     "resourceType": "Questionnaire",
     "meta": {
@@ -4018,11 +4018,11 @@
         "telecom": null
       }
     ],
-    "url": "http://spezi.health/fhir/questionnaire/f8b5df2d-3391-43d1-8cdc-ef5ec1f89c91",
+    "url": "http://spezi.health/fhir/questionnaire/35163213-790c-4a6d-9aee-a1fba0e1a340",
     "item": []
   },
   "postVisit_en_US": {
-    "id": "2cdb0732-4bfe-4954-9b1a-5497340f1563",
+    "id": "0bf917de-5eee-4d2b-ae22-0c0f67d357b5",
     "extension": null,
     "resourceType": "Questionnaire",
     "meta": {
@@ -4058,7 +4058,7 @@
         "telecom": null
       }
     ],
-    "url": "http://spezi.health/fhir/questionnaire/2cdb0732-4bfe-4954-9b1a-5497340f1563",
+    "url": "http://spezi.health/fhir/questionnaire/0bf917de-5eee-4d2b-ae22-0c0f67d357b5",
     "item": []
   }
 }

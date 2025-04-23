@@ -11,6 +11,7 @@ import {
   FHIRQuestionnaire,
   FHIRQuestionnaireItem,
   MedicationClassReference,
+  QuantityUnit,
 } from '@stanfordbdhg/engagehf-models'
 import { QuestionnaireFactory } from './QuestionnaireFactory.js'
 import { randomUUID } from 'crypto'
@@ -28,10 +29,13 @@ export class DataUpdateQuestionnaireFactory extends QuestionnaireFactory<DataUpd
     return this.questionnaire({
       id: randomUUID(),
       title: input.isPostVisit ? 'Post-Visit Survey' : 'Update Survey',
-      item: [],
+      item: [
+        ...this.labInputPages({}),
+        ...this.medicationInputPages({
+          medications: input.medications,
+          drugs: input.drugs,
+        }),
+      ],
     })
   }
-
-  // Helper methods
-  
 }

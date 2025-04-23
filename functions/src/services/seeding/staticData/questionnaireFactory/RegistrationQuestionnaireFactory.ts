@@ -9,8 +9,6 @@
 import {
   FHIRMedication,
   FHIRQuestionnaire,
-  MedicationClassReference,
-  QuantityUnit,
 } from '@stanfordbdhg/engagehf-models'
 import { QuestionnaireFactory } from './QuestionnaireFactory.js'
 import { randomUUID } from 'crypto'
@@ -52,66 +50,10 @@ export class RegistrationQuestionnaireFactory extends QuestionnaireFactory<Regis
             }),
           ],
         }),
-        ...this.medicationClassPageItems({
+        ...this.labInputPages({}),
+        ...this.medicationInputPages({
           medications: input.medications,
           drugs: input.drugs,
-          medicationClasses: [MedicationClassReference.betaBlockers],
-          text: 'Beta Blockers',
-          linkId: randomUUID(),
-        }),
-        ...this.medicationClassPageItems({
-          medications: input.medications,
-          drugs: input.drugs,
-          medicationClasses: [
-            MedicationClassReference.angiotensinConvertingEnzymeInhibitors,
-            MedicationClassReference.angiotensinReceptorNeprilysinInhibitors,
-          ],
-          text: 'RASI',
-          linkId: randomUUID(),
-        }),
-        ...this.medicationClassPageItems({
-          medications: input.medications,
-          drugs: input.drugs,
-          medicationClasses: [
-            MedicationClassReference.mineralocorticoidReceptorAntagonists,
-          ],
-          text: 'MRA',
-          linkId: randomUUID(),
-        }),
-        ...this.medicationClassPageItems({
-          medications: input.medications,
-          drugs: input.drugs,
-          medicationClasses: [MedicationClassReference.sglt2inhibitors],
-          text: 'SGLT2i',
-          linkId: randomUUID(),
-        }),
-        ...this.medicationClassPageItems({
-          medications: input.medications,
-          drugs: input.drugs,
-          medicationClasses: [MedicationClassReference.diuretics],
-          text: 'Diuretics',
-          linkId: randomUUID(),
-        }),
-        ...this.labInputPages({
-          linkId: randomUUID(),
-          text: 'Creatinine',
-          description:
-            'The creatinine level in your body helps understand how your liver handles the drugs you are taking.',
-          unit: QuantityUnit.mg_dL,
-        }),
-        ...this.labInputPages({
-          linkId: randomUUID(),
-          text: 'Potassium',
-          description:
-            'The potassium level in your body helps understand how your liver handles the drugs you are taking.',
-          unit: QuantityUnit.mEq_L,
-        }),
-        ...this.labInputPages({
-          linkId: randomUUID(),
-          text: 'Dry Weight',
-          description:
-            'The dry weight is useful to set a baseline to check that your weight does not increase unnoticed.',
-          unit: QuantityUnit.lbs,
         }),
       ],
     })
