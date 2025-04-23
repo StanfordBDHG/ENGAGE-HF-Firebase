@@ -41,8 +41,6 @@ To make this structure simpler to use, we provide different scripts as part of t
 |npm run serve:seeded|Starts up the relevant emulators for ENGAGE-HF and seeds them. Make sure to build the project first before executing this command.|
 
 
-### Using the emulator for client applications
-
 For using the emulators for client applications, it is probably easiest to call `npm run prepare` whenever files could have changed (e.g. when changing branch or pulling new changes) and then calling `npm run serve:seeded` to start up the emulators in a seeded state. Both of these commands are performed in the root directory of this repository.
 
 Otherwise, you may want to use Docker to run the emulators.  For this, you can use the following command:
@@ -642,6 +640,20 @@ Based on [FHIR QuestionnaireResponse](https://hl7.org/fhir/R4B/questionnaireresp
 |item[x]>answer|list of Answer|-|response(s) to the question|
 |item[x]>answer[y]>value|any|-|Value depending on the type of question in the survey, e.g. boolean, integer, date, string, etc|
 
+#### users/$userId$/shareCodes/$shareCodeId$
+
+In some circumstances, a patient may want to share a health summary to a clinician that isn't authenticated via ENGAGE-HF. In this case, they can use share codes to allow access to exporting a health summary temporarily. In this collection, these share codes are stored when generating a share code and retrieved when an export is requested without a properly authenticated account. A share code may be deleted at any time, if it is already expired (by time or by tries).
+
+The `shareCodeId` that is used when calling the `exportHealthSummary` function is the id of a document in this collection.
+
+This collection may only be used by the functions themselves and should neither be visible nor being accessed by client applications or the web frontend. All required functionality is provided using the `shareHealthSummary` and `exportHealthSummary` functions.
+
+|Property|Type|Values|Comments|
+|-|-|-|-|
+|code|string|-|A 4 character alphanumeric string.|
+|expiresAt|Date|-|An expiration date .|
+|tries|number|-|The amount of REMAINING tries to request a health summary using this share code.|
+
 #### users/$userId$/symptomScores/$symptomScoreId$
 
 Only users with a `patient` role assigned have values in this collection.
@@ -802,7 +814,9 @@ None.
 
 #### Security
 
-This function may be called by admins (for any patient), owners/clinicians (for patients of the same organization), or patients (for themselves).
+This function may be called by admins (for any patient), owners/clinicians (for patients of the same organization), or patients (for themselves). 
+
+Additionally, unauthenticated users can request a health summary using a `shareCodeId` and `shareCode`. A share code expires after 5 minutes and you may only attempt to request a health summary 3 times with one given `shareCodeId`.
 
 #### Input
 
@@ -811,6 +825,8 @@ This function may be called by admins (for any patient), owners/clinicians (for 
 |userId|string|-|The patient's user id. Needs to be specified, even if a patient is requesting the health summary for themselves.|
 |language|optional string|e.g. 'en-US'|See [`LocalizedText`](#localizedtext) for specification.|
 |weightUnit|optional string|e.g. '[lb_av]'|A loinc code for the weight unit to be used during generation of the health summary PDF|
+|shareCode|optional string|-|A 4 character alphanumeric code.|
+|shareCodeId|optional string|-|An id identifying the `shareCode`.|
 
 #### Output
 
@@ -843,6 +859,28 @@ If a notification token could not be generated on the device (e.g. due to missin
 #### Output
 
 None.
+
+### shareHealthSummary
+
+`shareHealthSummary` creates a share code for an unauthenticated user to export a health summary using alternative credentials.
+
+#### Security
+
+This function may be called by admins (for any patient), owners/clinicians (for patients of the same organization), or patients (for themselves).
+
+#### Input
+
+|Property|Type|Values|Comments|
+|-|-|-|-|
+|userId|optional string|-|The patient's user id. If not provided or null, the requesting user's userId is used instead.|
+
+#### Output
+
+|Property|Type|Values|Comments|
+|-|-|-|-|
+|code|string|-|A 4 character alphanumeric code. It is only checked case-insensitively, so you may change its casing when displaying it to the user.|
+|expiresAt|Date|-|The date the share code expires at. Exporting a health summary with an expired share code will fail. Currently, the expiration date is 5 minutes after requesting the share code.|
+|url|string|-|A url directing at the web frontend to display the health summary that requires input of the code (e.g. to be used for displaying it in the app).|
 
 ### unregisterDevice
 

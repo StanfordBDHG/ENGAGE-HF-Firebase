@@ -80,7 +80,7 @@ export class EmulatorTestEnvironment {
   async call<Input, Output>(
     func: CallableFunction<Input, Output>,
     input: Input,
-    auth: { uid: string; token?: object },
+    auth: { uid?: string; token?: object },
   ): Promise<Output> {
     const wrapped = this.wrapper.wrap(func)
     return wrapped({

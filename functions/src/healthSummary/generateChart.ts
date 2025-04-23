@@ -59,15 +59,20 @@ export function generateChartSvg(
   const yAxisExtent = d3.extent(data, (d) => d.value) as [number, number]
   const yAxisExtentMin = Math.min(yAxisExtent[0], baseline ?? yAxisExtent[0])
   const yAxisExtentMax = Math.max(yAxisExtent[1], baseline ?? yAxisExtent[1])
-  const yAxisExtentSize = yAxisExtentMax - yAxisExtentMin
+  const yAxisExtentAddition = Math.max(yAxisExtentMax - yAxisExtentMin, 4) * 0.2
   const yAxisScale = d3
     .scaleLinear()
     .domain([
-      yAxisExtentMin - yAxisExtentSize * 0.2,
-      yAxisExtentMax + yAxisExtentSize * 0.2,
+      yAxisExtentMin - yAxisExtentAddition,
+      yAxisExtentMax + yAxisExtentAddition,
     ])
     .range([innerHeight, 0])
-  const yAxis = d3.axisLeft(yAxisScale).ticks(5).tickSize(-innerWidth)
+  const yTicks = yAxisScale.ticks(5).filter((tick) => Number.isInteger(tick))
+  const yAxis = d3
+    .axisLeft(yAxisScale)
+    .tickValues(yTicks)
+    .tickFormat(d3.format('~d'))
+    .tickSize(-innerWidth)
   svg
     .append('g')
     .attr('class', 'y axis')

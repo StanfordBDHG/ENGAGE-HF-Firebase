@@ -22,6 +22,7 @@ import {
   userDeviceConverter,
   userMedicationRecommendationConverter,
   userMessageConverter,
+  userShareCodeConverter,
   videoConverter,
   videoSectionConverter,
   type UserObservationCollection,
@@ -270,6 +271,14 @@ export class CollectionsService {
       .withConverter(
         new DatabaseConverter(fhirQuestionnaireResponseConverter.value),
       )
+  }
+
+  userShareCodes(userId: string) {
+    return this.firestore
+      .collection('users')
+      .doc(userId)
+      .collection('shareCodes')
+      .withConverter(new DatabaseConverter(userShareCodeConverter.value))
   }
 
   userSymptomScores(userId: string) {
