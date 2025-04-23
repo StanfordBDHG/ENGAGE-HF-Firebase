@@ -207,7 +207,7 @@ export function healthSummaryLocalizations(languages: string[]) {
         en: 'Quality of Life',
       }),
       symptomFrequencyScoreHeader: localize({
-        en: 'Heart Failure Symptoms',
+        en: 'Symptom Frequency',
       }),
       dizzinessScoreHeader: localize({
         en: 'Dizziness',
