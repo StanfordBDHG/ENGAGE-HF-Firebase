@@ -11,25 +11,23 @@ import { Lazy, User, type UserType } from '@stanfordbdhg/engagehf-models'
 import { expect } from 'chai'
 import admin from 'firebase-admin'
 import {
-  DocumentData,
-  DocumentReference,
+  type DocumentData,
+  type DocumentReference,
   type DocumentSnapshot,
   Timestamp,
 } from 'firebase-admin/firestore'
-import { CloudFunction, type Change } from 'firebase-functions'
+import { type CloudFunction, type Change } from 'firebase-functions'
+import { type FirestoreEvent } from 'firebase-functions/firestore'
 import {
   type CallableFunction,
   type CallableRequest,
 } from 'firebase-functions/v2/https'
 import firebaseFunctionsTest from 'firebase-functions-test'
+import { type DeepPartial } from 'firebase-functions-test/lib/cloudevent/types.js'
 import { CollectionsService } from '../../services/database/collections.js'
 import { getServiceFactory } from '../../services/factory/getServiceFactory.js'
 import { type ServiceFactory } from '../../services/factory/serviceFactory.js'
 import { TestFlags } from '../testFlags.js'
-import { onUserBodyWeightObservationWritten } from '../../functions/onUserDocumentWritten.js'
-import { CloudEvent } from 'firebase-admin/eventarc'
-import { FirestoreEvent } from 'firebase-functions/firestore'
-import { DeepPartial } from 'firebase-functions-test/lib/cloudevent/types.js'
 
 export function describeWithEmulators(
   title: string,

@@ -11,15 +11,15 @@ import {
   FHIRObservation,
   LoincCode,
   QuantityUnit,
-  UserMessage,
+  type UserMessage,
   UserMessageType,
   UserType,
   UserObservationCollection,
   fhirObservationConverter,
 } from '@stanfordbdhg/engagehf-models'
 import { expect } from 'chai'
-import { describeWithEmulators } from '../tests/functions/testEnvironment.js'
 import { onUserBodyWeightObservationWritten } from './onUserDocumentWritten.js'
+import { describeWithEmulators } from '../tests/functions/testEnvironment.js'
 
 describeWithEmulators('onUserDocumentWritten.ts', (env) => {
   describe('onUserBodyWeightObservationWritten', () => {
@@ -83,7 +83,7 @@ describeWithEmulators('onUserDocumentWritten.ts', (env) => {
 
       const messages0 = await env.collections.userMessages(patientId).get()
       expect(messages0.docs.length).to.equal(1)
-      const message0 = messages0.docs[0].data() as UserMessage
+      const message0 = messages0.docs[0].data()
       expect(message0).to.exist
       expect(message0.type).to.equal(UserMessageType.weightGain)
       expect(message0.completionDate).to.not.exist
@@ -109,7 +109,7 @@ describeWithEmulators('onUserDocumentWritten.ts', (env) => {
 
       const messages1 = await env.collections.userMessages(patientId).get()
       expect(messages1.docs.length).to.equal(1)
-      const message1 = messages1.docs[0].data() as UserMessage
+      const message1 = messages1.docs[0].data()
       expect(message1).to.exist
       expect(message1.type).to.equal(UserMessageType.weightGain)
       expect(message1.creationDate.toISOString()).to.equal(
@@ -138,7 +138,7 @@ describeWithEmulators('onUserDocumentWritten.ts', (env) => {
 
       const messages2 = await env.collections.userMessages(patientId).get()
       expect(messages2.docs.length).to.equal(1)
-      const message2 = messages2.docs[0].data() as UserMessage
+      const message2 = messages2.docs[0].data()
       expect(message2.completionDate).to.exist
     })
   })
