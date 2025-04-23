@@ -26,6 +26,7 @@ import {
 } from '@stanfordbdhg/engagehf-models'
 import { type FHIRUsageContext } from '@stanfordbdhg/engagehf-models/lib/fhir/baseTypes/fhirUsageContext'
 
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-parameters
 export abstract class QuestionnaireFactory<Input> {
   // Abstract functions
 
