@@ -7,9 +7,9 @@
 //
 
 import {
-  FHIRQuestionnaireResponse,
-  Observation,
-  SymptomScore,
+  type FHIRQuestionnaireResponse,
+  type Observation,
+  type SymptomScore,
 } from '@stanfordbdhg/engagehf-models'
 
 export interface QuestionnaireResponse {

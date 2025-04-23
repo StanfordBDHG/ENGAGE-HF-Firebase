@@ -6,12 +6,12 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { FHIRQuestionnaireResponse } from '@stanfordbdhg/engagehf-models'
+import { type FHIRQuestionnaireResponse } from '@stanfordbdhg/engagehf-models'
 import {
-  QuestionnaireResponse,
-  QuestionnaireResponseService,
+  type QuestionnaireResponse,
+  type QuestionnaireResponseService,
 } from './questionnaireResponseService.js'
-import { SymptomScoreCalculator } from './symptomScore/symptomScoreCalculator.js'
+import { type SymptomScoreCalculator } from './symptomScore/symptomScoreCalculator.js'
 
 export class DefaultQuestionnaireResponseService
   implements QuestionnaireResponseService
@@ -28,6 +28,7 @@ export class DefaultQuestionnaireResponseService
 
   // Methods
 
+  // eslint-disable-next-line @typescript-eslint/require-await
   async extract(
     response: FHIRQuestionnaireResponse,
   ): Promise<QuestionnaireResponse> {

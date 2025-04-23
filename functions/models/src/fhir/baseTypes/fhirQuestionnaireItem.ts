@@ -7,14 +7,14 @@
 //
 
 import { z } from 'zod'
-import { FHIRCoding, fhirCodingConverter } from './fhirCoding.js'
+import { fhirCodingConverter } from './fhirCoding.js'
 import { fhirExtensionConverter } from './fhirElement.js'
+import { fhirQuantityConverter } from './fhirQuantity.js'
+import { fhirReferenceConverter } from './fhirReference.js'
+import { dateConverter } from '../../helpers/dateConverter.js'
 import { Lazy } from '../../helpers/lazy.js'
 import { optionalish } from '../../helpers/optionalish.js'
 import { SchemaConverter } from '../../helpers/schemaConverter.js'
-import { FHIRQuantity, fhirQuantityConverter } from './fhirQuantity.js'
-import { FHIRReference, fhirReferenceConverter } from './fhirReference.js'
-import { dateConverter } from '../../helpers/dateConverter.js'
 
 export enum FHIRQuestionnaireItemType {
   group = 'group',
@@ -154,12 +154,8 @@ const fhirQuestionnaireItemBaseConverter = new Lazy(
           object.enableWhen?.map((option) =>
             fhirQuestionnaireItemEnableWhenConverter.encode(option),
           ) ?? null,
-        enableBehavior:
-          object.enableBehavior !== undefined ? object.enableBehavior : null,
-        extension:
-          object.extension ?
-            object.extension.map(fhirExtensionConverter.encode)
-          : null,
+        enableBehavior: object.enableBehavior ?? null,
+        extension: object.extension?.map(fhirExtensionConverter.encode) ?? null,
       }),
     }),
 )

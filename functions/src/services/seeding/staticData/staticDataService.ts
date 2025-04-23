@@ -10,7 +10,7 @@ import {
   CachingStrategy,
   type FHIRMedication,
   fhirMedicationConverter,
-  FHIRQuestionnaire,
+  type FHIRQuestionnaire,
   fhirQuestionnaireConverter,
   localizedTextConverter,
   type MedicationClass,
@@ -27,9 +27,9 @@ import {
 } from './rxNorm/rxNormService.js'
 import { type DatabaseService } from '../../database/databaseService.js'
 import { SeedingService } from '../seedingService.js'
+import { DataUpdateQuestionnaireFactory } from './questionnaireFactory/DataUpdateQuestionnaireFactory.js'
 import { KccqQuestionnaireFactory } from './questionnaireFactory/KccqQuestionnaireFactory.js'
 import { RegistrationQuestionnaireFactory } from './questionnaireFactory/RegistrationQuestionnaireFactory.js'
-import { DataUpdateQuestionnaireFactory } from './questionnaireFactory/DataUpdateQuestionnaireFactory.js'
 
 export class StaticDataService extends SeedingService {
   // Properties
@@ -165,14 +165,14 @@ export class StaticDataService extends SeedingService {
   ): Promise<Record<string, FHIRQuestionnaire>> {
     const questionnairesFile = 'questionnaires.json'
 
-    return await this.cache(
+    return this.cache(
       strategy,
       () =>
         this.readJSONRecord(
           questionnairesFile,
           fhirQuestionnaireConverter.value.schema,
         ),
-      async () => await this.generateQuestionnaires(),
+      async () => this.generateQuestionnaires(),
       (result) =>
         this.writeJSON(
           'questionnaires.json',
@@ -194,19 +194,23 @@ export class StaticDataService extends SeedingService {
     )
 
     return {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       [QuestionnaireReference.kccq_en_US.split('/').at(-1)!]:
-        new KccqQuestionnaireFactory().create({}),
+        new KccqQuestionnaireFactory().create(),
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       [QuestionnaireReference.registration_en_US.split('/').at(-1)!]:
         new RegistrationQuestionnaireFactory().create({
           medications,
           drugs,
         }),
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       [QuestionnaireReference.dataUpdate_en_US.split('/').at(-1)!]:
         new DataUpdateQuestionnaireFactory().create({
           medications,
           drugs,
           isPostVisit: false,
         }),
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       [QuestionnaireReference.postVisit_en_US.split('/').at(-1)!]:
         new DataUpdateQuestionnaireFactory().create({
           medications,

@@ -6,25 +6,25 @@
 // SPDX-License-Identifier: MIT
 //
 
+import { randomUUID } from 'crypto'
 import {
   CodingSystem,
   compactMap,
-  FHIRExtension,
+  type FHIRExtension,
   FHIRExtensionUrl,
-  FHIRMedication,
+  type FHIRMedication,
   FHIRQuestionnaire,
-  FHIRQuestionnaireItem,
-  FHIRQuestionnaireItemAnswerOption,
-  FHIRQuestionnaireItemEnableBehavior,
-  FHIRQuestionnaireItemEnableWhen,
+  type FHIRQuestionnaireItem,
+  type FHIRQuestionnaireItemAnswerOption,
+  type FHIRQuestionnaireItemEnableBehavior,
+  type FHIRQuestionnaireItemEnableWhen,
   FHIRQuestionnaireItemEnableWhenOperator,
   FHIRQuestionnaireItemType,
   FHIRQuestionnairePublicationStatus,
   MedicationClassReference,
   QuantityUnit,
 } from '@stanfordbdhg/engagehf-models'
-import { FHIRUsageContext } from '@stanfordbdhg/engagehf-models/lib/fhir/baseTypes/fhirUsageContext'
-import { randomUUID } from 'crypto'
+import { type FHIRUsageContext } from '@stanfordbdhg/engagehf-models/lib/fhir/baseTypes/fhirUsageContext'
 
 export abstract class QuestionnaireFactory<Input> {
   // Abstract functions
@@ -33,16 +33,17 @@ export abstract class QuestionnaireFactory<Input> {
 
   // Helper functions - ENGAGE-HF specific
 
-  protected labInputPages(input: {}): FHIRQuestionnaireItem[] {
+  protected labInputPages(): FHIRQuestionnaireItem[] {
     return [
-      ...this.labInputPages({
-        linkId: randomUUID(),
-        text: 'Creatinine',
+      ...this.labInputPagesForValue({
+        linkId: 'creatinine',
+        title: 'Creatinine',
+        name: 'creatinine',
         description:
           'The creatinine level in your body helps understand how your liver handles the drugs you are taking.',
         unit: QuantityUnit.mg_dL,
       }),
-      ...this.labInputPages({
+      ...this.labInputPagesForValue({
         linkId: 'egfr',
         title: 'eGFR',
         name: 'eGFR',
@@ -52,16 +53,18 @@ export abstract class QuestionnaireFactory<Input> {
         minValue: 0,
         maxValue: 200,
       }),
-      ...this.labInputPages({
+      ...this.labInputPagesForValue({
         linkId: randomUUID(),
-        text: 'Potassium',
+        title: 'Potassium',
+        name: 'potassium',
         description:
           'The potassium level in your body helps understand how your liver handles the drugs you are taking.',
         unit: QuantityUnit.mEq_L,
       }),
-      ...this.labInputPages({
+      ...this.labInputPagesForValue({
         linkId: randomUUID(),
-        text: 'Dry Weight',
+        title: 'Dry Weight',
+        name: 'dry weight',
         description:
           'The dry weight is useful to set a baseline to check that your weight does not increase unnoticed.',
         unit: QuantityUnit.lbs,
@@ -194,15 +197,14 @@ export abstract class QuestionnaireFactory<Input> {
           id
         : undefined,
     )
-    const answers: {
+    const answers: Array<{
       id: string
       ingredient: FHIRMedication
       drug: FHIRMedication
       text: string
-    }[] = []
+    }> = []
     for (const ingredientId of ingredientIds) {
       const ingredient = input.medications[ingredientId]
-      if (ingredient === undefined) continue
       for (const [drugId, drug] of Object.entries(
         input.drugs[ingredientId] ?? {},
       )) {
@@ -448,11 +450,11 @@ export abstract class QuestionnaireFactory<Input> {
 
   protected valueSetAnswerOptions(input: {
     system?: string
-    values: {
+    values: Array<{
       id?: string
       code: string
       display: string
-    }[]
+    }>
   }): FHIRQuestionnaireItemAnswerOption[] {
     const system = input.system ?? `urn:uuid:${randomUUID()}`
     return input.values.map((option) => ({

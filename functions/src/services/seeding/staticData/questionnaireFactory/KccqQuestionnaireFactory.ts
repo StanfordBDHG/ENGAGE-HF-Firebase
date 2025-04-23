@@ -7,13 +7,14 @@
 //
 
 import {
-  FHIRQuestionnaire,
-  FHIRQuestionnaireItem,
+  type FHIRQuestionnaire,
+  type FHIRQuestionnaireItem,
 } from '@stanfordbdhg/engagehf-models'
 import { QuestionnaireFactory } from './QuestionnaireFactory.js'
 
-export class KccqQuestionnaireFactory extends QuestionnaireFactory<{}> {
-  create(input: {}): FHIRQuestionnaire {
+export class KccqQuestionnaireFactory extends QuestionnaireFactory<void> {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  create(): FHIRQuestionnaire {
     return this.questionnaire({
       id: '9528ccc2-d1be-4c4c-9c3c-19f78e51ec19',
       title: 'KCCQ-12',

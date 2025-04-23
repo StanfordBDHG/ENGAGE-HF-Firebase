@@ -6,12 +6,12 @@
 // SPDX-License-Identifier: MIT
 //
 
+import { randomUUID } from 'crypto'
 import {
-  FHIRMedication,
-  FHIRQuestionnaire,
+  type FHIRMedication,
+  type FHIRQuestionnaire,
 } from '@stanfordbdhg/engagehf-models'
 import { QuestionnaireFactory } from './QuestionnaireFactory.js'
-import { randomUUID } from 'crypto'
 
 interface RegistrationQuestionnaireFactoryInput {
   medications: Record<string, FHIRMedication>
@@ -50,7 +50,7 @@ export class RegistrationQuestionnaireFactory extends QuestionnaireFactory<Regis
             }),
           ],
         }),
-        ...this.labInputPages({}),
+        ...this.labInputPages(),
         ...this.medicationInputPages({
           medications: input.medications,
           drugs: input.drugs,

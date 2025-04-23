@@ -6,15 +6,12 @@
 // SPDX-License-Identifier: MIT
 //
 
+import { randomUUID } from 'crypto'
 import {
-  FHIRMedication,
-  FHIRQuestionnaire,
-  FHIRQuestionnaireItem,
-  MedicationClassReference,
-  QuantityUnit,
+  type FHIRMedication,
+  type FHIRQuestionnaire,
 } from '@stanfordbdhg/engagehf-models'
 import { QuestionnaireFactory } from './QuestionnaireFactory.js'
-import { randomUUID } from 'crypto'
 
 interface DataUpdateQuestionnaireFactoryInput {
   medications: Record<string, FHIRMedication>
@@ -30,7 +27,7 @@ export class DataUpdateQuestionnaireFactory extends QuestionnaireFactory<DataUpd
       id: randomUUID(),
       title: input.isPostVisit ? 'Post-Visit Survey' : 'Update Survey',
       item: [
-        ...this.labInputPages({}),
+        ...this.labInputPages(),
         ...this.medicationInputPages({
           medications: input.medications,
           drugs: input.drugs,
