@@ -31,7 +31,7 @@ describeWithEmulators('onUserDocumentWritten.ts', (env) => {
     const observations = Array.from({ length: 10 }).map((_, i) =>
       FHIRObservation.createSimple({
         id: i.toString(),
-        date: advanceDateByDays(date, -i - 1),
+        date: advanceDateByDays(date, -i - 3),
         value: 100.0,
         unit: QuantityUnit.lbs,
         code: LoincCode.bodyWeight,
@@ -64,7 +64,7 @@ describeWithEmulators('onUserDocumentWritten.ts', (env) => {
     it('creates message for high body weight, keeps it when still high and completes when it lowers again', async () => {
       const observation0 = FHIRObservation.createSimple({
         id: '100',
-        date: date,
+        date: advanceDateByDays(date, -2),
         value: 120.0,
         unit: QuantityUnit.lbs,
         code: LoincCode.bodyWeight,
@@ -90,7 +90,7 @@ describeWithEmulators('onUserDocumentWritten.ts', (env) => {
 
       const observation1 = FHIRObservation.createSimple({
         id: '101',
-        date: date,
+        date: advanceDateByDays(date, -1),
         value: 120.0,
         unit: QuantityUnit.lbs,
         code: LoincCode.bodyWeight,
