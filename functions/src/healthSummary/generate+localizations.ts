@@ -152,8 +152,8 @@ export const healthSummaryLocalization = {
     es: 'Calidad de vida',
   },
   symptomScoresTableSymptomFrequencyScoreHeader: {
-    en: 'Heart Failure Symptoms',
-    es: 'Síntomas',
+    en: 'Symptom Frequency',
+    es: 'Frecuencia',
   },
   symptomScoresTableDizzinessScoreHeader: {
     en: 'Dizziness',
