@@ -406,10 +406,11 @@ export class DebugDataService extends SeedingService {
   }
 
   async seedUserQuestionnaireResponses(userId: string, date: Date) {
-    const questionnaire = this.readJSONArray(
+    const questionnaire = this.readJSONRecord(
       '../questionnaires.json',
       fhirQuestionnaireConverter.value.schema,
-    ).at(0)
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    )[QuestionnaireReference.kccq_en_US.split('/').at(-1)!]
 
     // This is just a list of pseudo-random numbers that is used to generate
     // the different user collections
@@ -461,7 +462,7 @@ export class DebugDataService extends SeedingService {
 
     const values = chunks(randomNumbers, 13).map((chunk, index) =>
       FHIRQuestionnaireResponse.create({
-        questionnaire: questionnaire?.url ?? '',
+        questionnaire: questionnaire.url ?? '',
         questionnaireResponse: index.toString(),
         date: advanceDateByDays(date, -(index * 14) - 2),
         answer1a: Math.floor(1 + chunk[0] * 6),
