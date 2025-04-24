@@ -116,7 +116,7 @@ export enum DrugReference {
 }
 
 export enum QuestionnaireReference {
-  kccq_en_US = 'questionnaires/kccq_en_US',
+  kccq_en_US = 'questionnaires/0',
   registration_en_US = 'questionnaires/registration_en_US',
   dataUpdate_en_US = 'questionnaires/dataUpdate_en_US',
   postVisit_en_US = 'questionnaires/postVisit_en_US',
