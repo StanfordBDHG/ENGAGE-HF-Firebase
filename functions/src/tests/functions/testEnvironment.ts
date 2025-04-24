@@ -10,13 +10,20 @@ import http from 'http'
 import { Lazy, User, type UserType } from '@stanfordbdhg/engagehf-models'
 import { expect } from 'chai'
 import admin from 'firebase-admin'
-import { type DocumentSnapshot, Timestamp } from 'firebase-admin/firestore'
-import { type Change } from 'firebase-functions'
+import {
+  type DocumentData,
+  type DocumentReference,
+  type DocumentSnapshot,
+  Timestamp,
+} from 'firebase-admin/firestore'
+import { type CloudFunction, type Change } from 'firebase-functions'
+import { type FirestoreEvent } from 'firebase-functions/firestore'
 import {
   type CallableFunction,
   type CallableRequest,
 } from 'firebase-functions/v2/https'
 import firebaseFunctionsTest from 'firebase-functions-test'
+import { type DeepPartial } from 'firebase-functions-test/lib/cloudevent/types.js'
 import { CollectionsService } from '../../services/database/collections.js'
 import { getServiceFactory } from '../../services/factory/getServiceFactory.js'
 import { type ServiceFactory } from '../../services/factory/serviceFactory.js'
@@ -92,6 +99,40 @@ export class EmulatorTestEnvironment {
         },
       },
     } as unknown as CallableRequest<Input>)
+  }
+
+  async setWithTrigger<Model, Params>(
+    func: CloudFunction<FirestoreEvent<Change<DocumentSnapshot>, Params>>,
+    input: {
+      ref: DocumentReference<Model>
+      data: Model
+      params: Params
+    } & DeepPartial<FirestoreEvent<Change<DocumentSnapshot>, Params>>,
+  ) {
+    const wrapped = this.wrapper.wrap(func)
+    const before = input.ref.withConverter(null).get()
+    await input.ref.set(input.data)
+    const after = input.ref.withConverter(null).get()
+    await wrapped({
+      ...input,
+      data: this.wrapper.makeChange(before, after),
+    })
+  }
+
+  async trigger<Model, Params>(
+    func: CloudFunction<FirestoreEvent<Change<DocumentSnapshot>, Params>>,
+    input: {
+      before?: DocumentData
+      after?: DocumentData
+      ref: DocumentReference<Model>
+      params: Params
+    } & DeepPartial<FirestoreEvent<Change<DocumentSnapshot>, Params>>,
+  ) {
+    const wrapped = this.wrapper.wrap(func)
+    await wrapped({
+      ...input,
+      data: this.createChange(input.ref.path, input.before, input.after),
+    })
   }
 
   async cleanup() {
