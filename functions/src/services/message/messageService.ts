@@ -55,7 +55,7 @@ export interface MessageService {
     userId: string,
     type: UserMessageType,
     filter?: (message: UserMessage) => boolean,
-  ): Promise<void>
+  ): Promise<string[]>
 
   dismissMessage(
     userId: string,

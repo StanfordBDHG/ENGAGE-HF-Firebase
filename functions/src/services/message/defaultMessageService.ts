@@ -258,8 +258,8 @@ export class DefaultMessageService implements MessageService {
     userId: string,
     type: UserMessageType,
     filter?: (message: UserMessage) => boolean,
-  ) {
-    await this.databaseService.runTransaction(
+  ): Promise<string[]> {
+    return this.databaseService.runTransaction(
       async (collections, transaction) => {
         const messages = (
           await transaction.get(
@@ -277,6 +277,7 @@ export class DefaultMessageService implements MessageService {
         for (const message of messages) {
           this.updateCompletionDate(message.ref, transaction)
         }
+        return messages.map((message) => message.id)
       },
     )
   }
