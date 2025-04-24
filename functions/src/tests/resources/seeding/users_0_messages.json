@@ -70,7 +70,7 @@
     "description": {
       "en": "Complete your Symptom Survey for your care team."
     },
-    "action": "questionnaires/kccq_en_US",
+    "action": "questionnaires/0",
     "isDismissible": false,
     "reference": null
   },
