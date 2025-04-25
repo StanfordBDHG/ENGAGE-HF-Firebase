@@ -315,11 +315,11 @@ export class DatabasePatientService implements PatientService {
   async updateSymptomScore(
     userId: string,
     symptomScoreId: string,
-    symptomScore: SymptomScore | undefined,
+    symptomScore: SymptomScore | null,
   ): Promise<void> {
     return this.databaseService.runTransaction((collections, transaction) => {
       const ref = collections.userSymptomScores(userId).doc(symptomScoreId)
-      if (symptomScore) {
+      if (symptomScore !== null) {
         transaction.set(ref, symptomScore)
       } else {
         transaction.delete(ref)

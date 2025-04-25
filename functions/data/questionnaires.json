@@ -26,9 +26,7 @@
     "language": "en-US",
     "status": "active",
     "publisher": "Stanford Biodesign Digital Health",
-    "subjectType": [
-      "Patient"
-    ],
+    "subjectType": ["Patient"],
     "useContext": [
       {
         "code": {
@@ -1441,7 +1439,7 @@
     ]
   },
   "registration_en_US": {
-    "id": "e2b0c756-b321-481a-b14a-b839bfd7db4f",
+    "id": "registration_en_US",
     "extension": null,
     "resourceType": "Questionnaire",
     "meta": {
@@ -1467,9 +1465,7 @@
     "language": "en-US",
     "status": "active",
     "publisher": "Stanford Biodesign Digital Health",
-    "subjectType": [
-      "Patient"
-    ],
+    "subjectType": ["Patient"],
     "useContext": [],
     "contact": [
       {
@@ -1477,10 +1473,10 @@
         "telecom": null
       }
     ],
-    "url": "http://spezi.health/fhir/questionnaire/e2b0c756-b321-481a-b14a-b839bfd7db4f",
+    "url": "http://spezi.health/fhir/questionnaire/registration_en_US",
     "item": [
       {
-        "linkId": "fb224be6-9dcd-4c4b-b332-bd1a0a52b908",
+        "linkId": "5a59ffbf-0693-4689-8b65-01a40085b86c",
         "type": "display",
         "text": "Welcome to the ENGAGE-HF study! Please complete the following survey to help us understand your health and well-being.",
         "required": false,
@@ -1492,7 +1488,7 @@
         "item": null
       },
       {
-        "linkId": "738d2b56-420e-448d-9401-e3c4f7f14785",
+        "linkId": "personal-information-page",
         "type": "group",
         "text": "Personal information",
         "required": false,
@@ -1525,7 +1521,7 @@
         ],
         "item": [
           {
-            "linkId": "7c26b294-8c78-415b-9bc1-3d5ae57421c9",
+            "linkId": "personal-information-description",
             "type": "display",
             "text": "Please provide the following information to help us understand your health and well-being.",
             "required": false,
@@ -1537,7 +1533,7 @@
             "item": null
           },
           {
-            "linkId": "9dd07684-2b26-461f-8678-8010e62c0e17",
+            "linkId": "date-of-birth",
             "type": "date",
             "text": "Date of Birth",
             "required": true,
@@ -1549,7 +1545,7 @@
             "item": null
           },
           {
-            "linkId": "c07a9372-29f9-4f01-950e-eb2446d9fc51",
+            "linkId": "sex",
             "type": "choice",
             "text": "Select your sex:",
             "required": true,
@@ -1557,9 +1553,9 @@
             "answerOption": [
               {
                 "valueCoding": {
-                  "id": "5e2f4325-87f2-4be8-8dec-adb546b8d459",
+                  "id": "male",
                   "extension": null,
-                  "system": "urn:uuid:c3d1a1ce-9fbd-4c69-862e-03dcb704944d",
+                  "system": "engage-hf-sex",
                   "version": null,
                   "code": "male",
                   "display": "Male",
@@ -1568,9 +1564,9 @@
               },
               {
                 "valueCoding": {
-                  "id": "e5ab7ea6-dc6e-455a-9105-13e478bd9832",
+                  "id": "female",
                   "extension": null,
-                  "system": "urn:uuid:c3d1a1ce-9fbd-4c69-862e-03dcb704944d",
+                  "system": "engage-hf-sex",
                   "version": null,
                   "code": "female",
                   "display": "Female",
@@ -1579,9 +1575,9 @@
               },
               {
                 "valueCoding": {
-                  "id": "761d5437-da53-433c-9510-bcfc6ae5e4e7",
+                  "id": "other",
                   "extension": null,
-                  "system": "urn:uuid:c3d1a1ce-9fbd-4c69-862e-03dcb704944d",
+                  "system": "engage-hf-sex",
                   "version": null,
                   "code": "other",
                   "display": "Other",
@@ -1907,7 +1903,7 @@
         ]
       },
       {
-        "linkId": "87583287-5199-43a6-8922-1851272b8b75-exists",
+        "linkId": "71ebadc6-ca37-4225-b35e-76a511853193-exists",
         "type": "group",
         "text": "Potassium",
         "required": false,
@@ -1940,7 +1936,7 @@
         ],
         "item": [
           {
-            "linkId": "87583287-5199-43a6-8922-1851272b8b75-exists-description",
+            "linkId": "71ebadc6-ca37-4225-b35e-76a511853193-exists-description",
             "type": "display",
             "text": "The potassium level in your body helps understand how your liver handles the drugs you are taking.",
             "required": false,
@@ -1952,7 +1948,7 @@
             "item": null
           },
           {
-            "linkId": "87583287-5199-43a6-8922-1851272b8b75-exists",
+            "linkId": "71ebadc6-ca37-4225-b35e-76a511853193-exists",
             "type": "boolean",
             "text": "Have you recently received a new potassium value?",
             "required": true,
@@ -1966,7 +1962,7 @@
         ]
       },
       {
-        "linkId": "87583287-5199-43a6-8922-1851272b8b75-page1",
+        "linkId": "71ebadc6-ca37-4225-b35e-76a511853193-page1",
         "type": "group",
         "text": "Potassium",
         "required": false,
@@ -1974,7 +1970,7 @@
         "answerOption": null,
         "enableWhen": [
           {
-            "question": "87583287-5199-43a6-8922-1851272b8b75-exists",
+            "question": "71ebadc6-ca37-4225-b35e-76a511853193-exists",
             "operator": "=",
             "answerBoolean": true,
             "answerDecimal": null,
@@ -2013,7 +2009,7 @@
         ],
         "item": [
           {
-            "linkId": "87583287-5199-43a6-8922-1851272b8b75-value-description",
+            "linkId": "71ebadc6-ca37-4225-b35e-76a511853193-value-description",
             "type": "display",
             "text": "The potassium level in your body helps understand how your liver handles the drugs you are taking.",
             "required": false,
@@ -2025,7 +2021,7 @@
             "item": null
           },
           {
-            "linkId": "87583287-5199-43a6-8922-1851272b8b75-value",
+            "linkId": "71ebadc6-ca37-4225-b35e-76a511853193-value",
             "type": "decimal",
             "text": "Potassium (mEq/L):",
             "required": true,
@@ -2037,7 +2033,7 @@
             "item": null
           },
           {
-            "linkId": "87583287-5199-43a6-8922-1851272b8b75-date",
+            "linkId": "71ebadc6-ca37-4225-b35e-76a511853193-date",
             "type": "date",
             "text": "Date:",
             "required": true,
@@ -2051,7 +2047,7 @@
         ]
       },
       {
-        "linkId": "44afc6d0-20be-45d3-8172-7950567383c2-exists",
+        "linkId": "ef887406-06e4-440f-a6f2-5f2e7d587c1f-exists",
         "type": "group",
         "text": "Dry Weight",
         "required": false,
@@ -2084,7 +2080,7 @@
         ],
         "item": [
           {
-            "linkId": "44afc6d0-20be-45d3-8172-7950567383c2-exists-description",
+            "linkId": "ef887406-06e4-440f-a6f2-5f2e7d587c1f-exists-description",
             "type": "display",
             "text": "The dry weight is useful to set a baseline to check that your weight does not increase unnoticed.",
             "required": false,
@@ -2096,7 +2092,7 @@
             "item": null
           },
           {
-            "linkId": "44afc6d0-20be-45d3-8172-7950567383c2-exists",
+            "linkId": "ef887406-06e4-440f-a6f2-5f2e7d587c1f-exists",
             "type": "boolean",
             "text": "Have you recently received a new dry weight value?",
             "required": true,
@@ -2110,7 +2106,7 @@
         ]
       },
       {
-        "linkId": "44afc6d0-20be-45d3-8172-7950567383c2-page1",
+        "linkId": "ef887406-06e4-440f-a6f2-5f2e7d587c1f-page1",
         "type": "group",
         "text": "Dry Weight",
         "required": false,
@@ -2118,7 +2114,7 @@
         "answerOption": null,
         "enableWhen": [
           {
-            "question": "44afc6d0-20be-45d3-8172-7950567383c2-exists",
+            "question": "ef887406-06e4-440f-a6f2-5f2e7d587c1f-exists",
             "operator": "=",
             "answerBoolean": true,
             "answerDecimal": null,
@@ -2157,7 +2153,7 @@
         ],
         "item": [
           {
-            "linkId": "44afc6d0-20be-45d3-8172-7950567383c2-value-description",
+            "linkId": "ef887406-06e4-440f-a6f2-5f2e7d587c1f-value-description",
             "type": "display",
             "text": "The dry weight is useful to set a baseline to check that your weight does not increase unnoticed.",
             "required": false,
@@ -2169,7 +2165,7 @@
             "item": null
           },
           {
-            "linkId": "44afc6d0-20be-45d3-8172-7950567383c2-value",
+            "linkId": "ef887406-06e4-440f-a6f2-5f2e7d587c1f-value",
             "type": "decimal",
             "text": "Dry Weight (lbs):",
             "required": true,
@@ -2181,7 +2177,7 @@
             "item": null
           },
           {
-            "linkId": "44afc6d0-20be-45d3-8172-7950567383c2-date",
+            "linkId": "ef887406-06e4-440f-a6f2-5f2e7d587c1f-date",
             "type": "date",
             "text": "Date:",
             "required": true,
@@ -4126,7 +4122,7 @@
     ]
   },
   "dataUpdate_en_US": {
-    "id": "ef392899-0af7-4dd5-ac4d-34a49db9d4c2",
+    "id": "7e73ebd1-4947-4845-81c8-ed6c6f4c0c08",
     "extension": null,
     "resourceType": "Questionnaire",
     "meta": {
@@ -4152,9 +4148,7 @@
     "language": "en-US",
     "status": "active",
     "publisher": "Stanford Biodesign Digital Health",
-    "subjectType": [
-      "Patient"
-    ],
+    "subjectType": ["Patient"],
     "useContext": [],
     "contact": [
       {
@@ -4162,7 +4156,7 @@
         "telecom": null
       }
     ],
-    "url": "http://spezi.health/fhir/questionnaire/ef392899-0af7-4dd5-ac4d-34a49db9d4c2",
+    "url": "http://spezi.health/fhir/questionnaire/7e73ebd1-4947-4845-81c8-ed6c6f4c0c08",
     "item": [
       {
         "linkId": "creatinine-exists",
@@ -4453,7 +4447,7 @@
         ]
       },
       {
-        "linkId": "3dd411f9-2f03-476b-8a0d-9f2ea610a19a-exists",
+        "linkId": "6342d1b0-c3b5-4c5a-90e0-5699d708c0fe-exists",
         "type": "group",
         "text": "Potassium",
         "required": false,
@@ -4486,7 +4480,7 @@
         ],
         "item": [
           {
-            "linkId": "3dd411f9-2f03-476b-8a0d-9f2ea610a19a-exists-description",
+            "linkId": "6342d1b0-c3b5-4c5a-90e0-5699d708c0fe-exists-description",
             "type": "display",
             "text": "The potassium level in your body helps understand how your liver handles the drugs you are taking.",
             "required": false,
@@ -4498,7 +4492,7 @@
             "item": null
           },
           {
-            "linkId": "3dd411f9-2f03-476b-8a0d-9f2ea610a19a-exists",
+            "linkId": "6342d1b0-c3b5-4c5a-90e0-5699d708c0fe-exists",
             "type": "boolean",
             "text": "Have you recently received a new potassium value?",
             "required": true,
@@ -4512,7 +4506,7 @@
         ]
       },
       {
-        "linkId": "3dd411f9-2f03-476b-8a0d-9f2ea610a19a-page1",
+        "linkId": "6342d1b0-c3b5-4c5a-90e0-5699d708c0fe-page1",
         "type": "group",
         "text": "Potassium",
         "required": false,
@@ -4520,7 +4514,7 @@
         "answerOption": null,
         "enableWhen": [
           {
-            "question": "3dd411f9-2f03-476b-8a0d-9f2ea610a19a-exists",
+            "question": "6342d1b0-c3b5-4c5a-90e0-5699d708c0fe-exists",
             "operator": "=",
             "answerBoolean": true,
             "answerDecimal": null,
@@ -4559,7 +4553,7 @@
         ],
         "item": [
           {
-            "linkId": "3dd411f9-2f03-476b-8a0d-9f2ea610a19a-value-description",
+            "linkId": "6342d1b0-c3b5-4c5a-90e0-5699d708c0fe-value-description",
             "type": "display",
             "text": "The potassium level in your body helps understand how your liver handles the drugs you are taking.",
             "required": false,
@@ -4571,7 +4565,7 @@
             "item": null
           },
           {
-            "linkId": "3dd411f9-2f03-476b-8a0d-9f2ea610a19a-value",
+            "linkId": "6342d1b0-c3b5-4c5a-90e0-5699d708c0fe-value",
             "type": "decimal",
             "text": "Potassium (mEq/L):",
             "required": true,
@@ -4583,7 +4577,7 @@
             "item": null
           },
           {
-            "linkId": "3dd411f9-2f03-476b-8a0d-9f2ea610a19a-date",
+            "linkId": "6342d1b0-c3b5-4c5a-90e0-5699d708c0fe-date",
             "type": "date",
             "text": "Date:",
             "required": true,
@@ -4597,7 +4591,7 @@
         ]
       },
       {
-        "linkId": "15b64ec8-79e0-406a-b553-c96d916fe66b-exists",
+        "linkId": "7a1900b1-48e3-4b3a-a5eb-18e72630752e-exists",
         "type": "group",
         "text": "Dry Weight",
         "required": false,
@@ -4630,7 +4624,7 @@
         ],
         "item": [
           {
-            "linkId": "15b64ec8-79e0-406a-b553-c96d916fe66b-exists-description",
+            "linkId": "7a1900b1-48e3-4b3a-a5eb-18e72630752e-exists-description",
             "type": "display",
             "text": "The dry weight is useful to set a baseline to check that your weight does not increase unnoticed.",
             "required": false,
@@ -4642,7 +4636,7 @@
             "item": null
           },
           {
-            "linkId": "15b64ec8-79e0-406a-b553-c96d916fe66b-exists",
+            "linkId": "7a1900b1-48e3-4b3a-a5eb-18e72630752e-exists",
             "type": "boolean",
             "text": "Have you recently received a new dry weight value?",
             "required": true,
@@ -4656,7 +4650,7 @@
         ]
       },
       {
-        "linkId": "15b64ec8-79e0-406a-b553-c96d916fe66b-page1",
+        "linkId": "7a1900b1-48e3-4b3a-a5eb-18e72630752e-page1",
         "type": "group",
         "text": "Dry Weight",
         "required": false,
@@ -4664,7 +4658,7 @@
         "answerOption": null,
         "enableWhen": [
           {
-            "question": "15b64ec8-79e0-406a-b553-c96d916fe66b-exists",
+            "question": "7a1900b1-48e3-4b3a-a5eb-18e72630752e-exists",
             "operator": "=",
             "answerBoolean": true,
             "answerDecimal": null,
@@ -4703,7 +4697,7 @@
         ],
         "item": [
           {
-            "linkId": "15b64ec8-79e0-406a-b553-c96d916fe66b-value-description",
+            "linkId": "7a1900b1-48e3-4b3a-a5eb-18e72630752e-value-description",
             "type": "display",
             "text": "The dry weight is useful to set a baseline to check that your weight does not increase unnoticed.",
             "required": false,
@@ -4715,7 +4709,7 @@
             "item": null
           },
           {
-            "linkId": "15b64ec8-79e0-406a-b553-c96d916fe66b-value",
+            "linkId": "7a1900b1-48e3-4b3a-a5eb-18e72630752e-value",
             "type": "decimal",
             "text": "Dry Weight (lbs):",
             "required": true,
@@ -4727,7 +4721,7 @@
             "item": null
           },
           {
-            "linkId": "15b64ec8-79e0-406a-b553-c96d916fe66b-date",
+            "linkId": "7a1900b1-48e3-4b3a-a5eb-18e72630752e-date",
             "type": "date",
             "text": "Date:",
             "required": true,
@@ -6672,7 +6666,7 @@
     ]
   },
   "postVisit_en_US": {
-    "id": "b78b4de3-742a-4c6c-8b9d-76fed8b0e588",
+    "id": "6eb423ac-3344-4c4b-8f98-33e2916b0aca",
     "extension": null,
     "resourceType": "Questionnaire",
     "meta": {
@@ -6698,9 +6692,7 @@
     "language": "en-US",
     "status": "active",
     "publisher": "Stanford Biodesign Digital Health",
-    "subjectType": [
-      "Patient"
-    ],
+    "subjectType": ["Patient"],
     "useContext": [],
     "contact": [
       {
@@ -6708,7 +6700,7 @@
         "telecom": null
       }
     ],
-    "url": "http://spezi.health/fhir/questionnaire/b78b4de3-742a-4c6c-8b9d-76fed8b0e588",
+    "url": "http://spezi.health/fhir/questionnaire/6eb423ac-3344-4c4b-8f98-33e2916b0aca",
     "item": [
       {
         "linkId": "creatinine-exists",
@@ -6999,7 +6991,7 @@
         ]
       },
       {
-        "linkId": "fcec4e3c-3b82-4e37-9c7c-00474dc8870a-exists",
+        "linkId": "b7775de1-4dc7-4a07-b446-6aca76321fb4-exists",
         "type": "group",
         "text": "Potassium",
         "required": false,
@@ -7032,7 +7024,7 @@
         ],
         "item": [
           {
-            "linkId": "fcec4e3c-3b82-4e37-9c7c-00474dc8870a-exists-description",
+            "linkId": "b7775de1-4dc7-4a07-b446-6aca76321fb4-exists-description",
             "type": "display",
             "text": "The potassium level in your body helps understand how your liver handles the drugs you are taking.",
             "required": false,
@@ -7044,7 +7036,7 @@
             "item": null
           },
           {
-            "linkId": "fcec4e3c-3b82-4e37-9c7c-00474dc8870a-exists",
+            "linkId": "b7775de1-4dc7-4a07-b446-6aca76321fb4-exists",
             "type": "boolean",
             "text": "Have you recently received a new potassium value?",
             "required": true,
@@ -7058,7 +7050,7 @@
         ]
       },
       {
-        "linkId": "fcec4e3c-3b82-4e37-9c7c-00474dc8870a-page1",
+        "linkId": "b7775de1-4dc7-4a07-b446-6aca76321fb4-page1",
         "type": "group",
         "text": "Potassium",
         "required": false,
@@ -7066,7 +7058,7 @@
         "answerOption": null,
         "enableWhen": [
           {
-            "question": "fcec4e3c-3b82-4e37-9c7c-00474dc8870a-exists",
+            "question": "b7775de1-4dc7-4a07-b446-6aca76321fb4-exists",
             "operator": "=",
             "answerBoolean": true,
             "answerDecimal": null,
@@ -7105,7 +7097,7 @@
         ],
         "item": [
           {
-            "linkId": "fcec4e3c-3b82-4e37-9c7c-00474dc8870a-value-description",
+            "linkId": "b7775de1-4dc7-4a07-b446-6aca76321fb4-value-description",
             "type": "display",
             "text": "The potassium level in your body helps understand how your liver handles the drugs you are taking.",
             "required": false,
@@ -7117,7 +7109,7 @@
             "item": null
           },
           {
-            "linkId": "fcec4e3c-3b82-4e37-9c7c-00474dc8870a-value",
+            "linkId": "b7775de1-4dc7-4a07-b446-6aca76321fb4-value",
             "type": "decimal",
             "text": "Potassium (mEq/L):",
             "required": true,
@@ -7129,7 +7121,7 @@
             "item": null
           },
           {
-            "linkId": "fcec4e3c-3b82-4e37-9c7c-00474dc8870a-date",
+            "linkId": "b7775de1-4dc7-4a07-b446-6aca76321fb4-date",
             "type": "date",
             "text": "Date:",
             "required": true,
@@ -7143,7 +7135,7 @@
         ]
       },
       {
-        "linkId": "71c33e9c-4860-4e91-b36f-ffc4529b934f-exists",
+        "linkId": "422e07a0-e8a4-444e-b2b9-d734f166d177-exists",
         "type": "group",
         "text": "Dry Weight",
         "required": false,
@@ -7176,7 +7168,7 @@
         ],
         "item": [
           {
-            "linkId": "71c33e9c-4860-4e91-b36f-ffc4529b934f-exists-description",
+            "linkId": "422e07a0-e8a4-444e-b2b9-d734f166d177-exists-description",
             "type": "display",
             "text": "The dry weight is useful to set a baseline to check that your weight does not increase unnoticed.",
             "required": false,
@@ -7188,7 +7180,7 @@
             "item": null
           },
           {
-            "linkId": "71c33e9c-4860-4e91-b36f-ffc4529b934f-exists",
+            "linkId": "422e07a0-e8a4-444e-b2b9-d734f166d177-exists",
             "type": "boolean",
             "text": "Have you recently received a new dry weight value?",
             "required": true,
@@ -7202,7 +7194,7 @@
         ]
       },
       {
-        "linkId": "71c33e9c-4860-4e91-b36f-ffc4529b934f-page1",
+        "linkId": "422e07a0-e8a4-444e-b2b9-d734f166d177-page1",
         "type": "group",
         "text": "Dry Weight",
         "required": false,
@@ -7210,7 +7202,7 @@
         "answerOption": null,
         "enableWhen": [
           {
-            "question": "71c33e9c-4860-4e91-b36f-ffc4529b934f-exists",
+            "question": "422e07a0-e8a4-444e-b2b9-d734f166d177-exists",
             "operator": "=",
             "answerBoolean": true,
             "answerDecimal": null,
@@ -7249,7 +7241,7 @@
         ],
         "item": [
           {
-            "linkId": "71c33e9c-4860-4e91-b36f-ffc4529b934f-value-description",
+            "linkId": "422e07a0-e8a4-444e-b2b9-d734f166d177-value-description",
             "type": "display",
             "text": "The dry weight is useful to set a baseline to check that your weight does not increase unnoticed.",
             "required": false,
@@ -7261,7 +7253,7 @@
             "item": null
           },
           {
-            "linkId": "71c33e9c-4860-4e91-b36f-ffc4529b934f-value",
+            "linkId": "422e07a0-e8a4-444e-b2b9-d734f166d177-value",
             "type": "decimal",
             "text": "Dry Weight (lbs):",
             "required": true,
@@ -7273,7 +7265,7 @@
             "item": null
           },
           {
-            "linkId": "71c33e9c-4860-4e91-b36f-ffc4529b934f-date",
+            "linkId": "422e07a0-e8a4-444e-b2b9-d734f166d177-date",
             "type": "date",
             "text": "Date:",
             "required": true,

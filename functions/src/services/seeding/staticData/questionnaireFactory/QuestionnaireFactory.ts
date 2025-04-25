@@ -460,7 +460,7 @@ export abstract class QuestionnaireFactory<Input> {
     const system = input.system ?? `urn:uuid:${randomUUID()}`
     return input.values.map((option) => ({
       valueCoding: {
-        id: option.id ?? randomUUID(),
+        id: option.id ?? option.code,
         code: option.code,
         system: system,
         display: option.display,

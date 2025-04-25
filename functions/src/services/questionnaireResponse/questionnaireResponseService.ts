@@ -7,18 +7,61 @@
 //
 
 import {
+  Observation,
   type FHIRQuestionnaireResponse,
-  type Observation,
-  type SymptomScore,
 } from '@stanfordbdhg/engagehf-models'
+import { Document } from '../database/databaseService'
 
-export interface QuestionnaireResponse {
-  symptomScore: SymptomScore
-  creatinine: Observation | null
-  estimatedGlomerularFiltrationRate: Observation | null
-  potassium: Observation | null
+export interface QuestionnaireResponseMedication {
+  code: string
+  quantity: number
+  frequency: number
 }
 
-export interface QuestionnaireResponseService {
-  extract(response: FHIRQuestionnaireResponse): Promise<QuestionnaireResponse>
+export abstract class QuestionnaireResponseService {
+  // Methods
+
+  abstract handle(
+    userId: string,
+    response: Document<FHIRQuestionnaireResponse>,
+  ): Promise<boolean>
+
+  // Helpers - Personal information
+
+  protected async extractDateOfBirth(response: FHIRQuestionnaireResponse) {}
+  protected async extractSex(response: FHIRQuestionnaireResponse) {}
+
+  // Helpers - Lab values
+
+  protected extractCreatinine(
+    response: FHIRQuestionnaireResponse,
+  ): Observation | null {
+    return null
+  }
+
+  protected extractDryWeight(
+    response: FHIRQuestionnaireResponse,
+  ): Observation | null {
+    return null
+  }
+
+  protected extractEstimatedGlomerularFiltrationRate(
+    response: FHIRQuestionnaireResponse,
+  ): Observation | null {
+    return null
+  }
+
+  protected extractPotassium(
+    response: FHIRQuestionnaireResponse,
+  ): Observation | null {
+    return null
+  }
+
+  // Helpers - Medications
+
+  protected extractMedications(
+    response: FHIRQuestionnaireResponse,
+  ): QuestionnaireResponseMedication[] {
+    return []
+  }
 }

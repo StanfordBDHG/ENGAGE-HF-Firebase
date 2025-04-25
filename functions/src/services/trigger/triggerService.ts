@@ -101,7 +101,7 @@ export class TriggerService {
     await patientService.updateSymptomScore(
       userId,
       questionnaireResponseId,
-      extractedResponse?.symptomScore,
+      extractedResponse?.symptomScore ?? undefined,
     )
 
     // TODO: Handle remaining questionaire response data

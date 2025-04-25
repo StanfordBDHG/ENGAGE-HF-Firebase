@@ -97,7 +97,7 @@ export interface PatientService {
   updateSymptomScore(
     userId: string,
     symptomScoreId: string,
-    symptomScore: SymptomScore | undefined,
+    symptomScore: SymptomScore | null,
   ): Promise<void>
 
   // Share Code

@@ -352,7 +352,7 @@ export class MockPatientService implements PatientService {
   async updateSymptomScore(
     userId: string,
     symptomScoreId: string,
-    symptomScore: SymptomScore | undefined,
+    symptomScore: SymptomScore | null,
   ): Promise<void> {
     return
   }

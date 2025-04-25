@@ -35,6 +35,7 @@ import { logger } from 'firebase-functions'
 import { type CollectionsService } from '../../database/collections.js'
 import { type DatabaseService } from '../../database/databaseService.js'
 import { SeedingService } from '../seedingService.js'
+import { createKccqQuestionnaireResponse } from '../../questionnaireResponse/kccqQuestionnaireLinkIds.js'
 
 export class DebugDataService extends SeedingService {
   // Properties
@@ -461,7 +462,7 @@ export class DebugDataService extends SeedingService {
     ].map((n) => n / 100)
 
     const values = chunks(randomNumbers, 13).map((chunk, index) =>
-      FHIRQuestionnaireResponse.create({
+      createKccqQuestionnaireResponse({
         questionnaire: questionnaire.url ?? '',
         questionnaireResponse: index.toString(),
         date: advanceDateByDays(date, -(index * 14) - 2),

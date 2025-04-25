@@ -6,16 +6,13 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { FHIRQuestionnaireResponse } from '@stanfordbdhg/engagehf-models'
 import { expect } from 'chai'
-import { DefaultSymptomScoreCalculator } from './defaultSymptomScoreCalculator.js'
-import { type SymptomScoreCalculator } from './symptomScoreCalculator.js'
+import { SymptomScoreCalculator } from './symptomScoreCalculator.js'
 import { readCsv } from '../../../tests/helpers/csv.js'
 
 describe('DefaultSymptomScoreCalculator', () => {
   it('correctly computes symptom scores', () => {
-    const calculator: SymptomScoreCalculator =
-      new DefaultSymptomScoreCalculator()
+    const calculator: SymptomScoreCalculator = new SymptomScoreCalculator()
     readCsv('src/tests/resources/symptomScores.csv', 2268, (values, index) => {
       if (index === 0) return
       expect(values).to.have.length(18)
@@ -115,11 +112,7 @@ describe('DefaultSymptomScoreCalculator', () => {
       const answer8c = q8[values[17]]
       expect(answer8c, values[17] + ' - q8c').to.exist
 
-      const response = FHIRQuestionnaireResponse.create({
-        questionnaire:
-          'http://spezi.health/fhir/questionnaire/9528ccc2-d1be-4c4c-9c3c-19f78e51ec19',
-        questionnaireResponse: index.toString(),
-        date: new Date(),
+      const input = {
         answer1a,
         answer1b,
         answer1c,
@@ -133,12 +126,9 @@ describe('DefaultSymptomScoreCalculator', () => {
         answer8b,
         answer8c,
         answer9: (index % 6) - 1,
-      })
+      }
 
-      const score = calculator.calculate(response)
-
-      expect(score.questionnaireResponseId).to.equal(response.id)
-      expect(score.date).to.equal(response.authored)
+      const score = calculator.calculate(input)
 
       // In this test, we use approximations to compare the expected and actual values.
       // This is to avoid floating point precision issues. Therefore, we use a tolerance of 0.001,

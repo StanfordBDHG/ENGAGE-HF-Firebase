@@ -27,9 +27,9 @@ import {
 } from './rxNorm/rxNormService.js'
 import { type DatabaseService } from '../../database/databaseService.js'
 import { SeedingService } from '../seedingService.js'
-import { DataUpdateQuestionnaireFactory } from './questionnaireFactory/DataUpdateQuestionnaireFactory.js'
-import { KccqQuestionnaireFactory } from './questionnaireFactory/KccqQuestionnaireFactory.js'
-import { RegistrationQuestionnaireFactory } from './questionnaireFactory/RegistrationQuestionnaireFactory.js'
+import { DataUpdateQuestionnaireFactory } from './questionnaireFactory/dataUpdateQuestionnaireFactory.js'
+import { KccqQuestionnaireFactory } from './questionnaireFactory/kccqQuestionnaireFactory.js'
+import { RegistrationQuestionnaireFactory } from './questionnaireFactory/registrationQuestionnaireFactory.js'
 
 export class StaticDataService extends SeedingService {
   // Properties

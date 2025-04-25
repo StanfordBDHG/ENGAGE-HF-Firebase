@@ -92,7 +92,7 @@ describeWithEmulators('function: updateStaticData', (env) => {
 
 function simplify(data: unknown): unknown {
   return JSON.parse(
-    JSON.stringify(data, (key, value): unknown => {
+    JSON.stringify(data, (_, value): unknown => {
       if (value instanceof LocalizedText) {
         return value.content
       }

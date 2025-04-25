@@ -11,7 +11,7 @@ import {
   type FHIRMedication,
   type FHIRQuestionnaire,
 } from '@stanfordbdhg/engagehf-models'
-import { QuestionnaireFactory } from './QuestionnaireFactory.js'
+import { QuestionnaireFactory } from './questionnaireFactory.js'
 
 interface DataUpdateQuestionnaireFactoryInput {
   medications: Record<string, FHIRMedication>
