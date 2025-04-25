@@ -101,10 +101,10 @@ export class DefaultServiceFactory implements ServiceFactory {
     Flags.disableTwilio ?
       new MockPhoneService(this.databaseService.value)
     : new TwilioPhoneService({
-        accountSid: Env.TWILIO_ACCOUNT_SID,
-        authToken: Env.TWILIO_AUTH_TOKEN,
-        phoneNumber: Env.TWILIO_PHONE_NUMBER,
-        verifyServiceId: Env.TWILIO_VERIFY_SERVICE_ID,
+        accountSid: Env.twilioAccountSid,
+        authToken: Env.twilioAuthToken,
+        phoneNumber: Env.twilioPhoneNumber,
+        verifyServiceId: Env.twilioVerifiyServiceId,
       }),
   )
 
