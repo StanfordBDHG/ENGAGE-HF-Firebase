@@ -48,9 +48,7 @@ export class MockPatientService implements PatientService {
   ): Promise<Document<FHIRAppointment>[]> {
     return []
   }
-  async getAppointments(
-    userId: string,
-  ): Promise<Document<FHIRAppointment>[]> {
+  async getAppointments(userId: string): Promise<Document<FHIRAppointment>[]> {
     return []
   }
   async getNextAppointment(
@@ -101,7 +99,9 @@ export class MockPatientService implements PatientService {
   async updateMedicationRequests(
     userId: string,
     values: FHIRMedicationRequest[],
-  ): Promise<void> {}
+  ): Promise<void> {
+    return
+  }
 
   async getMedicationRecommendations(
     userId: string,
@@ -118,8 +118,8 @@ export class MockPatientService implements PatientService {
   async updateMedicationRecommendations(
     userId: string,
     recommendations: UserMedicationRecommendation[],
-  ): Promise<boolean> {
-    return false
+  ): Promise<void> {
+    return
   }
 
   // Methods - Observations

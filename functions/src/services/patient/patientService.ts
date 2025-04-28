@@ -56,7 +56,7 @@ export interface PatientService {
   updateMedicationRecommendations(
     userId: string,
     recommendations: UserMedicationRecommendation[],
-  ): Promise<boolean>
+  ): Promise<void>
 
   // Observations
 

@@ -67,9 +67,7 @@ export class DatabasePatientService implements PatientService {
     })
   }
 
-  async getAppointments(
-    userId: string,
-  ): Promise<Document<FHIRAppointment>[]> {
+  async getAppointments(userId: string): Promise<Document<FHIRAppointment>[]> {
     return this.databaseService.getQuery<FHIRAppointment>((collections) =>
       collections.userAppointments(userId),
     )
@@ -112,7 +110,40 @@ export class DatabasePatientService implements PatientService {
   async updateMedicationRequests(
     userId: string,
     values: FHIRMedicationRequest[],
-  ): Promise<void> {}
+  ): Promise<void> {
+    // TODO: Check this entire section!!!!!!!!
+    await this.databaseService.runTransaction(
+      async (collections, transaction) => {
+        const collection = collections.userMedicationRequests(userId)
+        const existingSnapshot = await transaction.get(collection)
+        const indicesToBeInserted = new Set<number>(
+          values.map((_, index) => index),
+        )
+        for (const existing of existingSnapshot.docs) {
+          const existingRequest = existing.data()
+
+          const newRequestIndex = values.findIndex(
+            (request) =>
+              request.medicationReference?.reference ===
+              existingRequest.medicationReference?.reference,
+          )
+
+          if (newRequestIndex < 0) {
+            transaction.delete(existing.ref)
+            continue
+          }
+          const newRequest = values[newRequestIndex]
+          indicesToBeInserted.delete(newRequestIndex)
+
+          if (!isDeepStrictEqual(newRequest, existingRequest))
+            transaction.set(existing.ref, newRequest)
+        }
+        indicesToBeInserted.forEach((newRequestIndex) => {
+          transaction.set(collection.doc(), values[newRequestIndex])
+        })
+      },
+    )
+  }
 
   async getMedicationRecommendations(
     userId: string,
@@ -137,8 +168,8 @@ export class DatabasePatientService implements PatientService {
   async updateMedicationRecommendations(
     userId: string,
     newRecommendations: UserMedicationRecommendation[],
-  ): Promise<boolean> {
-    return this.databaseService.runTransaction(
+  ): Promise<void> {
+    await this.databaseService.runTransaction(
       async (collections, transaction) => {
         const collection = collections.userMedicationRecommendations(userId)
         const existingSnapshot = await transaction.get(collection)
@@ -170,7 +201,6 @@ export class DatabasePatientService implements PatientService {
             newRecommendations[newRecommendationIndex],
           )
         })
-        return true
       },
     )
   }

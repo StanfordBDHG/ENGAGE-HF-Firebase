@@ -10,6 +10,7 @@ import {
   compact,
   FHIRQuestionnaireResponse,
   LoincCode,
+  Observation,
   UserObservationCollection,
 } from '@stanfordbdhg/engagehf-models'
 import { Document } from '../database/databaseService.js'
@@ -48,45 +49,54 @@ export class RegistrationQuestionnaireResponseService extends QuestionnaireRespo
       return false
     }
 
-    await this.patientService.createObservations(
-      userId,
-      compact([
-        mapNullable(
-          this.extractCreatinine(response.content),
-          (observation) => ({
-            observation,
-            loincCode: LoincCode.creatinine,
-            collection: UserObservationCollection.creatinine,
-          }),
-        ),
-        mapNullable(this.extractDryWeight(response.content), (observation) => ({
-          observation,
-          loincCode: LoincCode.bodyWeight,
-          collection: UserObservationCollection.dryWeight,
-        })),
-        mapNullable(
-          this.extractEstimatedGlomerularFiltrationRate(response.content),
-          (observation) => ({
-            observation,
-            loincCode: LoincCode.estimatedGlomerularFiltrationRate,
-            collection: UserObservationCollection.eGfr,
-          }),
-        ),
-        mapNullable(this.extractPotassium(response.content), (observation) => ({
-          observation,
-          loincCode: LoincCode.potassium,
-          collection: UserObservationCollection.potassium,
-        })),
-      ]),
-    )
+    this.patientService.updateMedicationRequests
+    const observationValues: {
+      observation: Observation
+      loincCode: LoincCode
+      collection: UserObservationCollection
+    }[] = []
+
+    const creatinine = this.extractCreatinine(response.content)
+    if (creatinine !== null) {
+      observationValues.push({
+        observation: creatinine,
+        loincCode: LoincCode.creatinine,
+        collection: UserObservationCollection.creatinine,
+      })
+    }
+
+    const dryWeight = this.extractDryWeight(response.content)
+    if (dryWeight !== null) {
+      observationValues.push({
+        observation: dryWeight,
+        loincCode: LoincCode.bodyWeight,
+        collection: UserObservationCollection.dryWeight,
+      })
+    }
+
+    const estimatedGlomerularFiltrationRate =
+      this.extractEstimatedGlomerularFiltrationRate(response.content)
+    if (estimatedGlomerularFiltrationRate !== null) {
+      observationValues.push({
+        observation: estimatedGlomerularFiltrationRate,
+        loincCode: LoincCode.estimatedGlomerularFiltrationRate,
+        collection: UserObservationCollection.eGfr,
+      })
+    }
+
+    const potassium = this.extractPotassium(response.content)
+    if (potassium !== null) {
+      observationValues.push({
+        observation: potassium,
+        loincCode: LoincCode.potassium,
+        collection: UserObservationCollection.potassium,
+      })
+    }
+
+    if (observationValues.length > 0) {
+      await this.patientService.createObservations(userId, observationValues)
+    }
+
     return true
   }
-}
-
-function mapNullable<T, U>(
-  value: T | null,
-  map: (value: T) => U,
-): U | undefined {
-  if (value === null) return undefined
-  return map(value)
 }
