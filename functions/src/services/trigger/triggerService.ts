@@ -88,6 +88,8 @@ export class TriggerService {
     )
 
     const patientService = this.factory.patient()
+    
+    /*
     const questionnaireResponseService = this.factory.questionnaireResponse()
 
     const extractedResponse =
@@ -103,6 +105,7 @@ export class TriggerService {
       questionnaireResponseId,
       extractedResponse?.symptomScore ?? undefined,
     )
+      */
 
     // TODO: Handle remaining questionaire response data
 
@@ -402,7 +405,7 @@ export class TriggerService {
       await patientService.updateSymptomScore(
         userId,
         symptomScore.id,
-        undefined,
+        null,
       )
     }
 

@@ -28,8 +28,6 @@ import { MockPhoneService } from '../message/phone/phoneService.mock.js'
 import { TwilioPhoneService } from '../message/phone/twilioPhoneService.js'
 import { DatabasePatientService } from '../patient/databasePatientService.js'
 import { type PatientService } from '../patient/patientService.js'
-import { DefaultQuestionnaireResponseService } from '../questionnaireResponse/kccqQuestionnaireResponseService.js'
-import { type QuestionnaireResponseService } from '../questionnaireResponse/questionnaireResponseService.js'
 import { RecommendationService } from '../recommendation/recommendationService.js'
 import { DebugDataService } from '../seeding/debugData/debugDataService.js'
 import { RxNormService } from '../seeding/staticData/rxNorm/rxNormService.js'
@@ -110,13 +108,6 @@ export class DefaultServiceFactory implements ServiceFactory {
       }),
   )
 
-  private readonly questionnaireResponseService = new Lazy(
-    () =>
-      new DefaultQuestionnaireResponseService(
-        this.symptomScoreCalculator.value,
-      ),
-  )
-
   private readonly recommendationService = new Lazy(
     () =>
       new RecommendationService(
@@ -186,10 +177,6 @@ export class DefaultServiceFactory implements ServiceFactory {
 
   recommendation(): RecommendationService {
     return this.recommendationService.value
-  }
-
-  questionnaireResponse(): QuestionnaireResponseService {
-    return this.questionnaireResponseService.value
   }
 
   // Methods - Trigger

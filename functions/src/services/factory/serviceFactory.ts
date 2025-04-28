@@ -38,7 +38,6 @@ export interface ServiceFactory {
   healthSummary(): HealthSummaryService
   patient(): PatientService
   recommendation(): RecommendationService
-  questionnaireResponse(): QuestionnaireResponseService
 
   // Trigger
 
