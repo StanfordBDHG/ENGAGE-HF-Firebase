@@ -24,14 +24,14 @@ export interface MedicationService {
 
   // Medication Classes
 
-  getMedicationClasses(): Promise<Array<Document<MedicationClass>>>
+  getMedicationClasses(): Promise<Document<MedicationClass>[]>
   getMedicationClass(
     medicationClassId: string,
   ): Promise<Document<MedicationClass> | undefined>
 
   // Medications
 
-  getMedications(): Promise<Array<Document<FHIRMedication>>>
+  getMedications(): Promise<Document<FHIRMedication>[]>
 
   getMedication(
     medicationId: string,
@@ -39,7 +39,7 @@ export interface MedicationService {
 
   // Drugs
 
-  getDrugs(medicationId: string): Promise<Array<Document<FHIRMedication>>>
+  getDrugs(medicationId: string): Promise<Document<FHIRMedication>[]>
 
   getDrug(
     medicationId: string,

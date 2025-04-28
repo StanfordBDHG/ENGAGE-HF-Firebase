@@ -23,7 +23,7 @@ export async function _updateStaticData(
   input: z.output<typeof updateStaticDataInputSchema>,
 ) {
   const service = factory.staticData()
-  const promises: Array<Promise<void>> = []
+  const promises: Promise<void>[] = []
   if (input.only.includes(StaticDataComponent.medicationClasses))
     promises.push(service.updateMedicationClasses(input.cachingStrategy))
   if (input.only.includes(StaticDataComponent.medications))

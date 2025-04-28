@@ -102,7 +102,7 @@ export class MockUserService implements UserService {
     return undefined
   }
 
-  async getOrganizations(): Promise<Array<Document<Organization>>> {
+  async getOrganizations(): Promise<Document<Organization>[]> {
     return []
   }
 
@@ -137,11 +137,11 @@ export class MockUserService implements UserService {
     return
   }
 
-  async getAllOwners(organizationId: string): Promise<Array<Document<User>>> {
+  async getAllOwners(organizationId: string): Promise<Document<User>[]> {
     return []
   }
 
-  async getAllPatients(): Promise<Array<Document<User>>> {
+  async getAllPatients(): Promise<Document<User>[]> {
     return []
   }
 

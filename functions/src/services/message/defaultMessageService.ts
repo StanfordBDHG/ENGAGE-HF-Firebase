@@ -383,7 +383,7 @@ export class DefaultMessageService implements MessageService {
 
   /// returns whether to save the new message or throw it away
   private handleOldMessages(
-    oldMessages: Array<QueryDocumentSnapshot<UserMessage>>,
+    oldMessages: QueryDocumentSnapshot<UserMessage>[],
     newMessage: UserMessage,
     transaction: FirebaseFirestore.Transaction,
   ): boolean {

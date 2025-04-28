@@ -198,12 +198,12 @@ export abstract class QuestionnaireFactory<Input> {
           id
         : undefined,
     )
-    const answers: Array<{
+    const answers: {
       id: string
       ingredient: FHIRMedication
       drug: FHIRMedication
       text: string
-    }> = []
+    }[] = []
     for (const ingredientId of ingredientIds) {
       const ingredient = input.medications[ingredientId]
       for (const [drugId, drug] of Object.entries(
@@ -451,11 +451,11 @@ export abstract class QuestionnaireFactory<Input> {
 
   protected valueSetAnswerOptions(input: {
     system?: string
-    values: Array<{
+    values: {
       id?: string
       code: string
       display: string
-    }>
+    }[]
   }): FHIRQuestionnaireItemAnswerOption[] {
     const system = input.system ?? `urn:uuid:${randomUUID()}`
     return input.values.map((option) => ({

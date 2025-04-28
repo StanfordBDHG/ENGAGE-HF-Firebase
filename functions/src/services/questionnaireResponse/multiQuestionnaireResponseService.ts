@@ -9,18 +9,17 @@
 import { FHIRQuestionnaireResponse } from '@stanfordbdhg/engagehf-models'
 import { Document } from '../database/databaseService.js'
 import { QuestionnaireResponseService } from './questionnaireResponseService.js'
-import { PatientService } from '../patient/patientService.js'
 
-export class DataUpdateQuestionnaireResponseService extends QuestionnaireResponseService {
+export class MultiQuestionnaireResponseService extends QuestionnaireResponseService {
   // Properties
 
-  private readonly patientService: PatientService
+  private readonly components: QuestionnaireResponseService[]
 
   // Constructor
 
-  constructor(patientService: PatientService) {
+  constructor(components: QuestionnaireResponseService[]) {
     super()
-    this.patientService = patientService
+    this.components = components
   }
 
   // Methods
@@ -29,6 +28,10 @@ export class DataUpdateQuestionnaireResponseService extends QuestionnaireRespons
     userId: string,
     response: Document<FHIRQuestionnaireResponse>,
   ): Promise<boolean> {
+    for (const components of this.components) {
+      const handled = await components.handle(userId, response)
+      if (handled) return true
+    }
     return false
   }
 }

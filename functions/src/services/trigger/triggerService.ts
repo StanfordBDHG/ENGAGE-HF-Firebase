@@ -648,7 +648,7 @@ export class TriggerService {
   }
 
   private async addDailyReminderMessages(options: {
-    patients: Array<Document<User>>
+    patients: Document<User>[]
     messageService: MessageService
     now: Date
   }) {
@@ -712,7 +712,7 @@ export class TriggerService {
   }
 
   private async addInactivityReminderMessages(options: {
-    patients: Array<Document<User>>
+    patients: Document<User>[]
     now: Date
     messageService: MessageService
     userService: UserService

@@ -25,7 +25,7 @@ export interface DatabaseService {
     query: (
       collectionsService: CollectionsService,
     ) => FirebaseFirestore.Query<T>,
-  ): Promise<Array<Document<T>>>
+  ): Promise<Document<T>[]>
 
   getDocument<T>(
     reference: (

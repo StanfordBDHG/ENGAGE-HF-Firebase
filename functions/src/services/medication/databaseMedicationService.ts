@@ -74,7 +74,7 @@ export class DatabaseMedicationService implements MedicationService {
 
   // Methods - Medication Classes
 
-  async getMedicationClasses(): Promise<Array<Document<MedicationClass>>> {
+  async getMedicationClasses(): Promise<Document<MedicationClass>[]> {
     return this.databaseService.getQuery(
       (collections) => collections.medicationClasses,
     )
@@ -90,7 +90,7 @@ export class DatabaseMedicationService implements MedicationService {
 
   // Methods - Medications
 
-  async getMedications(): Promise<Array<Document<FHIRMedication>>> {
+  async getMedications(): Promise<Document<FHIRMedication>[]> {
     return this.databaseService.getQuery(
       (collections) => collections.medications,
     )
@@ -108,7 +108,7 @@ export class DatabaseMedicationService implements MedicationService {
 
   async getDrugs(
     medicationId: string,
-  ): Promise<Array<Document<FHIRMedication>>> {
+  ): Promise<Document<FHIRMedication>[]> {
     return this.databaseService.getQuery((collections) =>
       collections.drugs(medicationId),
     )

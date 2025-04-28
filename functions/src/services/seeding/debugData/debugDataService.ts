@@ -173,10 +173,10 @@ export class DebugDataService extends SeedingService {
 
   async seedClinicianMessages(
     userId: string,
-    patients: Array<{
+    patients: {
       id: string
       name: string | undefined
-    }>,
+    }[],
   ) {
     const values = patients.flatMap((patient) => [
       UserMessage.createInactiveForClinician({

@@ -36,7 +36,7 @@ export class FirestoreService implements DatabaseService {
     query: (
       collectionsService: CollectionsService,
     ) => FirebaseFirestore.Query<T>,
-  ): Promise<Array<Document<T>>> {
+  ): Promise<Document<T>[]> {
     const collection = await query(this.collectionsService.value).get()
     return collection.docs.map((doc) => ({
       id: doc.id,

@@ -16,6 +16,8 @@ import {
   type SymptomScore,
   type UserMedicationRecommendation,
   type UserShareCode,
+  UserObservationCollection,
+  LoincCode,
 } from '@stanfordbdhg/engagehf-models'
 import { type Document } from '../database/databaseService.js'
 
@@ -25,9 +27,9 @@ export interface PatientService {
   getEveryAppoinment(
     fromDate: Date,
     toDate: Date,
-  ): Promise<Array<Document<FHIRAppointment>>>
+  ): Promise<Document<FHIRAppointment>[]>
 
-  getAppointments(userId: string): Promise<Array<Document<FHIRAppointment>>>
+  getAppointments(userId: string): Promise<Document<FHIRAppointment>[]>
   getNextAppointment(
     userId: string,
   ): Promise<Document<FHIRAppointment> | undefined>
@@ -36,16 +38,21 @@ export interface PatientService {
 
   getContraindications(
     userId: string,
-  ): Promise<Array<Document<FHIRAllergyIntolerance>>>
+  ): Promise<Document<FHIRAllergyIntolerance>[]>
 
   // Medication Requests
 
-  getMedicationRecommendations(
-    userId: string,
-  ): Promise<Array<Document<UserMedicationRecommendation>>>
   getMedicationRequests(
     userId: string,
-  ): Promise<Array<Document<FHIRMedicationRequest>>>
+  ): Promise<Document<FHIRMedicationRequest>[]>
+  updateMedicationRequests(
+    userId: string,
+    values: FHIRMedicationRequest[],
+  ): Promise<void>
+
+  getMedicationRecommendations(
+    userId: string,
+  ): Promise<Document<UserMedicationRecommendation>[]>
   updateMedicationRecommendations(
     userId: string,
     recommendations: UserMedicationRecommendation[],
@@ -81,15 +88,24 @@ export interface PatientService {
     userId: string,
   ): Promise<Observation | undefined>
 
+  createObservations(
+    userId: string,
+    values: {
+      observation: Observation
+      loincCode: LoincCode
+      collection: UserObservationCollection
+    }[],
+  ): Promise<void>
+
   // Questionnaire Responses
 
   getQuestionnaireResponses(
     userId: string,
-  ): Promise<Array<Document<FHIRQuestionnaireResponse>>>
+  ): Promise<Document<FHIRQuestionnaireResponse>[]>
   getSymptomScores(
     userId: string,
     options?: { limit?: number },
-  ): Promise<Array<Document<SymptomScore>>>
+  ): Promise<Document<SymptomScore>[]>
   getLatestSymptomScore(
     userId: string,
   ): Promise<Document<SymptomScore> | undefined>

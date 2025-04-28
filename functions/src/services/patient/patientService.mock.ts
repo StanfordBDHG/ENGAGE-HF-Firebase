@@ -14,10 +14,12 @@ import {
   FHIRAppointmentStatus,
   FHIRMedicationRequest,
   type FHIRQuestionnaireResponse,
+  LoincCode,
   type Observation,
   QuantityUnit,
   SymptomScore,
   type UserMedicationRecommendation,
+  UserObservationCollection,
   type UserShareCode,
 } from '@stanfordbdhg/engagehf-models'
 import { type PatientService } from './patientService.js'
@@ -43,12 +45,12 @@ export class MockPatientService implements PatientService {
   async getEveryAppoinment(
     fromDate: Date,
     toDate: Date,
-  ): Promise<Array<Document<FHIRAppointment>>> {
+  ): Promise<Document<FHIRAppointment>[]> {
     return []
   }
   async getAppointments(
     userId: string,
-  ): Promise<Array<Document<FHIRAppointment>>> {
+  ): Promise<Document<FHIRAppointment>[]> {
     return []
   }
   async getNextAppointment(
@@ -72,27 +74,15 @@ export class MockPatientService implements PatientService {
 
   async getContraindications(
     userId: string,
-  ): Promise<Array<Document<FHIRAllergyIntolerance>>> {
+  ): Promise<Document<FHIRAllergyIntolerance>[]> {
     return []
   }
 
   // Methods - Medication Requests
 
-  async getMedicationRecommendations(
-    userId: string,
-  ): Promise<Array<Document<UserMedicationRecommendation>>> {
-    const values: UserMedicationRecommendation[] = []
-    return values.map((value, index) => ({
-      id: index.toString(),
-      lastUpdate: new Date(),
-      path: `users/${userId}/medicationRecommendations/${index}`,
-      content: value,
-    }))
-  }
-
   async getMedicationRequests(
     userId: string,
-  ): Promise<Array<Document<FHIRMedicationRequest>>> {
+  ): Promise<Document<FHIRMedicationRequest>[]> {
     const values: FHIRMedicationRequest[] = [
       FHIRMedicationRequest.create({
         drugReference: DrugReference.carvedilol3_125,
@@ -104,6 +94,23 @@ export class MockPatientService implements PatientService {
       id: index.toString(),
       lastUpdate: new Date(),
       path: `users/${userId}/medicationRequests/${index}`,
+      content: value,
+    }))
+  }
+
+  async updateMedicationRequests(
+    userId: string,
+    values: FHIRMedicationRequest[],
+  ): Promise<void> {}
+
+  async getMedicationRecommendations(
+    userId: string,
+  ): Promise<Document<UserMedicationRecommendation>[]> {
+    const values: UserMedicationRecommendation[] = []
+    return values.map((value, index) => ({
+      id: index.toString(),
+      lastUpdate: new Date(),
+      path: `users/${userId}/medicationRecommendations/${index}`,
       content: value,
     }))
   }
@@ -276,11 +283,20 @@ export class MockPatientService implements PatientService {
     }
   }
 
+  async createObservations(
+    userId: string,
+    values: {
+      observation: Observation
+      loincCode: LoincCode
+      collection: UserObservationCollection
+    }[],
+  ): Promise<void> {}
+
   // Methods - Questionnaire Responses
 
   async getQuestionnaireResponses(
     userId: string,
-  ): Promise<Array<Document<FHIRQuestionnaireResponse>>> {
+  ): Promise<Document<FHIRQuestionnaireResponse>[]> {
     return [mockQuestionnaireResponse()].map((value, index) => ({
       id: index.toString(),
       lastUpdate: new Date(),
@@ -292,7 +308,7 @@ export class MockPatientService implements PatientService {
   async getSymptomScores(
     userId: string,
     options?: { limit?: number },
-  ): Promise<Array<Document<SymptomScore>>> {
+  ): Promise<Document<SymptomScore>[]> {
     const values: SymptomScore[] = [
       new SymptomScore({
         questionnaireResponseId: '4',

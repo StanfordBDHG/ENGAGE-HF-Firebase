@@ -36,6 +36,11 @@ import { StaticDataService } from '../seeding/staticData/staticDataService.js'
 import { TriggerService } from '../trigger/triggerService.js'
 import { DatabaseUserService } from '../user/databaseUserService.js'
 import { type UserService } from '../user/userService.js'
+import { MultiQuestionnaireResponseService } from '../questionnaireResponse/multiQuestionnaireResponseService.js'
+import { KccqQuestionnaireResponseService } from '../questionnaireResponse/kccqQuestionnaireResponseService.js'
+import { DataUpdateQuestionnaireResponseService } from '../questionnaireResponse/dataUpdateQuestionnaireResponseService.js'
+import { RegistrationQuestionnaireResponseService } from '../questionnaireResponse/registrationQuestionnaireResponseService.js'
+import { QuestionnaireResponseService } from '../questionnaireResponse/questionnaireResponseService.js'
 
 export class DefaultServiceFactory implements ServiceFactory {
   // Properties - Options
@@ -108,6 +113,18 @@ export class DefaultServiceFactory implements ServiceFactory {
       }),
   )
 
+  private readonly questionnaireResponseService = new Lazy(
+    () =>
+      new MultiQuestionnaireResponseService([
+        new KccqQuestionnaireResponseService(
+          this.patientService.value,
+          new SymptomScoreCalculator(),
+        ),
+        new DataUpdateQuestionnaireResponseService(this.patientService.value),
+        new RegistrationQuestionnaireResponseService(this.patientService.value),
+      ]),
+  )
+
   private readonly recommendationService = new Lazy(
     () =>
       new RecommendationService(
@@ -173,6 +190,10 @@ export class DefaultServiceFactory implements ServiceFactory {
 
   patient(): PatientService {
     return this.patientService.value
+  }
+
+  questionnaireResponse(): QuestionnaireResponseService {
+    return this.questionnaireResponseService.value
   }
 
   recommendation(): RecommendationService {
