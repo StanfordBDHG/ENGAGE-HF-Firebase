@@ -117,7 +117,8 @@ service cloud.firestore {
       function securityRelatedFieldsDidNotChange() {
         return isEqualOptional(request.resource.data, 'type', resource.data, 'type')
           && isEqualOptional(request.resource.data, 'disabled', resource.data, 'disabled')
-          && isEqualOptional(request.resource.data, 'organization', resource.data, 'organization');
+          && isEqualOptional(request.resource.data, 'organization', resource.data, 'organization')
+          && isEqualOptional(request.resource.data, 'phoneNumbers', resource.data, 'phoneNumbers');
       }
 
       function isAllowedUpdateWithinOrganization() {

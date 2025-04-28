@@ -13,11 +13,15 @@ import {
   beforeUserSignedIn,
 } from 'firebase-functions/v2/identity'
 import { privilegedServiceAccount } from './helpers.js'
+import { Env } from '../env.js'
 import { Flags } from '../flags.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
 export const beforeUserCreatedFunction = beforeUserCreated(
-  { serviceAccount: privilegedServiceAccount },
+  {
+    serviceAccount: privilegedServiceAccount,
+    secrets: Env.twilioSecretKeys,
+  },
   async (event) => {
     if (event.data === undefined) {
       logger.error(`No user data provided.`)
@@ -118,7 +122,10 @@ export const beforeUserCreatedFunction = beforeUserCreated(
 )
 
 export const beforeUserSignedInFunction = beforeUserSignedIn(
-  { serviceAccount: privilegedServiceAccount },
+  { 
+    serviceAccount: privilegedServiceAccount, 
+    secrets: Env.twilioSecretKeys,
+  },
   async (event) => {
     try {
       if (event.data === undefined) {

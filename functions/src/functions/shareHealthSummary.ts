@@ -38,11 +38,14 @@ export const shareHealthSummary = validatedOnCall(
     )
 
     const shareCodeDocument = await factory.patient().createShareCode(userId)
-    const url = `${Env.WEB_FRONTEND_BASE_URL}/patients/${userId}/healthSummary/${shareCodeDocument.id}`
+    const url = `${Env.webFrontendBaseUrl}/patients/${userId}/healthSummary/${shareCodeDocument.id}`
     return {
       code: shareCodeDocument.content.code,
       expiresAt: dateConverter.encode(shareCodeDocument.content.expiresAt),
       url: url,
     }
+  },
+  {
+    secrets: [Env.webFrontendBaseUrlSecretKey],
   },
 )

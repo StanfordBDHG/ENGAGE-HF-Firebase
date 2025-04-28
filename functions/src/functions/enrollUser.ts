@@ -9,6 +9,7 @@
 import { enrollUserInputSchema } from '@stanfordbdhg/engagehf-models'
 import { https, logger } from 'firebase-functions'
 import { privilegedServiceAccount, validatedOnCall } from './helpers.js'
+import { Env } from '../env.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
 export const enrollUser = validatedOnCall(
@@ -41,5 +42,6 @@ export const enrollUser = validatedOnCall(
   },
   {
     serviceAccount: privilegedServiceAccount,
+    secrets: Env.twilioSecretKeys,
   },
 )
