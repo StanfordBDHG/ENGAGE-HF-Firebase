@@ -154,6 +154,7 @@ export class DatabaseUserService implements UserService {
           lastActiveDate: new Date(),
           invitationCode: invitation.content.code,
           dateOfEnrollment: new Date(),
+          phoneNumbers: [],
         })
         transaction.set(userRef, userData)
 

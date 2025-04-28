@@ -8,7 +8,7 @@
     "lint:strict": "eslint src --max-warnings=0",
     "build": "tsc",
     "clean": "if [ -f tsconfig.tsbuildinfo ]; then rm tsconfig.tsbuildinfo; fi && if [ -d lib ]; then rm -r lib; fi",
-    "test": "env TZ=UTC c8 mocha --reporter-option maxDiffSize=0",
+    "test": "env TZ=UTC DISABLE_TWILIO=true c8 mocha --reporter-option maxDiffSize=0",
     "test:emulators": "env EMULATORS_ACTIVE=true npm run test",
     "test:regenerate": "env REGENERATE_VALUES=true npm run test",
     "serve": "firebase emulators:start --only auth,firestore,functions,storage",
@@ -33,6 +33,7 @@
     "jsdom": "^24.1.0",
     "jspdf": "^3.0.1",
     "jspdf-autotable": "^5.0.2",
+    "twilio": "^5.4.5",
     "zod": "^3.23.8"
   },
   "devDependencies": {
