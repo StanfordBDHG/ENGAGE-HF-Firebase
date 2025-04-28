@@ -13,6 +13,12 @@ import { Lazy } from '../helpers/lazy.js'
 import { optionalish, optionalishDefault } from '../helpers/optionalish.js'
 import { SchemaConverter } from '../helpers/schemaConverter.js'
 
+export enum UserSex {
+  male = 'male',
+  female = 'female',
+  other = 'other',
+}
+
 export const userRegistrationInputConverter = new Lazy(
   () =>
     new SchemaConverter({
@@ -21,6 +27,7 @@ export const userRegistrationInputConverter = new Lazy(
         disabled: optionalishDefault(z.boolean(), false),
         organization: optionalish(z.string()),
         dateOfBirth: optionalish(dateConverter.schema),
+        sex: optionalish(z.nativeEnum(UserSex)),
         clinician: optionalish(z.string()),
         providerName: optionalish(z.string()),
         receivesAppointmentReminders: optionalishDefault(z.boolean(), true),
@@ -40,6 +47,7 @@ export const userRegistrationInputConverter = new Lazy(
         organization: object.organization ?? null,
         dateOfBirth:
           object.dateOfBirth ? dateConverter.encode(object.dateOfBirth) : null,
+        sex: object.sex ?? null,
         clinician: object.clinician ?? null,
         providerName: object.providerName ?? null,
         receivesAppointmentReminders: object.receivesAppointmentReminders,

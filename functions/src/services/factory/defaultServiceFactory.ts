@@ -121,7 +121,10 @@ export class DefaultServiceFactory implements ServiceFactory {
           new SymptomScoreCalculator(),
         ),
         new DataUpdateQuestionnaireResponseService(this.patientService.value),
-        new RegistrationQuestionnaireResponseService(this.patientService.value),
+        new RegistrationQuestionnaireResponseService(
+          this.patientService.value,
+          this.userService.value,
+        ),
       ]),
   )
 

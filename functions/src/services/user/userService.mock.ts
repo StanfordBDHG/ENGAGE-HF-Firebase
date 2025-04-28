@@ -12,6 +12,7 @@ import {
   User,
   type UserAuth,
   UserRegistration,
+  UserSex,
   UserType,
 } from '@stanfordbdhg/engagehf-models'
 import { type UserService } from './userService.js'
@@ -128,6 +129,13 @@ export class MockUserService implements UserService {
   }
 
   // Methods - User
+
+  async updatePersonalInfo(
+    userId: string,
+    data: { dateOfBirth: Date; sex: UserSex },
+  ): Promise<void> {
+    return
+  }
 
   async disableUser(userId: string): Promise<void> {
     return

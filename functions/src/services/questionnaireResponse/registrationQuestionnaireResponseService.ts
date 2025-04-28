@@ -6,21 +6,29 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { FHIRQuestionnaireResponse } from '@stanfordbdhg/engagehf-models'
+import {
+  compact,
+  FHIRQuestionnaireResponse,
+  LoincCode,
+  UserObservationCollection,
+} from '@stanfordbdhg/engagehf-models'
 import { Document } from '../database/databaseService.js'
 import { QuestionnaireResponseService } from './questionnaireResponseService.js'
 import { PatientService } from '../patient/patientService.js'
+import { UserService } from '../user/userService.js'
 
 export class RegistrationQuestionnaireResponseService extends QuestionnaireResponseService {
   // Properties
 
   private readonly patientService: PatientService
+  private readonly userService: UserService
 
   // Constructor
 
-  constructor(patientService: PatientService) {
+  constructor(patientService: PatientService, userService: UserService) {
     super()
     this.patientService = patientService
+    this.userService = userService
   }
 
   // Methods
@@ -31,13 +39,54 @@ export class RegistrationQuestionnaireResponseService extends QuestionnaireRespo
   ): Promise<boolean> {
     const dateOfBirth = this.extractDateOfBirth(response.content)
     const sex = this.extractSex(response.content)
-    if (dateOfBirth === null || sex === null) return false
+    if (dateOfBirth !== null && sex !== null) {
+      await this.userService.updatePersonalInfo(userId, {
+        dateOfBirth,
+        sex,
+      })
+    } else {
+      return false
+    }
 
-    const medications = this.extractMedications(response.content)
-    const creatinine = this.extractCreatinine(response.content)
-    const dryWeight = this.extractDryWeight(response.content)
-    const eGFR = this.extractEstimatedGlomerularFiltrationRate(response.content)
-    const potassium = this.extractPotassium(response.content)
+    await this.patientService.createObservations(
+      userId,
+      compact([
+        mapNullable(
+          this.extractCreatinine(response.content),
+          (observation) => ({
+            observation,
+            loincCode: LoincCode.creatinine,
+            collection: UserObservationCollection.creatinine,
+          }),
+        ),
+        mapNullable(this.extractDryWeight(response.content), (observation) => ({
+          observation,
+          loincCode: LoincCode.bodyWeight,
+          collection: UserObservationCollection.dryWeight,
+        })),
+        mapNullable(
+          this.extractEstimatedGlomerularFiltrationRate(response.content),
+          (observation) => ({
+            observation,
+            loincCode: LoincCode.estimatedGlomerularFiltrationRate,
+            collection: UserObservationCollection.eGfr,
+          }),
+        ),
+        mapNullable(this.extractPotassium(response.content), (observation) => ({
+          observation,
+          loincCode: LoincCode.potassium,
+          collection: UserObservationCollection.potassium,
+        })),
+      ]),
+    )
     return true
   }
+}
+
+function mapNullable<T, U>(
+  value: T | null,
+  map: (value: T) => U,
+): U | undefined {
+  if (value === null) return undefined
+  return map(value)
 }
