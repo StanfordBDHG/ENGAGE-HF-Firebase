@@ -22,11 +22,13 @@ export class TwilioPhoneService implements PhoneService {
   constructor(options: {
     verifyServiceId: string
     phoneNumber: string
-    accountSid?: string
-    authToken?: string
-    options?: twilio.ClientOpts
+    accountSid: string
+    apiKey: string
+    apiSecret: string
   }) {
-    this.client = twilio(options.accountSid, options.authToken, options.options)
+    this.client = twilio(options.apiKey, options.apiSecret, {
+      accountSid: options.accountSid,
+    })
     this.senderPhoneNumber = options.phoneNumber
     this.verifyServiceId = options.verifyServiceId
   }

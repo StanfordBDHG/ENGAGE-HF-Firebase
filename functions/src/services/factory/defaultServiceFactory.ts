@@ -102,7 +102,8 @@ export class DefaultServiceFactory implements ServiceFactory {
       new MockPhoneService(this.databaseService.value)
     : new TwilioPhoneService({
         accountSid: Env.twilioAccountSid,
-        authToken: Env.twilioAuthToken,
+        apiKey: Env.twilioApiKey,
+        apiSecret: Env.twilioApiSecret,
         phoneNumber: Env.twilioPhoneNumber,
         verifyServiceId: Env.twilioVerifiyServiceId,
       }),
