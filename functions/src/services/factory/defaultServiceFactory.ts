@@ -11,6 +11,8 @@ import admin from 'firebase-admin'
 import { type AuthData } from 'firebase-functions/v2/tasks'
 import { type ServiceFactoryOptions } from './getServiceFactory.js'
 import { type ServiceFactory } from './serviceFactory.js'
+import { Env } from '../../env.js'
+import { Flags } from '../../flags.js'
 import { DefaultContraindicationService } from '../contraindication/defaultContraindicationService.js'
 import { Credential } from '../credential/credential.js'
 import { FirestoreService } from '../database/firestoreService.js'
@@ -22,6 +24,8 @@ import { DatabaseMedicationService } from '../medication/databaseMedicationServi
 import { type MedicationService } from '../medication/medicationService.js'
 import { DefaultMessageService } from '../message/defaultMessageService.js'
 import { type MessageService } from '../message/messageService.js'
+import { MockPhoneService } from '../message/phone/phoneService.mock.js'
+import { TwilioPhoneService } from '../message/phone/twilioPhoneService.js'
 import { DatabasePatientService } from '../patient/databasePatientService.js'
 import { type PatientService } from '../patient/patientService.js'
 import { DefaultQuestionnaireResponseService } from '../questionnaireResponse/kccqQuestionnaireResponseService.js'
@@ -85,12 +89,25 @@ export class DefaultServiceFactory implements ServiceFactory {
       new DefaultMessageService(
         this.messaging.value,
         this.databaseService.value,
+        this.phoneService.value,
         this.userService.value,
       ),
   )
 
   private readonly patientService = new Lazy(
     () => new DatabasePatientService(this.databaseService.value),
+  )
+
+  private readonly phoneService = new Lazy(() =>
+    Flags.disableTwilio ?
+      new MockPhoneService(this.databaseService.value)
+    : new TwilioPhoneService({
+        accountSid: Env.twilioAccountSid,
+        apiKey: Env.twilioApiKey,
+        apiSecret: Env.twilioApiSecret,
+        phoneNumber: Env.twilioPhoneNumber,
+        verifyServiceId: Env.twilioVerifiyServiceId,
+      }),
   )
 
   private readonly questionnaireResponseService = new Lazy(

@@ -15,6 +15,7 @@ import {
 import { type UserType } from './userType.js'
 import { dateConverter } from '../helpers/dateConverter.js'
 import { Lazy } from '../helpers/lazy.js'
+import { optionalishDefault } from '../helpers/optionalish.js'
 import { SchemaConverter } from '../helpers/schemaConverter.js'
 
 export const userConverter = new Lazy(
@@ -25,6 +26,7 @@ export const userConverter = new Lazy(
           dateOfEnrollment: dateConverter.schema,
           invitationCode: z.string(),
           lastActiveDate: dateConverter.schema,
+          phoneNumbers: optionalishDefault(z.array(z.string()), []),
         })
         .transform((values) => new User(values)),
       encode: (object) => ({
@@ -32,6 +34,7 @@ export const userConverter = new Lazy(
         lastActiveDate: dateConverter.encode(object.lastActiveDate),
         dateOfEnrollment: dateConverter.encode(object.dateOfEnrollment),
         invitationCode: object.invitationCode,
+        phoneNumbers: object.phoneNumbers,
       }),
     }),
 )
@@ -42,6 +45,7 @@ export class User extends UserRegistration {
   readonly dateOfEnrollment: Date
   readonly invitationCode: string
   readonly lastActiveDate: Date
+  readonly phoneNumbers: string[]
 
   // Constructor
 
@@ -64,10 +68,12 @@ export class User extends UserRegistration {
     dateOfEnrollment: Date
     invitationCode: string
     lastActiveDate: Date
+    phoneNumbers: string[]
   }) {
     super(input)
     this.dateOfEnrollment = input.dateOfEnrollment
     this.invitationCode = input.invitationCode
     this.lastActiveDate = input.lastActiveDate
+    this.phoneNumbers = input.phoneNumbers
   }
 }
