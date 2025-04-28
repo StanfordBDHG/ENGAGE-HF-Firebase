@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { FHIRQuestionnaireResponse } from '@stanfordbdhg/engagehf-models'
+import { type FHIRQuestionnaireResponse } from '@stanfordbdhg/engagehf-models'
 import { createKccqQuestionnaireResponse } from '../../services/questionnaireResponse/kccqQuestionnaireLinkIds.js'
 
 export function mockQuestionnaireResponse(): FHIRQuestionnaireResponse {

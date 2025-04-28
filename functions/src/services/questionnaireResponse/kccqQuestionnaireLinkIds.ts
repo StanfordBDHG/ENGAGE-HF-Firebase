@@ -8,7 +8,7 @@
 
 import {
   FHIRQuestionnaireResponse,
-  SymptomQuestionnaireResponse,
+  type SymptomQuestionnaireResponse,
 } from '@stanfordbdhg/engagehf-models'
 
 interface KccqQuestionnaireLinkIds {
@@ -27,14 +27,10 @@ interface KccqQuestionnaireLinkIds {
   question9: string
 }
 
-export function  symptomQuestionnaireLinkIds(
+export function symptomQuestionnaireLinkIds(
   questionnaire: string,
-): KccqQuestionnaireLinkIds {
-  const linkIds = linkIdMap.get(questionnaire)
-  if (linkIds === undefined) {
-    throw new Error(`Unknown questionnaire: ${questionnaire}`)
-  }
-  return linkIds
+): KccqQuestionnaireLinkIds | null {
+  return linkIdMap.get(questionnaire) ?? null
 }
 
 const linkIdMap = new Map<string, KccqQuestionnaireLinkIds>([
@@ -62,6 +58,7 @@ export function createKccqQuestionnaireResponse(
   input: SymptomQuestionnaireResponse,
 ): FHIRQuestionnaireResponse {
   const linkIds = symptomQuestionnaireLinkIds(input.questionnaire)
+  if (linkIds === null) throw new Error('Invalid questionnaire')
 
   return new FHIRQuestionnaireResponse({
     id: input.questionnaireResponse,

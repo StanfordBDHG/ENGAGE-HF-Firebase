@@ -10,11 +10,11 @@ import {
   SymptomScore,
   type FHIRQuestionnaireResponse,
 } from '@stanfordbdhg/engagehf-models'
+import { symptomQuestionnaireLinkIds } from './kccqQuestionnaireLinkIds.js'
 import { QuestionnaireResponseService } from './questionnaireResponseService.js'
 import { type SymptomScoreCalculator } from './symptomScore/symptomScoreCalculator.js'
-import { symptomQuestionnaireLinkIds } from './kccqQuestionnaireLinkIds.js'
-import { PatientService } from '../patient/patientService.js'
-import { Document } from '../database/databaseService.js'
+import { type Document } from '../database/databaseService.js'
+import { type PatientService } from '../patient/patientService.js'
 
 export class KccqQuestionnaireResponseService extends QuestionnaireResponseService {
   // Properties
@@ -39,7 +39,6 @@ export class KccqQuestionnaireResponseService extends QuestionnaireResponseServi
 
   // Methods
 
-  // eslint-disable-next-line @typescript-eslint/require-await
   async handle(
     userId: string,
     response: Document<FHIRQuestionnaireResponse>,
@@ -62,7 +61,7 @@ export class KccqQuestionnaireResponseService extends QuestionnaireResponseServi
     response: FHIRQuestionnaireResponse,
   ): SymptomScore | null {
     const linkIds = symptomQuestionnaireLinkIds(response.questionnaire)
-    if (linkIds === undefined) return null
+    if (linkIds === null) return null
 
     const input = {
       answer1a: this.singleIntCodingAnswer(linkIds.question1a, response),

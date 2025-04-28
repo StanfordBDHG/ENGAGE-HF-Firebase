@@ -87,9 +87,8 @@ export class TriggerService {
       `questionnaireResponseWritten(${userId}, ${questionnaireResponseId}): beforeData: ${beforeData !== undefined ? 'exists' : 'undefined'}, afterData: ${afterData !== undefined ? 'exists' : 'undefined'}`,
     )
 
-    const patientService = this.factory.patient()
-    
     /*
+    const patientService = this.factory.patient()
     const questionnaireResponseService = this.factory.questionnaireResponse()
 
     const extractedResponse =
@@ -402,11 +401,7 @@ export class TriggerService {
       logger.debug(
         `TriggerService.updateAllSymptomScores(${userId}): Deleting symptom score at ${symptomScore.path}`,
       )
-      await patientService.updateSymptomScore(
-        userId,
-        symptomScore.id,
-        null,
-      )
+      await patientService.updateSymptomScore(userId, symptomScore.id, null)
     }
 
     const questionnaireResponses =

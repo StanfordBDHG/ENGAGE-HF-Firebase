@@ -28,6 +28,7 @@ import { MockPhoneService } from '../message/phone/phoneService.mock.js'
 import { TwilioPhoneService } from '../message/phone/twilioPhoneService.js'
 import { DatabasePatientService } from '../patient/databasePatientService.js'
 import { type PatientService } from '../patient/patientService.js'
+import { SymptomScoreCalculator } from '../questionnaireResponse/symptomScore/symptomScoreCalculator.js'
 import { RecommendationService } from '../recommendation/recommendationService.js'
 import { DebugDataService } from '../seeding/debugData/debugDataService.js'
 import { RxNormService } from '../seeding/staticData/rxNorm/rxNormService.js'
@@ -35,7 +36,6 @@ import { StaticDataService } from '../seeding/staticData/staticDataService.js'
 import { TriggerService } from '../trigger/triggerService.js'
 import { DatabaseUserService } from '../user/databaseUserService.js'
 import { type UserService } from '../user/userService.js'
-import { SymptomScoreCalculator } from '../questionnaireResponse/symptomScore/symptomScoreCalculator.js'
 
 export class DefaultServiceFactory implements ServiceFactory {
   // Properties - Options

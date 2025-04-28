@@ -7,10 +7,12 @@
 //
 
 import {
-  Observation,
+  type Observation,
   type FHIRQuestionnaireResponse,
 } from '@stanfordbdhg/engagehf-models'
-import { Document } from '../database/databaseService'
+import { type Document } from '../database/databaseService.js'
+
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
 export interface QuestionnaireResponseMedication {
   code: string
@@ -28,8 +30,15 @@ export abstract class QuestionnaireResponseService {
 
   // Helpers - Personal information
 
-  protected async extractDateOfBirth(response: FHIRQuestionnaireResponse) {}
-  protected async extractSex(response: FHIRQuestionnaireResponse) {}
+  protected extractDateOfBirth(
+    response: FHIRQuestionnaireResponse,
+  ): Date | null {
+    return null
+  }
+
+  protected extractSex(response: FHIRQuestionnaireResponse) {
+    return null
+  }
 
   // Helpers - Lab values
 

@@ -17,7 +17,7 @@ interface RegistrationQuestionnaireFactoryInput {
   drugs: Record<string, Record<string, FHIRMedication>>
 }
 
-const linkIds = {
+export const linkIds = {
   introductionPage: 'introduction-page',
 
   personalInformationPage: 'personal-information-page',
