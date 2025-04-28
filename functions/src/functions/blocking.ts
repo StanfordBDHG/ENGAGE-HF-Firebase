@@ -122,8 +122,8 @@ export const beforeUserCreatedFunction = beforeUserCreated(
 )
 
 export const beforeUserSignedInFunction = beforeUserSignedIn(
-  { 
-    serviceAccount: privilegedServiceAccount, 
+  {
+    serviceAccount: privilegedServiceAccount,
     secrets: Env.twilioSecretKeys,
   },
   async (event) => {
