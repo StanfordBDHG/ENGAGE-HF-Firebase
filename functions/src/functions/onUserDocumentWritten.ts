@@ -12,11 +12,15 @@ import {
   UserObservationCollection,
 } from '@stanfordbdhg/engagehf-models'
 import { onDocumentWritten } from 'firebase-functions/v2/firestore'
+import { Env } from '../env.js'
 import { DatabaseConverter } from '../services/database/databaseConverter.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
 export const onUserAllergyIntoleranceWritten = onDocumentWritten(
-  'users/{userId}/allergyIntolerances/{allergyIntoleranceId}',
+  {
+    document: 'users/{userId}/allergyIntolerances/{allergyIntoleranceId}',
+    secrets: Env.twilioSecretKeys,
+  },
   async (event) =>
     getServiceFactory()
       .trigger()
@@ -24,7 +28,10 @@ export const onUserAllergyIntoleranceWritten = onDocumentWritten(
 )
 
 export const onUserCreatinineObservationWritten = onDocumentWritten(
-  'users/{userId}/creatinineObservations/{observationId}',
+  {
+    document: 'users/{userId}/creatinineObservations/{observationId}',
+    secrets: Env.twilioSecretKeys,
+  },
   async (event) =>
     getServiceFactory()
       .trigger()
@@ -35,7 +42,10 @@ export const onUserCreatinineObservationWritten = onDocumentWritten(
 )
 
 export const onUserBloodPressureObservationWritten = onDocumentWritten(
-  'users/{userId}/bloodPressureObservations/{observationId}',
+  {
+    document: 'users/{userId}/bloodPressureObservations/{observationId}',
+    secrets: Env.twilioSecretKeys,
+  },
   async (event) =>
     getServiceFactory()
       .trigger()
@@ -46,7 +56,10 @@ export const onUserBloodPressureObservationWritten = onDocumentWritten(
 )
 
 export const onUserBodyWeightObservationWritten = onDocumentWritten(
-  'users/{userId}/bodyWeightObservations/{observationId}',
+  {
+    document: 'users/{userId}/bodyWeightObservations/{observationId}',
+    secrets: Env.twilioSecretKeys,
+  },
   async (event) =>
     getServiceFactory()
       .trigger()
@@ -57,7 +70,10 @@ export const onUserBodyWeightObservationWritten = onDocumentWritten(
 )
 
 export const onUserDryWeightObservationWritten = onDocumentWritten(
-  'users/{userId}/dryWeightObservations/{observationId}',
+  {
+    document: 'users/{userId}/dryWeightObservations/{observationId}',
+    secrets: Env.twilioSecretKeys,
+  },
   async (event) =>
     getServiceFactory()
       .trigger()
@@ -68,7 +84,10 @@ export const onUserDryWeightObservationWritten = onDocumentWritten(
 )
 
 export const onUserEgfrObservationWritten = onDocumentWritten(
-  'users/{userId}/eGfrObservations/{observationId}',
+  {
+    document: 'users/{userId}/eGfrObservations/{observationId}',
+    secrets: Env.twilioSecretKeys,
+  },
   async (event) =>
     getServiceFactory()
       .trigger()
@@ -79,7 +98,10 @@ export const onUserEgfrObservationWritten = onDocumentWritten(
 )
 
 export const onUserHeartRateObservationWritten = onDocumentWritten(
-  'users/{userId}/heartRateObservations/{observationId}',
+  {
+    document: 'users/{userId}/heartRateObservations/{observationId}',
+    secrets: Env.twilioSecretKeys,
+  },
   async (event) =>
     getServiceFactory()
       .trigger()
@@ -90,7 +112,10 @@ export const onUserHeartRateObservationWritten = onDocumentWritten(
 )
 
 export const onUserMedicationRequestWritten = onDocumentWritten(
-  'users/{userId}/medicationRequests/{medicationRequestId}',
+  {
+    document: 'users/{userId}/medicationRequests/{medicationRequestId}',
+    secrets: Env.twilioSecretKeys,
+  },
   async (event) => {
     const beforeData = event.data?.before
     const afterData = event.data?.after
@@ -109,7 +134,10 @@ export const onUserMedicationRequestWritten = onDocumentWritten(
 )
 
 export const onUserPotassiumObservationWritten = onDocumentWritten(
-  'users/{userId}/potassiumObservations/{observationId}',
+  {
+    document: 'users/{userId}/potassiumObservations/{observationId}',
+    secrets: Env.twilioSecretKeys,
+  },
   async (event) =>
     getServiceFactory()
       .trigger()
@@ -120,7 +148,10 @@ export const onUserPotassiumObservationWritten = onDocumentWritten(
 )
 
 export const onUserQuestionnaireResponseWritten = onDocumentWritten(
-  'users/{userId}/questionnaireResponses/{questionnaireResponseId}',
+  {
+    document: 'users/{userId}/questionnaireResponses/{questionnaireResponseId}',
+    secrets: Env.twilioSecretKeys,
+  },
   async (event) => {
     const beforeData = event.data?.before
     const afterData = event.data?.after
