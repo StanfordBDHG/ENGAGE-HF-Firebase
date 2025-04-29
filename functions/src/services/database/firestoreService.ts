@@ -12,9 +12,15 @@ import {
   type BulkWriterOptions,
   type Transaction,
   type Firestore,
+  DocumentSnapshot,
+  QueryDocumentSnapshot,
 } from 'firebase-admin/firestore'
 import { CollectionsService } from './collections.js'
-import { type Document, type DatabaseService } from './databaseService.js'
+import {
+  type Document,
+  type DatabaseService,
+  ReplaceDiff,
+} from './databaseService.js'
 
 export class FirestoreService implements DatabaseService {
   // Properties
@@ -38,12 +44,7 @@ export class FirestoreService implements DatabaseService {
     ) => FirebaseFirestore.Query<T>,
   ): Promise<Document<T>[]> {
     const collection = await query(this.collectionsService.value).get()
-    return collection.docs.map((doc) => ({
-      id: doc.id,
-      path: doc.ref.path,
-      lastUpdate: doc.updateTime.toDate(),
-      content: doc.data(),
-    }))
+    return collection.docs.map(this.queryDoc)
   }
 
   async getDocument<T>(
@@ -77,6 +78,31 @@ export class FirestoreService implements DatabaseService {
     await writer.close()
   }
 
+  async replaceCollection<T>(
+    collection: (
+      collectionsService: CollectionsService,
+    ) => FirebaseFirestore.CollectionReference<T>,
+    diffs: (existing: Document<T>[]) => Promise<ReplaceDiff<T>[]>,
+  ): Promise<void> {
+    await this.runTransaction(async (collections, transaction) => {
+      const collectionRef = collection(collections)
+      const existingDocs = await transaction.get(collectionRef)
+      const docsDiffs = await diffs(existingDocs.docs.map(this.queryDoc))
+      for (const docsDiff of docsDiffs) {
+        if (docsDiff.predecessor !== undefined) {
+          const ref = collectionRef.doc(docsDiff.predecessor.id)
+          if (docsDiff.successor !== undefined) {
+            transaction.set(ref, docsDiff.successor)
+          } else {
+            transaction.delete(ref)
+          }
+        } else if (docsDiff.successor !== undefined) {
+          transaction.create(collectionRef.doc(), docsDiff.successor)
+        }
+      }
+    })
+  }
+
   async listCollections<T>(
     docReference: (
       collections: CollectionsService,
@@ -94,5 +120,14 @@ export class FirestoreService implements DatabaseService {
     return this.firestore.runTransaction(async (transaction) =>
       run(this.collectionsService.value, transaction),
     )
+  }
+
+  private queryDoc<T>(snapshot: QueryDocumentSnapshot<T>): Document<T> {
+    return {
+      id: snapshot.id,
+      path: snapshot.ref.path,
+      lastUpdate: snapshot.updateTime.toDate(),
+      content: snapshot.data(),
+    }
   }
 }

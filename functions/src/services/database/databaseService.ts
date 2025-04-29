@@ -13,6 +13,11 @@ import {
 } from 'firebase-admin/firestore'
 import { type CollectionsService } from './collections.js'
 
+export interface ReplaceDiff<T> {
+  predecessor?: Document<T>
+  successor?: T
+}
+
 export interface Document<Content> {
   id: string
   path: string
@@ -39,6 +44,13 @@ export interface DatabaseService {
       writer: BulkWriter,
     ) => Promise<void>,
     options?: BulkWriterOptions,
+  ): Promise<void>
+
+  replaceCollection<T>(
+    collection: (
+      collectionsService: CollectionsService,
+    ) => FirebaseFirestore.CollectionReference<T>,
+    diffs: (existing: Document<T>[]) => Promise<ReplaceDiff<T>[]>,
   ): Promise<void>
 
   listCollections<T>(

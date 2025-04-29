@@ -35,6 +35,7 @@ import { type CollectionsService } from '../database/collections.js'
 import {
   type Document,
   type DatabaseService,
+  ReplaceDiff,
 } from '../database/databaseService.js'
 
 export class DatabasePatientService implements PatientService {
@@ -111,36 +112,40 @@ export class DatabasePatientService implements PatientService {
     userId: string,
     values: FHIRMedicationRequest[],
   ): Promise<void> {
-    // TODO: Check this entire section!!!!!!!!
-    await this.databaseService.runTransaction(
-      async (collections, transaction) => {
-        const collection = collections.userMedicationRequests(userId)
-        const existingSnapshot = await transaction.get(collection)
-        const indicesToBeInserted = new Set<number>(
-          values.map((_, index) => index),
-        )
-        for (const existing of existingSnapshot.docs) {
-          const existingRequest = existing.data()
+    await this.databaseService.replaceCollection(
+      (collections) => collections.userMedicationRequests(userId),
+      async (documents) => {
+        const diffs: ReplaceDiff<FHIRMedicationRequest>[] = []
 
-          const newRequestIndex = values.findIndex(
-            (request) =>
-              request.medicationReference?.reference ===
-              existingRequest.medicationReference?.reference,
-          )
+        for (const value of values) {
+          const equivalentDoc = documents
+            .filter(
+              (doc) =>
+                doc.content.medicationReference?.reference ===
+                value.medicationReference?.reference,
+            )
+            .at(0)
+          // TODO: We are assuming here that there will only ever be a single medication request per medication!
 
-          if (newRequestIndex < 0) {
-            transaction.delete(existing.ref)
-            continue
+          if (equivalentDoc === undefined) {
+            diffs.push({ successor: value })
+          } else if (
+            !isDeepStrictEqual(
+              equivalentDoc.content.dosageInstruction,
+              value.dosageInstruction,
+            )
+          ) {
+            diffs.push({ predecessor: equivalentDoc, successor: value })
           }
-          const newRequest = values[newRequestIndex]
-          indicesToBeInserted.delete(newRequestIndex)
-
-          if (!isDeepStrictEqual(newRequest, existingRequest))
-            transaction.set(existing.ref, newRequest)
         }
-        indicesToBeInserted.forEach((newRequestIndex) => {
-          transaction.set(collection.doc(), values[newRequestIndex])
-        })
+
+        for (const doc of documents) {
+          if (!diffs.some((diff) => diff.predecessor?.id === doc.id)) {
+            diffs.push({ predecessor: doc })
+          }
+        }
+
+        return diffs
       },
     )
   }
@@ -169,38 +174,35 @@ export class DatabasePatientService implements PatientService {
     userId: string,
     newRecommendations: UserMedicationRecommendation[],
   ): Promise<void> {
-    await this.databaseService.runTransaction(
-      async (collections, transaction) => {
-        const collection = collections.userMedicationRecommendations(userId)
-        const existingSnapshot = await transaction.get(collection)
-        const indicesToBeInserted = new Set<number>(
-          newRecommendations.map((_, index) => index),
-        )
-        for (const existing of existingSnapshot.docs) {
-          const existingRecommendation = existing.data()
+    await this.databaseService.replaceCollection(
+      (collections) => collections.userMedicationRecommendations(userId),
+      async (documents) => {
+        const diffs: ReplaceDiff<UserMedicationRecommendation>[] = []
 
-          const newRecommendationIndex = newRecommendations.findIndex(
-            (recommendation) =>
-              recommendation.displayInformation.title ===
-              existingRecommendation.displayInformation.title,
-          )
+        for (const value of newRecommendations) {
+          const equivalentDoc = documents
+            .filter(
+              (doc) =>
+                doc.content.displayInformation.title ===
+                value.displayInformation.title,
+            )
+            .at(0)
+          // TODO: We are assuming here that there will only ever be a single medication request per medication!
 
-          if (newRecommendationIndex < 0) {
-            transaction.delete(existing.ref)
-            continue
+          if (equivalentDoc === undefined) {
+            diffs.push({ successor: value })
+          } else if (!isDeepStrictEqual(equivalentDoc.content, value)) {
+            diffs.push({ predecessor: equivalentDoc, successor: value })
           }
-          const newRecommendation = newRecommendations[newRecommendationIndex]
-          indicesToBeInserted.delete(newRecommendationIndex)
-
-          if (!isDeepStrictEqual(newRecommendation, existingRecommendation))
-            transaction.set(existing.ref, newRecommendation)
         }
-        indicesToBeInserted.forEach((newRecommendationIndex) => {
-          transaction.set(
-            collection.doc(),
-            newRecommendations[newRecommendationIndex],
-          )
-        })
+
+        for (const doc of documents) {
+          if (!diffs.some((diff) => diff.predecessor?.id === doc.id)) {
+            diffs.push({ predecessor: doc })
+          }
+        }
+
+        return diffs
       },
     )
   }
