@@ -182,7 +182,7 @@ describe('Sglt2iRecommender', () => {
     let contextBelowTarget: MedicationRequestContext
     before(async () => {
       const request = FHIRMedicationRequest.create({
-        drugReference: DrugReference.sotagliflozin200,
+        medicationReference: DrugReference.sotagliflozin200,
         frequencyPerDay: 1,
         quantity: 1,
       })
@@ -196,7 +196,7 @@ describe('Sglt2iRecommender', () => {
 
     it('detects target dose', async () => {
       const request = FHIRMedicationRequest.create({
-        drugReference: DrugReference.sotagliflozin200,
+        medicationReference: DrugReference.sotagliflozin200,
         frequencyPerDay: 2,
         quantity: 1,
       })

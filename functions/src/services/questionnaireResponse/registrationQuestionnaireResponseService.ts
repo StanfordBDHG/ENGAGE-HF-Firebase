@@ -7,10 +7,10 @@
 //
 
 import {
-  compact,
   FHIRQuestionnaireResponse,
   LoincCode,
   Observation,
+  QuantityUnit,
   UserObservationCollection,
 } from '@stanfordbdhg/engagehf-models'
 import { Document } from '../database/databaseService.js'
@@ -38,25 +38,31 @@ export class RegistrationQuestionnaireResponseService extends QuestionnaireRespo
     userId: string,
     response: Document<FHIRQuestionnaireResponse>,
   ): Promise<boolean> {
-    const dateOfBirth = this.extractDateOfBirth(response.content)
-    const sex = this.extractSex(response.content)
-    if (dateOfBirth !== null && sex !== null) {
-      await this.userService.updatePersonalInfo(userId, {
-        dateOfBirth,
-        sex,
-      })
+    const personalInfo = this.extractPersonalInfo(response.content)
+    if (personalInfo !== null) {
+      await this.userService.updatePersonalInfo(userId, personalInfo)
     } else {
       return false
     }
 
-    this.patientService.updateMedicationRequests
+    const medicationRequestContent = this.extractMedicationRequests(
+      response.content,
+    )
+    await this.patientService.replaceMedicationRequests(
+      userId,
+      medicationRequestContent.requests,
+    )
+
     const observationValues: {
       observation: Observation
       loincCode: LoincCode
       collection: UserObservationCollection
     }[] = []
 
-    const creatinine = this.extractCreatinine(response.content)
+    const creatinine = this.extractLabValue(response.content, {
+      code: LoincCode.creatinine,
+      unit: QuantityUnit.mg_dL,
+    })
     if (creatinine !== null) {
       observationValues.push({
         observation: creatinine,
@@ -65,17 +71,25 @@ export class RegistrationQuestionnaireResponseService extends QuestionnaireRespo
       })
     }
 
-    const dryWeight = this.extractDryWeight(response.content)
+    const dryWeight = this.extractLabValue(response.content, {
+      code: LoincCode.dryWeight,
+      unit: QuantityUnit.lbs,
+    })
     if (dryWeight !== null) {
       observationValues.push({
         observation: dryWeight,
-        loincCode: LoincCode.bodyWeight,
+        loincCode: LoincCode.dryWeight,
         collection: UserObservationCollection.dryWeight,
       })
     }
 
-    const estimatedGlomerularFiltrationRate =
-      this.extractEstimatedGlomerularFiltrationRate(response.content)
+    const estimatedGlomerularFiltrationRate = this.extractLabValue(
+      response.content,
+      {
+        code: LoincCode.estimatedGlomerularFiltrationRate,
+        unit: QuantityUnit.mL_min_173m2,
+      },
+    )
     if (estimatedGlomerularFiltrationRate !== null) {
       observationValues.push({
         observation: estimatedGlomerularFiltrationRate,
@@ -84,7 +98,10 @@ export class RegistrationQuestionnaireResponseService extends QuestionnaireRespo
       })
     }
 
-    const potassium = this.extractPotassium(response.content)
+    const potassium = this.extractLabValue(response.content, {
+      code: LoincCode.potassium,
+      unit: QuantityUnit.mEq_L,
+    })
     if (potassium !== null) {
       observationValues.push({
         observation: potassium,

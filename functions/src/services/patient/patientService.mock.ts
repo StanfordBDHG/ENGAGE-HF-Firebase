@@ -83,7 +83,7 @@ export class MockPatientService implements PatientService {
   ): Promise<Document<FHIRMedicationRequest>[]> {
     const values: FHIRMedicationRequest[] = [
       FHIRMedicationRequest.create({
-        drugReference: DrugReference.carvedilol3_125,
+        medicationReference: DrugReference.carvedilol3_125,
         frequencyPerDay: 1,
         quantity: 2,
       }),
@@ -96,7 +96,7 @@ export class MockPatientService implements PatientService {
     }))
   }
 
-  async updateMedicationRequests(
+  async replaceMedicationRequests(
     userId: string,
     values: FHIRMedicationRequest[],
   ): Promise<void> {
@@ -115,7 +115,7 @@ export class MockPatientService implements PatientService {
     }))
   }
 
-  async updateMedicationRecommendations(
+  async replaceMedicationRecommendations(
     userId: string,
     recommendations: UserMedicationRecommendation[],
   ): Promise<void> {

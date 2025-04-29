@@ -45,7 +45,7 @@ export interface PatientService {
   getMedicationRequests(
     userId: string,
   ): Promise<Document<FHIRMedicationRequest>[]>
-  updateMedicationRequests(
+  replaceMedicationRequests(
     userId: string,
     values: FHIRMedicationRequest[],
   ): Promise<void>
@@ -53,7 +53,7 @@ export interface PatientService {
   getMedicationRecommendations(
     userId: string,
   ): Promise<Document<UserMedicationRecommendation>[]>
-  updateMedicationRecommendations(
+  replaceMedicationRecommendations(
     userId: string,
     recommendations: UserMedicationRecommendation[],
   ): Promise<void>

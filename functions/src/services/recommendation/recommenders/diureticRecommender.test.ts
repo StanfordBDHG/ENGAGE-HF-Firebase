@@ -57,27 +57,11 @@ describe('DiureticRecommender', () => {
           reference:
             'users/mockPatient/medicationRequests/mockMedicationRequest',
         },
-        request: new FHIRMedicationRequest({
-          medicationReference: {
-            reference: DrugReference.furosemide20,
-          },
-          dosageInstruction: [
-            {
-              timing: {
-                repeat: {
-                  timeOfDay: ['08:00'],
-                },
-              },
-              doseAndRate: [
-                {
-                  doseQuantity: {
-                    value: 1,
-                    unit: 'tablet',
-                  },
-                },
-              ],
-            },
-          ],
+        request: FHIRMedicationRequest.create({
+          medicationReference: DrugReference.furosemide20,
+          medicationReferenceDisplay: 'Furosemide 20mg Oral Tablet',
+          frequencyPerDay: 1,
+          quantity: 1,
         }),
         drugReference: {
           reference: DrugReference.furosemide20,

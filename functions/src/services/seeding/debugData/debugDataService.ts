@@ -122,7 +122,7 @@ export class DebugDataService extends SeedingService {
     const values = [
       FHIRMedicationRequest.create({
         frequencyPerDay: 2,
-        drugReference: DrugReference.eplerenone25,
+        medicationReference: DrugReference.eplerenone25,
         quantity: 2,
       }),
     ]

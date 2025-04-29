@@ -17,6 +17,7 @@ import { dateConverter } from '../helpers/dateConverter.js'
 import { Lazy } from '../helpers/lazy.js'
 import { optionalish } from '../helpers/optionalish.js'
 import { SchemaConverter } from '../helpers/schemaConverter.js'
+import { fhirQuantityConverter } from './baseTypes/fhirQuantity.js'
 
 const fhirQuestionnaireResponseItemBaseConverter = new SchemaConverter({
   schema: z.object({
@@ -25,6 +26,14 @@ const fhirQuestionnaireResponseItemBaseConverter = new SchemaConverter({
         .object({
           valueCoding: optionalish(
             z.lazy(() => fhirCodingConverter.value.schema),
+          ),
+          valueDate: optionalish(dateConverter.schema),
+          valueString: optionalish(z.string()),
+          valueBoolean: optionalish(z.boolean()),
+          valueInteger: optionalish(z.number().int()),
+          valueDecimal: optionalish(z.number()),
+          valueQuantity: optionalish(
+            z.lazy(() => fhirQuantityConverter.value.schema),
           ),
         })
         .array(),
@@ -37,6 +46,16 @@ const fhirQuestionnaireResponseItemBaseConverter = new SchemaConverter({
         valueCoding:
           value.valueCoding ?
             fhirCodingConverter.value.encode(value.valueCoding)
+          : null,
+        valueDate:
+          value.valueDate ? dateConverter.encode(value.valueDate) : null,
+        valueString: value.valueString ?? null,
+        valueBoolean: value.valueBoolean ?? null,
+        valueInteger: value.valueInteger ?? null,
+        valueDecimal: value.valueDecimal ?? null,
+        valueQuantity:
+          value.valueQuantity ?
+            fhirQuantityConverter.value.encode(value.valueQuantity)
           : null,
       })) ?? null,
     linkId: object.linkId ?? null,

@@ -220,11 +220,10 @@ export class RxNormService {
     if (minimumDailyDose) {
       result.extension.push({
         url: FHIRExtensionUrl.minimumDailyDose,
-        valueMedicationRequest: new FHIRMedicationRequest({
-          medicationReference: {
-            reference: `medications/${rxcui}/drugs/${minimumDailyDose.drug}`,
-            display: drugs[minimumDailyDose.drug].code?.coding?.at(0)?.display,
-          },
+        valueMedicationRequest: FHIRMedicationRequest.create({
+          medicationReference: `medications/${rxcui}/drugs/${minimumDailyDose.drug}`,
+          medicationReferenceDisplay:
+            drugs[minimumDailyDose.drug].code?.coding?.at(0)?.display,
           extension: [
             {
               url: FHIRExtensionUrl.totalDailyDose,
@@ -241,35 +240,18 @@ export class RxNormService {
               ),
             },
           ],
-          dosageInstruction: [
-            {
-              timing: {
-                repeat: {
-                  frequency: minimumDailyDose.frequency,
-                  period: 1,
-                  periodUnit: 'd',
-                },
-              },
-              doseAndRate: [
-                {
-                  doseQuantity: QuantityUnit.tablet.fhirQuantity(
-                    minimumDailyDose.quantity,
-                  ),
-                },
-              ],
-            },
-          ],
+          frequencyPerDay: minimumDailyDose.frequency,
+          quantity: minimumDailyDose.quantity,
         }),
       })
     }
     if (targetDailyDose) {
       result.extension.push({
         url: FHIRExtensionUrl.targetDailyDose,
-        valueMedicationRequest: new FHIRMedicationRequest({
-          medicationReference: {
-            reference: `medications/${rxcui}/drugs/${targetDailyDose.drug}`,
-            display: drugs[targetDailyDose.drug].code?.coding?.at(0)?.display,
-          },
+        valueMedicationRequest: FHIRMedicationRequest.create({
+          medicationReference: `medications/${rxcui}/drugs/${targetDailyDose.drug}`,
+          medicationReferenceDisplay:
+            drugs[targetDailyDose.drug].code?.coding?.at(0)?.display,
           extension: [
             {
               url: FHIRExtensionUrl.totalDailyDose,
@@ -286,24 +268,8 @@ export class RxNormService {
               ),
             },
           ],
-          dosageInstruction: [
-            {
-              timing: {
-                repeat: {
-                  frequency: targetDailyDose.frequency,
-                  period: 1,
-                  periodUnit: 'd',
-                },
-              },
-              doseAndRate: [
-                {
-                  doseQuantity: QuantityUnit.tablet.fhirQuantity(
-                    targetDailyDose.quantity,
-                  ),
-                },
-              ],
-            },
-          ],
+          frequencyPerDay: targetDailyDose.frequency,
+          quantity: targetDailyDose.quantity,
         }),
       })
     }

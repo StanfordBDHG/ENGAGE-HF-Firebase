@@ -28,6 +28,7 @@ export enum LoincCode {
   systolicBloodPressure = '8480-6',
   diastolicBloodPressure = '8462-4',
   bodyWeight = '29463-7',
+  dryWeight = '8340-2',
   heartRate = '8867-4',
   creatinine = '2160-0',
   estimatedGlomerularFiltrationRate = '98979-8',

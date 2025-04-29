@@ -495,7 +495,7 @@ export class TriggerService {
       `TriggerService.updateRecommendationsForUser(${userId}): Computed ${recommendations.length} recommendations`,
     )
 
-    await patientService.updateMedicationRecommendations(
+    await patientService.replaceMedicationRecommendations(
       userId,
       recommendations,
     )

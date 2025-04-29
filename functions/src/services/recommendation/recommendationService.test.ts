@@ -146,140 +146,140 @@ function getMedicationRequest(
       return undefined
     case 'bisoprolol 2.5mg daily':
       return FHIRMedicationRequest.create({
-        drugReference: DrugReference.bisoprolol5,
+        medicationReference: DrugReference.bisoprolol5,
         frequencyPerDay: 1,
         quantity: 0.5,
       })
     case 'bisoprolol 10mg daily':
       return FHIRMedicationRequest.create({
-        drugReference: DrugReference.bisoprolol5,
+        medicationReference: DrugReference.bisoprolol5,
         frequencyPerDay: 2,
         quantity: 1,
       })
     case 'carvedilol 6.25 daily (3.125 bid)':
       return FHIRMedicationRequest.create({
-        drugReference: DrugReference.carvedilol3_125,
+        medicationReference: DrugReference.carvedilol3_125,
         frequencyPerDay: 2,
         quantity: 1,
       })
     case 'carvedilol 50mg daily (25mg twice daily)':
       return FHIRMedicationRequest.create({
-        drugReference: DrugReference.carvedilol25,
+        medicationReference: DrugReference.carvedilol25,
         frequencyPerDay: 2,
         quantity: 1,
       })
     case 'carvedilol 50mg   daily':
     case 'carvedilol 50mg  daily':
       return FHIRMedicationRequest.create({
-        drugReference: DrugReference.carvedilol25,
+        medicationReference: DrugReference.carvedilol25,
         frequencyPerDay: 1,
         quantity: 2,
       })
     case 'dapagliflozin 5mg daily':
       return FHIRMedicationRequest.create({
-        drugReference: DrugReference.dapagliflozin5,
+        medicationReference: DrugReference.dapagliflozin5,
         frequencyPerDay: 1,
         quantity: 1,
       })
     case 'dapagliflozin 10mg daily':
       return FHIRMedicationRequest.create({
-        drugReference: DrugReference.dapagliflozin5,
+        medicationReference: DrugReference.dapagliflozin5,
         frequencyPerDay: 1,
         quantity: 2,
       })
     case 'empagliflozin 5mg daily':
       return FHIRMedicationRequest.create({
-        drugReference: DrugReference.empagliflozin10,
+        medicationReference: DrugReference.empagliflozin10,
         frequencyPerDay: 1,
         quantity: 0.5,
       })
     case 'empagliflozin 10mg daily':
       return FHIRMedicationRequest.create({
-        drugReference: DrugReference.empagliflozin10,
+        medicationReference: DrugReference.empagliflozin10,
         frequencyPerDay: 1,
         quantity: 1,
       })
     case 'eplerenone 25mg daily':
       return FHIRMedicationRequest.create({
-        drugReference: DrugReference.eplerenone25,
+        medicationReference: DrugReference.eplerenone25,
         frequencyPerDay: 1,
         quantity: 1,
       })
     case 'eplerenone 50mg daily':
       return FHIRMedicationRequest.create({
-        drugReference: DrugReference.eplerenone25,
+        medicationReference: DrugReference.eplerenone25,
         frequencyPerDay: 1,
         quantity: 2,
       })
     case 'lisinopril 5mg daily':
       return FHIRMedicationRequest.create({
-        drugReference: DrugReference.lisinopril5,
+        medicationReference: DrugReference.lisinopril5,
         frequencyPerDay: 1,
         quantity: 1,
       })
     case 'lisinopril 40mg daily':
       return FHIRMedicationRequest.create({
-        drugReference: DrugReference.lisinopril5,
+        medicationReference: DrugReference.lisinopril5,
         frequencyPerDay: 4,
         quantity: 2,
       })
     case 'losartan 25mg daily':
       return FHIRMedicationRequest.create({
-        drugReference: DrugReference.losartan25,
+        medicationReference: DrugReference.losartan25,
         frequencyPerDay: 1,
         quantity: 1,
       })
     case 'losartan 150mg daily':
       return FHIRMedicationRequest.create({
-        drugReference: DrugReference.losartan100,
+        medicationReference: DrugReference.losartan100,
         frequencyPerDay: 1,
         quantity: 1.5,
       })
     case 'metoprolol 12.5mg daily':
       return FHIRMedicationRequest.create({
-        drugReference: DrugReference.metoprololSuccinate25Tablet,
+        medicationReference: DrugReference.metoprololSuccinate25Tablet,
         frequencyPerDay: 1,
         quantity: 0.5,
       })
     case 'metoprolol 200mg daily':
       return FHIRMedicationRequest.create({
-        drugReference: DrugReference.metoprololSuccinate25Tablet,
+        medicationReference: DrugReference.metoprololSuccinate25Tablet,
         frequencyPerDay: 2,
         quantity: 4,
       })
     case 'spironolactone 12.5 daily':
       return FHIRMedicationRequest.create({
-        drugReference: DrugReference.spironolactone25,
+        medicationReference: DrugReference.spironolactone25,
         frequencyPerDay: 1,
         quantity: 0.5,
       })
     case 'spironolactone 25mg daily':
       return FHIRMedicationRequest.create({
-        drugReference: DrugReference.spironolactone25,
+        medicationReference: DrugReference.spironolactone25,
         frequencyPerDay: 1,
         quantity: 1,
       })
     case 'sacubitril-valsartan 100mg daily (24-26mg twice daily)':
       return FHIRMedicationRequest.create({
-        drugReference: DrugReference.sacubitrilValsartan24_26,
+        medicationReference: DrugReference.sacubitrilValsartan24_26,
         frequencyPerDay: 2,
         quantity: 1,
       })
     case 'sacubitril-valsartan 200mg daily (49-51mg twice daily)':
       return FHIRMedicationRequest.create({
-        drugReference: DrugReference.sacubitrilValsartan49_51,
+        medicationReference: DrugReference.sacubitrilValsartan49_51,
         frequencyPerDay: 2,
         quantity: 1,
       })
     case 'sacubitril-valsartan 400mg daily (97-103mg twice daily)':
       return FHIRMedicationRequest.create({
-        drugReference: DrugReference.sacubitrilValsartan97_103,
+        medicationReference: DrugReference.sacubitrilValsartan97_103,
         frequencyPerDay: 1,
         quantity: 2,
       })
     case 'valsartan 40mg':
       return FHIRMedicationRequest.create({
-        drugReference: DrugReference.valsartan40,
+        medicationReference: DrugReference.valsartan40,
         frequencyPerDay: 1,
         quantity: 1,
       })

@@ -108,7 +108,7 @@ export class DatabasePatientService implements PatientService {
     )
   }
 
-  async updateMedicationRequests(
+  async replaceMedicationRequests(
     userId: string,
     values: FHIRMedicationRequest[],
   ): Promise<void> {
@@ -170,7 +170,7 @@ export class DatabasePatientService implements PatientService {
     })
   }
 
-  async updateMedicationRecommendations(
+  async replaceMedicationRecommendations(
     userId: string,
     newRecommendations: UserMedicationRecommendation[],
   ): Promise<void> {
@@ -289,7 +289,7 @@ export class DatabasePatientService implements PatientService {
           .orderBy('effectiveDateTime', 'desc')
           .limit(1),
     )
-    return result.at(0)?.content.bodyWeight(QuantityUnit.lbs)
+    return result.at(0)?.content.dryWeight(QuantityUnit.lbs)
   }
 
   async getMostRecentEstimatedGlomerularFiltrationRateObservation(

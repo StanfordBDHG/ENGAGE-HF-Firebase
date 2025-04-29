@@ -9,68 +9,113 @@
 import {
   type Observation,
   type FHIRQuestionnaireResponse,
+  FHIRMedicationRequest,
+  LoincCode,
+  UserSex,
+  MedicationClassReference,
+  QuantityUnit,
+  dateConverter,
 } from '@stanfordbdhg/engagehf-models'
 import { type Document } from '../database/databaseService.js'
+import { z } from 'zod'
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-export interface QuestionnaireResponseMedication {
-  code: string
+export interface QuestionnaireResponseMedicationRequests {
+  reference: string
+  display: string
   quantity: number
   frequency: number
 }
 
 export abstract class QuestionnaireResponseService {
-  // Methods
+  // Methods - Abstract
 
   abstract handle(
     userId: string,
     response: Document<FHIRQuestionnaireResponse>,
   ): Promise<boolean>
 
-  // Helpers - Personal information
+  // Methods - Protected
 
-  protected extractDateOfBirth(
+  protected extractPersonalInfo(
     response: FHIRQuestionnaireResponse,
-  ): Date | null {
+  ): { dateOfBirth: Date; sex: UserSex } | null {
+    try {
+      const dateOfBirth = response
+        .leafResponseItem('dateOfBirth')
+        ?.answer?.at(0)?.valueDate
+      if (dateOfBirth === undefined) return null
+
+      const sex = z
+        .nativeEnum(UserSex)
+        .parse(
+          response.leafResponseItem('sex')?.answer?.at(0)?.valueCoding?.code,
+        )
+      return {
+        dateOfBirth,
+        sex,
+      }
+    } catch {}
     return null
   }
 
-  protected extractSex(response: FHIRQuestionnaireResponse) {
-    return null
-  }
-
-  // Helpers - Lab values
-
-  protected extractCreatinine(
+  protected extractLabValue(
     response: FHIRQuestionnaireResponse,
+    options: {
+      code: LoincCode
+      unit: QuantityUnit
+    },
   ): Observation | null {
+    const dateAnswer = response
+      .leafResponseItem(options.code + '.date')
+      ?.answer?.at(0)?.valueDate
+    if (dateAnswer === undefined) return null
+
+    const quantityAnswer = response
+      .leafResponseItem(options.code + '.value')
+      ?.answer?.at(0)?.valueQuantity
+
+    const valueInExpectedUnit = options.unit.valueOf(quantityAnswer)
+    if (valueInExpectedUnit !== undefined) {
+      return {
+        value: valueInExpectedUnit,
+        unit: options.unit,
+        date: dateAnswer,
+      }
+    }
+
+    const actualValue = quantityAnswer?.value
+    const actualUnit = QuantityUnit.allValues.find(
+      (unit) => unit.code == quantityAnswer?.unit,
+    )
+    if (actualValue !== undefined && actualUnit !== undefined) {
+      return {
+        value: actualValue,
+        unit: actualUnit,
+        date: dateAnswer,
+      }
+    }
+
     return null
   }
 
-  protected extractDryWeight(
-    response: FHIRQuestionnaireResponse,
-  ): Observation | null {
-    return null
+  protected extractMedicationRequests(response: FHIRQuestionnaireResponse): {
+    requests: FHIRMedicationRequest[]
+    ignore: MedicationClassReference[]
+  } {
+    return {
+      requests: [],
+      ignore: [],
+    }
   }
 
-  protected extractEstimatedGlomerularFiltrationRate(
+  // Helpers
+
+  private extractDoubleValue(
     response: FHIRQuestionnaireResponse,
-  ): Observation | null {
+    code: string,
+  ): number | null {
     return null
-  }
-
-  protected extractPotassium(
-    response: FHIRQuestionnaireResponse,
-  ): Observation | null {
-    return null
-  }
-
-  // Helpers - Medications
-
-  protected extractMedications(
-    response: FHIRQuestionnaireResponse,
-  ): QuestionnaireResponseMedication[] {
-    return []
   }
 }
