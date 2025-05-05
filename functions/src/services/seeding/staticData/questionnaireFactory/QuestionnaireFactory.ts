@@ -21,10 +21,16 @@ import {
   FHIRQuestionnaireItemEnableWhenOperator,
   FHIRQuestionnaireItemType,
   FHIRQuestionnairePublicationStatus,
+  LoincCode,
   MedicationClassReference,
   QuantityUnit,
 } from '@stanfordbdhg/engagehf-models'
 import { type FHIRUsageContext } from '@stanfordbdhg/engagehf-models/lib/fhir/baseTypes/fhirUsageContext'
+import {
+  medicationClassesForGroup,
+  MedicationGroup,
+  QuestionnaireLinkId,
+} from './questionnaireLinkIds.js'
 
 // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-parameters
 export abstract class QuestionnaireFactory<Input> {
@@ -34,18 +40,61 @@ export abstract class QuestionnaireFactory<Input> {
 
   // Helper functions - ENGAGE-HF specific
 
+  protected appointmentInputPages(): FHIRQuestionnaireItem[] {
+    const linkIds = QuestionnaireLinkId.appointment
+    return [
+      this.pageItem({
+        linkId: linkIds.page0,
+        text: 'Next appointment',
+        item: [
+          this.displayItem({
+            linkId: linkIds.existsDescription,
+            text: 'Next appointment',
+          }),
+          this.booleanItem({
+            linkId: linkIds.exists,
+            text: 'Do you already have a new appointment scheduled?',
+          }),
+        ],
+      }),
+      this.pageItem({
+        linkId: linkIds.page1,
+        text: 'Next appointment',
+        enableWhen: [
+          {
+            question: linkIds.exists,
+            operator: FHIRQuestionnaireItemEnableWhenOperator.equals,
+            answerBoolean: true,
+          },
+        ],
+        item: [
+          this.displayItem({
+            linkId: linkIds.description,
+            text: 'Upcoming appointment',
+          }),
+          this.dateItem({
+            linkId: linkIds.date,
+            text: 'Date:',
+          }),
+        ],
+      }),
+    ]
+  }
+
   protected labInputPages(): FHIRQuestionnaireItem[] {
     return [
       ...this.labInputPagesForValue({
-        linkId: 'creatinine',
+        loincCode: LoincCode.creatinine,
         title: 'Creatinine',
         name: 'creatinine',
         description:
           'The creatinine level in your body helps understand how your liver handles the drugs you are taking.',
         unit: QuantityUnit.mg_dL,
+        minValue: 0,
+        maxValue: 100,
       }),
       ...this.labInputPagesForValue({
-        linkId: 'egfr',
+        loincCode: LoincCode.estimatedGlomerularFiltrationRate,
         title: 'eGFR',
         name: 'eGFR',
         description:
@@ -55,26 +104,30 @@ export abstract class QuestionnaireFactory<Input> {
         maxValue: 200,
       }),
       ...this.labInputPagesForValue({
-        linkId: randomUUID(),
+        loincCode: LoincCode.potassium,
         title: 'Potassium',
         name: 'potassium',
         description:
           'The potassium level in your body helps understand how your liver handles the drugs you are taking.',
         unit: QuantityUnit.mEq_L,
+        minValue: 0,
+        maxValue: 100,
       }),
       ...this.labInputPagesForValue({
-        linkId: randomUUID(),
+        loincCode: LoincCode.dryWeight,
         title: 'Dry Weight',
         name: 'dry weight',
         description:
           'The dry weight is useful to set a baseline to check that your weight does not increase unnoticed.',
         unit: QuantityUnit.lbs,
+        minValue: 0,
+        maxValue: 1000,
       }),
     ]
   }
 
   protected labInputPagesForValue(input: {
-    linkId: string
+    loincCode: LoincCode
     title: string
     name: string
     description: string
@@ -82,46 +135,46 @@ export abstract class QuestionnaireFactory<Input> {
     minValue?: number
     maxValue?: number
   }): FHIRQuestionnaireItem[] {
-    const existsLinkId = input.linkId + '-exists'
+    const linkIds = QuestionnaireLinkId.labValue(input.loincCode)
     return [
       this.pageItem({
-        linkId: existsLinkId,
+        linkId: linkIds.page0,
         text: input.title,
         item: [
           this.displayItem({
-            linkId: input.linkId + '-exists-description',
+            linkId: linkIds.existsDescription,
             text: input.description,
           }),
           this.booleanItem({
-            linkId: existsLinkId,
+            linkId: linkIds.exists,
             text: `Have you recently received a new ${input.name} value?`,
           }),
         ],
       }),
       this.pageItem({
-        linkId: input.linkId + '-page1',
+        linkId: linkIds.page1,
         text: input.title,
         enableWhen: [
           {
-            question: existsLinkId,
+            question: linkIds.exists,
             operator: FHIRQuestionnaireItemEnableWhenOperator.equals,
             answerBoolean: true,
           },
         ],
         item: [
           this.displayItem({
-            linkId: input.linkId + '-value-description',
+            linkId: linkIds.description,
             text: input.description,
           }),
           this.decimalItem({
-            linkId: input.linkId + '-value',
+            linkId: linkIds.number,
             text: `${input.title} (${input.unit.unit}):`,
             unit: input.unit.unit,
             minValue: input.minValue,
             maxValue: input.maxValue,
           }),
           this.dateItem({
-            linkId: input.linkId + '-date',
+            linkId: linkIds.date,
             text: 'Date:',
           }),
         ],
@@ -134,60 +187,50 @@ export abstract class QuestionnaireFactory<Input> {
     drugs: Record<string, Record<string, FHIRMedication>>
   }): FHIRQuestionnaireItem[] {
     return [
-      ...this.medicationInputPagesForMedicationClasses({
+      ...this.medicationInputPagesForMedicationGroup({
         medications: input.medications,
         drugs: input.drugs,
-        medicationClasses: [MedicationClassReference.betaBlockers],
         text: 'Beta Blockers',
-        linkId: 'betablockers',
+        group: MedicationGroup.betaBlockers,
       }),
-      ...this.medicationInputPagesForMedicationClasses({
+      ...this.medicationInputPagesForMedicationGroup({
         medications: input.medications,
         drugs: input.drugs,
-        medicationClasses: [
-          MedicationClassReference.angiotensinConvertingEnzymeInhibitors,
-          MedicationClassReference.angiotensinReceptorNeprilysinInhibitors,
-        ],
         text: 'Renin-Angiotensin System Inhibitors (RASI)',
-        linkId: 'rasi',
+        group: MedicationGroup.rasi,
       }),
-      ...this.medicationInputPagesForMedicationClasses({
+      ...this.medicationInputPagesForMedicationGroup({
         medications: input.medications,
         drugs: input.drugs,
-        medicationClasses: [
-          MedicationClassReference.mineralocorticoidReceptorAntagonists,
-        ],
         text: 'Mineralocorticoid Receptor Antagonists (MRA)',
-        linkId: 'mra',
+        group: MedicationGroup.mra,
       }),
-      ...this.medicationInputPagesForMedicationClasses({
+      ...this.medicationInputPagesForMedicationGroup({
         medications: input.medications,
         drugs: input.drugs,
-        medicationClasses: [MedicationClassReference.sglt2inhibitors],
         text: 'SGLT2 Inhibitors (SGLT2i)',
-        linkId: 'sglt2i',
+        group: MedicationGroup.sglt2i,
       }),
-      ...this.medicationInputPagesForMedicationClasses({
+      ...this.medicationInputPagesForMedicationGroup({
         medications: input.medications,
         drugs: input.drugs,
-        medicationClasses: [MedicationClassReference.diuretics],
         text: 'Diuretics',
-        linkId: 'diuretics',
+        group: MedicationGroup.diuretics,
       }),
     ]
   }
 
-  protected medicationInputPagesForMedicationClasses(input: {
-    linkId: string
-    text: string
-    medications: Record<string, FHIRMedication>
+  protected medicationInputPagesForMedicationGroup(input: {
     drugs: Record<string, Record<string, FHIRMedication>>
-    medicationClasses: MedicationClassReference[]
+    medications: Record<string, FHIRMedication>
+    group: MedicationGroup
+    text: string
   }): FHIRQuestionnaireItem[] {
-    const medicationClasses = input.medicationClasses.map((medicationClass) =>
-      medicationClass.toString(),
+    const linkIds = QuestionnaireLinkId.medication(input.group)
+    const medicationClasses = medicationClassesForGroup(input.group).map(
+      (medicationClass) => medicationClass.toString(),
     )
-    const ingredientIds = compactMap(
+    const medicationIds = compactMap(
       Object.entries(input.medications),
       ([id, medication]) =>
         (
@@ -198,80 +241,79 @@ export abstract class QuestionnaireFactory<Input> {
           id
         : undefined,
     )
-    const answers: {
+    const answers: Array<{
       id: string
-      ingredient: FHIRMedication
+      medication: FHIRMedication
       drug: FHIRMedication
       text: string
-    }[] = []
-    for (const ingredientId of ingredientIds) {
-      const ingredient = input.medications[ingredientId]
+    }> = []
+    for (const medicationId of medicationIds) {
+      const medication = input.medications[medicationId]
       for (const [drugId, drug] of Object.entries(
-        input.drugs[ingredientId] ?? {},
+        input.drugs[medicationId] ?? {},
       )) {
-        let text = ingredient.displayName ?? ''
-        if (ingredient.brandNames.length > 0)
-          text += ` (${ingredient.brandNames.join(', ')})`
+        let text = medication.displayName ?? ''
+        if (medication.brandNames.length > 0)
+          text += ` (${medication.brandNames.join(', ')})`
 
         text += `\n${drug.ingredient?.map((i) => i.strength?.numerator?.value ?? 0).join('/') ?? ''} mg ${drug.form?.text ?? ''}`
         answers.push({
-          id: drugId,
-          ingredient: ingredient,
-          drug: drug,
-          text: text,
+          id: `medications/${medicationId}/drugs/${drugId}`,
+          medication,
+          drug,
+          text,
         })
       }
     }
-    const ingredientListText = ingredientIds
+    const medicationListTexts = medicationIds
       .map((id) => {
-        const ingredient = input.medications[id]
-        let text = ingredient.displayName ?? ''
-        if (ingredient.brandNames.length > 0)
-          text += ` (${ingredient.brandNames.join(', ')})`
+        const medication = input.medications[id]
+        let text = medication.displayName ?? ''
+        if (medication.brandNames.length > 0)
+          text += ` (${medication.brandNames.join(', ')})`
         return text
       })
       .join('\n')
-    const existsLinkId = input.linkId + '-exists'
     return [
       this.pageItem({
-        linkId: existsLinkId,
+        linkId: linkIds.page0,
         text: input.text,
         item: [
           this.displayItem({
-            linkId: input.linkId + '-exists-display',
-            text: `Do you take any of the following medications?\n\n${ingredientListText}`,
+            linkId: linkIds.existsDescription,
+            text: `Do you take any of the following medications?\n\n${medicationListTexts}`,
           }),
           this.booleanItem({
-            linkId: existsLinkId,
+            linkId: linkIds.exists,
             text: 'Do you take any medication from the above list?',
           }),
         ],
       }),
       this.pageItem({
-        linkId: input.linkId + '-page1',
+        linkId: linkIds.page1,
         text: input.text,
         enableWhen: [
           {
-            question: existsLinkId,
+            question: linkIds.exists,
             operator: FHIRQuestionnaireItemEnableWhenOperator.equals,
             answerBoolean: true,
           },
         ],
         item: [
           this.displayItem({
-            linkId: input.linkId + '-page1-description',
+            linkId: linkIds.description,
             text: 'Please enter which drug you are taking, how often you take it per day and how many pills/tablets you take per intake.\n\nDo not enter the total amount of pills/tablets you take per day.',
           }),
           this.decimalItem({
-            linkId: input.linkId + '-frequency',
+            linkId: linkIds.frequency,
             text: 'Intake frequency (per day):',
           }),
           this.decimalItem({
-            linkId: input.linkId + '-quantity',
+            linkId: linkIds.quantity,
             text: 'Pills/tablets per intake:',
           }),
           this.radioButtonItem({
-            linkId: input.linkId + '-drug',
+            linkId: linkIds.drug,
             text: 'Which pill/tablet do you take?',
             answerOption: this.valueSetAnswerOptions({
               system: CodingSystem.rxNorm,
@@ -451,11 +493,11 @@ export abstract class QuestionnaireFactory<Input> {
 
   protected valueSetAnswerOptions(input: {
     system?: string
-    values: {
+    values: Array<{
       id?: string
       code: string
       display: string
-    }[]
+    }>
   }): FHIRQuestionnaireItemAnswerOption[] {
     const system = input.system ?? `urn:uuid:${randomUUID()}`
     return input.values.map((option) => ({

@@ -12,6 +12,7 @@ import {
   type FHIRQuestionnaire,
 } from '@stanfordbdhg/engagehf-models'
 import { QuestionnaireFactory } from './questionnaireFactory.js'
+import { QuestionnaireId } from './questionnaireLinkIds.js'
 
 interface DataUpdateQuestionnaireFactoryInput {
   medications: Record<string, FHIRMedication>
@@ -24,7 +25,10 @@ export class DataUpdateQuestionnaireFactory extends QuestionnaireFactory<DataUpd
 
   create(input: DataUpdateQuestionnaireFactoryInput): FHIRQuestionnaire {
     return this.questionnaire({
-      id: randomUUID(),
+      id:
+        input.isPostVisit ?
+          QuestionnaireId.postVisit
+        : QuestionnaireId.dataUpdate,
       title: input.isPostVisit ? 'Post-Visit Survey' : 'Update Survey',
       item: [
         ...this.labInputPages(),
@@ -32,6 +36,7 @@ export class DataUpdateQuestionnaireFactory extends QuestionnaireFactory<DataUpd
           medications: input.medications,
           drugs: input.drugs,
         }),
+        ...this.appointmentInputPages(),
       ],
     })
   }

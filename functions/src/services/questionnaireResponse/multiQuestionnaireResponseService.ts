@@ -6,9 +6,9 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { FHIRQuestionnaireResponse } from '@stanfordbdhg/engagehf-models'
-import { Document } from '../database/databaseService.js'
+import { type FHIRQuestionnaireResponse } from '@stanfordbdhg/engagehf-models'
 import { QuestionnaireResponseService } from './questionnaireResponseService.js'
+import { type Document } from '../database/databaseService.js'
 
 export class MultiQuestionnaireResponseService extends QuestionnaireResponseService {
   // Properties

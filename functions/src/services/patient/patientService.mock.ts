@@ -14,12 +14,12 @@ import {
   FHIRAppointmentStatus,
   FHIRMedicationRequest,
   type FHIRQuestionnaireResponse,
-  LoincCode,
+  type LoincCode,
   type Observation,
   QuantityUnit,
   SymptomScore,
   type UserMedicationRecommendation,
-  UserObservationCollection,
+  type UserObservationCollection,
   type UserShareCode,
 } from '@stanfordbdhg/engagehf-models'
 import { type PatientService } from './patientService.js'
@@ -45,10 +45,12 @@ export class MockPatientService implements PatientService {
   async getEveryAppoinment(
     fromDate: Date,
     toDate: Date,
-  ): Promise<Document<FHIRAppointment>[]> {
+  ): Promise<Array<Document<FHIRAppointment>>> {
     return []
   }
-  async getAppointments(userId: string): Promise<Document<FHIRAppointment>[]> {
+  async getAppointments(
+    userId: string,
+  ): Promise<Array<Document<FHIRAppointment>>> {
     return []
   }
   async getNextAppointment(
@@ -68,11 +70,18 @@ export class MockPatientService implements PatientService {
     }
   }
 
+  async createAppointment(
+    userId: string,
+    appointment: FHIRAppointment,
+  ): Promise<void> {
+    return
+  }
+
   // Methods - Contraindications
 
   async getContraindications(
     userId: string,
-  ): Promise<Document<FHIRAllergyIntolerance>[]> {
+  ): Promise<Array<Document<FHIRAllergyIntolerance>>> {
     return []
   }
 
@@ -80,7 +89,7 @@ export class MockPatientService implements PatientService {
 
   async getMedicationRequests(
     userId: string,
-  ): Promise<Document<FHIRMedicationRequest>[]> {
+  ): Promise<Array<Document<FHIRMedicationRequest>>> {
     const values: FHIRMedicationRequest[] = [
       FHIRMedicationRequest.create({
         medicationReference: DrugReference.carvedilol3_125,
@@ -105,7 +114,7 @@ export class MockPatientService implements PatientService {
 
   async getMedicationRecommendations(
     userId: string,
-  ): Promise<Document<UserMedicationRecommendation>[]> {
+  ): Promise<Array<Document<UserMedicationRecommendation>>> {
     const values: UserMedicationRecommendation[] = []
     return values.map((value, index) => ({
       id: index.toString(),
@@ -285,18 +294,20 @@ export class MockPatientService implements PatientService {
 
   async createObservations(
     userId: string,
-    values: {
+    values: Array<{
       observation: Observation
       loincCode: LoincCode
       collection: UserObservationCollection
-    }[],
-  ): Promise<void> {}
+    }>,
+  ): Promise<void> {
+    return
+  }
 
   // Methods - Questionnaire Responses
 
   async getQuestionnaireResponses(
     userId: string,
-  ): Promise<Document<FHIRQuestionnaireResponse>[]> {
+  ): Promise<Array<Document<FHIRQuestionnaireResponse>>> {
     return [mockQuestionnaireResponse()].map((value, index) => ({
       id: index.toString(),
       lastUpdate: new Date(),
@@ -308,7 +319,7 @@ export class MockPatientService implements PatientService {
   async getSymptomScores(
     userId: string,
     options?: { limit?: number },
-  ): Promise<Document<SymptomScore>[]> {
+  ): Promise<Array<Document<SymptomScore>>> {
     const values: SymptomScore[] = [
       new SymptomScore({
         questionnaireResponseId: '4',

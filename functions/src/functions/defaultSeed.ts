@@ -28,13 +28,13 @@ async function _seedClinicianCollections(input: {
   debugData: DebugDataService
   trigger: TriggerService
   userId: string
-  patients: {
+  patients: Array<{
     id: string
     name: string | undefined
-  }[]
+  }>
   components: UserDebugDataComponent[]
 }): Promise<void> {
-  const promises: Promise<void>[] = []
+  const promises: Array<Promise<void>> = []
   if (input.components.includes(UserDebugDataComponent.messages))
     promises.push(
       input.debugData.seedClinicianMessages(input.userId, input.patients),
@@ -49,7 +49,7 @@ async function _seedPatientCollections(input: {
   components: UserDebugDataComponent[]
   date: Date
 }): Promise<void> {
-  const promises: Promise<void>[] = []
+  const promises: Array<Promise<void>> = []
   if (input.components.includes(UserDebugDataComponent.appointments))
     promises.push(
       input.debugData.seedUserAppointments(input.userId, input.date),

@@ -174,7 +174,7 @@ export class RxNormService {
     brandNames: string[],
     medicationClassId: string,
     medicationClasses: Map<string, MedicationClass>,
-    ingredients: { rxcui: string; name: string }[],
+    ingredients: Array<{ rxcui: string; name: string }>,
     minimumDailyDose: MedicationDailyDoseSpecification | undefined,
     targetDailyDose: MedicationDailyDoseSpecification | undefined,
     drugs: Record<string, FHIRMedication>,
@@ -285,7 +285,7 @@ export class RxNormService {
 
   private async buildFHIRDrug(
     rxcui: string,
-    ingredients: { rxcui: string; name: string }[],
+    ingredients: Array<{ rxcui: string; name: string }>,
     fallbackTerms: RxTermInfo | undefined,
   ): Promise<FHIRMedication> {
     let rxTermInfo = await this.api.getAllRxTermInfo(rxcui)

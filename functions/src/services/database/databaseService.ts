@@ -30,7 +30,7 @@ export interface DatabaseService {
     query: (
       collectionsService: CollectionsService,
     ) => FirebaseFirestore.Query<T>,
-  ): Promise<Document<T>[]>
+  ): Promise<Array<Document<T>>>
 
   getDocument<T>(
     reference: (
@@ -50,7 +50,9 @@ export interface DatabaseService {
     collection: (
       collectionsService: CollectionsService,
     ) => FirebaseFirestore.CollectionReference<T>,
-    diffs: (existing: Document<T>[]) => Promise<ReplaceDiff<T>[]>,
+    diffs: (
+      existing: Array<Document<T>>,
+    ) => Promise<Array<ReplaceDiff<T>>> | Array<ReplaceDiff<T>>,
   ): Promise<void>
 
   listCollections<T>(

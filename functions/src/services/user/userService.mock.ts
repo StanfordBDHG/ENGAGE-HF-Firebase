@@ -12,7 +12,7 @@ import {
   User,
   type UserAuth,
   UserRegistration,
-  UserSex,
+  type UserSex,
   UserType,
 } from '@stanfordbdhg/engagehf-models'
 import { type UserService } from './userService.js'
@@ -103,7 +103,7 @@ export class MockUserService implements UserService {
     return undefined
   }
 
-  async getOrganizations(): Promise<Document<Organization>[]> {
+  async getOrganizations(): Promise<Array<Document<Organization>>> {
     return []
   }
 
@@ -145,11 +145,11 @@ export class MockUserService implements UserService {
     return
   }
 
-  async getAllOwners(organizationId: string): Promise<Document<User>[]> {
+  async getAllOwners(organizationId: string): Promise<Array<Document<User>>> {
     return []
   }
 
-  async getAllPatients(): Promise<Document<User>[]> {
+  async getAllPatients(): Promise<Array<Document<User>>> {
     return []
   }
 

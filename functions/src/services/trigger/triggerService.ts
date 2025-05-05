@@ -87,26 +87,27 @@ export class TriggerService {
       `questionnaireResponseWritten(${userId}, ${questionnaireResponseId}): beforeData: ${beforeData !== undefined ? 'exists' : 'undefined'}, afterData: ${afterData !== undefined ? 'exists' : 'undefined'}`,
     )
 
-    /*
-    const patientService = this.factory.patient()
-    const questionnaireResponseService = this.factory.questionnaireResponse()
+    try {
+      const questionnaireResponseService = this.factory.questionnaireResponse()
+      if (afterData !== undefined) {
+        const handled = await questionnaireResponseService.handle(userId, {
+          id: questionnaireResponseId,
+          path: `users/${userId}/questionnaireResponses/${questionnaireResponseId}`,
+          lastUpdate: new Date(),
+          content: afterData,
+        })
 
-    const extractedResponse =
-      afterData ?
-        await questionnaireResponseService.extract(afterData)
-      : undefined
-
-    logger.debug(
-      `questionnaireResponseWritten(${userId}, ${questionnaireResponseId}): Extracted new questionnaire response: ${JSON.stringify(extractedResponse)}.`,
-    )
-    await patientService.updateSymptomScore(
-      userId,
-      questionnaireResponseId,
-      extractedResponse?.symptomScore ?? undefined,
-    )
-      */
-
-    // TODO: Handle remaining questionaire response data
+        logger.debug(
+          `questionnaireResponseWritten(${userId}, ${questionnaireResponseId}): Handled questionnaire response: ${handled}`,
+        )
+      }
+    } catch (error) {
+      logger.error(
+        `questionnaireResponseWritten(${userId}, ${questionnaireResponseId}): Error handling questionnaire response: ${String(
+          error,
+        )}`,
+      )
+    }
 
     const messageService = this.factory.message()
     if (beforeData === undefined && afterData !== undefined) {
@@ -648,7 +649,7 @@ export class TriggerService {
   }
 
   private async addDailyReminderMessages(options: {
-    patients: Document<User>[]
+    patients: Array<Document<User>>
     messageService: MessageService
     now: Date
   }) {
@@ -712,7 +713,7 @@ export class TriggerService {
   }
 
   private async addInactivityReminderMessages(options: {
-    patients: Document<User>[]
+    patients: Array<Document<User>>
     now: Date
     messageService: MessageService
     userService: UserService

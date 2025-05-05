@@ -14,7 +14,7 @@ import {
   type Organization,
   User,
   type UserAuth,
-  UserSex,
+  type UserSex,
   UserType,
 } from '@stanfordbdhg/engagehf-models'
 import { type Auth } from 'firebase-admin/auth'
@@ -272,7 +272,7 @@ export class DatabaseUserService implements UserService {
     return result.at(0)
   }
 
-  async getOrganizations(): Promise<Document<Organization>[]> {
+  async getOrganizations(): Promise<Array<Document<Organization>>> {
     return this.databaseService.getQuery<Organization>(
       (collections) => collections.organizations,
     )
@@ -320,7 +320,7 @@ export class DatabaseUserService implements UserService {
     await this.updateClaims(userId)
   }
 
-  async getAllOwners(organizationId: string): Promise<Document<User>[]> {
+  async getAllOwners(organizationId: string): Promise<Array<Document<User>>> {
     return this.databaseService.getQuery<User>((collections) =>
       collections.users
         .where('type', '==', UserType.owner)
@@ -328,7 +328,7 @@ export class DatabaseUserService implements UserService {
     )
   }
 
-  async getAllPatients(): Promise<Document<User>[]> {
+  async getAllPatients(): Promise<Array<Document<User>>> {
     return this.databaseService.getQuery<User>((collections) =>
       collections.users.where('type', '==', UserType.patient),
     )
@@ -362,7 +362,7 @@ export class DatabaseUserService implements UserService {
 
   async deleteExpiredAccounts(): Promise<void> {
     const oneDayAgo = advanceDateByDays(new Date(), -1)
-    const promises: Promise<void>[] = []
+    const promises: Array<Promise<void>> = []
     let pageToken: string | undefined = undefined
     do {
       const usersResult = await this.auth.listUsers(1_000, pageToken)

@@ -12,14 +12,13 @@ import {
   type BulkWriterOptions,
   type Transaction,
   type Firestore,
-  DocumentSnapshot,
-  QueryDocumentSnapshot,
+  type QueryDocumentSnapshot,
 } from 'firebase-admin/firestore'
 import { CollectionsService } from './collections.js'
 import {
   type Document,
   type DatabaseService,
-  ReplaceDiff,
+  type ReplaceDiff,
 } from './databaseService.js'
 
 export class FirestoreService implements DatabaseService {
@@ -42,9 +41,9 @@ export class FirestoreService implements DatabaseService {
     query: (
       collectionsService: CollectionsService,
     ) => FirebaseFirestore.Query<T>,
-  ): Promise<Document<T>[]> {
+  ): Promise<Array<Document<T>>> {
     const collection = await query(this.collectionsService.value).get()
-    return collection.docs.map(this.queryDoc)
+    return collection.docs.map((doc) => this.queryDoc(doc))
   }
 
   async getDocument<T>(
@@ -82,12 +81,14 @@ export class FirestoreService implements DatabaseService {
     collection: (
       collectionsService: CollectionsService,
     ) => FirebaseFirestore.CollectionReference<T>,
-    diffs: (existing: Document<T>[]) => Promise<ReplaceDiff<T>[]>,
+    diffs: (existing: Array<Document<T>>) => Promise<Array<ReplaceDiff<T>>>,
   ): Promise<void> {
     await this.runTransaction(async (collections, transaction) => {
       const collectionRef = collection(collections)
       const existingDocs = await transaction.get(collectionRef)
-      const docsDiffs = await diffs(existingDocs.docs.map(this.queryDoc))
+      const docsDiffs = await diffs(
+        existingDocs.docs.map((doc) => this.queryDoc(doc)),
+      )
       for (const docsDiff of docsDiffs) {
         if (docsDiff.predecessor !== undefined) {
           const ref = collectionRef.doc(docsDiff.predecessor.id)

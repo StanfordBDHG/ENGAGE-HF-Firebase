@@ -10,11 +10,14 @@ import {
   SymptomScore,
   type FHIRQuestionnaireResponse,
 } from '@stanfordbdhg/engagehf-models'
-import { symptomQuestionnaireLinkIds } from './kccqQuestionnaireLinkIds.js'
 import { QuestionnaireResponseService } from './questionnaireResponseService.js'
 import { type SymptomScoreCalculator } from './symptomScore/symptomScoreCalculator.js'
 import { type Document } from '../database/databaseService.js'
 import { type PatientService } from '../patient/patientService.js'
+import {
+  QuestionnaireId,
+  QuestionnaireLinkId,
+} from '../seeding/staticData/questionnaireFactory/questionnaireLinkIds.js'
 
 export class KccqQuestionnaireResponseService extends QuestionnaireResponseService {
   // Properties
@@ -43,6 +46,9 @@ export class KccqQuestionnaireResponseService extends QuestionnaireResponseServi
     userId: string,
     response: Document<FHIRQuestionnaireResponse>,
   ): Promise<boolean> {
+    if (response.content.questionnaire !== QuestionnaireId.kccq.toString())
+      return false
+
     const symptomScore = this.symptomScore(response.content)
     if (symptomScore === null) return false
 
@@ -60,8 +66,7 @@ export class KccqQuestionnaireResponseService extends QuestionnaireResponseServi
   private symptomScore(
     response: FHIRQuestionnaireResponse,
   ): SymptomScore | null {
-    const linkIds = symptomQuestionnaireLinkIds(response.questionnaire)
-    if (linkIds === null) return null
+    const linkIds = QuestionnaireLinkId.kccq
 
     const input = {
       answer1a: this.singleIntCodingAnswer(linkIds.question1a, response),

@@ -6,10 +6,15 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { FHIRQuestionnaireResponse } from '@stanfordbdhg/engagehf-models'
-import { Document } from '../database/databaseService.js'
+import {
+  FHIRAppointment,
+  FHIRAppointmentStatus,
+  type FHIRQuestionnaireResponse,
+} from '@stanfordbdhg/engagehf-models'
 import { QuestionnaireResponseService } from './questionnaireResponseService.js'
-import { PatientService } from '../patient/patientService.js'
+import { type Document } from '../database/databaseService.js'
+import { type PatientService } from '../patient/patientService.js'
+import { QuestionnaireId } from '../seeding/staticData/questionnaireFactory/questionnaireLinkIds.js'
 
 export class DataUpdateQuestionnaireResponseService extends QuestionnaireResponseService {
   // Properties
@@ -29,6 +34,30 @@ export class DataUpdateQuestionnaireResponseService extends QuestionnaireRespons
     userId: string,
     response: Document<FHIRQuestionnaireResponse>,
   ): Promise<boolean> {
-    return false
+    if (
+      response.content.id !== QuestionnaireId.dataUpdate &&
+      response.content.id !== QuestionnaireId.postVisit
+    )
+      return false
+
+    await this.handleLabValues({
+      userId,
+      response,
+      patientService: this.patientService,
+    })
+
+    const medicationRequestContent = this.extractMedicationRequests(
+      response.content,
+    )
+    await this.patientService.replaceMedicationRequests(
+      userId,
+      medicationRequestContent.requests,
+    )
+
+    const appointment = this.extractAppointment(response.content)
+    if (appointment !== null) {
+      await this.patientService.createAppointment(userId, appointment)
+    }
+    return true
   }
 }

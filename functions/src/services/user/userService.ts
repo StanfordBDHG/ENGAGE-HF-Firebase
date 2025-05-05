@@ -7,7 +7,7 @@
 //
 
 import {
-  UserSex,
+  type UserSex,
   type Invitation,
   type Organization,
   type User,
@@ -46,7 +46,7 @@ export interface UserService {
   getOrganizationBySsoProviderId(
     providerId: string,
   ): Promise<Document<Organization> | undefined>
-  getOrganizations(): Promise<Document<Organization>[]>
+  getOrganizations(): Promise<Array<Document<Organization>>>
   getOrganization(
     organizationId: string,
   ): Promise<Document<Organization> | undefined>
@@ -62,8 +62,8 @@ export interface UserService {
   ): Promise<void>
   disableUser(userId: string): Promise<void>
   enableUser(userId: string): Promise<void>
-  getAllOwners(organizationId: string): Promise<Document<User>[]>
-  getAllPatients(): Promise<Document<User>[]>
+  getAllOwners(organizationId: string): Promise<Array<Document<User>>>
+  getAllPatients(): Promise<Array<Document<User>>>
   getUser(userId: string): Promise<Document<User> | undefined>
   updateLastActiveDate(userId: string): Promise<void>
   deleteUser(userId: string): Promise<void>

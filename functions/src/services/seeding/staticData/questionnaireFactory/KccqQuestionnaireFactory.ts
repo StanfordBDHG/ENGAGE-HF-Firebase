@@ -11,11 +11,12 @@ import {
   type FHIRQuestionnaireItem,
 } from '@stanfordbdhg/engagehf-models'
 import { QuestionnaireFactory } from './questionnaireFactory.js'
+import { QuestionnaireId, QuestionnaireLinkId } from './questionnaireLinkIds.js'
 
 export class KccqQuestionnaireFactory extends QuestionnaireFactory<void> {
   create(): FHIRQuestionnaire {
     return this.questionnaire({
-      id: '9528ccc2-d1be-4c4c-9c3c-19f78e51ec19',
+      id: QuestionnaireId.kccq,
       title: 'KCCQ-12',
       useContext: [
         {
@@ -36,7 +37,7 @@ export class KccqQuestionnaireFactory extends QuestionnaireFactory<void> {
       ],
       item: [
         this.displayItem({
-          linkId: '73490535-203f-44b2-d1b7-7c0a786c16f9',
+          linkId: QuestionnaireLinkId.kccq.introduction,
           text: 'The following questions refer to your heart failure and how it may affect your life. Please read and complete the following questions. There are no right or wrong answers. Please mark the answer that best applies to you.\n\nThese results will be send to your care team.',
         }),
         this.question1(),
@@ -56,11 +57,11 @@ export class KccqQuestionnaireFactory extends QuestionnaireFactory<void> {
 
   private question1(): FHIRQuestionnaireItem {
     return this.pageItem({
-      linkId: 'c0b3bef6-1e2d-4621-d82e-b73069574dc4',
+      linkId: QuestionnaireLinkId.kccq.question1,
       text: 'Heart failure affects different people in different ways. Some feel shortness of breath while others feel fatigue. Please indicate how much you are limited by heart failure (shortness of breath or fatigue) in your ability to do the following activities over the past 2 weeks.',
       item: [
         this.radioButtonItem({
-          linkId: 'a459b804-35bf-4792-f1eb-0b52c4e176e1',
+          linkId: QuestionnaireLinkId.kccq.question1a,
           text: 'Showering/bathing',
           answerOption: this.valueSetAnswerOptions({
             system: 'urn:uuid:8290e1d8-8141-4982-deb9-57f9d2e13a14',
@@ -99,7 +100,7 @@ export class KccqQuestionnaireFactory extends QuestionnaireFactory<void> {
           }),
         }),
         this.radioButtonItem({
-          linkId: 'cf9c5031-1ed5-438a-fc7d-dc69234015a0',
+          linkId: QuestionnaireLinkId.kccq.question1b,
           text: 'Walking 1 block on level ground',
           answerOption: this.valueSetAnswerOptions({
             system: 'urn:uuid:8290e1d8-8141-4982-deb9-57f9d2e13a14',
@@ -138,7 +139,7 @@ export class KccqQuestionnaireFactory extends QuestionnaireFactory<void> {
           }),
         }),
         this.radioButtonItem({
-          linkId: '1fad0f81-b2a9-4c8f-9a78-4b2a5d7aef07',
+          linkId: QuestionnaireLinkId.kccq.question1c,
           text: 'Hurrying or jogging (as if to catch a bus)',
           answerOption: this.valueSetAnswerOptions({
             system: 'urn:uuid:8290e1d8-8141-4982-deb9-57f9d2e13a14',
@@ -182,7 +183,7 @@ export class KccqQuestionnaireFactory extends QuestionnaireFactory<void> {
 
   private question2(): FHIRQuestionnaireItem {
     return this.radioButtonItem({
-      linkId: '692bda7d-a616-43d1-8dc6-8291f6460ab2',
+      linkId: QuestionnaireLinkId.kccq.question2,
       text: 'Over the past 2 weeks, how many times did you have swelling in your feet, ankles or legs when you woke up in the morning?',
       answerOption: this.valueSetAnswerOptions({
         system: 'urn:uuid:2b2f9a9a-e721-495a-82d6-fbc1b22a27b2',
@@ -219,7 +220,7 @@ export class KccqQuestionnaireFactory extends QuestionnaireFactory<void> {
 
   private question3(): FHIRQuestionnaireItem {
     return this.radioButtonItem({
-      linkId: 'b1734b9e-1d16-4238-8556-5ae3fa0ba913',
+      linkId: QuestionnaireLinkId.kccq.question3,
       text: 'Over the past 2 weeks, on average, how many times has fatigue limited your ability to do what you wanted',
       answerOption: this.valueSetAnswerOptions({
         system: 'urn:uuid:2b2f9a9a-e721-495a-82d6-fbc1b22a27b2',
@@ -266,7 +267,7 @@ export class KccqQuestionnaireFactory extends QuestionnaireFactory<void> {
 
   private question4(): FHIRQuestionnaireItem {
     return this.radioButtonItem({
-      linkId: '57f37fb3-a0ad-4b1f-844e-3f67d9b76946',
+      linkId: QuestionnaireLinkId.kccq.question4,
       text: 'Over the past 2 weeks, on average, how many times has shortness of breath limited your ability to do what you wanted',
       answerOption: this.valueSetAnswerOptions({
         system: 'urn:uuid:2b2f9a9a-e721-495a-82d6-fbc1b22a27b2',
@@ -313,7 +314,7 @@ export class KccqQuestionnaireFactory extends QuestionnaireFactory<void> {
 
   private question5(): FHIRQuestionnaireItem {
     return this.radioButtonItem({
-      linkId: '396164df-d045-4c56-d710-513297bdc6f2',
+      linkId: QuestionnaireLinkId.kccq.question5,
       text: 'Over the past 2 weeks, on average, how many times have you been forced to sleep sitting up in a chair or with at least 3 pillows to prop you up because of shortness of breath?',
       answerOption: this.valueSetAnswerOptions({
         system: 'urn:uuid:2b2f9a9a-e721-495a-82d6-fbc1b22a27b2',
@@ -350,7 +351,7 @@ export class KccqQuestionnaireFactory extends QuestionnaireFactory<void> {
 
   private question6(): FHIRQuestionnaireItem {
     return this.radioButtonItem({
-      linkId: '75e3f62e-e37d-48a2-f4d9-af2db8922da0',
+      linkId: QuestionnaireLinkId.kccq.question6,
       text: 'Over the past 2 weeks, how much has your heart failure limited your enjoyment of life?',
       answerOption: this.valueSetAnswerOptions({
         system: 'urn:uuid:2b2f9a9a-e721-495a-82d6-fbc1b22a27b2',
@@ -387,7 +388,7 @@ export class KccqQuestionnaireFactory extends QuestionnaireFactory<void> {
 
   private question7(): FHIRQuestionnaireItem {
     return this.radioButtonItem({
-      linkId: 'fce3a16e-c6d8-4bac-8ab5-8f4aee4adc08',
+      linkId: QuestionnaireLinkId.kccq.question7,
       text: 'If you had to spend the rest of your life with your heart failure the way it is right now, how would you feel about this?',
       answerOption: this.valueSetAnswerOptions({
         system: 'urn:uuid:2b2f9a9a-e721-495a-82d6-fbc1b22a27b2',
@@ -424,11 +425,11 @@ export class KccqQuestionnaireFactory extends QuestionnaireFactory<void> {
 
   private question8(): FHIRQuestionnaireItem {
     return this.pageItem({
-      linkId: '8649bc8c-f908-487d-87a4-a97106b1a4c3',
+      linkId: QuestionnaireLinkId.kccq.question8,
       text: 'How much does your heart failure affect your lifestyle? Please indicate how your heart failure may have limited your participation in the following activities over the past 2 weeks.',
       item: [
         this.radioButtonItem({
-          linkId: '8b022e69-127d-4447-8190-39ac645e60e1',
+          linkId: QuestionnaireLinkId.kccq.question8a,
           text: 'Hobbies, recreational activities',
           answerOption: this.valueSetAnswerOptions({
             system: 'urn:uuid:90ab9a5a-0ed7-43e0-9131-75ab9d8b94cf',
@@ -467,7 +468,7 @@ export class KccqQuestionnaireFactory extends QuestionnaireFactory<void> {
           }),
         }),
         this.radioButtonItem({
-          linkId: '1eee7259-da1c-4cba-80a9-e67e684573a1',
+          linkId: QuestionnaireLinkId.kccq.question8b,
           text: 'Working or doing household chores',
           answerOption: this.valueSetAnswerOptions({
             system: 'urn:uuid:90ab9a5a-0ed7-43e0-9131-75ab9d8b94cf',
@@ -506,7 +507,7 @@ export class KccqQuestionnaireFactory extends QuestionnaireFactory<void> {
           }),
         }),
         this.radioButtonItem({
-          linkId: '883a22a8-2f6e-4b41-84b7-0028ed543192',
+          linkId: QuestionnaireLinkId.kccq.question8c,
           text: 'Visiting family or friends out of your home',
           answerOption: this.valueSetAnswerOptions({
             system: 'urn:uuid:90ab9a5a-0ed7-43e0-9131-75ab9d8b94cf',
@@ -550,7 +551,7 @@ export class KccqQuestionnaireFactory extends QuestionnaireFactory<void> {
 
   private question9(): FHIRQuestionnaireItem {
     return this.radioButtonItem({
-      linkId: '24108967-2ff3-40d0-c54f-a7b97bb84d05',
+      linkId: QuestionnaireLinkId.kccq.question9,
       text: 'In the last two weeks, how much has your dizziness affected you?',
       answerOption: this.valueSetAnswerOptions({
         system: 'urn:uuid:2b2f9a9a-e721-495a-82d6-fbc1b22a27b2',

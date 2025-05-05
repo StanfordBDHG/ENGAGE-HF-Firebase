@@ -16,7 +16,7 @@ import {
   type FHIRMedicationRequest,
   FHIRObservation,
   type FHIRQuestionnaireResponse,
-  LoincCode,
+  type LoincCode,
   type Observation,
   QuantityUnit,
   type SymptomScore,
@@ -35,7 +35,7 @@ import { type CollectionsService } from '../database/collections.js'
 import {
   type Document,
   type DatabaseService,
-  ReplaceDiff,
+  type ReplaceDiff,
 } from '../database/databaseService.js'
 
 export class DatabasePatientService implements PatientService {
@@ -54,7 +54,7 @@ export class DatabasePatientService implements PatientService {
   async getEveryAppoinment(
     fromDate: Date,
     toDate: Date,
-  ): Promise<Document<FHIRAppointment>[]> {
+  ): Promise<Array<Document<FHIRAppointment>>> {
     const result = await this.databaseService.getQuery<FHIRAppointment>(
       (collections) =>
         collections.appointments
@@ -68,7 +68,9 @@ export class DatabasePatientService implements PatientService {
     })
   }
 
-  async getAppointments(userId: string): Promise<Document<FHIRAppointment>[]> {
+  async getAppointments(
+    userId: string,
+  ): Promise<Array<Document<FHIRAppointment>>> {
     return this.databaseService.getQuery<FHIRAppointment>((collections) =>
       collections.userAppointments(userId),
     )
@@ -88,11 +90,21 @@ export class DatabasePatientService implements PatientService {
     return result.at(0)
   }
 
+  async createAppointment(
+    userId: string,
+    appointment: FHIRAppointment,
+  ): Promise<void> {
+    await this.databaseService.runTransaction((collections, transaction) => {
+      const ref = collections.userAppointments(userId).doc()
+      transaction.set(ref, appointment)
+    })
+  }
+
   // Methods - Contraindications
 
   async getContraindications(
     userId: string,
-  ): Promise<Document<FHIRAllergyIntolerance>[]> {
+  ): Promise<Array<Document<FHIRAllergyIntolerance>>> {
     return this.databaseService.getQuery<FHIRAllergyIntolerance>(
       (collections) => collections.userAllergyIntolerances(userId),
     )
@@ -102,7 +114,7 @@ export class DatabasePatientService implements PatientService {
 
   async getMedicationRequests(
     userId: string,
-  ): Promise<Document<FHIRMedicationRequest>[]> {
+  ): Promise<Array<Document<FHIRMedicationRequest>>> {
     return this.databaseService.getQuery<FHIRMedicationRequest>((collections) =>
       collections.userMedicationRequests(userId),
     )
@@ -114,8 +126,8 @@ export class DatabasePatientService implements PatientService {
   ): Promise<void> {
     await this.databaseService.replaceCollection(
       (collections) => collections.userMedicationRequests(userId),
-      async (documents) => {
-        const diffs: ReplaceDiff<FHIRMedicationRequest>[] = []
+      (documents) => {
+        const diffs: Array<ReplaceDiff<FHIRMedicationRequest>> = []
 
         for (const value of values) {
           const equivalentDoc = documents
@@ -152,7 +164,7 @@ export class DatabasePatientService implements PatientService {
 
   async getMedicationRecommendations(
     userId: string,
-  ): Promise<Document<UserMedicationRecommendation>[]> {
+  ): Promise<Array<Document<UserMedicationRecommendation>>> {
     const result =
       await this.databaseService.getQuery<UserMedicationRecommendation>(
         (collections) => collections.userMedicationRecommendations(userId),
@@ -176,8 +188,8 @@ export class DatabasePatientService implements PatientService {
   ): Promise<void> {
     await this.databaseService.replaceCollection(
       (collections) => collections.userMedicationRecommendations(userId),
-      async (documents) => {
-        const diffs: ReplaceDiff<UserMedicationRecommendation>[] = []
+      (documents) => {
+        const diffs: Array<ReplaceDiff<UserMedicationRecommendation>> = []
 
         for (const value of newRecommendations) {
           const equivalentDoc = documents
@@ -320,13 +332,13 @@ export class DatabasePatientService implements PatientService {
 
   async createObservations(
     userId: string,
-    values: {
+    values: Array<{
       observation: Observation
       loincCode: LoincCode
       collection: UserObservationCollection
-    }[],
+    }>,
   ): Promise<void> {
-    this.databaseService.runTransaction((collections, transaction) => {
+    await this.databaseService.runTransaction((collections, transaction) => {
       for (const value of values) {
         const ref = collections.userObservations(userId, value.collection).doc()
         const fhirObservation = FHIRObservation.createSimple({
@@ -345,7 +357,7 @@ export class DatabasePatientService implements PatientService {
 
   async getQuestionnaireResponses(
     userId: string,
-  ): Promise<Document<FHIRQuestionnaireResponse>[]> {
+  ): Promise<Array<Document<FHIRQuestionnaireResponse>>> {
     return this.databaseService.getQuery<FHIRQuestionnaireResponse>(
       (collections) => collections.userQuestionnaireResponses(userId),
     )
@@ -354,7 +366,7 @@ export class DatabasePatientService implements PatientService {
   async getSymptomScores(
     userId: string,
     options?: { limit?: number },
-  ): Promise<Document<SymptomScore>[]> {
+  ): Promise<Array<Document<SymptomScore>>> {
     return this.databaseService.getQuery<SymptomScore>((collections) => {
       const query = collections
         .userSymptomScores(userId)
@@ -472,13 +484,13 @@ export class DatabasePatientService implements PatientService {
     perform: (
       collections: CollectionsService,
       transaction: Transaction,
-      codes: QueryDocumentSnapshot<UserShareCode>[],
+      codes: Array<QueryDocumentSnapshot<UserShareCode>>,
     ) => Promise<T> | T,
   ): Promise<T> {
     return this.databaseService.runTransaction(
       async (collections, transaction) => {
         const existingCodes = await collections.userShareCodes(userId).get()
-        const nonExpiredCodes: QueryDocumentSnapshot<UserShareCode>[] = []
+        const nonExpiredCodes: Array<QueryDocumentSnapshot<UserShareCode>> = []
 
         for (const existingDoc of existingCodes.docs) {
           const existingCode = existingDoc.data()
