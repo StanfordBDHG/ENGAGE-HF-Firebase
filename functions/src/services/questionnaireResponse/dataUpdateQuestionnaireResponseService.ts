@@ -6,11 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import {
-  FHIRAppointment,
-  FHIRAppointmentStatus,
-  type FHIRQuestionnaireResponse,
-} from '@stanfordbdhg/engagehf-models'
+import { type FHIRQuestionnaireResponse } from '@stanfordbdhg/engagehf-models'
 import { QuestionnaireResponseService } from './questionnaireResponseService.js'
 import { type Document } from '../database/databaseService.js'
 import { type PatientService } from '../patient/patientService.js'

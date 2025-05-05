@@ -20,13 +20,11 @@ import {
 } from '@stanfordbdhg/engagehf-models'
 import { z } from 'zod'
 import { type Document } from '../database/databaseService.js'
+import { type PatientService } from '../patient/patientService.js'
 import {
   MedicationGroup,
   QuestionnaireLinkId,
 } from '../seeding/staticData/questionnaireFactory/questionnaireLinkIds.js'
-import { PatientService } from '../patient/patientService.js'
-
-/* eslint-disable @typescript-eslint/no-unused-vars */
 
 export interface QuestionnaireResponseMedicationRequests {
   reference: string
@@ -153,7 +151,7 @@ export abstract class QuestionnaireResponseService {
 
       if (exists === undefined)
         throw new Error(`Missing medication group: ${medicationGroup}.`)
-      if (exists === false) continue
+      if (!exists) continue
 
       const drugCoding = response
         .leafResponseItem(linkIds.drug)

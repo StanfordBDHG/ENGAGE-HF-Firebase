@@ -6,18 +6,12 @@
 // SPDX-License-Identifier: MIT
 //
 
-import {
-  type FHIRQuestionnaireResponse,
-  LoincCode,
-  type Observation,
-  QuantityUnit,
-  UserObservationCollection,
-} from '@stanfordbdhg/engagehf-models'
+import { type FHIRQuestionnaireResponse } from '@stanfordbdhg/engagehf-models'
 import { QuestionnaireResponseService } from './questionnaireResponseService.js'
 import { type Document } from '../database/databaseService.js'
 import { type PatientService } from '../patient/patientService.js'
-import { type UserService } from '../user/userService.js'
 import { QuestionnaireId } from '../seeding/staticData/questionnaireFactory/questionnaireLinkIds.js'
+import { type UserService } from '../user/userService.js'
 
 export class RegistrationQuestionnaireResponseService extends QuestionnaireResponseService {
   // Properties
@@ -39,7 +33,9 @@ export class RegistrationQuestionnaireResponseService extends QuestionnaireRespo
     userId: string,
     response: Document<FHIRQuestionnaireResponse>,
   ): Promise<boolean> {
-    if (response.content.questionnaire !== QuestionnaireId.registration)
+    if (
+      response.content.questionnaire !== QuestionnaireId.registration.toString()
+    )
       return false
     const personalInfo = this.extractPersonalInfo(response.content)
     if (personalInfo !== null) {
