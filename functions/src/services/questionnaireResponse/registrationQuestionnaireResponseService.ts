@@ -40,8 +40,6 @@ export class RegistrationQuestionnaireResponseService extends QuestionnaireRespo
     const personalInfo = this.extractPersonalInfo(response.content)
     if (personalInfo !== null) {
       await this.userService.updatePersonalInfo(userId, personalInfo)
-    } else {
-      return false
     }
 
     await this.handleLabValues({
@@ -50,12 +48,10 @@ export class RegistrationQuestionnaireResponseService extends QuestionnaireRespo
       patientService: this.patientService,
     })
 
-    const medicationRequestContent = this.extractMedicationRequests(
-      response.content,
-    )
+    const medicationRequests = this.extractMedicationRequests(response.content)
     await this.patientService.replaceMedicationRequests(
       userId,
-      medicationRequestContent.requests,
+      medicationRequests,
     )
 
     const appointment = this.extractAppointment(response.content)

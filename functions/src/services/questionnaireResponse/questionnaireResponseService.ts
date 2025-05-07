@@ -132,17 +132,10 @@ export abstract class QuestionnaireResponseService {
     return null
   }
 
-  protected extractMedicationRequests(response: FHIRQuestionnaireResponse): {
-    requests: FHIRMedicationRequest[]
-    ignore: MedicationClassReference[]
-  } {
-    const result: {
-      requests: FHIRMedicationRequest[]
-      ignore: MedicationClassReference[]
-    } = {
-      requests: [],
-      ignore: [],
-    }
+  protected extractMedicationRequests(
+    response: FHIRQuestionnaireResponse,
+  ): FHIRMedicationRequest[] {
+    const requests: FHIRMedicationRequest[] = []
     for (const medicationGroup of Object.values(MedicationGroup)) {
       const linkIds = QuestionnaireLinkId.medication(medicationGroup)
       const exists = response
@@ -178,9 +171,9 @@ export abstract class QuestionnaireResponseService {
         frequencyPerDay: frequency,
         quantity: quantity,
       })
-      result.requests.push(request)
+      requests.push(request)
     }
-    return result
+    return requests
   }
 
   // Methods - Handle

@@ -42,12 +42,10 @@ export class DataUpdateQuestionnaireResponseService extends QuestionnaireRespons
       patientService: this.patientService,
     })
 
-    const medicationRequestContent = this.extractMedicationRequests(
-      response.content,
-    )
+    const medicationRequests = this.extractMedicationRequests(response.content)
     await this.patientService.replaceMedicationRequests(
       userId,
-      medicationRequestContent.requests,
+      medicationRequests,
     )
 
     const appointment = this.extractAppointment(response.content)
