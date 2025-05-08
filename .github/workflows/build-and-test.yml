@@ -69,23 +69,11 @@ jobs:
       - name: Test
         id: test
         run: npm run test:ci
-      - name: Archive Coverage Report
-        uses: actions/upload-artifact@v4
-        with:
-          name: Coverage Report
-          path: functions/coverage/lcov.info
-    permissions:
-      contents: read
-  uploadcoveragereport:
-    name: Upload Coverage Report
-    needs: buildandtest
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5
         with:
           files: functions/coverage/lcov.info
           fail_ci_if_error: true
           token: ${{ secrets.CODECOV_TOKEN }}
+    permissions:
+      contents: read
