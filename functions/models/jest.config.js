@@ -27,6 +27,6 @@ export default {
   testMatch: ['**/*.test.ts'],
   collectCoverage: true,
   coverageDirectory: 'coverage',
-  collectCoverageFrom: ['src/**/*.ts', '!src/**/*.test.ts', '!src/tests/**'],
+  collectCoverageFrom: ['src/**/*.ts', '!src/**/*.test.ts', '!src/tests/**', '!src/**/*.mock.ts'],
   setupFilesAfterEnv: [],
 }
