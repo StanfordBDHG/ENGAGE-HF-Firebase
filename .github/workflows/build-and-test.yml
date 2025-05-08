@@ -82,8 +82,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-    secrets:
-      token: ${{ secrets.CODECOV_TOKEN }}
     steps:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5
