@@ -6,7 +6,6 @@
 // SPDX-License-Identifier: MIT
 //
 
-import http from 'http'
 import { Lazy, User, type UserType } from '@stanfordbdhg/engagehf-models'
 import admin from 'firebase-admin'
 import {
