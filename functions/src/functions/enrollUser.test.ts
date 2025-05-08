@@ -107,7 +107,10 @@ describeWithEmulators('function: enrollUser', (env) => {
 
     const user = users.docs.at(0)?.data()
     expect(user?.invitationCode).toBe(invitation.code)
-    expect(user?.dateOfEnrollment.getTime()).toBeCloseTo(new Date().getTime(), -4)
+    expect(user?.dateOfEnrollment.getTime()).toBeCloseTo(
+      new Date().getTime(),
+      -4,
+    )
 
     const actualAppointments = await env.collections
       .userAppointments(authUser.uid)
@@ -132,7 +135,9 @@ describeWithEmulators('function: enrollUser', (env) => {
     if (actualObservation === undefined) {
       fail('actualObservation is undefined')
     } else {
-      expect(fhirObservationConverter.value.encode(actualObservation)).toStrictEqual(
+      expect(
+        fhirObservationConverter.value.encode(actualObservation),
+      ).toStrictEqual(
         fhirObservationConverter.value.encode(expectedObservation),
       )
     }

@@ -14,8 +14,7 @@ import { TestFlags } from '../tests/testFlags.js'
 
 describe('generateHealthSummary', () => {
   function comparePdf(actual: Buffer, expected: Buffer): boolean {
-    if (!TestFlags.regenerateValues)
-      expect(actual.length).toBe(expected.length)
+    if (!TestFlags.regenerateValues) expect(actual.length).toBe(expected.length)
     expect(actual.length).toBeLessThan(1_000_000)
     function removeUniqueValues(pdf: string): string {
       return pdf
