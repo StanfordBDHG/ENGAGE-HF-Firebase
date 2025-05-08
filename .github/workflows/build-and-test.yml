@@ -79,6 +79,7 @@ jobs:
   uploadcoveragereport:
     name: Upload Coverage Report
     needs: buildandtest
+    runs-on: ubuntu-latest
     permissions:
       contents: read
     secrets:
