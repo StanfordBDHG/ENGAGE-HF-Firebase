@@ -79,10 +79,14 @@ jobs:
   uploadcoveragereport:
     name: Upload Coverage Report
     needs: buildandtest
-    uses: StanfordBDHG/.github/.github/workflows/create-and-upload-coverage-report.yml@v2
     permissions:
       contents: read
-    with:
-      coveragereports: functions/coverage/lcov.info
     secrets:
       token: ${{ secrets.CODECOV_TOKEN }}
+    steps:
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          files: functions/coverage/lcov.info
+          fail_ci_if_error: true
+          token: ${{ secrets.CODECOV_TOKEN }}
