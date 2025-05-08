@@ -7,7 +7,6 @@
 //
 
 import { FHIRQuestionnaireResponse } from '@stanfordbdhg/engagehf-models'
-import { expect } from 'chai'
 import { DefaultSymptomScoreCalculator } from './defaultSymptomScoreCalculator.js'
 import { type SymptomScoreCalculator } from './symptomScoreCalculator.js'
 import { readCsv } from '../../tests/helpers/csv.js'
@@ -18,7 +17,7 @@ describe('DefaultSymptomScoreCalculator', () => {
       new DefaultSymptomScoreCalculator()
     readCsv('src/tests/resources/symptomScores.csv', 2268, (values, index) => {
       if (index === 0) return
-      expect(values).to.have.length(18)
+      expect(values).toHaveLength(18)
 
       const q1: Record<string, number> = {
         'Not at all limited': 5,
@@ -30,11 +29,11 @@ describe('DefaultSymptomScoreCalculator', () => {
         '': 6,
       }
       const answer1a = q1[values[6]]
-      expect(answer1a, values[6] + ' - q1a').to.exist
+      expect(answer1a).toBeDefined()
       const answer1b = q1[values[7]]
-      expect(answer1b, values[7] + ' - q1b').to.exist
+      expect(answer1b).toBeDefined()
       const answer1c = q1[values[8]]
-      expect(answer1c, values[8] + ' - q1c').to.exist
+      expect(answer1c).toBeDefined()
 
       const q2: Record<string, number> = {
         'Never over the past 2 weeks': 5,
@@ -44,7 +43,7 @@ describe('DefaultSymptomScoreCalculator', () => {
         'Every morning': 1,
       }
       const answer2 = q2[values[9]]
-      expect(answer2, values[9] + ' - q2').to.exist
+      expect(answer2).toBeDefined()
 
       const q3: Record<string, number> = {
         'Never over the past 2 weeks': 7,
@@ -56,7 +55,7 @@ describe('DefaultSymptomScoreCalculator', () => {
         'All of the time': 1,
       }
       const answer3 = q3[values[10]]
-      expect(answer3, values[10] + ' - q3').to.exist
+      expect(answer3).toBeDefined()
 
       const q4: Record<string, number> = {
         'Never over the past 2 weeks': 7,
@@ -68,7 +67,7 @@ describe('DefaultSymptomScoreCalculator', () => {
         'All of the time': 1,
       }
       const answer4 = q4[values[11]]
-      expect(answer4, values[11] + ' - q4').to.exist
+      expect(answer4).toBeDefined()
 
       const q5: Record<string, number> = {
         'Never over the past 2 weeks': 5,
@@ -78,7 +77,7 @@ describe('DefaultSymptomScoreCalculator', () => {
         'Every night': 1,
       }
       const answer5 = q5[values[12]]
-      expect(answer5, values[12] + ' - q5').to.exist
+      expect(answer5).toBeDefined()
 
       const q6: Record<string, number> = {
         'It has <b>extremely</b> limited my enjoyment of life': 1,
@@ -88,7 +87,7 @@ describe('DefaultSymptomScoreCalculator', () => {
         'It has  limited my enjoyment of life <b>quite a bit</b>': 2,
       }
       const answer6 = q6[values[13]]
-      expect(answer6, values[13] + ' - q6').to.exist
+      expect(answer6).toBeDefined()
 
       const q7: Record<string, number> = {
         'Not at all satisfied': 1,
@@ -98,7 +97,7 @@ describe('DefaultSymptomScoreCalculator', () => {
         'Somewhat satisfied': 3,
       }
       const answer7 = q7[values[14]]
-      expect(answer7, values[14] + ' - q7').to.exist
+      expect(answer7).toBeDefined()
 
       const q8: Record<string, number> = {
         'Extremely limited': 1,
@@ -109,11 +108,11 @@ describe('DefaultSymptomScoreCalculator', () => {
         'Quite a bit limited': 2,
       }
       const answer8a = q8[values[15]]
-      expect(answer8a, values[15] + ' - q8a').to.exist
+      expect(answer8a).toBeDefined()
       const answer8b = q8[values[16]]
-      expect(answer8b, values[16] + ' - q8b').to.exist
+      expect(answer8b).toBeDefined()
       const answer8c = q8[values[17]]
-      expect(answer8c, values[17] + ' - q8c').to.exist
+      expect(answer8c).toBeDefined()
 
       const response = FHIRQuestionnaireResponse.create({
         questionnaire:
@@ -137,57 +136,43 @@ describe('DefaultSymptomScoreCalculator', () => {
 
       const score = calculator.calculate(response)
 
-      expect(score.questionnaireResponseId).to.equal(response.id)
-      expect(score.date).to.equal(response.authored)
+      expect(score.questionnaireResponseId).toBe(response.id)
+      expect(score.date).toBe(response.authored)
 
       // In this test, we use approximations to compare the expected and actual values.
       // This is to avoid floating point precision issues. Therefore, we use a tolerance of 0.001,
       // which is a reasonable tolerance, since the values are shown to the user as integers anyways.
 
       if (score.physicalLimitsScore !== undefined) {
-        expect(
-          score.physicalLimitsScore,
-          `${index} - Physical Limits: ${values.join(',')}`,
-        ).to.approximately(parseFloat(values[1]), 0.001)
+        expect(score.physicalLimitsScore).toBeCloseTo(parseFloat(values[1]), 4)
       } else {
-        expect(values[1]).to.equal('')
+        expect(values[1]).toBe('')
       }
 
       if (score.symptomFrequencyScore !== undefined) {
-        expect(
-          score.symptomFrequencyScore,
-          `${index} - Symptom Frequency: ${values.join(',')}`,
-        ).to.approximately(parseFloat(values[2]), 0.001)
+        expect(score.symptomFrequencyScore).toBeCloseTo(
+          parseFloat(values[2]),
+          4,
+        )
       } else {
-        expect(values[2]).to.equal('')
+        expect(values[2]).toBe('')
       }
 
       if (score.qualityOfLifeScore !== undefined) {
-        expect(
-          score.qualityOfLifeScore,
-          `${index} - Quality of Life: ${values.join(',')}`,
-        ).to.approximately(parseFloat(values[3]), 0.001)
+        expect(score.qualityOfLifeScore).toBeCloseTo(parseFloat(values[3]), 4)
       } else {
-        expect(values[3]).to.equal('')
+        expect(values[3]).toBe('')
       }
 
       if (score.socialLimitsScore !== undefined) {
-        expect(
-          score.socialLimitsScore,
-          `${index} - Social Limits: ${values.join(',')}`,
-        ).to.approximately(parseFloat(values[4]), 0.001)
+        expect(score.socialLimitsScore).toBeCloseTo(parseFloat(values[4]), 4)
       } else {
-        expect(values[4]).to.equal('')
+        expect(values[4]).toBe('')
       }
 
-      expect(
-        score.overallScore,
-        `${index} - Overall score: ${values.join(',')}`,
-      ).to.approximately(parseFloat(values[5]), 0.001)
+      expect(score.overallScore).toBeCloseTo(parseFloat(values[5]), 4)
 
-      expect(score.dizzinessScore, `Dizziness: ${values.join(',')}`).to.equal(
-        (index % 6) - 1,
-      )
+      expect(score.dizzinessScore).toBe((index % 6) - 1)
     })
   })
 })

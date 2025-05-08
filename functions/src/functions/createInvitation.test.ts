@@ -10,7 +10,6 @@ import {
   type createInvitationInputSchema,
   UserType,
 } from '@stanfordbdhg/engagehf-models'
-import { expect } from 'chai'
 import { type z } from 'zod'
 import { createInvitation } from './createInvitation.js'
 import { describeWithEmulators } from '../tests/functions/testEnvironment.js'
@@ -42,10 +41,10 @@ describeWithEmulators('function: createInvitation', (env) => {
     })
 
     const invitations = await env.collections.invitations.get()
-    expect(invitations.docs).to.have.length(1)
+    expect(invitations.docs).toHaveLength(1)
 
     const invitation = invitations.docs[0].data()
-    expect(invitation.code).to.equal(input.auth.email)
+    expect(invitation.code).toBe(input.auth.email)
   })
 
   it('should create an invitation for a patient', async () => {
@@ -73,11 +72,11 @@ describeWithEmulators('function: createInvitation', (env) => {
     })
 
     const invitations = await env.collections.invitations.get()
-    expect(invitations.docs).to.have.length(1)
+    expect(invitations.docs).toHaveLength(1)
 
     const invitation = invitations.docs[0].data()
-    expect(invitation.code).to.have.length(8)
-    expect(invitation.code).to.match(/^[A-Z0-9]{8}$/)
+    expect(invitation.code).toHaveLength(8)
+    expect(invitation.code).toMatch(/^[A-Z0-9]{8}$/)
   })
 
   it('should not create an invitation without authentication', () => {
@@ -100,7 +99,7 @@ describeWithEmulators('function: createInvitation', (env) => {
 
     return expectError(
       async () => env.call(createInvitation, input, { uid: 'test' }),
-      (error) => expect(error).to.have.property('code', 'permission-denied'),
+      (error) => expect(error).toHaveProperty('code', 'permission-denied'),
     )
   })
 })

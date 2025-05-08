@@ -10,8 +10,6 @@ import {
   FHIRQuestionnaireResponse,
   type SymptomQuestionnaireResponse,
 } from '@stanfordbdhg/engagehf-models'
-import { expect } from 'chai'
-import { describe } from 'mocha'
 
 describe('FHIRQuestionnaireResponse', () => {
   it('decodes an encoded questionnaire response', () => {
@@ -36,7 +34,7 @@ describe('FHIRQuestionnaireResponse', () => {
     }
 
     const encoded = FHIRQuestionnaireResponse.create(questionnaireResponse)
-    expect(encoded.symptomQuestionnaireResponse).to.deep.equal(
+    expect(encoded.symptomQuestionnaireResponse).toStrictEqual(
       questionnaireResponse,
     )
   })

@@ -18,8 +18,6 @@ import {
   MedicationReference,
   UserMedicationRecommendationType,
 } from '@stanfordbdhg/engagehf-models'
-import { expect } from 'chai'
-import { describe, it } from 'mocha'
 import { DiureticRecommender } from './diureticRecommender.js'
 import { type Recommender } from './recommender.js'
 import { type MedicationRequestContext } from '../../../models/medicationRequestContext.js'
@@ -45,7 +43,7 @@ describe('DiureticRecommender', () => {
         vitals: healthSummaryData.vitals,
         latestDizzinessScore: undefined,
       })
-      expect(result).to.have.length(0)
+      expect(result).toHaveLength(0)
     })
   })
 
@@ -130,8 +128,8 @@ describe('DiureticRecommender', () => {
         vitals: healthSummaryData.vitals,
         latestDizzinessScore: undefined,
       })
-      expect(result).to.have.length(1)
-      expect(result.at(0)).to.deep.equal({
+      expect(result).toHaveLength(1)
+      expect(result.at(0)).toStrictEqual({
         currentMedication: [existingMedication],
         recommendedMedication: undefined,
         type: UserMedicationRecommendationType.personalTargetDoseReached,

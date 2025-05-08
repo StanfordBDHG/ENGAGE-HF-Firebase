@@ -8,7 +8,6 @@
 
 import assert from 'assert'
 import fs from 'fs'
-import { describe, it } from 'mocha'
 import { generateChartSvg } from './generateChart.js'
 import { mockHealthSummaryData } from '../tests/mocks/healthSummaryData.js'
 import { TestFlags } from '../tests/testFlags.js'

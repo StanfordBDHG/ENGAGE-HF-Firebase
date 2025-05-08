@@ -8,7 +8,6 @@
 
 import http from 'http'
 import { Lazy, User, type UserType } from '@stanfordbdhg/engagehf-models'
-import { expect } from 'chai'
 import admin from 'firebase-admin'
 import {
   type DocumentData,
@@ -39,12 +38,12 @@ export function describeWithEmulators(
 
       beforeEach(async () => {
         await env.cleanup()
-      })
+      }, 30_000)
 
       perform(env)
     } else {
       it('skipped due to missing emulator', () => {
-        expect.fail('skipped test')
+        fail('skipped test')
       })
     }
   })

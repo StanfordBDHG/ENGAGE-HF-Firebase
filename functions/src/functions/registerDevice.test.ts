@@ -11,7 +11,6 @@ import {
   userDeviceConverter,
   UserDevicePlatform,
 } from '@stanfordbdhg/engagehf-models'
-import { expect } from 'chai'
 import { registerDevice } from './registerDevice.js'
 import { describeWithEmulators } from '../tests/functions/testEnvironment.js'
 import { expectError } from '../tests/helpers.js'
@@ -33,7 +32,7 @@ describeWithEmulators('function: registerDevice', (env) => {
         ),
       (error) => {
         console.error(error)
-        expect(error).to.have.property('code', 'unauthenticated')
+        expect(error).toHaveProperty('code', 'unauthenticated')
       },
     )
   })
@@ -46,7 +45,7 @@ describeWithEmulators('function: registerDevice', (env) => {
     )
 
     const userDevices = await env.collections.userDevices('patient0').get()
-    expect(userDevices.docs).to.have.length(1)
+    expect(userDevices.docs).toHaveLength(1)
 
     const newUserDevice = new UserDevice({
       notificationToken: 'abc123',
@@ -61,7 +60,7 @@ describeWithEmulators('function: registerDevice', (env) => {
     )
 
     const newUserDevices = await env.collections.userDevices('patient0').get()
-    expect(newUserDevices.docs).to.have.length(1)
+    expect(newUserDevices.docs).toHaveLength(1)
   })
 
   it('should remove a device from other users when registering it for a new user', async () => {
@@ -72,7 +71,7 @@ describeWithEmulators('function: registerDevice', (env) => {
     )
 
     const userDevices = await env.collections.userDevices('patient0').get()
-    expect(userDevices.docs).to.have.length(1)
+    expect(userDevices.docs).toHaveLength(1)
 
     const newUserDevice = new UserDevice({
       notificationToken: 'abc123',
@@ -87,9 +86,9 @@ describeWithEmulators('function: registerDevice', (env) => {
     )
 
     const newUserDevices0 = await env.collections.userDevices('patient0').get()
-    expect(newUserDevices0.docs).to.have.length(0)
+    expect(newUserDevices0.docs).toHaveLength(0)
 
     const newUserDevices1 = await env.collections.userDevices('patient1').get()
-    expect(newUserDevices1.docs).to.have.length(1)
+    expect(newUserDevices1.docs).toHaveLength(1)
   })
 })

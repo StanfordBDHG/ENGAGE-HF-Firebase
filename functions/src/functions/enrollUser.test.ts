@@ -21,7 +21,6 @@ import {
   UserType,
   UserObservationCollection,
 } from '@stanfordbdhg/engagehf-models'
-import { expect } from 'chai'
 import { enrollUser } from './enrollUser.js'
 import { describeWithEmulators } from '../tests/functions/testEnvironment.js'
 import { expectError } from '../tests/helpers.js'
@@ -36,7 +35,7 @@ describeWithEmulators('function: enrollUser', (env) => {
           { invitationCode: 'TESTCODE' },
           { uid: authUser.uid },
         ),
-      (error) => expect(error).to.have.property('code', 'not-found'),
+      (error) => expect(error).toHaveProperty('code', 'not-found'),
     )
   })
 
@@ -100,30 +99,27 @@ describeWithEmulators('function: enrollUser', (env) => {
 
     const userService = env.factory.user()
     const dbUser = await userService.getUser(authUser.uid)
-    expect(dbUser).to.exist
+    expect(dbUser).toBeDefined()
     if (dbUser !== undefined) await userService.finishUserEnrollment(dbUser)
 
     const users = await env.collections.users.get()
-    expect(users.docs).to.have.length(1)
+    expect(users.docs).toHaveLength(1)
 
     const user = users.docs.at(0)?.data()
-    expect(user?.invitationCode).to.equal(invitation.code)
-    expect(user?.dateOfEnrollment.getTime()).to.approximately(
-      new Date().getTime(),
-      2000,
-    )
+    expect(user?.invitationCode).toBe(invitation.code)
+    expect(user?.dateOfEnrollment.getTime()).toBeCloseTo(new Date().getTime(), -4)
 
     const actualAppointments = await env.collections
       .userAppointments(authUser.uid)
       .get()
-    expect(actualAppointments.docs).to.have.length(1)
+    expect(actualAppointments.docs).toHaveLength(1)
     const actualAppointment = actualAppointments.docs.at(0)?.data()
     if (actualAppointment === undefined) {
-      expect.fail('actualAppointment is undefined')
+      fail('actualAppointment is undefined')
     } else {
       expect(
         fhirAppointmentConverter.value.encode(actualAppointment),
-      ).to.deep.equal(
+      ).toStrictEqual(
         fhirAppointmentConverter.value.encode(expectedAppointment),
       )
     }
@@ -131,30 +127,28 @@ describeWithEmulators('function: enrollUser', (env) => {
     const actualObservations = await env.collections
       .userObservations(authUser.uid, UserObservationCollection.bodyWeight)
       .get()
-    expect(actualObservations.docs).to.have.length(1)
+    expect(actualObservations.docs).toHaveLength(1)
     const actualObservation = actualObservations.docs.at(0)?.data()
     if (actualObservation === undefined) {
-      expect.fail('actualObservation is undefined')
+      fail('actualObservation is undefined')
     } else {
-      expect(
-        fhirObservationConverter.value.encode(actualObservation),
-      ).to.deep.equal(
+      expect(fhirObservationConverter.value.encode(actualObservation)).toStrictEqual(
         fhirObservationConverter.value.encode(expectedObservation),
       )
     }
 
     const userMessages = await env.collections.userMessages(authUser.uid).get()
-    expect(userMessages.docs.length).to.equal(2)
+    expect(userMessages.docs).toHaveLength(2)
     expect(
       userMessages.docs.find(
         (message) => message.data().type == UserMessageType.welcome,
       ),
-    ).to.exist
+    ).toBeDefined()
     expect(
       userMessages.docs.find(
         (message) =>
           message.data().type == UserMessageType.symptomQuestionnaire,
       ),
-    ).to.exist
+    ).toBeDefined()
   })
 })
