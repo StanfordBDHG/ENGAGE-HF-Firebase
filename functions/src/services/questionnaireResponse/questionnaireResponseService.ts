@@ -12,7 +12,6 @@ import {
   type Observation,
   type FHIRQuestionnaireResponse,
   UserSex,
-  type MedicationClassReference,
   QuantityUnit,
   FHIRAppointment,
   FHIRAppointmentStatus,
