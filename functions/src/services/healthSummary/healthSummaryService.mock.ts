@@ -13,6 +13,7 @@ import {
   LocalizedText,
   type Observation,
   QuantityUnit,
+  SymptomScore,
   UserMedicationRecommendationType,
 } from '@stanfordbdhg/engagehf-models'
 import { type HealthSummaryService } from './healthSummaryService.js'
@@ -98,7 +99,7 @@ export class MockHealthSummaryService implements HealthSummaryService {
       ],
       vitals: await this.getVitals(date),
       symptomScores: [
-        {
+        new SymptomScore({
           questionnaireResponseId: '4',
           overallScore: 40,
           physicalLimitsScore: 50,
@@ -107,8 +108,8 @@ export class MockHealthSummaryService implements HealthSummaryService {
           symptomFrequencyScore: 60,
           dizzinessScore: 3,
           date: advanceDateByDays(date, -9),
-        },
-        {
+        }),
+        new SymptomScore({
           questionnaireResponseId: '3',
           overallScore: 60,
           physicalLimitsScore: 58,
@@ -117,8 +118,8 @@ export class MockHealthSummaryService implements HealthSummaryService {
           symptomFrequencyScore: 72,
           dizzinessScore: 2,
           date: advanceDateByDays(date, -18),
-        },
-        {
+        }),
+        new SymptomScore({
           questionnaireResponseId: '2',
           overallScore: 44,
           physicalLimitsScore: 50,
@@ -127,8 +128,8 @@ export class MockHealthSummaryService implements HealthSummaryService {
           symptomFrequencyScore: 60,
           dizzinessScore: 1,
           date: advanceDateByDays(date, -34),
-        },
-        {
+        }),
+        new SymptomScore({
           questionnaireResponseId: '1',
           overallScore: 75,
           physicalLimitsScore: 58,
@@ -137,7 +138,7 @@ export class MockHealthSummaryService implements HealthSummaryService {
           symptomFrequencyScore: 80,
           dizzinessScore: 1,
           date: advanceDateByDays(date, -49),
-        },
+        }),
       ],
       now: date,
     })

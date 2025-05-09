@@ -7,8 +7,6 @@
 //
 
 import fs from 'fs'
-import { expect } from 'chai'
-import { describe } from 'mocha'
 import { type DebugDataService } from './debugDataService.js'
 import { type MockFirestore } from '../../../tests/mocks/firestore.js'
 import { cleanupMocks, setupMockFirebase } from '../../../tests/setup.js'
@@ -20,12 +18,12 @@ describe('DebugDataService', () => {
   let service: DebugDataService
   let mockFirestore: MockFirestore
 
-  before(() => {
+  beforeAll(() => {
     mockFirestore = setupMockFirebase().firestore
     service = getServiceFactory().debugData()
   })
 
-  after(() => {
+  afterAll(() => {
     cleanupMocks()
   })
 
@@ -47,12 +45,12 @@ describe('DebugDataService', () => {
       if (TestFlags.regenerateValues) {
         fs.writeFileSync(filename, JSON.stringify(valuesRecord, undefined, 2))
       } else {
-        expect(fs.readFileSync(filename, 'utf8')).to.deep.equal(
+        expect(fs.readFileSync(filename, 'utf8')).toBe(
           JSON.stringify(valuesRecord, undefined, 2),
         )
       }
     } catch (error) {
-      expect.fail(String(error))
+      fail(String(error))
     }
   }
 

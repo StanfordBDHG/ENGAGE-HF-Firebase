@@ -12,8 +12,6 @@ import {
   UserMessageType,
   UserType,
 } from '@stanfordbdhg/engagehf-models'
-import { expect } from 'chai'
-import { it } from 'mocha'
 import { dismissMessages } from './dismissMessages.js'
 import { describeWithEmulators } from '../tests/functions/testEnvironment.js'
 
@@ -71,18 +69,18 @@ describeWithEmulators('function: dismissMessages', (env) => {
       },
     )
 
-    expect(result).to.have.property('dismissedCount')
-    expect(result.dismissedCount).to.equal(2)
+    expect(result).toHaveProperty('dismissedCount')
+    expect(result.dismissedCount).toBe(2)
 
     // Check that the specified messages have completion dates
     const actualMessage1 = await messageRef1.get()
     const actualMessage2 = await messageRef2.get()
-    expect(actualMessage1.data()?.completionDate).to.exist
-    expect(actualMessage2.data()?.completionDate).to.exist
+    expect(actualMessage1.data()?.completionDate).toBeDefined()
+    expect(actualMessage2.data()?.completionDate).toBeDefined()
 
     // Check that the unspecified message does NOT have a completion date
     const actualMessage3 = await messageRef3.get()
-    expect(actualMessage3.data()?.completionDate).to.not.exist
+    expect(actualMessage3.data()?.completionDate).toBeUndefined()
   })
 
   it('should dismiss all dismissible messages when no messageIds are provided', async () => {
@@ -129,14 +127,14 @@ describeWithEmulators('function: dismissMessages', (env) => {
     )
 
     // Verify only dismissible messages were dismissed
-    expect(result).to.have.property('dismissedCount')
-    expect(result.dismissedCount).to.be.greaterThan(0)
+    expect(result).toHaveProperty('dismissedCount')
+    expect(result.dismissedCount).toBeGreaterThan(0)
 
     // Check the dismissible message has completion date, but non-dismissible doesn't
     const actualDismissible = await dismissibleRef.get()
     const actualNonDismissible = await nonDismissibleRef.get()
-    expect(actualDismissible.data()?.completionDate).to.exist
-    expect(actualNonDismissible.data()?.completionDate).to.not.exist
+    expect(actualDismissible.data()?.completionDate).toBeDefined()
+    expect(actualNonDismissible.data()?.completionDate).toBeUndefined()
   })
 
   it('should allow admin to dismiss messages for other users', async () => {
@@ -174,11 +172,11 @@ describeWithEmulators('function: dismissMessages', (env) => {
     )
 
     // Verify message was dismissed
-    expect(result).to.have.property('dismissedCount')
-    expect(result.dismissedCount).to.be.greaterThan(0)
+    expect(result).toHaveProperty('dismissedCount')
+    expect(result.dismissedCount).toBeGreaterThan(0)
 
     // Check the message has completion date
     const actualMessage = await messageRef.get()
-    expect(actualMessage.data()?.completionDate).to.exist
+    expect(actualMessage.data()?.completionDate).toBeDefined()
   })
 })

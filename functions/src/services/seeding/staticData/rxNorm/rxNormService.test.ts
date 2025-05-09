@@ -7,8 +7,6 @@
 //
 
 import { LocalizedText, MedicationClass } from '@stanfordbdhg/engagehf-models'
-import { expect } from 'chai'
-import { describe, it } from 'mocha'
 import {
   type MedicationClassSpecification,
   RxNormService,
@@ -51,15 +49,15 @@ describe('RxNormService', () => {
       specification,
     ])
     const carvedilol = result.medications['20352']
-    expect(carvedilol).to.exist
-    expect(carvedilol.brandNames).to.have.length(1)
-    expect(carvedilol.brandNames.at(0)).to.equal('Coreg')
+    expect(carvedilol).toBeDefined()
+    expect(carvedilol.brandNames).toHaveLength(1)
+    expect(carvedilol.brandNames.at(0)).toBe('Coreg')
 
     const carvedilol6_25 = result.drugs['20352']['200031']
-    expect(carvedilol6_25).to.exist
+    expect(carvedilol6_25).toBeDefined()
     expect(
       carvedilol6_25.code?.coding?.find((coding) => coding.code === '200031'),
-    ).to.exist
+    ).toBeDefined()
     expect(
       carvedilol6_25.ingredient?.find((ingredient) =>
         ingredient.itemCodeableConcept?.coding?.some(
@@ -69,10 +67,10 @@ describe('RxNormService', () => {
     )
 
     const carvedilol25 = result.drugs['20352']['200033']
-    expect(carvedilol25).to.exist
+    expect(carvedilol25).toBeDefined()
     expect(
       carvedilol25.code?.coding?.find((coding) => coding.code === '200033'),
-    ).to.exist
+    ).toBeDefined()
     expect(
       carvedilol25.ingredient?.find((ingredient) =>
         ingredient.itemCodeableConcept?.coding?.some(

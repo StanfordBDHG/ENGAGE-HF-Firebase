@@ -14,9 +14,7 @@ import {
   MedicationClassReference,
   MedicationReference,
 } from '@stanfordbdhg/engagehf-models'
-import { expect } from 'chai'
 import { logger } from 'firebase-functions'
-import { describe } from 'mocha'
 import {
   ContraindicationCategory,
   type ContraindicationService,
@@ -51,7 +49,7 @@ describe('DefaultContraindicationService', () => {
         contraindications,
         medication,
       )
-      expect(category).to.equal(options.category)
+      expect(category).toBe(options.category)
     })
 
     medicationClasses.forEach((medicationClass) => {
@@ -59,7 +57,7 @@ describe('DefaultContraindicationService', () => {
         contraindications,
         medicationClass,
       )
-      expect(category).to.equal(options.category)
+      expect(category).toBe(options.category)
     })
   }
 
@@ -69,17 +67,17 @@ describe('DefaultContraindicationService', () => {
       'utf8',
     )
     const lines = fileContents.split('\n').slice(1)
-    expect(lines).to.have.length(35)
+    expect(lines).toHaveLength(35)
 
     for (const line of lines) {
       const fields = line.split(',')
-      expect(fields).to.have.length(15)
+      expect(fields).toHaveLength(15)
 
       const medicationReference = Object.values(MedicationReference).find(
         (value) => value.toString() === 'medications/' + fields[0],
       )
 
-      expect(medicationReference).to.not.be.undefined
+      expect(medicationReference).toBeDefined()
       if (medicationReference === undefined)
         throw new Error('Medication reference not found')
 

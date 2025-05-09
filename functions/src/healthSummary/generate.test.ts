@@ -7,7 +7,6 @@
 //
 
 import fs from 'fs'
-import { assert, expect } from 'chai'
 import { generateHealthSummary } from './generate.js'
 import { type HealthSummaryData } from '../models/healthSummaryData.js'
 import { mockHealthSummaryData } from '../tests/mocks/healthSummaryData.js'
@@ -15,9 +14,8 @@ import { TestFlags } from '../tests/testFlags.js'
 
 describe('generateHealthSummary', () => {
   function comparePdf(actual: Buffer, expected: Buffer): boolean {
-    if (!TestFlags.regenerateValues)
-      assert.equal(actual.length, expected.length)
-    expect(actual.length).to.be.lessThan(1_000_000)
+    if (!TestFlags.regenerateValues) expect(actual.length).toBe(expected.length)
+    expect(actual.length).toBeLessThan(1_000_000)
     function removeUniqueValues(pdf: string): string {
       return pdf
         .split('\n')
@@ -31,8 +29,7 @@ describe('generateHealthSummary', () => {
     }
     const reducedActual = removeUniqueValues(actual.toString('utf8'))
     const reducedExpected = removeUniqueValues(expected.toString('utf8'))
-    if (!TestFlags.regenerateValues)
-      expect(reducedActual).to.equal(reducedExpected)
+    if (!TestFlags.regenerateValues) expect(reducedActual).toBe(reducedExpected)
     return reducedActual === reducedExpected
   }
 

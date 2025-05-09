@@ -15,8 +15,6 @@ import {
   SymptomScore,
   UserMedicationRecommendationType,
 } from '@stanfordbdhg/engagehf-models'
-import { expect } from 'chai'
-import { describe, it } from 'mocha'
 import { BetaBlockerRecommender } from './betaBlockerRecommender.js'
 import { type Recommender } from './recommender.js'
 import { type HealthSummaryData } from '../../../models/healthSummaryData.js'
@@ -46,7 +44,7 @@ describe('BetaBlockerRecommender', () => {
   let healthSummaryData: HealthSummaryData
   let medicationService: MedicationService
 
-  before(async () => {
+  beforeAll(async () => {
     setupMockFirebase()
     const factory = getServiceFactory()
     const staticDataService = factory.staticData()
@@ -61,7 +59,7 @@ describe('BetaBlockerRecommender', () => {
     medicationClassContraindication = (_) => ContraindicationCategory.none
   })
 
-  after(() => {
+  afterAll(() => {
     cleanupMocks()
   })
 
@@ -78,7 +76,7 @@ describe('BetaBlockerRecommender', () => {
         latestDizzinessScore: undefined,
         vitals: healthSummaryData.vitals,
       })
-      expect(result).to.be.empty
+      expect(result).toHaveLength(0)
     })
 
     it('shows carvedilol if only clinician-listed contraindication exists', () => {
@@ -93,8 +91,8 @@ describe('BetaBlockerRecommender', () => {
         latestDizzinessScore: undefined,
         vitals: healthSummaryData.vitals,
       })
-      expect(result).to.have.length(1)
-      expect(result.at(0)).to.deep.equal({
+      expect(result).toHaveLength(1)
+      expect(result.at(0)).toStrictEqual({
         currentMedication: [],
         recommendedMedication: MedicationReference.carvedilol,
         type: UserMedicationRecommendationType.noActionRequired,
@@ -110,8 +108,8 @@ describe('BetaBlockerRecommender', () => {
         latestDizzinessScore: undefined,
         vitals: healthSummaryData.vitals,
       })
-      expect(result).to.have.length(1)
-      expect(result.at(0)).to.deep.equal({
+      expect(result).toHaveLength(1)
+      expect(result.at(0)).toStrictEqual({
         currentMedication: [],
         recommendedMedication: MedicationReference.carvedilol,
         type: UserMedicationRecommendationType.morePatientObservationsRequired,
@@ -127,8 +125,8 @@ describe('BetaBlockerRecommender', () => {
         latestDizzinessScore: undefined,
         vitals: healthSummaryData.vitals,
       })
-      expect(result).to.have.length(1)
-      expect(result.at(0)).to.deep.equal({
+      expect(result).toHaveLength(1)
+      expect(result.at(0)).toStrictEqual({
         currentMedication: [],
         recommendedMedication: MedicationReference.carvedilol,
         type: UserMedicationRecommendationType.morePatientObservationsRequired,
@@ -147,8 +145,8 @@ describe('BetaBlockerRecommender', () => {
         latestDizzinessScore: undefined,
         vitals: healthSummaryData.vitals,
       })
-      expect(result).to.have.length(1)
-      expect(result.at(0)).to.deep.equal({
+      expect(result).toHaveLength(1)
+      expect(result.at(0)).toStrictEqual({
         currentMedication: [],
         recommendedMedication: MedicationReference.carvedilol,
         type: UserMedicationRecommendationType.noActionRequired,
@@ -167,8 +165,8 @@ describe('BetaBlockerRecommender', () => {
         latestDizzinessScore: undefined,
         vitals: healthSummaryData.vitals,
       })
-      expect(result).to.have.length(1)
-      expect(result.at(0)).to.deep.equal({
+      expect(result).toHaveLength(1)
+      expect(result.at(0)).toStrictEqual({
         currentMedication: [],
         recommendedMedication: MedicationReference.carvedilol,
         type: UserMedicationRecommendationType.noActionRequired,
@@ -182,8 +180,8 @@ describe('BetaBlockerRecommender', () => {
         latestDizzinessScore: undefined,
         vitals: healthSummaryData.vitals,
       })
-      expect(result).to.have.length(1)
-      expect(result.at(0)).to.deep.equal({
+      expect(result).toHaveLength(1)
+      expect(result.at(0)).toStrictEqual({
         currentMedication: [],
         recommendedMedication: MedicationReference.carvedilol,
         type: UserMedicationRecommendationType.notStarted,
@@ -193,7 +191,7 @@ describe('BetaBlockerRecommender', () => {
 
   describe('Existing treatment: Bisoprolol', () => {
     let contextBelowTarget: MedicationRequestContext
-    before(async () => {
+    beforeAll(async () => {
       const request = FHIRMedicationRequest.create({
         drugReference: DrugReference.bisoprolol5,
         frequencyPerDay: 1,
@@ -225,8 +223,8 @@ describe('BetaBlockerRecommender', () => {
         latestDizzinessScore: undefined,
         vitals: healthSummaryData.vitals,
       })
-      expect(result).to.have.length(1)
-      expect(result.at(0)).to.deep.equal({
+      expect(result).toHaveLength(1)
+      expect(result.at(0)).toStrictEqual({
         currentMedication: [contextAtTarget],
         recommendedMedication: undefined,
         type: UserMedicationRecommendationType.targetDoseReached,
@@ -242,8 +240,8 @@ describe('BetaBlockerRecommender', () => {
         latestDizzinessScore: undefined,
         vitals: healthSummaryData.vitals,
       })
-      expect(result).to.have.length(1)
-      expect(result.at(0)).to.deep.equal({
+      expect(result).toHaveLength(1)
+      expect(result.at(0)).toStrictEqual({
         currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
         type: UserMedicationRecommendationType.morePatientObservationsRequired,
@@ -259,8 +257,8 @@ describe('BetaBlockerRecommender', () => {
         latestDizzinessScore: undefined,
         vitals: healthSummaryData.vitals,
       })
-      expect(result).to.have.length(1)
-      expect(result.at(0)).to.deep.equal({
+      expect(result).toHaveLength(1)
+      expect(result.at(0)).toStrictEqual({
         currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
         type: UserMedicationRecommendationType.morePatientObservationsRequired,
@@ -276,8 +274,8 @@ describe('BetaBlockerRecommender', () => {
         latestDizzinessScore: undefined,
         vitals: healthSummaryData.vitals,
       })
-      expect(result).to.have.length(1)
-      expect(result.at(0)).to.deep.equal({
+      expect(result).toHaveLength(1)
+      expect(result.at(0)).toStrictEqual({
         currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
         type: UserMedicationRecommendationType.morePatientObservationsRequired,
@@ -293,8 +291,8 @@ describe('BetaBlockerRecommender', () => {
         latestDizzinessScore: undefined,
         vitals: healthSummaryData.vitals,
       })
-      expect(result).to.have.length(1)
-      expect(result.at(0)).to.deep.equal({
+      expect(result).toHaveLength(1)
+      expect(result.at(0)).toStrictEqual({
         currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
         type: UserMedicationRecommendationType.morePatientObservationsRequired,
@@ -308,8 +306,8 @@ describe('BetaBlockerRecommender', () => {
         latestDizzinessScore: 4,
         vitals: healthSummaryData.vitals,
       })
-      expect(result).to.have.length(1)
-      expect(result.at(0)).to.deep.equal({
+      expect(result).toHaveLength(1)
+      expect(result.at(0)).toStrictEqual({
         currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
         type: UserMedicationRecommendationType.personalTargetDoseReached,
@@ -331,8 +329,8 @@ describe('BetaBlockerRecommender', () => {
         latestDizzinessScore: undefined,
         vitals: healthSummaryData.vitals,
       })
-      expect(result).to.have.length(1)
-      expect(result.at(0)).to.deep.equal({
+      expect(result).toHaveLength(1)
+      expect(result.at(0)).toStrictEqual({
         currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
         type: UserMedicationRecommendationType.improvementAvailable,

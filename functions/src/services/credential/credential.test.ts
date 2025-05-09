@@ -7,10 +7,8 @@
 //
 
 import { UserType } from '@stanfordbdhg/engagehf-models'
-import { expect } from 'chai'
 import { type DecodedIdToken } from 'firebase-admin/auth'
 import { type AuthData } from 'firebase-functions/v2/tasks'
-import { describe } from 'mocha'
 import { Credential, UserRole } from './credential.js'
 
 describe('Credential', () => {
@@ -223,23 +221,19 @@ describe('Credential', () => {
 async function expectToThrow<T>(
   promise: () => Promise<T> | T,
   error?: unknown,
-  message?: string,
 ): Promise<void> {
   try {
     await promise()
-    expect.fail('Expected promise to throw')
+    fail('Expected promise to throw')
   } catch (e) {
-    if (error !== undefined) expect(e).to.deep.equal(error, message)
+    if (error !== undefined) expect(e).toStrictEqual(error)
   }
 }
 
-async function expectToNotThrow<T>(
-  promise: () => Promise<T> | T,
-  message?: string,
-): Promise<T> {
+async function expectToNotThrow<T>(promise: () => Promise<T> | T): Promise<T> {
   try {
     return await promise()
   } catch (e) {
-    expect.fail('Expected promise to not throw', message)
+    fail('Expected promise to not throw')
   }
 }

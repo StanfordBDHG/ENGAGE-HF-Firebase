@@ -7,7 +7,6 @@
 //
 
 import { LocalizedText } from '@stanfordbdhg/engagehf-models'
-import { expect } from 'chai'
 import {
   HealthSummaryDizzinessCategory,
   type HealthSummaryKeyPointMessage,
@@ -45,11 +44,11 @@ describe('keyPointsMessage', () => {
         LocalizedText.create({ en: text }),
       )
 
-      expect(recommendations, `recommendation: ${line[0]}`).to.not.be.null
-      expect(symptoms, `symptoms: ${line[1]}`).to.not.be.null
-      expect(dizziness, `dizziness: ${line[2]}`).to.not.be.null
-      expect(weight, `weight: ${line[3]}`).to.not.be.null
-      expect(texts).to.not.be.empty
+      expect(recommendations).not.toBeNull()
+      expect(symptoms).not.toBeNull()
+      expect(dizziness).not.toBeNull()
+      expect(weight).not.toBeNull()
+      expect(texts).not.toHaveLength(0)
 
       if (
         recommendations === null ||
@@ -58,7 +57,7 @@ describe('keyPointsMessage', () => {
         weight === null ||
         texts.length === 0
       )
-        expect.fail('Invalid key point message')
+        fail('Invalid key point message')
 
       const message: HealthSummaryKeyPointMessage = {
         recommendationsCategory: recommendations,
@@ -71,17 +70,7 @@ describe('keyPointsMessage', () => {
       keyPointMessages.push(message)
     })
 
-    expect(
-      keyPointMessages,
-      JSON.stringify(
-        keyPointMessages.map((message) => ({
-          ...message,
-          texts: message.texts.map((text) => text.content),
-        })),
-        null,
-        2,
-      ),
-    ).to.deep.equal(healthSummaryKeyPointMessages.value)
+    expect(keyPointMessages).toStrictEqual(healthSummaryKeyPointMessages.value)
   })
 
   it('should cover all combinations', () => {
@@ -105,10 +94,7 @@ describe('keyPointsMessage', () => {
               dizziness,
               weight,
             })
-            expect(
-              texts ?? [],
-              `${recommendations}, ${symptomScore}, ${dizziness}, ${weight}`,
-            ).to.not.be.empty
+            expect(texts ?? []).not.toHaveLength(0)
           }
         }
       }

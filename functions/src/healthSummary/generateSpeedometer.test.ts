@@ -8,7 +8,6 @@
 
 import assert from 'assert'
 import fs from 'fs'
-import { describe, it } from 'mocha'
 import { healthSummaryLocalization } from './generate+localizations.js'
 import { generateSpeedometerSvg } from './generateSpeedometer.js'
 import { Localizer } from '../services/localization/localizer.js'
@@ -29,7 +28,7 @@ describe('generateSpeedometer', () => {
       fs.writeFileSync(expectedPath, actualData)
     } else {
       const expectedData = fs.readFileSync(expectedPath)
-      assert.equal(actualData, expectedData.toString('utf8'))
+      expect(actualData).toBe(expectedData.toString('utf8'))
     }
   })
 
@@ -43,7 +42,7 @@ describe('generateSpeedometer', () => {
       fs.writeFileSync(expectedPath, actualData)
     } else {
       const expectedData = fs.readFileSync(expectedPath)
-      assert.equal(actualData, expectedData.toString('utf8'))
+      expect(actualData).toBe(expectedData.toString('utf8'))
     }
   })
 
@@ -56,7 +55,7 @@ describe('generateSpeedometer', () => {
       fs.writeFileSync(expectedPath, actualData)
     } else {
       const expectedData = fs.readFileSync(expectedPath)
-      assert.equal(actualData, expectedData.toString('utf8'))
+      expect(actualData).toBe(expectedData.toString('utf8'))
     }
   })
 
@@ -69,7 +68,7 @@ describe('generateSpeedometer', () => {
       fs.writeFileSync(expectedPath, actualData)
     } else {
       const expectedData = fs.readFileSync(expectedPath)
-      assert.equal(actualData, expectedData.toString('utf8'))
+      expect(actualData).toBe(expectedData.toString('utf8'))
     }
   })
 })

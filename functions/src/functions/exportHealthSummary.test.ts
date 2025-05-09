@@ -7,9 +7,7 @@
 //
 
 import { UserType } from '@stanfordbdhg/engagehf-models'
-import { expect } from 'chai'
 import { logger } from 'firebase-functions'
-import { it } from 'mocha'
 import { exportHealthSummary } from './exportHealthSummary.js'
 import { shareHealthSummary } from './shareHealthSummary.js'
 import { describeWithEmulators } from '../tests/functions/testEnvironment.js'
@@ -32,9 +30,8 @@ describeWithEmulators('function: exportHealthSummary', (env) => {
     )
 
     logger.info('healthSummary', healthSummary)
-    expect(healthSummary).to.exist
-    expect(healthSummary).to.have.property('content')
-    expect(healthSummary.content).to.be.a('string')
+    expect(healthSummary).toBeDefined()
+    expect(healthSummary).toHaveProperty('content')
   })
 
   it('fails to export health summary for unauthenticated user without share code', async () => {
@@ -52,7 +49,7 @@ describeWithEmulators('function: exportHealthSummary', (env) => {
           },
           {},
         ),
-      (error) => expect(error).to.have.property('code', 'unauthenticated'),
+      (error) => expect(error).toHaveProperty('code', 'unauthenticated'),
     )
   })
 
@@ -84,9 +81,8 @@ describeWithEmulators('function: exportHealthSummary', (env) => {
     )
 
     logger.info('healthSummary', healthSummary)
-    expect(healthSummary).to.exist
-    expect(healthSummary).to.have.property('content')
-    expect(healthSummary.content).to.be.a('string')
+    expect(healthSummary).toBeDefined()
+    expect(healthSummary).toHaveProperty('content')
   })
 
   it('fails to export health summary for unauthenticated user with missing or incorrect share code', async () => {
@@ -107,8 +103,8 @@ describeWithEmulators('function: exportHealthSummary', (env) => {
     logger.info('shareCode', shareCode)
 
     const shareCodes3 = await env.collections.userShareCodes(patientId).get()
-    expect(shareCodes3.docs).to.have.lengthOf(1)
-    expect(shareCodes3.docs.at(0)?.data()).to.have.property('tries', 3)
+    expect(shareCodes3.docs).toHaveLength(1)
+    expect(shareCodes3.docs.at(0)?.data()).toHaveProperty('tries', 3)
 
     await expectError(
       async () =>
@@ -120,12 +116,12 @@ describeWithEmulators('function: exportHealthSummary', (env) => {
           },
           {},
         ),
-      (error) => expect(error).to.have.property('code', 'unauthenticated'),
+      (error) => expect(error).toHaveProperty('code', 'unauthenticated'),
     )
 
     const shareCodes2 = await env.collections.userShareCodes(patientId).get()
-    expect(shareCodes2.docs).to.have.lengthOf(1)
-    expect(shareCodes2.docs.at(0)?.data()).to.have.property('tries', 2)
+    expect(shareCodes2.docs).toHaveLength(1)
+    expect(shareCodes2.docs.at(0)?.data()).toHaveProperty('tries', 2)
 
     await expectError(
       async () =>
@@ -138,12 +134,12 @@ describeWithEmulators('function: exportHealthSummary', (env) => {
           },
           {},
         ),
-      (error) => expect(error).to.have.property('code', 'unauthenticated'),
+      (error) => expect(error).toHaveProperty('code', 'unauthenticated'),
     )
 
     const shareCodes1 = await env.collections.userShareCodes(patientId).get()
-    expect(shareCodes1.docs).to.have.lengthOf(1)
-    expect(shareCodes1.docs.at(0)?.data()).to.have.property('tries', 1)
+    expect(shareCodes1.docs).toHaveLength(1)
+    expect(shareCodes1.docs.at(0)?.data()).toHaveProperty('tries', 1)
 
     await expectError(
       async () =>
@@ -155,10 +151,10 @@ describeWithEmulators('function: exportHealthSummary', (env) => {
           },
           {},
         ),
-      (error) => expect(error).to.have.property('code', 'unauthenticated'),
+      (error) => expect(error).toHaveProperty('code', 'unauthenticated'),
     )
 
     const shareCodes0 = await env.collections.userShareCodes(patientId).get()
-    expect(shareCodes0.docs).to.have.lengthOf(0)
+    expect(shareCodes0.docs).toHaveLength(0)
   })
 })
