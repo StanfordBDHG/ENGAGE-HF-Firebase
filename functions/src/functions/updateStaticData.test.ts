@@ -75,8 +75,10 @@ describeWithEmulators('function: updateStaticData', (env) => {
       )
     }
 
-    const questionnaires = await env.collections.questionnaires.get()
-    expect(questionnaires.docs).toHaveLength(1)
+    const questionnaires = await env.collections.questionnaires
+      .withConverter(null)
+      .get()
+    expect(questionnaires.docs).toHaveLength(4)
     const questionnairesJson = JSON.parse(
       fs.readFileSync('data/questionnaires.json', 'utf8'),
     )

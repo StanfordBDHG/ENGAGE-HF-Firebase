@@ -40,10 +40,10 @@ export function medicationClassesForGroup(
 }
 
 export enum QuestionnaireId {
-  kccq = 'http://spezi.health/fhir/questionnaire/9528ccc2-d1be-4c4c-9c3c-19f78e51ec19',
-  dataUpdate = 'http://spezi.health/fhir/questionnaire/engagehf-data-update',
-  postVisit = 'http://spezi.health/fhir/questionnaire/engagehf-post-visit',
-  registration = 'http://spezi.health/fhir/questionnaire/engagehf-registration',
+  kccq = '9528ccc2-d1be-4c4c-9c3c-19f78e51ec19',
+  dataUpdate = 'engagehf-data-update',
+  postVisit = 'engagehf-post-visit',
+  registration = 'engagehf-registration',
 }
 
 export const QuestionnaireLinkId = {
