@@ -161,7 +161,7 @@ describe('MraRecommender', () => {
     let contextBelowTarget: MedicationRequestContext
     beforeAll(async () => {
       const request = FHIRMedicationRequest.create({
-        drugReference: DrugReference.eplerenone25,
+        medicationReference: DrugReference.eplerenone25,
         frequencyPerDay: 1,
         quantity: 1,
       })
@@ -175,7 +175,7 @@ describe('MraRecommender', () => {
 
     it('states that target dose is reached', async () => {
       const request = FHIRMedicationRequest.create({
-        drugReference: DrugReference.eplerenone25,
+        medicationReference: DrugReference.eplerenone25,
         frequencyPerDay: 2,
         quantity: 1,
       })

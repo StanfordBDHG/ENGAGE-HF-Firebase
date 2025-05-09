@@ -16,6 +16,8 @@ import {
   type SymptomScore,
   type UserMedicationRecommendation,
   type UserShareCode,
+  type UserObservationCollection,
+  type LoincCode,
 } from '@stanfordbdhg/engagehf-models'
 import { type Document } from '../database/databaseService.js'
 
@@ -32,6 +34,8 @@ export interface PatientService {
     userId: string,
   ): Promise<Document<FHIRAppointment> | undefined>
 
+  createAppointment(userId: string, appointment: FHIRAppointment): Promise<void>
+
   // Contraindications
 
   getContraindications(
@@ -40,16 +44,21 @@ export interface PatientService {
 
   // Medication Requests
 
-  getMedicationRecommendations(
-    userId: string,
-  ): Promise<Array<Document<UserMedicationRecommendation>>>
   getMedicationRequests(
     userId: string,
   ): Promise<Array<Document<FHIRMedicationRequest>>>
-  updateMedicationRecommendations(
+  replaceMedicationRequests(
+    userId: string,
+    values: FHIRMedicationRequest[],
+  ): Promise<void>
+
+  getMedicationRecommendations(
+    userId: string,
+  ): Promise<Array<Document<UserMedicationRecommendation>>>
+  replaceMedicationRecommendations(
     userId: string,
     recommendations: UserMedicationRecommendation[],
-  ): Promise<boolean>
+  ): Promise<void>
 
   // Observations
 
@@ -81,6 +90,15 @@ export interface PatientService {
     userId: string,
   ): Promise<Observation | undefined>
 
+  createObservations(
+    userId: string,
+    values: Array<{
+      observation: Observation
+      loincCode: LoincCode
+      collection: UserObservationCollection
+    }>,
+  ): Promise<void>
+
   // Questionnaire Responses
 
   getQuestionnaireResponses(
@@ -97,7 +115,7 @@ export interface PatientService {
   updateSymptomScore(
     userId: string,
     symptomScoreId: string,
-    symptomScore: SymptomScore | undefined,
+    symptomScore: SymptomScore | null,
   ): Promise<void>
 
   // Share Code

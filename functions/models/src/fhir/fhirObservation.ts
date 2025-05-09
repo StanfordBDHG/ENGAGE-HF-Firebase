@@ -135,6 +135,7 @@ export class FHIRObservation extends FHIRResource {
     [LoincCode.systolicBloodPressure, 'Systolic blood pressure'],
     [LoincCode.diastolicBloodPressure, 'Diastolic blood pressure'],
     [LoincCode.bodyWeight, 'Body weight'],
+    [LoincCode.dryWeight, 'Dry body weight Estimated'],
     [LoincCode.creatinine, 'Creatinine [Mass/volume] in Serum or Plasma'],
     [
       LoincCode.estimatedGlomerularFiltrationRate,
@@ -277,6 +278,14 @@ export class FHIRObservation extends FHIRResource {
   bodyWeight(unit: QuantityUnit): Observation | undefined {
     return this.observations({
       code: LoincCode.bodyWeight,
+      system: CodingSystem.loinc,
+      unit: unit,
+    }).at(0)
+  }
+
+  dryWeight(unit: QuantityUnit): Observation | undefined {
+    return this.observations({
+      code: LoincCode.dryWeight,
       system: CodingSystem.loinc,
       unit: unit,
     }).at(0)

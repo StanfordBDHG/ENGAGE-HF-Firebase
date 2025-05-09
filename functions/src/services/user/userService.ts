@@ -7,6 +7,7 @@
 //
 
 import {
+  type UserSex,
   type Invitation,
   type Organization,
   type User,
@@ -52,6 +53,13 @@ export interface UserService {
 
   // Users
 
+  updatePersonalInfo(
+    userId: string,
+    data: {
+      dateOfBirth: Date
+      sex: UserSex
+    },
+  ): Promise<void>
   disableUser(userId: string): Promise<void>
   enableUser(userId: string): Promise<void>
   getAllOwners(organizationId: string): Promise<Array<Document<User>>>

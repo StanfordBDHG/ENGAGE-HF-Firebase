@@ -87,20 +87,27 @@ export class TriggerService {
       `questionnaireResponseWritten(${userId}, ${questionnaireResponseId}): beforeData: ${beforeData !== undefined ? 'exists' : 'undefined'}, afterData: ${afterData !== undefined ? 'exists' : 'undefined'}`,
     )
 
-    const patientService = this.factory.patient()
-    const symptomScoreCalculator = this.factory.symptomScore()
+    try {
+      const questionnaireResponseService = this.factory.questionnaireResponse()
+      if (afterData !== undefined) {
+        const handled = await questionnaireResponseService.handle(userId, {
+          id: questionnaireResponseId,
+          path: `users/${userId}/questionnaireResponses/${questionnaireResponseId}`,
+          lastUpdate: new Date(),
+          content: afterData,
+        })
 
-    const newScore =
-      afterData ? symptomScoreCalculator.calculate(afterData) : undefined
-
-    logger.debug(
-      `questionnaireResponseWritten(${userId}, ${questionnaireResponseId}): Calculated new score ${newScore?.overallScore}`,
-    )
-    await patientService.updateSymptomScore(
-      userId,
-      questionnaireResponseId,
-      newScore,
-    )
+        logger.debug(
+          `questionnaireResponseWritten(${userId}, ${questionnaireResponseId}): Handled questionnaire response: ${handled}`,
+        )
+      }
+    } catch (error) {
+      logger.error(
+        `questionnaireResponseWritten(${userId}, ${questionnaireResponseId}): Error handling questionnaire response: ${String(
+          error,
+        )}`,
+      )
+    }
 
     const messageService = this.factory.message()
     if (beforeData === undefined && afterData !== undefined) {
@@ -157,7 +164,7 @@ export class TriggerService {
       await this.factory.message().addMessage(
         user.id,
         UserMessage.createSymptomQuestionnaire({
-          questionnaireReference: QuestionnaireReference.enUS,
+          questionnaireReference: QuestionnaireReference.kccq_en_US,
         }),
         { notify: true },
       )
@@ -395,11 +402,7 @@ export class TriggerService {
       logger.debug(
         `TriggerService.updateAllSymptomScores(${userId}): Deleting symptom score at ${symptomScore.path}`,
       )
-      await patientService.updateSymptomScore(
-        userId,
-        symptomScore.id,
-        undefined,
-      )
+      await patientService.updateSymptomScore(userId, symptomScore.id, null)
     }
 
     const questionnaireResponses =
@@ -493,7 +496,7 @@ export class TriggerService {
       `TriggerService.updateRecommendationsForUser(${userId}): Computed ${recommendations.length} recommendations`,
     )
 
-    await patientService.updateMedicationRecommendations(
+    await patientService.replaceMedicationRecommendations(
       userId,
       recommendations,
     )
@@ -651,7 +654,7 @@ export class TriggerService {
     now: Date
   }) {
     const symptomReminderMessage = UserMessage.createSymptomQuestionnaire({
-      questionnaireReference: QuestionnaireReference.enUS,
+      questionnaireReference: QuestionnaireReference.kccq_en_US,
     })
     const vitalsMessage = UserMessage.createVitals()
 
@@ -835,6 +838,7 @@ export class TriggerService {
             code: '<your admin email>',
             user: new UserRegistration({
               type: UserType.admin,
+              selfManaged: false,
               disabled: false,
               receivesAppointmentReminders: false,
               receivesInactivityReminders: false,

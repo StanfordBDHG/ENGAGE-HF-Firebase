@@ -28,6 +28,7 @@ describeWithEmulators('function: deleteInvitation', (env) => {
       user: new UserRegistration({
         type: UserType.patient,
         disabled: false,
+        selfManaged: false,
         organization: 'stanford',
         receivesAppointmentReminders: false,
         receivesInactivityReminders: true,
