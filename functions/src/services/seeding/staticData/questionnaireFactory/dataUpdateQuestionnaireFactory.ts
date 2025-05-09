@@ -10,7 +10,7 @@ import {
   type FHIRMedication,
   type FHIRQuestionnaire,
 } from '@stanfordbdhg/engagehf-models'
-import { QuestionnaireFactory } from './questionnaireFactor.js'
+import { QuestionnaireFactory } from './questionnaireFactory.js'
 import { QuestionnaireId } from './questionnaireLinkIds.js'
 
 interface DataUpdateQuestionnaireFactoryInput {
