@@ -11,8 +11,6 @@ import {
   UserMessage,
   UserType,
 } from '@stanfordbdhg/engagehf-models'
-import { expect } from 'chai'
-import { it } from 'mocha'
 import { dismissMessage } from './dismissMessage.js'
 import { describeWithEmulators } from '../tests/functions/testEnvironment.js'
 import { expectError } from '../tests/helpers.js'
@@ -37,10 +35,7 @@ describeWithEmulators('function: dismissMessage', (env) => {
           },
         ),
       (error) =>
-        expect(error).to.have.property(
-          'message',
-          'Message is not dismissible.',
-        ),
+        expect(error).toHaveProperty('message', 'Message is not dismissible.'),
     )
   })
 
@@ -60,7 +55,7 @@ describeWithEmulators('function: dismissMessage', (env) => {
     )
 
     const actualMessage = await messageRef.get()
-    expect(actualMessage.exists).to.be.true
-    expect(actualMessage.data()?.completionDate).to.exist
+    expect(actualMessage.exists).toBe(true)
+    expect(actualMessage.data()?.completionDate).toBeDefined()
   })
 })

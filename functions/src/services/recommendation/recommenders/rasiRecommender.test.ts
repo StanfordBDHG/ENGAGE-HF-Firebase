@@ -16,8 +16,6 @@ import {
   SymptomScore,
   UserMedicationRecommendationType,
 } from '@stanfordbdhg/engagehf-models'
-import { expect } from 'chai'
-import { describe, it } from 'mocha'
 import { RasiRecommender } from './rasiRecommender.js'
 import { type Recommender } from './recommender.js'
 import { type MedicationRequestContext } from '../../../models/medicationRequestContext.js'
@@ -49,7 +47,7 @@ describe('RasiRecommender', () => {
   let vitals: RecommendationVitals
   let medicationService: MedicationService
 
-  before(async () => {
+  beforeAll(async () => {
     setupMockFirebase()
     const factory = getServiceFactory()
     const staticDataService = factory.staticData()
@@ -81,7 +79,7 @@ describe('RasiRecommender', () => {
     medicationClassContraindication = (_) => ContraindicationCategory.none
   })
 
-  after(() => {
+  afterAll(() => {
     cleanupMocks()
   })
 
@@ -102,7 +100,7 @@ describe('RasiRecommender', () => {
         vitals: vitals,
         latestDizzinessScore: symptomScore?.dizzinessScore,
       })
-      expect(result).to.have.length(0)
+      expect(result).toHaveLength(0)
     })
 
     it('does not recommend medication when severe ACEI allergies are present', () => {
@@ -121,7 +119,7 @@ describe('RasiRecommender', () => {
         vitals: vitals,
         latestDizzinessScore: symptomScore?.dizzinessScore,
       })
-      expect(result).to.have.length(0)
+      expect(result).toHaveLength(0)
     })
 
     it('shows sacubitril-valsartan when clinician-listed contraindications are present', () => {
@@ -136,8 +134,8 @@ describe('RasiRecommender', () => {
         vitals: vitals,
         latestDizzinessScore: symptomScore?.dizzinessScore,
       })
-      expect(result).to.have.length(1)
-      expect(result.at(0)).to.deep.equal({
+      expect(result).toHaveLength(1)
+      expect(result.at(0)).toStrictEqual({
         currentMedication: [],
         recommendedMedication: MedicationReference.sacubitrilValsartan,
         type: UserMedicationRecommendationType.noActionRequired,
@@ -152,8 +150,8 @@ describe('RasiRecommender', () => {
         vitals: vitals,
         latestDizzinessScore: symptomScore?.dizzinessScore,
       })
-      expect(result).to.have.length(1)
-      expect(result.at(0)).to.deep.equal({
+      expect(result).toHaveLength(1)
+      expect(result.at(0)).toStrictEqual({
         currentMedication: [],
         recommendedMedication: MedicationReference.sacubitrilValsartan,
         type: UserMedicationRecommendationType.morePatientObservationsRequired,
@@ -170,8 +168,8 @@ describe('RasiRecommender', () => {
         vitals: vitals,
         latestDizzinessScore: symptomScore?.dizzinessScore,
       })
-      expect(result).to.have.length(1)
-      expect(result.at(0)).to.deep.equal({
+      expect(result).toHaveLength(1)
+      expect(result.at(0)).toStrictEqual({
         currentMedication: [],
         recommendedMedication: MedicationReference.sacubitrilValsartan,
         type: UserMedicationRecommendationType.noActionRequired,
@@ -190,8 +188,8 @@ describe('RasiRecommender', () => {
         vitals: vitals,
         latestDizzinessScore: symptomScore?.dizzinessScore,
       })
-      expect(result).to.have.length(1)
-      expect(result.at(0)).to.deep.equal({
+      expect(result).toHaveLength(1)
+      expect(result.at(0)).toStrictEqual({
         currentMedication: [],
         recommendedMedication: MedicationReference.sacubitrilValsartan,
         type: UserMedicationRecommendationType.noActionRequired,
@@ -210,8 +208,8 @@ describe('RasiRecommender', () => {
         vitals: vitals,
         latestDizzinessScore: symptomScore?.dizzinessScore,
       })
-      expect(result).to.have.length(1)
-      expect(result.at(0)).to.deep.equal({
+      expect(result).toHaveLength(1)
+      expect(result.at(0)).toStrictEqual({
         currentMedication: [],
         recommendedMedication: MedicationReference.sacubitrilValsartan,
         type: UserMedicationRecommendationType.noActionRequired,
@@ -232,8 +230,8 @@ describe('RasiRecommender', () => {
         vitals: vitals,
         latestDizzinessScore: symptomScore?.dizzinessScore,
       })
-      expect(result).to.have.length(1)
-      expect(result.at(0)).to.deep.equal({
+      expect(result).toHaveLength(1)
+      expect(result.at(0)).toStrictEqual({
         currentMedication: [],
         recommendedMedication: MedicationReference.losartan,
         type: UserMedicationRecommendationType.notStarted,
@@ -247,8 +245,8 @@ describe('RasiRecommender', () => {
         vitals: vitals,
         latestDizzinessScore: symptomScore?.dizzinessScore,
       })
-      expect(result).to.have.length(1)
-      expect(result.at(0)).to.deep.equal({
+      expect(result).toHaveLength(1)
+      expect(result.at(0)).toStrictEqual({
         currentMedication: [],
         recommendedMedication: MedicationReference.sacubitrilValsartan,
         type: UserMedicationRecommendationType.notStarted,
@@ -258,7 +256,7 @@ describe('RasiRecommender', () => {
 
   describe('On perindopril (ACEI/ARB)', () => {
     let contextBelowTarget: MedicationRequestContext
-    before(async () => {
+    beforeAll(async () => {
       const request = FHIRMedicationRequest.create({
         medicationReference: DrugReference.perindopril4,
         frequencyPerDay: 1,
@@ -301,8 +299,8 @@ describe('RasiRecommender', () => {
           vitals: vitals,
           latestDizzinessScore: symptomScore?.dizzinessScore,
         })
-        expect(result).to.have.length(1)
-        expect(result.at(0)).to.deep.equal({
+        expect(result).toHaveLength(1)
+        expect(result.at(0)).toStrictEqual({
           currentMedication: [contextAtTarget],
           recommendedMedication: undefined,
           type: UserMedicationRecommendationType.targetDoseReached,
@@ -317,8 +315,8 @@ describe('RasiRecommender', () => {
           vitals: vitals,
           latestDizzinessScore: symptomScore?.dizzinessScore,
         })
-        expect(result).to.have.length(1)
-        expect(result.at(0)).to.deep.equal({
+        expect(result).toHaveLength(1)
+        expect(result.at(0)).toStrictEqual({
           currentMedication: [contextBelowTarget],
           recommendedMedication: undefined,
           type: UserMedicationRecommendationType.morePatientObservationsRequired,
@@ -335,8 +333,8 @@ describe('RasiRecommender', () => {
           vitals: vitals,
           latestDizzinessScore: symptomScore?.dizzinessScore,
         })
-        expect(result).to.have.length(1)
-        expect(result.at(0)).to.deep.equal({
+        expect(result).toHaveLength(1)
+        expect(result.at(0)).toStrictEqual({
           currentMedication: [contextBelowTarget],
           recommendedMedication: undefined,
           type: UserMedicationRecommendationType.personalTargetDoseReached,
@@ -355,8 +353,8 @@ describe('RasiRecommender', () => {
           vitals: vitals,
           latestDizzinessScore: symptomScore?.dizzinessScore,
         })
-        expect(result).to.have.length(1)
-        expect(result.at(0)).to.deep.equal({
+        expect(result).toHaveLength(1)
+        expect(result.at(0)).toStrictEqual({
           currentMedication: [contextBelowTarget],
           recommendedMedication: undefined,
           type: UserMedicationRecommendationType.personalTargetDoseReached,
@@ -375,8 +373,8 @@ describe('RasiRecommender', () => {
           vitals: vitals,
           latestDizzinessScore: symptomScore?.dizzinessScore,
         })
-        expect(result).to.have.length(1)
-        expect(result.at(0)).to.deep.equal({
+        expect(result).toHaveLength(1)
+        expect(result.at(0)).toStrictEqual({
           currentMedication: [contextBelowTarget],
           recommendedMedication: undefined,
           type: UserMedicationRecommendationType.personalTargetDoseReached,
@@ -390,8 +388,8 @@ describe('RasiRecommender', () => {
           vitals: vitals,
           latestDizzinessScore: 3,
         })
-        expect(result).to.have.length(1)
-        expect(result.at(0)).to.deep.equal({
+        expect(result).toHaveLength(1)
+        expect(result.at(0)).toStrictEqual({
           currentMedication: [contextBelowTarget],
           recommendedMedication: undefined,
           type: UserMedicationRecommendationType.personalTargetDoseReached,
@@ -405,8 +403,8 @@ describe('RasiRecommender', () => {
           vitals: vitals,
           latestDizzinessScore: symptomScore?.dizzinessScore,
         })
-        expect(result).to.have.length(1)
-        expect(result.at(0)).to.deep.equal({
+        expect(result).toHaveLength(1)
+        expect(result.at(0)).toStrictEqual({
           currentMedication: [contextBelowTarget],
           recommendedMedication: undefined,
           type: UserMedicationRecommendationType.improvementAvailable,
@@ -423,8 +421,8 @@ describe('RasiRecommender', () => {
           vitals: vitals,
           latestDizzinessScore: symptomScore?.dizzinessScore,
         })
-        expect(result).to.have.length(1)
-        expect(result.at(0)).to.deep.equal({
+        expect(result).toHaveLength(1)
+        expect(result.at(0)).toStrictEqual({
           currentMedication: [contextBelowTarget],
           recommendedMedication: undefined,
           type: UserMedicationRecommendationType.morePatientObservationsRequired,
@@ -441,8 +439,8 @@ describe('RasiRecommender', () => {
           vitals: vitals,
           latestDizzinessScore: symptomScore?.dizzinessScore,
         })
-        expect(result).to.have.length(1)
-        expect(result.at(0)).to.deep.equal({
+        expect(result).toHaveLength(1)
+        expect(result.at(0)).toStrictEqual({
           currentMedication: [contextBelowTarget],
           recommendedMedication: undefined,
           type: UserMedicationRecommendationType.personalTargetDoseReached,
@@ -461,8 +459,8 @@ describe('RasiRecommender', () => {
           vitals: vitals,
           latestDizzinessScore: symptomScore?.dizzinessScore,
         })
-        expect(result).to.have.length(1)
-        expect(result.at(0)).to.deep.equal({
+        expect(result).toHaveLength(1)
+        expect(result.at(0)).toStrictEqual({
           currentMedication: [contextBelowTarget],
           recommendedMedication: undefined,
           type: UserMedicationRecommendationType.personalTargetDoseReached,
@@ -481,8 +479,8 @@ describe('RasiRecommender', () => {
           vitals: vitals,
           latestDizzinessScore: symptomScore?.dizzinessScore,
         })
-        expect(result).to.have.length(1)
-        expect(result.at(0)).to.deep.equal({
+        expect(result).toHaveLength(1)
+        expect(result.at(0)).toStrictEqual({
           currentMedication: [contextBelowTarget],
           recommendedMedication: undefined,
           type: UserMedicationRecommendationType.personalTargetDoseReached,
@@ -496,8 +494,8 @@ describe('RasiRecommender', () => {
           vitals: vitals,
           latestDizzinessScore: 3,
         })
-        expect(result).to.have.length(1)
-        expect(result.at(0)).to.deep.equal({
+        expect(result).toHaveLength(1)
+        expect(result.at(0)).toStrictEqual({
           currentMedication: [contextBelowTarget],
           recommendedMedication: undefined,
           type: UserMedicationRecommendationType.personalTargetDoseReached,
@@ -511,8 +509,8 @@ describe('RasiRecommender', () => {
           vitals: vitals,
           latestDizzinessScore: symptomScore?.dizzinessScore,
         })
-        expect(result).to.have.length(1)
-        expect(result.at(0)).to.deep.equal({
+        expect(result).toHaveLength(1)
+        expect(result.at(0)).toStrictEqual({
           currentMedication: [contextBelowTarget],
           recommendedMedication: MedicationReference.sacubitrilValsartan,
           type: UserMedicationRecommendationType.improvementAvailable,
@@ -523,7 +521,7 @@ describe('RasiRecommender', () => {
 
   describe('On sacubitril/valsartan', () => {
     let contextBelowTarget: MedicationRequestContext
-    before(async () => {
+    beforeAll(async () => {
       const request = FHIRMedicationRequest.create({
         medicationReference: DrugReference.sacubitrilValsartan49_51,
         frequencyPerDay: 1,
@@ -555,8 +553,8 @@ describe('RasiRecommender', () => {
         vitals: vitals,
         latestDizzinessScore: symptomScore?.dizzinessScore,
       })
-      expect(result).to.have.length(1)
-      expect(result.at(0)).to.deep.equal({
+      expect(result).toHaveLength(1)
+      expect(result.at(0)).toStrictEqual({
         currentMedication: [contextAtTarget],
         recommendedMedication: undefined,
         type: UserMedicationRecommendationType.targetDoseReached,
@@ -571,8 +569,8 @@ describe('RasiRecommender', () => {
         vitals: vitals,
         latestDizzinessScore: symptomScore?.dizzinessScore,
       })
-      expect(result).to.have.length(1)
-      expect(result.at(0)).to.deep.equal({
+      expect(result).toHaveLength(1)
+      expect(result.at(0)).toStrictEqual({
         currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
         type: UserMedicationRecommendationType.morePatientObservationsRequired,
@@ -589,8 +587,8 @@ describe('RasiRecommender', () => {
         vitals: vitals,
         latestDizzinessScore: symptomScore?.dizzinessScore,
       })
-      expect(result).to.have.length(1)
-      expect(result.at(0)).to.deep.equal({
+      expect(result).toHaveLength(1)
+      expect(result.at(0)).toStrictEqual({
         currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
         type: UserMedicationRecommendationType.personalTargetDoseReached,
@@ -609,8 +607,8 @@ describe('RasiRecommender', () => {
         vitals: vitals,
         latestDizzinessScore: symptomScore?.dizzinessScore,
       })
-      expect(result).to.have.length(1)
-      expect(result.at(0)).to.deep.equal({
+      expect(result).toHaveLength(1)
+      expect(result.at(0)).toStrictEqual({
         currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
         type: UserMedicationRecommendationType.personalTargetDoseReached,
@@ -629,8 +627,8 @@ describe('RasiRecommender', () => {
         vitals: vitals,
         latestDizzinessScore: symptomScore?.dizzinessScore,
       })
-      expect(result).to.have.length(1)
-      expect(result.at(0)).to.deep.equal({
+      expect(result).toHaveLength(1)
+      expect(result.at(0)).toStrictEqual({
         currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
         type: UserMedicationRecommendationType.personalTargetDoseReached,
@@ -644,8 +642,8 @@ describe('RasiRecommender', () => {
         vitals: vitals,
         latestDizzinessScore: 3,
       })
-      expect(result).to.have.length(1)
-      expect(result.at(0)).to.deep.equal({
+      expect(result).toHaveLength(1)
+      expect(result.at(0)).toStrictEqual({
         currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
         type: UserMedicationRecommendationType.personalTargetDoseReached,
@@ -659,8 +657,8 @@ describe('RasiRecommender', () => {
         vitals: vitals,
         latestDizzinessScore: symptomScore?.dizzinessScore,
       })
-      expect(result).to.have.length(1)
-      expect(result.at(0)).to.deep.equal({
+      expect(result).toHaveLength(1)
+      expect(result.at(0)).toStrictEqual({
         currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
         type: UserMedicationRecommendationType.improvementAvailable,

@@ -7,7 +7,6 @@
 //
 
 import { UserType } from '@stanfordbdhg/engagehf-models'
-import { expect } from 'chai'
 import {
   checkPhoneNumberVerification,
   deletePhoneNumber,
@@ -44,7 +43,7 @@ describeWithEmulators('PhoneNumber', (env) => {
     )
 
     const user = await env.collections.users.doc(patientId).get()
-    expect(user.data()?.phoneNumbers).to.contain(phoneNumber)
+    expect(user.data()?.phoneNumbers).toContainEqual(phoneNumber)
   })
 
   it('fails to verify phone number without calling startPhoneNumberVerification', async () => {
@@ -65,7 +64,7 @@ describeWithEmulators('PhoneNumber', (env) => {
           },
         ),
       (error) =>
-        expect(error).to.have.property(
+        expect(error).toHaveProperty(
           'message',
           'Phone number verification not found.',
         ),
@@ -99,7 +98,7 @@ describeWithEmulators('PhoneNumber', (env) => {
           },
         ),
       (error) =>
-        expect(error).to.have.property('message', 'Invalid verification code.'),
+        expect(error).toHaveProperty('message', 'Invalid verification code.'),
     )
   })
 
@@ -123,8 +122,8 @@ describeWithEmulators('PhoneNumber', (env) => {
 
     const user = await env.collections.users.doc(patientId).get()
     const userData = user.data()
-    expect(userData?.phoneNumbers).to.not.contain(phoneNumber0)
-    expect(userData?.phoneNumbers).to.contain(phoneNumber1)
-    expect(userData?.phoneNumbers).to.have.length(1)
+    expect(userData?.phoneNumbers).not.toContainEqual(phoneNumber0)
+    expect(userData?.phoneNumbers).toContainEqual(phoneNumber1)
+    expect(userData?.phoneNumbers).toHaveLength(1)
   })
 })

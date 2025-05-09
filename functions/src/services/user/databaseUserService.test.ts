@@ -7,9 +7,7 @@
 //
 
 import { UserType } from '@stanfordbdhg/engagehf-models'
-import { assert, expect } from 'chai'
 import admin from 'firebase-admin'
-import { describe } from 'mocha'
 import { type UserService } from './userService.js'
 import { type MockFirestore } from '../../tests/mocks/firestore.js'
 import { cleanupMocks, setupMockFirebase } from '../../tests/setup.js'
@@ -53,21 +51,21 @@ describe('DatabaseUserService', () => {
       })
 
       const invitation = await userService.getInvitationByCode(invitationCode)
-      if (!invitation) assert.fail('Invitation not found')
+      if (!invitation) fail('Invitation not found')
       await userService.enrollUser(invitation, userId, {
         isSingleSignOn: false,
       })
 
       const auth = await admin.auth().getUser(userId)
-      expect(auth.displayName).to.equal(displayName)
+      expect(auth.displayName).toBe(displayName)
 
       const userSnapshot = await collectionsService.users.doc(userId).get()
-      expect(userSnapshot.exists).to.be.true
+      expect(userSnapshot.exists).toBe(true)
       const userData = userSnapshot.data()
-      expect(userData).to.exist
-      expect(userData?.invitationCode).to.equal(invitationCode)
-      expect(userData?.dateOfEnrollment).to.exist
-      expect(userData?.claims).to.deep.equal({
+      expect(userData).toBeDefined()
+      expect(userData?.invitationCode).toBe(invitationCode)
+      expect(userData?.dateOfEnrollment).toBeDefined()
+      expect(userData?.claims).toStrictEqual({
         type: UserType.admin,
         disabled: false,
       })
@@ -98,21 +96,21 @@ describe('DatabaseUserService', () => {
       })
 
       const invitation = await userService.getInvitationByCode(invitationCode)
-      if (!invitation) assert.fail('Invitation not found')
+      if (!invitation) fail('Invitation not found')
       await userService.enrollUser(invitation, userId, {
         isSingleSignOn: false,
       })
 
       const auth = await admin.auth().getUser(userId)
-      expect(auth.displayName).to.equal(displayName)
+      expect(auth.displayName).toBe(displayName)
 
       const userSnapshot = await collectionsService.users.doc(userId).get()
-      expect(userSnapshot.exists).to.be.true
+      expect(userSnapshot.exists).toBe(true)
       const userData = userSnapshot.data()
-      expect(userData).to.exist
-      expect(userData?.invitationCode).to.equal(invitationCode)
-      expect(userData?.dateOfEnrollment).to.exist
-      expect(userData?.claims).to.deep.equal({
+      expect(userData).toBeDefined()
+      expect(userData?.invitationCode).toBe(invitationCode)
+      expect(userData?.dateOfEnrollment).toBeDefined()
+      expect(userData?.claims).toStrictEqual({
         type: UserType.clinician,
         organization: 'mockOrganization',
         disabled: false,
@@ -146,21 +144,21 @@ describe('DatabaseUserService', () => {
       })
 
       const invitation = await userService.getInvitationByCode(invitationCode)
-      if (!invitation) assert.fail('Invitation not found')
+      if (!invitation) fail('Invitation not found')
       await userService.enrollUser(invitation, userId, {
         isSingleSignOn: false,
       })
 
       const auth = await admin.auth().getUser(userId)
-      expect(auth.displayName).to.equal(displayName)
+      expect(auth.displayName).toBe(displayName)
 
       const userSnapshot = await collectionsService.users.doc(userId).get()
-      expect(userSnapshot.exists).to.be.true
+      expect(userSnapshot.exists).toBe(true)
       const userData = userSnapshot.data()
-      expect(userData).to.exist
-      expect(userData?.invitationCode).to.equal(invitationCode)
-      expect(userData?.dateOfEnrollment).to.exist
-      expect(userData?.claims).to.deep.equal({
+      expect(userData).toBeDefined()
+      expect(userData?.invitationCode).toBe(invitationCode)
+      expect(userData?.dateOfEnrollment).toBeDefined()
+      expect(userData?.claims).toStrictEqual({
         type: UserType.patient,
         organization: 'mockOrganization',
         disabled: false,

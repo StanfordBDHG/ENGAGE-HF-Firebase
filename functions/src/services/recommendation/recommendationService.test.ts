@@ -16,8 +16,6 @@ import {
   MedicationReference,
   UserMedicationRecommendationType,
 } from '@stanfordbdhg/engagehf-models'
-import { expect } from 'chai'
-import { describe, it } from 'mocha'
 import { type RecommendationService } from './recommendationService.js'
 import { readCsv } from '../../tests/helpers/csv.js'
 import { mockRecommendationVitals } from '../../tests/mocks/recommendationVitals.js'
@@ -29,7 +27,7 @@ describe('RecommendationService', () => {
   let medicationService: MedicationService
   let recommendationService: RecommendationService
 
-  before(async () => {
+  beforeAll(async () => {
     setupMockFirebase()
     const factory = getServiceFactory()
     const staticDataService = factory.staticData()
@@ -43,7 +41,7 @@ describe('RecommendationService', () => {
     readCsv('src/tests/resources/medtitrationtest.csv', 76, (values, index) => {
       if (index === 0) return
       it(`line ${index + 1}: ${values.join(',')}`, async () => {
-        expect(values).to.have.length(24)
+        expect(values).toHaveLength(24)
 
         const medicationRequests = values
           .slice(0, 4)
@@ -107,28 +105,28 @@ describe('RecommendationService', () => {
           }),
         )
 
-        expect(actualRecommendations).to.have.length(
+        expect(actualRecommendations).toHaveLength(
           expectedRecommendations.length,
         )
 
         for (let i = 0; i < actualRecommendations.length; i++) {
           const actual = actualRecommendations[i]
           const expected = expectedRecommendations[i]
-          expect(actual.type).to.equal(expected.type)
+          expect(actual.type).toBe(expected.type)
           if (
             expected.type ===
             UserMedicationRecommendationType.improvementAvailable
           ) {
-            expect(expected.recommendedMedication).to.exist
-            expect(result[i].currentMedication).to.have.length.greaterThan(0)
+            expect(expected.recommendedMedication).toBeDefined()
+            expect(result[i].currentMedication.length).toBeGreaterThan(0)
             result[i].currentMedication.every((medication) =>
               medication.reference.startsWith(
                 (expected.recommendedMedication ?? '') + '/drugs/',
               ),
             )
           } else if (expected.recommendedMedication) {
-            expect(actual.recommendedMedication).to.exist
-            expect(actual.recommendedMedication).to.equal(
+            expect(actual.recommendedMedication).toBeDefined()
+            expect(actual.recommendedMedication).toBe(
               expected.recommendedMedication,
             )
           }
@@ -284,7 +282,7 @@ function getMedicationRequest(
         quantity: 1,
       })
     default:
-      expect.fail('Unhandled case for medication request:', value)
+      fail(`Unhandled case for medication request: ${value}`)
   }
 }
 
@@ -400,7 +398,7 @@ function getContraindications(
         }),
       ]
     default:
-      expect.fail('Unhandled case for contraindication:', field)
+      fail(`Unhandled case for contraindication: ${field}`)
   }
 }
 
@@ -560,6 +558,6 @@ function getExpectedRecommendation(
         type: UserMedicationRecommendationType.personalTargetDoseReached,
       }
     default:
-      expect.fail('Unhandled case for expected recommendation:', value)
+      fail(`Unhandled case for expected recommendation: ${value}`)
   }
 }

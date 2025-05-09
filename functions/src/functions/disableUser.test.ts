@@ -7,7 +7,6 @@
 //
 
 import { UserType } from '@stanfordbdhg/engagehf-models'
-import { expect } from 'chai'
 import { disableUser } from './disableUser.js'
 import { describeWithEmulators } from '../tests/functions/testEnvironment.js'
 
@@ -27,9 +26,9 @@ describeWithEmulators('function: disableUser', (env) => {
     const userService = env.factory.user()
 
     const originalUser = await userService.getUser(userId)
-    expect(originalUser).to.exist
-    expect(originalUser?.content.claims.disabled).to.be.false
-    expect(originalUser?.content.disabled).to.be.false
+    expect(originalUser).toBeDefined()
+    expect(originalUser?.content.claims.disabled).toBe(false)
+    expect(originalUser?.content.disabled).toBe(false)
 
     await env.call(
       disableUser,
@@ -45,9 +44,9 @@ describeWithEmulators('function: disableUser', (env) => {
     )
 
     const user = await userService.getUser(userId)
-    expect(user).to.exist
-    expect(user?.content.claims.disabled).to.be.true
-    expect(user?.content.disabled).to.be.true
+    expect(user).toBeDefined()
+    expect(user?.content.claims.disabled).toBe(true)
+    expect(user?.content.disabled).toBe(true)
   })
 
   it('keeps disabled users disabled', async () => {
@@ -66,9 +65,9 @@ describeWithEmulators('function: disableUser', (env) => {
     const userService = env.factory.user()
 
     const originalUser = await userService.getUser(userId)
-    expect(originalUser).to.exist
-    expect(originalUser?.content.claims.disabled).to.be.true
-    expect(originalUser?.content.disabled).to.be.true
+    expect(originalUser).toBeDefined()
+    expect(originalUser?.content.claims.disabled).toBe(true)
+    expect(originalUser?.content.disabled).toBe(true)
 
     await env.call(
       disableUser,
@@ -84,8 +83,8 @@ describeWithEmulators('function: disableUser', (env) => {
     )
 
     const user = await userService.getUser(userId)
-    expect(user).to.exist
-    expect(user?.content.claims.disabled).to.be.true
-    expect(user?.content.disabled).to.be.true
+    expect(user).toBeDefined()
+    expect(user?.content.claims.disabled).toBe(true)
+    expect(user?.content.disabled).toBe(true)
   })
 })

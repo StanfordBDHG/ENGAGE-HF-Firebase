@@ -11,7 +11,6 @@ import {
   FHIRAppointmentStatus,
   UserType,
 } from '@stanfordbdhg/engagehf-models'
-import { expect } from 'chai'
 import { deleteUser } from './deleteUser.js'
 import { describeWithEmulators } from '../tests/functions/testEnvironment.js'
 import { expectError } from '../tests/helpers.js'
@@ -26,14 +25,14 @@ describeWithEmulators('function: deleteUser', (env) => {
     await expectError(
       () => env.call(deleteUser, { userId: userId }, { uid: 'user' }),
       (error) =>
-        expect(error).to.have.property(
+        expect(error).toHaveProperty(
           'message',
           'User does not have permission.',
         ),
     )
 
     const actualUser = await env.collections.users.doc(userId).get()
-    expect(actualUser.exists).to.be.true
+    expect(actualUser.exists).toBe(true)
   })
 
   it('should not allow deleting user with claims of other organization', async () => {
@@ -53,14 +52,14 @@ describeWithEmulators('function: deleteUser', (env) => {
           },
         ),
       (error) =>
-        expect(error).to.have.property(
+        expect(error).toHaveProperty(
           'message',
           'User does not have permission.',
         ),
     )
 
     const actualUser = await env.collections.users.doc(userId).get()
-    expect(actualUser.exists).to.be.true
+    expect(actualUser.exists).toBe(true)
   })
 
   it('should delete a user', async () => {
@@ -85,9 +84,9 @@ describeWithEmulators('function: deleteUser', (env) => {
     )
 
     const actualUser = await env.collections.users.doc(userId).get()
-    expect(actualUser.exists).to.be.false
+    expect(actualUser.exists).toBe(false)
 
     const actualAppointment = await appointmentRef.get()
-    expect(actualAppointment.exists).to.be.false
+    expect(actualAppointment.exists).toBe(false)
   })
 })

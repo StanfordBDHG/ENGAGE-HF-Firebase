@@ -15,8 +15,6 @@ import {
   QuantityUnit,
   UserMedicationRecommendationType,
 } from '@stanfordbdhg/engagehf-models'
-import { expect } from 'chai'
-import { describe, it } from 'mocha'
 import { MraRecommender } from './mraRecommender.js'
 import { type Recommender } from './recommender.js'
 import { type MedicationRequestContext } from '../../../models/medicationRequestContext.js'
@@ -46,7 +44,7 @@ describe('MraRecommender', () => {
   let vitals: RecommendationVitals
   let medicationService: MedicationService
 
-  before(async () => {
+  beforeAll(async () => {
     setupMockFirebase()
     const factory = getServiceFactory()
     const staticDataService = factory.staticData()
@@ -68,7 +66,7 @@ describe('MraRecommender', () => {
     medicationClassContraindication = (_) => ContraindicationCategory.none
   })
 
-  after(() => {
+  afterAll(() => {
     cleanupMocks()
   })
 
@@ -84,7 +82,7 @@ describe('MraRecommender', () => {
         contraindications: [],
         vitals: vitals,
       })
-      expect(result).to.have.length(0)
+      expect(result).toHaveLength(0)
     })
 
     it('shows spironolactone when physician-listed contraindication exists', () => {
@@ -98,8 +96,8 @@ describe('MraRecommender', () => {
         contraindications: [],
         vitals: vitals,
       })
-      expect(result).to.have.length(1)
-      expect(result.at(0)).to.deep.equal({
+      expect(result).toHaveLength(1)
+      expect(result.at(0)).toStrictEqual({
         currentMedication: [],
         recommendedMedication: MedicationReference.spironolactone,
         type: UserMedicationRecommendationType.noActionRequired,
@@ -117,8 +115,8 @@ describe('MraRecommender', () => {
         contraindications: [],
         vitals: vitals,
       })
-      expect(result).to.have.length(1)
-      expect(result.at(0)).to.deep.equal({
+      expect(result).toHaveLength(1)
+      expect(result.at(0)).toStrictEqual({
         currentMedication: [],
         recommendedMedication: MedicationReference.spironolactone,
         type: UserMedicationRecommendationType.noActionRequired,
@@ -136,8 +134,8 @@ describe('MraRecommender', () => {
         contraindications: [],
         vitals: vitals,
       })
-      expect(result).to.have.length(1)
-      expect(result.at(0)).to.deep.equal({
+      expect(result).toHaveLength(1)
+      expect(result.at(0)).toStrictEqual({
         currentMedication: [],
         recommendedMedication: MedicationReference.spironolactone,
         type: UserMedicationRecommendationType.noActionRequired,
@@ -150,8 +148,8 @@ describe('MraRecommender', () => {
         contraindications: [],
         vitals: vitals,
       })
-      expect(result).to.have.length(1)
-      expect(result.at(0)).to.deep.equal({
+      expect(result).toHaveLength(1)
+      expect(result.at(0)).toStrictEqual({
         currentMedication: [],
         recommendedMedication: MedicationReference.spironolactone,
         type: UserMedicationRecommendationType.notStarted,
@@ -161,7 +159,7 @@ describe('MraRecommender', () => {
 
   describe('Existing treatment: Eplerenone', () => {
     let contextBelowTarget: MedicationRequestContext
-    before(async () => {
+    beforeAll(async () => {
       const request = FHIRMedicationRequest.create({
         medicationReference: DrugReference.eplerenone25,
         frequencyPerDay: 1,
@@ -192,8 +190,8 @@ describe('MraRecommender', () => {
         contraindications: [],
         vitals: vitals,
       })
-      expect(result).to.have.length(1)
-      expect(result.at(0)).to.deep.equal({
+      expect(result).toHaveLength(1)
+      expect(result.at(0)).toStrictEqual({
         currentMedication: [contextAtTarget],
         recommendedMedication: undefined,
         type: UserMedicationRecommendationType.targetDoseReached,
@@ -211,8 +209,8 @@ describe('MraRecommender', () => {
         contraindications: [],
         vitals: vitals,
       })
-      expect(result).to.have.length(1)
-      expect(result.at(0)).to.deep.equal({
+      expect(result).toHaveLength(1)
+      expect(result.at(0)).toStrictEqual({
         currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
         type: UserMedicationRecommendationType.moreLabObservationsRequired,
@@ -230,8 +228,8 @@ describe('MraRecommender', () => {
         contraindications: [],
         vitals: vitals,
       })
-      expect(result).to.have.length(1)
-      expect(result.at(0)).to.deep.equal({
+      expect(result).toHaveLength(1)
+      expect(result.at(0)).toStrictEqual({
         currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
         type: UserMedicationRecommendationType.moreLabObservationsRequired,
@@ -249,8 +247,8 @@ describe('MraRecommender', () => {
         contraindications: [],
         vitals: vitals,
       })
-      expect(result).to.have.length(1)
-      expect(result.at(0)).to.deep.equal({
+      expect(result).toHaveLength(1)
+      expect(result.at(0)).toStrictEqual({
         currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
         type: UserMedicationRecommendationType.personalTargetDoseReached,
@@ -268,8 +266,8 @@ describe('MraRecommender', () => {
         contraindications: [],
         vitals: vitals,
       })
-      expect(result).to.have.length(1)
-      expect(result.at(0)).to.deep.equal({
+      expect(result).toHaveLength(1)
+      expect(result.at(0)).toStrictEqual({
         currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
         type: UserMedicationRecommendationType.personalTargetDoseReached,
@@ -282,8 +280,8 @@ describe('MraRecommender', () => {
         contraindications: [],
         vitals: vitals,
       })
-      expect(result).to.have.length(1)
-      expect(result.at(0)).to.deep.equal({
+      expect(result).toHaveLength(1)
+      expect(result.at(0)).toStrictEqual({
         currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
         type: UserMedicationRecommendationType.improvementAvailable,
