@@ -10,7 +10,7 @@ import {
   type FHIRQuestionnaire,
   type FHIRQuestionnaireItem,
 } from '@stanfordbdhg/engagehf-models'
-import { QuestionnaireFactory } from './questionnaireFactory.js'
+import { QuestionnaireFactory } from './questionnaireFactor.js'
 import { QuestionnaireId, QuestionnaireLinkId } from './questionnaireLinkIds.js'
 
 export class KccqQuestionnaireFactory extends QuestionnaireFactory<void> {
