@@ -40,8 +40,8 @@ describe('keyPointsMessage', () => {
         Object.values(HealthSummaryWeightCategory).find(
           (category) => line[3] === category.toString(),
         ) ?? null
-      const texts = separateKeyPointTexts(line[4]).map(
-        (text) => new LocalizedText({ en: text }),
+      const texts = separateKeyPointTexts(line[4]).map((text) =>
+        LocalizedText.create({ en: text }),
       )
 
       expect(recommendations).not.toBeNull()
