@@ -6,9 +6,8 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { FHIRQuestionnaireResponse } from '@stanfordbdhg/engagehf-models'
 import { SymptomScoreCalculator } from './symptomScoreCalculator.js'
-import { readCsv } from '../../tests/helpers/csv.js'
+import { readCsv } from '../../../tests/helpers/csv.js'
 
 describe('DefaultSymptomScoreCalculator', () => {
   it('correctly computes symptom scores', () => {
