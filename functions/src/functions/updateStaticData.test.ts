@@ -15,8 +15,6 @@ import {
   LocalizedText,
   StaticDataComponent,
 } from '@stanfordbdhg/engagehf-models'
-import { expect } from 'chai'
-import { it } from 'mocha'
 import { _updateStaticData } from './updateStaticData.js'
 import { describeWithEmulators } from '../tests/functions/testEnvironment.js'
 
@@ -28,29 +26,29 @@ describeWithEmulators('function: updateStaticData', (env) => {
     })
 
     const medicationClasses = await env.collections.medicationClasses.get()
-    expect(medicationClasses.docs).to.have.length(7)
+    expect(medicationClasses.docs).toHaveLength(7)
     const medicationClassesJson = JSON.parse(
       fs.readFileSync('data/medicationClasses.json', 'utf8'),
     )
     for (const medicationClass of medicationClasses.docs) {
-      expect(simplify(medicationClass.data())).to.deep.equal(
+      expect(simplify(medicationClass.data())).toStrictEqual(
         medicationClassesJson[medicationClass.id],
       )
     }
 
     const medications = await env.collections.medications.get()
-    expect(medications.docs).to.have.length(35)
+    expect(medications.docs).toHaveLength(35)
     const medicationsJson = JSON.parse(
       fs.readFileSync('data/medications.json', 'utf8'),
     )
     for (const medication of medications.docs) {
-      expect(simplify(medication.data())).to.deep.equal(
+      expect(simplify(medication.data())).toStrictEqual(
         medicationsJson[medication.id],
       )
     }
 
     const videoSections = await env.collections.videoSections.get()
-    expect(videoSections.docs).to.have.length(4)
+    expect(videoSections.docs).toHaveLength(4)
     const videoSectionsJson = JSON.parse(
       fs.readFileSync('data/videoSections.json', 'utf8'),
     )
@@ -58,32 +56,32 @@ describeWithEmulators('function: updateStaticData', (env) => {
       const jsonVideoSection = videoSectionsJson[videoSection.id]
       const jsonVideos = jsonVideoSection.videos
       delete jsonVideoSection.videos
-      expect(simplify(videoSection.data())).to.deep.equal(jsonVideoSection)
+      expect(simplify(videoSection.data())).toStrictEqual(jsonVideoSection)
 
       const videos = await env.collections.videos(videoSection.id).get()
       for (const video of videos.docs) {
-        expect(simplify(video.data())).to.deep.equal(jsonVideos[video.id])
+        expect(simplify(video.data())).toStrictEqual(jsonVideos[video.id])
       }
     }
 
     const organizations = await env.collections.organizations.get()
-    expect(organizations.docs).to.have.length(4)
+    expect(organizations.docs).toHaveLength(4)
     const organizationsJson = JSON.parse(
       fs.readFileSync('data/organizations.json', 'utf8'),
     )
     for (const organization of organizations.docs) {
-      expect(simplify(organization.data())).to.deep.equal(
+      expect(simplify(organization.data())).toStrictEqual(
         organizationsJson[organization.id],
       )
     }
 
     const questionnaires = await env.collections.questionnaires.get()
-    expect(questionnaires.docs).to.have.length(1)
+    expect(questionnaires.docs).toHaveLength(1)
     const questionnairesJson = JSON.parse(
       fs.readFileSync('data/questionnaires.json', 'utf8'),
     )
     for (const questionnaire of questionnaires.docs) {
-      expect(simplify(questionnaire.data())).to.deep.equal(
+      expect(simplify(questionnaire.data())).toStrictEqual(
         questionnairesJson[questionnaire.id],
       )
     }

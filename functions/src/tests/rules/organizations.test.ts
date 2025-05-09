@@ -15,7 +15,6 @@ import {
 } from '@firebase/rules-unit-testing'
 import { UserType } from '@stanfordbdhg/engagehf-models'
 import type firebase from 'firebase/compat/app'
-import { describe, it } from 'mocha'
 
 describe('firestore.rules: organizations/{organizationId}', () => {
   const organizationId = 'stanford'
@@ -35,7 +34,7 @@ describe('firestore.rules: organizations/{organizationId}', () => {
   let patientFirestore: firebase.firestore.Firestore
   let userFirestore: firebase.firestore.Firestore
 
-  before(async () => {
+  beforeAll(async () => {
     testEnvironment = await initializeTestEnvironment({
       projectId: 'stanford-bdhg-engage-hf',
       firestore: {
@@ -92,7 +91,7 @@ describe('firestore.rules: organizations/{organizationId}', () => {
     })
   })
 
-  after(async () => {
+  afterAll(async () => {
     await testEnvironment.cleanup()
   })
 

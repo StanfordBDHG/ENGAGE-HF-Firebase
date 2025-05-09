@@ -19,7 +19,6 @@ import {
   UserType,
   UserObservationCollection,
 } from '@stanfordbdhg/engagehf-models'
-import { expect } from 'chai'
 import { describeWithEmulators } from '../../tests/functions/testEnvironment.js'
 
 describeWithEmulators('TriggerService', (env) => {
@@ -57,35 +56,35 @@ describeWithEmulators('TriggerService', (env) => {
       const patientMessages = await env.collections
         .userMessages(patientId)
         .get()
-      expect(patientMessages.docs).to.have.length(2)
+      expect(patientMessages.docs).toHaveLength(2)
       const preAppointmentMessages = patientMessages.docs.filter(
         (doc) => doc.data().type === UserMessageType.preAppointment,
       )
-      expect(preAppointmentMessages).to.have.length(1)
+      expect(preAppointmentMessages).toHaveLength(1)
       const patientMessage = preAppointmentMessages.at(0)?.data()
-      expect(patientMessage?.type).to.equal(UserMessageType.preAppointment)
-      expect(patientMessage?.reference).to.equal(appointmentRef.path)
-      expect(patientMessage?.completionDate).to.be.undefined
+      expect(patientMessage?.type).toBe(UserMessageType.preAppointment)
+      expect(patientMessage?.reference).toBe(appointmentRef.path)
+      expect(patientMessage?.completionDate).toBeUndefined()
 
       const clinicianMessages = await env.collections
         .userMessages(clinicianId)
         .get()
-      expect(clinicianMessages.docs).to.have.length(1)
+      expect(clinicianMessages.docs).toHaveLength(1)
       const clinicianMessage = clinicianMessages.docs.at(0)?.data()
-      expect(clinicianMessage?.type).to.equal(UserMessageType.preAppointment)
-      expect(clinicianMessage?.reference).to.equal(
+      expect(clinicianMessage?.type).toBe(UserMessageType.preAppointment)
+      expect(clinicianMessage?.reference).toBe(
         preAppointmentMessages.at(0)?.ref.path,
       )
-      expect(clinicianMessage?.completionDate).to.be.undefined
+      expect(clinicianMessage?.completionDate).toBeUndefined()
 
       const ownerMessages = await env.collections.userMessages(ownerId).get()
-      expect(ownerMessages.docs).to.have.length(1)
+      expect(ownerMessages.docs).toHaveLength(1)
       const ownerMessage = clinicianMessages.docs.at(0)?.data()
-      expect(ownerMessage?.type).to.equal(UserMessageType.preAppointment)
-      expect(ownerMessage?.reference).to.equal(
+      expect(ownerMessage?.type).toBe(UserMessageType.preAppointment)
+      expect(ownerMessage?.reference).toBe(
         preAppointmentMessages.at(0)?.ref.path,
       )
-      expect(ownerMessage?.completionDate).to.be.undefined
+      expect(ownerMessage?.completionDate).toBeUndefined()
     })
 
     it('should complete a message for a past appointment', async () => {
@@ -133,26 +132,24 @@ describeWithEmulators('TriggerService', (env) => {
       const patientMessages = await env.collections
         .userMessages(patientId)
         .get()
-      expect(patientMessages.docs).to.have.length(2)
+      expect(patientMessages.docs).toHaveLength(2)
       const preAppointmentMessages = patientMessages.docs.filter(
         (doc) => doc.data().type === UserMessageType.preAppointment,
       )
-      expect(preAppointmentMessages).to.have.length(1)
+      expect(preAppointmentMessages).toHaveLength(1)
       const patientMessageData = preAppointmentMessages.at(0)?.data()
-      expect(patientMessageData?.type).to.equal(UserMessageType.preAppointment)
-      expect(patientMessageData?.reference).to.equal(appointmentRef.path)
-      expect(patientMessageData?.completionDate).to.exist
+      expect(patientMessageData?.type).toBe(UserMessageType.preAppointment)
+      expect(patientMessageData?.reference).toBe(appointmentRef.path)
+      expect(patientMessageData?.completionDate).toBeDefined()
 
       const clinicianMessages = await env.collections
         .userMessages(clinicianId)
         .get()
-      expect(clinicianMessages.docs).to.have.length(1)
+      expect(clinicianMessages.docs).toHaveLength(1)
       const clinicianMessageData = clinicianMessages.docs.at(0)?.data()
-      expect(clinicianMessageData?.type).to.equal(
-        UserMessageType.preAppointment,
-      )
-      expect(clinicianMessageData?.reference).to.equal(patientMessageRef.path)
-      expect(clinicianMessageData?.completionDate).to.be.undefined // this message will need to be manually completed
+      expect(clinicianMessageData?.type).toBe(UserMessageType.preAppointment)
+      expect(clinicianMessageData?.reference).toBe(patientMessageRef.path)
+      expect(clinicianMessageData?.completionDate).toBeUndefined() // this message will need to be manually completed
     })
 
     it('should create a message to remind about vitals', async () => {
@@ -165,11 +162,11 @@ describeWithEmulators('TriggerService', (env) => {
       await env.factory.trigger().everyMorning()
 
       const messages = await env.collections.userMessages(userId).get()
-      expect(messages.docs).to.have.length(1)
+      expect(messages.docs).toHaveLength(1)
 
       const message = messages.docs.at(0)?.data()
-      expect(message?.type).to.equal(UserMessageType.vitals)
-      expect(message?.completionDate).to.be.undefined
+      expect(message?.type).toBe(UserMessageType.vitals)
+      expect(message?.completionDate).toBeUndefined()
     })
 
     it('shouldn`t create a message to remind about vitals for clinicians', async () => {
@@ -182,7 +179,7 @@ describeWithEmulators('TriggerService', (env) => {
       await env.factory.trigger().everyMorning()
 
       const messages = await env.collections.userMessages(userId).get()
-      expect(messages.docs).to.have.length(0)
+      expect(messages.docs).toHaveLength(0)
     })
 
     it('should create a message to remind about questionnaires if the special day has come', async () => {
@@ -195,20 +192,20 @@ describeWithEmulators('TriggerService', (env) => {
       await env.factory.trigger().everyMorning()
 
       const messagesResult = await env.collections.userMessages(userId).get()
-      expect(messagesResult.docs).to.have.length(2)
+      expect(messagesResult.docs).toHaveLength(2)
 
       const messages = messagesResult.docs.map((doc) => doc.data())
       const vitalsMessage = messages.find(
         (message) => message.type === UserMessageType.vitals,
       )
-      expect(vitalsMessage).to.exist
-      expect(vitalsMessage?.completionDate).to.be.undefined
+      expect(vitalsMessage).toBeDefined()
+      expect(vitalsMessage?.completionDate).toBeUndefined()
 
       const questionnaireMessage = messages.find(
         (message) => message.type === UserMessageType.symptomQuestionnaire,
       )
-      expect(questionnaireMessage).to.exist
-      expect(questionnaireMessage?.completionDate).to.be.undefined
+      expect(questionnaireMessage).toBeDefined()
+      expect(questionnaireMessage?.completionDate).toBeUndefined()
     })
 
     it('create a message about inactivity', async () => {
@@ -235,44 +232,44 @@ describeWithEmulators('TriggerService', (env) => {
       const patientMessages = await env.collections
         .userMessages(patientId)
         .get()
-      expect(patientMessages.docs).to.have.length(2)
+      expect(patientMessages.docs).toHaveLength(2)
       const patientMessagesData = patientMessages.docs.map((doc) => doc.data())
       const vitalsMessage = patientMessagesData
         .filter((message) => message.type === UserMessageType.vitals)
         .at(0)
-      expect(vitalsMessage).to.exist
-      expect(vitalsMessage?.reference).to.be.undefined
-      expect(vitalsMessage?.completionDate).to.be.undefined
+      expect(vitalsMessage).toBeDefined()
+      expect(vitalsMessage?.reference).toBeUndefined()
+      expect(vitalsMessage?.completionDate).toBeUndefined()
       const inactiveMessage = patientMessagesData
         .filter((message) => message.type === UserMessageType.inactive)
         .at(0)
-      expect(inactiveMessage).to.exist
-      expect(inactiveMessage?.reference).to.be.undefined
-      expect(inactiveMessage?.completionDate).to.be.undefined
+      expect(inactiveMessage).toBeDefined()
+      expect(inactiveMessage?.reference).toBeUndefined()
+      expect(inactiveMessage?.completionDate).toBeUndefined()
 
       const clinicianMessages = await env.collections
         .userMessages(clinicianId)
         .get()
-      expect(clinicianMessages.docs).to.have.length(1)
+      expect(clinicianMessages.docs).toHaveLength(1)
       const clinicianMessage = clinicianMessages.docs.at(0)?.data()
-      expect(clinicianMessage?.type).to.equal(UserMessageType.inactive)
-      expect(clinicianMessage?.reference).to.equal(
+      expect(clinicianMessage?.type).toBe(UserMessageType.inactive)
+      expect(clinicianMessage?.reference).toBe(
         patientMessages.docs
           .filter((doc) => doc.data().type === UserMessageType.inactive)
           .at(0)?.ref.path,
       )
-      expect(clinicianMessage?.completionDate).to.be.undefined
+      expect(clinicianMessage?.completionDate).toBeUndefined()
 
       const ownerMessages = await env.collections.userMessages(ownerId).get()
-      expect(ownerMessages.docs).to.have.length(1)
+      expect(ownerMessages.docs).toHaveLength(1)
       const ownerMessage = clinicianMessages.docs.at(0)?.data()
-      expect(ownerMessage?.type).to.equal(UserMessageType.inactive)
-      expect(ownerMessage?.reference).to.equal(
+      expect(ownerMessage?.type).toBe(UserMessageType.inactive)
+      expect(ownerMessage?.reference).toBe(
         patientMessages.docs
           .filter((doc) => doc.data().type === UserMessageType.inactive)
           .at(0)?.ref.path,
       )
-      expect(ownerMessage?.completionDate).to.be.undefined
+      expect(ownerMessage?.completionDate).toBeUndefined()
     })
 
     it('should complete inactivity messages', async () => {
@@ -295,20 +292,20 @@ describeWithEmulators('TriggerService', (env) => {
       const patientMessages = await env.collections
         .userMessages(patientId)
         .get()
-      expect(patientMessages.docs).to.have.length(2)
+      expect(patientMessages.docs).toHaveLength(2)
       const patientMessagesData = patientMessages.docs.map((doc) => doc.data())
       const vitalsMessage = patientMessagesData
         .filter((message) => message.type === UserMessageType.vitals)
         .at(0)
-      expect(vitalsMessage).to.exist
-      expect(vitalsMessage?.reference).to.be.undefined
-      expect(vitalsMessage?.completionDate).to.be.undefined
+      expect(vitalsMessage).toBeDefined()
+      expect(vitalsMessage?.reference).toBeUndefined()
+      expect(vitalsMessage?.completionDate).toBeUndefined()
       const inactiveMessage = patientMessagesData
         .filter((message) => message.type === UserMessageType.inactive)
         .at(0)
-      expect(inactiveMessage).to.exist
-      expect(inactiveMessage?.reference).to.be.undefined
-      expect(inactiveMessage?.completionDate).to.be.undefined
+      expect(inactiveMessage).toBeDefined()
+      expect(inactiveMessage?.reference).toBeUndefined()
+      expect(inactiveMessage?.completionDate).toBeUndefined()
 
       await triggerService.userObservationWritten(
         patientId,
@@ -318,23 +315,23 @@ describeWithEmulators('TriggerService', (env) => {
       const updatedPatientMessages = await env.collections
         .userMessages(patientId)
         .get()
-      expect(patientMessages.docs).to.have.length(2)
+      expect(patientMessages.docs).toHaveLength(2)
       const updatedPatientMessagesData = updatedPatientMessages.docs.map(
         (doc) => doc.data(),
       )
       const updatedVitalsMessage = updatedPatientMessagesData
         .filter((message) => message.type === UserMessageType.vitals)
         .at(0)
-      expect(updatedVitalsMessage).to.exist
-      expect(updatedVitalsMessage?.reference).to.be.undefined
-      expect(updatedVitalsMessage?.completionDate).to.be.undefined
+      expect(updatedVitalsMessage).toBeDefined()
+      expect(updatedVitalsMessage?.reference).toBeUndefined()
+      expect(updatedVitalsMessage?.completionDate).toBeUndefined()
 
       const updatedInactiveMessage = updatedPatientMessagesData
         .filter((message) => message.type === UserMessageType.inactive)
         .at(0)
-      expect(updatedInactiveMessage).to.exist
-      expect(updatedInactiveMessage?.reference).to.be.undefined
-      expect(updatedInactiveMessage?.completionDate).to.exist
+      expect(updatedInactiveMessage).toBeDefined()
+      expect(updatedInactiveMessage?.reference).toBeUndefined()
+      expect(updatedInactiveMessage?.completionDate).toBeDefined()
     })
 
     it('create no message about inactivity', async () => {
@@ -361,18 +358,18 @@ describeWithEmulators('TriggerService', (env) => {
       const patientMessages = await env.collections
         .userMessages(patientId)
         .get()
-      expect(patientMessages.docs).to.have.length(1)
+      expect(patientMessages.docs).toHaveLength(1)
       const patientMessage = patientMessages.docs.at(0)?.data()
-      expect(patientMessage?.type).to.equal(UserMessageType.vitals)
-      expect(patientMessage?.completionDate).to.be.undefined
+      expect(patientMessage?.type).toBe(UserMessageType.vitals)
+      expect(patientMessage?.completionDate).toBeUndefined()
 
       const clinicianMessages = await env.collections
         .userMessages(clinicianId)
         .get()
-      expect(clinicianMessages.docs).to.have.length(0)
+      expect(clinicianMessages.docs).toHaveLength(0)
 
       const ownerMessages = await env.collections.userMessages(ownerId).get()
-      expect(ownerMessages.docs).to.have.length(0)
+      expect(ownerMessages.docs).toHaveLength(0)
     })
   })
 
@@ -422,15 +419,15 @@ describeWithEmulators('TriggerService', (env) => {
         const patientMessages0 = await env.collections
           .userMessages(patientId)
           .get()
-        expect(patientMessages0.docs).to.have.length(0)
+        expect(patientMessages0.docs).toHaveLength(0)
 
         const clinicianMessages0 = await env.collections
           .userMessages(clinicianId)
           .get()
-        expect(clinicianMessages0.docs).to.have.length(0)
+        expect(clinicianMessages0.docs).toHaveLength(0)
 
         const ownerMessages0 = await env.collections.userMessages(ownerId).get()
-        expect(ownerMessages0.docs).to.have.length(0)
+        expect(ownerMessages0.docs).toHaveLength(0)
 
         const slightlyHigherWeight = FHIRObservation.createSimple({
           id: 'observation-10',
@@ -450,24 +447,24 @@ describeWithEmulators('TriggerService', (env) => {
         const patientMessages1 = await env.collections
           .userMessages(patientId)
           .get()
-        expect(patientMessages1.docs, 'patientMessages1').to.have.length(1)
+        expect(patientMessages1.docs).toHaveLength(1)
         const patientMessage1 = patientMessages1.docs.at(0)?.data()
-        expect(patientMessage1?.type).to.equal(UserMessageType.weightGain)
-        expect(patientMessage1?.completionDate).to.be.undefined
+        expect(patientMessage1?.type).toBe(UserMessageType.weightGain)
+        expect(patientMessage1?.completionDate).toBeUndefined()
 
         const clinicianMessages1 = await env.collections
           .userMessages(clinicianId)
           .get()
-        expect(clinicianMessages1.docs, 'clinicianMessages1').to.have.length(1)
+        expect(clinicianMessages1.docs).toHaveLength(1)
         const clinicianMessage1 = clinicianMessages1.docs.at(0)?.data()
-        expect(clinicianMessage1?.type).to.equal(UserMessageType.weightGain)
-        expect(clinicianMessage1?.completionDate).to.be.undefined
+        expect(clinicianMessage1?.type).toBe(UserMessageType.weightGain)
+        expect(clinicianMessage1?.completionDate).toBeUndefined()
 
         const ownerMessages1 = await env.collections.userMessages(ownerId).get()
-        expect(ownerMessages1.docs, 'ownerMessages1').to.have.length(1)
+        expect(ownerMessages1.docs).toHaveLength(1)
         const ownerMessage1 = clinicianMessages1.docs.at(0)?.data()
-        expect(ownerMessage1?.type).to.equal(UserMessageType.weightGain)
-        expect(ownerMessage1?.completionDate).to.be.undefined
+        expect(ownerMessage1?.type).toBe(UserMessageType.weightGain)
+        expect(ownerMessage1?.completionDate).toBeUndefined()
 
         const actuallyHigherWeight = FHIRObservation.createSimple({
           id: 'observation-11',
@@ -487,24 +484,24 @@ describeWithEmulators('TriggerService', (env) => {
         const patientMessages2 = await env.collections
           .userMessages(patientId)
           .get()
-        expect(patientMessages2.docs, 'patientMessages2').to.have.length(1)
+        expect(patientMessages2.docs).toHaveLength(1)
         const patientMessage2 = patientMessages1.docs.at(0)?.data()
-        expect(patientMessage2?.type).to.equal(UserMessageType.weightGain)
-        expect(patientMessage2?.completionDate).to.be.undefined
+        expect(patientMessage2?.type).toBe(UserMessageType.weightGain)
+        expect(patientMessage2?.completionDate).toBeUndefined()
 
         const clinicianMessages2 = await env.collections
           .userMessages(clinicianId)
           .get()
-        expect(clinicianMessages2.docs, 'clinicianMessages2').to.have.length(1)
+        expect(clinicianMessages2.docs).toHaveLength(1)
         const clinicianMessage2 = clinicianMessages1.docs.at(0)?.data()
-        expect(clinicianMessage2?.type).to.equal(UserMessageType.weightGain)
-        expect(clinicianMessage2?.completionDate).to.be.undefined
+        expect(clinicianMessage2?.type).toBe(UserMessageType.weightGain)
+        expect(clinicianMessage2?.completionDate).toBeUndefined()
 
         const ownerMessages2 = await env.collections.userMessages(ownerId).get()
-        expect(ownerMessages2.docs, 'ownerMessages2').to.have.length(1)
+        expect(ownerMessages2.docs).toHaveLength(1)
         const ownerMessage2 = ownerMessages2.docs.at(0)?.data()
-        expect(ownerMessage2?.type).to.equal(UserMessageType.weightGain)
-        expect(ownerMessage2?.completionDate).to.be.undefined
+        expect(ownerMessage2?.type).toBe(UserMessageType.weightGain)
+        expect(ownerMessage2?.completionDate).toBeUndefined()
       })
     })
   })

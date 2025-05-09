@@ -17,7 +17,6 @@ import {
   UserObservationCollection,
   fhirObservationConverter,
 } from '@stanfordbdhg/engagehf-models'
-import { expect } from 'chai'
 import { onUserBodyWeightObservationWritten } from './onUserDocumentWritten.js'
 import { describeWithEmulators } from '../tests/functions/testEnvironment.js'
 
@@ -82,11 +81,11 @@ describeWithEmulators('onUserDocumentWritten.ts', (env) => {
       })
 
       const messages0 = await env.collections.userMessages(patientId).get()
-      expect(messages0.docs.length).to.equal(1)
+      expect(messages0.docs).toHaveLength(1)
       const message0 = messages0.docs[0].data()
-      expect(message0).to.exist
-      expect(message0.type).to.equal(UserMessageType.weightGain)
-      expect(message0.completionDate).to.not.exist
+      expect(message0).toBeDefined()
+      expect(message0.type).toBe(UserMessageType.weightGain)
+      expect(message0.completionDate).toBeUndefined()
 
       const observation1 = FHIRObservation.createSimple({
         id: '101',
@@ -108,14 +107,14 @@ describeWithEmulators('onUserDocumentWritten.ts', (env) => {
       })
 
       const messages1 = await env.collections.userMessages(patientId).get()
-      expect(messages1.docs.length).to.equal(1)
+      expect(messages1.docs.length).toBe(1)
       const message1 = messages1.docs[0].data()
-      expect(message1).to.exist
-      expect(message1.type).to.equal(UserMessageType.weightGain)
-      expect(message1.creationDate.toISOString()).to.equal(
+      expect(message1).toBeDefined()
+      expect(message1.type).toBe(UserMessageType.weightGain)
+      expect(message1.creationDate.toISOString()).toBe(
         message0.creationDate.toISOString(),
       )
-      expect(message1.completionDate).to.not.exist
+      expect(message1.completionDate).toBeUndefined()
 
       const observation2 = FHIRObservation.createSimple({
         id: '102',
@@ -137,9 +136,9 @@ describeWithEmulators('onUserDocumentWritten.ts', (env) => {
       })
 
       const messages2 = await env.collections.userMessages(patientId).get()
-      expect(messages2.docs.length).to.equal(1)
+      expect(messages2.docs.length).toBe(1)
       const message2 = messages2.docs[0].data()
-      expect(message2.completionDate).to.exist
+      expect(message2.completionDate).toBeDefined()
     })
   })
 })

@@ -7,9 +7,7 @@
 //
 
 import { UserType } from '@stanfordbdhg/engagehf-models'
-import { expect } from 'chai'
 import { logger } from 'firebase-functions'
-import { it } from 'mocha'
 import { shareHealthSummary } from './shareHealthSummary.js'
 import { describeWithEmulators } from '../tests/functions/testEnvironment.js'
 
@@ -30,11 +28,10 @@ describeWithEmulators('function: shareHealthSummary', (env) => {
     )
 
     logger.info('shareCode', shareCode)
-    expect(shareCode).to.exist
-    expect(shareCode).to.have.property('code')
-    expect(shareCode.code).to.be.a('string')
-    expect(shareCode.code).to.have.length(4)
-    expect(shareCode).to.have.property('expiresAt')
+    expect(shareCode).toBeDefined()
+    expect(shareCode).toHaveProperty('code')
+    expect(shareCode.code).toHaveLength(4)
+    expect(shareCode).toHaveProperty('expiresAt')
   })
 
   it('should create a new share code for clinician', async () => {
@@ -59,10 +56,9 @@ describeWithEmulators('function: shareHealthSummary', (env) => {
     )
 
     logger.info('shareCode', shareCode)
-    expect(shareCode).to.exist
-    expect(shareCode).to.have.property('code')
-    expect(shareCode.code).to.be.a('string')
-    expect(shareCode.code).to.have.length(4)
-    expect(shareCode).to.have.property('expiresAt')
+    expect(shareCode).toBeDefined()
+    expect(shareCode).toHaveProperty('code')
+    expect(shareCode.code).toHaveLength(4)
+    expect(shareCode).toHaveProperty('expiresAt')
   })
 })

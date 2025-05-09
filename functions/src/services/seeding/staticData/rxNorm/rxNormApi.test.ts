@@ -6,28 +6,31 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { expect } from 'chai'
-import { describe } from 'mocha'
 import { RxNormApi } from './rxNormApi.js'
 import { TestFlags } from '../../../../tests/testFlags.js'
 
 describe('RxNormApi', () => {
-  if (!TestFlags.connectsToRxNormApi) return
+  if (!TestFlags.connectsToRxNormApi) {
+    it("doesn't run tests because connectsToRxNormApi is false", () => {
+      expect(true).toBe(true)
+    })
+    return
+  }
 
   const api = new RxNormApi()
 
   it('getAllRxTermInfo: Medication', async () => {
     const termInfo = await api.getAllRxTermInfo('20352')
-    expect(termInfo).to.be.undefined
+    expect(termInfo).toBeUndefined()
   })
 
   it('getAllRxTermInfo: Drug', async () => {
     const termInfo = await api.getAllRxTermInfo('200031')
-    expect(termInfo).to.exist
-    expect(termInfo?.displayName).to.equal('Carvedilol (Oral Pill)')
-    expect(termInfo?.fullName).to.equal('carvedilol 6.25 MG Oral Tablet')
-    expect(termInfo?.rxnormDoseForm).to.equal('Oral Tablet')
-    expect(termInfo?.strength).to.equal('6.25 mg')
+    expect(termInfo).toBeDefined()
+    expect(termInfo?.displayName).toBe('Carvedilol (Oral Pill)')
+    expect(termInfo?.fullName).toBe('carvedilol 6.25 MG Oral Tablet')
+    expect(termInfo?.rxnormDoseForm).toBe('Oral Tablet')
+    expect(termInfo?.strength).toBe('6.25 mg')
   })
 
   it('getRelated: constitutes', async () => {
@@ -36,7 +39,7 @@ describe('RxNormApi', () => {
       related.relatedGroup?.conceptGroup
         .find((group) => group.tty === 'SCD')
         ?.conceptProperties.find((props) => props.rxcui === '200031'),
-    ).to.exist
+    ).toBeDefined()
   })
 
   it('getRelated: ingredient_of', async () => {
@@ -45,11 +48,11 @@ describe('RxNormApi', () => {
       related.relatedGroup?.conceptGroup
         .find((group) => group.tty === 'SCDC')
         ?.conceptProperties.find((props) => props.rxcui === '315577'),
-    ).to.exist
+    ).toBeDefined()
   })
 
   it('getRxNormName', async () => {
     const name = await api.getRxNormName('20352')
-    expect(name).to.equal('carvedilol')
+    expect(name).toBe('carvedilol')
   })
 })
