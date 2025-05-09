@@ -16,8 +16,6 @@ import {
   type SymptomScore,
   UserMedicationRecommendationType,
 } from '@stanfordbdhg/engagehf-models'
-import { expect } from 'chai'
-import { describe, it } from 'mocha'
 import { type Recommender } from './recommender.js'
 import { Sglt2iRecommender } from './sglt2iRecommender.js'
 import { type MedicationRequestContext } from '../../../models/medicationRequestContext.js'
@@ -49,7 +47,7 @@ describe('Sglt2iRecommender', () => {
   let symptomScore: SymptomScore | undefined
   let medicationService: MedicationService
 
-  before(async () => {
+  beforeAll(async () => {
     setupMockFirebase()
     const factory = getServiceFactory()
     const staticDataService = factory.staticData()
@@ -74,7 +72,7 @@ describe('Sglt2iRecommender', () => {
     medicationClassContraindication = (_) => ContraindicationCategory.none
   })
 
-  after(() => {
+  afterAll(() => {
     cleanupMocks()
   })
 
@@ -90,7 +88,7 @@ describe('Sglt2iRecommender', () => {
         latestDizzinessScore: symptomScore?.dizzinessScore,
         vitals: vitals,
       })
-      expect(result).to.have.length(0)
+      expect(result).toHaveLength(0)
     })
 
     it('recommends no treatment when eGFR is too low', () => {
@@ -105,7 +103,7 @@ describe('Sglt2iRecommender', () => {
         latestDizzinessScore: symptomScore?.dizzinessScore,
         vitals: vitals,
       })
-      expect(result).to.have.length(0)
+      expect(result).toHaveLength(0)
     })
 
     it('shows empagliflozin when clinician-listed contraindications exist', () => {
@@ -120,8 +118,8 @@ describe('Sglt2iRecommender', () => {
         latestDizzinessScore: symptomScore?.dizzinessScore,
         vitals: vitals,
       })
-      expect(result).to.have.length(1)
-      expect(result.at(0)).to.deep.equal({
+      expect(result).toHaveLength(1)
+      expect(result.at(0)).toStrictEqual({
         currentMedication: [],
         recommendedMedication: MedicationReference.empagliflozin,
         type: UserMedicationRecommendationType.noActionRequired,
@@ -136,8 +134,8 @@ describe('Sglt2iRecommender', () => {
         latestDizzinessScore: symptomScore?.dizzinessScore,
         vitals: vitals,
       })
-      expect(result).to.have.length(1)
-      expect(result.at(0)).to.deep.equal({
+      expect(result).toHaveLength(1)
+      expect(result.at(0)).toStrictEqual({
         currentMedication: [],
         recommendedMedication: MedicationReference.empagliflozin,
         type: UserMedicationRecommendationType.morePatientObservationsRequired,
@@ -154,8 +152,8 @@ describe('Sglt2iRecommender', () => {
         latestDizzinessScore: symptomScore?.dizzinessScore,
         vitals: vitals,
       })
-      expect(result).to.have.length(1)
-      expect(result.at(0)).to.deep.equal({
+      expect(result).toHaveLength(1)
+      expect(result.at(0)).toStrictEqual({
         currentMedication: [],
         recommendedMedication: MedicationReference.empagliflozin,
         type: UserMedicationRecommendationType.noActionRequired,
@@ -169,8 +167,8 @@ describe('Sglt2iRecommender', () => {
         latestDizzinessScore: symptomScore?.dizzinessScore,
         vitals: vitals,
       })
-      expect(result).to.have.length(1)
-      expect(result.at(0)).to.deep.equal({
+      expect(result).toHaveLength(1)
+      expect(result.at(0)).toStrictEqual({
         currentMedication: [],
         recommendedMedication: MedicationReference.empagliflozin,
         type: UserMedicationRecommendationType.notStarted,
@@ -180,7 +178,7 @@ describe('Sglt2iRecommender', () => {
 
   describe('On Sotagliflozin', () => {
     let contextBelowTarget: MedicationRequestContext
-    before(async () => {
+    beforeAll(async () => {
       const request = FHIRMedicationRequest.create({
         drugReference: DrugReference.sotagliflozin200,
         frequencyPerDay: 1,
@@ -212,8 +210,8 @@ describe('Sglt2iRecommender', () => {
         latestDizzinessScore: symptomScore?.dizzinessScore,
         vitals: vitals,
       })
-      expect(result).to.have.length(1)
-      expect(result.at(0)).to.deep.equal({
+      expect(result).toHaveLength(1)
+      expect(result.at(0)).toStrictEqual({
         currentMedication: [contextAtTarget],
         recommendedMedication: undefined,
         type: UserMedicationRecommendationType.targetDoseReached,
@@ -228,8 +226,8 @@ describe('Sglt2iRecommender', () => {
         latestDizzinessScore: symptomScore?.dizzinessScore,
         vitals: vitals,
       })
-      expect(result).to.have.length(1)
-      expect(result.at(0)).to.deep.equal({
+      expect(result).toHaveLength(1)
+      expect(result.at(0)).toStrictEqual({
         currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
         type: UserMedicationRecommendationType.morePatientObservationsRequired,
@@ -246,8 +244,8 @@ describe('Sglt2iRecommender', () => {
         latestDizzinessScore: symptomScore?.dizzinessScore,
         vitals: vitals,
       })
-      expect(result).to.have.length(1)
-      expect(result.at(0)).to.deep.equal({
+      expect(result).toHaveLength(1)
+      expect(result.at(0)).toStrictEqual({
         currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
         type: UserMedicationRecommendationType.personalTargetDoseReached,
@@ -261,8 +259,8 @@ describe('Sglt2iRecommender', () => {
         latestDizzinessScore: symptomScore?.dizzinessScore,
         vitals: vitals,
       })
-      expect(result).to.have.length(1)
-      expect(result.at(0)).to.deep.equal({
+      expect(result).toHaveLength(1)
+      expect(result.at(0)).toStrictEqual({
         currentMedication: [contextBelowTarget],
         recommendedMedication: undefined,
         type: UserMedicationRecommendationType.improvementAvailable,

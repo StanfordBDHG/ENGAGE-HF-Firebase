@@ -11,8 +11,6 @@ import {
   userDeviceConverter,
   UserDevicePlatform,
 } from '@stanfordbdhg/engagehf-models'
-import { expect } from 'chai'
-import { it } from 'mocha'
 import { describeWithEmulators } from '../../tests/functions/testEnvironment.js'
 
 describeWithEmulators('DatabaseHistoryService', (env) => {
@@ -31,10 +29,10 @@ describeWithEmulators('DatabaseHistoryService', (env) => {
     await service.recordChange(change)
 
     const historyItems = await env.collections.history.get()
-    expect(historyItems.docs).to.have.length(1)
+    expect(historyItems.docs).toHaveLength(1)
 
     const historyItem = historyItems.docs[0].data()
-    expect(historyItem.data).to.deep.equal(
+    expect(historyItem.data).toStrictEqual(
       userDeviceConverter.value.encode(device),
     )
   })

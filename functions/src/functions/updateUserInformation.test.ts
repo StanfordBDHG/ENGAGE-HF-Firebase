@@ -6,8 +6,6 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { expect } from 'chai'
-import { it } from 'mocha'
 import { updateUserInformation } from './updateUserInformation.js'
 import { describeWithEmulators } from '../tests/functions/testEnvironment.js'
 
@@ -29,6 +27,6 @@ describeWithEmulators('function: updateUserInformation', (env) => {
     )
 
     const updatedUser = await env.auth.getUser(authUser.uid)
-    expect(updatedUser.displayName).to.equal('Test User')
+    expect(updatedUser.displayName).toBe('Test User')
   })
 })

@@ -7,7 +7,6 @@
 //
 
 import fs from 'fs'
-import { expect } from 'chai'
 
 export function readCsv(
   path: string,
@@ -25,7 +24,7 @@ export function readCsv(
         .join('###NEWLINE###'),
     )
     .split('\n')
-  expect(lines).to.have.length(expectedLines)
+  expect(lines).toHaveLength(expectedLines)
   lines.forEach((line, index) => {
     const values = line
       .split(',')

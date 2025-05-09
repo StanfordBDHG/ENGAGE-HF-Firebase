@@ -11,7 +11,6 @@ import {
   UserMessage,
   UserMessageType,
 } from '@stanfordbdhg/engagehf-models'
-import { expect } from 'chai'
 import admin from 'firebase-admin'
 import { https } from 'firebase-functions'
 import { type MessageService } from './messageService.js'
@@ -50,7 +49,7 @@ describe('DefaultMessageService', () => {
         .userMessages('mockUser')
         .doc('0')
         .get()
-      expect(updatedMessage.data()?.completionDate).to.not.be.undefined
+      expect(updatedMessage.data()?.completionDate).toBeDefined()
     })
 
     it('should not update the completionDate of messages', async () => {
@@ -66,9 +65,9 @@ describe('DefaultMessageService', () => {
       await collectionsService.userMessages('mockUser').doc('0').set(message)
       try {
         await messageService.dismissMessage('mockUser', '0', true)
-        expect.fail('Message should not be dismissible.')
+        fail('Message should not be dismissible.')
       } catch (error) {
-        expect(error).to.deep.equal(
+        expect(error).toStrictEqual(
           new https.HttpsError(
             'invalid-argument',
             'Message is not dismissible.',

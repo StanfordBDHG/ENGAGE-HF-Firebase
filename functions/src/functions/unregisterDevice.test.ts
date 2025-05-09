@@ -11,7 +11,6 @@ import {
   userDeviceConverter,
   UserDevicePlatform,
 } from '@stanfordbdhg/engagehf-models'
-import { expect } from 'chai'
 import { registerDevice } from './registerDevice.js'
 import { unregisterDevice } from './unregisterDevice.js'
 import { describeWithEmulators } from '../tests/functions/testEnvironment.js'
@@ -32,7 +31,7 @@ describeWithEmulators('function: registerDevice', (env) => {
           // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
           {} as any, // eslint-disable-line @typescript-eslint/no-explicit-any
         ),
-      (error) => expect(error).to.have.property('code', 'unauthenticated'),
+      (error) => expect(error).toHaveProperty('code', 'unauthenticated'),
     )
   })
 
@@ -44,7 +43,7 @@ describeWithEmulators('function: registerDevice', (env) => {
     )
 
     const userDevices = await env.collections.userDevices('patient0').get()
-    expect(userDevices.docs).to.have.length(1)
+    expect(userDevices.docs).toHaveLength(1)
 
     const newUserDevice = new UserDevice({
       notificationToken: 'abc123',
@@ -59,6 +58,6 @@ describeWithEmulators('function: registerDevice', (env) => {
     )
 
     const newUserDevices = await env.collections.userDevices('patient0').get()
-    expect(newUserDevices.docs).to.have.length(0)
+    expect(newUserDevices.docs).toHaveLength(0)
   })
 })
