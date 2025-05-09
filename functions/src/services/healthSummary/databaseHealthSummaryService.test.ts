@@ -7,7 +7,6 @@
 //
 
 import { QuantityUnit } from '@stanfordbdhg/engagehf-models'
-import { expect } from 'chai'
 import { DefaultHealthSummaryService } from './databaseHealthSummaryService.js'
 import { type HealthSummaryService } from './healthSummaryService.js'
 import { mockHealthSummaryData } from '../../tests/mocks/healthSummaryData.js'
@@ -31,6 +30,6 @@ describe('HealthSummaryService', () => {
     const expectedData = await mockHealthSummaryData('mockUser')
     // TODO: Remove the next line to check whether medication optimizations also match the expected value.
     expectedData.recommendations = []
-    expect(actualData).to.deep.equal(expectedData)
+    expect(actualData).toStrictEqual(expectedData)
   })
 })

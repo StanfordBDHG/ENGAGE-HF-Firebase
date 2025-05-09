@@ -7,7 +7,6 @@
 //
 
 import { CachingStrategy } from '@stanfordbdhg/engagehf-models'
-import { expect } from 'chai'
 import admin from 'firebase-admin'
 import { type Firestore } from 'firebase-admin/firestore'
 import { type StaticDataService } from './staticDataService.js'
@@ -19,13 +18,13 @@ describe('StaticDataService', () => {
   let firestore: Firestore
   let staticDataService: StaticDataService
 
-  before(() => {
+  beforeAll(() => {
     setupMockFirebase()
     firestore = admin.firestore()
     staticDataService = getServiceFactory().staticData()
   })
 
-  after(() => {
+  afterAll(() => {
     cleanupMocks()
   })
 
@@ -33,19 +32,19 @@ describe('StaticDataService', () => {
     const medicationClasses = await firestore
       .collection('medicationClasses')
       .get()
-    expect(medicationClasses.size).to.equal(0)
+    expect(medicationClasses.size).toBe(0)
 
     await staticDataService.updateMedicationClasses(CachingStrategy.expectCache)
 
     const updatedMedicationClasses = await firestore
       .collection('medicationClasses')
       .get()
-    expect(updatedMedicationClasses.size).to.be.greaterThan(0)
+    expect(updatedMedicationClasses.size).toBeGreaterThan(0)
   })
 
   it('actually creates medications and drugs', async () => {
     const medications = await firestore.collection('medications').get()
-    expect(medications.size).to.equal(0)
+    expect(medications.size).toBe(0)
 
     await staticDataService.updateMedications(
       TestFlags.regenerateValues ?
@@ -54,47 +53,47 @@ describe('StaticDataService', () => {
     )
 
     const updatedMedications = await firestore.collection('medications').get()
-    expect(updatedMedications.size).to.be.greaterThan(0)
+    expect(updatedMedications.size).toBeGreaterThan(0)
 
     for (const medication of updatedMedications.docs) {
       const drugs = await medication.ref.collection('drugs').get()
-      expect(drugs.size).to.be.greaterThan(0)
+      expect(drugs.size).toBeGreaterThan(0)
     }
   })
 
   it('actually creates organizations', async () => {
     const organizations = await firestore.collection('organizations').get()
-    expect(organizations.size).to.equal(0)
+    expect(organizations.size).toBe(0)
 
     await staticDataService.updateOrganizations(CachingStrategy.expectCache)
 
     const updatedOrganizations = await firestore
       .collection('organizations')
       .get()
-    expect(updatedOrganizations.size).to.be.greaterThan(0)
+    expect(updatedOrganizations.size).toBeGreaterThan(0)
   })
 
   it('actually creates questionnaires', async () => {
     const questionnaires = await firestore.collection('questionnaires').get()
-    expect(questionnaires.size).to.equal(0)
+    expect(questionnaires.size).toBe(0)
 
     await staticDataService.updateQuestionnaires(CachingStrategy.expectCache)
 
     const updatedQuestionnaires = await firestore
       .collection('questionnaires')
       .get()
-    expect(updatedQuestionnaires.size).to.be.greaterThan(0)
+    expect(updatedQuestionnaires.size).toBeGreaterThan(0)
   })
 
   it('actually creates videoSections', async () => {
     const videoSections = await firestore.collection('videoSections').get()
-    expect(videoSections.size).to.equal(0)
+    expect(videoSections.size).toBe(0)
 
     await staticDataService.updateVideoSections(CachingStrategy.expectCache)
 
     const updatedVideoSections = await firestore
       .collection('videoSections')
       .get()
-    expect(updatedVideoSections.size).to.be.greaterThan(0)
+    expect(updatedVideoSections.size).toBeGreaterThan(0)
   })
 })

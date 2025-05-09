@@ -14,8 +14,6 @@ import {
   UserRegistration,
   UserType,
 } from '@stanfordbdhg/engagehf-models'
-import { expect } from 'chai'
-import { it } from 'mocha'
 import { deleteInvitation } from './deleteInvitation.js'
 import { describeWithEmulators } from '../tests/functions/testEnvironment.js'
 
@@ -67,9 +65,9 @@ describeWithEmulators('function: deleteInvitation', (env) => {
     )
 
     const actualInvitation = await invitationRef.get()
-    expect(actualInvitation.exists).to.be.false
+    expect(actualInvitation.exists).toBe(false)
 
     const actualAppointment = await appointmentRef.get()
-    expect(actualAppointment.exists).to.be.false
+    expect(actualAppointment.exists).toBe(false)
   })
 })

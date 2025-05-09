@@ -6,9 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import http from 'http'
 import { Lazy, User, type UserType } from '@stanfordbdhg/engagehf-models'
-import { expect } from 'chai'
 import admin from 'firebase-admin'
 import {
   type DocumentData,
@@ -39,12 +37,12 @@ export function describeWithEmulators(
 
       beforeEach(async () => {
         await env.cleanup()
-      })
+      }, 30_000)
 
       perform(env)
     } else {
       it('skipped due to missing emulator', () => {
-        expect.fail('skipped test')
+        fail('skipped test')
       })
     }
   })
@@ -226,30 +224,5 @@ export class EmulatorTestEnvironment {
       },
       data: () => undefined,
     }
-  }
-
-  private async post(url: string, data: object) {
-    return new Promise((resolve, reject) => {
-      const request = http.request(
-        url,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-        },
-        (response) => {
-          if (response.statusCode === undefined) {
-            reject(new Error('statusCode=undefined'))
-            return
-          } else if (response.statusCode < 200 || response.statusCode >= 300) {
-            reject(new Error(`statusCode=${response.statusCode}`))
-            return
-          }
-          response.on('end', resolve)
-        },
-      )
-      request.on('error', reject)
-      request.write(JSON.stringify(data))
-      request.end()
-    })
   }
 }
