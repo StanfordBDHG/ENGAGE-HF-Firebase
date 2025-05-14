@@ -14,7 +14,7 @@ import {
 import {
   QuestionnaireId,
   QuestionnaireLinkId,
-} from '../../services/seeding/staticData/questionnaireFactory/questionnaireLinkIds'
+} from '../../services/seeding/staticData/questionnaireFactory/questionnaireLinkIds.js'
 
 export function mockQuestionnaire(): FHIRQuestionnaire {
   return new FHIRQuestionnaire({

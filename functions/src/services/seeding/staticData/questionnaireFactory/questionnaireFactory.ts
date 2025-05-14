@@ -28,7 +28,7 @@ import { type FHIRUsageContext } from '@stanfordbdhg/engagehf-models/lib/fhir/ba
 import {
   medicationClassesForGroup,
   MedicationGroup,
-  QuestionnaireId,
+  type QuestionnaireId,
   QuestionnaireLinkId,
 } from './questionnaireLinkIds.js'
 
