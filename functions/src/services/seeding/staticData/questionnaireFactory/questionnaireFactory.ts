@@ -28,6 +28,7 @@ import { type FHIRUsageContext } from '@stanfordbdhg/engagehf-models/lib/fhir/ba
 import {
   medicationClassesForGroup,
   MedicationGroup,
+  QuestionnaireId,
   QuestionnaireLinkId,
 } from './questionnaireLinkIds.js'
 
@@ -425,7 +426,7 @@ export abstract class QuestionnaireFactory<Input> {
   }
 
   protected questionnaire(input: {
-    id: string
+    id: QuestionnaireId
     title: string
     status?: FHIRQuestionnairePublicationStatus
     item: FHIRQuestionnaireItem[]
@@ -456,7 +457,7 @@ export abstract class QuestionnaireFactory<Input> {
         },
       ],
       subjectType: ['Patient'],
-      url: `http://spezi.health/fhir/questionnaire/${input.id}`,
+      url: QuestionnaireLinkId.url(input.id),
       item: input.item,
     })
   }

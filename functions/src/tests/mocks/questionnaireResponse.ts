@@ -8,11 +8,14 @@
 
 import { type FHIRQuestionnaireResponse } from '@stanfordbdhg/engagehf-models'
 import { createKccqQuestionnaireResponse } from '../../services/questionnaireResponse/kccqQuestionnaireLinkIds.js'
+import {
+  QuestionnaireId,
+  QuestionnaireLinkId,
+} from '../../services/seeding/staticData/questionnaireFactory/questionnaireLinkIds.js'
 
 export function mockQuestionnaireResponse(): FHIRQuestionnaireResponse {
   return createKccqQuestionnaireResponse({
-    questionnaire:
-      'http://spezi.health/fhir/questionnaire/9528ccc2-d1be-4c4c-9c3c-19f78e51ec19',
+    questionnaire: QuestionnaireLinkId.url(QuestionnaireId.kccq),
     questionnaireResponse: '60193B69-B0F7-4708-8CCE-F3CB2936628D',
     date: new Date('2024-07-18T18:46:37.219581961-07:00'),
     answer1a: 1,

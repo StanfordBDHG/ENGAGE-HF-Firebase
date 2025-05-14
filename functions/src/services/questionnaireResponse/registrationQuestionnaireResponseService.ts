@@ -11,7 +11,10 @@ import { logger } from 'firebase-functions/v2'
 import { QuestionnaireResponseService } from './questionnaireResponseService.js'
 import { type Document } from '../database/databaseService.js'
 import { type PatientService } from '../patient/patientService.js'
-import { QuestionnaireId } from '../seeding/staticData/questionnaireFactory/questionnaireLinkIds.js'
+import {
+  QuestionnaireId,
+  QuestionnaireLinkId,
+} from '../seeding/staticData/questionnaireFactory/questionnaireLinkIds.js'
 import { type UserService } from '../user/userService.js'
 
 export class RegistrationQuestionnaireResponseService extends QuestionnaireResponseService {
@@ -34,16 +37,8 @@ export class RegistrationQuestionnaireResponseService extends QuestionnaireRespo
     userId: string,
     response: Document<FHIRQuestionnaireResponse>,
   ): Promise<boolean> {
-    logger.debug(
-      'RegistrationQuestionnaireResponseService.handle()',
-      response.content.questionnaire,
-    )
-    if (
-      !response.content.questionnaire.endsWith(
-        QuestionnaireId.registration.toString(),
-      )
-    )
-      return false
+    const urls = [QuestionnaireLinkId.url(QuestionnaireId.registration)]
+    if (!urls.includes(response.content.questionnaire)) return false
 
     const personalInfo = this.extractPersonalInfo(response.content)
     if (personalInfo !== null) {

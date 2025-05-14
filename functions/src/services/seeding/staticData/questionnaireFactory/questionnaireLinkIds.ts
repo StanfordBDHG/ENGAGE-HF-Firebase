@@ -27,6 +27,7 @@ export function medicationClassesForGroup(
       return [MedicationClassReference.betaBlockers]
     case MedicationGroup.rasi:
       return [
+        MedicationClassReference.angiotensinReceptorNeprilysinInhibitors,
         MedicationClassReference.angiotensinConvertingEnzymeInhibitors,
         MedicationClassReference.angiotensinReceptorBlockers,
       ]
@@ -47,6 +48,10 @@ export enum QuestionnaireId {
 }
 
 export const QuestionnaireLinkId = {
+  url(id: QuestionnaireId) {
+    return `http://spezi.health/fhir/questionnaire/${id}`
+  },
+
   appointment: {
     page0: 'appointment.exists',
     existsDescription: 'appointment.exists-description',

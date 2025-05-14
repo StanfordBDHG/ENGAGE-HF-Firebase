@@ -10,7 +10,10 @@ import { type FHIRQuestionnaireResponse } from '@stanfordbdhg/engagehf-models'
 import { QuestionnaireResponseService } from './questionnaireResponseService.js'
 import { type Document } from '../database/databaseService.js'
 import { type PatientService } from '../patient/patientService.js'
-import { QuestionnaireId } from '../seeding/staticData/questionnaireFactory/questionnaireLinkIds.js'
+import {
+  QuestionnaireId,
+  QuestionnaireLinkId,
+} from '../seeding/staticData/questionnaireFactory/questionnaireLinkIds.js'
 
 export class DataUpdateQuestionnaireResponseService extends QuestionnaireResponseService {
   // Properties
@@ -30,15 +33,11 @@ export class DataUpdateQuestionnaireResponseService extends QuestionnaireRespons
     userId: string,
     response: Document<FHIRQuestionnaireResponse>,
   ): Promise<boolean> {
-    if (
-      !response.content.questionnaire.endsWith(
-        QuestionnaireId.dataUpdate.toString(),
-      ) &&
-      !response.content.questionnaire.endsWith(
-        QuestionnaireId.postVisit.toString(),
-      )
-    )
-      return false
+    const urls = [
+      QuestionnaireLinkId.url(QuestionnaireId.dataUpdate),
+      QuestionnaireLinkId.url(QuestionnaireId.postVisit),
+    ]
+    if (!urls.includes(response.content.questionnaire)) return false
 
     await this.handleLabValues({
       userId,
