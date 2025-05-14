@@ -14,11 +14,11 @@ import {
   UserSex,
   UserType,
 } from '@stanfordbdhg/engagehf-models'
-import { onUserQuestionnaireResponseWritten } from '../../functions/onUserDocumentWritten'
-import { describeWithEmulators } from '../../tests/functions/testEnvironment'
-import { _defaultSeed } from '../../functions/defaultSeed'
-import { _updateStaticData } from '../../functions/updateStaticData'
-import { getServiceFactory } from '../factory/getServiceFactory'
+import { _defaultSeed } from '../../functions/defaultSeed.js'
+import { onUserQuestionnaireResponseWritten } from '../../functions/onUserDocumentWritten.js'
+import { _updateStaticData } from '../../functions/updateStaticData.js'
+import { describeWithEmulators } from '../../tests/functions/testEnvironment.js'
+import { getServiceFactory } from '../factory/getServiceFactory.js'
 
 describeWithEmulators('QuestionnaireResponseService', (env) => {
   it('should be able to extract the registration response from an Apple device', async () => {

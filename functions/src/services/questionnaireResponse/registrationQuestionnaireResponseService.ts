@@ -7,12 +7,12 @@
 //
 
 import { type FHIRQuestionnaireResponse } from '@stanfordbdhg/engagehf-models'
+import { logger } from 'firebase-functions/v2'
 import { QuestionnaireResponseService } from './questionnaireResponseService.js'
 import { type Document } from '../database/databaseService.js'
 import { type PatientService } from '../patient/patientService.js'
 import { QuestionnaireId } from '../seeding/staticData/questionnaireFactory/questionnaireLinkIds.js'
 import { type UserService } from '../user/userService.js'
-import { logger } from 'firebase-functions/v2'
 
 export class RegistrationQuestionnaireResponseService extends QuestionnaireResponseService {
   // Properties
