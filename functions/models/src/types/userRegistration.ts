@@ -91,6 +91,7 @@ export class UserRegistration {
   readonly selfManaged: boolean
 
   readonly dateOfBirth?: Date
+  readonly sex?: UserSex
   readonly clinician?: string
   readonly providerName?: string
 
@@ -126,6 +127,7 @@ export class UserRegistration {
     organization?: string
     selfManaged: boolean
     dateOfBirth?: Date
+    sex?: UserSex
     clinician?: string
     providerName?: string
     receivesAppointmentReminders: boolean
@@ -143,6 +145,7 @@ export class UserRegistration {
     this.organization = input.organization
     this.selfManaged = input.selfManaged
     this.dateOfBirth = input.dateOfBirth
+    this.sex = input.sex
     this.clinician = input.clinician
     this.providerName = input.providerName
     this.receivesAppointmentReminders = input.receivesAppointmentReminders

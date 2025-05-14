@@ -12,6 +12,7 @@ import { type Document } from '../database/databaseService.js'
 import { type PatientService } from '../patient/patientService.js'
 import { QuestionnaireId } from '../seeding/staticData/questionnaireFactory/questionnaireLinkIds.js'
 import { type UserService } from '../user/userService.js'
+import { logger } from 'firebase-functions/v2'
 
 export class RegistrationQuestionnaireResponseService extends QuestionnaireResponseService {
   // Properties
@@ -33,10 +34,17 @@ export class RegistrationQuestionnaireResponseService extends QuestionnaireRespo
     userId: string,
     response: Document<FHIRQuestionnaireResponse>,
   ): Promise<boolean> {
+    logger.debug(
+      'RegistrationQuestionnaireResponseService.handle()',
+      response.content.questionnaire,
+    )
     if (
-      response.content.questionnaire !== QuestionnaireId.registration.toString()
+      !response.content.questionnaire.endsWith(
+        QuestionnaireId.registration.toString(),
+      )
     )
       return false
+
     const personalInfo = this.extractPersonalInfo(response.content)
     if (personalInfo !== null) {
       await this.userService.updatePersonalInfo(userId, personalInfo)

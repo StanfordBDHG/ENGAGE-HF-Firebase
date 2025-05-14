@@ -107,9 +107,9 @@ export class EmulatorTestEnvironment {
     } & DeepPartial<FirestoreEvent<Change<DocumentSnapshot>, Params>>,
   ) {
     const wrapped = this.wrapper.wrap(func)
-    const before = input.ref.withConverter(null).get()
+    const before = await input.ref.withConverter(null).get()
     await input.ref.set(input.data)
-    const after = input.ref.withConverter(null).get()
+    const after = await input.ref.withConverter(null).get()
     await wrapped({
       ...input,
       data: this.wrapper.makeChange(before, after),

@@ -46,7 +46,9 @@ export class KccqQuestionnaireResponseService extends QuestionnaireResponseServi
     userId: string,
     response: Document<FHIRQuestionnaireResponse>,
   ): Promise<boolean> {
-    if (response.content.questionnaire !== QuestionnaireId.kccq.toString())
+    if (
+      !response.content.questionnaire.endsWith(QuestionnaireId.kccq.toString())
+    )
       return false
 
     const symptomScore = this.symptomScore(response.content)

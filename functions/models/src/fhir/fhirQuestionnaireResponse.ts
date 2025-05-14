@@ -233,13 +233,13 @@ export class FHIRQuestionnaireResponse extends FHIRResource {
     linkId: string,
     item: FHIRQuestionnaireResponseItem,
   ): FHIRQuestionnaireResponseItem[] {
+    const children = item.item ?? []
+    if (children.length === 0 && item.linkId === linkId) {
+      return [item]
+    }
     const items: FHIRQuestionnaireResponseItem[] = []
     for (const child of item.item ?? []) {
-      if (child.item !== undefined) {
-        items.push(...this.leafResponseItemsRecursive(linkId, child))
-      } else if (child.linkId === linkId) {
-        items.push(item)
-      }
+      items.push(...this.leafResponseItemsRecursive(linkId, child))
     }
     return items
   }

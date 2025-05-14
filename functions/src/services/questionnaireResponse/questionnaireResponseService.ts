@@ -76,12 +76,9 @@ export abstract class QuestionnaireResponseService {
         ?.answer?.at(0)?.valueDate
       if (dateOfBirth === undefined) return null
 
-      const sex = z
-        .nativeEnum(UserSex)
-        .parse(
-          response.leafResponseItem(linkIds.sex)?.answer?.at(0)?.valueCoding
-            ?.code,
-        )
+      const sexCode = response.leafResponseItem(linkIds.sex)?.answer?.at(0)
+        ?.valueCoding?.code
+      const sex = z.nativeEnum(UserSex).parse(sexCode)
       return {
         dateOfBirth,
         sex,
@@ -103,32 +100,17 @@ export abstract class QuestionnaireResponseService {
       ?.answer?.at(0)?.valueDate
     if (dateAnswer === undefined) return null
 
-    const quantityAnswer = response
+    const decimalAnswer = response
       .leafResponseItem(linkIds.number)
-      ?.answer?.at(0)?.valueQuantity
+      ?.answer?.at(0)?.valueDecimal
 
-    const valueInExpectedUnit = options.unit.valueOf(quantityAnswer)
-    if (valueInExpectedUnit !== undefined) {
-      return {
-        value: valueInExpectedUnit,
-        unit: options.unit,
-        date: dateAnswer,
-      }
+    if (decimalAnswer === undefined) return null
+
+    return {
+      value: decimalAnswer,
+      unit: options.unit,
+      date: dateAnswer,
     }
-
-    const actualValue = quantityAnswer?.value
-    const actualUnit = QuantityUnit.allValues.find(
-      (unit) => unit.code == quantityAnswer?.unit,
-    )
-    if (actualValue !== undefined && actualUnit !== undefined) {
-      return {
-        value: actualValue,
-        unit: actualUnit,
-        date: dateAnswer,
-      }
-    }
-
-    return null
   }
 
   protected extractMedicationRequests(

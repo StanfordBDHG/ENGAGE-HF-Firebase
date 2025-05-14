@@ -31,8 +31,12 @@ export class DataUpdateQuestionnaireResponseService extends QuestionnaireRespons
     response: Document<FHIRQuestionnaireResponse>,
   ): Promise<boolean> {
     if (
-      response.content.id !== QuestionnaireId.dataUpdate &&
-      response.content.id !== QuestionnaireId.postVisit
+      !response.content.questionnaire.endsWith(
+        QuestionnaireId.dataUpdate.toString(),
+      ) &&
+      !response.content.questionnaire.endsWith(
+        QuestionnaireId.postVisit.toString(),
+      )
     )
       return false
 
