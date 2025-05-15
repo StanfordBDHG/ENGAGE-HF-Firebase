@@ -98,9 +98,7 @@ export class TriggerService {
             lastUpdate: new Date(),
             content: afterData,
           },
-          {
-            isNew: beforeData === undefined && afterData !== undefined,
-          },
+          { isNew: beforeData === undefined },
         )
 
         logger.debug(

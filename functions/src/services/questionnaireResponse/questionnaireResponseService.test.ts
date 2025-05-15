@@ -15,12 +15,12 @@ import {
   UserType,
   QuantityUnit,
 } from '@stanfordbdhg/engagehf-models'
+import { median } from 'd3'
 import { _defaultSeed } from '../../functions/defaultSeed.js'
 import { onUserQuestionnaireResponseWritten } from '../../functions/onUserDocumentWritten.js'
 import { _updateStaticData } from '../../functions/updateStaticData.js'
 import { describeWithEmulators } from '../../tests/functions/testEnvironment.js'
 import { getServiceFactory } from '../factory/getServiceFactory.js'
-import { median } from 'd3'
 
 describeWithEmulators('QuestionnaireResponseService', (env) => {
   it('should be able to extract the registration response from an Apple device', async () => {

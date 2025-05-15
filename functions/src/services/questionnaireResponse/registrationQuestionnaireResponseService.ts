@@ -12,13 +12,13 @@ import {
 } from '@stanfordbdhg/engagehf-models'
 import { QuestionnaireResponseService } from './questionnaireResponseService.js'
 import { type Document } from '../database/databaseService.js'
+import { type MessageService } from '../message/messageService.js'
 import { type PatientService } from '../patient/patientService.js'
 import {
   QuestionnaireId,
   QuestionnaireLinkId,
 } from '../seeding/staticData/questionnaireFactory/questionnaireLinkIds.js'
 import { type UserService } from '../user/userService.js'
-import { MessageService } from '../message/messageService.js'
 
 export class RegistrationQuestionnaireResponseService extends QuestionnaireResponseService {
   // Properties

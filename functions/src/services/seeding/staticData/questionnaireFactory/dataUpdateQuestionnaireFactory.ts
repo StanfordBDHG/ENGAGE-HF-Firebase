@@ -28,7 +28,8 @@ export class DataUpdateQuestionnaireFactory extends QuestionnaireFactory<DataUpd
         input.isPostAppointment ?
           QuestionnaireId.postAppointment
         : QuestionnaireId.dataUpdate,
-      title: input.isPostAppointment ? 'Post-Appointment Survey' : 'Update Survey',
+      title:
+        input.isPostAppointment ? 'Post-Appointment Survey' : 'Update Survey',
       item: [
         ...this.labInputPages(),
         ...this.medicationInputPages({
