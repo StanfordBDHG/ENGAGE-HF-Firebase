@@ -27,9 +27,10 @@ export class MultiQuestionnaireResponseService extends QuestionnaireResponseServ
   async handle(
     userId: string,
     response: Document<FHIRQuestionnaireResponse>,
+    options: { isNew: boolean },
   ): Promise<boolean> {
     for (const components of this.components) {
-      const handled = await components.handle(userId, response)
+      const handled = await components.handle(userId, response, options)
       if (handled) return true
     }
     return false

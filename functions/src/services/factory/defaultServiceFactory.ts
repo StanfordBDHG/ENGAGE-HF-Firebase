@@ -116,15 +116,20 @@ export class DefaultServiceFactory implements ServiceFactory {
   private readonly questionnaireResponseService = new Lazy(
     () =>
       new MultiQuestionnaireResponseService([
-        new KccqQuestionnaireResponseService(
-          this.patientService.value,
-          new SymptomScoreCalculator(),
-        ),
-        new DataUpdateQuestionnaireResponseService(this.patientService.value),
-        new RegistrationQuestionnaireResponseService(
-          this.patientService.value,
-          this.userService.value,
-        ),
+        new KccqQuestionnaireResponseService({
+          messageService: this.messageService.value,
+          patientService: this.patientService.value,
+          symptomScoreCalculator: new SymptomScoreCalculator(),
+        }),
+        new DataUpdateQuestionnaireResponseService({
+          messageService: this.messageService.value,
+          patientService: this.patientService.value,
+        }),
+        new RegistrationQuestionnaireResponseService({
+          messageService: this.messageService.value,
+          patientService: this.patientService.value,
+          userService: this.userService.value,
+        }),
       ]),
   )
 

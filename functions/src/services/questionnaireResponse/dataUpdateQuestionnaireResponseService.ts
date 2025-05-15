@@ -6,7 +6,10 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { type FHIRQuestionnaireResponse } from '@stanfordbdhg/engagehf-models'
+import {
+  UserMessageType,
+  type FHIRQuestionnaireResponse,
+} from '@stanfordbdhg/engagehf-models'
 import { QuestionnaireResponseService } from './questionnaireResponseService.js'
 import { type Document } from '../database/databaseService.js'
 import { type PatientService } from '../patient/patientService.js'
@@ -14,17 +17,23 @@ import {
   QuestionnaireId,
   QuestionnaireLinkId,
 } from '../seeding/staticData/questionnaireFactory/questionnaireLinkIds.js'
+import { MessageService } from '../message/messageService.js'
 
 export class DataUpdateQuestionnaireResponseService extends QuestionnaireResponseService {
   // Properties
 
+  private readonly messageService: MessageService
   private readonly patientService: PatientService
 
   // Constructor
 
-  constructor(patientService: PatientService) {
+  constructor(input: {
+    messageService: MessageService
+    patientService: PatientService
+  }) {
     super()
-    this.patientService = patientService
+    this.messageService = input.messageService
+    this.patientService = input.patientService
   }
 
   // Methods
@@ -32,10 +41,14 @@ export class DataUpdateQuestionnaireResponseService extends QuestionnaireRespons
   async handle(
     userId: string,
     response: Document<FHIRQuestionnaireResponse>,
+    options: { isNew: boolean },
   ): Promise<boolean> {
+    const postAppointmentUrl = QuestionnaireLinkId.url(
+      QuestionnaireId.postAppointment,
+    )
     const urls = [
       QuestionnaireLinkId.url(QuestionnaireId.dataUpdate),
-      QuestionnaireLinkId.url(QuestionnaireId.postVisit),
+      postAppointmentUrl,
     ]
     if (!urls.includes(response.content.questionnaire)) return false
 
@@ -54,6 +67,16 @@ export class DataUpdateQuestionnaireResponseService extends QuestionnaireRespons
     const appointment = this.extractAppointment(response.content)
     if (appointment !== null) {
       await this.patientService.createAppointment(userId, appointment)
+    }
+
+    if (
+      options.isNew &&
+      response.content.questionnaire === postAppointmentUrl
+    ) {
+      await this.messageService.completeMessages(
+        userId,
+        UserMessageType.postAppointmentQuestionnaire,
+      )
     }
     return true
   }

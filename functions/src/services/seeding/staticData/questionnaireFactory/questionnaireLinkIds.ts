@@ -43,7 +43,7 @@ export function medicationClassesForGroup(
 export enum QuestionnaireId {
   kccq = '9528ccc2-d1be-4c4c-9c3c-19f78e51ec19',
   dataUpdate = 'engagehf-data-update',
-  postVisit = 'engagehf-post-visit',
+  postAppointment = 'engagehf-post-appointment',
   registration = 'engagehf-registration',
 }
 

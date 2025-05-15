@@ -8,6 +8,7 @@
 
 import {
   SymptomScore,
+  UserMessageType,
   type FHIRQuestionnaireResponse,
 } from '@stanfordbdhg/engagehf-models'
 import { QuestionnaireResponseService } from './questionnaireResponseService.js'
@@ -18,38 +19,37 @@ import {
   QuestionnaireId,
   QuestionnaireLinkId,
 } from '../seeding/staticData/questionnaireFactory/questionnaireLinkIds.js'
+import { MessageService } from '../message/messageService.js'
 
 export class KccqQuestionnaireResponseService extends QuestionnaireResponseService {
   // Properties
 
+  private readonly messageService: MessageService
   private readonly patientService: PatientService
   private readonly symptomScoreCalculator: SymptomScoreCalculator
 
   // Constructor
 
-  constructor(
-    patientService: PatientService,
-    symptomScoreCalculator: SymptomScoreCalculator,
-  ) {
+  constructor(input: {
+    messageService: MessageService
+    patientService: PatientService
+    symptomScoreCalculator: SymptomScoreCalculator
+  }) {
     super()
-    this.patientService = patientService
-    this.symptomScoreCalculator = symptomScoreCalculator
+    this.messageService = input.messageService
+    this.patientService = input.patientService
+    this.symptomScoreCalculator = input.symptomScoreCalculator
   }
-
-  // Helpers - Single answer of leaf response item with integer coding
-
-  // Computed Properties
 
   // Methods
 
   async handle(
     userId: string,
     response: Document<FHIRQuestionnaireResponse>,
+    options: { isNew: boolean },
   ): Promise<boolean> {
     const urls = [QuestionnaireLinkId.url(QuestionnaireId.kccq)]
     if (!urls.includes(response.content.questionnaire)) return false
-
-    return false
 
     const symptomScore = this.symptomScore(response.content)
     if (symptomScore === null) return false
@@ -59,6 +59,13 @@ export class KccqQuestionnaireResponseService extends QuestionnaireResponseServi
       response.id,
       symptomScore,
     )
+
+    if (options.isNew) {
+      await this.messageService.completeMessages(
+        userId,
+        UserMessageType.symptomQuestionnaire,
+      )
+    }
 
     return true
   }

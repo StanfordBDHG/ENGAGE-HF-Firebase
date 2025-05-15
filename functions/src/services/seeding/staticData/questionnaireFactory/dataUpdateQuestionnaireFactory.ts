@@ -16,7 +16,7 @@ import { QuestionnaireId } from './questionnaireLinkIds.js'
 interface DataUpdateQuestionnaireFactoryInput {
   medications: Record<string, FHIRMedication>
   drugs: Record<string, Record<string, FHIRMedication>>
-  isPostVisit: boolean
+  isPostAppointment: boolean
 }
 
 export class DataUpdateQuestionnaireFactory extends QuestionnaireFactory<DataUpdateQuestionnaireFactoryInput> {
@@ -25,10 +25,10 @@ export class DataUpdateQuestionnaireFactory extends QuestionnaireFactory<DataUpd
   create(input: DataUpdateQuestionnaireFactoryInput): FHIRQuestionnaire {
     return this.questionnaire({
       id:
-        input.isPostVisit ?
-          QuestionnaireId.postVisit
+        input.isPostAppointment ?
+          QuestionnaireId.postAppointment
         : QuestionnaireId.dataUpdate,
-      title: input.isPostVisit ? 'Post-Visit Survey' : 'Update Survey',
+      title: input.isPostAppointment ? 'Post-Appointment Survey' : 'Update Survey',
       item: [
         ...this.labInputPages(),
         ...this.medicationInputPages({

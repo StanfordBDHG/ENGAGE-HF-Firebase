@@ -1480,7 +1480,7 @@
     "url": "http://spezi.health/fhir/questionnaire/engagehf-registration",
     "item": [
       {
-        "linkId": "de981575-bd5b-4d84-95bb-35ed6c7f5923",
+        "linkId": "c1579908-c1f2-400f-8899-0a4b2dd946bb",
         "type": "display",
         "text": "Welcome to the ENGAGE-HF study! Please complete the following survey to help us understand your health and well-being.",
         "required": false,
@@ -2607,7 +2607,7 @@
           {
             "linkId": "rasi.exists-description",
             "type": "display",
-            "text": "Do you take any of the following medications?\n\nCaptopril (Capoten)\nEnalapril (Vasotec)\nBenazepril (Lotensin)\nLisinopril (Zestril)\nMoexipril (Univasc)\nQuinapril (Accupril)\nRamipril (Altace)\nTrandolapril (Mavik)\nPerindopril (Aceon)\nValsartan (Diovan)\nTelmisartan (Micardis)\nEprosartan (Teveten)\nIrbesartan (Avapro)\nOlmesartan Medoxomil (Benicar)\nLosartan Potassium (Cozaar)\nCandesartan (Atacand)\nFosinopril Sodium (Monopril)\nAzilsartan Medoxomil (Edarbi)",
+            "text": "Do you take any of the following medications?\n\nCaptopril (Capoten)\nEnalapril (Vasotec)\nBenazepril (Lotensin)\nLisinopril (Zestril)\nMoexipril (Univasc)\nQuinapril (Accupril)\nRamipril (Altace)\nTrandolapril (Mavik)\nPerindopril (Aceon)\nValsartan (Diovan)\nTelmisartan (Micardis)\nEprosartan (Teveten)\nIrbesartan (Avapro)\nOlmesartan Medoxomil (Benicar)\nLosartan Potassium (Cozaar)\nCandesartan (Atacand)\nFosinopril Sodium (Monopril)\nAzilsartan Medoxomil (Edarbi)\nSacubitril / Valsartan (Entresto)",
             "required": false,
             "unit": null,
             "answerOption": null,
@@ -3322,6 +3322,61 @@
                   "version": null,
                   "code": "medications/35296/drugs/251857",
                   "display": "Ramipril (Altace)\n5 mg Oral Tablet",
+                  "userSelected": null
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1656339/drugs/2679793",
+                  "extension": null,
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "version": null,
+                  "code": "medications/1656339/drugs/2679793",
+                  "display": "Sacubitril / Valsartan (Entresto)\n15/16 mg Oral Pellet",
+                  "userSelected": null
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1656339/drugs/1656340",
+                  "extension": null,
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "version": null,
+                  "code": "medications/1656339/drugs/1656340",
+                  "display": "Sacubitril / Valsartan (Entresto)\n24/26 mg Oral Tablet",
+                  "userSelected": null
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1656339/drugs/1656349",
+                  "extension": null,
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "version": null,
+                  "code": "medications/1656339/drugs/1656349",
+                  "display": "Sacubitril / Valsartan (Entresto)\n49/51 mg Oral Tablet",
+                  "userSelected": null
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1656339/drugs/2679800",
+                  "extension": null,
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "version": null,
+                  "code": "medications/1656339/drugs/2679800",
+                  "display": "Sacubitril / Valsartan (Entresto)\n6/6 mg Oral Pellet",
+                  "userSelected": null
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1656339/drugs/1656354",
+                  "extension": null,
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "version": null,
+                  "code": "medications/1656339/drugs/1656354",
+                  "display": "Sacubitril / Valsartan (Entresto)\n97/103 mg Oral Tablet",
                   "userSelected": null
                 }
               },
@@ -5494,7 +5549,7 @@
           {
             "linkId": "rasi.exists-description",
             "type": "display",
-            "text": "Do you take any of the following medications?\n\nCaptopril (Capoten)\nEnalapril (Vasotec)\nBenazepril (Lotensin)\nLisinopril (Zestril)\nMoexipril (Univasc)\nQuinapril (Accupril)\nRamipril (Altace)\nTrandolapril (Mavik)\nPerindopril (Aceon)\nValsartan (Diovan)\nTelmisartan (Micardis)\nEprosartan (Teveten)\nIrbesartan (Avapro)\nOlmesartan Medoxomil (Benicar)\nLosartan Potassium (Cozaar)\nCandesartan (Atacand)\nFosinopril Sodium (Monopril)\nAzilsartan Medoxomil (Edarbi)",
+            "text": "Do you take any of the following medications?\n\nCaptopril (Capoten)\nEnalapril (Vasotec)\nBenazepril (Lotensin)\nLisinopril (Zestril)\nMoexipril (Univasc)\nQuinapril (Accupril)\nRamipril (Altace)\nTrandolapril (Mavik)\nPerindopril (Aceon)\nValsartan (Diovan)\nTelmisartan (Micardis)\nEprosartan (Teveten)\nIrbesartan (Avapro)\nOlmesartan Medoxomil (Benicar)\nLosartan Potassium (Cozaar)\nCandesartan (Atacand)\nFosinopril Sodium (Monopril)\nAzilsartan Medoxomil (Edarbi)\nSacubitril / Valsartan (Entresto)",
             "required": false,
             "unit": null,
             "answerOption": null,
@@ -6209,6 +6264,61 @@
                   "version": null,
                   "code": "medications/35296/drugs/251857",
                   "display": "Ramipril (Altace)\n5 mg Oral Tablet",
+                  "userSelected": null
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1656339/drugs/2679793",
+                  "extension": null,
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "version": null,
+                  "code": "medications/1656339/drugs/2679793",
+                  "display": "Sacubitril / Valsartan (Entresto)\n15/16 mg Oral Pellet",
+                  "userSelected": null
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1656339/drugs/1656340",
+                  "extension": null,
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "version": null,
+                  "code": "medications/1656339/drugs/1656340",
+                  "display": "Sacubitril / Valsartan (Entresto)\n24/26 mg Oral Tablet",
+                  "userSelected": null
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1656339/drugs/1656349",
+                  "extension": null,
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "version": null,
+                  "code": "medications/1656339/drugs/1656349",
+                  "display": "Sacubitril / Valsartan (Entresto)\n49/51 mg Oral Tablet",
+                  "userSelected": null
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1656339/drugs/2679800",
+                  "extension": null,
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "version": null,
+                  "code": "medications/1656339/drugs/2679800",
+                  "display": "Sacubitril / Valsartan (Entresto)\n6/6 mg Oral Pellet",
+                  "userSelected": null
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1656339/drugs/1656354",
+                  "extension": null,
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "version": null,
+                  "code": "medications/1656339/drugs/1656354",
+                  "display": "Sacubitril / Valsartan (Entresto)\n97/103 mg Oral Tablet",
                   "userSelected": null
                 }
               },
@@ -7353,8 +7463,8 @@
       }
     ]
   },
-  "postVisit_en_US": {
-    "id": "engagehf-post-visit",
+  "postAppointment_en_US": {
+    "id": "engagehf-post-appointment",
     "extension": null,
     "resourceType": "Questionnaire",
     "meta": {
@@ -7376,7 +7486,7 @@
         }
       ]
     },
-    "title": "Post-Visit Survey",
+    "title": "Post-Appointment Survey",
     "language": "en-US",
     "status": "active",
     "publisher": "Stanford Biodesign Digital Health",
@@ -7390,7 +7500,7 @@
         "telecom": null
       }
     ],
-    "url": "http://spezi.health/fhir/questionnaire/engagehf-post-visit",
+    "url": "http://spezi.health/fhir/questionnaire/engagehf-post-appointment",
     "item": [
       {
         "linkId": "2160-0.exists",
@@ -8381,7 +8491,7 @@
           {
             "linkId": "rasi.exists-description",
             "type": "display",
-            "text": "Do you take any of the following medications?\n\nCaptopril (Capoten)\nEnalapril (Vasotec)\nBenazepril (Lotensin)\nLisinopril (Zestril)\nMoexipril (Univasc)\nQuinapril (Accupril)\nRamipril (Altace)\nTrandolapril (Mavik)\nPerindopril (Aceon)\nValsartan (Diovan)\nTelmisartan (Micardis)\nEprosartan (Teveten)\nIrbesartan (Avapro)\nOlmesartan Medoxomil (Benicar)\nLosartan Potassium (Cozaar)\nCandesartan (Atacand)\nFosinopril Sodium (Monopril)\nAzilsartan Medoxomil (Edarbi)",
+            "text": "Do you take any of the following medications?\n\nCaptopril (Capoten)\nEnalapril (Vasotec)\nBenazepril (Lotensin)\nLisinopril (Zestril)\nMoexipril (Univasc)\nQuinapril (Accupril)\nRamipril (Altace)\nTrandolapril (Mavik)\nPerindopril (Aceon)\nValsartan (Diovan)\nTelmisartan (Micardis)\nEprosartan (Teveten)\nIrbesartan (Avapro)\nOlmesartan Medoxomil (Benicar)\nLosartan Potassium (Cozaar)\nCandesartan (Atacand)\nFosinopril Sodium (Monopril)\nAzilsartan Medoxomil (Edarbi)\nSacubitril / Valsartan (Entresto)",
             "required": false,
             "unit": null,
             "answerOption": null,
@@ -9096,6 +9206,61 @@
                   "version": null,
                   "code": "medications/35296/drugs/251857",
                   "display": "Ramipril (Altace)\n5 mg Oral Tablet",
+                  "userSelected": null
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1656339/drugs/2679793",
+                  "extension": null,
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "version": null,
+                  "code": "medications/1656339/drugs/2679793",
+                  "display": "Sacubitril / Valsartan (Entresto)\n15/16 mg Oral Pellet",
+                  "userSelected": null
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1656339/drugs/1656340",
+                  "extension": null,
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "version": null,
+                  "code": "medications/1656339/drugs/1656340",
+                  "display": "Sacubitril / Valsartan (Entresto)\n24/26 mg Oral Tablet",
+                  "userSelected": null
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1656339/drugs/1656349",
+                  "extension": null,
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "version": null,
+                  "code": "medications/1656339/drugs/1656349",
+                  "display": "Sacubitril / Valsartan (Entresto)\n49/51 mg Oral Tablet",
+                  "userSelected": null
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1656339/drugs/2679800",
+                  "extension": null,
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "version": null,
+                  "code": "medications/1656339/drugs/2679800",
+                  "display": "Sacubitril / Valsartan (Entresto)\n6/6 mg Oral Pellet",
+                  "userSelected": null
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1656339/drugs/1656354",
+                  "extension": null,
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "version": null,
+                  "code": "medications/1656339/drugs/1656354",
+                  "display": "Sacubitril / Valsartan (Entresto)\n97/103 mg Oral Tablet",
                   "userSelected": null
                 }
               },

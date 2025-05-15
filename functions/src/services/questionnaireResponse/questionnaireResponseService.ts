@@ -38,6 +38,7 @@ export abstract class QuestionnaireResponseService {
   abstract handle(
     userId: string,
     response: Document<FHIRQuestionnaireResponse>,
+    options: { isNew: boolean },
   ): Promise<boolean>
 
   // Methods - Extract

@@ -6,7 +6,10 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { type FHIRQuestionnaireResponse } from '@stanfordbdhg/engagehf-models'
+import {
+  UserMessageType,
+  type FHIRQuestionnaireResponse,
+} from '@stanfordbdhg/engagehf-models'
 import { QuestionnaireResponseService } from './questionnaireResponseService.js'
 import { type Document } from '../database/databaseService.js'
 import { type PatientService } from '../patient/patientService.js'
@@ -15,19 +18,26 @@ import {
   QuestionnaireLinkId,
 } from '../seeding/staticData/questionnaireFactory/questionnaireLinkIds.js'
 import { type UserService } from '../user/userService.js'
+import { MessageService } from '../message/messageService.js'
 
 export class RegistrationQuestionnaireResponseService extends QuestionnaireResponseService {
   // Properties
 
+  private readonly messageService: MessageService
   private readonly patientService: PatientService
   private readonly userService: UserService
 
   // Constructor
 
-  constructor(patientService: PatientService, userService: UserService) {
+  constructor(input: {
+    messageService: MessageService
+    patientService: PatientService
+    userService: UserService
+  }) {
     super()
-    this.patientService = patientService
-    this.userService = userService
+    this.messageService = input.messageService
+    this.patientService = input.patientService
+    this.userService = input.userService
   }
 
   // Methods
@@ -35,6 +45,7 @@ export class RegistrationQuestionnaireResponseService extends QuestionnaireRespo
   async handle(
     userId: string,
     response: Document<FHIRQuestionnaireResponse>,
+    options: { isNew: boolean },
   ): Promise<boolean> {
     const urls = [QuestionnaireLinkId.url(QuestionnaireId.registration)]
     if (!urls.includes(response.content.questionnaire)) return false
@@ -59,6 +70,13 @@ export class RegistrationQuestionnaireResponseService extends QuestionnaireRespo
     const appointment = this.extractAppointment(response.content)
     if (appointment !== null) {
       await this.patientService.createAppointment(userId, appointment)
+    }
+
+    if (options.isNew) {
+      await this.messageService.completeMessages(
+        userId,
+        UserMessageType.registrationQuestionnaire,
+      )
     }
 
     return true

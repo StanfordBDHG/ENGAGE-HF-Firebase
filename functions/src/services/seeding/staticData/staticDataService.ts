@@ -208,14 +208,14 @@ export class StaticDataService extends SeedingService {
         new DataUpdateQuestionnaireFactory().create({
           medications,
           drugs,
-          isPostVisit: false,
+          isPostAppointment: false,
         }),
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      [QuestionnaireReference.postVisit_en_US.split('/').at(-1)!]:
+      [QuestionnaireReference.postAppointment_en_US.split('/').at(-1)!]:
         new DataUpdateQuestionnaireFactory().create({
           medications,
           drugs,
-          isPostVisit: true,
+          isPostAppointment: true,
         }),
     }
   }

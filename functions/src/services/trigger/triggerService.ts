@@ -90,12 +90,18 @@ export class TriggerService {
     try {
       const questionnaireResponseService = this.factory.questionnaireResponse()
       if (afterData !== undefined) {
-        const handled = await questionnaireResponseService.handle(userId, {
-          id: questionnaireResponseId,
-          path: `users/${userId}/questionnaireResponses/${questionnaireResponseId}`,
-          lastUpdate: new Date(),
-          content: afterData,
-        })
+        const handled = await questionnaireResponseService.handle(
+          userId,
+          {
+            id: questionnaireResponseId,
+            path: `users/${userId}/questionnaireResponses/${questionnaireResponseId}`,
+            lastUpdate: new Date(),
+            content: afterData,
+          },
+          {
+            isNew: beforeData === undefined && afterData !== undefined,
+          },
+        )
 
         logger.debug(
           `questionnaireResponseWritten(${userId}, ${questionnaireResponseId}): Handled questionnaire response: ${handled}`,
@@ -106,17 +112,6 @@ export class TriggerService {
         `questionnaireResponseWritten(${userId}, ${questionnaireResponseId}): Error handling questionnaire response: ${String(
           error,
         )}`,
-      )
-    }
-
-    const messageService = this.factory.message()
-    if (beforeData === undefined && afterData !== undefined) {
-      logger.debug(
-        `questionnaireResponseWritten(${userId}, ${questionnaireResponseId}): Completing symptom questionnaire messages`,
-      )
-      await messageService.completeMessages(
-        userId,
-        UserMessageType.symptomQuestionnaire,
       )
     }
 
@@ -132,6 +127,7 @@ export class TriggerService {
   }
 
   async userEnrolled(user: Document<User>) {
+    const messageService = this.factory.message()
     if (user.content.type !== UserType.patient) {
       logger.error(
         `TriggerService.userEnrolled(${user.id}): Skipping user of type ${user.content.type}.`,
@@ -147,7 +143,7 @@ export class TriggerService {
     }
 
     try {
-      await this.factory.message().addMessage(
+      await messageService.addMessage(
         user.id,
         UserMessage.createWelcome({
           videoReference: VideoReference.welcome,
@@ -161,7 +157,19 @@ export class TriggerService {
     }
 
     try {
-      await this.factory.message().addMessage(
+      const messageService = this.factory.message()
+
+      if (user.content.selfManaged) {
+        await messageService.addMessage(
+          user.id,
+          UserMessage.createRegistrationQuestionnaire({
+            questionnaireReference: QuestionnaireReference.registration_en_US,
+          }),
+          { notify: true },
+        )
+      }
+
+      await messageService.addMessage(
         user.id,
         UserMessage.createSymptomQuestionnaire({
           questionnaireReference: QuestionnaireReference.kccq_en_US,
@@ -170,7 +178,7 @@ export class TriggerService {
       )
     } catch (error) {
       logger.error(
-        `TriggerService.userEnrolled(${user.id}): Adding symptom questionnaire message failed due to ${String(error)}`,
+        `TriggerService.userEnrolled(${user.id}): Adding questionnaire message failed due to ${String(error)}`,
       )
     }
   }
@@ -815,11 +823,25 @@ export class TriggerService {
     await Promise.all(
       pastAppointments.map(async (appointment) => {
         try {
+          const userId = appointment.path.split('/')[1]
           await messageService.completeMessages(
-            appointment.path.split('/')[1],
+            userId,
             UserMessageType.preAppointment,
             (message) => message.reference === appointment.path,
           )
+
+          const user = await this.factory.user().getUser(userId)
+          if (user?.content.selfManaged ?? false) {
+            await messageService.addMessage(
+              userId,
+              UserMessage.createPostAppointmentQuestionnaire({
+                creationDate: appointment.content.end,
+                questionnaireReference:
+                  QuestionnaireReference.postAppointment_en_US,
+              }),
+              { notify: true },
+            )
+          }
         } catch (error) {
           logger.error(
             `TriggerService.completeAppointmentReminderMessages: Error completing messages for appointment ${appointment.path}: ${String(error)}`,

@@ -12,6 +12,7 @@ import { type MockFirestore } from '../../../tests/mocks/firestore.js'
 import { cleanupMocks, setupMockFirebase } from '../../../tests/setup.js'
 import { TestFlags } from '../../../tests/testFlags.js'
 import { getServiceFactory } from '../../factory/getServiceFactory.js'
+import { fail } from 'assert'
 
 describe('DebugDataService', () => {
   const date = new Date('2024-06-05')
