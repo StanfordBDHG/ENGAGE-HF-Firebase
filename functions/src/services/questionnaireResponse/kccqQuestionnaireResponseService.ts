@@ -87,7 +87,7 @@ export class KccqQuestionnaireResponseService extends QuestionnaireResponseServi
     }
 
     return new SymptomScore({
-      date: response.authored,
+      date: response.authored ?? new Date(),
       ...this.symptomScoreCalculator.calculate(input),
     })
   }

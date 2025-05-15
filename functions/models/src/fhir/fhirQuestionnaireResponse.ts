@@ -113,7 +113,7 @@ export const fhirQuestionnaireResponseConverter = new Lazy(
     new SchemaConverter({
       schema: fhirResourceConverter.value.schema
         .extend({
-          authored: dateConverter.schema,
+          authored: optionalish(dateConverter.schema),
           item: optionalish(
             z
               .lazy(() => fhirQuestionnaireResponseItemConverter.value.schema)
@@ -124,7 +124,10 @@ export const fhirQuestionnaireResponseConverter = new Lazy(
         .transform((values) => new FHIRQuestionnaireResponse(values)),
       encode: (object) => ({
         ...fhirResourceConverter.value.encode(object),
-        authored: dateConverter.encode(object.authored),
+        authored:
+          object.authored !== undefined ?
+            dateConverter.encode(object.authored)
+          : null,
         item:
           object.item?.map(
             fhirQuestionnaireResponseItemConverter.value.encode,
@@ -138,7 +141,7 @@ export class FHIRQuestionnaireResponse extends FHIRResource {
   // Stored Properties
 
   readonly resourceType: string = 'QuestionnaireResponse'
-  readonly authored: Date
+  readonly authored?: Date
   readonly item?: FHIRQuestionnaireResponseItem[]
   readonly questionnaire: string
 
@@ -146,7 +149,7 @@ export class FHIRQuestionnaireResponse extends FHIRResource {
 
   constructor(
     input: FHIRResourceInput & {
-      authored: Date
+      authored?: Date
       item?: FHIRQuestionnaireResponseItem[]
       questionnaire: string
     },
