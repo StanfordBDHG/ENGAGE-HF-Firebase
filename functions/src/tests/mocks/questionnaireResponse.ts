@@ -7,7 +7,7 @@
 //
 
 import { type FHIRQuestionnaireResponse } from '@stanfordbdhg/engagehf-models'
-import { createKccqQuestionnaireResponse } from '../../services/questionnaireResponse/kccqQuestionnaireLinkIds.js'
+import { createKccqQuestionnaireResponse } from '../../services/questionnaireResponse/createKccqQuestionnaireResponse.js'
 import {
   QuestionnaireId,
   QuestionnaireLinkId,
