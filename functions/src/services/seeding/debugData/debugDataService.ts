@@ -16,7 +16,6 @@ import {
   FHIRMedicationRequest,
   FHIRObservation,
   fhirQuestionnaireConverter,
-  FHIRQuestionnaireResponse,
   invitationConverter,
   LoincCode,
   MedicationReference,
@@ -34,6 +33,7 @@ import { type Storage } from 'firebase-admin/storage'
 import { logger } from 'firebase-functions'
 import { type CollectionsService } from '../../database/collections.js'
 import { type DatabaseService } from '../../database/databaseService.js'
+import { createKccqQuestionnaireResponse } from '../../questionnaireResponse/createKccqQuestionnaireResponse.js'
 import { SeedingService } from '../seedingService.js'
 
 export class DebugDataService extends SeedingService {
@@ -122,7 +122,7 @@ export class DebugDataService extends SeedingService {
     const values = [
       FHIRMedicationRequest.create({
         frequencyPerDay: 2,
-        drugReference: DrugReference.eplerenone25,
+        medicationReference: DrugReference.eplerenone25,
         quantity: 2,
       }),
     ]
@@ -152,7 +152,7 @@ export class DebugDataService extends SeedingService {
       }),
       UserMessage.createSymptomQuestionnaire({
         creationDate: date,
-        questionnaireReference: QuestionnaireReference.enUS,
+        questionnaireReference: QuestionnaireReference.kccq_en_US,
       }),
       UserMessage.createVitals({
         creationDate: date,
@@ -406,10 +406,11 @@ export class DebugDataService extends SeedingService {
   }
 
   async seedUserQuestionnaireResponses(userId: string, date: Date) {
-    const questionnaire = this.readJSONArray(
+    const questionnaire = this.readJSONRecord(
       '../questionnaires.json',
       fhirQuestionnaireConverter.value.schema,
-    ).at(0)
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    )[QuestionnaireReference.kccq_en_US.split('/').at(-1)!]
 
     // This is just a list of pseudo-random numbers that is used to generate
     // the different user collections
@@ -460,8 +461,8 @@ export class DebugDataService extends SeedingService {
     ].map((n) => n / 100)
 
     const values = chunks(randomNumbers, 13).map((chunk, index) =>
-      FHIRQuestionnaireResponse.create({
-        questionnaire: questionnaire?.url ?? '',
+      createKccqQuestionnaireResponse({
+        questionnaire: questionnaire.url ?? '',
         questionnaireResponse: index.toString(),
         date: advanceDateByDays(date, -(index * 14) - 2),
         answer1a: Math.floor(1 + chunk[0] * 6),

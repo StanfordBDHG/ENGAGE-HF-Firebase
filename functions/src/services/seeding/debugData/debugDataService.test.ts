@@ -6,6 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
+import { fail } from 'assert'
 import fs from 'fs'
 import { type DebugDataService } from './debugDataService.js'
 import { type MockFirestore } from '../../../tests/mocks/firestore.js'

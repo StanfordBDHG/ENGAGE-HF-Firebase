@@ -152,6 +152,12 @@ export class FHIRMedication extends FHIRResource {
     return result
   }
 
+  get rxNormCode(): string | undefined {
+    return this.code?.coding?.find(
+      (coding) => coding.system === CodingSystem.rxNorm,
+    )?.code
+  }
+
   // Constructor
 
   constructor(

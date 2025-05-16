@@ -258,7 +258,7 @@ describe('RasiRecommender', () => {
     let contextBelowTarget: MedicationRequestContext
     beforeAll(async () => {
       const request = FHIRMedicationRequest.create({
-        drugReference: DrugReference.perindopril4,
+        medicationReference: DrugReference.perindopril4,
         frequencyPerDay: 1,
         quantity: 1,
       })
@@ -283,7 +283,7 @@ describe('RasiRecommender', () => {
 
       it('detects target dose reached', async () => {
         const request = FHIRMedicationRequest.create({
-          drugReference: DrugReference.perindopril4,
+          medicationReference: DrugReference.perindopril4,
           frequencyPerDay: 2,
           quantity: 2,
         })
@@ -523,7 +523,7 @@ describe('RasiRecommender', () => {
     let contextBelowTarget: MedicationRequestContext
     beforeAll(async () => {
       const request = FHIRMedicationRequest.create({
-        drugReference: DrugReference.sacubitrilValsartan49_51,
+        medicationReference: DrugReference.sacubitrilValsartan49_51,
         frequencyPerDay: 1,
         quantity: 1,
       })
@@ -537,7 +537,7 @@ describe('RasiRecommender', () => {
 
     it('detects target dose reached', async () => {
       const request = FHIRMedicationRequest.create({
-        drugReference: DrugReference.sacubitrilValsartan49_51,
+        medicationReference: DrugReference.sacubitrilValsartan49_51,
         frequencyPerDay: 2,
         quantity: 2,
       })

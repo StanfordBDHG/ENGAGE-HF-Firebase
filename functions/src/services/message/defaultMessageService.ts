@@ -411,6 +411,8 @@ export class DefaultMessageService implements MessageService {
           `DefaultMessageService.handleOldMessages(${newMessage.type}): Contains newish message? ${containsNewishMessage ? 'yes' : 'no'}`,
         )
         return !containsNewishMessage
+      case UserMessageType.postAppointmentQuestionnaire:
+      case UserMessageType.registrationQuestionnaire:
       case UserMessageType.symptomQuestionnaire:
       case UserMessageType.vitals:
         // Mark old messages as completed and create new ones instead

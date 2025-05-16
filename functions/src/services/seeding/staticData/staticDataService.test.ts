@@ -77,7 +77,11 @@ describe('StaticDataService', () => {
     const questionnaires = await firestore.collection('questionnaires').get()
     expect(questionnaires.size).toBe(0)
 
-    await staticDataService.updateQuestionnaires(CachingStrategy.expectCache)
+    await staticDataService.updateQuestionnaires(
+      TestFlags.regenerateValues ?
+        CachingStrategy.updateCache
+      : CachingStrategy.expectCache,
+    )
 
     const updatedQuestionnaires = await firestore
       .collection('questionnaires')

@@ -9,7 +9,6 @@
 export * from './codes/codes.js'
 export * from './codes/quantityUnit.js'
 export * from './codes/references.js'
-export * from './codes/symptomQuestionnaireLinkIds.js'
 export * from './fhir/baseTypes/fhirCodeableConcept.js'
 export * from './fhir/baseTypes/fhirCoding.js'
 export * from './fhir/baseTypes/fhirDosage.js'

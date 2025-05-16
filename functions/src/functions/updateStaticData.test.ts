@@ -17,6 +17,7 @@ import {
 } from '@stanfordbdhg/engagehf-models'
 import { _updateStaticData } from './updateStaticData.js'
 import { describeWithEmulators } from '../tests/functions/testEnvironment.js'
+import { TestFlags } from '../tests/testFlags.js'
 
 describeWithEmulators('function: updateStaticData', (env) => {
   it('updates static data successfully', async () => {
@@ -75,8 +76,33 @@ describeWithEmulators('function: updateStaticData', (env) => {
       )
     }
 
-    const questionnaires = await env.collections.questionnaires.get()
-    expect(questionnaires.docs).toHaveLength(1)
+    const questionnaires = await env.collections.questionnaires
+      .withConverter(null)
+      .get()
+    expect(questionnaires.docs).toHaveLength(4)
+    const questionnairesJson = JSON.parse(
+      fs.readFileSync('data/questionnaires.json', 'utf8'),
+    )
+    for (const questionnaire of questionnaires.docs) {
+      expect(simplify(questionnaire.data())).toStrictEqual(
+        questionnairesJson[questionnaire.id],
+      )
+    }
+  })
+
+  it('creates the same questionnaires again', async () => {
+    await _updateStaticData(env.factory, {
+      only: [StaticDataComponent.questionnaires],
+      cachingStrategy:
+        TestFlags.regenerateValues ?
+          CachingStrategy.updateCache
+        : CachingStrategy.ignoreCache,
+    })
+
+    const questionnaires = await env.collections.questionnaires
+      .withConverter(null)
+      .get()
+    expect(questionnaires.docs).toHaveLength(4)
     const questionnairesJson = JSON.parse(
       fs.readFileSync('data/questionnaires.json', 'utf8'),
     )
@@ -90,7 +116,7 @@ describeWithEmulators('function: updateStaticData', (env) => {
 
 function simplify(data: unknown): unknown {
   return JSON.parse(
-    JSON.stringify(data, (key, value): unknown => {
+    JSON.stringify(data, (_, value): unknown => {
       if (value instanceof LocalizedText) {
         return value.content
       }

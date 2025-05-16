@@ -11,6 +11,10 @@ import {
   FHIRQuestionnaireItemType,
   FHIRQuestionnairePublicationStatus,
 } from '@stanfordbdhg/engagehf-models'
+import {
+  QuestionnaireId,
+  QuestionnaireLinkId,
+} from '../../services/seeding/staticData/questionnaireFactory/questionnaireLinkIds.js'
 
 export function mockQuestionnaire(): FHIRQuestionnaire {
   return new FHIRQuestionnaire({
@@ -18,7 +22,7 @@ export function mockQuestionnaire(): FHIRQuestionnaire {
     language: 'en-US',
     status: FHIRQuestionnairePublicationStatus.draft,
     publisher: 'Stanford Biodesign Digital Health',
-    url: 'http://spezi.health/fhir/questionnaire/9528ccc2-d1be-4c4c-9c3c-19f78e51ec19',
+    url: QuestionnaireLinkId.url(QuestionnaireId.kccq),
     item: [
       {
         linkId: '73490535-203f-44b2-d1b7-7c0a786c16f9',

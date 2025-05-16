@@ -85,14 +85,14 @@ export const fhirQuestionnaireConverter = new Lazy(
       encode: (object) => ({
         ...fhirResourceConverter.value.encode(object),
         title: object.title ?? null,
-        status: object.status,
         language: object.language ?? null,
+        status: object.status,
+        publisher: object.publisher ?? null,
         subjectType: object.subjectType ?? null,
-        contact:
-          object.contact?.map(fhirContactDetailConverter.value.encode) ?? null,
         useContext:
           object.useContext?.map(fhirUsageContextConverter.encode) ?? null,
-        publisher: object.publisher ?? null,
+        contact:
+          object.contact?.map(fhirContactDetailConverter.value.encode) ?? null,
         url: object.url ?? null,
         item:
           object.item?.map(fhirQuestionnaireItemConverter.value.encode) ?? null,
