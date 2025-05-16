@@ -6,7 +6,6 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { fail } from 'assert'
 import {
   CachingStrategy,
   fhirQuestionnaireResponseConverter,
@@ -15,8 +14,6 @@ import {
   UserSex,
   UserType,
   QuantityUnit,
-  SymptomQuestionnaireResponse,
-  FHIRQuestionnaireResponse,
 } from '@stanfordbdhg/engagehf-models'
 import { createKccqQuestionnaireResponse } from './createKccqQuestionnaireResponse.js'
 import { _defaultSeed } from '../../functions/defaultSeed.js'
