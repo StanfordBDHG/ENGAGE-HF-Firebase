@@ -27,6 +27,7 @@ export class RegistrationQuestionnaireFactory extends QuestionnaireFactory<Regis
       title: 'Registration Survey',
       item: [
         this.displayItem({
+          linkId: QuestionnaireLinkId.welcome,
           text: 'Welcome to the ENGAGE-HF study! Please complete the following survey to help us understand your health and well-being.',
         }),
         this.personalInformationPage(),

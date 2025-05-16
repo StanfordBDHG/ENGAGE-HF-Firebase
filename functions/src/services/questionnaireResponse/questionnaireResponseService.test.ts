@@ -51,12 +51,6 @@ describeWithEmulators('QuestionnaireResponseService', (env) => {
     expect(userDoc.data()?.dateOfBirth).toBeDefined()
     expect(userDoc.data()?.sex).toBe(UserSex.female)
 
-    const appointments = await env.collections.userAppointments(userId).get()
-    expect(appointments.size).toBe(1)
-    expect(appointments.docs[0].data().start.toDateString()).toBe(
-      new Date('2025-05-14').toDateString(),
-    )
-
     const medicationRequests = await env.collections
       .userMedicationRequests(userId)
       .get()
@@ -114,6 +108,12 @@ describeWithEmulators('QuestionnaireResponseService', (env) => {
       .userObservations(userId, UserObservationCollection.dryWeight)
       .get()
     expect(dryWeightDocs.size).toBe(0)
+
+    const appointments = await env.collections.userAppointments(userId).get()
+    expect(appointments.size).toBe(1)
+    expect(appointments.docs[0].data().start.toDateString()).toBe(
+      new Date('2025-05-14').toDateString(),
+    )
   })
 
   it('should be able to extract the registration response from an Android device', async () => {
@@ -144,12 +144,6 @@ describeWithEmulators('QuestionnaireResponseService', (env) => {
     expect(userData).toBeDefined()
     expect(userDoc.data()?.dateOfBirth).toBeDefined()
     expect(userDoc.data()?.sex).toBe(UserSex.male)
-
-    const appointments = await env.collections.userAppointments(userId).get()
-    expect(appointments.size).toBe(1)
-    expect(appointments.docs[0].data().start.toDateString()).toBe(
-      new Date('2025-07-12').toDateString(),
-    )
 
     const medicationRequests = await env.collections
       .userMedicationRequests(userId)
@@ -213,6 +207,12 @@ describeWithEmulators('QuestionnaireResponseService', (env) => {
     expect(
       dryWeightDocs.docs[0].data().dryWeight(QuantityUnit.lbs)?.value,
     ).toBe(150)
+
+    const appointments = await env.collections.userAppointments(userId).get()
+    expect(appointments.size).toBe(1)
+    expect(appointments.docs[0].data().start.toDateString()).toBe(
+      new Date('2025-07-12').toDateString(),
+    )
   })
 })
 
@@ -220,7 +220,10 @@ const registrationResponseApple = {
   authored: '2025-05-14T21:00:08.836575031+02:00',
   resourceType: 'QuestionnaireResponse',
   item: [
-    { answer: [{ valueDate: '2025-05-14' }], linkId: 'dateOfBirth' },
+    {
+      answer: [{ valueDate: '2025-05-14' }],
+      linkId: 'personal-information.dateOfBirth',
+    },
     {
       answer: [
         {
@@ -231,20 +234,23 @@ const registrationResponseApple = {
           },
         },
       ],
-      linkId: 'sex',
+      linkId: 'personal-information.sex',
     },
-    { answer: [{ valueBoolean: true }], linkId: '2160-0.exists' },
-    { answer: [{ valueDecimal: 15 }], linkId: '2160-0.value' },
-    { answer: [{ valueDate: '2025-05-14' }], linkId: '2160-0.date' },
-    { linkId: '98979-8.exists', answer: [{ valueBoolean: false }] },
-    { linkId: '6298-4.exists', answer: [{ valueBoolean: true }] },
-    { linkId: '6298-4.value', answer: [{ valueDecimal: 1.75 }] },
-    { answer: [{ valueDate: '2025-05-14' }], linkId: '6298-4.date' },
-    { answer: [{ valueBoolean: false }], linkId: '8340-2.exists' },
-    { linkId: 'betablockers.exists', answer: [{ valueBoolean: false }] },
-    { linkId: 'rasi.exists', answer: [{ valueBoolean: true }] },
-    { linkId: 'rasi.frequency', answer: [{ valueDecimal: 2 }] },
-    { linkId: 'rasi.quantity', answer: [{ valueDecimal: 1.5 }] },
+    { answer: [{ valueBoolean: true }], linkId: 'lab.2160-0.exists' },
+    { answer: [{ valueDecimal: 15 }], linkId: 'lab.2160-0.value' },
+    { answer: [{ valueDate: '2025-05-14' }], linkId: 'lab.2160-0.date' },
+    { linkId: 'lab.98979-8.exists', answer: [{ valueBoolean: false }] },
+    { linkId: 'lab.6298-4.exists', answer: [{ valueBoolean: true }] },
+    { linkId: 'lab.6298-4.value', answer: [{ valueDecimal: 1.75 }] },
+    { answer: [{ valueDate: '2025-05-14' }], linkId: 'lab.6298-4.date' },
+    { answer: [{ valueBoolean: false }], linkId: 'lab.8340-2.exists' },
+    {
+      linkId: 'medication.betablockers.exists',
+      answer: [{ valueBoolean: false }],
+    },
+    { linkId: 'medication.rasi.exists', answer: [{ valueBoolean: true }] },
+    { linkId: 'medication.rasi.frequency', answer: [{ valueDecimal: 2 }] },
+    { linkId: 'medication.rasi.quantity', answer: [{ valueDecimal: 1.5 }] },
     {
       answer: [
         {
@@ -255,12 +261,12 @@ const registrationResponseApple = {
           },
         },
       ],
-      linkId: 'rasi.drug',
+      linkId: 'medication.rasi.drug',
     },
-    { linkId: 'mra.exists', answer: [{ valueBoolean: false }] },
-    { linkId: 'sglt2i.exists', answer: [{ valueBoolean: true }] },
-    { linkId: 'sglt2i.frequency', answer: [{ valueDecimal: 2 }] },
-    { answer: [{ valueDecimal: 1.34 }], linkId: 'sglt2i.quantity' },
+    { linkId: 'medication.mra.exists', answer: [{ valueBoolean: false }] },
+    { linkId: 'medication.sglt2i.exists', answer: [{ valueBoolean: true }] },
+    { linkId: 'medication.sglt2i.frequency', answer: [{ valueDecimal: 2 }] },
+    { answer: [{ valueDecimal: 1.34 }], linkId: 'medication.sglt2i.quantity' },
     {
       answer: [
         {
@@ -271,9 +277,12 @@ const registrationResponseApple = {
           },
         },
       ],
-      linkId: 'sglt2i.drug',
+      linkId: 'medication.sglt2i.drug',
     },
-    { answer: [{ valueBoolean: false }], linkId: 'diuretics.exists' },
+    {
+      answer: [{ valueBoolean: false }],
+      linkId: 'medication.diuretics.exists',
+    },
     { answer: [{ valueBoolean: true }], linkId: 'appointment.exists' },
     { linkId: 'appointment.date', answer: [{ valueDate: '2025-05-14' }] },
   ],
@@ -299,7 +308,7 @@ const registrationResponseAndroid = {
           text: 'Please provide the following information to help us understand your health and well-being.',
         },
         {
-          linkId: 'dateOfBirth',
+          linkId: 'personal-information.dateOfBirth',
           text: 'Date of Birth',
           answer: [
             {
@@ -308,7 +317,7 @@ const registrationResponseAndroid = {
           ],
         },
         {
-          linkId: 'sex',
+          linkId: 'personal-information.sex',
           text: 'Select your sex:',
           answer: [
             {
@@ -324,15 +333,15 @@ const registrationResponseAndroid = {
       ],
     },
     {
-      linkId: '2160-0.exists',
+      linkId: 'lab.2160-0.exists',
       text: 'Creatinine',
       item: [
         {
-          linkId: '2160-0.exists-description',
+          linkId: 'lab.2160-0.exists-description',
           text: 'The creatinine level in your body helps understand how your liver handles the drugs you are taking.',
         },
         {
-          linkId: '2160-0.exists',
+          linkId: 'lab.2160-0.exists',
           text: 'Have you recently received a new creatinine value?',
           answer: [
             {
@@ -343,15 +352,15 @@ const registrationResponseAndroid = {
       ],
     },
     {
-      linkId: '2160-0.page1',
+      linkId: 'lab.2160-0.page1',
       text: 'Creatinine',
       item: [
         {
-          linkId: '2160-0.description',
+          linkId: 'lab.2160-0.description',
           text: 'The creatinine level in your body helps understand how your liver handles the drugs you are taking.',
         },
         {
-          linkId: '2160-0.value',
+          linkId: 'lab.2160-0.value',
           text: 'Creatinine (mg/dL):',
           answer: [
             {
@@ -360,7 +369,7 @@ const registrationResponseAndroid = {
           ],
         },
         {
-          linkId: '2160-0.date',
+          linkId: 'lab.2160-0.date',
           text: 'Date:',
           answer: [
             {
@@ -371,15 +380,15 @@ const registrationResponseAndroid = {
       ],
     },
     {
-      linkId: '98979-8.exists',
+      linkId: 'lab.98979-8.exists',
       text: 'eGFR',
       item: [
         {
-          linkId: '98979-8.exists-description',
+          linkId: 'lab.98979-8.exists-description',
           text: 'eGFR (estimated Glomerular Filtration Rate) is a test that estimates how well your kidneys are filtering blood.',
         },
         {
-          linkId: '98979-8.exists',
+          linkId: 'lab.98979-8.exists',
           text: 'Have you recently received a new eGFR value?',
           answer: [
             {
@@ -390,15 +399,15 @@ const registrationResponseAndroid = {
       ],
     },
     {
-      linkId: '98979-8.page1',
+      linkId: 'lab.98979-8.page1',
       text: 'eGFR',
       item: [
         {
-          linkId: '98979-8.description',
+          linkId: 'lab.98979-8.description',
           text: 'eGFR (estimated Glomerular Filtration Rate) is a test that estimates how well your kidneys are filtering blood.',
         },
         {
-          linkId: '98979-8.value',
+          linkId: 'lab.98979-8.value',
           text: 'eGFR (mL/min/1.73m2):',
           answer: [
             {
@@ -407,7 +416,7 @@ const registrationResponseAndroid = {
           ],
         },
         {
-          linkId: '98979-8.date',
+          linkId: 'lab.98979-8.date',
           text: 'Date:',
           answer: [
             {
@@ -418,15 +427,15 @@ const registrationResponseAndroid = {
       ],
     },
     {
-      linkId: '6298-4.exists',
+      linkId: 'lab.6298-4.exists',
       text: 'Potassium',
       item: [
         {
-          linkId: '6298-4.exists-description',
+          linkId: 'lab.6298-4.exists-description',
           text: 'The potassium level in your body helps understand how your liver handles the drugs you are taking.',
         },
         {
-          linkId: '6298-4.exists',
+          linkId: 'lab.6298-4.exists',
           text: 'Have you recently received a new potassium value?',
           answer: [
             {
@@ -437,15 +446,15 @@ const registrationResponseAndroid = {
       ],
     },
     {
-      linkId: '8340-2.exists',
+      linkId: 'lab.8340-2.exists',
       text: 'Dry Weight',
       item: [
         {
-          linkId: '8340-2.exists-description',
+          linkId: 'lab.8340-2.exists-description',
           text: 'The dry weight is useful to set a baseline to check that your weight does not increase unnoticed.',
         },
         {
-          linkId: '8340-2.exists',
+          linkId: 'lab.8340-2.exists',
           text: 'Have you recently received a new dry weight value?',
           answer: [
             {
@@ -456,15 +465,15 @@ const registrationResponseAndroid = {
       ],
     },
     {
-      linkId: '8340-2.page1',
+      linkId: 'lab.8340-2.page1',
       text: 'Dry Weight',
       item: [
         {
-          linkId: '8340-2.description',
+          linkId: 'lab.8340-2.description',
           text: 'The dry weight is useful to set a baseline to check that your weight does not increase unnoticed.',
         },
         {
-          linkId: '8340-2.value',
+          linkId: 'lab.8340-2.value',
           text: 'Dry Weight (lbs):',
           answer: [
             {
@@ -473,7 +482,7 @@ const registrationResponseAndroid = {
           ],
         },
         {
-          linkId: '8340-2.date',
+          linkId: 'lab.8340-2.date',
           text: 'Date:',
           answer: [
             {
@@ -484,15 +493,15 @@ const registrationResponseAndroid = {
       ],
     },
     {
-      linkId: 'betablockers.exists',
+      linkId: 'medication.betablockers.exists',
       text: 'Beta Blockers',
       item: [
         {
-          linkId: 'betablockers.exists-description',
+          linkId: 'medication.betablockers.exists-description',
           text: 'Do you take any of the following medications? Bisoprolol (Zebeta) Carvedilol (Coreg) Metoprolol Succinate (Toprol XL) Carvedilol Phosphate (Coreg CR)',
         },
         {
-          linkId: 'betablockers.exists',
+          linkId: 'medication.betablockers.exists',
           text: 'Do you take any medication from the above list?',
           answer: [
             {
@@ -503,15 +512,15 @@ const registrationResponseAndroid = {
       ],
     },
     {
-      linkId: 'rasi.exists',
+      linkId: 'medication.rasi.exists',
       text: 'Renin-Angiotensin System Inhibitors (RASI)',
       item: [
         {
-          linkId: 'rasi.exists-description',
+          linkId: 'medication.rasi.exists-description',
           text: 'Do you take any of the following medications? Captopril (Capoten) Enalapril (Vasotec) Benazepril (Lotensin) Lisinopril (Zestril) Moexipril (Univasc) Quinapril (Accupril) Ramipril (Altace) Trandolapril (Mavik) Perindopril (Aceon) Valsartan (Diovan) Telmisartan (Micardis) Eprosartan (Teveten) Irbesartan (Avapro) Olmesartan Medoxomil (Benicar) Losartan Potassium (Cozaar) Candesartan (Atacand) Fosinopril Sodium (Monopril) Azilsartan Medoxomil (Edarbi)',
         },
         {
-          linkId: 'rasi.exists',
+          linkId: 'medication.rasi.exists',
           text: 'Do you take any medication from the above list?',
           answer: [
             {
@@ -522,15 +531,15 @@ const registrationResponseAndroid = {
       ],
     },
     {
-      linkId: 'rasi.page1',
+      linkId: 'medication.rasi.page1',
       text: 'Renin-Angiotensin System Inhibitors (RASI)',
       item: [
         {
-          linkId: 'rasi.description',
+          linkId: 'medication.rasi.description',
           text: 'Please enter which drug you are taking, how often you take it per day and how many pills/tablets you take per intake. Do not enter the total amount of pills/tablets you take per day.',
         },
         {
-          linkId: 'rasi.frequency',
+          linkId: 'medication.rasi.frequency',
           text: 'Intake frequency (per day):',
           answer: [
             {
@@ -539,7 +548,7 @@ const registrationResponseAndroid = {
           ],
         },
         {
-          linkId: 'rasi.quantity',
+          linkId: 'medication.rasi.quantity',
           text: 'Pills/tablets per intake:',
           answer: [
             {
@@ -548,7 +557,7 @@ const registrationResponseAndroid = {
           ],
         },
         {
-          linkId: 'rasi.drug',
+          linkId: 'medication.rasi.drug',
           text: 'Which pill/tablet do you take?',
           answer: [
             {
@@ -564,15 +573,15 @@ const registrationResponseAndroid = {
       ],
     },
     {
-      linkId: 'mra.exists',
+      linkId: 'medication.mra.exists',
       text: 'Mineralocorticoid Receptor Antagonists (MRA)',
       item: [
         {
-          linkId: 'mra.exists-description',
+          linkId: 'medication.mra.exists-description',
           text: 'Do you take any of the following medications? Spironolactone (Aldactone) Eplerenone (Inspra)',
         },
         {
-          linkId: 'mra.exists',
+          linkId: 'medication.mra.exists',
           text: 'Do you take any medication from the above list?',
           answer: [
             {
@@ -583,15 +592,15 @@ const registrationResponseAndroid = {
       ],
     },
     {
-      linkId: 'sglt2i.exists',
-      text: 'SGLT2 Inhibitors (SGLT2i)',
+      linkId: 'medication.sglt2i.exists',
+      text: 'medication.SGLT2 Inhibitors (SGLT2i)',
       item: [
         {
-          linkId: 'sglt2i.exists-description',
+          linkId: 'medication.sglt2i.exists-description',
           text: 'Do you take any of the following medications? Canagliflozin (Invokana) Dapagliflozin (Farxiga) Empagliflozin (Jardiance) Ertugliflozin (Steglatro) Bexagliflozin (Brenzavvy) Sotagliflozin (Inpefa)',
         },
         {
-          linkId: 'sglt2i.exists',
+          linkId: 'medication.sglt2i.exists',
           text: 'Do you take any medication from the above list?',
           answer: [
             {
@@ -602,15 +611,15 @@ const registrationResponseAndroid = {
       ],
     },
     {
-      linkId: 'sglt2i.page1',
+      linkId: 'medication.sglt2i.page1',
       text: 'SGLT2 Inhibitors (SGLT2i)',
       item: [
         {
-          linkId: 'sglt2i.description',
+          linkId: 'medication.sglt2i.description',
           text: 'Please enter which drug you are taking, how often you take it per day and how many pills/tablets you take per intake. Do not enter the total amount of pills/tablets you take per day.',
         },
         {
-          linkId: 'sglt2i.frequency',
+          linkId: 'medication.sglt2i.frequency',
           text: 'Intake frequency (per day):',
           answer: [
             {
@@ -619,7 +628,7 @@ const registrationResponseAndroid = {
           ],
         },
         {
-          linkId: 'sglt2i.quantity',
+          linkId: 'medication.sglt2i.quantity',
           text: 'Pills/tablets per intake:',
           answer: [
             {
@@ -628,7 +637,7 @@ const registrationResponseAndroid = {
           ],
         },
         {
-          linkId: 'sglt2i.drug',
+          linkId: 'medication.sglt2i.drug',
           text: 'Which pill/tablet do you take?',
           answer: [
             {
@@ -644,15 +653,15 @@ const registrationResponseAndroid = {
       ],
     },
     {
-      linkId: 'diuretics.exists',
+      linkId: 'medication.diuretics.exists',
       text: 'Diuretics',
       item: [
         {
-          linkId: 'diuretics.exists-description',
+          linkId: 'medication.diuretics.exists-description',
           text: 'Do you take any of the following medications? Bumetanide (Bumex) Ethacrynic Acid (Edecrin) Furosemide (Lasix) Torsemide (Soaanz)',
         },
         {
-          linkId: 'diuretics.exists',
+          linkId: 'medication.diuretics.exists',
           text: 'Do you take any medication from the above list?',
           answer: [
             {

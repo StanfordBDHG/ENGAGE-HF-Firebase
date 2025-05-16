@@ -17,6 +17,7 @@ import {
 } from '@stanfordbdhg/engagehf-models'
 import { _updateStaticData } from './updateStaticData.js'
 import { describeWithEmulators } from '../tests/functions/testEnvironment.js'
+import { TestFlags } from '../tests/testFlags.js'
 
 describeWithEmulators('function: updateStaticData', (env) => {
   it('updates static data successfully', async () => {
@@ -74,6 +75,29 @@ describeWithEmulators('function: updateStaticData', (env) => {
         organizationsJson[organization.id],
       )
     }
+
+    const questionnaires = await env.collections.questionnaires
+      .withConverter(null)
+      .get()
+    expect(questionnaires.docs).toHaveLength(4)
+    const questionnairesJson = JSON.parse(
+      fs.readFileSync('data/questionnaires.json', 'utf8'),
+    )
+    for (const questionnaire of questionnaires.docs) {
+      expect(simplify(questionnaire.data())).toStrictEqual(
+        questionnairesJson[questionnaire.id],
+      )
+    }
+  })
+
+  it('creates the same questionnaires again', async () => {
+    await _updateStaticData(env.factory, {
+      only: [StaticDataComponent.questionnaires],
+      cachingStrategy:
+        TestFlags.regenerateValues ?
+          CachingStrategy.updateCache
+        : CachingStrategy.ignoreCache,
+    })
 
     const questionnaires = await env.collections.questionnaires
       .withConverter(null)

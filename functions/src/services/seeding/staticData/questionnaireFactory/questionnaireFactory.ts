@@ -377,12 +377,12 @@ export abstract class QuestionnaireFactory<Input> {
   }
 
   protected displayItem(input: {
-    linkId?: string
+    linkId: string
     text: string
     required?: boolean
   }): FHIRQuestionnaireItem {
     return {
-      linkId: input.linkId ?? randomUUID(),
+      linkId: input.linkId,
       type: FHIRQuestionnaireItemType.display,
       text: input.text,
       required: input.required ?? false,
@@ -390,7 +390,7 @@ export abstract class QuestionnaireFactory<Input> {
   }
 
   protected pageItem(input: {
-    linkId?: string
+    linkId: string
     text: string
     item: FHIRQuestionnaireItem[]
     enableWhen?: FHIRQuestionnaireItemEnableWhen[]
@@ -399,7 +399,7 @@ export abstract class QuestionnaireFactory<Input> {
     required?: boolean
   }): FHIRQuestionnaireItem {
     return {
-      linkId: input.linkId ?? randomUUID(),
+      linkId: input.linkId,
       type: FHIRQuestionnaireItemType.group,
       extension: [
         ...(input.extension ?? []),

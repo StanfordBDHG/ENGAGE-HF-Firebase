@@ -52,6 +52,8 @@ export const QuestionnaireLinkId = {
     return `http://spezi.health/fhir/questionnaire/${id}`
   },
 
+  welcome: 'welcome',
+
   appointment: {
     page0: 'appointment.exists',
     existsDescription: 'appointment.exists-description',
@@ -65,34 +67,34 @@ export const QuestionnaireLinkId = {
   personalInformation: {
     page: 'personal-information',
     description: 'personal-information.description',
-    dateOfBirth: 'dateOfBirth',
-    sex: 'sex',
+    dateOfBirth: 'personal-information.dateOfBirth',
+    sex: 'personal-information.sex',
   },
 
   labValue(loincCode: LoincCode) {
     return {
-      page0: `${loincCode}.exists`,
-      existsDescription: `${loincCode}.exists-description`,
-      exists: `${loincCode}.exists`,
+      page0: `lab.${loincCode}.exists`,
+      existsDescription: `lab.${loincCode}.exists-description`,
+      exists: `lab.${loincCode}.exists`,
 
-      page1: `${loincCode}.page1`,
-      description: `${loincCode}.description`,
-      number: `${loincCode}.value`,
-      date: `${loincCode}.date`,
+      page1: `lab.${loincCode}.page1`,
+      description: `lab.${loincCode}.description`,
+      number: `lab.${loincCode}.value`,
+      date: `lab.${loincCode}.date`,
     }
   },
 
   medication(medicationGroup: MedicationGroup) {
     return {
-      page0: `${medicationGroup}.exists`,
-      existsDescription: `${medicationGroup}.exists-description`,
-      exists: `${medicationGroup}.exists`,
+      page0: `medication.${medicationGroup}.exists`,
+      existsDescription: `medication.${medicationGroup}.exists-description`,
+      exists: `medication.${medicationGroup}.exists`,
 
-      page1: `${medicationGroup}.page1`,
-      description: `${medicationGroup}.description`,
-      drug: `${medicationGroup}.drug`,
-      quantity: `${medicationGroup}.quantity`,
-      frequency: `${medicationGroup}.frequency`,
+      page1: `medication.${medicationGroup}.page1`,
+      description: `medication.${medicationGroup}.description`,
+      drug: `medication.${medicationGroup}.drug`,
+      quantity: `medication.${medicationGroup}.quantity`,
+      frequency: `medication.${medicationGroup}.frequency`,
     }
   },
 

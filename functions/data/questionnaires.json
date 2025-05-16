@@ -1480,7 +1480,7 @@
     "url": "http://spezi.health/fhir/questionnaire/engagehf-registration",
     "item": [
       {
-        "linkId": "c1579908-c1f2-400f-8899-0a4b2dd946bb",
+        "linkId": "welcome",
         "type": "display",
         "text": "Welcome to the ENGAGE-HF study! Please complete the following survey to help us understand your health and well-being.",
         "required": false,
@@ -1537,7 +1537,7 @@
             "item": null
           },
           {
-            "linkId": "dateOfBirth",
+            "linkId": "personal-information.dateOfBirth",
             "type": "date",
             "text": "Date of Birth",
             "required": true,
@@ -1549,7 +1549,7 @@
             "item": null
           },
           {
-            "linkId": "sex",
+            "linkId": "personal-information.sex",
             "type": "choice",
             "text": "Select your sex:",
             "required": true,
@@ -1619,7 +1619,7 @@
         ]
       },
       {
-        "linkId": "2160-0.exists",
+        "linkId": "lab.2160-0.exists",
         "type": "group",
         "text": "Creatinine",
         "required": false,
@@ -1652,7 +1652,7 @@
         ],
         "item": [
           {
-            "linkId": "2160-0.exists-description",
+            "linkId": "lab.2160-0.exists-description",
             "type": "display",
             "text": "The creatinine level in your body helps understand how your liver handles the drugs you are taking.",
             "required": false,
@@ -1664,7 +1664,7 @@
             "item": null
           },
           {
-            "linkId": "2160-0.exists",
+            "linkId": "lab.2160-0.exists",
             "type": "boolean",
             "text": "Have you recently received a new creatinine value?",
             "required": true,
@@ -1678,7 +1678,7 @@
         ]
       },
       {
-        "linkId": "2160-0.page1",
+        "linkId": "lab.2160-0.page1",
         "type": "group",
         "text": "Creatinine",
         "required": false,
@@ -1686,7 +1686,7 @@
         "answerOption": null,
         "enableWhen": [
           {
-            "question": "2160-0.exists",
+            "question": "lab.2160-0.exists",
             "operator": "=",
             "answerBoolean": true,
             "answerDecimal": null,
@@ -1725,7 +1725,7 @@
         ],
         "item": [
           {
-            "linkId": "2160-0.description",
+            "linkId": "lab.2160-0.description",
             "type": "display",
             "text": "The creatinine level in your body helps understand how your liver handles the drugs you are taking.",
             "required": false,
@@ -1737,7 +1737,7 @@
             "item": null
           },
           {
-            "linkId": "2160-0.value",
+            "linkId": "lab.2160-0.value",
             "type": "decimal",
             "text": "Creatinine (mg/dL):",
             "required": true,
@@ -1749,7 +1749,7 @@
             "item": null
           },
           {
-            "linkId": "2160-0.date",
+            "linkId": "lab.2160-0.date",
             "type": "date",
             "text": "Date:",
             "required": true,
@@ -1763,7 +1763,7 @@
         ]
       },
       {
-        "linkId": "98979-8.exists",
+        "linkId": "lab.98979-8.exists",
         "type": "group",
         "text": "eGFR",
         "required": false,
@@ -1796,7 +1796,7 @@
         ],
         "item": [
           {
-            "linkId": "98979-8.exists-description",
+            "linkId": "lab.98979-8.exists-description",
             "type": "display",
             "text": "eGFR (estimated Glomerular Filtration Rate) is a test that estimates how well your kidneys are filtering blood.",
             "required": false,
@@ -1808,7 +1808,7 @@
             "item": null
           },
           {
-            "linkId": "98979-8.exists",
+            "linkId": "lab.98979-8.exists",
             "type": "boolean",
             "text": "Have you recently received a new eGFR value?",
             "required": true,
@@ -1822,7 +1822,7 @@
         ]
       },
       {
-        "linkId": "98979-8.page1",
+        "linkId": "lab.98979-8.page1",
         "type": "group",
         "text": "eGFR",
         "required": false,
@@ -1830,7 +1830,7 @@
         "answerOption": null,
         "enableWhen": [
           {
-            "question": "98979-8.exists",
+            "question": "lab.98979-8.exists",
             "operator": "=",
             "answerBoolean": true,
             "answerDecimal": null,
@@ -1869,7 +1869,7 @@
         ],
         "item": [
           {
-            "linkId": "98979-8.description",
+            "linkId": "lab.98979-8.description",
             "type": "display",
             "text": "eGFR (estimated Glomerular Filtration Rate) is a test that estimates how well your kidneys are filtering blood.",
             "required": false,
@@ -1881,7 +1881,7 @@
             "item": null
           },
           {
-            "linkId": "98979-8.value",
+            "linkId": "lab.98979-8.value",
             "type": "decimal",
             "text": "eGFR (mL/min/1.73m2):",
             "required": true,
@@ -1893,7 +1893,7 @@
             "item": null
           },
           {
-            "linkId": "98979-8.date",
+            "linkId": "lab.98979-8.date",
             "type": "date",
             "text": "Date:",
             "required": true,
@@ -1907,7 +1907,7 @@
         ]
       },
       {
-        "linkId": "6298-4.exists",
+        "linkId": "lab.6298-4.exists",
         "type": "group",
         "text": "Potassium",
         "required": false,
@@ -1940,7 +1940,7 @@
         ],
         "item": [
           {
-            "linkId": "6298-4.exists-description",
+            "linkId": "lab.6298-4.exists-description",
             "type": "display",
             "text": "The potassium level in your body helps understand how your liver handles the drugs you are taking.",
             "required": false,
@@ -1952,7 +1952,7 @@
             "item": null
           },
           {
-            "linkId": "6298-4.exists",
+            "linkId": "lab.6298-4.exists",
             "type": "boolean",
             "text": "Have you recently received a new potassium value?",
             "required": true,
@@ -1966,7 +1966,7 @@
         ]
       },
       {
-        "linkId": "6298-4.page1",
+        "linkId": "lab.6298-4.page1",
         "type": "group",
         "text": "Potassium",
         "required": false,
@@ -1974,7 +1974,7 @@
         "answerOption": null,
         "enableWhen": [
           {
-            "question": "6298-4.exists",
+            "question": "lab.6298-4.exists",
             "operator": "=",
             "answerBoolean": true,
             "answerDecimal": null,
@@ -2013,7 +2013,7 @@
         ],
         "item": [
           {
-            "linkId": "6298-4.description",
+            "linkId": "lab.6298-4.description",
             "type": "display",
             "text": "The potassium level in your body helps understand how your liver handles the drugs you are taking.",
             "required": false,
@@ -2025,7 +2025,7 @@
             "item": null
           },
           {
-            "linkId": "6298-4.value",
+            "linkId": "lab.6298-4.value",
             "type": "decimal",
             "text": "Potassium (mEq/L):",
             "required": true,
@@ -2037,7 +2037,7 @@
             "item": null
           },
           {
-            "linkId": "6298-4.date",
+            "linkId": "lab.6298-4.date",
             "type": "date",
             "text": "Date:",
             "required": true,
@@ -2051,7 +2051,7 @@
         ]
       },
       {
-        "linkId": "8340-2.exists",
+        "linkId": "lab.8340-2.exists",
         "type": "group",
         "text": "Dry Weight",
         "required": false,
@@ -2084,7 +2084,7 @@
         ],
         "item": [
           {
-            "linkId": "8340-2.exists-description",
+            "linkId": "lab.8340-2.exists-description",
             "type": "display",
             "text": "The dry weight is useful to set a baseline to check that your weight does not increase unnoticed.",
             "required": false,
@@ -2096,7 +2096,7 @@
             "item": null
           },
           {
-            "linkId": "8340-2.exists",
+            "linkId": "lab.8340-2.exists",
             "type": "boolean",
             "text": "Have you recently received a new dry weight value?",
             "required": true,
@@ -2110,7 +2110,7 @@
         ]
       },
       {
-        "linkId": "8340-2.page1",
+        "linkId": "lab.8340-2.page1",
         "type": "group",
         "text": "Dry Weight",
         "required": false,
@@ -2118,7 +2118,7 @@
         "answerOption": null,
         "enableWhen": [
           {
-            "question": "8340-2.exists",
+            "question": "lab.8340-2.exists",
             "operator": "=",
             "answerBoolean": true,
             "answerDecimal": null,
@@ -2157,7 +2157,7 @@
         ],
         "item": [
           {
-            "linkId": "8340-2.description",
+            "linkId": "lab.8340-2.description",
             "type": "display",
             "text": "The dry weight is useful to set a baseline to check that your weight does not increase unnoticed.",
             "required": false,
@@ -2169,7 +2169,7 @@
             "item": null
           },
           {
-            "linkId": "8340-2.value",
+            "linkId": "lab.8340-2.value",
             "type": "decimal",
             "text": "Dry Weight (lbs):",
             "required": true,
@@ -2181,7 +2181,7 @@
             "item": null
           },
           {
-            "linkId": "8340-2.date",
+            "linkId": "lab.8340-2.date",
             "type": "date",
             "text": "Date:",
             "required": true,
@@ -2195,7 +2195,7 @@
         ]
       },
       {
-        "linkId": "betablockers.exists",
+        "linkId": "medication.betablockers.exists",
         "type": "group",
         "text": "Beta Blockers",
         "required": false,
@@ -2228,7 +2228,7 @@
         ],
         "item": [
           {
-            "linkId": "betablockers.exists-description",
+            "linkId": "medication.betablockers.exists-description",
             "type": "display",
             "text": "Do you take any of the following medications?\n\nBisoprolol (Zebeta)\nCarvedilol (Coreg)\nMetoprolol Succinate (Toprol XL)\nCarvedilol Phosphate (Coreg CR)",
             "required": false,
@@ -2240,7 +2240,7 @@
             "item": null
           },
           {
-            "linkId": "betablockers.exists",
+            "linkId": "medication.betablockers.exists",
             "type": "boolean",
             "text": "Do you take any medication from the above list?",
             "required": true,
@@ -2254,7 +2254,7 @@
         ]
       },
       {
-        "linkId": "betablockers.page1",
+        "linkId": "medication.betablockers.page1",
         "type": "group",
         "text": "Beta Blockers",
         "required": false,
@@ -2262,7 +2262,7 @@
         "answerOption": null,
         "enableWhen": [
           {
-            "question": "betablockers.exists",
+            "question": "medication.betablockers.exists",
             "operator": "=",
             "answerBoolean": true,
             "answerDecimal": null,
@@ -2301,7 +2301,7 @@
         ],
         "item": [
           {
-            "linkId": "betablockers.description",
+            "linkId": "medication.betablockers.description",
             "type": "display",
             "text": "Please enter which drug you are taking, how often you take it per day and how many pills/tablets you take per intake.\n\nDo not enter the total amount of pills/tablets you take per day.",
             "required": false,
@@ -2313,7 +2313,7 @@
             "item": null
           },
           {
-            "linkId": "betablockers.frequency",
+            "linkId": "medication.betablockers.frequency",
             "type": "decimal",
             "text": "Intake frequency (per day):",
             "required": true,
@@ -2325,7 +2325,7 @@
             "item": null
           },
           {
-            "linkId": "betablockers.quantity",
+            "linkId": "medication.betablockers.quantity",
             "type": "decimal",
             "text": "Pills/tablets per intake:",
             "required": true,
@@ -2337,7 +2337,7 @@
             "item": null
           },
           {
-            "linkId": "betablockers.drug",
+            "linkId": "medication.betablockers.drug",
             "type": "choice",
             "text": "Which pill/tablet do you take?",
             "required": true,
@@ -2572,7 +2572,7 @@
         ]
       },
       {
-        "linkId": "rasi.exists",
+        "linkId": "medication.rasi.exists",
         "type": "group",
         "text": "Renin-Angiotensin System Inhibitors (RASI)",
         "required": false,
@@ -2605,7 +2605,7 @@
         ],
         "item": [
           {
-            "linkId": "rasi.exists-description",
+            "linkId": "medication.rasi.exists-description",
             "type": "display",
             "text": "Do you take any of the following medications?\n\nCaptopril (Capoten)\nEnalapril (Vasotec)\nBenazepril (Lotensin)\nLisinopril (Zestril)\nMoexipril (Univasc)\nQuinapril (Accupril)\nRamipril (Altace)\nTrandolapril (Mavik)\nPerindopril (Aceon)\nValsartan (Diovan)\nTelmisartan (Micardis)\nEprosartan (Teveten)\nIrbesartan (Avapro)\nOlmesartan Medoxomil (Benicar)\nLosartan Potassium (Cozaar)\nCandesartan (Atacand)\nFosinopril Sodium (Monopril)\nAzilsartan Medoxomil (Edarbi)\nSacubitril / Valsartan (Entresto)",
             "required": false,
@@ -2617,7 +2617,7 @@
             "item": null
           },
           {
-            "linkId": "rasi.exists",
+            "linkId": "medication.rasi.exists",
             "type": "boolean",
             "text": "Do you take any medication from the above list?",
             "required": true,
@@ -2631,7 +2631,7 @@
         ]
       },
       {
-        "linkId": "rasi.page1",
+        "linkId": "medication.rasi.page1",
         "type": "group",
         "text": "Renin-Angiotensin System Inhibitors (RASI)",
         "required": false,
@@ -2639,7 +2639,7 @@
         "answerOption": null,
         "enableWhen": [
           {
-            "question": "rasi.exists",
+            "question": "medication.rasi.exists",
             "operator": "=",
             "answerBoolean": true,
             "answerDecimal": null,
@@ -2678,7 +2678,7 @@
         ],
         "item": [
           {
-            "linkId": "rasi.description",
+            "linkId": "medication.rasi.description",
             "type": "display",
             "text": "Please enter which drug you are taking, how often you take it per day and how many pills/tablets you take per intake.\n\nDo not enter the total amount of pills/tablets you take per day.",
             "required": false,
@@ -2690,7 +2690,7 @@
             "item": null
           },
           {
-            "linkId": "rasi.frequency",
+            "linkId": "medication.rasi.frequency",
             "type": "decimal",
             "text": "Intake frequency (per day):",
             "required": true,
@@ -2702,7 +2702,7 @@
             "item": null
           },
           {
-            "linkId": "rasi.quantity",
+            "linkId": "medication.rasi.quantity",
             "type": "decimal",
             "text": "Pills/tablets per intake:",
             "required": true,
@@ -2714,7 +2714,7 @@
             "item": null
           },
           {
-            "linkId": "rasi.drug",
+            "linkId": "medication.rasi.drug",
             "type": "choice",
             "text": "Which pill/tablet do you take?",
             "required": true,
@@ -3521,7 +3521,7 @@
         ]
       },
       {
-        "linkId": "mra.exists",
+        "linkId": "medication.mra.exists",
         "type": "group",
         "text": "Mineralocorticoid Receptor Antagonists (MRA)",
         "required": false,
@@ -3554,7 +3554,7 @@
         ],
         "item": [
           {
-            "linkId": "mra.exists-description",
+            "linkId": "medication.mra.exists-description",
             "type": "display",
             "text": "Do you take any of the following medications?\n\nSpironolactone (Aldactone)\nEplerenone (Inspra)",
             "required": false,
@@ -3566,7 +3566,7 @@
             "item": null
           },
           {
-            "linkId": "mra.exists",
+            "linkId": "medication.mra.exists",
             "type": "boolean",
             "text": "Do you take any medication from the above list?",
             "required": true,
@@ -3580,7 +3580,7 @@
         ]
       },
       {
-        "linkId": "mra.page1",
+        "linkId": "medication.mra.page1",
         "type": "group",
         "text": "Mineralocorticoid Receptor Antagonists (MRA)",
         "required": false,
@@ -3588,7 +3588,7 @@
         "answerOption": null,
         "enableWhen": [
           {
-            "question": "mra.exists",
+            "question": "medication.mra.exists",
             "operator": "=",
             "answerBoolean": true,
             "answerDecimal": null,
@@ -3627,7 +3627,7 @@
         ],
         "item": [
           {
-            "linkId": "mra.description",
+            "linkId": "medication.mra.description",
             "type": "display",
             "text": "Please enter which drug you are taking, how often you take it per day and how many pills/tablets you take per intake.\n\nDo not enter the total amount of pills/tablets you take per day.",
             "required": false,
@@ -3639,7 +3639,7 @@
             "item": null
           },
           {
-            "linkId": "mra.frequency",
+            "linkId": "medication.mra.frequency",
             "type": "decimal",
             "text": "Intake frequency (per day):",
             "required": true,
@@ -3651,7 +3651,7 @@
             "item": null
           },
           {
-            "linkId": "mra.quantity",
+            "linkId": "medication.mra.quantity",
             "type": "decimal",
             "text": "Pills/tablets per intake:",
             "required": true,
@@ -3663,7 +3663,7 @@
             "item": null
           },
           {
-            "linkId": "mra.drug",
+            "linkId": "medication.mra.drug",
             "type": "choice",
             "text": "Which pill/tablet do you take?",
             "required": true,
@@ -3755,7 +3755,7 @@
         ]
       },
       {
-        "linkId": "sglt2i.exists",
+        "linkId": "medication.sglt2i.exists",
         "type": "group",
         "text": "SGLT2 Inhibitors (SGLT2i)",
         "required": false,
@@ -3788,7 +3788,7 @@
         ],
         "item": [
           {
-            "linkId": "sglt2i.exists-description",
+            "linkId": "medication.sglt2i.exists-description",
             "type": "display",
             "text": "Do you take any of the following medications?\n\nCanagliflozin (Invokana)\nDapagliflozin (Farxiga)\nEmpagliflozin (Jardiance)\nErtugliflozin (Steglatro)\nBexagliflozin (Brenzavvy)\nSotagliflozin (Inpefa)",
             "required": false,
@@ -3800,7 +3800,7 @@
             "item": null
           },
           {
-            "linkId": "sglt2i.exists",
+            "linkId": "medication.sglt2i.exists",
             "type": "boolean",
             "text": "Do you take any medication from the above list?",
             "required": true,
@@ -3814,7 +3814,7 @@
         ]
       },
       {
-        "linkId": "sglt2i.page1",
+        "linkId": "medication.sglt2i.page1",
         "type": "group",
         "text": "SGLT2 Inhibitors (SGLT2i)",
         "required": false,
@@ -3822,7 +3822,7 @@
         "answerOption": null,
         "enableWhen": [
           {
-            "question": "sglt2i.exists",
+            "question": "medication.sglt2i.exists",
             "operator": "=",
             "answerBoolean": true,
             "answerDecimal": null,
@@ -3861,7 +3861,7 @@
         ],
         "item": [
           {
-            "linkId": "sglt2i.description",
+            "linkId": "medication.sglt2i.description",
             "type": "display",
             "text": "Please enter which drug you are taking, how often you take it per day and how many pills/tablets you take per intake.\n\nDo not enter the total amount of pills/tablets you take per day.",
             "required": false,
@@ -3873,7 +3873,7 @@
             "item": null
           },
           {
-            "linkId": "sglt2i.frequency",
+            "linkId": "medication.sglt2i.frequency",
             "type": "decimal",
             "text": "Intake frequency (per day):",
             "required": true,
@@ -3885,7 +3885,7 @@
             "item": null
           },
           {
-            "linkId": "sglt2i.quantity",
+            "linkId": "medication.sglt2i.quantity",
             "type": "decimal",
             "text": "Pills/tablets per intake:",
             "required": true,
@@ -3897,7 +3897,7 @@
             "item": null
           },
           {
-            "linkId": "sglt2i.drug",
+            "linkId": "medication.sglt2i.drug",
             "type": "choice",
             "text": "Which pill/tablet do you take?",
             "required": true,
@@ -4055,7 +4055,7 @@
         ]
       },
       {
-        "linkId": "diuretics.exists",
+        "linkId": "medication.diuretics.exists",
         "type": "group",
         "text": "Diuretics",
         "required": false,
@@ -4088,7 +4088,7 @@
         ],
         "item": [
           {
-            "linkId": "diuretics.exists-description",
+            "linkId": "medication.diuretics.exists-description",
             "type": "display",
             "text": "Do you take any of the following medications?\n\nBumetanide (Bumex)\nEthacrynic Acid (Edecrin)\nFurosemide (Lasix)\nTorsemide (Soaanz)",
             "required": false,
@@ -4100,7 +4100,7 @@
             "item": null
           },
           {
-            "linkId": "diuretics.exists",
+            "linkId": "medication.diuretics.exists",
             "type": "boolean",
             "text": "Do you take any medication from the above list?",
             "required": true,
@@ -4114,7 +4114,7 @@
         ]
       },
       {
-        "linkId": "diuretics.page1",
+        "linkId": "medication.diuretics.page1",
         "type": "group",
         "text": "Diuretics",
         "required": false,
@@ -4122,7 +4122,7 @@
         "answerOption": null,
         "enableWhen": [
           {
-            "question": "diuretics.exists",
+            "question": "medication.diuretics.exists",
             "operator": "=",
             "answerBoolean": true,
             "answerDecimal": null,
@@ -4161,7 +4161,7 @@
         ],
         "item": [
           {
-            "linkId": "diuretics.description",
+            "linkId": "medication.diuretics.description",
             "type": "display",
             "text": "Please enter which drug you are taking, how often you take it per day and how many pills/tablets you take per intake.\n\nDo not enter the total amount of pills/tablets you take per day.",
             "required": false,
@@ -4173,7 +4173,7 @@
             "item": null
           },
           {
-            "linkId": "diuretics.frequency",
+            "linkId": "medication.diuretics.frequency",
             "type": "decimal",
             "text": "Intake frequency (per day):",
             "required": true,
@@ -4185,7 +4185,7 @@
             "item": null
           },
           {
-            "linkId": "diuretics.quantity",
+            "linkId": "medication.diuretics.quantity",
             "type": "decimal",
             "text": "Pills/tablets per intake:",
             "required": true,
@@ -4197,7 +4197,7 @@
             "item": null
           },
           {
-            "linkId": "diuretics.drug",
+            "linkId": "medication.diuretics.drug",
             "type": "choice",
             "text": "Which pill/tablet do you take?",
             "required": true,
@@ -4561,7 +4561,7 @@
     "url": "http://spezi.health/fhir/questionnaire/engagehf-data-update",
     "item": [
       {
-        "linkId": "2160-0.exists",
+        "linkId": "lab.2160-0.exists",
         "type": "group",
         "text": "Creatinine",
         "required": false,
@@ -4594,7 +4594,7 @@
         ],
         "item": [
           {
-            "linkId": "2160-0.exists-description",
+            "linkId": "lab.2160-0.exists-description",
             "type": "display",
             "text": "The creatinine level in your body helps understand how your liver handles the drugs you are taking.",
             "required": false,
@@ -4606,7 +4606,7 @@
             "item": null
           },
           {
-            "linkId": "2160-0.exists",
+            "linkId": "lab.2160-0.exists",
             "type": "boolean",
             "text": "Have you recently received a new creatinine value?",
             "required": true,
@@ -4620,7 +4620,7 @@
         ]
       },
       {
-        "linkId": "2160-0.page1",
+        "linkId": "lab.2160-0.page1",
         "type": "group",
         "text": "Creatinine",
         "required": false,
@@ -4628,7 +4628,7 @@
         "answerOption": null,
         "enableWhen": [
           {
-            "question": "2160-0.exists",
+            "question": "lab.2160-0.exists",
             "operator": "=",
             "answerBoolean": true,
             "answerDecimal": null,
@@ -4667,7 +4667,7 @@
         ],
         "item": [
           {
-            "linkId": "2160-0.description",
+            "linkId": "lab.2160-0.description",
             "type": "display",
             "text": "The creatinine level in your body helps understand how your liver handles the drugs you are taking.",
             "required": false,
@@ -4679,7 +4679,7 @@
             "item": null
           },
           {
-            "linkId": "2160-0.value",
+            "linkId": "lab.2160-0.value",
             "type": "decimal",
             "text": "Creatinine (mg/dL):",
             "required": true,
@@ -4691,7 +4691,7 @@
             "item": null
           },
           {
-            "linkId": "2160-0.date",
+            "linkId": "lab.2160-0.date",
             "type": "date",
             "text": "Date:",
             "required": true,
@@ -4705,7 +4705,7 @@
         ]
       },
       {
-        "linkId": "98979-8.exists",
+        "linkId": "lab.98979-8.exists",
         "type": "group",
         "text": "eGFR",
         "required": false,
@@ -4738,7 +4738,7 @@
         ],
         "item": [
           {
-            "linkId": "98979-8.exists-description",
+            "linkId": "lab.98979-8.exists-description",
             "type": "display",
             "text": "eGFR (estimated Glomerular Filtration Rate) is a test that estimates how well your kidneys are filtering blood.",
             "required": false,
@@ -4750,7 +4750,7 @@
             "item": null
           },
           {
-            "linkId": "98979-8.exists",
+            "linkId": "lab.98979-8.exists",
             "type": "boolean",
             "text": "Have you recently received a new eGFR value?",
             "required": true,
@@ -4764,7 +4764,7 @@
         ]
       },
       {
-        "linkId": "98979-8.page1",
+        "linkId": "lab.98979-8.page1",
         "type": "group",
         "text": "eGFR",
         "required": false,
@@ -4772,7 +4772,7 @@
         "answerOption": null,
         "enableWhen": [
           {
-            "question": "98979-8.exists",
+            "question": "lab.98979-8.exists",
             "operator": "=",
             "answerBoolean": true,
             "answerDecimal": null,
@@ -4811,7 +4811,7 @@
         ],
         "item": [
           {
-            "linkId": "98979-8.description",
+            "linkId": "lab.98979-8.description",
             "type": "display",
             "text": "eGFR (estimated Glomerular Filtration Rate) is a test that estimates how well your kidneys are filtering blood.",
             "required": false,
@@ -4823,7 +4823,7 @@
             "item": null
           },
           {
-            "linkId": "98979-8.value",
+            "linkId": "lab.98979-8.value",
             "type": "decimal",
             "text": "eGFR (mL/min/1.73m2):",
             "required": true,
@@ -4835,7 +4835,7 @@
             "item": null
           },
           {
-            "linkId": "98979-8.date",
+            "linkId": "lab.98979-8.date",
             "type": "date",
             "text": "Date:",
             "required": true,
@@ -4849,7 +4849,7 @@
         ]
       },
       {
-        "linkId": "6298-4.exists",
+        "linkId": "lab.6298-4.exists",
         "type": "group",
         "text": "Potassium",
         "required": false,
@@ -4882,7 +4882,7 @@
         ],
         "item": [
           {
-            "linkId": "6298-4.exists-description",
+            "linkId": "lab.6298-4.exists-description",
             "type": "display",
             "text": "The potassium level in your body helps understand how your liver handles the drugs you are taking.",
             "required": false,
@@ -4894,7 +4894,7 @@
             "item": null
           },
           {
-            "linkId": "6298-4.exists",
+            "linkId": "lab.6298-4.exists",
             "type": "boolean",
             "text": "Have you recently received a new potassium value?",
             "required": true,
@@ -4908,7 +4908,7 @@
         ]
       },
       {
-        "linkId": "6298-4.page1",
+        "linkId": "lab.6298-4.page1",
         "type": "group",
         "text": "Potassium",
         "required": false,
@@ -4916,7 +4916,7 @@
         "answerOption": null,
         "enableWhen": [
           {
-            "question": "6298-4.exists",
+            "question": "lab.6298-4.exists",
             "operator": "=",
             "answerBoolean": true,
             "answerDecimal": null,
@@ -4955,7 +4955,7 @@
         ],
         "item": [
           {
-            "linkId": "6298-4.description",
+            "linkId": "lab.6298-4.description",
             "type": "display",
             "text": "The potassium level in your body helps understand how your liver handles the drugs you are taking.",
             "required": false,
@@ -4967,7 +4967,7 @@
             "item": null
           },
           {
-            "linkId": "6298-4.value",
+            "linkId": "lab.6298-4.value",
             "type": "decimal",
             "text": "Potassium (mEq/L):",
             "required": true,
@@ -4979,7 +4979,7 @@
             "item": null
           },
           {
-            "linkId": "6298-4.date",
+            "linkId": "lab.6298-4.date",
             "type": "date",
             "text": "Date:",
             "required": true,
@@ -4993,7 +4993,7 @@
         ]
       },
       {
-        "linkId": "8340-2.exists",
+        "linkId": "lab.8340-2.exists",
         "type": "group",
         "text": "Dry Weight",
         "required": false,
@@ -5026,7 +5026,7 @@
         ],
         "item": [
           {
-            "linkId": "8340-2.exists-description",
+            "linkId": "lab.8340-2.exists-description",
             "type": "display",
             "text": "The dry weight is useful to set a baseline to check that your weight does not increase unnoticed.",
             "required": false,
@@ -5038,7 +5038,7 @@
             "item": null
           },
           {
-            "linkId": "8340-2.exists",
+            "linkId": "lab.8340-2.exists",
             "type": "boolean",
             "text": "Have you recently received a new dry weight value?",
             "required": true,
@@ -5052,7 +5052,7 @@
         ]
       },
       {
-        "linkId": "8340-2.page1",
+        "linkId": "lab.8340-2.page1",
         "type": "group",
         "text": "Dry Weight",
         "required": false,
@@ -5060,7 +5060,7 @@
         "answerOption": null,
         "enableWhen": [
           {
-            "question": "8340-2.exists",
+            "question": "lab.8340-2.exists",
             "operator": "=",
             "answerBoolean": true,
             "answerDecimal": null,
@@ -5099,7 +5099,7 @@
         ],
         "item": [
           {
-            "linkId": "8340-2.description",
+            "linkId": "lab.8340-2.description",
             "type": "display",
             "text": "The dry weight is useful to set a baseline to check that your weight does not increase unnoticed.",
             "required": false,
@@ -5111,7 +5111,7 @@
             "item": null
           },
           {
-            "linkId": "8340-2.value",
+            "linkId": "lab.8340-2.value",
             "type": "decimal",
             "text": "Dry Weight (lbs):",
             "required": true,
@@ -5123,7 +5123,7 @@
             "item": null
           },
           {
-            "linkId": "8340-2.date",
+            "linkId": "lab.8340-2.date",
             "type": "date",
             "text": "Date:",
             "required": true,
@@ -5137,7 +5137,7 @@
         ]
       },
       {
-        "linkId": "betablockers.exists",
+        "linkId": "medication.betablockers.exists",
         "type": "group",
         "text": "Beta Blockers",
         "required": false,
@@ -5170,7 +5170,7 @@
         ],
         "item": [
           {
-            "linkId": "betablockers.exists-description",
+            "linkId": "medication.betablockers.exists-description",
             "type": "display",
             "text": "Do you take any of the following medications?\n\nBisoprolol (Zebeta)\nCarvedilol (Coreg)\nMetoprolol Succinate (Toprol XL)\nCarvedilol Phosphate (Coreg CR)",
             "required": false,
@@ -5182,7 +5182,7 @@
             "item": null
           },
           {
-            "linkId": "betablockers.exists",
+            "linkId": "medication.betablockers.exists",
             "type": "boolean",
             "text": "Do you take any medication from the above list?",
             "required": true,
@@ -5196,7 +5196,7 @@
         ]
       },
       {
-        "linkId": "betablockers.page1",
+        "linkId": "medication.betablockers.page1",
         "type": "group",
         "text": "Beta Blockers",
         "required": false,
@@ -5204,7 +5204,7 @@
         "answerOption": null,
         "enableWhen": [
           {
-            "question": "betablockers.exists",
+            "question": "medication.betablockers.exists",
             "operator": "=",
             "answerBoolean": true,
             "answerDecimal": null,
@@ -5243,7 +5243,7 @@
         ],
         "item": [
           {
-            "linkId": "betablockers.description",
+            "linkId": "medication.betablockers.description",
             "type": "display",
             "text": "Please enter which drug you are taking, how often you take it per day and how many pills/tablets you take per intake.\n\nDo not enter the total amount of pills/tablets you take per day.",
             "required": false,
@@ -5255,7 +5255,7 @@
             "item": null
           },
           {
-            "linkId": "betablockers.frequency",
+            "linkId": "medication.betablockers.frequency",
             "type": "decimal",
             "text": "Intake frequency (per day):",
             "required": true,
@@ -5267,7 +5267,7 @@
             "item": null
           },
           {
-            "linkId": "betablockers.quantity",
+            "linkId": "medication.betablockers.quantity",
             "type": "decimal",
             "text": "Pills/tablets per intake:",
             "required": true,
@@ -5279,7 +5279,7 @@
             "item": null
           },
           {
-            "linkId": "betablockers.drug",
+            "linkId": "medication.betablockers.drug",
             "type": "choice",
             "text": "Which pill/tablet do you take?",
             "required": true,
@@ -5514,7 +5514,7 @@
         ]
       },
       {
-        "linkId": "rasi.exists",
+        "linkId": "medication.rasi.exists",
         "type": "group",
         "text": "Renin-Angiotensin System Inhibitors (RASI)",
         "required": false,
@@ -5547,7 +5547,7 @@
         ],
         "item": [
           {
-            "linkId": "rasi.exists-description",
+            "linkId": "medication.rasi.exists-description",
             "type": "display",
             "text": "Do you take any of the following medications?\n\nCaptopril (Capoten)\nEnalapril (Vasotec)\nBenazepril (Lotensin)\nLisinopril (Zestril)\nMoexipril (Univasc)\nQuinapril (Accupril)\nRamipril (Altace)\nTrandolapril (Mavik)\nPerindopril (Aceon)\nValsartan (Diovan)\nTelmisartan (Micardis)\nEprosartan (Teveten)\nIrbesartan (Avapro)\nOlmesartan Medoxomil (Benicar)\nLosartan Potassium (Cozaar)\nCandesartan (Atacand)\nFosinopril Sodium (Monopril)\nAzilsartan Medoxomil (Edarbi)\nSacubitril / Valsartan (Entresto)",
             "required": false,
@@ -5559,7 +5559,7 @@
             "item": null
           },
           {
-            "linkId": "rasi.exists",
+            "linkId": "medication.rasi.exists",
             "type": "boolean",
             "text": "Do you take any medication from the above list?",
             "required": true,
@@ -5573,7 +5573,7 @@
         ]
       },
       {
-        "linkId": "rasi.page1",
+        "linkId": "medication.rasi.page1",
         "type": "group",
         "text": "Renin-Angiotensin System Inhibitors (RASI)",
         "required": false,
@@ -5581,7 +5581,7 @@
         "answerOption": null,
         "enableWhen": [
           {
-            "question": "rasi.exists",
+            "question": "medication.rasi.exists",
             "operator": "=",
             "answerBoolean": true,
             "answerDecimal": null,
@@ -5620,7 +5620,7 @@
         ],
         "item": [
           {
-            "linkId": "rasi.description",
+            "linkId": "medication.rasi.description",
             "type": "display",
             "text": "Please enter which drug you are taking, how often you take it per day and how many pills/tablets you take per intake.\n\nDo not enter the total amount of pills/tablets you take per day.",
             "required": false,
@@ -5632,7 +5632,7 @@
             "item": null
           },
           {
-            "linkId": "rasi.frequency",
+            "linkId": "medication.rasi.frequency",
             "type": "decimal",
             "text": "Intake frequency (per day):",
             "required": true,
@@ -5644,7 +5644,7 @@
             "item": null
           },
           {
-            "linkId": "rasi.quantity",
+            "linkId": "medication.rasi.quantity",
             "type": "decimal",
             "text": "Pills/tablets per intake:",
             "required": true,
@@ -5656,7 +5656,7 @@
             "item": null
           },
           {
-            "linkId": "rasi.drug",
+            "linkId": "medication.rasi.drug",
             "type": "choice",
             "text": "Which pill/tablet do you take?",
             "required": true,
@@ -6463,7 +6463,7 @@
         ]
       },
       {
-        "linkId": "mra.exists",
+        "linkId": "medication.mra.exists",
         "type": "group",
         "text": "Mineralocorticoid Receptor Antagonists (MRA)",
         "required": false,
@@ -6496,7 +6496,7 @@
         ],
         "item": [
           {
-            "linkId": "mra.exists-description",
+            "linkId": "medication.mra.exists-description",
             "type": "display",
             "text": "Do you take any of the following medications?\n\nSpironolactone (Aldactone)\nEplerenone (Inspra)",
             "required": false,
@@ -6508,7 +6508,7 @@
             "item": null
           },
           {
-            "linkId": "mra.exists",
+            "linkId": "medication.mra.exists",
             "type": "boolean",
             "text": "Do you take any medication from the above list?",
             "required": true,
@@ -6522,7 +6522,7 @@
         ]
       },
       {
-        "linkId": "mra.page1",
+        "linkId": "medication.mra.page1",
         "type": "group",
         "text": "Mineralocorticoid Receptor Antagonists (MRA)",
         "required": false,
@@ -6530,7 +6530,7 @@
         "answerOption": null,
         "enableWhen": [
           {
-            "question": "mra.exists",
+            "question": "medication.mra.exists",
             "operator": "=",
             "answerBoolean": true,
             "answerDecimal": null,
@@ -6569,7 +6569,7 @@
         ],
         "item": [
           {
-            "linkId": "mra.description",
+            "linkId": "medication.mra.description",
             "type": "display",
             "text": "Please enter which drug you are taking, how often you take it per day and how many pills/tablets you take per intake.\n\nDo not enter the total amount of pills/tablets you take per day.",
             "required": false,
@@ -6581,7 +6581,7 @@
             "item": null
           },
           {
-            "linkId": "mra.frequency",
+            "linkId": "medication.mra.frequency",
             "type": "decimal",
             "text": "Intake frequency (per day):",
             "required": true,
@@ -6593,7 +6593,7 @@
             "item": null
           },
           {
-            "linkId": "mra.quantity",
+            "linkId": "medication.mra.quantity",
             "type": "decimal",
             "text": "Pills/tablets per intake:",
             "required": true,
@@ -6605,7 +6605,7 @@
             "item": null
           },
           {
-            "linkId": "mra.drug",
+            "linkId": "medication.mra.drug",
             "type": "choice",
             "text": "Which pill/tablet do you take?",
             "required": true,
@@ -6697,7 +6697,7 @@
         ]
       },
       {
-        "linkId": "sglt2i.exists",
+        "linkId": "medication.sglt2i.exists",
         "type": "group",
         "text": "SGLT2 Inhibitors (SGLT2i)",
         "required": false,
@@ -6730,7 +6730,7 @@
         ],
         "item": [
           {
-            "linkId": "sglt2i.exists-description",
+            "linkId": "medication.sglt2i.exists-description",
             "type": "display",
             "text": "Do you take any of the following medications?\n\nCanagliflozin (Invokana)\nDapagliflozin (Farxiga)\nEmpagliflozin (Jardiance)\nErtugliflozin (Steglatro)\nBexagliflozin (Brenzavvy)\nSotagliflozin (Inpefa)",
             "required": false,
@@ -6742,7 +6742,7 @@
             "item": null
           },
           {
-            "linkId": "sglt2i.exists",
+            "linkId": "medication.sglt2i.exists",
             "type": "boolean",
             "text": "Do you take any medication from the above list?",
             "required": true,
@@ -6756,7 +6756,7 @@
         ]
       },
       {
-        "linkId": "sglt2i.page1",
+        "linkId": "medication.sglt2i.page1",
         "type": "group",
         "text": "SGLT2 Inhibitors (SGLT2i)",
         "required": false,
@@ -6764,7 +6764,7 @@
         "answerOption": null,
         "enableWhen": [
           {
-            "question": "sglt2i.exists",
+            "question": "medication.sglt2i.exists",
             "operator": "=",
             "answerBoolean": true,
             "answerDecimal": null,
@@ -6803,7 +6803,7 @@
         ],
         "item": [
           {
-            "linkId": "sglt2i.description",
+            "linkId": "medication.sglt2i.description",
             "type": "display",
             "text": "Please enter which drug you are taking, how often you take it per day and how many pills/tablets you take per intake.\n\nDo not enter the total amount of pills/tablets you take per day.",
             "required": false,
@@ -6815,7 +6815,7 @@
             "item": null
           },
           {
-            "linkId": "sglt2i.frequency",
+            "linkId": "medication.sglt2i.frequency",
             "type": "decimal",
             "text": "Intake frequency (per day):",
             "required": true,
@@ -6827,7 +6827,7 @@
             "item": null
           },
           {
-            "linkId": "sglt2i.quantity",
+            "linkId": "medication.sglt2i.quantity",
             "type": "decimal",
             "text": "Pills/tablets per intake:",
             "required": true,
@@ -6839,7 +6839,7 @@
             "item": null
           },
           {
-            "linkId": "sglt2i.drug",
+            "linkId": "medication.sglt2i.drug",
             "type": "choice",
             "text": "Which pill/tablet do you take?",
             "required": true,
@@ -6997,7 +6997,7 @@
         ]
       },
       {
-        "linkId": "diuretics.exists",
+        "linkId": "medication.diuretics.exists",
         "type": "group",
         "text": "Diuretics",
         "required": false,
@@ -7030,7 +7030,7 @@
         ],
         "item": [
           {
-            "linkId": "diuretics.exists-description",
+            "linkId": "medication.diuretics.exists-description",
             "type": "display",
             "text": "Do you take any of the following medications?\n\nBumetanide (Bumex)\nEthacrynic Acid (Edecrin)\nFurosemide (Lasix)\nTorsemide (Soaanz)",
             "required": false,
@@ -7042,7 +7042,7 @@
             "item": null
           },
           {
-            "linkId": "diuretics.exists",
+            "linkId": "medication.diuretics.exists",
             "type": "boolean",
             "text": "Do you take any medication from the above list?",
             "required": true,
@@ -7056,7 +7056,7 @@
         ]
       },
       {
-        "linkId": "diuretics.page1",
+        "linkId": "medication.diuretics.page1",
         "type": "group",
         "text": "Diuretics",
         "required": false,
@@ -7064,7 +7064,7 @@
         "answerOption": null,
         "enableWhen": [
           {
-            "question": "diuretics.exists",
+            "question": "medication.diuretics.exists",
             "operator": "=",
             "answerBoolean": true,
             "answerDecimal": null,
@@ -7103,7 +7103,7 @@
         ],
         "item": [
           {
-            "linkId": "diuretics.description",
+            "linkId": "medication.diuretics.description",
             "type": "display",
             "text": "Please enter which drug you are taking, how often you take it per day and how many pills/tablets you take per intake.\n\nDo not enter the total amount of pills/tablets you take per day.",
             "required": false,
@@ -7115,7 +7115,7 @@
             "item": null
           },
           {
-            "linkId": "diuretics.frequency",
+            "linkId": "medication.diuretics.frequency",
             "type": "decimal",
             "text": "Intake frequency (per day):",
             "required": true,
@@ -7127,7 +7127,7 @@
             "item": null
           },
           {
-            "linkId": "diuretics.quantity",
+            "linkId": "medication.diuretics.quantity",
             "type": "decimal",
             "text": "Pills/tablets per intake:",
             "required": true,
@@ -7139,7 +7139,7 @@
             "item": null
           },
           {
-            "linkId": "diuretics.drug",
+            "linkId": "medication.diuretics.drug",
             "type": "choice",
             "text": "Which pill/tablet do you take?",
             "required": true,
@@ -7503,7 +7503,7 @@
     "url": "http://spezi.health/fhir/questionnaire/engagehf-post-appointment",
     "item": [
       {
-        "linkId": "2160-0.exists",
+        "linkId": "lab.2160-0.exists",
         "type": "group",
         "text": "Creatinine",
         "required": false,
@@ -7536,7 +7536,7 @@
         ],
         "item": [
           {
-            "linkId": "2160-0.exists-description",
+            "linkId": "lab.2160-0.exists-description",
             "type": "display",
             "text": "The creatinine level in your body helps understand how your liver handles the drugs you are taking.",
             "required": false,
@@ -7548,7 +7548,7 @@
             "item": null
           },
           {
-            "linkId": "2160-0.exists",
+            "linkId": "lab.2160-0.exists",
             "type": "boolean",
             "text": "Have you recently received a new creatinine value?",
             "required": true,
@@ -7562,7 +7562,7 @@
         ]
       },
       {
-        "linkId": "2160-0.page1",
+        "linkId": "lab.2160-0.page1",
         "type": "group",
         "text": "Creatinine",
         "required": false,
@@ -7570,7 +7570,7 @@
         "answerOption": null,
         "enableWhen": [
           {
-            "question": "2160-0.exists",
+            "question": "lab.2160-0.exists",
             "operator": "=",
             "answerBoolean": true,
             "answerDecimal": null,
@@ -7609,7 +7609,7 @@
         ],
         "item": [
           {
-            "linkId": "2160-0.description",
+            "linkId": "lab.2160-0.description",
             "type": "display",
             "text": "The creatinine level in your body helps understand how your liver handles the drugs you are taking.",
             "required": false,
@@ -7621,7 +7621,7 @@
             "item": null
           },
           {
-            "linkId": "2160-0.value",
+            "linkId": "lab.2160-0.value",
             "type": "decimal",
             "text": "Creatinine (mg/dL):",
             "required": true,
@@ -7633,7 +7633,7 @@
             "item": null
           },
           {
-            "linkId": "2160-0.date",
+            "linkId": "lab.2160-0.date",
             "type": "date",
             "text": "Date:",
             "required": true,
@@ -7647,7 +7647,7 @@
         ]
       },
       {
-        "linkId": "98979-8.exists",
+        "linkId": "lab.98979-8.exists",
         "type": "group",
         "text": "eGFR",
         "required": false,
@@ -7680,7 +7680,7 @@
         ],
         "item": [
           {
-            "linkId": "98979-8.exists-description",
+            "linkId": "lab.98979-8.exists-description",
             "type": "display",
             "text": "eGFR (estimated Glomerular Filtration Rate) is a test that estimates how well your kidneys are filtering blood.",
             "required": false,
@@ -7692,7 +7692,7 @@
             "item": null
           },
           {
-            "linkId": "98979-8.exists",
+            "linkId": "lab.98979-8.exists",
             "type": "boolean",
             "text": "Have you recently received a new eGFR value?",
             "required": true,
@@ -7706,7 +7706,7 @@
         ]
       },
       {
-        "linkId": "98979-8.page1",
+        "linkId": "lab.98979-8.page1",
         "type": "group",
         "text": "eGFR",
         "required": false,
@@ -7714,7 +7714,7 @@
         "answerOption": null,
         "enableWhen": [
           {
-            "question": "98979-8.exists",
+            "question": "lab.98979-8.exists",
             "operator": "=",
             "answerBoolean": true,
             "answerDecimal": null,
@@ -7753,7 +7753,7 @@
         ],
         "item": [
           {
-            "linkId": "98979-8.description",
+            "linkId": "lab.98979-8.description",
             "type": "display",
             "text": "eGFR (estimated Glomerular Filtration Rate) is a test that estimates how well your kidneys are filtering blood.",
             "required": false,
@@ -7765,7 +7765,7 @@
             "item": null
           },
           {
-            "linkId": "98979-8.value",
+            "linkId": "lab.98979-8.value",
             "type": "decimal",
             "text": "eGFR (mL/min/1.73m2):",
             "required": true,
@@ -7777,7 +7777,7 @@
             "item": null
           },
           {
-            "linkId": "98979-8.date",
+            "linkId": "lab.98979-8.date",
             "type": "date",
             "text": "Date:",
             "required": true,
@@ -7791,7 +7791,7 @@
         ]
       },
       {
-        "linkId": "6298-4.exists",
+        "linkId": "lab.6298-4.exists",
         "type": "group",
         "text": "Potassium",
         "required": false,
@@ -7824,7 +7824,7 @@
         ],
         "item": [
           {
-            "linkId": "6298-4.exists-description",
+            "linkId": "lab.6298-4.exists-description",
             "type": "display",
             "text": "The potassium level in your body helps understand how your liver handles the drugs you are taking.",
             "required": false,
@@ -7836,7 +7836,7 @@
             "item": null
           },
           {
-            "linkId": "6298-4.exists",
+            "linkId": "lab.6298-4.exists",
             "type": "boolean",
             "text": "Have you recently received a new potassium value?",
             "required": true,
@@ -7850,7 +7850,7 @@
         ]
       },
       {
-        "linkId": "6298-4.page1",
+        "linkId": "lab.6298-4.page1",
         "type": "group",
         "text": "Potassium",
         "required": false,
@@ -7858,7 +7858,7 @@
         "answerOption": null,
         "enableWhen": [
           {
-            "question": "6298-4.exists",
+            "question": "lab.6298-4.exists",
             "operator": "=",
             "answerBoolean": true,
             "answerDecimal": null,
@@ -7897,7 +7897,7 @@
         ],
         "item": [
           {
-            "linkId": "6298-4.description",
+            "linkId": "lab.6298-4.description",
             "type": "display",
             "text": "The potassium level in your body helps understand how your liver handles the drugs you are taking.",
             "required": false,
@@ -7909,7 +7909,7 @@
             "item": null
           },
           {
-            "linkId": "6298-4.value",
+            "linkId": "lab.6298-4.value",
             "type": "decimal",
             "text": "Potassium (mEq/L):",
             "required": true,
@@ -7921,7 +7921,7 @@
             "item": null
           },
           {
-            "linkId": "6298-4.date",
+            "linkId": "lab.6298-4.date",
             "type": "date",
             "text": "Date:",
             "required": true,
@@ -7935,7 +7935,7 @@
         ]
       },
       {
-        "linkId": "8340-2.exists",
+        "linkId": "lab.8340-2.exists",
         "type": "group",
         "text": "Dry Weight",
         "required": false,
@@ -7968,7 +7968,7 @@
         ],
         "item": [
           {
-            "linkId": "8340-2.exists-description",
+            "linkId": "lab.8340-2.exists-description",
             "type": "display",
             "text": "The dry weight is useful to set a baseline to check that your weight does not increase unnoticed.",
             "required": false,
@@ -7980,7 +7980,7 @@
             "item": null
           },
           {
-            "linkId": "8340-2.exists",
+            "linkId": "lab.8340-2.exists",
             "type": "boolean",
             "text": "Have you recently received a new dry weight value?",
             "required": true,
@@ -7994,7 +7994,7 @@
         ]
       },
       {
-        "linkId": "8340-2.page1",
+        "linkId": "lab.8340-2.page1",
         "type": "group",
         "text": "Dry Weight",
         "required": false,
@@ -8002,7 +8002,7 @@
         "answerOption": null,
         "enableWhen": [
           {
-            "question": "8340-2.exists",
+            "question": "lab.8340-2.exists",
             "operator": "=",
             "answerBoolean": true,
             "answerDecimal": null,
@@ -8041,7 +8041,7 @@
         ],
         "item": [
           {
-            "linkId": "8340-2.description",
+            "linkId": "lab.8340-2.description",
             "type": "display",
             "text": "The dry weight is useful to set a baseline to check that your weight does not increase unnoticed.",
             "required": false,
@@ -8053,7 +8053,7 @@
             "item": null
           },
           {
-            "linkId": "8340-2.value",
+            "linkId": "lab.8340-2.value",
             "type": "decimal",
             "text": "Dry Weight (lbs):",
             "required": true,
@@ -8065,7 +8065,7 @@
             "item": null
           },
           {
-            "linkId": "8340-2.date",
+            "linkId": "lab.8340-2.date",
             "type": "date",
             "text": "Date:",
             "required": true,
@@ -8079,7 +8079,7 @@
         ]
       },
       {
-        "linkId": "betablockers.exists",
+        "linkId": "medication.betablockers.exists",
         "type": "group",
         "text": "Beta Blockers",
         "required": false,
@@ -8112,7 +8112,7 @@
         ],
         "item": [
           {
-            "linkId": "betablockers.exists-description",
+            "linkId": "medication.betablockers.exists-description",
             "type": "display",
             "text": "Do you take any of the following medications?\n\nBisoprolol (Zebeta)\nCarvedilol (Coreg)\nMetoprolol Succinate (Toprol XL)\nCarvedilol Phosphate (Coreg CR)",
             "required": false,
@@ -8124,7 +8124,7 @@
             "item": null
           },
           {
-            "linkId": "betablockers.exists",
+            "linkId": "medication.betablockers.exists",
             "type": "boolean",
             "text": "Do you take any medication from the above list?",
             "required": true,
@@ -8138,7 +8138,7 @@
         ]
       },
       {
-        "linkId": "betablockers.page1",
+        "linkId": "medication.betablockers.page1",
         "type": "group",
         "text": "Beta Blockers",
         "required": false,
@@ -8146,7 +8146,7 @@
         "answerOption": null,
         "enableWhen": [
           {
-            "question": "betablockers.exists",
+            "question": "medication.betablockers.exists",
             "operator": "=",
             "answerBoolean": true,
             "answerDecimal": null,
@@ -8185,7 +8185,7 @@
         ],
         "item": [
           {
-            "linkId": "betablockers.description",
+            "linkId": "medication.betablockers.description",
             "type": "display",
             "text": "Please enter which drug you are taking, how often you take it per day and how many pills/tablets you take per intake.\n\nDo not enter the total amount of pills/tablets you take per day.",
             "required": false,
@@ -8197,7 +8197,7 @@
             "item": null
           },
           {
-            "linkId": "betablockers.frequency",
+            "linkId": "medication.betablockers.frequency",
             "type": "decimal",
             "text": "Intake frequency (per day):",
             "required": true,
@@ -8209,7 +8209,7 @@
             "item": null
           },
           {
-            "linkId": "betablockers.quantity",
+            "linkId": "medication.betablockers.quantity",
             "type": "decimal",
             "text": "Pills/tablets per intake:",
             "required": true,
@@ -8221,7 +8221,7 @@
             "item": null
           },
           {
-            "linkId": "betablockers.drug",
+            "linkId": "medication.betablockers.drug",
             "type": "choice",
             "text": "Which pill/tablet do you take?",
             "required": true,
@@ -8456,7 +8456,7 @@
         ]
       },
       {
-        "linkId": "rasi.exists",
+        "linkId": "medication.rasi.exists",
         "type": "group",
         "text": "Renin-Angiotensin System Inhibitors (RASI)",
         "required": false,
@@ -8489,7 +8489,7 @@
         ],
         "item": [
           {
-            "linkId": "rasi.exists-description",
+            "linkId": "medication.rasi.exists-description",
             "type": "display",
             "text": "Do you take any of the following medications?\n\nCaptopril (Capoten)\nEnalapril (Vasotec)\nBenazepril (Lotensin)\nLisinopril (Zestril)\nMoexipril (Univasc)\nQuinapril (Accupril)\nRamipril (Altace)\nTrandolapril (Mavik)\nPerindopril (Aceon)\nValsartan (Diovan)\nTelmisartan (Micardis)\nEprosartan (Teveten)\nIrbesartan (Avapro)\nOlmesartan Medoxomil (Benicar)\nLosartan Potassium (Cozaar)\nCandesartan (Atacand)\nFosinopril Sodium (Monopril)\nAzilsartan Medoxomil (Edarbi)\nSacubitril / Valsartan (Entresto)",
             "required": false,
@@ -8501,7 +8501,7 @@
             "item": null
           },
           {
-            "linkId": "rasi.exists",
+            "linkId": "medication.rasi.exists",
             "type": "boolean",
             "text": "Do you take any medication from the above list?",
             "required": true,
@@ -8515,7 +8515,7 @@
         ]
       },
       {
-        "linkId": "rasi.page1",
+        "linkId": "medication.rasi.page1",
         "type": "group",
         "text": "Renin-Angiotensin System Inhibitors (RASI)",
         "required": false,
@@ -8523,7 +8523,7 @@
         "answerOption": null,
         "enableWhen": [
           {
-            "question": "rasi.exists",
+            "question": "medication.rasi.exists",
             "operator": "=",
             "answerBoolean": true,
             "answerDecimal": null,
@@ -8562,7 +8562,7 @@
         ],
         "item": [
           {
-            "linkId": "rasi.description",
+            "linkId": "medication.rasi.description",
             "type": "display",
             "text": "Please enter which drug you are taking, how often you take it per day and how many pills/tablets you take per intake.\n\nDo not enter the total amount of pills/tablets you take per day.",
             "required": false,
@@ -8574,7 +8574,7 @@
             "item": null
           },
           {
-            "linkId": "rasi.frequency",
+            "linkId": "medication.rasi.frequency",
             "type": "decimal",
             "text": "Intake frequency (per day):",
             "required": true,
@@ -8586,7 +8586,7 @@
             "item": null
           },
           {
-            "linkId": "rasi.quantity",
+            "linkId": "medication.rasi.quantity",
             "type": "decimal",
             "text": "Pills/tablets per intake:",
             "required": true,
@@ -8598,7 +8598,7 @@
             "item": null
           },
           {
-            "linkId": "rasi.drug",
+            "linkId": "medication.rasi.drug",
             "type": "choice",
             "text": "Which pill/tablet do you take?",
             "required": true,
@@ -9405,7 +9405,7 @@
         ]
       },
       {
-        "linkId": "mra.exists",
+        "linkId": "medication.mra.exists",
         "type": "group",
         "text": "Mineralocorticoid Receptor Antagonists (MRA)",
         "required": false,
@@ -9438,7 +9438,7 @@
         ],
         "item": [
           {
-            "linkId": "mra.exists-description",
+            "linkId": "medication.mra.exists-description",
             "type": "display",
             "text": "Do you take any of the following medications?\n\nSpironolactone (Aldactone)\nEplerenone (Inspra)",
             "required": false,
@@ -9450,7 +9450,7 @@
             "item": null
           },
           {
-            "linkId": "mra.exists",
+            "linkId": "medication.mra.exists",
             "type": "boolean",
             "text": "Do you take any medication from the above list?",
             "required": true,
@@ -9464,7 +9464,7 @@
         ]
       },
       {
-        "linkId": "mra.page1",
+        "linkId": "medication.mra.page1",
         "type": "group",
         "text": "Mineralocorticoid Receptor Antagonists (MRA)",
         "required": false,
@@ -9472,7 +9472,7 @@
         "answerOption": null,
         "enableWhen": [
           {
-            "question": "mra.exists",
+            "question": "medication.mra.exists",
             "operator": "=",
             "answerBoolean": true,
             "answerDecimal": null,
@@ -9511,7 +9511,7 @@
         ],
         "item": [
           {
-            "linkId": "mra.description",
+            "linkId": "medication.mra.description",
             "type": "display",
             "text": "Please enter which drug you are taking, how often you take it per day and how many pills/tablets you take per intake.\n\nDo not enter the total amount of pills/tablets you take per day.",
             "required": false,
@@ -9523,7 +9523,7 @@
             "item": null
           },
           {
-            "linkId": "mra.frequency",
+            "linkId": "medication.mra.frequency",
             "type": "decimal",
             "text": "Intake frequency (per day):",
             "required": true,
@@ -9535,7 +9535,7 @@
             "item": null
           },
           {
-            "linkId": "mra.quantity",
+            "linkId": "medication.mra.quantity",
             "type": "decimal",
             "text": "Pills/tablets per intake:",
             "required": true,
@@ -9547,7 +9547,7 @@
             "item": null
           },
           {
-            "linkId": "mra.drug",
+            "linkId": "medication.mra.drug",
             "type": "choice",
             "text": "Which pill/tablet do you take?",
             "required": true,
@@ -9639,7 +9639,7 @@
         ]
       },
       {
-        "linkId": "sglt2i.exists",
+        "linkId": "medication.sglt2i.exists",
         "type": "group",
         "text": "SGLT2 Inhibitors (SGLT2i)",
         "required": false,
@@ -9672,7 +9672,7 @@
         ],
         "item": [
           {
-            "linkId": "sglt2i.exists-description",
+            "linkId": "medication.sglt2i.exists-description",
             "type": "display",
             "text": "Do you take any of the following medications?\n\nCanagliflozin (Invokana)\nDapagliflozin (Farxiga)\nEmpagliflozin (Jardiance)\nErtugliflozin (Steglatro)\nBexagliflozin (Brenzavvy)\nSotagliflozin (Inpefa)",
             "required": false,
@@ -9684,7 +9684,7 @@
             "item": null
           },
           {
-            "linkId": "sglt2i.exists",
+            "linkId": "medication.sglt2i.exists",
             "type": "boolean",
             "text": "Do you take any medication from the above list?",
             "required": true,
@@ -9698,7 +9698,7 @@
         ]
       },
       {
-        "linkId": "sglt2i.page1",
+        "linkId": "medication.sglt2i.page1",
         "type": "group",
         "text": "SGLT2 Inhibitors (SGLT2i)",
         "required": false,
@@ -9706,7 +9706,7 @@
         "answerOption": null,
         "enableWhen": [
           {
-            "question": "sglt2i.exists",
+            "question": "medication.sglt2i.exists",
             "operator": "=",
             "answerBoolean": true,
             "answerDecimal": null,
@@ -9745,7 +9745,7 @@
         ],
         "item": [
           {
-            "linkId": "sglt2i.description",
+            "linkId": "medication.sglt2i.description",
             "type": "display",
             "text": "Please enter which drug you are taking, how often you take it per day and how many pills/tablets you take per intake.\n\nDo not enter the total amount of pills/tablets you take per day.",
             "required": false,
@@ -9757,7 +9757,7 @@
             "item": null
           },
           {
-            "linkId": "sglt2i.frequency",
+            "linkId": "medication.sglt2i.frequency",
             "type": "decimal",
             "text": "Intake frequency (per day):",
             "required": true,
@@ -9769,7 +9769,7 @@
             "item": null
           },
           {
-            "linkId": "sglt2i.quantity",
+            "linkId": "medication.sglt2i.quantity",
             "type": "decimal",
             "text": "Pills/tablets per intake:",
             "required": true,
@@ -9781,7 +9781,7 @@
             "item": null
           },
           {
-            "linkId": "sglt2i.drug",
+            "linkId": "medication.sglt2i.drug",
             "type": "choice",
             "text": "Which pill/tablet do you take?",
             "required": true,
@@ -9939,7 +9939,7 @@
         ]
       },
       {
-        "linkId": "diuretics.exists",
+        "linkId": "medication.diuretics.exists",
         "type": "group",
         "text": "Diuretics",
         "required": false,
@@ -9972,7 +9972,7 @@
         ],
         "item": [
           {
-            "linkId": "diuretics.exists-description",
+            "linkId": "medication.diuretics.exists-description",
             "type": "display",
             "text": "Do you take any of the following medications?\n\nBumetanide (Bumex)\nEthacrynic Acid (Edecrin)\nFurosemide (Lasix)\nTorsemide (Soaanz)",
             "required": false,
@@ -9984,7 +9984,7 @@
             "item": null
           },
           {
-            "linkId": "diuretics.exists",
+            "linkId": "medication.diuretics.exists",
             "type": "boolean",
             "text": "Do you take any medication from the above list?",
             "required": true,
@@ -9998,7 +9998,7 @@
         ]
       },
       {
-        "linkId": "diuretics.page1",
+        "linkId": "medication.diuretics.page1",
         "type": "group",
         "text": "Diuretics",
         "required": false,
@@ -10006,7 +10006,7 @@
         "answerOption": null,
         "enableWhen": [
           {
-            "question": "diuretics.exists",
+            "question": "medication.diuretics.exists",
             "operator": "=",
             "answerBoolean": true,
             "answerDecimal": null,
@@ -10045,7 +10045,7 @@
         ],
         "item": [
           {
-            "linkId": "diuretics.description",
+            "linkId": "medication.diuretics.description",
             "type": "display",
             "text": "Please enter which drug you are taking, how often you take it per day and how many pills/tablets you take per intake.\n\nDo not enter the total amount of pills/tablets you take per day.",
             "required": false,
@@ -10057,7 +10057,7 @@
             "item": null
           },
           {
-            "linkId": "diuretics.frequency",
+            "linkId": "medication.diuretics.frequency",
             "type": "decimal",
             "text": "Intake frequency (per day):",
             "required": true,
@@ -10069,7 +10069,7 @@
             "item": null
           },
           {
-            "linkId": "diuretics.quantity",
+            "linkId": "medication.diuretics.quantity",
             "type": "decimal",
             "text": "Pills/tablets per intake:",
             "required": true,
@@ -10081,7 +10081,7 @@
             "item": null
           },
           {
-            "linkId": "diuretics.drug",
+            "linkId": "medication.diuretics.drug",
             "type": "choice",
             "text": "Which pill/tablet do you take?",
             "required": true,
