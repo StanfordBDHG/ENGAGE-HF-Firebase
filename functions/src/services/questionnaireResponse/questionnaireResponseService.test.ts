@@ -15,7 +15,6 @@ import {
   UserType,
   QuantityUnit,
 } from '@stanfordbdhg/engagehf-models'
-import { median } from 'd3'
 import { _defaultSeed } from '../../functions/defaultSeed.js'
 import { onUserQuestionnaireResponseWritten } from '../../functions/onUserDocumentWritten.js'
 import { _updateStaticData } from '../../functions/updateStaticData.js'
