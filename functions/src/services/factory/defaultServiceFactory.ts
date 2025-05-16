@@ -119,7 +119,7 @@ export class DefaultServiceFactory implements ServiceFactory {
         new KccqQuestionnaireResponseService({
           messageService: this.messageService.value,
           patientService: this.patientService.value,
-          symptomScoreCalculator: new SymptomScoreCalculator(),
+          symptomScoreCalculator: this.symptomScoreCalculator.value,
         }),
         new DataUpdateQuestionnaireResponseService({
           messageService: this.messageService.value,
