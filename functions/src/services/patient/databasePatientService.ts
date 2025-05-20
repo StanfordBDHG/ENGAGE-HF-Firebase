@@ -130,15 +130,12 @@ export class DatabasePatientService implements PatientService {
         const diffs: Array<ReplaceDiff<FHIRMedicationRequest>> = []
 
         for (const value of values) {
-          const equivalentDoc = documents
-            .filter(
-              (doc) =>
-                doc.content.medicationReference?.reference ===
-                value.medicationReference?.reference,
-            )
-            .at(0)
-          // TODO: We are assuming here that there will only ever be a single medication request per medication!
-
+          // We are assuming here that there will only ever be a single medication request per medicationReference!
+          const equivalentDoc = documents.find(
+            (doc) =>
+              doc.content.medicationReference?.reference ===
+              value.medicationReference?.reference,
+          )
           if (equivalentDoc === undefined) {
             diffs.push({ successor: value })
           } else if (
