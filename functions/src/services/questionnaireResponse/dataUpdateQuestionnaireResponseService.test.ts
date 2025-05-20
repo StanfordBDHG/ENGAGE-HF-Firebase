@@ -14,6 +14,9 @@ import {
   UserSex,
   UserType,
   QuantityUnit,
+  MedicationReference,
+  FHIRMedicationRequest,
+  DrugReference,
 } from '@stanfordbdhg/engagehf-models'
 import { _defaultSeed } from '../../functions/defaultSeed.js'
 import { onUserQuestionnaireResponseWritten } from '../../functions/onUserDocumentWritten.js'
@@ -32,6 +35,23 @@ describeWithEmulators('DataUpdateQuestionnaireResponseService', (env) => {
       organization: 'stanford',
       selfManaged: true,
     })
+
+    const previousMedicationRequests = [
+      FHIRMedicationRequest.create({
+        medicationReference: DrugReference.sacubitrilValsartan24_26,
+        frequencyPerDay: 2,
+        quantity: 3,
+      }),
+      FHIRMedicationRequest.create({
+        medicationReference: DrugReference.sotagliflozin200,
+        frequencyPerDay: 5,
+        quantity: 0.5,
+      }),
+    ]
+
+    for (const request of previousMedicationRequests) {
+      await env.collections.userMedicationRequests(userId).doc().create(request)
+    }
 
     const ref = env.collections.userQuestionnaireResponses(userId).doc()
     await env.setWithTrigger(onUserQuestionnaireResponseWritten, {
@@ -110,7 +130,7 @@ describeWithEmulators('DataUpdateQuestionnaireResponseService', (env) => {
     )
   })
 
-  it('should be able to extract the data update response from an Android device', async () => {
+  it('should be able to extract the post appointment response from an Android device', async () => {
     await _updateStaticData(env.factory, {
       only: Object.values(StaticDataComponent),
       cachingStrategy: CachingStrategy.expectCache,
@@ -119,13 +139,31 @@ describeWithEmulators('DataUpdateQuestionnaireResponseService', (env) => {
     const userId = await env.createUser({
       type: UserType.patient,
       organization: 'stanford',
+      selfManaged: true,
     })
+
+    const previousMedicationRequests = [
+      FHIRMedicationRequest.create({
+        medicationReference: DrugReference.carvedilol25,
+        frequencyPerDay: 4,
+        quantity: 1,
+      }),
+      FHIRMedicationRequest.create({
+        medicationReference: DrugReference.bisoprolol5,
+        frequencyPerDay: 7,
+        quantity: 3,
+      }),
+    ]
+
+    for (const request of previousMedicationRequests) {
+      await env.collections.userMedicationRequests(userId).doc().create(request)
+    }
 
     const ref = env.collections.userQuestionnaireResponses(userId).doc()
     await env.setWithTrigger(onUserQuestionnaireResponseWritten, {
       ref,
       data: fhirQuestionnaireResponseConverter.value.schema.parse(
-        dataUpdateResponseAndroid,
+        postAppointmentResponseAndroid,
       ),
       params: {
         userId,
@@ -208,22 +246,6 @@ const dataUpdateResponseApple = {
   authored: '2025-05-14T21:00:08.836575031+02:00',
   resourceType: 'QuestionnaireResponse',
   item: [
-    {
-      answer: [{ valueDate: '2025-05-14' }],
-      linkId: 'personal-information.dateOfBirth',
-    },
-    {
-      answer: [
-        {
-          valueCoding: {
-            system: 'engage-hf-sex',
-            code: 'female',
-            display: 'Female',
-          },
-        },
-      ],
-      linkId: 'personal-information.sex',
-    },
     { answer: [{ valueBoolean: true }], linkId: 'lab.2160-0.exists' },
     { answer: [{ valueDecimal: 15 }], linkId: 'lab.2160-0.value' },
     { answer: [{ valueDate: '2025-05-14' }], linkId: 'lab.2160-0.date' },
@@ -279,47 +301,11 @@ const dataUpdateResponseApple = {
   status: 'completed',
 }
 
-const dataUpdateResponseAndroid = {
+const postAppointmentResponseAndroid = {
   resourceType: 'QuestionnaireResponse',
-  questionnaire: 'http://spezi.health/fhir/questionnaire/engagehf-data-update',
+  questionnaire:
+    'http://spezi.health/fhir/questionnaire/engagehf-post-appointment',
   item: [
-    {
-      linkId: 'de981575-bd5b-4d84-95bb-35ed6c7f5923',
-      text: 'Welcome to the ENGAGE-HF study! Please complete the following survey to help us understand your health and well-being.',
-    },
-    {
-      linkId: 'personal-information',
-      text: 'Personal information',
-      item: [
-        {
-          linkId: 'personal-information.description',
-          text: 'Please provide the following information to help us understand your health and well-being.',
-        },
-        {
-          linkId: 'personal-information.dateOfBirth',
-          text: 'Date of Birth',
-          answer: [
-            {
-              valueDate: '2024-10-21',
-            },
-          ],
-        },
-        {
-          linkId: 'personal-information.sex',
-          text: 'Select your sex:',
-          answer: [
-            {
-              valueCoding: {
-                id: 'male',
-                system: 'engage-hf-sex',
-                code: 'male',
-                display: 'Male',
-              },
-            },
-          ],
-        },
-      ],
-    },
     {
       linkId: 'lab.2160-0.exists',
       text: 'Creatinine',
