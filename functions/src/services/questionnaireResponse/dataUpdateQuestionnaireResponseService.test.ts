@@ -38,7 +38,7 @@ describeWithEmulators('DataUpdateQuestionnaireResponseService', (env) => {
 
     const previousMedicationRequests = [
       FHIRMedicationRequest.create({
-        medicationReference: DrugReference.sacubitrilValsartan24_26,
+        medicationReference: 'medications/69749/drugs/349201',
         frequencyPerDay: 2,
         quantity: 3,
       }),
