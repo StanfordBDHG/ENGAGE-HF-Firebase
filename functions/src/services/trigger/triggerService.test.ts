@@ -18,6 +18,7 @@ import {
   UserMessageType,
   UserType,
   UserObservationCollection,
+  QuestionnaireReference,
 } from '@stanfordbdhg/engagehf-models'
 import { describeWithEmulators } from '../../tests/functions/testEnvironment.js'
 
@@ -141,6 +142,87 @@ describeWithEmulators('TriggerService', (env) => {
       expect(patientMessageData?.type).toBe(UserMessageType.preAppointment)
       expect(patientMessageData?.reference).toBe(appointmentRef.path)
       expect(patientMessageData?.completionDate).toBeDefined()
+
+      const clinicianMessages = await env.collections
+        .userMessages(clinicianId)
+        .get()
+      expect(clinicianMessages.docs).toHaveLength(1)
+      const clinicianMessageData = clinicianMessages.docs.at(0)?.data()
+      expect(clinicianMessageData?.type).toBe(UserMessageType.preAppointment)
+      expect(clinicianMessageData?.reference).toBe(patientMessageRef.path)
+      expect(clinicianMessageData?.completionDate).toBeUndefined() // this message will need to be manually completed
+    })
+
+    it('should complete a message for a past appointment and request a post appointment questionnaire for self-managed patients', async () => {
+      const clinicianId = await env.createUser({
+        type: UserType.clinician,
+        organization: 'stanford',
+      })
+
+      const patientId = await env.createUser({
+        type: UserType.patient,
+        organization: 'stanford',
+        clinician: clinicianId,
+        selfManaged: true,
+      })
+
+      const appointment = FHIRAppointment.create({
+        userId: patientId,
+        status: FHIRAppointmentStatus.proposed,
+        created: advanceDateByDays(new Date(), -3),
+        start: advanceDateByDays(new Date(), -1),
+        durationInMinutes: 60,
+      })
+
+      const appointmentRef = env.collections.userAppointments(patientId).doc()
+      await appointmentRef.set(appointment)
+
+      const patientMessage = UserMessage.createPreAppointment({
+        reference: appointmentRef.path,
+      })
+      const patientMessageRef = env.collections.userMessages(patientId).doc()
+      await patientMessageRef.set(patientMessage)
+
+      const clinicianMessage = UserMessage.createPreAppointmentForClinician({
+        userId: patientId,
+        userName: 'Mock',
+        reference: patientMessageRef.path,
+      })
+
+      const clinicianMessageRef = env.collections
+        .userMessages(clinicianId)
+        .doc()
+      await clinicianMessageRef.set(clinicianMessage)
+
+      await env.factory.trigger().everyMorning()
+
+      const patientMessages = await env.collections
+        .userMessages(patientId)
+        .get()
+      expect(patientMessages.docs).toHaveLength(3)
+      const patientMessagesData = patientMessages.docs.map((doc) => doc.data())
+      const preAppointmentMessages = patientMessagesData.filter(
+        (message) => message.type === UserMessageType.preAppointment,
+      )
+      expect(preAppointmentMessages).toHaveLength(1)
+      const patientMessageData = preAppointmentMessages.at(0)
+      expect(patientMessageData?.type).toBe(UserMessageType.preAppointment)
+      expect(patientMessageData?.reference).toBe(appointmentRef.path)
+      expect(patientMessageData?.completionDate).toBeDefined()
+
+      const postAppointmentQuestionnaireMessages = patientMessagesData.filter(
+        (message) =>
+          message.type === UserMessageType.postAppointmentQuestionnaire,
+      )
+      expect(postAppointmentQuestionnaireMessages).toHaveLength(1)
+      const postAppointmentQuestionnaireMessage =
+        postAppointmentQuestionnaireMessages.at(0)
+      expect(postAppointmentQuestionnaireMessage?.action).toBe(
+        QuestionnaireReference.postAppointment_en_US,
+      )
+      expect(
+        postAppointmentQuestionnaireMessage?.completionDate,
+      ).toBeUndefined()
 
       const clinicianMessages = await env.collections
         .userMessages(clinicianId)
