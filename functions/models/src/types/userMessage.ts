@@ -231,12 +231,12 @@ export class UserMessage {
   }): UserMessage {
     return new UserMessage({
       creationDate: input.creationDate ?? new Date(),
-      title: new LocalizedText({
-        en: 'Registration Survey',
-      }),
-      description: new LocalizedText({
-        en: 'Complete registration by filling out this survey.',
-      }),
+      title: LocalizedText.create(
+        messagesLocalization.registrationQuestionnaireTitle,
+      ),
+      description: LocalizedText.create(
+        messagesLocalization.registrationQuestionnaireDescription,
+      ),
       action: input.questionnaireReference,
       type: UserMessageType.registrationQuestionnaire,
       isDismissible: false,
@@ -249,12 +249,10 @@ export class UserMessage {
   }): UserMessage {
     return new UserMessage({
       creationDate: input.creationDate ?? new Date(),
-      title: new LocalizedText({
-        en: 'Post-Appointment Survey',
-      }),
-      description: new LocalizedText({
-        en: 'Update us about what has changed during your last appointment.',
-      }),
+      title: LocalizedText.create(messagesLocalization.postAppointmentTitle),
+      description: LocalizedText.create(
+        messagesLocalization.postAppointmentDescription,
+      ),
       action: input.questionnaireReference,
       type: UserMessageType.postAppointmentQuestionnaire,
       isDismissible: false,

@@ -51,6 +51,14 @@ export const messagesLocalization = {
     en: 'Patient may be eligible for med changes. You can review med information on the user detail page.',
     es: 'El paciente puede ser elegible para cambios en la medicación. Puede revisar la información de la medicación en la página de detalles del usuario.',
   },
+  postAppointmentTitle: {
+    en: 'Post-Appointment Survey',
+    es: 'Encuesta posterior a la cita',
+  },
+  postAppointmentDescription: {
+    en: 'Update us about what has changed during your last appointment.',
+    es: 'Actualícenos sobre lo que ha cambiado durante su última cita.',
+  },
   preAppointmentTitle: {
     en: 'Appointment Reminder',
     es: 'Recordatorio de cita',
@@ -70,6 +78,14 @@ export const messagesLocalization = {
   preAppointmentDescriptionForClinicianNoName: {
     en: 'Appointment with patient is coming up.',
     es: 'La cita con el paciente se acerca.',
+  },
+  registrationQuestionnaireTitle: {
+    en: 'Registration Survey',
+    es: 'Encuesta de registro',
+  },
+  registrationQuestionnaireDescription: {
+    en: 'Complete registration by filling out this survey.',
+    es: 'Complete el registro completando esta encuesta.',
   },
   symptomQuestionnaireTitle: {
     en: 'Symptom Questionnaire',
