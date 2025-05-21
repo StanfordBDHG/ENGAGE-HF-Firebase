@@ -13,6 +13,12 @@ import { Lazy } from '../helpers/lazy.js'
 import { optionalish, optionalishDefault } from '../helpers/optionalish.js'
 import { SchemaConverter } from '../helpers/schemaConverter.js'
 
+export enum UserSex {
+  male = 'male',
+  female = 'female',
+  other = 'other',
+}
+
 export const userRegistrationInputConverter = new Lazy(
   () =>
     new SchemaConverter({
@@ -21,6 +27,7 @@ export const userRegistrationInputConverter = new Lazy(
         disabled: optionalishDefault(z.boolean(), false),
         organization: optionalish(z.string()),
         dateOfBirth: optionalish(dateConverter.schema),
+        sex: optionalish(z.nativeEnum(UserSex)),
         clinician: optionalish(z.string()),
         providerName: optionalish(z.string()),
         receivesAppointmentReminders: optionalishDefault(z.boolean(), true),
@@ -32,6 +39,7 @@ export const userRegistrationInputConverter = new Lazy(
         receivesWeightAlerts: optionalishDefault(z.boolean(), true),
         language: optionalish(z.string()),
         timeZone: optionalish(z.string()),
+        selfManaged: optionalishDefault(z.boolean(), false),
       }),
       encode: (object) => ({
         type: object.type,
@@ -39,6 +47,7 @@ export const userRegistrationInputConverter = new Lazy(
         organization: object.organization ?? null,
         dateOfBirth:
           object.dateOfBirth ? dateConverter.encode(object.dateOfBirth) : null,
+        sex: object.sex ?? null,
         clinician: object.clinician ?? null,
         providerName: object.providerName ?? null,
         receivesAppointmentReminders: object.receivesAppointmentReminders,
@@ -50,6 +59,7 @@ export const userRegistrationInputConverter = new Lazy(
         receivesWeightAlerts: object.receivesWeightAlerts,
         language: object.language ?? null,
         timeZone: object.timeZone ?? null,
+        selfManaged: object.selfManaged,
       }),
     }),
 )
@@ -78,8 +88,10 @@ export class UserRegistration {
   readonly type: UserType
   readonly disabled: boolean
   readonly organization?: string
+  readonly selfManaged: boolean
 
   readonly dateOfBirth?: Date
+  readonly sex?: UserSex
   readonly clinician?: string
   readonly providerName?: string
 
@@ -113,7 +125,9 @@ export class UserRegistration {
     type: UserType
     disabled: boolean
     organization?: string
+    selfManaged: boolean
     dateOfBirth?: Date
+    sex?: UserSex
     clinician?: string
     providerName?: string
     receivesAppointmentReminders: boolean
@@ -129,7 +143,9 @@ export class UserRegistration {
     this.type = input.type
     this.disabled = input.disabled
     this.organization = input.organization
+    this.selfManaged = input.selfManaged
     this.dateOfBirth = input.dateOfBirth
+    this.sex = input.sex
     this.clinician = input.clinician
     this.providerName = input.providerName
     this.receivesAppointmentReminders = input.receivesAppointmentReminders

@@ -18,7 +18,6 @@ import { fhirQuantityConverter } from './fhirQuantity.js'
 import { type FHIRReference, fhirReferenceConverter } from './fhirReference.js'
 import { type FHIRExtensionUrl } from '../../codes/codes.js'
 import { QuantityUnit } from '../../codes/quantityUnit.js'
-import { type DrugReference } from '../../codes/references.js'
 import { optionalish } from '../../helpers/optionalish.js'
 import { SchemaConverter } from '../../helpers/schemaConverter.js'
 
@@ -215,13 +214,11 @@ export const fhirMedicationRequestConverter = new SchemaConverter({
   encode: (object) => ({
     ...fhirResourceConverter.value.encode(object),
     medicationReference:
-      object.medicationReference ?
+      object.medicationReference !== undefined ?
         fhirReferenceConverter.value.encode(object.medicationReference)
       : null,
     dosageInstruction:
-      object.dosageInstruction ?
-        object.dosageInstruction.map(fhirDosageConverter.value.encode)
-      : null,
+      object.dosageInstruction?.map(fhirDosageConverter.value.encode) ?? null,
   }),
 })
 
@@ -229,14 +226,18 @@ export class FHIRMedicationRequest extends FHIRResource {
   // Static Functions
 
   static create(input: {
-    drugReference: DrugReference
+    medicationReference: string
+    medicationReferenceDisplay?: string
     frequencyPerDay: number
     quantity: number
+    extension?: FHIRExtension[]
   }): FHIRMedicationRequest {
     return new FHIRMedicationRequest({
       medicationReference: {
-        reference: input.drugReference,
+        reference: input.medicationReference,
+        display: input.medicationReferenceDisplay,
       },
+      extension: input.extension,
       dosageInstruction: [
         {
           timing: {

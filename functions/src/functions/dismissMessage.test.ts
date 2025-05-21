@@ -19,7 +19,7 @@ describeWithEmulators('function: dismissMessage', (env) => {
   it('should fail dismissing a non-dismissible message', async () => {
     const user = await env.auth.createUser({})
     const message = UserMessage.createSymptomQuestionnaire({
-      questionnaireReference: QuestionnaireReference.enUS,
+      questionnaireReference: QuestionnaireReference.kccq_en_US,
     })
     const messageRef = env.collections.userMessages(user.uid).doc()
     await messageRef.set(message)
