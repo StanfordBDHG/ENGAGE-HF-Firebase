@@ -25,6 +25,8 @@ export enum UserMessageType {
   medicationUptitration = 'MedicationUptitration',
   welcome = 'Welcome',
   vitals = 'Vitals',
+  registrationQuestionnaire = 'RegistrationQuestionnaire',
+  postAppointmentQuestionnaire = 'PostAppointmentQuestionnaire',
   symptomQuestionnaire = 'SymptomQuestionnaire',
   preAppointment = 'PreAppointment',
   inactive = 'Inactive',
@@ -220,6 +222,42 @@ export class UserMessage {
       reference: input.reference,
       type: UserMessageType.preAppointment,
       isDismissible: true,
+    })
+  }
+
+  static createRegistrationQuestionnaire(input: {
+    creationDate?: Date
+    questionnaireReference: QuestionnaireReference
+  }): UserMessage {
+    return new UserMessage({
+      creationDate: input.creationDate ?? new Date(),
+      title: new LocalizedText({
+        en: 'Registration Survey',
+      }),
+      description: new LocalizedText({
+        en: 'Complete registration by filling out this survey.',
+      }),
+      action: input.questionnaireReference,
+      type: UserMessageType.registrationQuestionnaire,
+      isDismissible: false,
+    })
+  }
+
+  static createPostAppointmentQuestionnaire(input: {
+    creationDate?: Date
+    questionnaireReference: QuestionnaireReference
+  }): UserMessage {
+    return new UserMessage({
+      creationDate: input.creationDate ?? new Date(),
+      title: new LocalizedText({
+        en: 'Post-Appointment Survey',
+      }),
+      description: new LocalizedText({
+        en: 'Update us about what has changed during your last appointment.',
+      }),
+      action: input.questionnaireReference,
+      type: UserMessageType.postAppointmentQuestionnaire,
+      isDismissible: false,
     })
   }
 

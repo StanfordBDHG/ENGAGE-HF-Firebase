@@ -193,7 +193,7 @@ describe('BetaBlockerRecommender', () => {
     let contextBelowTarget: MedicationRequestContext
     beforeAll(async () => {
       const request = FHIRMedicationRequest.create({
-        drugReference: DrugReference.bisoprolol5,
+        medicationReference: DrugReference.bisoprolol5,
         frequencyPerDay: 1,
         quantity: 1,
       })
@@ -207,7 +207,7 @@ describe('BetaBlockerRecommender', () => {
 
     it('states that it hit target dose', async () => {
       const request = FHIRMedicationRequest.create({
-        drugReference: DrugReference.bisoprolol5,
+        medicationReference: DrugReference.bisoprolol5,
         frequencyPerDay: 1,
         quantity: 2,
       })

@@ -14,6 +14,7 @@ import {
   type Organization,
   User,
   type UserAuth,
+  type UserSex,
   UserType,
 } from '@stanfordbdhg/engagehf-models'
 import { type Auth } from 'firebase-admin/auth'
@@ -286,6 +287,18 @@ export class DatabaseUserService implements UserService {
   }
 
   // Users
+
+  async updatePersonalInfo(
+    userId: string,
+    data: { dateOfBirth: Date; sex: UserSex },
+  ): Promise<void> {
+    await this.databaseService.runTransaction((collections, transaction) => {
+      transaction.update(collections.users.doc(userId), {
+        dateOfBirth: dateConverter.encode(data.dateOfBirth),
+        sex: data.sex,
+      })
+    })
+  }
 
   async disableUser(userId: string): Promise<void> {
     await this.databaseService.runTransaction((collections, transaction) => {

@@ -13,7 +13,7 @@ import {
   LocalizedText,
   type MedicationReference,
   type Observation,
-  type UserMedicationRecommendation,
+  UserMedicationRecommendation,
   type UserMedicationRecommendationDoseSchedule,
   UserMedicationRecommendationType,
 } from '@stanfordbdhg/engagehf-models'
@@ -165,7 +165,7 @@ export class RecommendationService {
         this.doseSchedule(targetDailyDoseRequest, targetDailyDoseDrugReference)
       : []
 
-    return {
+    return new UserMedicationRecommendation({
       currentMedication: output.currentMedication.map(
         (context) => context.requestReference,
       ),
@@ -197,7 +197,7 @@ export class RecommendationService {
           unit: 'mg',
         },
       },
-    }
+    })
   }
 
   private doseSchedule(
