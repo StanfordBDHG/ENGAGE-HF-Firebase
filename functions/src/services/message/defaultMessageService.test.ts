@@ -38,8 +38,8 @@ describe('DefaultMessageService', () => {
         creationDate: new Date('2024-01-01'),
         dueDate: new Date('2024-01-01'),
         type: UserMessageType.medicationChange,
-        title: new LocalizedText('Medication Change'),
-        description: new LocalizedText('You have a new medication!'),
+        title: LocalizedText.raw('Medication Change'),
+        description: LocalizedText.raw('You have a new medication!'),
         action: 'medications',
         isDismissible: true,
       })
@@ -57,8 +57,8 @@ describe('DefaultMessageService', () => {
         creationDate: new Date('2024-01-01'),
         dueDate: new Date('2024-01-01'),
         type: UserMessageType.preAppointment,
-        title: new LocalizedText('Upcoming appointment'),
-        description: new LocalizedText('You have an upcoming appointment!'),
+        title: LocalizedText.raw('Upcoming appointment'),
+        description: LocalizedText.raw('You have an upcoming appointment!'),
         action: 'healthSummary',
         isDismissible: false,
       })

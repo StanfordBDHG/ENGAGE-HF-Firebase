@@ -17,6 +17,7 @@ import {
   type UserMedicationRecommendationDoseSchedule,
   UserMedicationRecommendationType,
 } from '@stanfordbdhg/engagehf-models'
+import { recommendationLocalization } from './recommendationService+localization.js'
 import { BetaBlockerRecommender } from './recommenders/betaBlockerRecommender.js'
 import { DiureticRecommender } from './recommenders/diureticRecommender.js'
 import { MraRecommender } from './recommenders/mraRecommender.js'
@@ -176,11 +177,11 @@ export class RecommendationService {
           }
         : undefined,
       displayInformation: {
-        title: new LocalizedText(title),
+        title: LocalizedText.raw(title),
         subtitle:
           currentMedicationClass?.name ??
           recommendedMedicationClass?.name ??
-          new LocalizedText(''),
+          LocalizedText.raw(''),
         description: this.recommendationDescription(
           output,
           recommendedMedication?.content ?? undefined,
@@ -225,42 +226,43 @@ export class RecommendationService {
   ): LocalizedText {
     switch (output.type) {
       case UserMedicationRecommendationType.improvementAvailable: {
-        if (recommendedMedication !== undefined) {
-          const displayName = recommendedMedication.displayName
-          return new LocalizedText(
-            `Discuss starting ${displayName} (more effective med) with your care team to help your heart.`,
+        const recommendedMedicationName = recommendedMedication?.displayName
+        if (recommendedMedicationName !== undefined) {
+          return LocalizedText.create(
+            recommendationLocalization.improvementAvailableMoreEffectiveMed,
+            recommendedMedicationName,
           )
         } else {
-          return new LocalizedText(
-            'Discuss increasing the dose with your care team to get closer to target.',
+          return LocalizedText.create(
+            recommendationLocalization.improvementAvailableIncreasing,
           )
         }
       }
       case UserMedicationRecommendationType.moreLabObservationsRequired: {
-        return new LocalizedText(
-          'Discuss lab check with your care team before med change.',
+        return LocalizedText.create(
+          recommendationLocalization.moreLabObservationsRequired,
         )
       }
       case UserMedicationRecommendationType.morePatientObservationsRequired: {
-        return new LocalizedText(
-          'Need more blood pressure / heart rate checks to suggest a change.',
+        return LocalizedText.create(
+          recommendationLocalization.morePatientObservationsRequired,
         )
       }
       case UserMedicationRecommendationType.noActionRequired: {
-        return new LocalizedText('')
+        return LocalizedText.create(recommendationLocalization.noActionRequired)
       }
       case UserMedicationRecommendationType.notStarted: {
-        return new LocalizedText(
-          'Discuss starting this med with your care team to help your heart.',
-        )
+        return LocalizedText.create(recommendationLocalization.notStarted)
       }
       case UserMedicationRecommendationType.personalTargetDoseReached: {
-        return new LocalizedText(
-          'Your current target dose was reached. Congrats!',
+        return LocalizedText.create(
+          recommendationLocalization.personalTargetDoseReached,
         )
       }
       case UserMedicationRecommendationType.targetDoseReached: {
-        return new LocalizedText(`You're on the target dose. Congrats!`)
+        return LocalizedText.create(
+          recommendationLocalization.targetDoseReached,
+        )
       }
     }
   }

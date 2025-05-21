@@ -8,33 +8,67 @@
 
 import assert from 'assert'
 import fs from 'fs'
+import { healthSummaryLocalization } from './generate+localizations.js'
 import { generateSpeedometerSvg } from './generateSpeedometer.js'
+import { Localizer } from '../services/localization/localizer.js'
 import { mockHealthSummaryData } from '../tests/mocks/healthSummaryData.js'
 import { TestFlags } from '../tests/testFlags.js'
 
 describe('generateSpeedometer', () => {
-  it('should generate the same chart on mock data', async () => {
+  const enLocalizer = new Localizer(healthSummaryLocalization, ['en-US'])
+  const esLocalizer = new Localizer(healthSummaryLocalization, ['es'])
+
+  it('should generate the same chart on mock data (en)', async () => {
     const inputData = await mockHealthSummaryData('')
     const actualData = generateSpeedometerSvg(inputData.symptomScores, 258, {
-      languages: ['en_US'],
+      localizer: enLocalizer,
     })
-    const expectedPath = 'src/tests/resources/mockSpeedometer.svg'
+    const expectedPath = 'src/tests/resources/mockSpeedometer-en.svg'
     if (TestFlags.regenerateValues) {
       fs.writeFileSync(expectedPath, actualData)
     } else {
       const expectedData = fs.readFileSync(expectedPath)
-      assert.equal(actualData, expectedData.toString('utf8'))
+      expect(actualData).toBe(expectedData.toString('utf8'))
     }
   })
 
-  it('should generate an empty chart the same way', () => {
-    const actualData = generateSpeedometerSvg([], 258, { languages: ['en-US'] })
-    const expectedPath = 'src/tests/resources/emptySpeedometer.svg'
+  it('should generate the same chart on mock data (es)', async () => {
+    const inputData = await mockHealthSummaryData('')
+    const actualData = generateSpeedometerSvg(inputData.symptomScores, 258, {
+      localizer: esLocalizer,
+    })
+    const expectedPath = 'src/tests/resources/mockSpeedometer-es.svg'
     if (TestFlags.regenerateValues) {
       fs.writeFileSync(expectedPath, actualData)
     } else {
       const expectedData = fs.readFileSync(expectedPath)
-      assert.equal(actualData, expectedData.toString('utf8'))
+      expect(actualData).toBe(expectedData.toString('utf8'))
+    }
+  })
+
+  it('should generate an empty chart the same way (en)', () => {
+    const actualData = generateSpeedometerSvg([], 258, {
+      localizer: enLocalizer,
+    })
+    const expectedPath = 'src/tests/resources/emptySpeedometer-en.svg'
+    if (TestFlags.regenerateValues) {
+      fs.writeFileSync(expectedPath, actualData)
+    } else {
+      const expectedData = fs.readFileSync(expectedPath)
+      expect(actualData).toBe(expectedData.toString('utf8'))
+    }
+  })
+
+  it('should generate an empty chart the same way (es)', () => {
+    const actualData = generateSpeedometerSvg([], 258, {
+      localizer: esLocalizer,
+    })
+    const expectedPath = 'src/tests/resources/emptySpeedometer-es.svg'
+    if (TestFlags.regenerateValues) {
+      fs.writeFileSync(expectedPath, actualData)
+    } else {
+      const expectedData = fs.readFileSync(expectedPath)
+      expect(actualData).toBe(expectedData.toString('utf8'))
     }
   })
 })
