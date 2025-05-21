@@ -6,34 +6,48 @@
 // SPDX-License-Identifier: MIT
 //
 
-import {
-  average,
-  type FHIRQuestionnaireResponse,
-  SymptomScore,
-} from '@stanfordbdhg/engagehf-models'
-import { type SymptomScoreCalculator } from './symptomScoreCalculator.js'
+import { average } from '@stanfordbdhg/engagehf-models'
 
-export class DefaultSymptomScoreCalculator implements SymptomScoreCalculator {
-  // Methods
+export interface SymptomScoreCalculatorInput {
+  answer1a: number
+  answer1b: number
+  answer1c: number
+  answer2: number
+  answer3: number
+  answer4: number
+  answer5: number
+  answer6: number
+  answer7: number
+  answer8a: number
+  answer8b: number
+  answer8c: number
+  answer9: number
+}
 
-  calculate(questionnaireResponse: FHIRQuestionnaireResponse): SymptomScore {
-    const response = questionnaireResponse.symptomQuestionnaireResponse
+export interface SymptomScoreCalculatorOutput {
+  overallScore: number
+  physicalLimitsScore: number | undefined
+  socialLimitsScore: number | undefined
+  qualityOfLifeScore: number | undefined
+  symptomFrequencyScore: number | undefined
+  dizzinessScore: number
+}
 
+export class SymptomScoreCalculator {
+  calculate(input: SymptomScoreCalculatorInput): SymptomScoreCalculatorOutput {
     const result = {
-      questionnaireResponseId: questionnaireResponse.id,
-      date: questionnaireResponse.authored,
       overallScore: 0,
       socialLimitsScore: undefined as number | undefined,
       physicalLimitsScore: undefined as number | undefined,
       qualityOfLifeScore: undefined as number | undefined,
       symptomFrequencyScore: undefined as number | undefined,
-      dizzinessScore: response.answer9,
+      dizzinessScore: input.answer9,
     }
 
     const physicalLimitsAnswers = [
-      response.answer1a,
-      response.answer1b,
-      response.answer1c,
+      input.answer1a,
+      input.answer1b,
+      input.answer1c,
     ]
       .filter((x) => x !== 6)
       .map((x) => (100 * (x - 1)) / 4)
@@ -44,24 +58,20 @@ export class DefaultSymptomScoreCalculator implements SymptomScoreCalculator {
       : undefined
 
     const symptomFrequencyAnswers = [
-      (response.answer2 - 1) / 4,
-      (response.answer3 - 1) / 6,
-      (response.answer4 - 1) / 6,
-      (response.answer5 - 1) / 4,
+      (input.answer2 - 1) / 4,
+      (input.answer3 - 1) / 6,
+      (input.answer4 - 1) / 6,
+      (input.answer5 - 1) / 4,
     ].map((x) => x * 100)
 
     result.symptomFrequencyScore = average(symptomFrequencyAnswers)
 
-    const qualityOfLifeAnswers = [response.answer6, response.answer7].map(
+    const qualityOfLifeAnswers = [input.answer6, input.answer7].map(
       (x) => (100 * (x - 1)) / 4,
     )
     result.qualityOfLifeScore = average(qualityOfLifeAnswers)
 
-    const socialLimitsAnswers = [
-      response.answer8a,
-      response.answer8b,
-      response.answer8c,
-    ]
+    const socialLimitsAnswers = [input.answer8a, input.answer8b, input.answer8c]
       .filter((x) => x !== 6)
       .map((x) => (100 * (x - 1)) / 4)
 
@@ -76,6 +86,6 @@ export class DefaultSymptomScoreCalculator implements SymptomScoreCalculator {
     ].flatMap((score) => (score !== undefined ? [score] : []))
     result.overallScore = average(domainScores) ?? 0
 
-    return new SymptomScore(result)
+    return result
   }
 }
