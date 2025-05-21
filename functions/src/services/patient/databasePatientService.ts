@@ -14,8 +14,9 @@ import {
   type FHIRAllergyIntolerance,
   type FHIRAppointment,
   type FHIRMedicationRequest,
-  type FHIRObservation,
+  FHIRObservation,
   type FHIRQuestionnaireResponse,
+  type LoincCode,
   type Observation,
   QuantityUnit,
   type SymptomScore,
@@ -34,6 +35,7 @@ import { type CollectionsService } from '../database/collections.js'
 import {
   type Document,
   type DatabaseService,
+  type ReplaceDiff,
 } from '../database/databaseService.js'
 
 export class DatabasePatientService implements PatientService {
@@ -88,6 +90,16 @@ export class DatabasePatientService implements PatientService {
     return result.at(0)
   }
 
+  async createAppointment(
+    userId: string,
+    appointment: FHIRAppointment,
+  ): Promise<void> {
+    await this.databaseService.runTransaction((collections, transaction) => {
+      const ref = collections.userAppointments(userId).doc()
+      transaction.set(ref, appointment)
+    })
+  }
+
   // Methods - Contraindications
 
   async getContraindications(
@@ -99,6 +111,53 @@ export class DatabasePatientService implements PatientService {
   }
 
   // Methods - Medication Requests
+
+  async getMedicationRequests(
+    userId: string,
+  ): Promise<Array<Document<FHIRMedicationRequest>>> {
+    return this.databaseService.getQuery<FHIRMedicationRequest>((collections) =>
+      collections.userMedicationRequests(userId),
+    )
+  }
+
+  async replaceMedicationRequests(
+    userId: string,
+    values: FHIRMedicationRequest[],
+  ): Promise<void> {
+    await this.databaseService.replaceCollection(
+      (collections) => collections.userMedicationRequests(userId),
+      (documents) => {
+        const diffs: Array<ReplaceDiff<FHIRMedicationRequest>> = []
+
+        for (const value of values) {
+          // We are assuming here that there will only ever be a single medication request per medicationReference!
+          const equivalentDoc = documents.find(
+            (doc) =>
+              doc.content.medicationReference?.reference ===
+              value.medicationReference?.reference,
+          )
+          if (equivalentDoc === undefined) {
+            diffs.push({ successor: value })
+          } else if (
+            !isDeepStrictEqual(
+              equivalentDoc.content.dosageInstruction,
+              value.dosageInstruction,
+            )
+          ) {
+            diffs.push({ predecessor: equivalentDoc, successor: value })
+          }
+        }
+
+        for (const doc of documents) {
+          if (!diffs.some((diff) => diff.predecessor?.id === doc.id)) {
+            diffs.push({ predecessor: doc })
+          }
+        }
+
+        return diffs
+      },
+    )
+  }
 
   async getMedicationRecommendations(
     userId: string,
@@ -120,51 +179,39 @@ export class DatabasePatientService implements PatientService {
     })
   }
 
-  async getMedicationRequests(
-    userId: string,
-  ): Promise<Array<Document<FHIRMedicationRequest>>> {
-    return this.databaseService.getQuery<FHIRMedicationRequest>((collections) =>
-      collections.userMedicationRequests(userId),
-    )
-  }
-
-  async updateMedicationRecommendations(
+  async replaceMedicationRecommendations(
     userId: string,
     newRecommendations: UserMedicationRecommendation[],
-  ): Promise<boolean> {
-    return this.databaseService.runTransaction(
-      async (collections, transaction) => {
-        const collection = collections.userMedicationRecommendations(userId)
-        const existingSnapshot = await transaction.get(collection)
-        const indicesToBeInserted = new Set<number>(
-          newRecommendations.map((_, index) => index),
-        )
-        for (const existing of existingSnapshot.docs) {
-          const existingRecommendation = existing.data()
+  ): Promise<void> {
+    await this.databaseService.replaceCollection(
+      (collections) => collections.userMedicationRecommendations(userId),
+      (documents) => {
+        const diffs: Array<ReplaceDiff<UserMedicationRecommendation>> = []
 
-          const newRecommendationIndex = newRecommendations.findIndex(
-            (recommendation) =>
-              recommendation.displayInformation.title ===
-              existingRecommendation.displayInformation.title,
-          )
+        for (const value of newRecommendations) {
+          const equivalentDoc = documents
+            .filter(
+              (doc) =>
+                doc.content.displayInformation.title ===
+                value.displayInformation.title,
+            )
+            .at(0)
+          // TODO: We are assuming here that there will only ever be a single medication request per medication!
 
-          if (newRecommendationIndex < 0) {
-            transaction.delete(existing.ref)
-            continue
+          if (equivalentDoc === undefined) {
+            diffs.push({ successor: value })
+          } else if (!isDeepStrictEqual(equivalentDoc.content, value)) {
+            diffs.push({ predecessor: equivalentDoc, successor: value })
           }
-          const newRecommendation = newRecommendations[newRecommendationIndex]
-          indicesToBeInserted.delete(newRecommendationIndex)
-
-          if (!isDeepStrictEqual(newRecommendation, existingRecommendation))
-            transaction.set(existing.ref, newRecommendation)
         }
-        indicesToBeInserted.forEach((newRecommendationIndex) => {
-          transaction.set(
-            collection.doc(),
-            newRecommendations[newRecommendationIndex],
-          )
-        })
-        return true
+
+        for (const doc of documents) {
+          if (!diffs.some((diff) => diff.predecessor?.id === doc.id)) {
+            diffs.push({ predecessor: doc })
+          }
+        }
+
+        return diffs
       },
     )
   }
@@ -251,7 +298,7 @@ export class DatabasePatientService implements PatientService {
           .orderBy('effectiveDateTime', 'desc')
           .limit(1),
     )
-    return result.at(0)?.content.bodyWeight(QuantityUnit.lbs)
+    return result.at(0)?.content.dryWeight(QuantityUnit.lbs)
   }
 
   async getMostRecentEstimatedGlomerularFiltrationRateObservation(
@@ -278,6 +325,29 @@ export class DatabasePatientService implements PatientService {
           .limit(1),
     )
     return result.at(0)?.content.potassium
+  }
+
+  async createObservations(
+    userId: string,
+    values: Array<{
+      observation: Observation
+      loincCode: LoincCode
+      collection: UserObservationCollection
+    }>,
+  ): Promise<void> {
+    await this.databaseService.runTransaction((collections, transaction) => {
+      for (const value of values) {
+        const ref = collections.userObservations(userId, value.collection).doc()
+        const fhirObservation = FHIRObservation.createSimple({
+          id: ref.id,
+          date: value.observation.date,
+          value: value.observation.value,
+          unit: value.observation.unit,
+          code: value.loincCode,
+        })
+        transaction.set(ref, fhirObservation)
+      }
+    })
   }
 
   // Methods - Questionnaire Responses
@@ -315,11 +385,11 @@ export class DatabasePatientService implements PatientService {
   async updateSymptomScore(
     userId: string,
     symptomScoreId: string,
-    symptomScore: SymptomScore | undefined,
+    symptomScore: SymptomScore | null,
   ): Promise<void> {
     return this.databaseService.runTransaction((collections, transaction) => {
       const ref = collections.userSymptomScores(userId).doc(symptomScoreId)
-      if (symptomScore) {
+      if (symptomScore !== null) {
         transaction.set(ref, symptomScore)
       } else {
         transaction.delete(ref)

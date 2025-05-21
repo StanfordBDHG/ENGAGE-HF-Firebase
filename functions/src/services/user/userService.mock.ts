@@ -12,6 +12,7 @@ import {
   User,
   type UserAuth,
   UserRegistration,
+  type UserSex,
   UserType,
 } from '@stanfordbdhg/engagehf-models'
 import { type UserService } from './userService.js'
@@ -65,6 +66,7 @@ export class MockUserService implements UserService {
         user: new UserRegistration({
           type: UserType.patient,
           disabled: false,
+          selfManaged: false,
           dateOfBirth: new Date('1970-01-02'),
           clinician: 'mockPatient',
           receivesAppointmentReminders: true,
@@ -128,6 +130,13 @@ export class MockUserService implements UserService {
 
   // Methods - User
 
+  async updatePersonalInfo(
+    userId: string,
+    data: { dateOfBirth: Date; sex: UserSex },
+  ): Promise<void> {
+    return
+  }
+
   async disableUser(userId: string): Promise<void> {
     return
   }
@@ -152,6 +161,7 @@ export class MockUserService implements UserService {
       content: new User({
         type: UserType.clinician,
         disabled: false,
+        selfManaged: false,
         dateOfBirth: new Date('1970-01-02'),
         clinician: 'mockClinician',
         lastActiveDate: new Date('2024-04-04'),
