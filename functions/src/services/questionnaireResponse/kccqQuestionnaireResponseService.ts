@@ -21,7 +21,7 @@ import {
   QuestionnaireId,
   QuestionnaireLinkId,
 } from '../seeding/staticData/questionnaireFactory/questionnaireLinkIds.js'
-import { UserService } from '../user/userService.js'
+import { type UserService } from '../user/userService.js'
 
 export class KccqQuestionnaireResponseService extends QuestionnaireResponseService {
   // Properties
@@ -73,9 +73,11 @@ export class KccqQuestionnaireResponseService extends QuestionnaireResponseServi
     ) {
       let userName: string | undefined = undefined
       try {
-        userName = (await this.userService.getAuth(userId))?.displayName
+        userName = (await this.userService.getAuth(userId)).displayName
       } catch (error) {
-        console.error(`Failed to get user name for userId ${userId}: ${error}`)
+        console.error(
+          `Failed to get user name for userId ${userId}: ${String(error)}`,
+        )
         userName = undefined
       }
       const message = UserMessage.createKccqDeclineForClinician({
