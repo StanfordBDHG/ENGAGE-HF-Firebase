@@ -120,6 +120,7 @@ export class DefaultServiceFactory implements ServiceFactory {
           messageService: this.messageService.value,
           patientService: this.patientService.value,
           symptomScoreCalculator: this.symptomScoreCalculator.value,
+          userService: this.userService.value,
         }),
         new DataUpdateQuestionnaireResponseService({
           messageService: this.messageService.value,

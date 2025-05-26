@@ -8,6 +8,7 @@
 
 import {
   SymptomScore,
+  UserMessage,
   UserMessageType,
   type FHIRQuestionnaireResponse,
 } from '@stanfordbdhg/engagehf-models'
@@ -20,6 +21,7 @@ import {
   QuestionnaireId,
   QuestionnaireLinkId,
 } from '../seeding/staticData/questionnaireFactory/questionnaireLinkIds.js'
+import { UserService } from '../user/userService.js'
 
 export class KccqQuestionnaireResponseService extends QuestionnaireResponseService {
   // Properties
@@ -27,6 +29,7 @@ export class KccqQuestionnaireResponseService extends QuestionnaireResponseServi
   private readonly messageService: MessageService
   private readonly patientService: PatientService
   private readonly symptomScoreCalculator: SymptomScoreCalculator
+  private readonly userService: UserService
 
   // Constructor
 
@@ -34,11 +37,13 @@ export class KccqQuestionnaireResponseService extends QuestionnaireResponseServi
     messageService: MessageService
     patientService: PatientService
     symptomScoreCalculator: SymptomScoreCalculator
+    userService: UserService
   }) {
     super()
     this.messageService = input.messageService
     this.patientService = input.patientService
     this.symptomScoreCalculator = input.symptomScoreCalculator
+    this.userService = input.userService
   }
 
   // Methods
@@ -53,12 +58,37 @@ export class KccqQuestionnaireResponseService extends QuestionnaireResponseServi
 
     const symptomScore = this.symptomScore(response.content)
     if (symptomScore === null) return false
+    const previousSymptomScore =
+      await this.patientService.getLatestSymptomScore(userId)
 
     await this.patientService.updateSymptomScore(
       userId,
       response.id,
       symptomScore,
     )
+
+    if (
+      previousSymptomScore !== undefined &&
+      symptomScore.overallScore < previousSymptomScore.content.overallScore - 10
+    ) {
+      let userName: string | undefined = undefined
+      try {
+        userName = (await this.userService.getAuth(userId))?.displayName
+      } catch (error) {
+        console.error(`Failed to get user name for userId ${userId}: ${error}`)
+        userName = undefined
+      }
+      const message = UserMessage.createKccqDeclineForClinician({
+        userId: userId,
+        reference: response.id,
+        userName,
+      })
+      await this.messageService.addMessageForClinicianAndOwners(
+        userId,
+        message,
+        { notify: true },
+      )
+    }
 
     if (options.isNew) {
       await this.messageService.completeMessages(
