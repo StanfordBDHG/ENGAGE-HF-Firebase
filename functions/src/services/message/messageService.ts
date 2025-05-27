@@ -42,6 +42,15 @@ export interface MessageService {
 
   // Messages
 
+  addMessageForClinicianAndOwners(
+    userId: string,
+    message: UserMessage,
+    options: {
+      notify: boolean
+      user?: User | null
+    },
+  ): Promise<void>
+
   addMessage(
     userId: string,
     message: UserMessage,
@@ -56,6 +65,14 @@ export interface MessageService {
     type: UserMessageType,
     filter?: (message: UserMessage) => boolean,
   ): Promise<string[]>
+
+  completeMessagesIncludingClinicianAndOwners(
+    userId: string,
+    type: UserMessageType,
+    options: {
+      user?: User
+    },
+  ): Promise<void>
 
   dismissMessage(
     userId: string,

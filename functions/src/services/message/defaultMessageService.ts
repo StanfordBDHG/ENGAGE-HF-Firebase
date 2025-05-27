@@ -187,6 +187,44 @@ export class DefaultMessageService implements MessageService {
 
   // Methods - Messages
 
+  async addMessageForClinicianAndOwners(
+    userId: string,
+    message: UserMessage,
+    options: {
+      notify: boolean
+      user?: User | null
+    },
+  ): Promise<void> {
+    const user =
+      options.user ?? (await this.userService.getUser(userId))?.content
+    if (user === undefined) {
+      logger.warn(
+        `DefaultMessageService.addMessageForClinicianAndOwners(${userId}): User not found, skipping message forwarding.`,
+      )
+      return
+    }
+    const owners =
+      user.organization !== undefined ?
+        await this.userService.getAllOwners(user.organization)
+      : []
+    const clinican = user.clinician
+
+    const recipientIds = owners.map((owner) => owner.id)
+    if (clinican !== undefined) recipientIds.push(clinican)
+
+    logger.debug(
+      `DefaultMessageService.addMessageForClinicianAndOwners(${userId}): Found ${recipientIds.length} recipients (${recipientIds.join(', ')}).`,
+    )
+
+    await Promise.all(
+      recipientIds.map(async (recipientId) =>
+        this.addMessage(recipientId, message, {
+          notify: true,
+        }),
+      ),
+    )
+  }
+
   async addMessage(
     userId: string,
     message: UserMessage,
@@ -279,6 +317,48 @@ export class DefaultMessageService implements MessageService {
         }
         return messages.map((message) => message.id)
       },
+    )
+  }
+
+  async completeMessagesIncludingClinicianAndOwners(
+    userId: string,
+    type: UserMessageType,
+    options: {
+      user?: User
+    },
+  ) {
+    const user =
+      options.user ?? (await this.userService.getUser(userId))?.content
+
+    if (user === undefined) {
+      logger.warn(
+        `DefaultMessageService.completeMessagesIncludingClinicianAndOwners(${userId}): User not found, skipping message completion.`,
+      )
+      return
+    }
+    const owners =
+      user.organization !== undefined ?
+        await this.userService.getAllOwners(user.organization)
+      : []
+    const clinican = user.clinician
+
+    const messageIds = await this.completeMessages(userId, type)
+
+    const recipientIds = owners.map((owner) => owner.id)
+    if (clinican !== undefined) recipientIds.push(clinican)
+
+    logger.debug(
+      `DefaultMessageService.completeMessagesIncludingClinicianAndOwners(${userId}): Found ${recipientIds.length} previous recipients (${recipientIds.join(', ')}).`,
+    )
+
+    await Promise.all(
+      recipientIds.map(async (recipientId) =>
+        this.completeMessages(recipientId, type, (message) =>
+          message.reference !== undefined ?
+            messageIds.includes(message.reference)
+          : false,
+        ),
+      ),
     )
   }
 
@@ -411,6 +491,7 @@ export class DefaultMessageService implements MessageService {
           `DefaultMessageService.handleOldMessages(${newMessage.type}): Contains newish message? ${containsNewishMessage ? 'yes' : 'no'}`,
         )
         return !containsNewishMessage
+      case UserMessageType.kccqDecline:
       case UserMessageType.postAppointmentQuestionnaire:
       case UserMessageType.registrationQuestionnaire:
       case UserMessageType.symptomQuestionnaire:

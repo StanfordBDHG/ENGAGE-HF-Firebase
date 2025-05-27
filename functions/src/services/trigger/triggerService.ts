@@ -88,8 +88,9 @@ export class TriggerService {
     )
 
     try {
-      const questionnaireResponseService = this.factory.questionnaireResponse()
       if (afterData !== undefined) {
+        const questionnaireResponseService =
+          this.factory.questionnaireResponse()
         const handled = await questionnaireResponseService.handle(
           userId,
           {
@@ -263,20 +264,23 @@ export class TriggerService {
               userName: userAuth.displayName,
               reference: messageDoc.path,
             })
-            await this.forwardMessageToOwnersAndClinician({
-              user,
-              userService,
-              message: forwardedMessage,
-              messageService,
-            })
+            await messageService.addMessageForClinicianAndOwners(
+              userId,
+              forwardedMessage,
+              {
+                notify: true,
+                user: user.content,
+              },
+            )
           }
         } else {
-          await this.completeMessagesIncludingOwnersAndClinician({
-            user: user,
-            messageType: UserMessageType.weightGain,
-            userService,
-            messageService,
-          })
+          await messageService.completeMessagesIncludingClinicianAndOwners(
+            userId,
+            UserMessageType.weightGain,
+            {
+              user: user.content,
+            },
+          )
         }
       } catch (error) {
         logger.error(
@@ -580,77 +584,17 @@ export class TriggerService {
           userName: userAuth.displayName,
           reference: messageDoc.path,
         })
-      await this.forwardMessageToOwnersAndClinician({
-        user,
-        userService,
-        message: forwardedMessage,
-        messageService,
-      })
+      await messageService.addMessageForClinicianAndOwners(
+        input.userId,
+        forwardedMessage,
+        {
+          notify: true,
+          user: user.content,
+        },
+      )
       return true
     } else {
       return false
-    }
-  }
-
-  private async forwardMessageToOwnersAndClinician(input: {
-    user: Document<User>
-    message: UserMessage
-    userService: UserService
-    messageService: MessageService
-  }) {
-    const owners =
-      input.user.content.organization !== undefined ?
-        await input.userService.getAllOwners(input.user.content.organization)
-      : []
-    const clinican = input.user.content.clinician
-
-    const recipientIds = owners.map((owner) => owner.id)
-    if (clinican !== undefined) recipientIds.push(clinican)
-
-    logger.debug(
-      `TriggerService.forwardMessageToOwnersAndClinician(${input.user.id}): Found ${recipientIds.length} recipients (${recipientIds.join(', ')}).`,
-    )
-
-    for (const recipientId of recipientIds) {
-      await input.messageService.addMessage(recipientId, input.message, {
-        notify: true,
-      })
-    }
-  }
-
-  private async completeMessagesIncludingOwnersAndClinician(input: {
-    user: Document<User>
-    messageType: UserMessageType
-    userService: UserService
-    messageService: MessageService
-  }) {
-    const owners =
-      input.user.content.organization !== undefined ?
-        await input.userService.getAllOwners(input.user.content.organization)
-      : []
-    const clinican = input.user.content.clinician
-
-    const messageIds = await input.messageService.completeMessages(
-      input.user.id,
-      input.messageType,
-    )
-
-    const recipientIds = owners.map((owner) => owner.id)
-    if (clinican !== undefined) recipientIds.push(clinican)
-
-    logger.debug(
-      `TriggerService.completeMessagesIncludingOwnersAndClinician(${input.user.id}): Found ${recipientIds.length} previous recipients (${recipientIds.join(', ')}).`,
-    )
-
-    for (const recipientId of recipientIds) {
-      await input.messageService.completeMessages(
-        recipientId,
-        input.messageType,
-        (message) =>
-          message.reference !== undefined ?
-            messageIds.includes(message.reference)
-          : false,
-      )
     }
   }
 
@@ -733,7 +677,7 @@ export class TriggerService {
         const messageDoc = await options.messageService.addMessage(
           user.id,
           UserMessage.createInactive({}),
-          { notify: true },
+          { notify: true, user: user.content },
         )
 
         if (messageDoc !== undefined) {
@@ -743,12 +687,14 @@ export class TriggerService {
             userName: userAuth.displayName,
             reference: messageDoc.path,
           })
-          await this.forwardMessageToOwnersAndClinician({
-            user,
-            userService: options.userService,
-            message: forwardedMessage,
-            messageService: options.messageService,
-          })
+          await options.messageService.addMessageForClinicianAndOwners(
+            user.id,
+            forwardedMessage,
+            {
+              notify: true,
+              user: user.content,
+            },
+          )
         }
       }),
     )
@@ -789,12 +735,14 @@ export class TriggerService {
                 userName: userAuth.displayName,
                 reference: messageDoc.path,
               })
-            await this.forwardMessageToOwnersAndClinician({
-              user,
-              userService,
-              message: forwardedMessage,
-              messageService,
-            })
+            await messageService.addMessageForClinicianAndOwners(
+              user.id,
+              forwardedMessage,
+              {
+                notify: true,
+                user: user.content,
+              },
+            )
           }
         } catch (error) {
           logger.error(
