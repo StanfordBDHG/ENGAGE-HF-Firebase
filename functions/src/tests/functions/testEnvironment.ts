@@ -9,7 +9,7 @@
 import {
   Lazy,
   User,
-  UserSex,
+  type UserSex,
   type UserType,
 } from '@stanfordbdhg/engagehf-models'
 import admin from 'firebase-admin'

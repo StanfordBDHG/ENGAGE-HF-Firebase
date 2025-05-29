@@ -16,8 +16,8 @@ import {
   FHIRAppointment,
   FHIRAppointmentStatus,
   UserObservationCollection,
-  User,
 } from '@stanfordbdhg/engagehf-models'
+import { logger } from 'firebase-functions/v2'
 import { z } from 'zod'
 import { type Document } from '../database/databaseService.js'
 import { type PatientService } from '../patient/patientService.js'
@@ -25,8 +25,6 @@ import {
   MedicationGroup,
   QuestionnaireLinkId,
 } from '../seeding/staticData/questionnaireFactory/questionnaireLinkIds.js'
-import { UserService } from '../user/userService.js'
-import { logger } from 'firebase-functions/v2'
 
 export interface QuestionnaireResponseMedicationRequests {
   reference: string
@@ -205,7 +203,7 @@ export abstract class QuestionnaireResponseService {
           })
         } else {
           logger.error(
-            `Unable to calculate eGFR for user ${input.userId} with creatinine ${creatinine.value}, date of birth ${input.dateOfBirth} and sex ${input.sex}.`,
+            `Unable to calculate eGFR for user ${input.userId} with creatinine ${creatinine.value}, date of birth ${input.dateOfBirth.toString()} and sex ${input.sex}.`,
           )
         }
       } else {

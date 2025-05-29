@@ -7,10 +7,11 @@
 //
 
 import {
-  User,
+  type User,
   UserMessageType,
   type FHIRQuestionnaireResponse,
 } from '@stanfordbdhg/engagehf-models'
+import { logger } from 'firebase-functions/v2'
 import { QuestionnaireResponseService } from './questionnaireResponseService.js'
 import { type Document } from '../database/databaseService.js'
 import { type MessageService } from '../message/messageService.js'
@@ -19,8 +20,7 @@ import {
   QuestionnaireId,
   QuestionnaireLinkId,
 } from '../seeding/staticData/questionnaireFactory/questionnaireLinkIds.js'
-import { UserService } from '../user/userService.js'
-import { logger } from 'firebase-functions/v2'
+import { type UserService } from '../user/userService.js'
 
 export class DataUpdateQuestionnaireResponseService extends QuestionnaireResponseService {
   // Properties
@@ -65,7 +65,7 @@ export class DataUpdateQuestionnaireResponseService extends QuestionnaireRespons
       logger.error(`Failed to fetch user ${userId}:`, error)
       user = null
     }
-    
+
     await this.handleLabValues({
       userId,
       response,

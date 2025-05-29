@@ -11,7 +11,7 @@ import {
   userRegistrationConverter,
   userRegistrationInputConverter,
   UserRegistration,
-  UserSex,
+  type UserSex,
 } from './userRegistration.js'
 import { type UserType } from './userType.js'
 import { dateConverter } from '../helpers/dateConverter.js'
