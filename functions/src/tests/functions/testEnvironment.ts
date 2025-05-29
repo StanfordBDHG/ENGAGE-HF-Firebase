@@ -6,7 +6,12 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { Lazy, User, type UserType } from '@stanfordbdhg/engagehf-models'
+import {
+  Lazy,
+  User,
+  UserSex,
+  type UserType,
+} from '@stanfordbdhg/engagehf-models'
 import admin from 'firebase-admin'
 import {
   type DocumentData,
@@ -170,6 +175,8 @@ export class EmulatorTestEnvironment {
       organization?: string
       clinician?: string
       dateOfEnrollment?: Date
+      dateOfBirth?: Date
+      sex?: UserSex
       lastActiveDate?: Date
       invitationCode?: string
       phoneNumbers?: string[]
@@ -190,6 +197,8 @@ export class EmulatorTestEnvironment {
         disabled: options.disabled ?? false,
         organization: options.organization,
         dateOfEnrollment: options.dateOfEnrollment ?? new Date(),
+        dateOfBirth: options.dateOfBirth,
+        sex: options.sex,
         clinician: options.clinician,
         lastActiveDate: options.lastActiveDate ?? new Date(),
         invitationCode: options.invitationCode ?? 'TESTCODE',

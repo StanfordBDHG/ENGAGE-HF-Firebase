@@ -11,6 +11,7 @@ import {
   userRegistrationConverter,
   userRegistrationInputConverter,
   UserRegistration,
+  UserSex,
 } from './userRegistration.js'
 import { type UserType } from './userType.js'
 import { dateConverter } from '../helpers/dateConverter.js'
@@ -55,6 +56,7 @@ export class User extends UserRegistration {
     selfManaged: boolean
     organization?: string
     dateOfBirth?: Date
+    sex?: UserSex
     clinician?: string
     receivesAppointmentReminders: boolean
     receivesInactivityReminders: boolean

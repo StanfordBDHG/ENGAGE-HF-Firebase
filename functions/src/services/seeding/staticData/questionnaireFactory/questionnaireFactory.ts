@@ -88,20 +88,10 @@ export abstract class QuestionnaireFactory<Input> {
         title: 'Creatinine',
         name: 'creatinine',
         description:
-          'The creatinine level in your body helps understand how your liver handles the drugs you are taking.',
+          'The creatinine level in your body helps understand how your kidneys handle the drugs you are taking.',
         unit: QuantityUnit.mg_dL,
         minValue: 0,
         maxValue: 100,
-      }),
-      ...this.labInputPagesForValue({
-        loincCode: LoincCode.estimatedGlomerularFiltrationRate,
-        title: 'eGFR',
-        name: 'eGFR',
-        description:
-          'eGFR (estimated Glomerular Filtration Rate) is a test that estimates how well your kidneys are filtering blood.',
-        unit: QuantityUnit.mL_min_173m2,
-        minValue: 0,
-        maxValue: 200,
       }),
       ...this.labInputPagesForValue({
         loincCode: LoincCode.potassium,

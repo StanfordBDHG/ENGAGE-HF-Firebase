@@ -95,7 +95,10 @@ describeWithEmulators('RegistrationQuestionnaireResponseService', (env) => {
     const egfrDocs = await env.collections
       .userObservations(userId, UserObservationCollection.eGfr)
       .get()
-    expect(egfrDocs.size).toBe(0)
+    expect(egfrDocs.size).toBe(1)
+    expect(
+      egfrDocs.docs[0].data().estimatedGlomerularFiltrationRate?.value,
+    ).toBeCloseTo(3.633097006675995, 5)
 
     const potassiumDocs = await env.collections
       .userObservations(userId, UserObservationCollection.potassium)
@@ -192,7 +195,7 @@ describeWithEmulators('RegistrationQuestionnaireResponseService', (env) => {
     expect(egfrDocs.size).toBe(1)
     expect(
       egfrDocs.docs[0].data().estimatedGlomerularFiltrationRate?.value,
-    ).toBe(55)
+    ).toBeCloseTo(20.456123245266184, 5)
 
     const potassiumDocs = await env.collections
       .userObservations(userId, UserObservationCollection.potassium)
@@ -238,7 +241,6 @@ const registrationResponseApple = {
     { answer: [{ valueBoolean: true }], linkId: 'lab.2160-0.exists' },
     { answer: [{ valueDecimal: 15 }], linkId: 'lab.2160-0.value' },
     { answer: [{ valueDate: '2025-05-14' }], linkId: 'lab.2160-0.date' },
-    { linkId: 'lab.98979-8.exists', answer: [{ valueBoolean: false }] },
     { linkId: 'lab.6298-4.exists', answer: [{ valueBoolean: true }] },
     { linkId: 'lab.6298-4.value', answer: [{ valueDecimal: 1.75 }] },
     { answer: [{ valueDate: '2025-05-14' }], linkId: 'lab.6298-4.date' },
@@ -337,7 +339,7 @@ const registrationResponseAndroid = {
       item: [
         {
           linkId: 'lab.2160-0.exists-description',
-          text: 'The creatinine level in your body helps understand how your liver handles the drugs you are taking.',
+          text: 'The creatinine level in your body helps understand how your kidneys handle the drugs you are taking.',
         },
         {
           linkId: 'lab.2160-0.exists',
@@ -356,7 +358,7 @@ const registrationResponseAndroid = {
       item: [
         {
           linkId: 'lab.2160-0.description',
-          text: 'The creatinine level in your body helps understand how your liver handles the drugs you are taking.',
+          text: 'The creatinine level in your body helps understand how your kidneys handle the drugs you are taking.',
         },
         {
           linkId: 'lab.2160-0.value',
@@ -392,34 +394,6 @@ const registrationResponseAndroid = {
           answer: [
             {
               valueBoolean: true,
-            },
-          ],
-        },
-      ],
-    },
-    {
-      linkId: 'lab.98979-8.page1',
-      text: 'eGFR',
-      item: [
-        {
-          linkId: 'lab.98979-8.description',
-          text: 'eGFR (estimated Glomerular Filtration Rate) is a test that estimates how well your kidneys are filtering blood.',
-        },
-        {
-          linkId: 'lab.98979-8.value',
-          text: 'eGFR (mL/min/1.73m2):',
-          answer: [
-            {
-              valueDecimal: 55.0,
-            },
-          ],
-        },
-        {
-          linkId: 'lab.98979-8.date',
-          text: 'Date:',
-          answer: [
-            {
-              valueDate: '2025-05-23',
             },
           ],
         },

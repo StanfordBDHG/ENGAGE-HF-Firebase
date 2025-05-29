@@ -125,6 +125,7 @@ export class DefaultServiceFactory implements ServiceFactory {
         new DataUpdateQuestionnaireResponseService({
           messageService: this.messageService.value,
           patientService: this.patientService.value,
+          userService: this.userService.value,
         }),
         new RegistrationQuestionnaireResponseService({
           messageService: this.messageService.value,

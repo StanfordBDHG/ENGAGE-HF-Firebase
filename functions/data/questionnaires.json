@@ -26,9 +26,7 @@
     "language": "en-US",
     "status": "active",
     "publisher": "Stanford Biodesign Digital Health",
-    "subjectType": [
-      "Patient"
-    ],
+    "subjectType": ["Patient"],
     "useContext": [
       {
         "code": {
@@ -1467,9 +1465,7 @@
     "language": "en-US",
     "status": "active",
     "publisher": "Stanford Biodesign Digital Health",
-    "subjectType": [
-      "Patient"
-    ],
+    "subjectType": ["Patient"],
     "useContext": [],
     "contact": [
       {
@@ -1654,7 +1650,7 @@
           {
             "linkId": "lab.2160-0.exists-description",
             "type": "display",
-            "text": "The creatinine level in your body helps understand how your liver handles the drugs you are taking.",
+            "text": "The creatinine level in your body helps understand how your kidneys handle the drugs you are taking.",
             "required": false,
             "unit": null,
             "answerOption": null,
@@ -1727,7 +1723,7 @@
           {
             "linkId": "lab.2160-0.description",
             "type": "display",
-            "text": "The creatinine level in your body helps understand how your liver handles the drugs you are taking.",
+            "text": "The creatinine level in your body helps understand how your kidneys handle the drugs you are taking.",
             "required": false,
             "unit": null,
             "answerOption": null,
@@ -1750,150 +1746,6 @@
           },
           {
             "linkId": "lab.2160-0.date",
-            "type": "date",
-            "text": "Date:",
-            "required": true,
-            "unit": null,
-            "answerOption": null,
-            "enableWhen": null,
-            "enableBehavior": null,
-            "extension": null,
-            "item": null
-          }
-        ]
-      },
-      {
-        "linkId": "lab.98979-8.exists",
-        "type": "group",
-        "text": "eGFR",
-        "required": false,
-        "unit": null,
-        "answerOption": null,
-        "enableWhen": null,
-        "enableBehavior": null,
-        "extension": [
-          {
-            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
-            "valueQuantities": null,
-            "valueReference": null,
-            "valueString": null,
-            "valueCodeableConcept": {
-              "coding": [
-                {
-                  "id": null,
-                  "extension": null,
-                  "system": "http://hl7.org/fhir/questionnaire-item-control",
-                  "version": null,
-                  "code": "page",
-                  "display": "Page",
-                  "userSelected": null
-                }
-              ],
-              "text": "Page"
-            },
-            "valueMedicationRequest": null
-          }
-        ],
-        "item": [
-          {
-            "linkId": "lab.98979-8.exists-description",
-            "type": "display",
-            "text": "eGFR (estimated Glomerular Filtration Rate) is a test that estimates how well your kidneys are filtering blood.",
-            "required": false,
-            "unit": null,
-            "answerOption": null,
-            "enableWhen": null,
-            "enableBehavior": null,
-            "extension": null,
-            "item": null
-          },
-          {
-            "linkId": "lab.98979-8.exists",
-            "type": "boolean",
-            "text": "Have you recently received a new eGFR value?",
-            "required": true,
-            "unit": null,
-            "answerOption": null,
-            "enableWhen": null,
-            "enableBehavior": null,
-            "extension": null,
-            "item": null
-          }
-        ]
-      },
-      {
-        "linkId": "lab.98979-8.page1",
-        "type": "group",
-        "text": "eGFR",
-        "required": false,
-        "unit": null,
-        "answerOption": null,
-        "enableWhen": [
-          {
-            "question": "lab.98979-8.exists",
-            "operator": "=",
-            "answerBoolean": true,
-            "answerDecimal": null,
-            "answerInteger": null,
-            "answerDate": null,
-            "answerDateTime": null,
-            "answerString": null,
-            "answerCoding": null,
-            "answerQuantity": null,
-            "answerReference": null
-          }
-        ],
-        "enableBehavior": null,
-        "extension": [
-          {
-            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
-            "valueQuantities": null,
-            "valueReference": null,
-            "valueString": null,
-            "valueCodeableConcept": {
-              "coding": [
-                {
-                  "id": null,
-                  "extension": null,
-                  "system": "http://hl7.org/fhir/questionnaire-item-control",
-                  "version": null,
-                  "code": "page",
-                  "display": "Page",
-                  "userSelected": null
-                }
-              ],
-              "text": "Page"
-            },
-            "valueMedicationRequest": null
-          }
-        ],
-        "item": [
-          {
-            "linkId": "lab.98979-8.description",
-            "type": "display",
-            "text": "eGFR (estimated Glomerular Filtration Rate) is a test that estimates how well your kidneys are filtering blood.",
-            "required": false,
-            "unit": null,
-            "answerOption": null,
-            "enableWhen": null,
-            "enableBehavior": null,
-            "extension": null,
-            "item": null
-          },
-          {
-            "linkId": "lab.98979-8.value",
-            "type": "decimal",
-            "text": "eGFR (mL/min/1.73m2):",
-            "required": true,
-            "unit": "mL/min/1.73m2",
-            "answerOption": null,
-            "enableWhen": null,
-            "enableBehavior": null,
-            "extension": null,
-            "item": null
-          },
-          {
-            "linkId": "lab.98979-8.date",
             "type": "date",
             "text": "Date:",
             "required": true,
@@ -4548,9 +4400,7 @@
     "language": "en-US",
     "status": "active",
     "publisher": "Stanford Biodesign Digital Health",
-    "subjectType": [
-      "Patient"
-    ],
+    "subjectType": ["Patient"],
     "useContext": [],
     "contact": [
       {
@@ -4596,7 +4446,7 @@
           {
             "linkId": "lab.2160-0.exists-description",
             "type": "display",
-            "text": "The creatinine level in your body helps understand how your liver handles the drugs you are taking.",
+            "text": "The creatinine level in your body helps understand how your kidneys handle the drugs you are taking.",
             "required": false,
             "unit": null,
             "answerOption": null,
@@ -4669,7 +4519,7 @@
           {
             "linkId": "lab.2160-0.description",
             "type": "display",
-            "text": "The creatinine level in your body helps understand how your liver handles the drugs you are taking.",
+            "text": "The creatinine level in your body helps understand how your kidneys handle the drugs you are taking.",
             "required": false,
             "unit": null,
             "answerOption": null,
@@ -4692,150 +4542,6 @@
           },
           {
             "linkId": "lab.2160-0.date",
-            "type": "date",
-            "text": "Date:",
-            "required": true,
-            "unit": null,
-            "answerOption": null,
-            "enableWhen": null,
-            "enableBehavior": null,
-            "extension": null,
-            "item": null
-          }
-        ]
-      },
-      {
-        "linkId": "lab.98979-8.exists",
-        "type": "group",
-        "text": "eGFR",
-        "required": false,
-        "unit": null,
-        "answerOption": null,
-        "enableWhen": null,
-        "enableBehavior": null,
-        "extension": [
-          {
-            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
-            "valueQuantities": null,
-            "valueReference": null,
-            "valueString": null,
-            "valueCodeableConcept": {
-              "coding": [
-                {
-                  "id": null,
-                  "extension": null,
-                  "system": "http://hl7.org/fhir/questionnaire-item-control",
-                  "version": null,
-                  "code": "page",
-                  "display": "Page",
-                  "userSelected": null
-                }
-              ],
-              "text": "Page"
-            },
-            "valueMedicationRequest": null
-          }
-        ],
-        "item": [
-          {
-            "linkId": "lab.98979-8.exists-description",
-            "type": "display",
-            "text": "eGFR (estimated Glomerular Filtration Rate) is a test that estimates how well your kidneys are filtering blood.",
-            "required": false,
-            "unit": null,
-            "answerOption": null,
-            "enableWhen": null,
-            "enableBehavior": null,
-            "extension": null,
-            "item": null
-          },
-          {
-            "linkId": "lab.98979-8.exists",
-            "type": "boolean",
-            "text": "Have you recently received a new eGFR value?",
-            "required": true,
-            "unit": null,
-            "answerOption": null,
-            "enableWhen": null,
-            "enableBehavior": null,
-            "extension": null,
-            "item": null
-          }
-        ]
-      },
-      {
-        "linkId": "lab.98979-8.page1",
-        "type": "group",
-        "text": "eGFR",
-        "required": false,
-        "unit": null,
-        "answerOption": null,
-        "enableWhen": [
-          {
-            "question": "lab.98979-8.exists",
-            "operator": "=",
-            "answerBoolean": true,
-            "answerDecimal": null,
-            "answerInteger": null,
-            "answerDate": null,
-            "answerDateTime": null,
-            "answerString": null,
-            "answerCoding": null,
-            "answerQuantity": null,
-            "answerReference": null
-          }
-        ],
-        "enableBehavior": null,
-        "extension": [
-          {
-            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
-            "valueQuantities": null,
-            "valueReference": null,
-            "valueString": null,
-            "valueCodeableConcept": {
-              "coding": [
-                {
-                  "id": null,
-                  "extension": null,
-                  "system": "http://hl7.org/fhir/questionnaire-item-control",
-                  "version": null,
-                  "code": "page",
-                  "display": "Page",
-                  "userSelected": null
-                }
-              ],
-              "text": "Page"
-            },
-            "valueMedicationRequest": null
-          }
-        ],
-        "item": [
-          {
-            "linkId": "lab.98979-8.description",
-            "type": "display",
-            "text": "eGFR (estimated Glomerular Filtration Rate) is a test that estimates how well your kidneys are filtering blood.",
-            "required": false,
-            "unit": null,
-            "answerOption": null,
-            "enableWhen": null,
-            "enableBehavior": null,
-            "extension": null,
-            "item": null
-          },
-          {
-            "linkId": "lab.98979-8.value",
-            "type": "decimal",
-            "text": "eGFR (mL/min/1.73m2):",
-            "required": true,
-            "unit": "mL/min/1.73m2",
-            "answerOption": null,
-            "enableWhen": null,
-            "enableBehavior": null,
-            "extension": null,
-            "item": null
-          },
-          {
-            "linkId": "lab.98979-8.date",
             "type": "date",
             "text": "Date:",
             "required": true,
@@ -7490,9 +7196,7 @@
     "language": "en-US",
     "status": "active",
     "publisher": "Stanford Biodesign Digital Health",
-    "subjectType": [
-      "Patient"
-    ],
+    "subjectType": ["Patient"],
     "useContext": [],
     "contact": [
       {
@@ -7538,7 +7242,7 @@
           {
             "linkId": "lab.2160-0.exists-description",
             "type": "display",
-            "text": "The creatinine level in your body helps understand how your liver handles the drugs you are taking.",
+            "text": "The creatinine level in your body helps understand how your kidneys handle the drugs you are taking.",
             "required": false,
             "unit": null,
             "answerOption": null,
@@ -7611,7 +7315,7 @@
           {
             "linkId": "lab.2160-0.description",
             "type": "display",
-            "text": "The creatinine level in your body helps understand how your liver handles the drugs you are taking.",
+            "text": "The creatinine level in your body helps understand how your kidneys handle the drugs you are taking.",
             "required": false,
             "unit": null,
             "answerOption": null,
@@ -7634,150 +7338,6 @@
           },
           {
             "linkId": "lab.2160-0.date",
-            "type": "date",
-            "text": "Date:",
-            "required": true,
-            "unit": null,
-            "answerOption": null,
-            "enableWhen": null,
-            "enableBehavior": null,
-            "extension": null,
-            "item": null
-          }
-        ]
-      },
-      {
-        "linkId": "lab.98979-8.exists",
-        "type": "group",
-        "text": "eGFR",
-        "required": false,
-        "unit": null,
-        "answerOption": null,
-        "enableWhen": null,
-        "enableBehavior": null,
-        "extension": [
-          {
-            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
-            "valueQuantities": null,
-            "valueReference": null,
-            "valueString": null,
-            "valueCodeableConcept": {
-              "coding": [
-                {
-                  "id": null,
-                  "extension": null,
-                  "system": "http://hl7.org/fhir/questionnaire-item-control",
-                  "version": null,
-                  "code": "page",
-                  "display": "Page",
-                  "userSelected": null
-                }
-              ],
-              "text": "Page"
-            },
-            "valueMedicationRequest": null
-          }
-        ],
-        "item": [
-          {
-            "linkId": "lab.98979-8.exists-description",
-            "type": "display",
-            "text": "eGFR (estimated Glomerular Filtration Rate) is a test that estimates how well your kidneys are filtering blood.",
-            "required": false,
-            "unit": null,
-            "answerOption": null,
-            "enableWhen": null,
-            "enableBehavior": null,
-            "extension": null,
-            "item": null
-          },
-          {
-            "linkId": "lab.98979-8.exists",
-            "type": "boolean",
-            "text": "Have you recently received a new eGFR value?",
-            "required": true,
-            "unit": null,
-            "answerOption": null,
-            "enableWhen": null,
-            "enableBehavior": null,
-            "extension": null,
-            "item": null
-          }
-        ]
-      },
-      {
-        "linkId": "lab.98979-8.page1",
-        "type": "group",
-        "text": "eGFR",
-        "required": false,
-        "unit": null,
-        "answerOption": null,
-        "enableWhen": [
-          {
-            "question": "lab.98979-8.exists",
-            "operator": "=",
-            "answerBoolean": true,
-            "answerDecimal": null,
-            "answerInteger": null,
-            "answerDate": null,
-            "answerDateTime": null,
-            "answerString": null,
-            "answerCoding": null,
-            "answerQuantity": null,
-            "answerReference": null
-          }
-        ],
-        "enableBehavior": null,
-        "extension": [
-          {
-            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
-            "valueQuantities": null,
-            "valueReference": null,
-            "valueString": null,
-            "valueCodeableConcept": {
-              "coding": [
-                {
-                  "id": null,
-                  "extension": null,
-                  "system": "http://hl7.org/fhir/questionnaire-item-control",
-                  "version": null,
-                  "code": "page",
-                  "display": "Page",
-                  "userSelected": null
-                }
-              ],
-              "text": "Page"
-            },
-            "valueMedicationRequest": null
-          }
-        ],
-        "item": [
-          {
-            "linkId": "lab.98979-8.description",
-            "type": "display",
-            "text": "eGFR (estimated Glomerular Filtration Rate) is a test that estimates how well your kidneys are filtering blood.",
-            "required": false,
-            "unit": null,
-            "answerOption": null,
-            "enableWhen": null,
-            "enableBehavior": null,
-            "extension": null,
-            "item": null
-          },
-          {
-            "linkId": "lab.98979-8.value",
-            "type": "decimal",
-            "text": "eGFR (mL/min/1.73m2):",
-            "required": true,
-            "unit": "mL/min/1.73m2",
-            "answerOption": null,
-            "enableWhen": null,
-            "enableBehavior": null,
-            "extension": null,
-            "item": null
-          },
-          {
-            "linkId": "lab.98979-8.date",
             "type": "date",
             "text": "Date:",
             "required": true,

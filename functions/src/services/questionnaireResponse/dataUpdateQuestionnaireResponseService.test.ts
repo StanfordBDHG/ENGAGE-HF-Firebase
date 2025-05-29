@@ -11,12 +11,11 @@ import {
   fhirQuestionnaireResponseConverter,
   StaticDataComponent,
   UserObservationCollection,
-  UserSex,
   UserType,
   QuantityUnit,
-  MedicationReference,
   FHIRMedicationRequest,
   DrugReference,
+  UserSex,
 } from '@stanfordbdhg/engagehf-models'
 import { _defaultSeed } from '../../functions/defaultSeed.js'
 import { onUserQuestionnaireResponseWritten } from '../../functions/onUserDocumentWritten.js'
@@ -34,6 +33,8 @@ describeWithEmulators('DataUpdateQuestionnaireResponseService', (env) => {
       type: UserType.patient,
       organization: 'stanford',
       selfManaged: true,
+      dateOfBirth: new Date('1980-01-01'),
+      sex: UserSex.female,
     })
 
     const previousMedicationRequests = [
@@ -110,7 +111,10 @@ describeWithEmulators('DataUpdateQuestionnaireResponseService', (env) => {
     const egfrDocs = await env.collections
       .userObservations(userId, UserObservationCollection.eGfr)
       .get()
-    expect(egfrDocs.size).toBe(0)
+    expect(egfrDocs.size).toBe(1)
+    expect(
+      egfrDocs.docs[0].data().estimatedGlomerularFiltrationRate?.value,
+    ).toBeCloseTo(2.746196772902818, 5)
 
     const potassiumDocs = await env.collections
       .userObservations(userId, UserObservationCollection.potassium)
@@ -140,6 +144,8 @@ describeWithEmulators('DataUpdateQuestionnaireResponseService', (env) => {
       type: UserType.patient,
       organization: 'stanford',
       selfManaged: true,
+      dateOfBirth: new Date('1980-01-01'),
+      sex: UserSex.male,
     })
 
     const previousMedicationRequests = [
@@ -219,7 +225,7 @@ describeWithEmulators('DataUpdateQuestionnaireResponseService', (env) => {
     expect(egfrDocs.size).toBe(1)
     expect(
       egfrDocs.docs[0].data().estimatedGlomerularFiltrationRate?.value,
-    ).toBe(55)
+    ).toBeCloseTo(15.558903872457991, 5)
 
     const potassiumDocs = await env.collections
       .userObservations(userId, UserObservationCollection.potassium)
@@ -249,7 +255,6 @@ const dataUpdateResponseApple = {
     { answer: [{ valueBoolean: true }], linkId: 'lab.2160-0.exists' },
     { answer: [{ valueDecimal: 15 }], linkId: 'lab.2160-0.value' },
     { answer: [{ valueDate: '2025-05-14' }], linkId: 'lab.2160-0.date' },
-    { linkId: 'lab.98979-8.exists', answer: [{ valueBoolean: false }] },
     { linkId: 'lab.6298-4.exists', answer: [{ valueBoolean: true }] },
     { linkId: 'lab.6298-4.value', answer: [{ valueDecimal: 1.75 }] },
     { answer: [{ valueDate: '2025-05-14' }], linkId: 'lab.6298-4.date' },
@@ -312,7 +317,7 @@ const postAppointmentResponseAndroid = {
       item: [
         {
           linkId: 'lab.2160-0.exists-description',
-          text: 'The creatinine level in your body helps understand how your liver handles the drugs you are taking.',
+          text: 'The creatinine level in your body helps understand how your kidneys handle the drugs you are taking.',
         },
         {
           linkId: 'lab.2160-0.exists',
@@ -331,7 +336,7 @@ const postAppointmentResponseAndroid = {
       item: [
         {
           linkId: 'lab.2160-0.description',
-          text: 'The creatinine level in your body helps understand how your liver handles the drugs you are taking.',
+          text: 'The creatinine level in your body helps understand how your kidneys handle the drugs you are taking.',
         },
         {
           linkId: 'lab.2160-0.value',
@@ -367,34 +372,6 @@ const postAppointmentResponseAndroid = {
           answer: [
             {
               valueBoolean: true,
-            },
-          ],
-        },
-      ],
-    },
-    {
-      linkId: 'lab.98979-8.page1',
-      text: 'eGFR',
-      item: [
-        {
-          linkId: 'lab.98979-8.description',
-          text: 'eGFR (estimated Glomerular Filtration Rate) is a test that estimates how well your kidneys are filtering blood.',
-        },
-        {
-          linkId: 'lab.98979-8.value',
-          text: 'eGFR (mL/min/1.73m2):',
-          answer: [
-            {
-              valueDecimal: 55.0,
-            },
-          ],
-        },
-        {
-          linkId: 'lab.98979-8.date',
-          text: 'Date:',
-          answer: [
-            {
-              valueDate: '2025-05-23',
             },
           ],
         },

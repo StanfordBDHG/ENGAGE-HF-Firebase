@@ -7,6 +7,7 @@
 //
 
 import {
+  User,
   UserMessageType,
   type FHIRQuestionnaireResponse,
 } from '@stanfordbdhg/engagehf-models'
@@ -18,22 +19,27 @@ import {
   QuestionnaireId,
   QuestionnaireLinkId,
 } from '../seeding/staticData/questionnaireFactory/questionnaireLinkIds.js'
+import { UserService } from '../user/userService.js'
+import { logger } from 'firebase-functions/v2'
 
 export class DataUpdateQuestionnaireResponseService extends QuestionnaireResponseService {
   // Properties
 
   private readonly messageService: MessageService
   private readonly patientService: PatientService
+  private readonly userService: UserService
 
   // Constructor
 
   constructor(input: {
     messageService: MessageService
     patientService: PatientService
+    userService: UserService
   }) {
     super()
     this.messageService = input.messageService
     this.patientService = input.patientService
+    this.userService = input.userService
   }
 
   // Methods
@@ -52,9 +58,19 @@ export class DataUpdateQuestionnaireResponseService extends QuestionnaireRespons
     ]
     if (!urls.includes(response.content.questionnaire)) return false
 
+    let user: User | null
+    try {
+      user = (await this.userService.getUser(userId))?.content ?? null
+    } catch (error) {
+      logger.error(`Failed to fetch user ${userId}:`, error)
+      user = null
+    }
+    
     await this.handleLabValues({
       userId,
       response,
+      dateOfBirth: user?.dateOfBirth ?? null,
+      sex: user?.sex ?? null,
       patientService: this.patientService,
     })
 

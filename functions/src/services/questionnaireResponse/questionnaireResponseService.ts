@@ -16,6 +16,7 @@ import {
   FHIRAppointment,
   FHIRAppointmentStatus,
   UserObservationCollection,
+  User,
 } from '@stanfordbdhg/engagehf-models'
 import { z } from 'zod'
 import { type Document } from '../database/databaseService.js'
@@ -24,6 +25,8 @@ import {
   MedicationGroup,
   QuestionnaireLinkId,
 } from '../seeding/staticData/questionnaireFactory/questionnaireLinkIds.js'
+import { UserService } from '../user/userService.js'
+import { logger } from 'firebase-functions/v2'
 
 export interface QuestionnaireResponseMedicationRequests {
   reference: string
@@ -163,6 +166,8 @@ export abstract class QuestionnaireResponseService {
   protected async handleLabValues(input: {
     userId: string
     patientService: PatientService
+    dateOfBirth: Date | null
+    sex: UserSex | null
     response: Document<FHIRQuestionnaireResponse>
   }): Promise<void> {
     const observationValues: Array<{
@@ -181,6 +186,33 @@ export abstract class QuestionnaireResponseService {
         loincCode: LoincCode.creatinine,
         collection: UserObservationCollection.creatinine,
       })
+
+      if (input.dateOfBirth !== null && input.sex !== null) {
+        const eGfr = this.calculateEstimatedGlomerularFiltrationRate({
+          creatinine: creatinine.value,
+          dateOfBirth: input.dateOfBirth,
+          sex: input.sex,
+        })
+        if (eGfr !== null) {
+          observationValues.push({
+            observation: {
+              value: eGfr,
+              unit: QuantityUnit.mL_min_173m2,
+              date: creatinine.date,
+            },
+            loincCode: LoincCode.estimatedGlomerularFiltrationRate,
+            collection: UserObservationCollection.eGfr,
+          })
+        } else {
+          logger.error(
+            `Unable to calculate eGFR for user ${input.userId} with creatinine ${creatinine.value}, date of birth ${input.dateOfBirth} and sex ${input.sex}.`,
+          )
+        }
+      } else {
+        logger.error(
+          `Missing date of birth or user sex for eGFR calculation for user ${input.userId}.`,
+        )
+      }
     }
 
     const dryWeight = this.extractLabValue(input.response.content, {
@@ -192,21 +224,6 @@ export abstract class QuestionnaireResponseService {
         observation: dryWeight,
         loincCode: LoincCode.dryWeight,
         collection: UserObservationCollection.dryWeight,
-      })
-    }
-
-    const estimatedGlomerularFiltrationRate = this.extractLabValue(
-      input.response.content,
-      {
-        code: LoincCode.estimatedGlomerularFiltrationRate,
-        unit: QuantityUnit.mL_min_173m2,
-      },
-    )
-    if (estimatedGlomerularFiltrationRate !== null) {
-      observationValues.push({
-        observation: estimatedGlomerularFiltrationRate,
-        loincCode: LoincCode.estimatedGlomerularFiltrationRate,
-        collection: UserObservationCollection.eGfr,
       })
     }
 
@@ -227,6 +244,61 @@ export abstract class QuestionnaireResponseService {
         input.userId,
         observationValues,
       )
+    }
+  }
+
+  // Methods - Helpers
+
+  private calculateEstimatedGlomerularFiltrationRate(input: {
+    creatinine: number
+    dateOfBirth: Date
+    sex: UserSex
+  }): number | null {
+    //
+    // https://www.kidney.org/ckd-epi-creatinine-equation-2021
+    //
+    // eGFR = 142 x min(S_cr/κ, 1)^alpha x max(S_cr/κ, 1)-1.200 x 0.9938^age x 1.012 [if female]
+    //
+    // where:
+    // - S_cr = standardized serum creatinine in mg/dL
+    // - κ = 0.7 (females) or 0.9 (males)
+    // - alpha = -0.241 (female) or -0.302 (male)
+    // - min(Scr/κ, 1) is the minimum of Scr/κ or 1.0
+    // - max(Scr/κ, 1) is the maximum of Scr/κ or 1.0
+    // - age (years)
+    //
+    // Additional source for testing:
+    // - https://www.mdcalc.com/calc/3939/ckd-epi-equations-glomerular-filtration-rate-gfr
+    //
+
+    const age = new Date().getFullYear() - input.dateOfBirth.getFullYear()
+    switch (input.sex) {
+      case UserSex.female: {
+        const k = 0.7
+        const min = Math.min(input.creatinine / k, 1)
+        const max = Math.max(input.creatinine / k, 1)
+        return (
+          142 *
+          Math.pow(min, -0.241) *
+          Math.pow(max, -1.2) *
+          Math.pow(0.9938, age) *
+          1.012
+        )
+      }
+      case UserSex.male: {
+        const k = 0.9
+        const min = Math.min(input.creatinine / k, 1)
+        const max = Math.max(input.creatinine / k, 1)
+        return (
+          142 *
+          Math.pow(min, -0.302) *
+          Math.pow(max, -1.2) *
+          Math.pow(0.9938, age)
+        )
+      }
+      case UserSex.other:
+        // TODO: Possibly figure out how to handle non-binary users
+        return null
     }
   }
 }

@@ -58,6 +58,8 @@ export class RegistrationQuestionnaireResponseService extends QuestionnaireRespo
     await this.handleLabValues({
       userId,
       response,
+      dateOfBirth: personalInfo?.dateOfBirth ?? null,
+      sex: personalInfo?.sex ?? null,
       patientService: this.patientService,
     })
 
