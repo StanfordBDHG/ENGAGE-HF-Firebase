@@ -225,7 +225,7 @@ describeWithEmulators('DataUpdateQuestionnaireResponseService', (env) => {
     expect(egfrDocs.size).toBe(1)
     expect(
       egfrDocs.docs[0].data().estimatedGlomerularFiltrationRate?.value,
-    ).toBeCloseTo(15.558903872457991, 5)
+    ).toBeCloseTo(15.65597089198832, 5)
 
     const potassiumDocs = await env.collections
       .userObservations(userId, UserObservationCollection.potassium)

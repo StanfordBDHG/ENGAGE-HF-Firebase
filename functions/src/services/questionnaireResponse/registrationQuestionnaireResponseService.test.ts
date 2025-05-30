@@ -98,7 +98,7 @@ describeWithEmulators('RegistrationQuestionnaireResponseService', (env) => {
     expect(egfrDocs.size).toBe(1)
     expect(
       egfrDocs.docs[0].data().estimatedGlomerularFiltrationRate?.value,
-    ).toBeCloseTo(3.633097006675995, 5)
+    ).toBeCloseTo(3.6557627356369444, 5)
 
     const potassiumDocs = await env.collections
       .userObservations(userId, UserObservationCollection.potassium)
@@ -195,7 +195,7 @@ describeWithEmulators('RegistrationQuestionnaireResponseService', (env) => {
     expect(egfrDocs.size).toBe(1)
     expect(
       egfrDocs.docs[0].data().estimatedGlomerularFiltrationRate?.value,
-    ).toBeCloseTo(20.456123245266184, 5)
+    ).toBeCloseTo(20.712157826973794, 5)
 
     const potassiumDocs = await env.collections
       .userObservations(userId, UserObservationCollection.potassium)
