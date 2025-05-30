@@ -14,6 +14,7 @@ import {
   FHIRAppointmentStatus,
   FHIRMedicationRequest,
   type FHIRQuestionnaireResponse,
+  type FHIRReference,
   type LoincCode,
   type Observation,
   QuantityUnit,
@@ -299,6 +300,7 @@ export class MockPatientService implements PatientService {
       loincCode: LoincCode
       collection: UserObservationCollection
     }>,
+    reference: FHIRReference | null,
   ): Promise<void> {
     return
   }

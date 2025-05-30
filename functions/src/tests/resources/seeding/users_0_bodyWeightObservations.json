@@ -28,7 +28,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-06-03T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "1": {
     "id": "1",
@@ -59,7 +60,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-06-02T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "2": {
     "id": "2",
@@ -90,7 +92,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-06-01T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "3": {
     "id": "3",
@@ -121,7 +124,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-05-31T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "4": {
     "id": "4",
@@ -152,7 +156,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-05-30T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "5": {
     "id": "5",
@@ -183,7 +188,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-05-29T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "6": {
     "id": "6",
@@ -214,7 +220,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-05-28T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "7": {
     "id": "7",
@@ -245,7 +252,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-05-27T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "8": {
     "id": "8",
@@ -276,7 +284,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-05-26T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "9": {
     "id": "9",
@@ -307,7 +316,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-05-25T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "10": {
     "id": "10",
@@ -338,7 +348,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-05-24T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "11": {
     "id": "11",
@@ -369,7 +380,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-05-23T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "12": {
     "id": "12",
@@ -400,7 +412,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-05-22T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "13": {
     "id": "13",
@@ -431,7 +444,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-05-21T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "14": {
     "id": "14",
@@ -462,7 +476,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-05-20T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "15": {
     "id": "15",
@@ -493,7 +508,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-05-19T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "16": {
     "id": "16",
@@ -524,7 +540,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-05-18T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "17": {
     "id": "17",
@@ -555,7 +572,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-05-17T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "18": {
     "id": "18",
@@ -586,7 +604,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-05-16T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "19": {
     "id": "19",
@@ -617,7 +636,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-05-15T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "20": {
     "id": "20",
@@ -648,7 +668,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-05-14T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "21": {
     "id": "21",
@@ -679,7 +700,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-05-13T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "22": {
     "id": "22",
@@ -710,7 +732,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-05-12T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "23": {
     "id": "23",
@@ -741,7 +764,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-05-11T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "24": {
     "id": "24",
@@ -772,7 +796,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-05-10T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "25": {
     "id": "25",
@@ -803,7 +828,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-05-09T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "26": {
     "id": "26",
@@ -834,7 +860,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-05-08T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "27": {
     "id": "27",
@@ -865,7 +892,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-05-07T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "28": {
     "id": "28",
@@ -896,7 +924,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-05-06T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "29": {
     "id": "29",
@@ -927,7 +956,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-05-05T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "30": {
     "id": "30",
@@ -958,7 +988,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-05-04T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "31": {
     "id": "31",
@@ -989,7 +1020,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-05-03T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "32": {
     "id": "32",
@@ -1020,7 +1052,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-05-02T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "33": {
     "id": "33",
@@ -1051,7 +1084,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-05-01T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "34": {
     "id": "34",
@@ -1082,7 +1116,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-04-30T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "35": {
     "id": "35",
@@ -1113,7 +1148,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-04-29T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "36": {
     "id": "36",
@@ -1144,7 +1180,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-04-28T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "37": {
     "id": "37",
@@ -1175,7 +1212,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-04-27T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "38": {
     "id": "38",
@@ -1206,7 +1244,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-04-26T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "39": {
     "id": "39",
@@ -1237,7 +1276,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-04-25T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "40": {
     "id": "40",
@@ -1268,7 +1308,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-04-24T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "41": {
     "id": "41",
@@ -1299,7 +1340,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-04-23T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "42": {
     "id": "42",
@@ -1330,7 +1372,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-04-22T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "43": {
     "id": "43",
@@ -1361,7 +1404,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-04-21T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "44": {
     "id": "44",
@@ -1392,7 +1436,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-04-20T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "45": {
     "id": "45",
@@ -1423,7 +1468,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-04-19T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "46": {
     "id": "46",
@@ -1454,7 +1500,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-04-18T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "47": {
     "id": "47",
@@ -1485,7 +1532,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-04-17T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "48": {
     "id": "48",
@@ -1516,7 +1564,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-04-16T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "49": {
     "id": "49",
@@ -1547,7 +1596,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-04-15T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "50": {
     "id": "50",
@@ -1578,7 +1628,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-04-14T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "51": {
     "id": "51",
@@ -1609,7 +1660,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-04-13T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "52": {
     "id": "52",
@@ -1640,7 +1692,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-04-12T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "53": {
     "id": "53",
@@ -1671,7 +1724,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-04-11T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "54": {
     "id": "54",
@@ -1702,7 +1756,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-04-10T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "55": {
     "id": "55",
@@ -1733,7 +1788,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-04-09T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "56": {
     "id": "56",
@@ -1764,7 +1820,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-04-08T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "57": {
     "id": "57",
@@ -1795,7 +1852,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-04-07T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "58": {
     "id": "58",
@@ -1826,7 +1884,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-04-06T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "59": {
     "id": "59",
@@ -1857,7 +1916,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-04-05T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "60": {
     "id": "60",
@@ -1888,7 +1948,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-04-04T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "61": {
     "id": "61",
@@ -1919,7 +1980,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-04-03T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "62": {
     "id": "62",
@@ -1950,7 +2012,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-04-02T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "63": {
     "id": "63",
@@ -1981,7 +2044,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-04-01T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "64": {
     "id": "64",
@@ -2012,7 +2076,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-03-31T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "65": {
     "id": "65",
@@ -2043,7 +2108,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-03-30T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "66": {
     "id": "66",
@@ -2074,7 +2140,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-03-29T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "67": {
     "id": "67",
@@ -2105,7 +2172,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-03-28T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "68": {
     "id": "68",
@@ -2136,7 +2204,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-03-27T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "69": {
     "id": "69",
@@ -2167,7 +2236,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-03-26T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "70": {
     "id": "70",
@@ -2198,7 +2268,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-03-25T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "71": {
     "id": "71",
@@ -2229,7 +2300,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-03-24T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "72": {
     "id": "72",
@@ -2260,7 +2332,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-03-23T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "73": {
     "id": "73",
@@ -2291,7 +2364,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-03-22T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "74": {
     "id": "74",
@@ -2322,7 +2396,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-03-21T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "75": {
     "id": "75",
@@ -2353,7 +2428,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-03-20T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "76": {
     "id": "76",
@@ -2384,7 +2460,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-03-19T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "77": {
     "id": "77",
@@ -2415,7 +2492,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-03-18T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "78": {
     "id": "78",
@@ -2446,7 +2524,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-03-17T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "79": {
     "id": "79",
@@ -2477,7 +2556,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-03-16T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "80": {
     "id": "80",
@@ -2508,7 +2588,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-03-15T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "81": {
     "id": "81",
@@ -2539,7 +2620,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-03-14T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "82": {
     "id": "82",
@@ -2570,7 +2652,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-03-13T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "83": {
     "id": "83",
@@ -2601,7 +2684,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-03-12T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "84": {
     "id": "84",
@@ -2632,7 +2716,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-03-11T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "85": {
     "id": "85",
@@ -2663,7 +2748,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-03-10T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "86": {
     "id": "86",
@@ -2694,7 +2780,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-03-09T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "87": {
     "id": "87",
@@ -2725,7 +2812,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-03-08T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "88": {
     "id": "88",
@@ -2756,7 +2844,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-03-07T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "89": {
     "id": "89",
@@ -2787,7 +2876,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-03-06T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "90": {
     "id": "90",
@@ -2818,7 +2908,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-03-05T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "91": {
     "id": "91",
@@ -2849,7 +2940,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-03-04T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "92": {
     "id": "92",
@@ -2880,7 +2972,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-03-03T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "93": {
     "id": "93",
@@ -2911,7 +3004,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-03-02T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "94": {
     "id": "94",
@@ -2942,7 +3036,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-03-01T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "95": {
     "id": "95",
@@ -2973,7 +3068,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-02-29T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "96": {
     "id": "96",
@@ -3004,7 +3100,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-02-28T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "97": {
     "id": "97",
@@ -3035,7 +3132,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-02-27T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "98": {
     "id": "98",
@@ -3066,7 +3164,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-02-26T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "99": {
     "id": "99",
@@ -3097,7 +3196,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-02-25T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "100": {
     "id": "100",
@@ -3128,7 +3228,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-02-24T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "101": {
     "id": "101",
@@ -3159,7 +3260,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-02-23T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "102": {
     "id": "102",
@@ -3190,7 +3292,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-02-22T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "103": {
     "id": "103",
@@ -3221,7 +3324,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-02-21T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "104": {
     "id": "104",
@@ -3252,7 +3356,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-02-20T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "105": {
     "id": "105",
@@ -3283,7 +3388,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-02-19T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "106": {
     "id": "106",
@@ -3314,7 +3420,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-02-18T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "107": {
     "id": "107",
@@ -3345,7 +3452,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-02-17T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "108": {
     "id": "108",
@@ -3376,7 +3484,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-02-16T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "109": {
     "id": "109",
@@ -3407,7 +3516,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-02-15T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "110": {
     "id": "110",
@@ -3438,7 +3548,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-02-14T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "111": {
     "id": "111",
@@ -3469,7 +3580,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-02-13T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "112": {
     "id": "112",
@@ -3500,7 +3612,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-02-12T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "113": {
     "id": "113",
@@ -3531,7 +3644,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-02-11T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "114": {
     "id": "114",
@@ -3562,7 +3676,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-02-10T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "115": {
     "id": "115",
@@ -3593,7 +3708,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-02-09T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "116": {
     "id": "116",
@@ -3624,7 +3740,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-02-08T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "117": {
     "id": "117",
@@ -3655,7 +3772,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-02-07T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "118": {
     "id": "118",
@@ -3686,7 +3804,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-02-06T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "119": {
     "id": "119",
@@ -3717,7 +3836,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-02-05T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "120": {
     "id": "120",
@@ -3748,7 +3868,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-02-04T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "121": {
     "id": "121",
@@ -3779,7 +3900,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-02-03T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "122": {
     "id": "122",
@@ -3810,7 +3932,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-02-02T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "123": {
     "id": "123",
@@ -3841,7 +3964,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-02-01T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "124": {
     "id": "124",
@@ -3872,7 +3996,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-01-31T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "125": {
     "id": "125",
@@ -3903,7 +4028,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-01-30T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "126": {
     "id": "126",
@@ -3934,7 +4060,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-01-29T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "127": {
     "id": "127",
@@ -3965,7 +4092,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-01-28T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "128": {
     "id": "128",
@@ -3996,7 +4124,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-01-27T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "129": {
     "id": "129",
@@ -4027,7 +4156,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-01-26T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "130": {
     "id": "130",
@@ -4058,7 +4188,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-01-25T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "131": {
     "id": "131",
@@ -4089,7 +4220,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-01-24T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "132": {
     "id": "132",
@@ -4120,7 +4252,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-01-23T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "133": {
     "id": "133",
@@ -4151,7 +4284,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-01-22T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "134": {
     "id": "134",
@@ -4182,7 +4316,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-01-21T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "135": {
     "id": "135",
@@ -4213,7 +4348,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-01-20T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "136": {
     "id": "136",
@@ -4244,7 +4380,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-01-19T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "137": {
     "id": "137",
@@ -4275,7 +4412,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-01-18T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "138": {
     "id": "138",
@@ -4306,7 +4444,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-01-17T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "139": {
     "id": "139",
@@ -4337,7 +4476,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-01-16T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "140": {
     "id": "140",
@@ -4368,7 +4508,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-01-15T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "141": {
     "id": "141",
@@ -4399,7 +4540,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-01-14T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "142": {
     "id": "142",
@@ -4430,7 +4572,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-01-13T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "143": {
     "id": "143",
@@ -4461,7 +4604,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-01-12T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "144": {
     "id": "144",
@@ -4492,7 +4636,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-01-11T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "145": {
     "id": "145",
@@ -4523,7 +4668,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-01-10T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "146": {
     "id": "146",
@@ -4554,7 +4700,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-01-09T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "147": {
     "id": "147",
@@ -4585,7 +4732,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-01-08T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "148": {
     "id": "148",
@@ -4616,7 +4764,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-01-07T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "149": {
     "id": "149",
@@ -4647,7 +4796,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-01-06T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "150": {
     "id": "150",
@@ -4678,7 +4828,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-01-05T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "151": {
     "id": "151",
@@ -4709,7 +4860,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-01-04T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "152": {
     "id": "152",
@@ -4740,7 +4892,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-01-03T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "153": {
     "id": "153",
@@ -4771,7 +4924,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-01-02T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "154": {
     "id": "154",
@@ -4802,7 +4956,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2024-01-01T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "155": {
     "id": "155",
@@ -4833,7 +4988,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2023-12-31T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "156": {
     "id": "156",
@@ -4864,7 +5020,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2023-12-30T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "157": {
     "id": "157",
@@ -4895,7 +5052,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2023-12-29T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "158": {
     "id": "158",
@@ -4926,7 +5084,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2023-12-28T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "159": {
     "id": "159",
@@ -4957,7 +5116,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2023-12-27T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "160": {
     "id": "160",
@@ -4988,7 +5148,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2023-12-26T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "161": {
     "id": "161",
@@ -5019,7 +5180,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2023-12-25T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "162": {
     "id": "162",
@@ -5050,7 +5212,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2023-12-24T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "163": {
     "id": "163",
@@ -5081,7 +5244,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2023-12-23T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "164": {
     "id": "164",
@@ -5112,7 +5276,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2023-12-22T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "165": {
     "id": "165",
@@ -5143,7 +5308,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2023-12-21T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "166": {
     "id": "166",
@@ -5174,7 +5340,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2023-12-20T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "167": {
     "id": "167",
@@ -5205,7 +5372,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2023-12-19T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "168": {
     "id": "168",
@@ -5236,7 +5404,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2023-12-18T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "169": {
     "id": "169",
@@ -5267,7 +5436,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2023-12-17T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "170": {
     "id": "170",
@@ -5298,7 +5468,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2023-12-16T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "171": {
     "id": "171",
@@ -5329,7 +5500,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2023-12-15T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "172": {
     "id": "172",
@@ -5360,7 +5532,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2023-12-14T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "173": {
     "id": "173",
@@ -5391,7 +5564,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2023-12-13T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "174": {
     "id": "174",
@@ -5422,7 +5596,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2023-12-12T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "175": {
     "id": "175",
@@ -5453,7 +5628,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2023-12-11T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "176": {
     "id": "176",
@@ -5484,7 +5660,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2023-12-10T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "177": {
     "id": "177",
@@ -5515,7 +5692,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2023-12-09T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "178": {
     "id": "178",
@@ -5546,7 +5724,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2023-12-08T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "179": {
     "id": "179",
@@ -5577,7 +5756,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2023-12-07T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "180": {
     "id": "180",
@@ -5608,7 +5788,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2023-12-06T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "181": {
     "id": "181",
@@ -5639,7 +5820,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2023-12-05T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "182": {
     "id": "182",
@@ -5670,7 +5852,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2023-12-04T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "183": {
     "id": "183",
@@ -5701,7 +5884,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2023-12-03T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "184": {
     "id": "184",
@@ -5732,7 +5916,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2023-12-02T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "185": {
     "id": "185",
@@ -5763,7 +5948,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2023-12-01T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "186": {
     "id": "186",
@@ -5794,7 +5980,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2023-11-30T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "187": {
     "id": "187",
@@ -5825,7 +6012,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2023-11-29T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "188": {
     "id": "188",
@@ -5856,7 +6044,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2023-11-28T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "189": {
     "id": "189",
@@ -5887,7 +6076,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2023-11-27T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "190": {
     "id": "190",
@@ -5918,7 +6108,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2023-11-26T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "191": {
     "id": "191",
@@ -5949,7 +6140,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2023-11-25T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "192": {
     "id": "192",
@@ -5980,7 +6172,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2023-11-24T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "193": {
     "id": "193",
@@ -6011,7 +6204,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2023-11-23T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "194": {
     "id": "194",
@@ -6042,7 +6236,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2023-11-22T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "195": {
     "id": "195",
@@ -6073,7 +6268,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2023-11-21T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "196": {
     "id": "196",
@@ -6104,7 +6300,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2023-11-20T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "197": {
     "id": "197",
@@ -6135,7 +6332,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2023-11-19T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "198": {
     "id": "198",
@@ -6166,7 +6364,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2023-11-18T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "199": {
     "id": "199",
@@ -6197,7 +6396,8 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2023-11-17T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   },
   "200": {
     "id": "200",
@@ -6228,6 +6428,7 @@
     },
     "effectivePeriod": null,
     "effectiveDateTime": "2023-11-16T00:00:00.000Z",
-    "effectiveInstant": null
+    "effectiveInstant": null,
+    "derivedFrom": null
   }
 }

@@ -238,6 +238,10 @@ export abstract class QuestionnaireResponseService {
       await input.patientService.createObservations(
         input.userId,
         observationValues,
+        {
+          type: input.response.content.resourceType,
+          reference: input.response.path,
+        },
       )
     }
   }
@@ -280,6 +284,7 @@ export abstract class QuestionnaireResponseService {
           Math.pow(max, -1.2) *
           Math.pow(0.9938, age) *
           1.012
+        break
       }
       case UserSex.male: {
         const k = 0.9
@@ -290,6 +295,7 @@ export abstract class QuestionnaireResponseService {
           Math.pow(min, -0.302) *
           Math.pow(max, -1.2) *
           Math.pow(0.9938, age)
+        break
       }
       case UserSex.other:
         // TODO: Possibly figure out how to handle non-binary users

@@ -16,6 +16,7 @@ import {
   type FHIRMedicationRequest,
   FHIRObservation,
   type FHIRQuestionnaireResponse,
+  type FHIRReference,
   type LoincCode,
   type Observation,
   QuantityUnit,
@@ -334,6 +335,7 @@ export class DatabasePatientService implements PatientService {
       loincCode: LoincCode
       collection: UserObservationCollection
     }>,
+    reference: FHIRReference | null,
   ): Promise<void> {
     await this.databaseService.runTransaction((collections, transaction) => {
       for (const value of values) {
@@ -344,6 +346,7 @@ export class DatabasePatientService implements PatientService {
           value: value.observation.value,
           unit: value.observation.unit,
           code: value.loincCode,
+          derivedFrom: [...(reference !== null ? [reference] : [])],
         })
         transaction.set(ref, fhirObservation)
       }

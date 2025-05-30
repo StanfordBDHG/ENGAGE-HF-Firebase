@@ -18,6 +18,7 @@ import {
   type UserShareCode,
   type UserObservationCollection,
   type LoincCode,
+  type FHIRReference,
 } from '@stanfordbdhg/engagehf-models'
 import { type Document } from '../database/databaseService.js'
 
@@ -97,6 +98,7 @@ export interface PatientService {
       loincCode: LoincCode
       collection: UserObservationCollection
     }>,
+    reference: FHIRReference | null,
   ): Promise<void>
 
   // Questionnaire Responses

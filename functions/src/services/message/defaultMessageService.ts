@@ -538,18 +538,24 @@ export class DefaultMessageService implements MessageService {
     switch (input.message.content.type) {
       case UserMessageType.medicationChange:
         if (!user.receivesMedicationUpdates) return
+        break
       case UserMessageType.weightGain:
         if (!user.receivesWeightAlerts) return
+        break
       case UserMessageType.medicationUptitration:
         if (!user.receivesRecommendationUpdates) return
+        break
       case UserMessageType.welcome:
         break
       case UserMessageType.vitals:
         if (!user.receivesVitalsReminders) return
+        break
       case UserMessageType.symptomQuestionnaire:
         if (!user.receivesQuestionnaireReminders) return
+        break
       case UserMessageType.preAppointment:
         if (!user.receivesAppointmentReminders) return
+        break
     }
 
     await this.sendTextNotification(input.userId, user, input.message)
