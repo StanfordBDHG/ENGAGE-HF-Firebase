@@ -190,14 +190,11 @@ export abstract class QuestionnaireResponseService {
           creatinine: creatinine.value,
           dateOfBirth: input.dateOfBirth,
           sex: input.sex,
+          date: creatinine.date,
         })
         if (eGfr !== null) {
           observationValues.push({
-            observation: {
-              value: eGfr,
-              unit: QuantityUnit.mL_min_173m2,
-              date: creatinine.date,
-            },
+            observation: eGfr,
             loincCode: LoincCode.estimatedGlomerularFiltrationRate,
             collection: UserObservationCollection.eGfr,
           })
@@ -251,7 +248,8 @@ export abstract class QuestionnaireResponseService {
     creatinine: number
     dateOfBirth: Date
     sex: UserSex
-  }): number | null {
+    date: Date
+  }): Observation | null {
     //
     // https://www.kidney.org/ckd-epi-creatinine-equation-2021
     //
@@ -269,34 +267,53 @@ export abstract class QuestionnaireResponseService {
     // - https://www.mdcalc.com/calc/3939/ckd-epi-equations-glomerular-filtration-rate-gfr
     //
 
-    const age = new Date().getFullYear() - input.dateOfBirth.getFullYear()
+    const age = this.calculateAge(input.dateOfBirth, input.date)
+    let value: number | null
     switch (input.sex) {
       case UserSex.female: {
         const k = 0.7
         const min = Math.min(input.creatinine / k, 1)
         const max = Math.max(input.creatinine / k, 1)
-        return (
+        value =
           142 *
           Math.pow(min, -0.241) *
           Math.pow(max, -1.2) *
           Math.pow(0.9938, age) *
           1.012
-        )
       }
       case UserSex.male: {
         const k = 0.9
         const min = Math.min(input.creatinine / k, 1)
         const max = Math.max(input.creatinine / k, 1)
-        return (
+        value =
           142 *
           Math.pow(min, -0.302) *
           Math.pow(max, -1.2) *
           Math.pow(0.9938, age)
-        )
       }
       case UserSex.other:
         // TODO: Possibly figure out how to handle non-binary users
-        return null
+        value = null
     }
+
+    return value !== null ?
+        {
+          value: value,
+          unit: QuantityUnit.mL_min_173m2,
+          date: input.date,
+        }
+      : null
+  }
+
+  private calculateAge(dateOfBirth: Date, present: Date = new Date()): number {
+    const yearDiff = present.getFullYear() - dateOfBirth.getFullYear()
+    const monthDiff = present.getMonth() - dateOfBirth.getMonth()
+    if (
+      monthDiff < 0 ||
+      (monthDiff === 0 && present.getDate() <= dateOfBirth.getDate())
+    ) {
+      return yearDiff - 1
+    }
+    return yearDiff
   }
 }
