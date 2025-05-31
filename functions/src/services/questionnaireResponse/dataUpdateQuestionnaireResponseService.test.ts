@@ -159,6 +159,11 @@ describeWithEmulators('DataUpdateQuestionnaireResponseService', (env) => {
         frequencyPerDay: 7,
         quantity: 3,
       }),
+      FHIRMedicationRequest.create({
+        medicationReference: DrugReference.sacubitrilValsartan49_51,
+        frequencyPerDay: 2.3,
+        quantity: 0.5,
+      }),
     ]
 
     for (const request of previousMedicationRequests) {
@@ -185,18 +190,22 @@ describeWithEmulators('DataUpdateQuestionnaireResponseService', (env) => {
       doc.data(),
     )
 
-    const benazepril = medicationRequestsData.find(
+    const sacubitrilValsartan = medicationRequestsData.find(
       (req) =>
-        req.medicationReference?.reference === 'medications/18867/drugs/898719',
+        req.medicationReference?.reference ===
+        'medications/1656339/drugs/1656349',
     )
-    expect(benazepril).toBeDefined()
-    expect(benazepril?.dosageInstruction?.length).toBe(1)
-    const benazeprilDosageInstruction = benazepril?.dosageInstruction?.at(0)
-    expect(benazeprilDosageInstruction?.timing?.repeat?.frequency).toBe(2.3)
-    expect(benazeprilDosageInstruction?.doseAndRate?.length).toBe(1)
-    const benazeprilDoseAndRate =
-      benazeprilDosageInstruction?.doseAndRate?.at(0)
-    expect(benazeprilDoseAndRate?.doseQuantity?.value).toBe(0.5)
+    expect(sacubitrilValsartan).toBeDefined()
+    expect(sacubitrilValsartan?.dosageInstruction?.length).toBe(1)
+    const sacubitrilValsartanDosageInstruction =
+      sacubitrilValsartan?.dosageInstruction?.at(0)
+    expect(
+      sacubitrilValsartanDosageInstruction?.timing?.repeat?.frequency,
+    ).toBe(2.3)
+    expect(sacubitrilValsartanDosageInstruction?.doseAndRate?.length).toBe(1)
+    const sacubitrilValsartanDoseAndRate =
+      sacubitrilValsartanDosageInstruction?.doseAndRate?.at(0)
+    expect(sacubitrilValsartanDoseAndRate?.doseQuantity?.value).toBe(0.5)
 
     const empagliflozin = medicationRequestsData.find(
       (req) =>
@@ -264,8 +273,8 @@ const dataUpdateResponseApple = {
       answer: [
         {
           valueCoding: {
-            code: 'no',
-            display: 'No',
+            code: 'yes-unchanged',
+            display: 'Yes, unchanged since last update',
             system:
               'http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update',
           },
@@ -535,52 +544,10 @@ const postAppointmentResponseAndroid = {
           answer: [
             {
               valueCoding: {
-                code: 'yes-changed',
-                display: 'Yes, changed since last update',
+                code: 'yes-unchanged',
+                display: 'Yes, unchanged since last update',
                 system:
                   'http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update',
-              },
-            },
-          ],
-        },
-      ],
-    },
-    {
-      linkId: 'medication.rasi.page1',
-      text: 'Renin-Angiotensin System Inhibitors (RASI)',
-      item: [
-        {
-          linkId: 'medication.rasi.description',
-          text: 'Please enter which drug you are taking, how often you take it per day and how many pills/tablets you take per intake. Do not enter the total amount of pills/tablets you take per day.',
-        },
-        {
-          linkId: 'medication.rasi.frequency',
-          text: 'Intake frequency (per day):',
-          answer: [
-            {
-              valueDecimal: 2.3,
-            },
-          ],
-        },
-        {
-          linkId: 'medication.rasi.quantity',
-          text: 'Pills/tablets per intake:',
-          answer: [
-            {
-              valueDecimal: 0.5,
-            },
-          ],
-        },
-        {
-          linkId: 'medication.rasi.drug',
-          text: 'Which pill/tablet do you take?',
-          answer: [
-            {
-              valueCoding: {
-                id: 'medications/18867/drugs/898719',
-                system: 'http://www.nlm.nih.gov/research/umls/rxnorm',
-                code: 'medications/18867/drugs/898719',
-                display: 'Benazepril (Lotensin)\n40 mg Oral Tablet',
               },
             },
           ],

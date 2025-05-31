@@ -6,6 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
+import assert from 'assert'
 import {
   FHIRMedicationRequest,
   LoincCode,
@@ -20,6 +21,7 @@ import {
 } from '@stanfordbdhg/engagehf-models'
 import { logger } from 'firebase-functions/v2'
 import { z } from 'zod'
+import { medicationClassReference } from '../../models/medicationRequestContext.js'
 import { type Document } from '../database/databaseService.js'
 import { type PatientService } from '../patient/patientService.js'
 import {
@@ -27,9 +29,6 @@ import {
   MedicationGroup,
   QuestionnaireLinkId,
 } from '../seeding/staticData/questionnaireFactory/questionnaireLinkIds.js'
-import { link } from 'fs'
-import assert from 'assert'
-import { medicationClassReference } from '../../models/medicationRequestContext.js'
 
 export interface QuestionnaireResponseMedicationRequests {
   reference: string

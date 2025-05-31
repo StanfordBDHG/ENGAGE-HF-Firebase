@@ -7,7 +7,6 @@
 //
 
 import {
-  CodingSystem,
   MedicationClassReference,
   type LoincCode,
 } from '@stanfordbdhg/engagehf-models'
