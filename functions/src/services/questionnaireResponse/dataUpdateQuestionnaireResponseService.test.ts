@@ -48,6 +48,11 @@ describeWithEmulators('DataUpdateQuestionnaireResponseService', (env) => {
         frequencyPerDay: 5,
         quantity: 0.5,
       }),
+      FHIRMedicationRequest.create({
+        medicationReference: DrugReference.furosemide20,
+        frequencyPerDay: 4,
+        quantity: 2,
+      }),
     ]
 
     for (const request of previousMedicationRequests) {
@@ -69,7 +74,7 @@ describeWithEmulators('DataUpdateQuestionnaireResponseService', (env) => {
     const medicationRequests = await env.collections
       .userMedicationRequests(userId)
       .get()
-    expect(medicationRequests.size).toBe(2)
+    expect(medicationRequests.size).toBe(3)
 
     const medicationRequestsData = medicationRequests.docs.map((doc) =>
       doc.data(),
@@ -101,6 +106,19 @@ describeWithEmulators('DataUpdateQuestionnaireResponseService', (env) => {
     const bexagliflozinDoseAndRate =
       bexagliflozinDosageInstruction?.doseAndRate?.at(0)
     expect(bexagliflozinDoseAndRate?.doseQuantity?.value).toBe(1.34)
+
+    const furosemide = medicationRequestsData.find(
+      (req) =>
+        req.medicationReference?.reference === DrugReference.furosemide20,
+    )
+    expect(furosemide).toBeDefined()
+    expect(furosemide?.dosageInstruction?.length).toBe(1)
+    const furosemideDosageInstruction = furosemide?.dosageInstruction?.at(0)
+    expect(furosemideDosageInstruction?.timing?.repeat?.frequency).toBe(4)
+    expect(furosemideDosageInstruction?.doseAndRate?.length).toBe(1)
+    const furosemideDoseAndRate =
+      furosemideDosageInstruction?.doseAndRate?.at(0)
+    expect(furosemideDoseAndRate?.doseQuantity?.value).toBe(2)
 
     const creatinineDocs = await env.collections
       .userObservations(userId, UserObservationCollection.creatinine)
@@ -352,8 +370,8 @@ const dataUpdateResponseApple = {
       answer: [
         {
           valueCoding: {
-            code: 'no',
-            display: 'No',
+            code: 'yes-unchanged',
+            display: 'Yes, unchanged since last update',
             system:
               'http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update',
           },
