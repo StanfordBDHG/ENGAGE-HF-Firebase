@@ -18,6 +18,7 @@ import {
   ContraindicationCategory,
   type ContraindicationService,
 } from './contraindicationService.js'
+import { medicationClassReference } from '../../models/medicationRequestContext.js'
 
 interface ContraindicationRecord {
   category: ContraindicationCategory
@@ -50,13 +51,12 @@ export class DefaultContraindicationService implements ContraindicationService {
     contraindications: FHIRAllergyIntolerance[],
     medicationReference: MedicationReference,
   ): ContraindicationCategory {
-    const medicationClassReference =
-      this.medicationClassReference(medicationReference)
+    const medicationClass = medicationClassReference(medicationReference)
     return this.checkAll(
       contraindications,
       (record) =>
         record.medications.has(medicationReference) ||
-        record.medicationClasses.has(medicationClassReference),
+        record.medicationClasses.has(medicationClass),
     )
   }
 
@@ -79,9 +79,7 @@ export class DefaultContraindicationService implements ContraindicationService {
       availableMedications = availableMedications.filter(
         (medication) =>
           !record.medications.has(medication) &&
-          !record.medicationClasses.has(
-            this.medicationClassReference(medication),
-          ),
+          !record.medicationClasses.has(medicationClassReference(medication)),
       )
       return false
     })
@@ -125,9 +123,7 @@ export class DefaultContraindicationService implements ContraindicationService {
     type: FHIRAllergyIntoleranceType
     criticality?: FHIRAllergyIntoleranceCriticality
   }): ContraindicationRecord {
-    const medicationClass = this.medicationClassReference(
-      input.medicationReference,
-    )
+    const medicationClass = medicationClassReference(input.medicationReference)
     const medicationReferences = this.medicationReferenceIncludingDerivatives(
       input.medicationReference,
     )
@@ -202,61 +198,6 @@ export class DefaultContraindicationService implements ContraindicationService {
         ])
       default:
         return new Set([reference])
-    }
-  }
-
-  private medicationClassReference(
-    medicationReference: MedicationReference,
-  ): MedicationClassReference {
-    switch (medicationReference) {
-      case MedicationReference.metoprololSuccinate:
-      case MedicationReference.carvedilol:
-      case MedicationReference.carvedilolPhosphate:
-      case MedicationReference.bisoprolol:
-        return MedicationClassReference.betaBlockers
-
-      case MedicationReference.dapagliflozin:
-      case MedicationReference.empagliflozin:
-      case MedicationReference.sotagliflozin:
-      case MedicationReference.bexagliflozin:
-      case MedicationReference.canagliflozin:
-      case MedicationReference.ertugliflozin:
-        return MedicationClassReference.sglt2inhibitors
-
-      case MedicationReference.spironolactone:
-      case MedicationReference.eplerenone:
-        return MedicationClassReference.mineralocorticoidReceptorAntagonists
-
-      case MedicationReference.quinapril:
-      case MedicationReference.perindopril:
-      case MedicationReference.ramipril:
-      case MedicationReference.benazepril:
-      case MedicationReference.captopril:
-      case MedicationReference.enalapril:
-      case MedicationReference.lisinopril:
-      case MedicationReference.fosinopril:
-      case MedicationReference.trandolapril:
-      case MedicationReference.moexepril:
-        return MedicationClassReference.angiotensinConvertingEnzymeInhibitors
-
-      case MedicationReference.losartan:
-      case MedicationReference.valsartan:
-      case MedicationReference.candesartan:
-      case MedicationReference.irbesartan:
-      case MedicationReference.telmisartan:
-      case MedicationReference.olmesartan:
-      case MedicationReference.azilsartan:
-      case MedicationReference.eprosartan:
-        return MedicationClassReference.angiotensinReceptorBlockers
-
-      case MedicationReference.sacubitrilValsartan:
-        return MedicationClassReference.angiotensinReceptorNeprilysinInhibitors
-
-      case MedicationReference.furosemide:
-      case MedicationReference.bumetanide:
-      case MedicationReference.torsemide:
-      case MedicationReference.ethacrynicAcid:
-        return MedicationClassReference.diuretics
     }
   }
 }

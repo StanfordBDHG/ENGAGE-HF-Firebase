@@ -124,6 +124,7 @@ export class DatabasePatientService implements PatientService {
   async replaceMedicationRequests(
     userId: string,
     values: FHIRMedicationRequest[],
+    keepUnchanged?: (request: Document<FHIRMedicationRequest>) => boolean,
   ): Promise<void> {
     await this.databaseService.replaceCollection(
       (collections) => collections.userMedicationRequests(userId),
@@ -150,7 +151,10 @@ export class DatabasePatientService implements PatientService {
         }
 
         for (const doc of documents) {
-          if (!diffs.some((diff) => diff.predecessor?.id === doc.id)) {
+          if (
+            !diffs.some((diff) => diff.predecessor?.id === doc.id) &&
+            keepUnchanged?.(doc) !== true
+          ) {
             diffs.push({ predecessor: doc })
           }
         }

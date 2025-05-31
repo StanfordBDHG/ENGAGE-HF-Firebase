@@ -109,6 +109,7 @@ export class MockPatientService implements PatientService {
   async replaceMedicationRequests(
     userId: string,
     values: FHIRMedicationRequest[],
+    keepUnchanged?: (request: Document<FHIRMedicationRequest>) => boolean,
   ): Promise<void> {
     return
   }

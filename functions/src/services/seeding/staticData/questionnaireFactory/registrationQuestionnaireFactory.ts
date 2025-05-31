@@ -35,6 +35,7 @@ export class RegistrationQuestionnaireFactory extends QuestionnaireFactory<Regis
         ...this.medicationInputPages({
           medications: input.medications,
           drugs: input.drugs,
+          isRegistration: true,
         }),
         ...this.appointmentInputPages(),
       ],

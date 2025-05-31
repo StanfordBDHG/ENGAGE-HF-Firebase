@@ -74,11 +74,11 @@ export class DataUpdateQuestionnaireResponseService extends QuestionnaireRespons
       patientService: this.patientService,
     })
 
-    const medicationRequests = this.extractMedicationRequests(response.content)
-    await this.patientService.replaceMedicationRequests(
+    await this.handleMedicationRequests({
       userId,
-      medicationRequests,
-    )
+      response,
+      patientService: this.patientService,
+    })
 
     const appointment = this.extractAppointment(response.content)
     if (appointment !== null) {

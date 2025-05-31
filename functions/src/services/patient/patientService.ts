@@ -51,6 +51,7 @@ export interface PatientService {
   replaceMedicationRequests(
     userId: string,
     values: FHIRMedicationRequest[],
+    keepUnchanged?: (request: Document<FHIRMedicationRequest>) => boolean,
   ): Promise<void>
 
   getMedicationRecommendations(

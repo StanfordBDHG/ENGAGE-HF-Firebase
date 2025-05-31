@@ -16,15 +16,20 @@ import {
   FHIRAppointment,
   FHIRAppointmentStatus,
   UserObservationCollection,
+  MedicationReference,
 } from '@stanfordbdhg/engagehf-models'
 import { logger } from 'firebase-functions/v2'
 import { z } from 'zod'
 import { type Document } from '../database/databaseService.js'
 import { type PatientService } from '../patient/patientService.js'
 import {
+  medicationClassesForGroup,
   MedicationGroup,
   QuestionnaireLinkId,
 } from '../seeding/staticData/questionnaireFactory/questionnaireLinkIds.js'
+import { link } from 'fs'
+import assert from 'assert'
+import { medicationClassReference } from '../../models/medicationRequestContext.js'
 
 export interface QuestionnaireResponseMedicationRequests {
   reference: string
@@ -115,19 +120,57 @@ export abstract class QuestionnaireResponseService {
     }
   }
 
-  protected extractMedicationRequests(
-    response: FHIRQuestionnaireResponse,
-  ): FHIRMedicationRequest[] {
+  protected extractMedicationRequests(response: FHIRQuestionnaireResponse): {
+    requests: FHIRMedicationRequest[]
+    keepUnchanged: MedicationGroup[]
+  } {
     const requests: FHIRMedicationRequest[] = []
+    const keepUnchanged: MedicationGroup[] = []
     for (const medicationGroup of Object.values(MedicationGroup)) {
       const linkIds = QuestionnaireLinkId.medication(medicationGroup)
-      const exists = response
+      const existsCoding = response
         .leafResponseItem(linkIds.exists)
-        ?.answer?.at(0)?.valueBoolean
+        ?.answer?.at(0)?.valueCoding
 
-      if (exists === undefined)
+      if (existsCoding === undefined) {
         throw new Error(`Missing medication group: ${medicationGroup}.`)
-      if (!exists) continue
+      }
+
+      switch (existsCoding.system) {
+        case linkIds.registrationExistsValueSet.system: {
+          const noCode = linkIds.registrationExistsValueSet.values.no
+          if (existsCoding.code === noCode) {
+            continue
+          }
+          assert(
+            existsCoding.code === linkIds.registrationExistsValueSet.values.yes,
+            `Unexpected coding for medication group: ${medicationGroup}. Expected 'yes' or 'no', but got '${existsCoding.code}'.`,
+          )
+          break
+        }
+        case linkIds.updateExistsValueSet.system: {
+          const yesUnchangedCode =
+            linkIds.updateExistsValueSet.values.yesUnchanged
+          if (existsCoding.code === yesUnchangedCode) {
+            keepUnchanged.push(medicationGroup)
+            continue
+          }
+          const noCode = linkIds.updateExistsValueSet.values.no
+          if (existsCoding.code === noCode) {
+            continue
+          }
+          assert(
+            existsCoding.code ===
+              linkIds.updateExistsValueSet.values.yesChanged,
+            `Unexpected coding for medication group: ${medicationGroup}. Expected 'yes-changed', 'yes-unchanged' or 'no', but got '${existsCoding.code}'.`,
+          )
+          break
+        }
+        default:
+          throw new Error(
+            `Unknown coding system for medication group: ${medicationGroup}.`,
+          )
+      }
 
       const drugCoding = response
         .leafResponseItem(linkIds.drug)
@@ -156,7 +199,7 @@ export abstract class QuestionnaireResponseService {
       })
       requests.push(request)
     }
-    return requests
+    return { requests, keepUnchanged }
   }
 
   // Methods - Handle
@@ -244,6 +287,44 @@ export abstract class QuestionnaireResponseService {
         },
       )
     }
+  }
+
+  protected handleMedicationRequests(input: {
+    userId: string
+    patientService: PatientService
+    response: Document<FHIRQuestionnaireResponse>
+  }): Promise<void> {
+    const medicationExtraction = this.extractMedicationRequests(
+      input.response.content,
+    )
+    const medicationClasses = medicationExtraction.keepUnchanged.flatMap(
+      medicationClassesForGroup,
+    )
+    return input.patientService.replaceMedicationRequests(
+      input.userId,
+      medicationExtraction.requests,
+      medicationClasses.length > 0 ?
+        (doc) => {
+          const referenceString = doc.content.medicationReference?.reference
+          if (referenceString === undefined) {
+            logger.error(
+              `Encountered medication request without reference at ${doc.path}: ${JSON.stringify(doc.content)}`,
+            )
+            return false
+          }
+          const reference = Object.values(MedicationReference).find((value) =>
+            referenceString.startsWith(value.toString() + '/'),
+          )
+          if (reference === undefined) {
+            logger.error(
+              `Unknown medication reference in questionnaire response at ${doc.path}: ${referenceString}`,
+            )
+            return false
+          }
+          return medicationClasses.includes(medicationClassReference(reference))
+        }
+      : undefined,
+    )
   }
 
   // Methods - Helpers
