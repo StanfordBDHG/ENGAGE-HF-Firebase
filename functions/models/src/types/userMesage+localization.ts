@@ -13,7 +13,7 @@ export const messagesLocalization = {
   },
   inactiveDescription: {
     en: 'You have been inactive for 7 days. Please log in to continue your care.',
-    es: 'Has estado inactivo durante 7 días. Por favor, inicie sesión para continuar su atención.',
+    es: 'Ha estado inactivo durante 7 días. Inicie sesión para continuar con su atención.',
   },
   inactiveDescriptionForClinician: {
     en: '@0 has been inactive for 7 days.',
@@ -25,39 +25,37 @@ export const messagesLocalization = {
   },
   medicationChangeTitle: {
     en: 'Medication Change',
-    es: 'Cambio de medicación',
+    es: 'Cambio de medicamento',
   },
   medicationChangeDescription: {
     en: 'Your dose of @0 was changed. You can review medication information on the Education Page.',
-    es: 'Su dosis de @0 fue cambiada. Puede revisar la información de la medicación en la página de Educación.',
+    es: 'Su dosis de @0 fue modificada. Puede revisar la información sobre sus medicamentos en la Página de Educación.',
   },
   medicationUptitrationTitle: {
     en: 'Eligible Medication Change',
-    es: 'Cambio de medicación elegible',
+    es: 'Apto para cambio de medicamento',
   },
   medicationUptitrationDescription: {
     en: 'You may be eligible for med changes that may help your heart. Your care team will be sent this information. You can review med information on the Education Page.',
-    es: 'Puede ser elegible para cambios en la medicación que pueden ayudar a su corazón. Su equipo de atención recibirá esta información. Puede revisar la información de la medicación en la página de Educación.',
+    es: 'Podría ser apto para cambios de medicamentos que podrían beneficiar su corazón. Su equipo de atención médica recibirá esta información. Puede revisar la información sobre sus medicamentos en la Página de Educación.',
   },
   medicationUptitrationTitleForClinician: {
     en: 'Eligible Medication Change',
-    es: 'Cambio de medicación elegible',
+    es: 'Apto para cambio de medicamento',
   },
   medicationUptitrationDescriptionForClinician: {
     en: '@0 may be eligible for med changes. You can review med information on the user detail page.',
-    es: '@0 puede ser elegible para cambios en la medicación. Puede revisar la información de la medicación en la página de detalles del usuario.',
+    es: '@0 podría ser apto para cambios de medicamentos. Puede revisar la información sobre sus medicamentos en la página de detalles del usuario.',
   },
   medicationUptitrationDescriptionForClinicianNoName: {
     en: 'Patient may be eligible for med changes. You can review med information on the user detail page.',
-    es: 'El paciente puede ser elegible para cambios en la medicación. Puede revisar la información de la medicación en la página de detalles del usuario.',
+    es: 'El paciente podría ser apto para cambios de medicamentos. Puede revisar la información sobre sus medicamentos en la página de detalles del usuario.',
   },
   postAppointmentTitle: {
     en: 'Post-Appointment Survey',
-    es: 'Encuesta posterior a la cita',
   },
   postAppointmentDescription: {
     en: 'Update us about what has changed during your last appointment.',
-    es: 'Actualícenos sobre lo que ha cambiado durante su última cita.',
   },
   preAppointmentTitle: {
     en: 'Appointment Reminder',
@@ -65,7 +63,7 @@ export const messagesLocalization = {
   },
   preAppointmentDescription: {
     en: 'Your appointment is coming up. Review your Health Summary before your visit.',
-    es: 'Su cita se acerca. Revise su Resumen de Salud antes de su visita.',
+    es: 'Su cita se acerca. Revise su Resumen de Salud antes de su cita.',
   },
   preAppointmentTitleForClinician: {
     en: 'Appointment Reminder',
@@ -73,19 +71,17 @@ export const messagesLocalization = {
   },
   preAppointmentDescriptionForClinician: {
     en: 'Appointment with @0 is coming up.',
-    es: 'La cita con @0 se acerca.',
+    es: 'Su cita con @0 se acerca.',
   },
   preAppointmentDescriptionForClinicianNoName: {
     en: 'Appointment with patient is coming up.',
-    es: 'La cita con el paciente se acerca.',
+    es: 'Su cita con el paciente se acerca.',
   },
   registrationQuestionnaireTitle: {
     en: 'Registration Survey',
-    es: 'Encuesta de registro',
   },
   registrationQuestionnaireDescription: {
     en: 'Complete registration by filling out this survey.',
-    es: 'Complete el registro completando esta encuesta.',
   },
   symptomQuestionnaireTitle: {
     en: 'Symptom Questionnaire',
@@ -93,7 +89,7 @@ export const messagesLocalization = {
   },
   symptomQuestionnaireDescription: {
     en: 'Complete your Symptom Survey for your care team.',
-    es: 'Complete su Encuesta de Síntomas para su equipo de atención.',
+    es: 'Complete su Cuestionario de síntomas para su equipo de atención.',
   },
   vitalsTitle: {
     en: 'Vitals',
@@ -101,7 +97,7 @@ export const messagesLocalization = {
   },
   vitalsDescription: {
     en: 'Check your blood pressure and weight daily.',
-    es: 'Revise su presión arterial y peso diariamente.',
+    es: 'Controle su presión arterial y peso diariamente.',
   },
   weightGainTitle: {
     en: 'Weight increase since last week',
@@ -109,7 +105,7 @@ export const messagesLocalization = {
   },
   weightGainDescription: {
     en: 'Your weight increased over 3 lbs. Your care team will be informed. Please follow any instructions about diuretic changes after weight increase on the Medication page.',
-    es: 'Su peso aumentó más de 3 libras. Su equipo de atención será informado. Siga cualquier instrucción sobre cambios diuréticos después del aumento de peso en la página de Medicación.',
+    es: 'Su peso aumentó más de 3 lbs. Se informará a su equipo de atención. Siga las instrucciones sobre los cambios en por diuréticos después de aumentar de peso en la página de Medicamentos.',
   },
   weightGainTitleForClinician: {
     en: 'Weight increase since last week',
@@ -117,15 +113,15 @@ export const messagesLocalization = {
   },
   weightGainDescriptionForClinician: {
     en: 'Weight increase over 3 lbs for @0.',
-    es: 'Aumento de peso de más de 3 libras para @0.',
+    es: 'Aumento de peso de más de 3 lbs de @0.',
   },
   weightGainDescriptionForClinicianNoName: {
     en: 'Weight increase over 3 lbs for patient.',
-    es: 'Aumento de peso de más de 3 libras para el paciente.',
+    es: 'Aumento de peso de más de 3 lbs del paciente.',
   },
   welcomeTitle: {
     en: 'Welcome',
-    es: 'Bienvenido',
+    es: 'Bienvenido.',
   },
   welcomeDescription: {
     en: 'Watch Welcome Video on the Education Page.',

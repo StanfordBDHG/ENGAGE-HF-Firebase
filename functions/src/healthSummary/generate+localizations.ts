@@ -9,11 +9,11 @@
 export const healthSummaryLocalization = {
   headerTitle: {
     en: 'ENGAGE-HF Health Summary',
-    es: 'ENGAGE-HF Resumen de salud',
+    es: 'Resumen de salud de ENGAGE-HF.',
   },
   headerDateOfBirth: {
     en: 'DOB: @0',
-    es: 'Fecha de nacimiento: @0',
+    es: 'FDN: @0',
   },
   headerProvider: {
     en: 'Provider: @0',
@@ -37,7 +37,7 @@ export const healthSummaryLocalization = {
   },
   keyPointsDefault: {
     en: 'No key points available. Please discuss with your care team for more information.',
-    es: 'No hay puntos clave disponibles. Por favor, hable con su equipo de atención para obtener más información.',
+    es: 'No hay puntos clave disponibles. Consulte con su equipo de atención médica para obtener más información.',
   },
   currentMedicationsTitle: {
     en: 'CURRENT HEART MEDICATIONS',
@@ -45,7 +45,7 @@ export const healthSummaryLocalization = {
   },
   currentMedicationsDescription: {
     en: 'Here are meds you are taking for your heart function, your current dose, and the target dose that we aim to get to. The target dose is the dose we know best helps strengthen your heart.',
-    es: 'Aquí están los medicamentos que está tomando para la función de su corazón, su dosis actual y la dosis objetivo a la que pretendemos llegar. La dosis objetivo es la dosis que mejor sabemos que ayuda a fortalecer su corazón.',
+    es: 'Aquí se detallan los medicamentos que toma para su función cardíaca, su dosis actual y la dosis objetivo que buscamos alcanzar. La dosis objetivo es la que sabemos que mejor ayuda a fortalecer su corazón.',
   },
   currentMedicationsTableNameHeader: {
     en: 'My Medications',
@@ -61,7 +61,7 @@ export const healthSummaryLocalization = {
   },
   currentMedicationsTableDoseScheduleOnceDaily: {
     en: '@0 daily',
-    es: '@0 diario',
+    es: '@0 diariamente',
   },
   currentMedicationsTableDoseScheduleTwiceDaily: {
     en: '@0 twice daily',
@@ -69,15 +69,15 @@ export const healthSummaryLocalization = {
   },
   currentMedicationsTableDoseScheduleMultipleTimesDaily: {
     en: '@0 @1x daily',
-    es: '@0 @1x al día',
+    es: '@0 @1 veces al día',
   },
   medicationRecommendationsTitle: {
     en: 'POTENTIAL MED CHANGES TO HELP HEART',
-    es: 'POSIBLES CAMBIOS DE MEDICACIÓN PARA AYUDAR AL CORAZÓN',
+    es: 'POSIBLES CAMBIOS EN LA MEDICACIÓN PARA AYUDAR AL CORAZÓN',
   },
   medicationRecommendationsDescription: {
     en: 'These potential changes are based on your meds, vital signs, and lab values. These changes are expected to help your heart work better. Discuss these potential changes with your care team at your next clinic appointment.',
-    es: 'Estos posibles cambios se basan en sus medicamentos, signos vitales y valores de laboratorio. Se espera que estos cambios ayuden a que su corazón funcione mejor. Hable sobre estos posibles cambios con su equipo de atención en su próxima cita clínica.',
+    es: 'Estos posibles cambios se basan en sus medicamentos, signos vitales y valores de laboratorio. Se espera que estos cambios ayuden a que su corazón funcione mejor. Hable sobre estos posibles cambios con su equipo de atención médica en su próxima cita clínica.',
   },
   medicationRecommendationsHint: {
     en: 'Aim to make one positive change!',
@@ -89,11 +89,11 @@ export const healthSummaryLocalization = {
   },
   symptomScoresSummaryDescription: {
     en: 'These symptom scores range from 0-100. 0 indicates severe symptoms. 100 indicates you are doing extremely well. Blue line is current and grey line is previous. This is the overall score. The Overall Score is an average of physical limits, social limits, quality of life, and symptoms. Detailed results for each are on the Table on page 2.',
-    es: 'Estas puntuaciones de síntomas van de 0 a 100. 0 indica síntomas graves. 100 indica que está haciendo extremadamente bien. La línea azul es la actual y la línea gris es la anterior. Esta es la puntuación general. La Puntuación General es un promedio de límites físicos, límites sociales, calidad de vida y síntomas. Los resultados detallados de cada uno están en la Tabla en la página 2.',
+    es: 'Estas puntuaciones de síntomas van de 0 a 100. 0 indica síntomas graves. 100 indica que se encuentra muy bien. La línea azul es actual y la línea gris es anterior. Esta es la puntuación general. La puntuación general es un promedio de las limitaciones físicas, las limitaciones sociales, la calidad de vida y los síntomas. Los resultados detallados de cada uno se encuentran en la tabla de la página 2.',
   },
   symptomScoresSummaryGoodImproving: {
     en: 'Your heart symptoms score increased from @0 to @1. This means you are feeling better. Your score is overall very good. Continuing to take your meds will be important for keeping you feeling well.',
-    es: 'Su puntuación de síntomas cardíacos aumentó de @0 a @1. Esto significa que se siente mejor. Su puntuación es en general muy buena. Continuar tomando sus medicamentos será importante para mantenerse sintiéndose bien.',
+    es: 'Su puntuación de síntomas cardíacos aumentó de @0 a @1. Esto significa que se siente mejor. En general, su puntuación es muy buena. Continuar tomando sus medicamentos será importante para que se sienta bien.',
   },
   symptomScoresSummaryGoodStable: {
     en: 'Your heart symptom score remains very good. Continuing to take your meds will be important for keeping you feeling well.',
@@ -101,23 +101,23 @@ export const healthSummaryLocalization = {
   },
   symptomScoresSummaryFairImproving: {
     en: 'Your heart symptoms score increased from @0 to @1. This means you have been feeling better. There is still room to continue improving how you feel. Getting on the best doses of heart failure medicines can help you feeling better. Consider discussing further with your care team.',
-    es: 'Su puntuación de síntomas cardíacos aumentó de @0 a @1. Esto significa que se ha sentido mejor. Todavía hay margen para seguir mejorando cómo se siente. Tomar las mejores dosis de medicamentos para la insuficiencia cardíaca puede ayudarlo a sentirse mejor. Considere discutir más con su equipo de atención.',
+    es: 'Su puntuación de síntomas cardíacos se mantiene muy buena. El continuar tomando sus medicamentos será importante para que se sienta bien.',
   },
   symptomScoresSummaryFairStable: {
     en: 'Your heart symptom score is stable. There is still room to continue improving how you feel. Getting on the best doses of heart failure medicines can help you feeling better. Consider discussing further with your care team.',
-    es: 'Su puntuación de síntomas cardíacos es estable. Todavía hay margen para seguir mejorando cómo se siente. Tomar las mejores dosis de medicamentos para la insuficiencia cardíaca puede ayudarlo a sentirse mejor. Considere discutir más con su equipo de atención.',
+    es: 'Su puntuación de síntomas cardíacos aumentó de @0 a @1. Esto significa que se ha sentido mejor. Aun puede seguir mejorando el cómo se siente. Recibir las dosis óptimas de medicamentos para la insuficiencia cardíaca puede ayudarle a sentirse mejor. Considere hablarlo con su equipo médico.',
   },
   symptomScoresSummaryFairWorsening: {
     en: 'Your heart symptoms score decreased from @0 to @1. This means you are feeling worse. Consider talking to your care team about adjusting your heart failure medications as these have been shown to decrease symptoms long term.',
-    es: 'Su puntuación de síntomas cardíacos disminuyó de @0 a @1. Esto significa que se siente peor. Considere hablar con su equipo de atención sobre ajustar sus medicamentos para la insuficiencia cardíaca, ya que se ha demostrado que disminuyen los síntomas a largo plazo.',
+    es: 'Su puntuación de síntomas cardíacos disminuyó de @0 a @1. Esto significa que se siente peor. Considere hablar con su equipo médico sobre la posibilidad de ajustar sus medicamentos para la insuficiencia cardíaca, ya que se ha demostrado que estos reducen los síntomas a largo plazo.',
   },
   symptomScoresSpeedometerTrendSuffix: {
     en: 'from previous',
-    es: 'de anterior',
+    es: 'del anterior',
   },
   symptomScoresSpeedometerLegendBaseline: {
     en: 'Baseline',
-    es: 'Base',
+    es: 'Inicial',
   },
   symptomScoresSpeedometerLegendPrevious: {
     en: 'Previous',
@@ -129,11 +129,11 @@ export const healthSummaryLocalization = {
   },
   symptomScoresTableTitle: {
     en: 'Symptom Scores [KCCQ-12] Over Time',
-    es: 'Puntuaciones de síntomas [KCCQ-12] con el tiempo',
+    es: 'Puntuaciones de síntomas [KCCQ-12] a lo largo del tiempo',
   },
   symptomScoresTableDescription: {
     en: 'This is a detailed report of your symptom scores over time. The graph above shows the overall score. 100 is better and 0 is worse. Each KCCQ-12 question is from one of these categories. Your Overall Score is the average of the other categories.',
-    es: 'Este es un informe detallado de sus puntuaciones de síntomas con el tiempo. El gráfico anterior muestra la puntuación general. 100 es mejor y 0 es peor. Cada pregunta KCCQ-12 es de una de estas categorías. Su Puntuación General es el promedio de las otras categorías.',
+    es: 'Este es un informe detallado de sus puntuaciones de síntomas a lo largo del tiempo. El gráfico anterior muestra la puntuación general. 100 es mejor y 0 es peor. Cada pregunta del KCCQ-12 pertenece a una de estas categorías. Su puntuación general es el promedio de las demás categorías.',
   },
   symptomScoresTableOverallScoreHeader: {
     en: 'Overall Score',
@@ -153,7 +153,7 @@ export const healthSummaryLocalization = {
   },
   symptomScoresTableSymptomFrequencyScoreHeader: {
     en: 'Symptom Frequency',
-    es: 'Frecuencia',
+    es: 'Frecuencia de los síntomas',
   },
   symptomScoresTableDizzinessScoreHeader: {
     en: 'Dizziness',
@@ -161,7 +161,7 @@ export const healthSummaryLocalization = {
   },
   vitalsTitle: {
     en: 'VITALS OVER LAST 2 WEEKS',
-    es: 'SIGNOS VITALES EN LAS ÚLTIMAS 2 SEMANAS',
+    es: 'VALORES VITALES DE LAS ÚLTIMAS 2 SEMANAS',
   },
   vitalsBodyWeightTitle: {
     en: 'Weight',
@@ -197,11 +197,11 @@ export const healthSummaryLocalization = {
   },
   vitalsHeartRateTablePercentageUnder50Header: {
     en: '% Under 50',
-    es: '% < 50',
+    es: '% menor a 50',
   },
   vitalsHeartRateTablePercentageOver120Header: {
     en: '% Over 120',
-    es: '% > 120',
+    es: '% mayor a 120',
   },
   vitalsHeartRateTableRowTitle: {
     en: 'Heart Rate',
@@ -225,11 +225,11 @@ export const healthSummaryLocalization = {
   },
   vitalsBloodPressureTablePercentageUnder90Header: {
     en: '% Under 90 mmHg',
-    es: '% Menos de 90 mmHg',
+    es: '% menor a 90 mmHg',
   },
   vitalsBloodPressureTablePercentageOver180Header: {
     en: '% Over 180 mmHg',
-    es: '% Más de 180 mmHg',
+    es: '% mayor a 180 mmHg',
   },
   vitalsBloodPressureTableSystolicRowTitle: {
     en: 'Systolic',
