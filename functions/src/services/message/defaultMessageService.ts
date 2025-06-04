@@ -192,7 +192,7 @@ export class DefaultMessageService implements MessageService {
     message: UserMessage,
     options: {
       notify: boolean
-      user?: User | null
+      user: User | null
     },
   ): Promise<void> {
     const user =
@@ -220,6 +220,7 @@ export class DefaultMessageService implements MessageService {
       recipientIds.map(async (recipientId) =>
         this.addMessage(recipientId, message, {
           notify: true,
+          user,
         }),
       ),
     )
@@ -230,7 +231,7 @@ export class DefaultMessageService implements MessageService {
     message: UserMessage,
     options: {
       notify: boolean
-      user?: User | null
+      user: User | null
     },
   ): Promise<Document<UserMessage> | undefined> {
     const newMessage = await this.databaseService.runTransaction(
@@ -287,9 +288,9 @@ export class DefaultMessageService implements MessageService {
         user: options.user ?? null,
         message: newMessage,
       })
-
-      return newMessage
     }
+
+    return newMessage
   }
 
   async completeMessages(
@@ -552,10 +553,12 @@ export class DefaultMessageService implements MessageService {
         if (!user.receivesAppointmentReminders) return
     }
 
-    await this.sendTextNotification(input.userId, user, input.message)
-    await this.sendPushNotification(input.userId, input.message, {
-      language: user.language,
-    })
+    await Promise.all([
+      this.sendTextNotification(input.userId, user, input.message),
+      this.sendPushNotification(input.userId, input.message, {
+        language: user.language,
+      }),
+    ])
   }
 
   private async sendTextNotification(

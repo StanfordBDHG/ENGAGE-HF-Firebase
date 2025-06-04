@@ -165,7 +165,7 @@ export class TriggerService {
           UserMessage.createRegistrationQuestionnaire({
             questionnaireReference: QuestionnaireReference.registration_en_US,
           }),
-          { notify: true },
+          { notify: true, user: user.content },
         )
       }
 
@@ -174,7 +174,7 @@ export class TriggerService {
         UserMessage.createSymptomQuestionnaire({
           questionnaireReference: QuestionnaireReference.kccq_en_US,
         }),
-        { notify: true },
+        { notify: true, user: user.content },
       )
     } catch (error) {
       logger.error(
@@ -194,6 +194,7 @@ export class TriggerService {
   ): Promise<void> {
     try {
       const now = new Date()
+      const messageService = this.factory.message()
       const reminderRangeStart = advanceDateByHours(now, -24)
       const reminderRangeEnd = advanceDateByHours(now, 24)
 
@@ -202,7 +203,6 @@ export class TriggerService {
         newData.start < reminderRangeStart ||
         newData.end > reminderRangeEnd
       ) {
-        const messageService = this.factory.message()
         await messageService.completeMessages(
           userId,
           UserMessageType.preAppointment,
@@ -210,6 +210,32 @@ export class TriggerService {
             message.reference ===
             `users/${userId}/appointments/${appointmentId}`,
         )
+      } else if (newData.start > now && newData.start < reminderRangeEnd) {
+        const userService = this.factory.user()
+        const message = UserMessage.createPreAppointment({
+          creationDate: now,
+          reference: `users/${userId}/appointments/${appointmentId}`,
+        })
+        const user = await userService.getUser(userId)
+        const messageDoc = await messageService.addMessage(userId, message, {
+          notify: true,
+          user: user?.content ?? null,
+        })
+        if (messageDoc !== undefined) {
+          const userAuth = await userService.getAuth(userId)
+          await messageService.addMessageForClinicianAndOwners(
+            userId,
+            UserMessage.createPreAppointmentForClinician({
+              userId: userId,
+              userName: userAuth.displayName,
+              reference: messageDoc?.path,
+            }),
+            {
+              notify: true,
+              user: user?.content ?? null,
+            },
+          )
+        }
       }
     } catch (error) {
       logger.error(
@@ -286,7 +312,7 @@ export class TriggerService {
           const messageDoc = await messageService.addMessage(
             userId,
             UserMessage.createWeightGain(),
-            { notify: true },
+            { notify: true, user: user.content },
           )
 
           if (messageDoc !== undefined) {
@@ -426,7 +452,7 @@ export class TriggerService {
         reference: medicationReference,
         videoReference: medicationClass?.content.videoPath,
       }),
-      { notify: true },
+      { notify: true, user: null },
     )
   }
 
