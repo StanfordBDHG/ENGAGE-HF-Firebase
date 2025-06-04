@@ -25,6 +25,7 @@ export enum UserMessageType {
   medicationUptitration = 'MedicationUptitration',
   welcome = 'Welcome',
   vitals = 'Vitals',
+  kccqDecline = 'KccqDecline',
   registrationQuestionnaire = 'RegistrationQuestionnaire',
   postAppointmentQuestionnaire = 'PostAppointmentQuestionnaire',
   symptomQuestionnaire = 'SymptomQuestionnaire',
@@ -110,6 +111,27 @@ export class UserMessage {
       type: UserMessageType.inactive,
       isDismissible: true,
       reference: input.reference,
+    })
+  }
+
+  static createKccqDeclineForClinician(input: {
+    creationDate?: Date
+    userId: string
+    userName?: string
+    reference: string
+  }): UserMessage {
+    return new UserMessage({
+      creationDate: input.creationDate ?? new Date(),
+      title: new LocalizedText({
+        en: 'KCCQ Score dropped',
+      }),
+      description: new LocalizedText({
+        en: `${input.userName ?? 'Patient'} has submitted a drop in KCCQ score. You can review med information on the user detail page.`,
+      }),
+      reference: input.reference,
+      action: `users/${input.userId}/medications`,
+      type: UserMessageType.kccqDecline,
+      isDismissible: true,
     })
   }
 
