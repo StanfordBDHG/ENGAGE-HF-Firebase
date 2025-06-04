@@ -7,6 +7,7 @@
 //
 
 import {
+  fhirAppointmentConverter,
   fhirMedicationRequestConverter,
   fhirQuestionnaireResponseConverter,
   UserObservationCollection,
@@ -25,6 +26,24 @@ export const onUserAllergyIntoleranceWritten = onDocumentWritten(
     getServiceFactory()
       .trigger()
       .userAllergyIntoleranceWritten(event.params.userId),
+)
+
+export const onUserAppointmentWritten = onDocumentWritten(
+  {
+    document: 'users/{userId}/appointments/{appointmentId}',
+    secrets: Env.twilioSecretKeys,
+  },
+  async (event) => {
+    const data = event.data?.after
+    const converter = new DatabaseConverter(fhirAppointmentConverter.value)
+    await getServiceFactory()
+      .trigger()
+      .userAppointmentWritten(
+        event.params.userId,
+        event.params.appointmentId,
+        data?.exists ? converter.fromFirestore(data) : null,
+      )
+  },
 )
 
 export const onUserCreatinineObservationWritten = onDocumentWritten(

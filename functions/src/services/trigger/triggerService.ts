@@ -26,6 +26,7 @@ import {
   Invitation,
   UserRegistration,
   advanceDateByHours,
+  FHIRAppointment,
 } from '@stanfordbdhg/engagehf-models'
 import { logger } from 'firebase-functions'
 import { _updateStaticData } from '../../functions/updateStaticData.js'
@@ -184,6 +185,37 @@ export class TriggerService {
 
   async userAllergyIntoleranceWritten(userId: string): Promise<void> {
     await this.updateRecommendationsForUser(userId)
+  }
+
+  async userAppointmentWritten(
+    userId: string,
+    appointmentId: string,
+    newData: FHIRAppointment | null,
+  ): Promise<void> {
+    try {
+      const now = new Date()
+      const messageService = this.factory.message()
+      const reminderRangeStart = advanceDateByHours(now, -24)
+      const reminderRangeEnd = advanceDateByHours(now, 24)
+
+      if (
+        newData === null ||
+        newData.start < reminderRangeStart ||
+        newData.end > reminderRangeEnd
+      ) {
+        await messageService.completeMessages(
+          userId,
+          UserMessageType.preAppointment,
+          (message) =>
+            message.reference ===
+            `users/${userId}/appointments/${appointmentId}`,
+        )
+      }
+    } catch (error) {
+      logger.error(
+        `TriggerService.userAppointmentWritten(${userId}, ${appointmentId}): Completing pre-appointment messages failed due to ${String(error)}`,
+      )
+    }
   }
 
   async userObservationWritten(
