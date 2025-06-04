@@ -148,7 +148,7 @@ export class TriggerService {
         UserMessage.createWelcome({
           videoReference: VideoReference.welcome,
         }),
-        { notify: true },
+        { notify: true, user: user.content },
       )
     } catch (error) {
       logger.error(
@@ -228,7 +228,7 @@ export class TriggerService {
             UserMessage.createPreAppointmentForClinician({
               userId: userId,
               userName: userAuth.displayName,
-              reference: messageDoc?.path,
+              reference: messageDoc.path,
             }),
             {
               notify: true,
@@ -630,6 +630,7 @@ export class TriggerService {
     const messageService = this.factory.message()
     const messageDoc = await messageService.addMessage(input.userId, message, {
       notify: true,
+      user: null,
     })
 
     const userService = this.factory.user()
@@ -777,14 +778,14 @@ export class TriggerService {
       upcomingAppointments.map(async (appointment) => {
         try {
           const userId = appointment.path.split('/')[1]
+          const user = await userService.getUser(userId)
           const messageDoc = await messageService.addMessage(
             userId,
             UserMessage.createPreAppointment({
               reference: appointment.path,
             }),
-            { notify: true },
+            { notify: true, user: user?.content ?? null },
           )
-          const user = await userService.getUser(userId)
           if (user !== undefined && messageDoc !== undefined) {
             const userAuth = await userService.getAuth(userId)
             const forwardedMessage =
@@ -843,7 +844,7 @@ export class TriggerService {
                 questionnaireReference:
                   QuestionnaireReference.postAppointment_en_US,
               }),
-              { notify: true },
+              { notify: true, user: user?.content ?? null },
             )
           }
         } catch (error) {

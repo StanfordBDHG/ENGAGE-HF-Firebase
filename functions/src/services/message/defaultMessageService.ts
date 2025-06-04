@@ -234,6 +234,22 @@ export class DefaultMessageService implements MessageService {
       user: User | null
     },
   ): Promise<Document<UserMessage> | undefined> {
+    const user =
+      options.user ?? (await this.userService.getUser(userId))?.content
+    if (user === undefined) {
+      logger.warn(
+        `DefaultMessageService.addMessage(user: ${userId}): User not found, skipping message creation.`,
+      )
+      return undefined
+    }
+
+    if (user.disabled) {
+      logger.info(
+        `DefaultMessageService.addMessage(user: ${userId}): User is disabled, skipping message creation.`,
+      )
+      return undefined
+    }
+
     const newMessage = await this.databaseService.runTransaction(
       async (collections, transaction) => {
         logger.debug(
@@ -284,8 +300,8 @@ export class DefaultMessageService implements MessageService {
       )
 
       await this.sendNotificationIfNeeded({
-        userId: userId,
-        user: options.user ?? null,
+        userId,
+        user,
         message: newMessage,
       })
     }
@@ -529,34 +545,30 @@ export class DefaultMessageService implements MessageService {
 
   private async sendNotificationIfNeeded(input: {
     userId: string
-    user: User | null
+    user: User
     message: Document<UserMessage>
   }) {
-    const user =
-      input.user ?? (await this.userService.getUser(input.userId))?.content
-    if (!user) return
-
     switch (input.message.content.type) {
       case UserMessageType.medicationChange:
-        if (!user.receivesMedicationUpdates) return
+        if (!input.user.receivesMedicationUpdates) return
       case UserMessageType.weightGain:
-        if (!user.receivesWeightAlerts) return
+        if (!input.user.receivesWeightAlerts) return
       case UserMessageType.medicationUptitration:
-        if (!user.receivesRecommendationUpdates) return
+        if (!input.user.receivesRecommendationUpdates) return
       case UserMessageType.welcome:
         break
       case UserMessageType.vitals:
-        if (!user.receivesVitalsReminders) return
+        if (!input.user.receivesVitalsReminders) return
       case UserMessageType.symptomQuestionnaire:
-        if (!user.receivesQuestionnaireReminders) return
+        if (!input.user.receivesQuestionnaireReminders) return
       case UserMessageType.preAppointment:
-        if (!user.receivesAppointmentReminders) return
+        if (!input.user.receivesAppointmentReminders) return
     }
 
     await Promise.all([
-      this.sendTextNotification(input.userId, user, input.message),
+      this.sendTextNotification(input.userId, input.user, input.message),
       this.sendPushNotification(input.userId, input.message, {
-        language: user.language,
+        language: input.user.language,
       }),
     ])
   }
