@@ -122,12 +122,18 @@ export class UserMessage {
   }): UserMessage {
     return new UserMessage({
       creationDate: input.creationDate ?? new Date(),
-      title: new LocalizedText({
-        en: 'KCCQ Score dropped',
-      }),
-      description: new LocalizedText({
-        en: `${input.userName ?? 'Patient'} has submitted a drop in KCCQ score. You can review med information on the user detail page.`,
-      }),
+      title: LocalizedText.create(
+        messagesLocalization.kccqDeclineTitleForClinician,
+      ),
+      description:
+        input.userName !== undefined ?
+          LocalizedText.create(
+            messagesLocalization.kccqDeclineDescriptionForClinician,
+            input.userName,
+          )
+        : LocalizedText.create(
+            messagesLocalization.kccqDeclineDescriptionForClinicianNoName,
+          ),
       reference: input.reference,
       action: `users/${input.userId}/medications`,
       type: UserMessageType.kccqDecline,

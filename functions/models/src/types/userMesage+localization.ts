@@ -23,6 +23,15 @@ export const messagesLocalization = {
     en: 'Patient has been inactive for 7 days.',
     es: 'El paciente ha estado inactivo durante 7 días.',
   },
+  kccqDeclineTitleForClinician: {
+    en: 'KCCQ Score dropped',
+  },
+  kccqDeclineDescriptionForClinician: {
+    en: '@0 has submitted a drop in KCCQ score. You can review med information on the user detail page.',
+  },
+  kccqDeclineDescriptionForClinicianNoName: {
+    en: 'Patient has submitted a drop in KCCQ score. You can review med information on the user detail page.',
+  },
   medicationChangeTitle: {
     en: 'Medication Change',
     es: 'Cambio de medicamento',
