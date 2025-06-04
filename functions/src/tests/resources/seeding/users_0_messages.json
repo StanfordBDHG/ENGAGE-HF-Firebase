@@ -10,7 +10,7 @@
     },
     "description": {
       "en": "You have been inactive for 7 days. Please log in to continue your care.",
-      "es": "Has estado inactivo durante 7 días. Por favor, inicie sesión para continuar su atención."
+      "es": "Ha estado inactivo durante 7 días. Inicie sesión para continuar con su atención."
     },
     "action": null,
     "isDismissible": false,
@@ -23,11 +23,11 @@
     "type": "MedicationChange",
     "title": {
       "en": "Medication Change",
-      "es": "Cambio de medicación"
+      "es": "Cambio de medicamento"
     },
     "description": {
       "en": "Your dose of Losartan Potassium was changed. You can review medication information on the Education Page.",
-      "es": "Su dosis de Losartan Potassium fue cambiada. Puede revisar la información de la medicación en la página de Educación."
+      "es": "Su dosis de Losartan Potassium fue modificada. Puede revisar la información sobre sus medicamentos en la Página de Educación."
     },
     "action": "videoSections/1/videos/2",
     "isDismissible": true,
@@ -40,11 +40,11 @@
     "type": "MedicationUptitration",
     "title": {
       "en": "Eligible Medication Change",
-      "es": "Cambio de medicación elegible"
+      "es": "Apto para cambio de medicamento"
     },
     "description": {
       "en": "You may be eligible for med changes that may help your heart. Your care team will be sent this information. You can review med information on the Education Page.",
-      "es": "Puede ser elegible para cambios en la medicación que pueden ayudar a su corazón. Su equipo de atención recibirá esta información. Puede revisar la información de la medicación en la página de Educación."
+      "es": "Podría ser apto para cambios de medicamentos que podrían beneficiar su corazón. Su equipo de atención médica recibirá esta información. Puede revisar la información sobre sus medicamentos en la Página de Educación."
     },
     "action": "medications",
     "isDismissible": true,
@@ -61,7 +61,7 @@
     },
     "description": {
       "en": "Your appointment is coming up. Review your Health Summary before your visit.",
-      "es": "Su cita se acerca. Revise su Resumen de Salud antes de su visita."
+      "es": "Su cita se acerca. Revise su Resumen de Salud antes de su cita."
     },
     "action": "healthSummary",
     "isDismissible": false,
@@ -78,7 +78,7 @@
     },
     "description": {
       "en": "Complete your Symptom Survey for your care team.",
-      "es": "Complete su Encuesta de Síntomas para su equipo de atención."
+      "es": "Complete su Cuestionario de síntomas para su equipo de atención."
     },
     "action": "questionnaires/0",
     "isDismissible": false,
@@ -95,7 +95,7 @@
     },
     "description": {
       "en": "Check your blood pressure and weight daily.",
-      "es": "Revise su presión arterial y peso diariamente."
+      "es": "Controle su presión arterial y peso diariamente."
     },
     "action": "observations",
     "isDismissible": false,
@@ -112,7 +112,7 @@
     },
     "description": {
       "en": "Your weight increased over 3 lbs. Your care team will be informed. Please follow any instructions about diuretic changes after weight increase on the Medication page.",
-      "es": "Su peso aumentó más de 3 libras. Su equipo de atención será informado. Siga cualquier instrucción sobre cambios diuréticos después del aumento de peso en la página de Medicación."
+      "es": "Su peso aumentó más de 3 lbs. Se informará a su equipo de atención. Siga las instrucciones sobre los cambios en por diuréticos después de aumentar de peso en la página de Medicamentos."
     },
     "action": "medications",
     "isDismissible": true,
@@ -125,7 +125,7 @@
     "type": "Welcome",
     "title": {
       "en": "Welcome",
-      "es": "Bienvenido"
+      "es": "Bienvenido."
     },
     "description": {
       "en": "Watch Welcome Video on the Education Page.",
