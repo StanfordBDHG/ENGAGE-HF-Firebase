@@ -194,7 +194,6 @@ export class TriggerService {
   ): Promise<void> {
     try {
       const now = new Date()
-      const messageService = this.factory.message()
       const reminderRangeStart = advanceDateByHours(now, -24)
       const reminderRangeEnd = advanceDateByHours(now, 24)
 
@@ -203,6 +202,7 @@ export class TriggerService {
         newData.start < reminderRangeStart ||
         newData.end > reminderRangeEnd
       ) {
+        const messageService = this.factory.message()
         await messageService.completeMessages(
           userId,
           UserMessageType.preAppointment,
