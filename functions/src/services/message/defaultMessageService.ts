@@ -220,7 +220,7 @@ export class DefaultMessageService implements MessageService {
       recipientIds.map(async (recipientId) =>
         this.addMessage(recipientId, message, {
           notify: true,
-          user,
+          user: null,
         }),
       ),
     )
