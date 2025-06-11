@@ -20,7 +20,7 @@ describe('RxNormService', () => {
     medicationClasses.set(
       '0',
       new MedicationClass({
-        name: new LocalizedText('Beta blockers'),
+        name: LocalizedText.raw('Beta blockers'),
         videoPath: 'videoSections/1/videos/1',
       }),
     )
