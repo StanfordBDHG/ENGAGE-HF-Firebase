@@ -39,11 +39,11 @@ describe('generateHealthSummary', () => {
     inputData = await mockHealthSummaryData('')
   })
 
-  it('should still create as nice of a PDF as before', () => {
+  it('should still create as nice of a PDF as before (en)', () => {
     const actualData = generateHealthSummary(inputData, {
       languages: ['en_US'],
     })
-    const expectedPath = 'src/tests/resources/mockHealthSummary.pdf'
+    const expectedPath = 'src/tests/resources/mockHealthSummary-en.pdf'
     if (TestFlags.regenerateValues) {
       if (!comparePdf(actualData, fs.readFileSync(expectedPath)))
         fs.writeFileSync(expectedPath, actualData)
@@ -53,7 +53,21 @@ describe('generateHealthSummary', () => {
     }
   })
 
-  it('should not fail on empty data', () => {
+  it('should still create as nice of a PDF as before (es)', () => {
+    const actualData = generateHealthSummary(inputData, {
+      languages: ['es'],
+    })
+    const expectedPath = 'src/tests/resources/mockHealthSummary-es.pdf'
+    if (TestFlags.regenerateValues) {
+      if (!comparePdf(actualData, fs.readFileSync(expectedPath)))
+        fs.writeFileSync(expectedPath, actualData)
+    } else {
+      const expectedData = fs.readFileSync(expectedPath)
+      comparePdf(actualData, expectedData)
+    }
+  })
+
+  it('should not fail on empty data (en)', () => {
     inputData.dateOfBirth = undefined
     inputData.nextAppointment = undefined
     inputData.recommendations = []
@@ -66,7 +80,30 @@ describe('generateHealthSummary', () => {
     const actualData = generateHealthSummary(inputData, {
       languages: ['en-US'],
     })
-    const expectedPath = 'src/tests/resources/emptyHealthSummary.pdf'
+    const expectedPath = 'src/tests/resources/emptyHealthSummary-en.pdf'
+    if (TestFlags.regenerateValues) {
+      if (!comparePdf(actualData, fs.readFileSync(expectedPath)))
+        fs.writeFileSync(expectedPath, actualData)
+    } else {
+      const expectedData = fs.readFileSync(expectedPath)
+      comparePdf(actualData, expectedData)
+    }
+  })
+
+  it('should not fail on empty data (es)', () => {
+    inputData.dateOfBirth = undefined
+    inputData.nextAppointment = undefined
+    inputData.recommendations = []
+    inputData.symptomScores = []
+    inputData.vitals.systolicBloodPressure = []
+    inputData.vitals.diastolicBloodPressure = []
+    inputData.vitals.heartRate = []
+    inputData.vitals.bodyWeight = []
+    inputData.vitals.dryWeight = undefined
+    const actualData = generateHealthSummary(inputData, {
+      languages: ['es'],
+    })
+    const expectedPath = 'src/tests/resources/emptyHealthSummary-es.pdf'
     if (TestFlags.regenerateValues) {
       if (!comparePdf(actualData, fs.readFileSync(expectedPath)))
         fs.writeFileSync(expectedPath, actualData)
