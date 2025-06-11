@@ -22,8 +22,8 @@ describeWithEmulators('function: dismissMessages', (env) => {
     // Create dismissible messages
     const message1 = new UserMessage({
       type: UserMessageType.weightGain,
-      title: new LocalizedText({ text: 'Test Title 1' }),
-      description: new LocalizedText({ text: 'Test Description 1' }),
+      title: LocalizedText.raw('Test Title 1'),
+      description: LocalizedText.raw('Test Description 1'),
       reference: 'test-reference-1',
       creationDate: new Date(),
       completionDate: undefined,
@@ -31,8 +31,8 @@ describeWithEmulators('function: dismissMessages', (env) => {
     })
     const message2 = new UserMessage({
       type: UserMessageType.vitals,
-      title: new LocalizedText({ text: 'Test Title 2' }),
-      description: new LocalizedText({ text: 'Test Description 2' }),
+      title: LocalizedText.raw('Test Title 2'),
+      description: LocalizedText.raw('Test Description 2'),
       reference: 'test-reference-2',
       creationDate: new Date(),
       completionDate: undefined,
@@ -40,8 +40,8 @@ describeWithEmulators('function: dismissMessages', (env) => {
     })
     const message3 = new UserMessage({
       type: UserMessageType.medicationChange,
-      title: new LocalizedText({ text: 'Test Title 3' }),
-      description: new LocalizedText({ text: 'Test Description 3' }),
+      title: LocalizedText.raw('Test Title 3'),
+      description: LocalizedText.raw('Test Description 3'),
       reference: 'test-reference-3',
       creationDate: new Date(),
       completionDate: undefined,
@@ -90,8 +90,8 @@ describeWithEmulators('function: dismissMessages', (env) => {
     // Create dismissible and non-dismissible messages
     const dismissibleMessage = new UserMessage({
       type: UserMessageType.weightGain,
-      title: new LocalizedText({ text: 'Dismissible Message' }),
-      description: new LocalizedText({ text: 'This message can be dismissed' }),
+      title: LocalizedText.raw('Dismissible Message'),
+      description: LocalizedText.raw('This message can be dismissed'),
       reference: 'test-reference-1',
       creationDate: new Date(),
       completionDate: undefined,
@@ -100,10 +100,8 @@ describeWithEmulators('function: dismissMessages', (env) => {
 
     const nonDismissibleMessage = new UserMessage({
       type: UserMessageType.vitals,
-      title: new LocalizedText({ text: 'Non-dismissible Message' }),
-      description: new LocalizedText({
-        text: 'This message cannot be dismissed',
-      }),
+      title: LocalizedText.raw('Non-dismissible Message'),
+      description: LocalizedText.raw('This message cannot be dismissed'),
       reference: 'test-reference-2',
       creationDate: new Date(),
       completionDate: undefined,
@@ -147,8 +145,8 @@ describeWithEmulators('function: dismissMessages', (env) => {
     // Create a dismissible message for the regular user
     const message = new UserMessage({
       type: UserMessageType.weightGain,
-      title: new LocalizedText({ text: 'Test Message' }),
-      description: new LocalizedText({ text: 'Message for regular user' }),
+      title: LocalizedText.raw('Test Message'),
+      description: LocalizedText.raw('Message for regular user'),
       reference: 'test-reference',
       creationDate: new Date(),
       completionDate: undefined,
