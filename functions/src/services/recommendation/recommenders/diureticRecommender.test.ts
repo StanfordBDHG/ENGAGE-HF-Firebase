@@ -98,7 +98,7 @@ describe('DiureticRecommender', () => {
           ],
         }),
         medicationClass: new MedicationClass({
-          name: new LocalizedText('Diuretics'),
+          name: LocalizedText.raw('Diuretics'),
           videoPath: 'videoSections/1/videos/5',
         }),
         medicationClassReference: {
