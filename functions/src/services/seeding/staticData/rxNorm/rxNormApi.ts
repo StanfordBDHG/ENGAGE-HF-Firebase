@@ -57,7 +57,19 @@ export class RxNormApi {
     path: string,
     schema: Schema,
   ): Promise<z.output<Schema>> {
-    return new Promise((resolve, reject) => {
+    let isDone = false
+    return new Promise((res, rej) => {
+      function resolve(data: z.output<Schema>) {
+        if (isDone) return
+        isDone = true
+        res(data)
+      }
+      function reject(reason: unknown) {
+        if (isDone) return
+        isDone = true
+        // eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors
+        rej(reason)
+      }
       const request = https.get(
         'https://rxnav.nlm.nih.gov/REST/' + path,
         (response) => {
@@ -77,8 +89,7 @@ export class RxNormApi {
                     JSON.parse(body.toString('utf8')),
                   ) as z.output<Schema>,
                 )
-              } catch (error: unknown) {
-                /* eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors */
+              } catch (error) {
                 reject(error)
               }
             } else {

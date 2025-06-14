@@ -44,8 +44,8 @@ export const healthSummaryLocalization = {
     es: 'MEDICAMENTOS ACTUALES PARA EL CORAZÓN',
   },
   currentMedicationsDescription: {
-    en: 'Here are meds you are taking for your heart function, your current dose, and the target dose that we aim to get to. The target dose is the dose we know best helps strengthen your heart.',
-    es: 'Aquí se detallan los medicamentos que toma para su función cardíaca, su dosis actual y la dosis objetivo que buscamos alcanzar. La dosis objetivo es la que sabemos que mejor ayuda a fortalecer su corazón.',
+    en: 'Here are meds you are taking for your heart function, your current dose, and the target dose that we aim to get to. Getting to at least the target dose or higher is the best way to strengthen your heart.',
+    es: 'Aquí se detallan los medicamentos que toma para su función cardíaca, su dosis actual y la dosis objetivo que buscamos alcanzar. Alcanzar al menos la dosis objetivo o incluso una mayor es la mejor manera de fortalecer su corazón.',
   },
   currentMedicationsTableNameHeader: {
     en: 'My Medications',
