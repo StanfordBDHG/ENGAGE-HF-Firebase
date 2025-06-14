@@ -1132,7 +1132,7 @@
           "resourceType": "MedicationRequest",
           "medicationReference": {
             "reference": "medications/35296/drugs/401965",
-            "display": "Ramipril (Oral Pill)"
+            "display": "Ramipril (Oral Tablet)"
           },
           "dosageInstruction": [
             {
@@ -1176,7 +1176,7 @@
           "resourceType": "MedicationRequest",
           "medicationReference": {
             "reference": "medications/35296/drugs/401968",
-            "display": "Ramipril (Oral Pill)"
+            "display": "Ramipril (Oral Tablet)"
           },
           "dosageInstruction": [
             {

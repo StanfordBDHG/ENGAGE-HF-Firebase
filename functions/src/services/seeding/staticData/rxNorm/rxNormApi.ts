@@ -8,7 +8,6 @@
 
 import * as https from 'https'
 import { optionalish } from '@stanfordbdhg/engagehf-models'
-import { logger } from 'firebase-functions'
 import { z } from 'zod'
 import {
   rxNormRelatedDrugGroupResponse,
@@ -16,6 +15,7 @@ import {
   rxTermInfo,
   type RxTermInfo,
 } from './rxNormModels.js'
+import { logger } from 'firebase-functions/v2'
 
 export class RxNormApi {
   // Methods
@@ -57,7 +57,18 @@ export class RxNormApi {
     path: string,
     schema: Schema,
   ): Promise<z.output<Schema>> {
-    return new Promise((resolve, reject) => {
+    let isDone = false
+    return new Promise((res, rej) => {
+      function resolve(data: z.output<Schema>) {
+        if (isDone) return
+        isDone = true
+        res(data)
+      }
+      function reject(error: unknown) {
+        if (isDone) return
+        isDone = true
+        rej(error)
+      }
       const request = https.get(
         'https://rxnav.nlm.nih.gov/REST/' + path,
         (response) => {

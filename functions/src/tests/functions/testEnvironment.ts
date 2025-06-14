@@ -14,7 +14,7 @@ import {
   type DocumentSnapshot,
   Timestamp,
 } from 'firebase-admin/firestore'
-import { type CloudFunction, type Change } from 'firebase-functions'
+import { type CloudFunction, type Change, logger } from 'firebase-functions'
 import { type FirestoreEvent } from 'firebase-functions/firestore'
 import {
   type CallableFunction,
@@ -32,19 +32,20 @@ export function describeWithEmulators(
   perform: (env: EmulatorTestEnvironment) => void,
 ) {
   describe(title, () => {
-    if (TestFlags.connectsToEmulator) {
-      const env = EmulatorTestEnvironment.instance
-
-      beforeEach(async () => {
-        await env.cleanup()
-      }, 30_000)
-
-      perform(env)
-    } else {
+    if (!TestFlags.connectsToEmulator) {
       it('skipped due to missing emulator', () => {
-        fail('skipped test')
+        logger.warn('skipping test because emulator is not running')
       })
+      return
     }
+
+    const env = EmulatorTestEnvironment.instance
+    
+    beforeEach(async () => {
+      await env.cleanup()
+    }, 30_000)
+
+    perform(env)
   })
 }
 
