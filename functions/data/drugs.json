@@ -2053,7 +2053,7 @@
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
             "code": "251856",
-            "display": "Ramipril (Oral Pill)"
+            "display": "Ramipril (Oral Tablet)"
           }
         ]
       },
@@ -2085,11 +2085,11 @@
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "Oral Pill",
-            "display": "Oral Pill"
+            "code": "Oral Tablet",
+            "display": "Oral Tablet"
           }
         ],
-        "text": "Oral Pill"
+        "text": "Oral Tablet"
       }
     },
     "251857": {
@@ -2100,7 +2100,7 @@
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
             "code": "251857",
-            "display": "Ramipril (Oral Pill)"
+            "display": "Ramipril (Oral Tablet)"
           }
         ]
       },
@@ -2132,11 +2132,11 @@
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "Oral Pill",
-            "display": "Oral Pill"
+            "code": "Oral Tablet",
+            "display": "Oral Tablet"
           }
         ],
-        "text": "Oral Pill"
+        "text": "Oral Tablet"
       }
     },
     "261962": {
@@ -2194,7 +2194,7 @@
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
             "code": "401965",
-            "display": "Ramipril (Oral Pill)"
+            "display": "Ramipril (Oral Tablet)"
           }
         ]
       },
@@ -2226,11 +2226,11 @@
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "Oral Pill",
-            "display": "Oral Pill"
+            "code": "Oral Tablet",
+            "display": "Oral Tablet"
           }
         ],
-        "text": "Oral Pill"
+        "text": "Oral Tablet"
       }
     },
     "401968": {
@@ -2241,7 +2241,7 @@
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
             "code": "401968",
-            "display": "Ramipril (Oral Pill)"
+            "display": "Ramipril (Oral Tablet)"
           }
         ]
       },
@@ -2273,11 +2273,11 @@
         "coding": [
           {
             "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "Oral Pill",
-            "display": "Oral Pill"
+            "code": "Oral Tablet",
+            "display": "Oral Tablet"
           }
         ],
-        "text": "Oral Pill"
+        "text": "Oral Tablet"
       }
     },
     "845488": {
