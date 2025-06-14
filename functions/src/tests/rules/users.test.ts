@@ -16,8 +16,17 @@ import {
 } from '@firebase/rules-unit-testing'
 import { UserType } from '@stanfordbdhg/engagehf-models'
 import type firebase from 'firebase/compat/app'
+import { logger } from 'firebase-functions/v2'
+import { TestFlags } from '../testFlags.js'
 
 describe('firestore.rules: users/{userId}', () => {
+  if (!TestFlags.connectsToEmulator) {
+    it('skipped due to missing emulator', () => {
+      logger.warn('skipping test because emulator is not running')
+    })
+    return
+  }
+
   const organizationId = 'stanford'
   const otherOrganizationId = 'jhu'
 

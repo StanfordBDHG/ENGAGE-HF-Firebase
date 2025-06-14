@@ -94,6 +94,7 @@ export class RxNormService {
               logger.error(
                 `Error processing ingredient ${ingredientRxcui}: ${JSON.stringify(error)}`,
               )
+              throw error
             }
           }
         }
@@ -115,6 +116,7 @@ export class RxNormService {
                 logger.error(
                   `Error processing drug ${drugRxcui}: ${JSON.stringify(error)}`,
                 )
+                throw error
               }
             }
           } else {
@@ -139,6 +141,7 @@ export class RxNormService {
                 logger.error(
                   `Error processing drug ${drug.rxcui}: ${JSON.stringify(error)}`,
                 )
+                throw error
               }
             }
           }
@@ -146,6 +149,7 @@ export class RxNormService {
           logger.error(
             `Error processing medication ${medication.code}: ${JSON.stringify(error)}`,
           )
+          throw error
         }
 
         const fhirMedication = this.buildFHIRMedication(
@@ -290,10 +294,13 @@ export class RxNormService {
   ): Promise<FHIRMedication> {
     let rxTermInfo = await this.api.getAllRxTermInfo(rxcui)
     if (rxTermInfo === undefined || Object.entries(rxTermInfo).length === 0) {
-      logger.error(
+      logger.warn(
         `Error getting term info for ${rxcui}. Using fallback terms...`,
       )
       rxTermInfo = fallbackTerms ?? {}
+      if (Object.entries(rxTermInfo).length === 0) {
+        throw new Error(`No fallback terms provided for RXCUI ${rxcui}.`)
+      }
     }
     const amounts = this.removingSuffix(
       (rxTermInfo.strength ?? '').toUpperCase(),
@@ -301,6 +308,10 @@ export class RxNormService {
     )
       .split('-')
       .map(parseFloat)
+    const display = rxTermInfo.displayName ?? rxTermInfo.fullName
+    if (!display) {
+      throw new Error(`Missing display name for RXCUI ${rxcui}.`)
+    }
     return new FHIRMedication({
       id: rxcui,
       code: {
@@ -308,9 +319,7 @@ export class RxNormService {
           {
             system: CodingSystem.rxNorm,
             code: rxcui,
-            display: capitalize(
-              rxTermInfo.displayName ?? rxTermInfo.fullName ?? '',
-            ),
+            display: capitalize(display),
           },
         ],
       },
