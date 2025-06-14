@@ -40,7 +40,7 @@ export function describeWithEmulators(
     }
 
     const env = EmulatorTestEnvironment.instance
-    
+
     beforeEach(async () => {
       await env.cleanup()
     }, 30_000)

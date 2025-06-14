@@ -254,7 +254,7 @@ export class StaticDataService extends SeedingService {
           'medicationCodes.json',
           medicationClassSpecificationSchema,
         )
-        return await this.rxNormService.buildFHIRCollections(
+        return this.rxNormService.buildFHIRCollections(
           medicationClassMap,
           specification,
         )

@@ -15,8 +15,8 @@ import {
 } from '@firebase/rules-unit-testing'
 import { UserType } from '@stanfordbdhg/engagehf-models'
 import type firebase from 'firebase/compat/app'
-import { TestFlags } from '../testFlags'
 import { logger } from 'firebase-functions/v2'
+import { TestFlags } from '../testFlags.js'
 
 describe('firestore.rules: users/{userId}/{collectionName}/{documentId}', () => {
   if (!TestFlags.connectsToEmulator) {
