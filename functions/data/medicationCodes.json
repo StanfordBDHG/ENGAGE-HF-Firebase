@@ -259,7 +259,33 @@
           "198188",
           "198189",
           "261962"
-        ]
+        ],
+        "fallbackTerms": {
+          "401965": {
+            "strength": "1.25 MG",
+            "rxnormDoseForm": "Oral Tablet",
+            "fullName": "ramipril 1.25 MG Oral Tablet",
+            "displayName": "Ramipril (Oral Pill)"
+          },
+          "251856": {
+            "strength": "2.5 MG",
+            "rxnormDoseForm": "Oral Tablet",
+            "fullName": "ramipril 2.5 MG Oral Tablet",
+            "displayName": "Ramipril (Oral Pill)"
+          },
+          "251857": {
+            "strength": "5 MG",
+            "rxnormDoseForm": "Oral Tablet",
+            "fullName": "ramipril 5 MG Oral Tablet",
+            "displayName": "Ramipril (Oral Pill)"
+          },
+          "401968": {
+            "strength": "10 MG",
+            "rxnormDoseForm": "Oral Tablet",
+            "fullName": "ramipril 10 MG Oral Tablet",
+            "displayName": "Ramipril (Oral Pill)"
+          }
+        }
       },
       {
         "code": "18867",

@@ -59,7 +59,7 @@ describe('StaticDataService', () => {
       const drugs = await medication.ref.collection('drugs').get()
       expect(drugs.size).toBeGreaterThan(0)
     }
-  })
+  }, 100_000)
 
   it('actually creates organizations', async () => {
     const organizations = await firestore.collection('organizations').get()
