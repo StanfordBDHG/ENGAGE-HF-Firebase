@@ -9,13 +9,13 @@
 import { UserObservationCollection } from '@stanfordbdhg/engagehf-models'
 import { onDocumentWritten } from 'firebase-functions/firestore'
 import { Env } from '../env.js'
-import { serviceAccount } from './helpers.js'
+import { defaultServiceAccount } from './helpers.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
 export const onUserCreatinineObservationWritten = onDocumentWritten(
   {
     document: 'users/{userId}/creatinineObservations/{observationId}',
-    serviceAccount,
+    serviceAccount: defaultServiceAccount,
     secrets: Env.twilioSecretKeys,
   },
   async (event) => {
