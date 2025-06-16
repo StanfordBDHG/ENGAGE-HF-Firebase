@@ -104,6 +104,23 @@ export class EmulatorTestEnvironment {
     } as unknown as CallableRequest<Input>)
   }
 
+  async deleteWithTrigger<Model, Params>(
+    func: CloudFunction<FirestoreEvent<Change<DocumentSnapshot>, Params>>,
+    input: {
+      ref: DocumentReference<Model>
+      params: Params
+    } & DeepPartial<FirestoreEvent<Change<DocumentSnapshot>, Params>>,
+  ) {
+    const wrapped = this.wrapper.wrap(func)
+    const before = await input.ref.withConverter(null).get()
+    await input.ref.delete()
+    const after = await input.ref.withConverter(null).get()
+    await wrapped({
+      ...input,
+      data: this.wrapper.makeChange(before, after),
+    })
+  }
+
   async setWithTrigger<Model, Params>(
     func: CloudFunction<FirestoreEvent<Change<DocumentSnapshot>, Params>>,
     input: {
