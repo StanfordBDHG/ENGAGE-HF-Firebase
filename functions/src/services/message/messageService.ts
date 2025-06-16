@@ -47,7 +47,7 @@ export interface MessageService {
     message: UserMessage,
     options: {
       notify: boolean
-      user?: User | null
+      user: User | null
     },
   ): Promise<void>
 
@@ -56,7 +56,7 @@ export interface MessageService {
     message: UserMessage,
     options: {
       notify: boolean
-      user?: User | null
+      user: User | null
     },
   ): Promise<Document<UserMessage> | undefined>
 

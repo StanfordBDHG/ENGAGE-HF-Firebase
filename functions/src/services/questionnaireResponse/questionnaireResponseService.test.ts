@@ -17,7 +17,7 @@ import {
 } from '@stanfordbdhg/engagehf-models'
 import { createKccqQuestionnaireResponse } from './createKccqQuestionnaireResponse.js'
 import { _defaultSeed } from '../../functions/defaultSeed.js'
-import { onUserQuestionnaireResponseWritten } from '../../functions/onUserDocumentWritten.js'
+import { onUserQuestionnaireResponseWritten } from '../../functions/onUserQuestionnaireResponseWritten.js'
 import { _updateStaticData } from '../../functions/updateStaticData.js'
 import { describeWithEmulators } from '../../tests/functions/testEnvironment.js'
 import { getServiceFactory } from '../factory/getServiceFactory.js'
