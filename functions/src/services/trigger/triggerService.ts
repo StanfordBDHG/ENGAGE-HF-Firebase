@@ -183,10 +183,6 @@ export class TriggerService {
     }
   }
 
-  async userAllergyIntoleranceWritten(userId: string): Promise<void> {
-    await this.updateRecommendationsForUser(userId)
-  }
-
   async userAppointmentWritten(
     userId: string,
     appointmentId: string,
