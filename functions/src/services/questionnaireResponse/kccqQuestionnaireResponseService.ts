@@ -88,7 +88,7 @@ export class KccqQuestionnaireResponseService extends QuestionnaireResponseServi
       await this.messageService.addMessageForClinicianAndOwners(
         userId,
         message,
-        { notify: true },
+        { notify: true, user: null },
       )
     }
 

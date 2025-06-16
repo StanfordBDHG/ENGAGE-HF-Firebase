@@ -26,6 +26,7 @@ import {
   Invitation,
   UserRegistration,
   advanceDateByHours,
+  type FHIRAppointment,
 } from '@stanfordbdhg/engagehf-models'
 import { logger } from 'firebase-functions'
 import { _updateStaticData } from '../../functions/updateStaticData.js'
@@ -147,7 +148,7 @@ export class TriggerService {
         UserMessage.createWelcome({
           videoReference: VideoReference.welcome,
         }),
-        { notify: true },
+        { notify: true, user: user.content },
       )
     } catch (error) {
       logger.error(
@@ -164,7 +165,7 @@ export class TriggerService {
           UserMessage.createRegistrationQuestionnaire({
             questionnaireReference: QuestionnaireReference.registration_en_US,
           }),
-          { notify: true },
+          { notify: true, user: user.content },
         )
       }
 
@@ -173,7 +174,7 @@ export class TriggerService {
         UserMessage.createSymptomQuestionnaire({
           questionnaireReference: QuestionnaireReference.kccq_en_US,
         }),
-        { notify: true },
+        { notify: true, user: user.content },
       )
     } catch (error) {
       logger.error(
@@ -182,8 +183,61 @@ export class TriggerService {
     }
   }
 
-  async userAllergyIntoleranceWritten(userId: string): Promise<void> {
-    await this.updateRecommendationsForUser(userId)
+  async userAppointmentWritten(
+    userId: string,
+    appointmentId: string,
+    newData: FHIRAppointment | null,
+  ): Promise<void> {
+    try {
+      const now = new Date()
+      const messageService = this.factory.message()
+      const reminderRangeStart = advanceDateByHours(now, -24)
+      const reminderRangeEnd = advanceDateByHours(now, 24)
+
+      if (
+        newData === null ||
+        newData.start < reminderRangeStart ||
+        newData.end > reminderRangeEnd
+      ) {
+        await messageService.completeMessages(
+          userId,
+          UserMessageType.preAppointment,
+          (message) =>
+            message.reference ===
+            `users/${userId}/appointments/${appointmentId}`,
+        )
+      } else if (newData.start > now && newData.start < reminderRangeEnd) {
+        const userService = this.factory.user()
+        const message = UserMessage.createPreAppointment({
+          creationDate: now,
+          reference: `users/${userId}/appointments/${appointmentId}`,
+        })
+        const user = await userService.getUser(userId)
+        const messageDoc = await messageService.addMessage(userId, message, {
+          notify: true,
+          user: user?.content ?? null,
+        })
+        if (messageDoc !== undefined) {
+          const userAuth = await userService.getAuth(userId)
+          await messageService.addMessageForClinicianAndOwners(
+            userId,
+            UserMessage.createPreAppointmentForClinician({
+              userId: userId,
+              userName: userAuth.displayName,
+              reference: messageDoc.path,
+            }),
+            {
+              notify: true,
+              user: user?.content ?? null,
+            },
+          )
+        }
+      }
+    } catch (error) {
+      logger.error(
+        `TriggerService.userAppointmentWritten(${userId}, ${appointmentId}): Completing pre-appointment messages failed due to ${String(error)}`,
+      )
+    }
   }
 
   async userObservationWritten(
@@ -254,7 +308,7 @@ export class TriggerService {
           const messageDoc = await messageService.addMessage(
             userId,
             UserMessage.createWeightGain(),
-            { notify: true },
+            { notify: true, user: user.content },
           )
 
           if (messageDoc !== undefined) {
@@ -394,7 +448,7 @@ export class TriggerService {
         reference: medicationReference,
         videoReference: medicationClass?.content.videoPath,
       }),
-      { notify: true },
+      { notify: true, user: null },
     )
   }
 
@@ -572,6 +626,7 @@ export class TriggerService {
     const messageService = this.factory.message()
     const messageDoc = await messageService.addMessage(input.userId, message, {
       notify: true,
+      user: null,
     })
 
     const userService = this.factory.user()
@@ -719,14 +774,14 @@ export class TriggerService {
       upcomingAppointments.map(async (appointment) => {
         try {
           const userId = appointment.path.split('/')[1]
+          const user = await userService.getUser(userId)
           const messageDoc = await messageService.addMessage(
             userId,
             UserMessage.createPreAppointment({
               reference: appointment.path,
             }),
-            { notify: true },
+            { notify: true, user: user?.content ?? null },
           )
-          const user = await userService.getUser(userId)
           if (user !== undefined && messageDoc !== undefined) {
             const userAuth = await userService.getAuth(userId)
             const forwardedMessage =
@@ -785,7 +840,7 @@ export class TriggerService {
                 questionnaireReference:
                   QuestionnaireReference.postAppointment_en_US,
               }),
-              { notify: true },
+              { notify: true, user: user?.content ?? null },
             )
           }
         } catch (error) {
