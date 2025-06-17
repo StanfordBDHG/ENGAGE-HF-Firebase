@@ -8,13 +8,11 @@
 
 import { onDocumentWritten } from 'firebase-functions/firestore'
 import { Env } from '../env.js'
-import { serviceAccount } from './helpers.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
 export const onUserAllergyIntoleranceWritten = onDocumentWritten(
   {
     document: 'users/{userId}/allergyIntolerances/{allergyIntoleranceId}',
-    serviceAccount,
     secrets: Env.twilioSecretKeys,
   },
   async (event) => {
