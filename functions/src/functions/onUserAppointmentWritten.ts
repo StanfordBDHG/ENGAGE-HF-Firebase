@@ -9,14 +9,12 @@
 import { fhirAppointmentConverter } from '@stanfordbdhg/engagehf-models'
 import { onDocumentWritten } from 'firebase-functions/firestore'
 import { Env } from '../env.js'
-import { defaultServiceAccount } from './helpers.js'
 import { DatabaseConverter } from '../services/database/databaseConverter.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
 export const onUserAppointmentWritten = onDocumentWritten(
   {
     document: 'users/{userId}/appointments/{appointmentId}',
-    serviceAccount: defaultServiceAccount,
     secrets: Env.twilioSecretKeys,
   },
   async (event) => {
