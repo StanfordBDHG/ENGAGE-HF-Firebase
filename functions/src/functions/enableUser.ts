@@ -10,7 +10,7 @@ import {
   enableUserInputSchema,
   type EnableUserOutput,
 } from '@stanfordbdhg/engagehf-models'
-import { validatedOnCall } from './helpers.js'
+import { privilegedServiceAccount, validatedOnCall } from './helpers.js'
 import { UserRole } from '../services/credential/credential.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
@@ -37,5 +37,8 @@ export const enableUser = validatedOnCall(
     )
 
     await userService.enableUser(userId)
+  },
+  {
+    serviceAccount: privilegedServiceAccount,
   },
 )

@@ -10,7 +10,7 @@ import {
   updateUserInformationInputSchema,
   type UpdateUserInformationOutput,
 } from '@stanfordbdhg/engagehf-models'
-import { validatedOnCall } from './helpers.js'
+import { privilegedServiceAccount, validatedOnCall } from './helpers.js'
 import { UserRole } from '../services/credential/credential.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
@@ -36,5 +36,8 @@ export const updateUserInformation = validatedOnCall(
     )
 
     await userService.updateAuth(request.data.userId, request.data.data.auth)
+  },
+  {
+    serviceAccount: privilegedServiceAccount,
   },
 )
