@@ -14,6 +14,7 @@ import {
   FHIRAppointmentStatus,
   FHIRMedicationRequest,
   type FHIRQuestionnaireResponse,
+  type FHIRReference,
   type LoincCode,
   type Observation,
   QuantityUnit,
@@ -108,6 +109,7 @@ export class MockPatientService implements PatientService {
   async replaceMedicationRequests(
     userId: string,
     values: FHIRMedicationRequest[],
+    keepUnchanged?: (request: Document<FHIRMedicationRequest>) => boolean,
   ): Promise<void> {
     return
   }
@@ -299,6 +301,7 @@ export class MockPatientService implements PatientService {
       loincCode: LoincCode
       collection: UserObservationCollection
     }>,
+    reference: FHIRReference | null,
   ): Promise<void> {
     return
   }

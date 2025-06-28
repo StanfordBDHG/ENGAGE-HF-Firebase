@@ -19,10 +19,12 @@ import {
   QuestionnaireLinkId,
 } from '../seeding/staticData/questionnaireFactory/questionnaireLinkIds.js'
 import { type UserService } from '../user/userService.js'
+import { type EgfrCalculator } from './egfr/egfrCalculator.js'
 
 export class RegistrationQuestionnaireResponseService extends QuestionnaireResponseService {
   // Properties
 
+  private readonly egfrCalculator: EgfrCalculator
   private readonly messageService: MessageService
   private readonly patientService: PatientService
   private readonly userService: UserService
@@ -30,11 +32,13 @@ export class RegistrationQuestionnaireResponseService extends QuestionnaireRespo
   // Constructor
 
   constructor(input: {
+    egfrCalculator: EgfrCalculator
     messageService: MessageService
     patientService: PatientService
     userService: UserService
   }) {
     super()
+    this.egfrCalculator = input.egfrCalculator
     this.messageService = input.messageService
     this.patientService = input.patientService
     this.userService = input.userService
@@ -58,14 +62,17 @@ export class RegistrationQuestionnaireResponseService extends QuestionnaireRespo
     await this.handleLabValues({
       userId,
       response,
+      dateOfBirth: personalInfo?.dateOfBirth ?? null,
+      sex: personalInfo?.sex ?? null,
+      egfrCalculator: this.egfrCalculator,
       patientService: this.patientService,
     })
 
-    const medicationRequests = this.extractMedicationRequests(response.content)
-    await this.patientService.replaceMedicationRequests(
+    await this.handleMedicationRequests({
       userId,
-      medicationRequests,
-    )
+      response,
+      patientService: this.patientService,
+    })
 
     const appointment = this.extractAppointment(response.content)
     if (appointment !== null) {

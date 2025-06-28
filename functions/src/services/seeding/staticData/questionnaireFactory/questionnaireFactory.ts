@@ -88,20 +88,10 @@ export abstract class QuestionnaireFactory<Input> {
         title: 'Creatinine',
         name: 'creatinine',
         description:
-          'The creatinine level in your body helps understand how your liver handles the drugs you are taking.',
+          'The creatinine level in your body helps understand how your kidneys handle the drugs you are taking.',
         unit: QuantityUnit.mg_dL,
         minValue: 0,
         maxValue: 100,
-      }),
-      ...this.labInputPagesForValue({
-        loincCode: LoincCode.estimatedGlomerularFiltrationRate,
-        title: 'eGFR',
-        name: 'eGFR',
-        description:
-          'eGFR (estimated Glomerular Filtration Rate) is a test that estimates how well your kidneys are filtering blood.',
-        unit: QuantityUnit.mL_min_173m2,
-        minValue: 0,
-        maxValue: 200,
       }),
       ...this.labInputPagesForValue({
         loincCode: LoincCode.potassium,
@@ -185,35 +175,31 @@ export abstract class QuestionnaireFactory<Input> {
   protected medicationInputPages(input: {
     medications: Record<string, FHIRMedication>
     drugs: Record<string, Record<string, FHIRMedication>>
+    isRegistration: boolean
   }): FHIRQuestionnaireItem[] {
     return [
       ...this.medicationInputPagesForMedicationGroup({
-        medications: input.medications,
-        drugs: input.drugs,
+        ...input,
         text: 'Beta Blockers',
         group: MedicationGroup.betaBlockers,
       }),
       ...this.medicationInputPagesForMedicationGroup({
-        medications: input.medications,
-        drugs: input.drugs,
+        ...input,
         text: 'Renin-Angiotensin System Inhibitors (RASI)',
         group: MedicationGroup.rasi,
       }),
       ...this.medicationInputPagesForMedicationGroup({
-        medications: input.medications,
-        drugs: input.drugs,
+        ...input,
         text: 'Mineralocorticoid Receptor Antagonists (MRA)',
         group: MedicationGroup.mra,
       }),
       ...this.medicationInputPagesForMedicationGroup({
-        medications: input.medications,
-        drugs: input.drugs,
+        ...input,
         text: 'SGLT2 Inhibitors (SGLT2i)',
         group: MedicationGroup.sglt2i,
       }),
       ...this.medicationInputPagesForMedicationGroup({
-        medications: input.medications,
-        drugs: input.drugs,
+        ...input,
         text: 'Diuretics',
         group: MedicationGroup.diuretics,
       }),
@@ -225,6 +211,7 @@ export abstract class QuestionnaireFactory<Input> {
     medications: Record<string, FHIRMedication>
     group: MedicationGroup
     text: string
+    isRegistration: boolean
   }): FHIRQuestionnaireItem[] {
     const linkIds = QuestionnaireLinkId.medication(input.group)
     const medicationClasses = medicationClassesForGroup(input.group).map(
@@ -283,9 +270,41 @@ export abstract class QuestionnaireFactory<Input> {
             linkId: linkIds.existsDescription,
             text: `Do you take any of the following medications?\n\n${medicationListTexts}`,
           }),
-          this.booleanItem({
+          this.radioButtonItem({
             linkId: linkIds.exists,
             text: 'Do you take any medication from the above list?',
+            answerOption:
+              input.isRegistration ?
+                this.valueSetAnswerOptions({
+                  system: linkIds.registrationExistsValueSet.system,
+                  values: [
+                    {
+                      code: linkIds.registrationExistsValueSet.values.yes,
+                      display: 'Yes',
+                    },
+                    {
+                      code: linkIds.registrationExistsValueSet.values.no,
+                      display: 'No',
+                    },
+                  ],
+                })
+              : this.valueSetAnswerOptions({
+                  system: linkIds.updateExistsValueSet.system,
+                  values: [
+                    {
+                      code: linkIds.updateExistsValueSet.values.yesChanged,
+                      display: 'Yes, changed since last update',
+                    },
+                    {
+                      code: linkIds.updateExistsValueSet.values.yesUnchanged,
+                      display: 'Yes, unchanged since last update',
+                    },
+                    {
+                      code: linkIds.updateExistsValueSet.values.no,
+                      display: 'No',
+                    },
+                  ],
+                }),
           }),
         ],
       }),
@@ -296,7 +315,16 @@ export abstract class QuestionnaireFactory<Input> {
           {
             question: linkIds.exists,
             operator: FHIRQuestionnaireItemEnableWhenOperator.equals,
-            answerBoolean: true,
+            answerCoding: {
+              system:
+                input.isRegistration ?
+                  linkIds.registrationExistsValueSet.system
+                : linkIds.updateExistsValueSet.system,
+              code:
+                input.isRegistration ?
+                  linkIds.registrationExistsValueSet.values.yes
+                : linkIds.updateExistsValueSet.values.yesChanged,
+            },
           },
         ],
         item: [

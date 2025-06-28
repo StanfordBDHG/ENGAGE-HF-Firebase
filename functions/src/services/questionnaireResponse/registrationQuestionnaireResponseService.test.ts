@@ -95,7 +95,10 @@ describeWithEmulators('RegistrationQuestionnaireResponseService', (env) => {
     const egfrDocs = await env.collections
       .userObservations(userId, UserObservationCollection.eGfr)
       .get()
-    expect(egfrDocs.size).toBe(0)
+    expect(egfrDocs.size).toBe(1)
+    expect(
+      egfrDocs.docs[0].data().estimatedGlomerularFiltrationRate?.value,
+    ).toBeCloseTo(3.6557627356369444, 5)
 
     const potassiumDocs = await env.collections
       .userObservations(userId, UserObservationCollection.potassium)
@@ -192,7 +195,7 @@ describeWithEmulators('RegistrationQuestionnaireResponseService', (env) => {
     expect(egfrDocs.size).toBe(1)
     expect(
       egfrDocs.docs[0].data().estimatedGlomerularFiltrationRate?.value,
-    ).toBe(55)
+    ).toBeCloseTo(20.712157826973794, 5)
 
     const potassiumDocs = await env.collections
       .userObservations(userId, UserObservationCollection.potassium)
@@ -238,16 +241,36 @@ const registrationResponseApple = {
     { answer: [{ valueBoolean: true }], linkId: 'lab.2160-0.exists' },
     { answer: [{ valueDecimal: 15 }], linkId: 'lab.2160-0.value' },
     { answer: [{ valueDate: '2025-05-14' }], linkId: 'lab.2160-0.date' },
-    { linkId: 'lab.98979-8.exists', answer: [{ valueBoolean: false }] },
     { linkId: 'lab.6298-4.exists', answer: [{ valueBoolean: true }] },
     { linkId: 'lab.6298-4.value', answer: [{ valueDecimal: 1.75 }] },
     { answer: [{ valueDate: '2025-05-14' }], linkId: 'lab.6298-4.date' },
     { answer: [{ valueBoolean: false }], linkId: 'lab.8340-2.exists' },
     {
       linkId: 'medication.betablockers.exists',
-      answer: [{ valueBoolean: false }],
+      answer: [
+        {
+          valueCoding: {
+            code: 'no',
+            display: 'No',
+            system:
+              'http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-registration',
+          },
+        },
+      ],
     },
-    { linkId: 'medication.rasi.exists', answer: [{ valueBoolean: true }] },
+    {
+      linkId: 'medication.rasi.exists',
+      answer: [
+        {
+          valueCoding: {
+            code: 'yes',
+            display: 'Yes',
+            system:
+              'http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-registration',
+          },
+        },
+      ],
+    },
     { linkId: 'medication.rasi.frequency', answer: [{ valueDecimal: 2 }] },
     { linkId: 'medication.rasi.quantity', answer: [{ valueDecimal: 1.5 }] },
     {
@@ -262,8 +285,32 @@ const registrationResponseApple = {
       ],
       linkId: 'medication.rasi.drug',
     },
-    { linkId: 'medication.mra.exists', answer: [{ valueBoolean: false }] },
-    { linkId: 'medication.sglt2i.exists', answer: [{ valueBoolean: true }] },
+    {
+      linkId: 'medication.mra.exists',
+      answer: [
+        {
+          valueCoding: {
+            code: 'no',
+            display: 'No',
+            system:
+              'http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-registration',
+          },
+        },
+      ],
+    },
+    {
+      linkId: 'medication.sglt2i.exists',
+      answer: [
+        {
+          valueCoding: {
+            code: 'yes',
+            display: 'Yes',
+            system:
+              'http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-registration',
+          },
+        },
+      ],
+    },
     { linkId: 'medication.sglt2i.frequency', answer: [{ valueDecimal: 2 }] },
     { answer: [{ valueDecimal: 1.34 }], linkId: 'medication.sglt2i.quantity' },
     {
@@ -279,7 +326,16 @@ const registrationResponseApple = {
       linkId: 'medication.sglt2i.drug',
     },
     {
-      answer: [{ valueBoolean: false }],
+      answer: [
+        {
+          valueCoding: {
+            code: 'no',
+            display: 'No',
+            system:
+              'http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-registration',
+          },
+        },
+      ],
       linkId: 'medication.diuretics.exists',
     },
     { answer: [{ valueBoolean: true }], linkId: 'appointment.exists' },
@@ -337,7 +393,7 @@ const registrationResponseAndroid = {
       item: [
         {
           linkId: 'lab.2160-0.exists-description',
-          text: 'The creatinine level in your body helps understand how your liver handles the drugs you are taking.',
+          text: 'The creatinine level in your body helps understand how your kidneys handle the drugs you are taking.',
         },
         {
           linkId: 'lab.2160-0.exists',
@@ -356,7 +412,7 @@ const registrationResponseAndroid = {
       item: [
         {
           linkId: 'lab.2160-0.description',
-          text: 'The creatinine level in your body helps understand how your liver handles the drugs you are taking.',
+          text: 'The creatinine level in your body helps understand how your kidneys handle the drugs you are taking.',
         },
         {
           linkId: 'lab.2160-0.value',
@@ -392,34 +448,6 @@ const registrationResponseAndroid = {
           answer: [
             {
               valueBoolean: true,
-            },
-          ],
-        },
-      ],
-    },
-    {
-      linkId: 'lab.98979-8.page1',
-      text: 'eGFR',
-      item: [
-        {
-          linkId: 'lab.98979-8.description',
-          text: 'eGFR (estimated Glomerular Filtration Rate) is a test that estimates how well your kidneys are filtering blood.',
-        },
-        {
-          linkId: 'lab.98979-8.value',
-          text: 'eGFR (mL/min/1.73m2):',
-          answer: [
-            {
-              valueDecimal: 55.0,
-            },
-          ],
-        },
-        {
-          linkId: 'lab.98979-8.date',
-          text: 'Date:',
-          answer: [
-            {
-              valueDate: '2025-05-23',
             },
           ],
         },
@@ -504,7 +532,12 @@ const registrationResponseAndroid = {
           text: 'Do you take any medication from the above list?',
           answer: [
             {
-              valueBoolean: false,
+              valueCoding: {
+                code: 'no',
+                display: 'No',
+                system:
+                  'http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-registration',
+              },
             },
           ],
         },
@@ -523,7 +556,12 @@ const registrationResponseAndroid = {
           text: 'Do you take any medication from the above list?',
           answer: [
             {
-              valueBoolean: true,
+              valueCoding: {
+                code: 'yes',
+                display: 'Yes',
+                system:
+                  'http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-registration',
+              },
             },
           ],
         },
@@ -584,7 +622,12 @@ const registrationResponseAndroid = {
           text: 'Do you take any medication from the above list?',
           answer: [
             {
-              valueBoolean: false,
+              valueCoding: {
+                code: 'no',
+                display: 'No',
+                system:
+                  'http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-registration',
+              },
             },
           ],
         },
@@ -603,7 +646,12 @@ const registrationResponseAndroid = {
           text: 'Do you take any medication from the above list?',
           answer: [
             {
-              valueBoolean: true,
+              valueCoding: {
+                code: 'yes',
+                display: 'Yes',
+                system:
+                  'http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-registration',
+              },
             },
           ],
         },
@@ -664,7 +712,12 @@ const registrationResponseAndroid = {
           text: 'Do you take any medication from the above list?',
           answer: [
             {
-              valueBoolean: false,
+              valueCoding: {
+                code: 'no',
+                display: 'No',
+                system:
+                  'http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-registration',
+              },
             },
           ],
         },

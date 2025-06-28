@@ -16,6 +16,7 @@ import {
   type FHIRMedicationRequest,
   FHIRObservation,
   type FHIRQuestionnaireResponse,
+  type FHIRReference,
   type LoincCode,
   type Observation,
   QuantityUnit,
@@ -123,6 +124,7 @@ export class DatabasePatientService implements PatientService {
   async replaceMedicationRequests(
     userId: string,
     values: FHIRMedicationRequest[],
+    keepUnchanged?: (request: Document<FHIRMedicationRequest>) => boolean,
   ): Promise<void> {
     await this.databaseService.replaceCollection(
       (collections) => collections.userMedicationRequests(userId),
@@ -149,7 +151,10 @@ export class DatabasePatientService implements PatientService {
         }
 
         for (const doc of documents) {
-          if (!diffs.some((diff) => diff.predecessor?.id === doc.id)) {
+          if (
+            !diffs.some((diff) => diff.predecessor?.id === doc.id) &&
+            keepUnchanged?.(doc) !== true
+          ) {
             diffs.push({ predecessor: doc })
           }
         }
@@ -334,6 +339,7 @@ export class DatabasePatientService implements PatientService {
       loincCode: LoincCode
       collection: UserObservationCollection
     }>,
+    reference: FHIRReference | null,
   ): Promise<void> {
     await this.databaseService.runTransaction((collections, transaction) => {
       for (const value of values) {
@@ -344,6 +350,7 @@ export class DatabasePatientService implements PatientService {
           value: value.observation.value,
           unit: value.observation.unit,
           code: value.loincCode,
+          derivedFrom: [...(reference !== null ? [reference] : [])],
         })
         transaction.set(ref, fhirObservation)
       }
