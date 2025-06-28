@@ -21,7 +21,7 @@ import {
   QuestionnaireLinkId,
 } from '../seeding/staticData/questionnaireFactory/questionnaireLinkIds.js'
 import { type UserService } from '../user/userService.js'
-import { EgfrCalculator } from './egfr/egfrCalculator.js'
+import { type EgfrCalculator } from './egfr/egfrCalculator.js'
 
 export class DataUpdateQuestionnaireResponseService extends QuestionnaireResponseService {
   // Properties

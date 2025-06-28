@@ -7,9 +7,9 @@
 //
 
 import { QuantityUnit, UserSex } from '@stanfordbdhg/engagehf-models'
-import { EgfrCalculator } from './egfrCalculator'
-import { readCsv } from '../../../tests/helpers/csv'
 import { z } from 'zod'
+import { EgfrCalculator } from './egfrCalculator.js'
+import { readCsv } from '../../../tests/helpers/csv.js'
 
 describe('EgfrCalculator', () => {
   const egfrCalculator = new EgfrCalculator()

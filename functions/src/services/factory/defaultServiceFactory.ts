@@ -29,6 +29,7 @@ import { TwilioPhoneService } from '../message/phone/twilioPhoneService.js'
 import { DatabasePatientService } from '../patient/databasePatientService.js'
 import { type PatientService } from '../patient/patientService.js'
 import { DataUpdateQuestionnaireResponseService } from '../questionnaireResponse/dataUpdateQuestionnaireResponseService.js'
+import { EgfrCalculator } from '../questionnaireResponse/egfr/egfrCalculator.js'
 import { KccqQuestionnaireResponseService } from '../questionnaireResponse/kccqQuestionnaireResponseService.js'
 import { MultiQuestionnaireResponseService } from '../questionnaireResponse/multiQuestionnaireResponseService.js'
 import { type QuestionnaireResponseService } from '../questionnaireResponse/questionnaireResponseService.js'
@@ -41,7 +42,6 @@ import { StaticDataService } from '../seeding/staticData/staticDataService.js'
 import { TriggerService } from '../trigger/triggerService.js'
 import { DatabaseUserService } from '../user/databaseUserService.js'
 import { type UserService } from '../user/userService.js'
-import { EgfrCalculator } from '../questionnaireResponse/egfr/egfrCalculator.js'
 
 export class DefaultServiceFactory implements ServiceFactory {
   // Properties - Options

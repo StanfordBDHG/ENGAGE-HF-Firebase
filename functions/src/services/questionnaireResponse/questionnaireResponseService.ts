@@ -24,12 +24,12 @@ import { z } from 'zod'
 import { medicationClassReference } from '../../models/medicationRequestContext.js'
 import { type Document } from '../database/databaseService.js'
 import { type PatientService } from '../patient/patientService.js'
+import { type EgfrCalculator } from './egfr/egfrCalculator.js'
 import {
   medicationClassesForGroup,
   MedicationGroup,
   QuestionnaireLinkId,
 } from '../seeding/staticData/questionnaireFactory/questionnaireLinkIds.js'
-import { EgfrCalculator } from './egfr/egfrCalculator.js'
 
 export interface QuestionnaireResponseMedicationRequests {
   reference: string
@@ -236,20 +236,14 @@ export abstract class QuestionnaireResponseService {
           age,
           sexAssignedAtBirth: input.sex,
         })
-        if (eGfr !== null) {
-          observationValues.push({
-            observation: {
-              ...eGfr,
-              date: creatinine.date,
-            },
-            loincCode: LoincCode.estimatedGlomerularFiltrationRate,
-            collection: UserObservationCollection.eGfr,
-          })
-        } else {
-          logger.error(
-            `Unable to calculate eGFR for user ${input.userId} with creatinine ${creatinine.value}, date of birth ${input.dateOfBirth.toString()} and sex ${input.sex}.`,
-          )
-        }
+        observationValues.push({
+          observation: {
+            ...eGfr,
+            date: creatinine.date,
+          },
+          loincCode: LoincCode.estimatedGlomerularFiltrationRate,
+          collection: UserObservationCollection.eGfr,
+        })
       } else {
         logger.error(
           `Missing date of birth or user sex for eGFR calculation for user ${input.userId}.`,
