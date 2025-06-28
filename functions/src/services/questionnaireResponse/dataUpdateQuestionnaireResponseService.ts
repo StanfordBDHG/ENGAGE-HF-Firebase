@@ -21,10 +21,12 @@ import {
   QuestionnaireLinkId,
 } from '../seeding/staticData/questionnaireFactory/questionnaireLinkIds.js'
 import { type UserService } from '../user/userService.js'
+import { EgfrCalculator } from './egfr/egfrCalculator.js'
 
 export class DataUpdateQuestionnaireResponseService extends QuestionnaireResponseService {
   // Properties
 
+  private readonly egfrCalculator: EgfrCalculator
   private readonly messageService: MessageService
   private readonly patientService: PatientService
   private readonly userService: UserService
@@ -32,11 +34,13 @@ export class DataUpdateQuestionnaireResponseService extends QuestionnaireRespons
   // Constructor
 
   constructor(input: {
+    egfrCalculator: EgfrCalculator
     messageService: MessageService
     patientService: PatientService
     userService: UserService
   }) {
     super()
+    this.egfrCalculator = input.egfrCalculator
     this.messageService = input.messageService
     this.patientService = input.patientService
     this.userService = input.userService
@@ -71,6 +75,7 @@ export class DataUpdateQuestionnaireResponseService extends QuestionnaireRespons
       response,
       dateOfBirth: user?.dateOfBirth ?? null,
       sex: user?.sex ?? null,
+      egfrCalculator: this.egfrCalculator,
       patientService: this.patientService,
     })
 

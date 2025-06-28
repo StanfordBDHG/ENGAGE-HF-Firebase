@@ -41,6 +41,7 @@ import { StaticDataService } from '../seeding/staticData/staticDataService.js'
 import { TriggerService } from '../trigger/triggerService.js'
 import { DatabaseUserService } from '../user/databaseUserService.js'
 import { type UserService } from '../user/userService.js'
+import { EgfrCalculator } from '../questionnaireResponse/egfr/egfrCalculator.js'
 
 export class DefaultServiceFactory implements ServiceFactory {
   // Properties - Options
@@ -70,6 +71,8 @@ export class DefaultServiceFactory implements ServiceFactory {
         this.storage.value,
       ),
   )
+
+  private readonly egfrCalculator = new Lazy(() => new EgfrCalculator())
 
   private readonly healthSummaryService = new Lazy(
     () =>
@@ -123,11 +126,13 @@ export class DefaultServiceFactory implements ServiceFactory {
           userService: this.userService.value,
         }),
         new DataUpdateQuestionnaireResponseService({
+          egfrCalculator: this.egfrCalculator.value,
           messageService: this.messageService.value,
           patientService: this.patientService.value,
           userService: this.userService.value,
         }),
         new RegistrationQuestionnaireResponseService({
+          egfrCalculator: this.egfrCalculator.value,
           messageService: this.messageService.value,
           patientService: this.patientService.value,
           userService: this.userService.value,

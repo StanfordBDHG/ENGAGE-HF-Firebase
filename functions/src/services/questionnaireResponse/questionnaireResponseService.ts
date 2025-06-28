@@ -29,6 +29,7 @@ import {
   MedicationGroup,
   QuestionnaireLinkId,
 } from '../seeding/staticData/questionnaireFactory/questionnaireLinkIds.js'
+import { EgfrCalculator } from './egfr/egfrCalculator.js'
 
 export interface QuestionnaireResponseMedicationRequests {
   reference: string
@@ -206,6 +207,7 @@ export abstract class QuestionnaireResponseService {
   protected async handleLabValues(input: {
     userId: string
     patientService: PatientService
+    egfrCalculator: EgfrCalculator
     dateOfBirth: Date | null
     sex: UserSex | null
     response: Document<FHIRQuestionnaireResponse>
@@ -228,15 +230,18 @@ export abstract class QuestionnaireResponseService {
       })
 
       if (input.dateOfBirth !== null && input.sex !== null) {
-        const eGfr = this.calculateEstimatedGlomerularFiltrationRate({
+        const age = this.calculateAge(input.dateOfBirth, creatinine.date)
+        const eGfr = input.egfrCalculator.calculate({
           creatinine: creatinine.value,
-          dateOfBirth: input.dateOfBirth,
-          sex: input.sex,
-          date: creatinine.date,
+          age,
+          sexAssignedAtBirth: input.sex,
         })
         if (eGfr !== null) {
           observationValues.push({
-            observation: eGfr,
+            observation: {
+              ...eGfr,
+              date: creatinine.date,
+            },
             loincCode: LoincCode.estimatedGlomerularFiltrationRate,
             collection: UserObservationCollection.eGfr,
           })
@@ -327,64 +332,6 @@ export abstract class QuestionnaireResponseService {
   }
 
   // Methods - Helpers
-
-  private calculateEstimatedGlomerularFiltrationRate(input: {
-    creatinine: number
-    dateOfBirth: Date
-    sex: UserSex
-    date: Date
-  }): Observation {
-    //
-    // https://www.kidney.org/ckd-epi-creatinine-equation-2021
-    //
-    // eGFR = 142 x min(S_cr/κ, 1)^alpha x max(S_cr/κ, 1)-1.200 x 0.9938^age x 1.012 [if female]
-    //
-    // where:
-    // - S_cr = standardized serum creatinine in mg/dL
-    // - κ = 0.7 (females) or 0.9 (males)
-    // - alpha = -0.241 (female) or -0.302 (male)
-    // - min(Scr/κ, 1) is the minimum of Scr/κ or 1.0
-    // - max(Scr/κ, 1) is the maximum of Scr/κ or 1.0
-    // - age (years)
-    //
-    // Additional source for testing:
-    // - https://www.mdcalc.com/calc/3939/ckd-epi-equations-glomerular-filtration-rate-gfr
-    //
-
-    const age = this.calculateAge(input.dateOfBirth, input.date)
-    let value: number
-    switch (input.sex) {
-      case UserSex.female: {
-        const k = 0.7
-        const min = Math.min(input.creatinine / k, 1)
-        const max = Math.max(input.creatinine / k, 1)
-        value =
-          142 *
-          Math.pow(min, -0.241) *
-          Math.pow(max, -1.2) *
-          Math.pow(0.9938, age) *
-          1.012
-        break
-      }
-      case UserSex.male: {
-        const k = 0.9
-        const min = Math.min(input.creatinine / k, 1)
-        const max = Math.max(input.creatinine / k, 1)
-        value =
-          142 *
-          Math.pow(min, -0.302) *
-          Math.pow(max, -1.2) *
-          Math.pow(0.9938, age)
-        break
-      }
-    }
-
-    return {
-      value,
-      unit: QuantityUnit.mL_min_173m2,
-      date: input.date,
-    }
-  }
 
   private calculateAge(dateOfBirth: Date, present: Date = new Date()): number {
     const yearDiff = present.getFullYear() - dateOfBirth.getFullYear()
