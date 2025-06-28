@@ -10,7 +10,7 @@ import {
   deleteInvitationInputSchema,
   type DeleteInvitationOutput,
 } from '@stanfordbdhg/engagehf-models'
-import { privilegedServiceAccount, validatedOnCall } from './helpers.js'
+import { validatedOnCall } from './helpers.js'
 import { UserRole } from '../services/credential/credential.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
