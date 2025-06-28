@@ -1551,7 +1551,7 @@
           {
             "linkId": "personal-information.sex",
             "type": "choice",
-            "text": "Select your sex:",
+            "text": "Select your sex assigned at birth:",
             "required": true,
             "unit": null,
             "answerOption": [
@@ -1574,17 +1574,6 @@
                   "version": null,
                   "code": "female",
                   "display": "Female",
-                  "userSelected": null
-                }
-              },
-              {
-                "valueCoding": {
-                  "id": "other",
-                  "extension": null,
-                  "system": "engage-hf-sex",
-                  "version": null,
-                  "code": "other",
-                  "display": "Other",
                   "userSelected": null
                 }
               }

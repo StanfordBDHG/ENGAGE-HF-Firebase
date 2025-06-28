@@ -333,7 +333,7 @@ export abstract class QuestionnaireResponseService {
     dateOfBirth: Date
     sex: UserSex
     date: Date
-  }): Observation | null {
+  }): Observation {
     //
     // https://www.kidney.org/ckd-epi-creatinine-equation-2021
     //
@@ -352,7 +352,7 @@ export abstract class QuestionnaireResponseService {
     //
 
     const age = this.calculateAge(input.dateOfBirth, input.date)
-    let value: number | null
+    let value: number
     switch (input.sex) {
       case UserSex.female: {
         const k = 0.7
@@ -377,18 +377,13 @@ export abstract class QuestionnaireResponseService {
           Math.pow(0.9938, age)
         break
       }
-      case UserSex.other:
-        // TODO: Possibly figure out how to handle non-binary users
-        value = null
     }
 
-    return value !== null ?
-        {
-          value: value,
-          unit: QuantityUnit.mL_min_173m2,
-          date: input.date,
-        }
-      : null
+    return {
+      value,
+      unit: QuantityUnit.mL_min_173m2,
+      date: input.date,
+    }
   }
 
   private calculateAge(dateOfBirth: Date, present: Date = new Date()): number {
