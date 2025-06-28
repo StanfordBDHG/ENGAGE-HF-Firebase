@@ -90,6 +90,24 @@ export const QuestionnaireLinkId = {
       existsDescription: `medication.${medicationGroup}.exists-description`,
       exists: `medication.${medicationGroup}.exists`,
 
+      registrationExistsValueSet: {
+        system:
+          'http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-registration',
+        values: {
+          yes: 'yes',
+          no: 'no',
+        },
+      },
+      updateExistsValueSet: {
+        system:
+          'http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update',
+        values: {
+          yesChanged: 'yes-changed',
+          yesUnchanged: 'yes-unchanged',
+          no: 'no',
+        },
+      },
+
       page1: `medication.${medicationGroup}.page1`,
       description: `medication.${medicationGroup}.description`,
       drug: `medication.${medicationGroup}.drug`,

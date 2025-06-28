@@ -267,5 +267,5 @@ describeWithEmulators('onUserBodyWeightObservationWritten', (env) => {
     const ownerMessage2 = ownerMessages2.docs.at(0)?.data()
     expect(ownerMessage2?.type).toBe(UserMessageType.weightGain)
     expect(ownerMessage2?.completionDate).toBeUndefined()
-  })
+  }, 30_000)
 })

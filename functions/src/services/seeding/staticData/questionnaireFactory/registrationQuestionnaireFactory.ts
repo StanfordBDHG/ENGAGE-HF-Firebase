@@ -35,6 +35,7 @@ export class RegistrationQuestionnaireFactory extends QuestionnaireFactory<Regis
         ...this.medicationInputPages({
           medications: input.medications,
           drugs: input.drugs,
+          isRegistration: true,
         }),
         ...this.appointmentInputPages(),
       ],
@@ -60,7 +61,7 @@ export class RegistrationQuestionnaireFactory extends QuestionnaireFactory<Regis
         }),
         this.radioButtonItem({
           linkId: linkIds.sex,
-          text: 'Select your sex:',
+          text: 'Select your sex assigned at birth:',
           answerOption: this.valueSetAnswerOptions({
             system: 'engage-hf-sex',
             values: Object.values(UserSex).map((value) => ({
@@ -79,8 +80,6 @@ export class RegistrationQuestionnaireFactory extends QuestionnaireFactory<Regis
         return 'Male'
       case UserSex.female:
         return 'Female'
-      case UserSex.other:
-        return 'Other'
     }
   }
 }

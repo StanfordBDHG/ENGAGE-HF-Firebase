@@ -29,6 +29,10 @@ import { Lazy } from '../helpers/lazy.js'
 import { optionalish } from '../helpers/optionalish.js'
 import { SchemaConverter } from '../helpers/schemaConverter.js'
 import { type Observation } from '../types/observation.js'
+import {
+  type FHIRReference,
+  fhirReferenceConverter,
+} from './baseTypes/fhirReference.js'
 
 export enum UserObservationCollection {
   bodyWeight = 'bodyWeightObservations',
@@ -94,6 +98,7 @@ export const fhirObservationConverter = new Lazy(
           ),
           effectiveDateTime: optionalish(dateConverter.schema),
           effectiveInstant: optionalish(dateConverter.schema),
+          derivedFrom: optionalish(fhirReferenceConverter.value.schema.array()),
         })
         .transform((values) => new FHIRObservation(values)),
       encode: (object) => ({
@@ -119,6 +124,10 @@ export const fhirObservationConverter = new Lazy(
         effectiveInstant:
           object.effectiveInstant ?
             dateConverter.encode(object.effectiveInstant)
+          : null,
+        derivedFrom:
+          object.derivedFrom ?
+            object.derivedFrom.map(fhirReferenceConverter.value.encode)
           : null,
       }),
     }),
@@ -214,6 +223,7 @@ export class FHIRObservation extends FHIRResource {
     value: number
     unit: QuantityUnit
     code: LoincCode
+    derivedFrom?: FHIRReference[]
   }): FHIRObservation {
     return new FHIRObservation({
       id: input.id,
@@ -235,6 +245,7 @@ export class FHIRObservation extends FHIRResource {
         code: input.unit.code,
       },
       effectiveDateTime: input.date,
+      derivedFrom: input.derivedFrom,
     })
   }
 
@@ -248,6 +259,7 @@ export class FHIRObservation extends FHIRResource {
   readonly effectivePeriod?: FHIRPeriod
   readonly effectiveDateTime?: Date
   readonly effectiveInstant?: Date
+  readonly derivedFrom?: FHIRReference[]
 
   // Computed Properties
 
@@ -334,6 +346,7 @@ export class FHIRObservation extends FHIRResource {
       effectivePeriod?: FHIRPeriod
       effectiveDateTime?: Date
       effectiveInstant?: Date
+      derivedFrom?: FHIRReference[]
     },
   ) {
     super(input)
@@ -344,6 +357,7 @@ export class FHIRObservation extends FHIRResource {
     this.effectivePeriod = input.effectivePeriod
     this.effectiveDateTime = input.effectiveDateTime
     this.effectiveInstant = input.effectiveInstant
+    this.derivedFrom = input.derivedFrom
   }
 
   // Methods

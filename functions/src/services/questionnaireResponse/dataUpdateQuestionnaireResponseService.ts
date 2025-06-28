@@ -7,9 +7,11 @@
 //
 
 import {
+  type User,
   UserMessageType,
   type FHIRQuestionnaireResponse,
 } from '@stanfordbdhg/engagehf-models'
+import { logger } from 'firebase-functions/v2'
 import { QuestionnaireResponseService } from './questionnaireResponseService.js'
 import { type Document } from '../database/databaseService.js'
 import { type MessageService } from '../message/messageService.js'
@@ -18,22 +20,30 @@ import {
   QuestionnaireId,
   QuestionnaireLinkId,
 } from '../seeding/staticData/questionnaireFactory/questionnaireLinkIds.js'
+import { type UserService } from '../user/userService.js'
+import { type EgfrCalculator } from './egfr/egfrCalculator.js'
 
 export class DataUpdateQuestionnaireResponseService extends QuestionnaireResponseService {
   // Properties
 
+  private readonly egfrCalculator: EgfrCalculator
   private readonly messageService: MessageService
   private readonly patientService: PatientService
+  private readonly userService: UserService
 
   // Constructor
 
   constructor(input: {
+    egfrCalculator: EgfrCalculator
     messageService: MessageService
     patientService: PatientService
+    userService: UserService
   }) {
     super()
+    this.egfrCalculator = input.egfrCalculator
     this.messageService = input.messageService
     this.patientService = input.patientService
+    this.userService = input.userService
   }
 
   // Methods
@@ -52,17 +62,28 @@ export class DataUpdateQuestionnaireResponseService extends QuestionnaireRespons
     ]
     if (!urls.includes(response.content.questionnaire)) return false
 
+    let user: User | null
+    try {
+      user = (await this.userService.getUser(userId))?.content ?? null
+    } catch (error) {
+      logger.error(`Failed to fetch user ${userId}:`, error)
+      user = null
+    }
+
     await this.handleLabValues({
+      userId,
+      response,
+      dateOfBirth: user?.dateOfBirth ?? null,
+      sex: user?.sex ?? null,
+      egfrCalculator: this.egfrCalculator,
+      patientService: this.patientService,
+    })
+
+    await this.handleMedicationRequests({
       userId,
       response,
       patientService: this.patientService,
     })
-
-    const medicationRequests = this.extractMedicationRequests(response.content)
-    await this.patientService.replaceMedicationRequests(
-      userId,
-      medicationRequests,
-    )
 
     const appointment = this.extractAppointment(response.content)
     if (appointment !== null) {

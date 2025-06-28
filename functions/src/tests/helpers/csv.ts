@@ -24,18 +24,23 @@ export function readCsv(
         .join('###NEWLINE###'),
     )
     .split('\n')
-  expect(lines).toHaveLength(expectedLines)
   lines.forEach((line, index) => {
-    const values = line
-      .split(',')
-      .map((x) =>
-        x
-          .split('###COMMA###')
-          .join(',')
-          .split('###NEWLINE###')
-          .join('\n')
-          .trim(),
-      )
-    perform(values, index)
+    try {
+      const values = line
+        .split(',')
+        .map((x) =>
+          x
+            .split('###COMMA###')
+            .join(',')
+            .split('###NEWLINE###')
+            .join('\n')
+            .trim(),
+        )
+      perform(values, index)
+    } catch (error) {
+      console.error(`Error processing line ${index + 1}:`, error)
+      throw error
+    }
   })
+  expect(lines).toHaveLength(expectedLines)
 }

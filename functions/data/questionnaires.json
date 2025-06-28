@@ -1551,7 +1551,7 @@
           {
             "linkId": "personal-information.sex",
             "type": "choice",
-            "text": "Select your sex:",
+            "text": "Select your sex assigned at birth:",
             "required": true,
             "unit": null,
             "answerOption": [
@@ -1574,17 +1574,6 @@
                   "version": null,
                   "code": "female",
                   "display": "Female",
-                  "userSelected": null
-                }
-              },
-              {
-                "valueCoding": {
-                  "id": "other",
-                  "extension": null,
-                  "system": "engage-hf-sex",
-                  "version": null,
-                  "code": "other",
-                  "display": "Other",
                   "userSelected": null
                 }
               }
@@ -1654,7 +1643,7 @@
           {
             "linkId": "lab.2160-0.exists-description",
             "type": "display",
-            "text": "The creatinine level in your body helps understand how your liver handles the drugs you are taking.",
+            "text": "The creatinine level in your body helps understand how your kidneys handle the drugs you are taking.",
             "required": false,
             "unit": null,
             "answerOption": null,
@@ -1727,7 +1716,7 @@
           {
             "linkId": "lab.2160-0.description",
             "type": "display",
-            "text": "The creatinine level in your body helps understand how your liver handles the drugs you are taking.",
+            "text": "The creatinine level in your body helps understand how your kidneys handle the drugs you are taking.",
             "required": false,
             "unit": null,
             "answerOption": null,
@@ -1750,150 +1739,6 @@
           },
           {
             "linkId": "lab.2160-0.date",
-            "type": "date",
-            "text": "Date:",
-            "required": true,
-            "unit": null,
-            "answerOption": null,
-            "enableWhen": null,
-            "enableBehavior": null,
-            "extension": null,
-            "item": null
-          }
-        ]
-      },
-      {
-        "linkId": "lab.98979-8.exists",
-        "type": "group",
-        "text": "eGFR",
-        "required": false,
-        "unit": null,
-        "answerOption": null,
-        "enableWhen": null,
-        "enableBehavior": null,
-        "extension": [
-          {
-            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
-            "valueQuantities": null,
-            "valueReference": null,
-            "valueString": null,
-            "valueCodeableConcept": {
-              "coding": [
-                {
-                  "id": null,
-                  "extension": null,
-                  "system": "http://hl7.org/fhir/questionnaire-item-control",
-                  "version": null,
-                  "code": "page",
-                  "display": "Page",
-                  "userSelected": null
-                }
-              ],
-              "text": "Page"
-            },
-            "valueMedicationRequest": null
-          }
-        ],
-        "item": [
-          {
-            "linkId": "lab.98979-8.exists-description",
-            "type": "display",
-            "text": "eGFR (estimated Glomerular Filtration Rate) is a test that estimates how well your kidneys are filtering blood.",
-            "required": false,
-            "unit": null,
-            "answerOption": null,
-            "enableWhen": null,
-            "enableBehavior": null,
-            "extension": null,
-            "item": null
-          },
-          {
-            "linkId": "lab.98979-8.exists",
-            "type": "boolean",
-            "text": "Have you recently received a new eGFR value?",
-            "required": true,
-            "unit": null,
-            "answerOption": null,
-            "enableWhen": null,
-            "enableBehavior": null,
-            "extension": null,
-            "item": null
-          }
-        ]
-      },
-      {
-        "linkId": "lab.98979-8.page1",
-        "type": "group",
-        "text": "eGFR",
-        "required": false,
-        "unit": null,
-        "answerOption": null,
-        "enableWhen": [
-          {
-            "question": "lab.98979-8.exists",
-            "operator": "=",
-            "answerBoolean": true,
-            "answerDecimal": null,
-            "answerInteger": null,
-            "answerDate": null,
-            "answerDateTime": null,
-            "answerString": null,
-            "answerCoding": null,
-            "answerQuantity": null,
-            "answerReference": null
-          }
-        ],
-        "enableBehavior": null,
-        "extension": [
-          {
-            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
-            "valueQuantities": null,
-            "valueReference": null,
-            "valueString": null,
-            "valueCodeableConcept": {
-              "coding": [
-                {
-                  "id": null,
-                  "extension": null,
-                  "system": "http://hl7.org/fhir/questionnaire-item-control",
-                  "version": null,
-                  "code": "page",
-                  "display": "Page",
-                  "userSelected": null
-                }
-              ],
-              "text": "Page"
-            },
-            "valueMedicationRequest": null
-          }
-        ],
-        "item": [
-          {
-            "linkId": "lab.98979-8.description",
-            "type": "display",
-            "text": "eGFR (estimated Glomerular Filtration Rate) is a test that estimates how well your kidneys are filtering blood.",
-            "required": false,
-            "unit": null,
-            "answerOption": null,
-            "enableWhen": null,
-            "enableBehavior": null,
-            "extension": null,
-            "item": null
-          },
-          {
-            "linkId": "lab.98979-8.value",
-            "type": "decimal",
-            "text": "eGFR (mL/min/1.73m2):",
-            "required": true,
-            "unit": "mL/min/1.73m2",
-            "answerOption": null,
-            "enableWhen": null,
-            "enableBehavior": null,
-            "extension": null,
-            "item": null
-          },
-          {
-            "linkId": "lab.98979-8.date",
             "type": "date",
             "text": "Date:",
             "required": true,
@@ -2241,14 +2086,59 @@
           },
           {
             "linkId": "medication.betablockers.exists",
-            "type": "boolean",
+            "type": "choice",
             "text": "Do you take any medication from the above list?",
             "required": true,
             "unit": null,
-            "answerOption": null,
+            "answerOption": [
+              {
+                "valueCoding": {
+                  "id": "yes",
+                  "extension": null,
+                  "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-registration",
+                  "version": null,
+                  "code": "yes",
+                  "display": "Yes",
+                  "userSelected": null
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "no",
+                  "extension": null,
+                  "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-registration",
+                  "version": null,
+                  "code": "no",
+                  "display": "No",
+                  "userSelected": null
+                }
+              }
+            ],
             "enableWhen": null,
             "enableBehavior": null,
-            "extension": null,
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                "valueQuantities": null,
+                "valueReference": null,
+                "valueString": null,
+                "valueCodeableConcept": {
+                  "coding": [
+                    {
+                      "id": null,
+                      "extension": null,
+                      "system": "http://hl7.org/fhir/questionnaire-item-control",
+                      "version": null,
+                      "code": "radio-button",
+                      "display": "Radio Button",
+                      "userSelected": null
+                    }
+                  ],
+                  "text": null
+                },
+                "valueMedicationRequest": null
+              }
+            ],
             "item": null
           }
         ]
@@ -2264,13 +2154,21 @@
           {
             "question": "medication.betablockers.exists",
             "operator": "=",
-            "answerBoolean": true,
+            "answerBoolean": null,
             "answerDecimal": null,
             "answerInteger": null,
             "answerDate": null,
             "answerDateTime": null,
             "answerString": null,
-            "answerCoding": null,
+            "answerCoding": {
+              "id": null,
+              "extension": null,
+              "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-registration",
+              "version": null,
+              "code": "yes",
+              "display": null,
+              "userSelected": null
+            },
             "answerQuantity": null,
             "answerReference": null
           }
@@ -2618,14 +2516,59 @@
           },
           {
             "linkId": "medication.rasi.exists",
-            "type": "boolean",
+            "type": "choice",
             "text": "Do you take any medication from the above list?",
             "required": true,
             "unit": null,
-            "answerOption": null,
+            "answerOption": [
+              {
+                "valueCoding": {
+                  "id": "yes",
+                  "extension": null,
+                  "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-registration",
+                  "version": null,
+                  "code": "yes",
+                  "display": "Yes",
+                  "userSelected": null
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "no",
+                  "extension": null,
+                  "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-registration",
+                  "version": null,
+                  "code": "no",
+                  "display": "No",
+                  "userSelected": null
+                }
+              }
+            ],
             "enableWhen": null,
             "enableBehavior": null,
-            "extension": null,
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                "valueQuantities": null,
+                "valueReference": null,
+                "valueString": null,
+                "valueCodeableConcept": {
+                  "coding": [
+                    {
+                      "id": null,
+                      "extension": null,
+                      "system": "http://hl7.org/fhir/questionnaire-item-control",
+                      "version": null,
+                      "code": "radio-button",
+                      "display": "Radio Button",
+                      "userSelected": null
+                    }
+                  ],
+                  "text": null
+                },
+                "valueMedicationRequest": null
+              }
+            ],
             "item": null
           }
         ]
@@ -2641,13 +2584,21 @@
           {
             "question": "medication.rasi.exists",
             "operator": "=",
-            "answerBoolean": true,
+            "answerBoolean": null,
             "answerDecimal": null,
             "answerInteger": null,
             "answerDate": null,
             "answerDateTime": null,
             "answerString": null,
-            "answerCoding": null,
+            "answerCoding": {
+              "id": null,
+              "extension": null,
+              "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-registration",
+              "version": null,
+              "code": "yes",
+              "display": null,
+              "userSelected": null
+            },
             "answerQuantity": null,
             "answerReference": null
           }
@@ -3567,14 +3518,59 @@
           },
           {
             "linkId": "medication.mra.exists",
-            "type": "boolean",
+            "type": "choice",
             "text": "Do you take any medication from the above list?",
             "required": true,
             "unit": null,
-            "answerOption": null,
+            "answerOption": [
+              {
+                "valueCoding": {
+                  "id": "yes",
+                  "extension": null,
+                  "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-registration",
+                  "version": null,
+                  "code": "yes",
+                  "display": "Yes",
+                  "userSelected": null
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "no",
+                  "extension": null,
+                  "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-registration",
+                  "version": null,
+                  "code": "no",
+                  "display": "No",
+                  "userSelected": null
+                }
+              }
+            ],
             "enableWhen": null,
             "enableBehavior": null,
-            "extension": null,
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                "valueQuantities": null,
+                "valueReference": null,
+                "valueString": null,
+                "valueCodeableConcept": {
+                  "coding": [
+                    {
+                      "id": null,
+                      "extension": null,
+                      "system": "http://hl7.org/fhir/questionnaire-item-control",
+                      "version": null,
+                      "code": "radio-button",
+                      "display": "Radio Button",
+                      "userSelected": null
+                    }
+                  ],
+                  "text": null
+                },
+                "valueMedicationRequest": null
+              }
+            ],
             "item": null
           }
         ]
@@ -3590,13 +3586,21 @@
           {
             "question": "medication.mra.exists",
             "operator": "=",
-            "answerBoolean": true,
+            "answerBoolean": null,
             "answerDecimal": null,
             "answerInteger": null,
             "answerDate": null,
             "answerDateTime": null,
             "answerString": null,
-            "answerCoding": null,
+            "answerCoding": {
+              "id": null,
+              "extension": null,
+              "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-registration",
+              "version": null,
+              "code": "yes",
+              "display": null,
+              "userSelected": null
+            },
             "answerQuantity": null,
             "answerReference": null
           }
@@ -3801,14 +3805,59 @@
           },
           {
             "linkId": "medication.sglt2i.exists",
-            "type": "boolean",
+            "type": "choice",
             "text": "Do you take any medication from the above list?",
             "required": true,
             "unit": null,
-            "answerOption": null,
+            "answerOption": [
+              {
+                "valueCoding": {
+                  "id": "yes",
+                  "extension": null,
+                  "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-registration",
+                  "version": null,
+                  "code": "yes",
+                  "display": "Yes",
+                  "userSelected": null
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "no",
+                  "extension": null,
+                  "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-registration",
+                  "version": null,
+                  "code": "no",
+                  "display": "No",
+                  "userSelected": null
+                }
+              }
+            ],
             "enableWhen": null,
             "enableBehavior": null,
-            "extension": null,
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                "valueQuantities": null,
+                "valueReference": null,
+                "valueString": null,
+                "valueCodeableConcept": {
+                  "coding": [
+                    {
+                      "id": null,
+                      "extension": null,
+                      "system": "http://hl7.org/fhir/questionnaire-item-control",
+                      "version": null,
+                      "code": "radio-button",
+                      "display": "Radio Button",
+                      "userSelected": null
+                    }
+                  ],
+                  "text": null
+                },
+                "valueMedicationRequest": null
+              }
+            ],
             "item": null
           }
         ]
@@ -3824,13 +3873,21 @@
           {
             "question": "medication.sglt2i.exists",
             "operator": "=",
-            "answerBoolean": true,
+            "answerBoolean": null,
             "answerDecimal": null,
             "answerInteger": null,
             "answerDate": null,
             "answerDateTime": null,
             "answerString": null,
-            "answerCoding": null,
+            "answerCoding": {
+              "id": null,
+              "extension": null,
+              "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-registration",
+              "version": null,
+              "code": "yes",
+              "display": null,
+              "userSelected": null
+            },
             "answerQuantity": null,
             "answerReference": null
           }
@@ -4101,14 +4158,59 @@
           },
           {
             "linkId": "medication.diuretics.exists",
-            "type": "boolean",
+            "type": "choice",
             "text": "Do you take any medication from the above list?",
             "required": true,
             "unit": null,
-            "answerOption": null,
+            "answerOption": [
+              {
+                "valueCoding": {
+                  "id": "yes",
+                  "extension": null,
+                  "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-registration",
+                  "version": null,
+                  "code": "yes",
+                  "display": "Yes",
+                  "userSelected": null
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "no",
+                  "extension": null,
+                  "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-registration",
+                  "version": null,
+                  "code": "no",
+                  "display": "No",
+                  "userSelected": null
+                }
+              }
+            ],
             "enableWhen": null,
             "enableBehavior": null,
-            "extension": null,
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                "valueQuantities": null,
+                "valueReference": null,
+                "valueString": null,
+                "valueCodeableConcept": {
+                  "coding": [
+                    {
+                      "id": null,
+                      "extension": null,
+                      "system": "http://hl7.org/fhir/questionnaire-item-control",
+                      "version": null,
+                      "code": "radio-button",
+                      "display": "Radio Button",
+                      "userSelected": null
+                    }
+                  ],
+                  "text": null
+                },
+                "valueMedicationRequest": null
+              }
+            ],
             "item": null
           }
         ]
@@ -4124,13 +4226,21 @@
           {
             "question": "medication.diuretics.exists",
             "operator": "=",
-            "answerBoolean": true,
+            "answerBoolean": null,
             "answerDecimal": null,
             "answerInteger": null,
             "answerDate": null,
             "answerDateTime": null,
             "answerString": null,
-            "answerCoding": null,
+            "answerCoding": {
+              "id": null,
+              "extension": null,
+              "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-registration",
+              "version": null,
+              "code": "yes",
+              "display": null,
+              "userSelected": null
+            },
             "answerQuantity": null,
             "answerReference": null
           }
@@ -4596,7 +4706,7 @@
           {
             "linkId": "lab.2160-0.exists-description",
             "type": "display",
-            "text": "The creatinine level in your body helps understand how your liver handles the drugs you are taking.",
+            "text": "The creatinine level in your body helps understand how your kidneys handle the drugs you are taking.",
             "required": false,
             "unit": null,
             "answerOption": null,
@@ -4669,7 +4779,7 @@
           {
             "linkId": "lab.2160-0.description",
             "type": "display",
-            "text": "The creatinine level in your body helps understand how your liver handles the drugs you are taking.",
+            "text": "The creatinine level in your body helps understand how your kidneys handle the drugs you are taking.",
             "required": false,
             "unit": null,
             "answerOption": null,
@@ -4692,150 +4802,6 @@
           },
           {
             "linkId": "lab.2160-0.date",
-            "type": "date",
-            "text": "Date:",
-            "required": true,
-            "unit": null,
-            "answerOption": null,
-            "enableWhen": null,
-            "enableBehavior": null,
-            "extension": null,
-            "item": null
-          }
-        ]
-      },
-      {
-        "linkId": "lab.98979-8.exists",
-        "type": "group",
-        "text": "eGFR",
-        "required": false,
-        "unit": null,
-        "answerOption": null,
-        "enableWhen": null,
-        "enableBehavior": null,
-        "extension": [
-          {
-            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
-            "valueQuantities": null,
-            "valueReference": null,
-            "valueString": null,
-            "valueCodeableConcept": {
-              "coding": [
-                {
-                  "id": null,
-                  "extension": null,
-                  "system": "http://hl7.org/fhir/questionnaire-item-control",
-                  "version": null,
-                  "code": "page",
-                  "display": "Page",
-                  "userSelected": null
-                }
-              ],
-              "text": "Page"
-            },
-            "valueMedicationRequest": null
-          }
-        ],
-        "item": [
-          {
-            "linkId": "lab.98979-8.exists-description",
-            "type": "display",
-            "text": "eGFR (estimated Glomerular Filtration Rate) is a test that estimates how well your kidneys are filtering blood.",
-            "required": false,
-            "unit": null,
-            "answerOption": null,
-            "enableWhen": null,
-            "enableBehavior": null,
-            "extension": null,
-            "item": null
-          },
-          {
-            "linkId": "lab.98979-8.exists",
-            "type": "boolean",
-            "text": "Have you recently received a new eGFR value?",
-            "required": true,
-            "unit": null,
-            "answerOption": null,
-            "enableWhen": null,
-            "enableBehavior": null,
-            "extension": null,
-            "item": null
-          }
-        ]
-      },
-      {
-        "linkId": "lab.98979-8.page1",
-        "type": "group",
-        "text": "eGFR",
-        "required": false,
-        "unit": null,
-        "answerOption": null,
-        "enableWhen": [
-          {
-            "question": "lab.98979-8.exists",
-            "operator": "=",
-            "answerBoolean": true,
-            "answerDecimal": null,
-            "answerInteger": null,
-            "answerDate": null,
-            "answerDateTime": null,
-            "answerString": null,
-            "answerCoding": null,
-            "answerQuantity": null,
-            "answerReference": null
-          }
-        ],
-        "enableBehavior": null,
-        "extension": [
-          {
-            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
-            "valueQuantities": null,
-            "valueReference": null,
-            "valueString": null,
-            "valueCodeableConcept": {
-              "coding": [
-                {
-                  "id": null,
-                  "extension": null,
-                  "system": "http://hl7.org/fhir/questionnaire-item-control",
-                  "version": null,
-                  "code": "page",
-                  "display": "Page",
-                  "userSelected": null
-                }
-              ],
-              "text": "Page"
-            },
-            "valueMedicationRequest": null
-          }
-        ],
-        "item": [
-          {
-            "linkId": "lab.98979-8.description",
-            "type": "display",
-            "text": "eGFR (estimated Glomerular Filtration Rate) is a test that estimates how well your kidneys are filtering blood.",
-            "required": false,
-            "unit": null,
-            "answerOption": null,
-            "enableWhen": null,
-            "enableBehavior": null,
-            "extension": null,
-            "item": null
-          },
-          {
-            "linkId": "lab.98979-8.value",
-            "type": "decimal",
-            "text": "eGFR (mL/min/1.73m2):",
-            "required": true,
-            "unit": "mL/min/1.73m2",
-            "answerOption": null,
-            "enableWhen": null,
-            "enableBehavior": null,
-            "extension": null,
-            "item": null
-          },
-          {
-            "linkId": "lab.98979-8.date",
             "type": "date",
             "text": "Date:",
             "required": true,
@@ -5183,14 +5149,70 @@
           },
           {
             "linkId": "medication.betablockers.exists",
-            "type": "boolean",
+            "type": "choice",
             "text": "Do you take any medication from the above list?",
             "required": true,
             "unit": null,
-            "answerOption": null,
+            "answerOption": [
+              {
+                "valueCoding": {
+                  "id": "yes-changed",
+                  "extension": null,
+                  "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
+                  "version": null,
+                  "code": "yes-changed",
+                  "display": "Yes, changed since last update",
+                  "userSelected": null
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "yes-unchanged",
+                  "extension": null,
+                  "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
+                  "version": null,
+                  "code": "yes-unchanged",
+                  "display": "Yes, unchanged since last update",
+                  "userSelected": null
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "no",
+                  "extension": null,
+                  "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
+                  "version": null,
+                  "code": "no",
+                  "display": "No",
+                  "userSelected": null
+                }
+              }
+            ],
             "enableWhen": null,
             "enableBehavior": null,
-            "extension": null,
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                "valueQuantities": null,
+                "valueReference": null,
+                "valueString": null,
+                "valueCodeableConcept": {
+                  "coding": [
+                    {
+                      "id": null,
+                      "extension": null,
+                      "system": "http://hl7.org/fhir/questionnaire-item-control",
+                      "version": null,
+                      "code": "radio-button",
+                      "display": "Radio Button",
+                      "userSelected": null
+                    }
+                  ],
+                  "text": null
+                },
+                "valueMedicationRequest": null
+              }
+            ],
             "item": null
           }
         ]
@@ -5206,13 +5228,21 @@
           {
             "question": "medication.betablockers.exists",
             "operator": "=",
-            "answerBoolean": true,
+            "answerBoolean": null,
             "answerDecimal": null,
             "answerInteger": null,
             "answerDate": null,
             "answerDateTime": null,
             "answerString": null,
-            "answerCoding": null,
+            "answerCoding": {
+              "id": null,
+              "extension": null,
+              "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
+              "version": null,
+              "code": "yes-changed",
+              "display": null,
+              "userSelected": null
+            },
             "answerQuantity": null,
             "answerReference": null
           }
@@ -5560,14 +5590,70 @@
           },
           {
             "linkId": "medication.rasi.exists",
-            "type": "boolean",
+            "type": "choice",
             "text": "Do you take any medication from the above list?",
             "required": true,
             "unit": null,
-            "answerOption": null,
+            "answerOption": [
+              {
+                "valueCoding": {
+                  "id": "yes-changed",
+                  "extension": null,
+                  "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
+                  "version": null,
+                  "code": "yes-changed",
+                  "display": "Yes, changed since last update",
+                  "userSelected": null
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "yes-unchanged",
+                  "extension": null,
+                  "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
+                  "version": null,
+                  "code": "yes-unchanged",
+                  "display": "Yes, unchanged since last update",
+                  "userSelected": null
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "no",
+                  "extension": null,
+                  "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
+                  "version": null,
+                  "code": "no",
+                  "display": "No",
+                  "userSelected": null
+                }
+              }
+            ],
             "enableWhen": null,
             "enableBehavior": null,
-            "extension": null,
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                "valueQuantities": null,
+                "valueReference": null,
+                "valueString": null,
+                "valueCodeableConcept": {
+                  "coding": [
+                    {
+                      "id": null,
+                      "extension": null,
+                      "system": "http://hl7.org/fhir/questionnaire-item-control",
+                      "version": null,
+                      "code": "radio-button",
+                      "display": "Radio Button",
+                      "userSelected": null
+                    }
+                  ],
+                  "text": null
+                },
+                "valueMedicationRequest": null
+              }
+            ],
             "item": null
           }
         ]
@@ -5583,13 +5669,21 @@
           {
             "question": "medication.rasi.exists",
             "operator": "=",
-            "answerBoolean": true,
+            "answerBoolean": null,
             "answerDecimal": null,
             "answerInteger": null,
             "answerDate": null,
             "answerDateTime": null,
             "answerString": null,
-            "answerCoding": null,
+            "answerCoding": {
+              "id": null,
+              "extension": null,
+              "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
+              "version": null,
+              "code": "yes-changed",
+              "display": null,
+              "userSelected": null
+            },
             "answerQuantity": null,
             "answerReference": null
           }
@@ -6509,14 +6603,70 @@
           },
           {
             "linkId": "medication.mra.exists",
-            "type": "boolean",
+            "type": "choice",
             "text": "Do you take any medication from the above list?",
             "required": true,
             "unit": null,
-            "answerOption": null,
+            "answerOption": [
+              {
+                "valueCoding": {
+                  "id": "yes-changed",
+                  "extension": null,
+                  "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
+                  "version": null,
+                  "code": "yes-changed",
+                  "display": "Yes, changed since last update",
+                  "userSelected": null
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "yes-unchanged",
+                  "extension": null,
+                  "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
+                  "version": null,
+                  "code": "yes-unchanged",
+                  "display": "Yes, unchanged since last update",
+                  "userSelected": null
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "no",
+                  "extension": null,
+                  "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
+                  "version": null,
+                  "code": "no",
+                  "display": "No",
+                  "userSelected": null
+                }
+              }
+            ],
             "enableWhen": null,
             "enableBehavior": null,
-            "extension": null,
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                "valueQuantities": null,
+                "valueReference": null,
+                "valueString": null,
+                "valueCodeableConcept": {
+                  "coding": [
+                    {
+                      "id": null,
+                      "extension": null,
+                      "system": "http://hl7.org/fhir/questionnaire-item-control",
+                      "version": null,
+                      "code": "radio-button",
+                      "display": "Radio Button",
+                      "userSelected": null
+                    }
+                  ],
+                  "text": null
+                },
+                "valueMedicationRequest": null
+              }
+            ],
             "item": null
           }
         ]
@@ -6532,13 +6682,21 @@
           {
             "question": "medication.mra.exists",
             "operator": "=",
-            "answerBoolean": true,
+            "answerBoolean": null,
             "answerDecimal": null,
             "answerInteger": null,
             "answerDate": null,
             "answerDateTime": null,
             "answerString": null,
-            "answerCoding": null,
+            "answerCoding": {
+              "id": null,
+              "extension": null,
+              "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
+              "version": null,
+              "code": "yes-changed",
+              "display": null,
+              "userSelected": null
+            },
             "answerQuantity": null,
             "answerReference": null
           }
@@ -6743,14 +6901,70 @@
           },
           {
             "linkId": "medication.sglt2i.exists",
-            "type": "boolean",
+            "type": "choice",
             "text": "Do you take any medication from the above list?",
             "required": true,
             "unit": null,
-            "answerOption": null,
+            "answerOption": [
+              {
+                "valueCoding": {
+                  "id": "yes-changed",
+                  "extension": null,
+                  "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
+                  "version": null,
+                  "code": "yes-changed",
+                  "display": "Yes, changed since last update",
+                  "userSelected": null
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "yes-unchanged",
+                  "extension": null,
+                  "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
+                  "version": null,
+                  "code": "yes-unchanged",
+                  "display": "Yes, unchanged since last update",
+                  "userSelected": null
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "no",
+                  "extension": null,
+                  "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
+                  "version": null,
+                  "code": "no",
+                  "display": "No",
+                  "userSelected": null
+                }
+              }
+            ],
             "enableWhen": null,
             "enableBehavior": null,
-            "extension": null,
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                "valueQuantities": null,
+                "valueReference": null,
+                "valueString": null,
+                "valueCodeableConcept": {
+                  "coding": [
+                    {
+                      "id": null,
+                      "extension": null,
+                      "system": "http://hl7.org/fhir/questionnaire-item-control",
+                      "version": null,
+                      "code": "radio-button",
+                      "display": "Radio Button",
+                      "userSelected": null
+                    }
+                  ],
+                  "text": null
+                },
+                "valueMedicationRequest": null
+              }
+            ],
             "item": null
           }
         ]
@@ -6766,13 +6980,21 @@
           {
             "question": "medication.sglt2i.exists",
             "operator": "=",
-            "answerBoolean": true,
+            "answerBoolean": null,
             "answerDecimal": null,
             "answerInteger": null,
             "answerDate": null,
             "answerDateTime": null,
             "answerString": null,
-            "answerCoding": null,
+            "answerCoding": {
+              "id": null,
+              "extension": null,
+              "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
+              "version": null,
+              "code": "yes-changed",
+              "display": null,
+              "userSelected": null
+            },
             "answerQuantity": null,
             "answerReference": null
           }
@@ -7043,14 +7265,70 @@
           },
           {
             "linkId": "medication.diuretics.exists",
-            "type": "boolean",
+            "type": "choice",
             "text": "Do you take any medication from the above list?",
             "required": true,
             "unit": null,
-            "answerOption": null,
+            "answerOption": [
+              {
+                "valueCoding": {
+                  "id": "yes-changed",
+                  "extension": null,
+                  "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
+                  "version": null,
+                  "code": "yes-changed",
+                  "display": "Yes, changed since last update",
+                  "userSelected": null
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "yes-unchanged",
+                  "extension": null,
+                  "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
+                  "version": null,
+                  "code": "yes-unchanged",
+                  "display": "Yes, unchanged since last update",
+                  "userSelected": null
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "no",
+                  "extension": null,
+                  "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
+                  "version": null,
+                  "code": "no",
+                  "display": "No",
+                  "userSelected": null
+                }
+              }
+            ],
             "enableWhen": null,
             "enableBehavior": null,
-            "extension": null,
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                "valueQuantities": null,
+                "valueReference": null,
+                "valueString": null,
+                "valueCodeableConcept": {
+                  "coding": [
+                    {
+                      "id": null,
+                      "extension": null,
+                      "system": "http://hl7.org/fhir/questionnaire-item-control",
+                      "version": null,
+                      "code": "radio-button",
+                      "display": "Radio Button",
+                      "userSelected": null
+                    }
+                  ],
+                  "text": null
+                },
+                "valueMedicationRequest": null
+              }
+            ],
             "item": null
           }
         ]
@@ -7066,13 +7344,21 @@
           {
             "question": "medication.diuretics.exists",
             "operator": "=",
-            "answerBoolean": true,
+            "answerBoolean": null,
             "answerDecimal": null,
             "answerInteger": null,
             "answerDate": null,
             "answerDateTime": null,
             "answerString": null,
-            "answerCoding": null,
+            "answerCoding": {
+              "id": null,
+              "extension": null,
+              "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
+              "version": null,
+              "code": "yes-changed",
+              "display": null,
+              "userSelected": null
+            },
             "answerQuantity": null,
             "answerReference": null
           }
@@ -7538,7 +7824,7 @@
           {
             "linkId": "lab.2160-0.exists-description",
             "type": "display",
-            "text": "The creatinine level in your body helps understand how your liver handles the drugs you are taking.",
+            "text": "The creatinine level in your body helps understand how your kidneys handle the drugs you are taking.",
             "required": false,
             "unit": null,
             "answerOption": null,
@@ -7611,7 +7897,7 @@
           {
             "linkId": "lab.2160-0.description",
             "type": "display",
-            "text": "The creatinine level in your body helps understand how your liver handles the drugs you are taking.",
+            "text": "The creatinine level in your body helps understand how your kidneys handle the drugs you are taking.",
             "required": false,
             "unit": null,
             "answerOption": null,
@@ -7634,150 +7920,6 @@
           },
           {
             "linkId": "lab.2160-0.date",
-            "type": "date",
-            "text": "Date:",
-            "required": true,
-            "unit": null,
-            "answerOption": null,
-            "enableWhen": null,
-            "enableBehavior": null,
-            "extension": null,
-            "item": null
-          }
-        ]
-      },
-      {
-        "linkId": "lab.98979-8.exists",
-        "type": "group",
-        "text": "eGFR",
-        "required": false,
-        "unit": null,
-        "answerOption": null,
-        "enableWhen": null,
-        "enableBehavior": null,
-        "extension": [
-          {
-            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
-            "valueQuantities": null,
-            "valueReference": null,
-            "valueString": null,
-            "valueCodeableConcept": {
-              "coding": [
-                {
-                  "id": null,
-                  "extension": null,
-                  "system": "http://hl7.org/fhir/questionnaire-item-control",
-                  "version": null,
-                  "code": "page",
-                  "display": "Page",
-                  "userSelected": null
-                }
-              ],
-              "text": "Page"
-            },
-            "valueMedicationRequest": null
-          }
-        ],
-        "item": [
-          {
-            "linkId": "lab.98979-8.exists-description",
-            "type": "display",
-            "text": "eGFR (estimated Glomerular Filtration Rate) is a test that estimates how well your kidneys are filtering blood.",
-            "required": false,
-            "unit": null,
-            "answerOption": null,
-            "enableWhen": null,
-            "enableBehavior": null,
-            "extension": null,
-            "item": null
-          },
-          {
-            "linkId": "lab.98979-8.exists",
-            "type": "boolean",
-            "text": "Have you recently received a new eGFR value?",
-            "required": true,
-            "unit": null,
-            "answerOption": null,
-            "enableWhen": null,
-            "enableBehavior": null,
-            "extension": null,
-            "item": null
-          }
-        ]
-      },
-      {
-        "linkId": "lab.98979-8.page1",
-        "type": "group",
-        "text": "eGFR",
-        "required": false,
-        "unit": null,
-        "answerOption": null,
-        "enableWhen": [
-          {
-            "question": "lab.98979-8.exists",
-            "operator": "=",
-            "answerBoolean": true,
-            "answerDecimal": null,
-            "answerInteger": null,
-            "answerDate": null,
-            "answerDateTime": null,
-            "answerString": null,
-            "answerCoding": null,
-            "answerQuantity": null,
-            "answerReference": null
-          }
-        ],
-        "enableBehavior": null,
-        "extension": [
-          {
-            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
-            "valueQuantities": null,
-            "valueReference": null,
-            "valueString": null,
-            "valueCodeableConcept": {
-              "coding": [
-                {
-                  "id": null,
-                  "extension": null,
-                  "system": "http://hl7.org/fhir/questionnaire-item-control",
-                  "version": null,
-                  "code": "page",
-                  "display": "Page",
-                  "userSelected": null
-                }
-              ],
-              "text": "Page"
-            },
-            "valueMedicationRequest": null
-          }
-        ],
-        "item": [
-          {
-            "linkId": "lab.98979-8.description",
-            "type": "display",
-            "text": "eGFR (estimated Glomerular Filtration Rate) is a test that estimates how well your kidneys are filtering blood.",
-            "required": false,
-            "unit": null,
-            "answerOption": null,
-            "enableWhen": null,
-            "enableBehavior": null,
-            "extension": null,
-            "item": null
-          },
-          {
-            "linkId": "lab.98979-8.value",
-            "type": "decimal",
-            "text": "eGFR (mL/min/1.73m2):",
-            "required": true,
-            "unit": "mL/min/1.73m2",
-            "answerOption": null,
-            "enableWhen": null,
-            "enableBehavior": null,
-            "extension": null,
-            "item": null
-          },
-          {
-            "linkId": "lab.98979-8.date",
             "type": "date",
             "text": "Date:",
             "required": true,
@@ -8125,14 +8267,70 @@
           },
           {
             "linkId": "medication.betablockers.exists",
-            "type": "boolean",
+            "type": "choice",
             "text": "Do you take any medication from the above list?",
             "required": true,
             "unit": null,
-            "answerOption": null,
+            "answerOption": [
+              {
+                "valueCoding": {
+                  "id": "yes-changed",
+                  "extension": null,
+                  "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
+                  "version": null,
+                  "code": "yes-changed",
+                  "display": "Yes, changed since last update",
+                  "userSelected": null
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "yes-unchanged",
+                  "extension": null,
+                  "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
+                  "version": null,
+                  "code": "yes-unchanged",
+                  "display": "Yes, unchanged since last update",
+                  "userSelected": null
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "no",
+                  "extension": null,
+                  "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
+                  "version": null,
+                  "code": "no",
+                  "display": "No",
+                  "userSelected": null
+                }
+              }
+            ],
             "enableWhen": null,
             "enableBehavior": null,
-            "extension": null,
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                "valueQuantities": null,
+                "valueReference": null,
+                "valueString": null,
+                "valueCodeableConcept": {
+                  "coding": [
+                    {
+                      "id": null,
+                      "extension": null,
+                      "system": "http://hl7.org/fhir/questionnaire-item-control",
+                      "version": null,
+                      "code": "radio-button",
+                      "display": "Radio Button",
+                      "userSelected": null
+                    }
+                  ],
+                  "text": null
+                },
+                "valueMedicationRequest": null
+              }
+            ],
             "item": null
           }
         ]
@@ -8148,13 +8346,21 @@
           {
             "question": "medication.betablockers.exists",
             "operator": "=",
-            "answerBoolean": true,
+            "answerBoolean": null,
             "answerDecimal": null,
             "answerInteger": null,
             "answerDate": null,
             "answerDateTime": null,
             "answerString": null,
-            "answerCoding": null,
+            "answerCoding": {
+              "id": null,
+              "extension": null,
+              "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
+              "version": null,
+              "code": "yes-changed",
+              "display": null,
+              "userSelected": null
+            },
             "answerQuantity": null,
             "answerReference": null
           }
@@ -8502,14 +8708,70 @@
           },
           {
             "linkId": "medication.rasi.exists",
-            "type": "boolean",
+            "type": "choice",
             "text": "Do you take any medication from the above list?",
             "required": true,
             "unit": null,
-            "answerOption": null,
+            "answerOption": [
+              {
+                "valueCoding": {
+                  "id": "yes-changed",
+                  "extension": null,
+                  "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
+                  "version": null,
+                  "code": "yes-changed",
+                  "display": "Yes, changed since last update",
+                  "userSelected": null
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "yes-unchanged",
+                  "extension": null,
+                  "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
+                  "version": null,
+                  "code": "yes-unchanged",
+                  "display": "Yes, unchanged since last update",
+                  "userSelected": null
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "no",
+                  "extension": null,
+                  "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
+                  "version": null,
+                  "code": "no",
+                  "display": "No",
+                  "userSelected": null
+                }
+              }
+            ],
             "enableWhen": null,
             "enableBehavior": null,
-            "extension": null,
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                "valueQuantities": null,
+                "valueReference": null,
+                "valueString": null,
+                "valueCodeableConcept": {
+                  "coding": [
+                    {
+                      "id": null,
+                      "extension": null,
+                      "system": "http://hl7.org/fhir/questionnaire-item-control",
+                      "version": null,
+                      "code": "radio-button",
+                      "display": "Radio Button",
+                      "userSelected": null
+                    }
+                  ],
+                  "text": null
+                },
+                "valueMedicationRequest": null
+              }
+            ],
             "item": null
           }
         ]
@@ -8525,13 +8787,21 @@
           {
             "question": "medication.rasi.exists",
             "operator": "=",
-            "answerBoolean": true,
+            "answerBoolean": null,
             "answerDecimal": null,
             "answerInteger": null,
             "answerDate": null,
             "answerDateTime": null,
             "answerString": null,
-            "answerCoding": null,
+            "answerCoding": {
+              "id": null,
+              "extension": null,
+              "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
+              "version": null,
+              "code": "yes-changed",
+              "display": null,
+              "userSelected": null
+            },
             "answerQuantity": null,
             "answerReference": null
           }
@@ -9451,14 +9721,70 @@
           },
           {
             "linkId": "medication.mra.exists",
-            "type": "boolean",
+            "type": "choice",
             "text": "Do you take any medication from the above list?",
             "required": true,
             "unit": null,
-            "answerOption": null,
+            "answerOption": [
+              {
+                "valueCoding": {
+                  "id": "yes-changed",
+                  "extension": null,
+                  "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
+                  "version": null,
+                  "code": "yes-changed",
+                  "display": "Yes, changed since last update",
+                  "userSelected": null
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "yes-unchanged",
+                  "extension": null,
+                  "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
+                  "version": null,
+                  "code": "yes-unchanged",
+                  "display": "Yes, unchanged since last update",
+                  "userSelected": null
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "no",
+                  "extension": null,
+                  "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
+                  "version": null,
+                  "code": "no",
+                  "display": "No",
+                  "userSelected": null
+                }
+              }
+            ],
             "enableWhen": null,
             "enableBehavior": null,
-            "extension": null,
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                "valueQuantities": null,
+                "valueReference": null,
+                "valueString": null,
+                "valueCodeableConcept": {
+                  "coding": [
+                    {
+                      "id": null,
+                      "extension": null,
+                      "system": "http://hl7.org/fhir/questionnaire-item-control",
+                      "version": null,
+                      "code": "radio-button",
+                      "display": "Radio Button",
+                      "userSelected": null
+                    }
+                  ],
+                  "text": null
+                },
+                "valueMedicationRequest": null
+              }
+            ],
             "item": null
           }
         ]
@@ -9474,13 +9800,21 @@
           {
             "question": "medication.mra.exists",
             "operator": "=",
-            "answerBoolean": true,
+            "answerBoolean": null,
             "answerDecimal": null,
             "answerInteger": null,
             "answerDate": null,
             "answerDateTime": null,
             "answerString": null,
-            "answerCoding": null,
+            "answerCoding": {
+              "id": null,
+              "extension": null,
+              "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
+              "version": null,
+              "code": "yes-changed",
+              "display": null,
+              "userSelected": null
+            },
             "answerQuantity": null,
             "answerReference": null
           }
@@ -9685,14 +10019,70 @@
           },
           {
             "linkId": "medication.sglt2i.exists",
-            "type": "boolean",
+            "type": "choice",
             "text": "Do you take any medication from the above list?",
             "required": true,
             "unit": null,
-            "answerOption": null,
+            "answerOption": [
+              {
+                "valueCoding": {
+                  "id": "yes-changed",
+                  "extension": null,
+                  "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
+                  "version": null,
+                  "code": "yes-changed",
+                  "display": "Yes, changed since last update",
+                  "userSelected": null
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "yes-unchanged",
+                  "extension": null,
+                  "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
+                  "version": null,
+                  "code": "yes-unchanged",
+                  "display": "Yes, unchanged since last update",
+                  "userSelected": null
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "no",
+                  "extension": null,
+                  "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
+                  "version": null,
+                  "code": "no",
+                  "display": "No",
+                  "userSelected": null
+                }
+              }
+            ],
             "enableWhen": null,
             "enableBehavior": null,
-            "extension": null,
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                "valueQuantities": null,
+                "valueReference": null,
+                "valueString": null,
+                "valueCodeableConcept": {
+                  "coding": [
+                    {
+                      "id": null,
+                      "extension": null,
+                      "system": "http://hl7.org/fhir/questionnaire-item-control",
+                      "version": null,
+                      "code": "radio-button",
+                      "display": "Radio Button",
+                      "userSelected": null
+                    }
+                  ],
+                  "text": null
+                },
+                "valueMedicationRequest": null
+              }
+            ],
             "item": null
           }
         ]
@@ -9708,13 +10098,21 @@
           {
             "question": "medication.sglt2i.exists",
             "operator": "=",
-            "answerBoolean": true,
+            "answerBoolean": null,
             "answerDecimal": null,
             "answerInteger": null,
             "answerDate": null,
             "answerDateTime": null,
             "answerString": null,
-            "answerCoding": null,
+            "answerCoding": {
+              "id": null,
+              "extension": null,
+              "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
+              "version": null,
+              "code": "yes-changed",
+              "display": null,
+              "userSelected": null
+            },
             "answerQuantity": null,
             "answerReference": null
           }
@@ -9985,14 +10383,70 @@
           },
           {
             "linkId": "medication.diuretics.exists",
-            "type": "boolean",
+            "type": "choice",
             "text": "Do you take any medication from the above list?",
             "required": true,
             "unit": null,
-            "answerOption": null,
+            "answerOption": [
+              {
+                "valueCoding": {
+                  "id": "yes-changed",
+                  "extension": null,
+                  "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
+                  "version": null,
+                  "code": "yes-changed",
+                  "display": "Yes, changed since last update",
+                  "userSelected": null
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "yes-unchanged",
+                  "extension": null,
+                  "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
+                  "version": null,
+                  "code": "yes-unchanged",
+                  "display": "Yes, unchanged since last update",
+                  "userSelected": null
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "no",
+                  "extension": null,
+                  "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
+                  "version": null,
+                  "code": "no",
+                  "display": "No",
+                  "userSelected": null
+                }
+              }
+            ],
             "enableWhen": null,
             "enableBehavior": null,
-            "extension": null,
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                "valueQuantities": null,
+                "valueReference": null,
+                "valueString": null,
+                "valueCodeableConcept": {
+                  "coding": [
+                    {
+                      "id": null,
+                      "extension": null,
+                      "system": "http://hl7.org/fhir/questionnaire-item-control",
+                      "version": null,
+                      "code": "radio-button",
+                      "display": "Radio Button",
+                      "userSelected": null
+                    }
+                  ],
+                  "text": null
+                },
+                "valueMedicationRequest": null
+              }
+            ],
             "item": null
           }
         ]
@@ -10008,13 +10462,21 @@
           {
             "question": "medication.diuretics.exists",
             "operator": "=",
-            "answerBoolean": true,
+            "answerBoolean": null,
             "answerDecimal": null,
             "answerInteger": null,
             "answerDate": null,
             "answerDateTime": null,
             "answerString": null,
-            "answerCoding": null,
+            "answerCoding": {
+              "id": null,
+              "extension": null,
+              "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
+              "version": null,
+              "code": "yes-changed",
+              "display": null,
+              "userSelected": null
+            },
             "answerQuantity": null,
             "answerReference": null
           }
