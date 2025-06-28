@@ -26,6 +26,7 @@ import {
   userSeedingOptionsSchema,
   VideoReference,
   UserObservationCollection,
+  compact,
 } from '@stanfordbdhg/engagehf-models'
 import { type Auth } from 'firebase-admin/auth'
 import { type CollectionReference } from 'firebase-admin/firestore'
@@ -55,14 +56,15 @@ export class DebugDataService extends SeedingService {
   // Methods
 
   async seedCustom(input: CustomSeedingOptions): Promise<string[]> {
-    const userIds: string[] = []
-    for (const user of input.users) {
-      try {
-        userIds.push(await this.createUser(user))
-      } catch (error) {
-        logger.error(error)
-      }
-    }
+    const userIds = await Promise.all(
+      input.users.map((user) => {
+        try {
+          return this.createUser(user)
+        } catch (error) {
+          logger.error(error)
+        }
+      }),
+    )
     await this.databaseService.runTransaction((collections, transaction) => {
       for (const collectionName in input.firestore) {
         this.setCollection(
@@ -72,7 +74,7 @@ export class DebugDataService extends SeedingService {
         )
       }
     })
-    return userIds
+    return compact(userIds)
   }
 
   async seedInvitations() {
@@ -89,9 +91,15 @@ export class DebugDataService extends SeedingService {
   async seedUsers() {
     const users = this.readJSONArray('users.json', userSeedingOptionsSchema)
     const userIds = await Promise.all(
-      users.map((user) => this.createUser(user)),
+      users.map((user) => {
+        try {
+          return this.createUser(user)
+        } catch (error) {
+          logger.error(error)
+        }
+      }),
     )
-    return userIds
+    return compact(userIds)
   }
 
   async seedUserConsent(userId: string) {
