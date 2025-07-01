@@ -371,12 +371,12 @@ export class DatabaseUserService implements UserService {
       promises.push(
         ...usersResult.users.map(async (user) => {
           try {
-            const userObject = await this.getUser(user.uid)
             if (
-              userObject === undefined &&
               Object.keys(user.customClaims ?? {}).length === 0 &&
               new Date(user.metadata.lastSignInTime) < oneDayAgo
             ) {
+              const userObject = await this.getUser(user.uid)
+              if (userObject !== undefined) return
               logger.info(`Deleting expired account ${user.uid}`)
               try {
                 await this.auth.deleteUser(user.uid)
