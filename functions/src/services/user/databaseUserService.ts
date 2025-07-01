@@ -367,23 +367,26 @@ export class DatabaseUserService implements UserService {
     do {
       const usersResult = await this.auth.listUsers(1_000, pageToken)
       pageToken = usersResult.pageToken
-      for (const user of usersResult.users) {
-        if (
-          Object.keys(user.customClaims ?? {}).length === 0 &&
-          new Date(user.metadata.lastSignInTime) < oneDayAgo
-        ) {
-          logger.info(`Deleting expired account ${user.uid}`)
-          promises.push(
-            this.auth
-              .deleteUser(user.uid)
-              .catch((error: unknown) =>
-                console.error(
-                  `Failed to delete expired account ${user.uid}: ${String(error)}`,
-                ),
-              ),
-          )
-        }
-      }
+
+      promises.push(
+        ...usersResult.users.map(async (user) => {
+          const userObject = await this.getUser(user.uid)
+          if (
+            userObject === undefined &&
+            Object.keys(user.customClaims ?? {}).length === 0 &&
+            new Date(user.metadata.lastSignInTime) < oneDayAgo
+          ) {
+            logger.info(`Deleting expired account ${user.uid}`)
+            try {
+              await this.auth.deleteUser(user.uid)
+            } catch (error) {
+              console.error(
+                `Failed to delete expired account ${user.uid}: ${String(error)}`,
+              )
+            }
+          }
+        }),
+      )
     } while (pageToken !== undefined)
 
     await Promise.all(promises)

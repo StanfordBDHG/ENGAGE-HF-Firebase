@@ -73,6 +73,7 @@ export class TriggerService {
       this.addAppointmentReminderMessages(now),
       this.completeAppointmentReminderMessages(now),
       this.seedStaticDataIfNeeded(),
+      this.deleteExpiredAccounts(),
     ])
   }
 
