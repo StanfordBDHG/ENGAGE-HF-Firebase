@@ -53,6 +53,7 @@ export class DatabaseUserService implements UserService {
 
   async updateAuth(userId: string, auth: UserAuth): Promise<void> {
     await this.auth.updateUser(userId, {
+      email: auth.email ?? undefined,
       displayName: auth.displayName ?? undefined,
       phoneNumber: auth.phoneNumber ?? undefined,
       photoURL: auth.photoURL ?? undefined,
