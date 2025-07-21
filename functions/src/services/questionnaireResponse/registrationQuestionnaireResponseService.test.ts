@@ -114,7 +114,7 @@ describeWithEmulators('RegistrationQuestionnaireResponseService', (env) => {
     const appointments = await env.collections.userAppointments(userId).get()
     expect(appointments.size).toBe(1)
     expect(appointments.docs[0].data().start.toISOString()).toBe(
-      '2025-05-14T12:00:00Z',
+      '2025-05-14T12:00:00.000Z',
     )
   })
 
