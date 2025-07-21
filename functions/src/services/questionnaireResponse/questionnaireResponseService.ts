@@ -60,8 +60,8 @@ export abstract class QuestionnaireResponseService {
     if (exists !== true) return null
 
     const dateAnswer = response
-      .leafResponseItem(linkIds.date)
-      ?.answer?.at(0)?.valueDate
+      .leafResponseItem(linkIds.dateTime)
+      ?.answer?.at(0)?.valueDateTime
     if (dateAnswer === undefined) return null
 
     return FHIRAppointment.create({
@@ -103,8 +103,8 @@ export abstract class QuestionnaireResponseService {
   ): Observation | null {
     const linkIds = QuestionnaireLinkId.labValue(options.code)
     const dateAnswer = response
-      .leafResponseItem(linkIds.date)
-      ?.answer?.at(0)?.valueDate
+      .leafResponseItem(linkIds.dateTime)
+      ?.answer?.at(0)?.valueDateTime
     if (dateAnswer === undefined) return null
 
     const decimalAnswer = response

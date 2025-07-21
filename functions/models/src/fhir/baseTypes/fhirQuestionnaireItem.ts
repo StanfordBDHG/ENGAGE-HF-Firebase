@@ -11,7 +11,10 @@ import { fhirCodingConverter } from './fhirCoding.js'
 import { fhirExtensionConverter } from './fhirElement.js'
 import { fhirQuantityConverter } from './fhirQuantity.js'
 import { fhirReferenceConverter } from './fhirReference.js'
-import { dateConverter } from '../../helpers/dateConverter.js'
+import {
+  dateConverter,
+  dateTimeConverter,
+} from '../../helpers/dateConverter.js'
 import { Lazy } from '../../helpers/lazy.js'
 import { optionalish } from '../../helpers/optionalish.js'
 import { SchemaConverter } from '../../helpers/schemaConverter.js'
@@ -78,7 +81,7 @@ const fhirQuestionnaireItemEnableWhenConverter = new SchemaConverter({
     answerDecimal: optionalish(z.number()),
     answerInteger: optionalish(z.number().int()),
     answerDate: optionalish(dateConverter.schema),
-    answerDateTime: optionalish(dateConverter.schema),
+    answerDateTime: optionalish(dateTimeConverter.schema),
     answerString: optionalish(z.string()),
     answerCoding: optionalish(fhirCodingConverter.value.schema),
     answerQuantity: optionalish(fhirQuantityConverter.value.schema),
@@ -96,7 +99,7 @@ const fhirQuestionnaireItemEnableWhenConverter = new SchemaConverter({
       : null,
     answerDateTime:
       object.answerDateTime !== undefined ?
-        dateConverter.encode(object.answerDateTime)
+        dateTimeConverter.encode(object.answerDateTime)
       : null,
     answerString: object.answerString ?? null,
     answerCoding:

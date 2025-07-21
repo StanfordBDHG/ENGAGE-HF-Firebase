@@ -7,7 +7,7 @@
 //
 
 import { z } from 'zod'
-import { dateConverter } from '../helpers/dateConverter.js'
+import { dateTimeConverter } from '../helpers/dateConverter.js'
 import { Lazy } from '../helpers/lazy.js'
 import { optionalish } from '../helpers/optionalish.js'
 import { SchemaConverter } from '../helpers/schemaConverter.js'
@@ -18,7 +18,7 @@ export const symptomScoreConverter = new Lazy(
       schema: z
         .object({
           questionnaireResponseId: optionalish(z.string()),
-          date: dateConverter.schema,
+          date: dateTimeConverter.schema,
           overallScore: z.number().min(0).max(100),
           physicalLimitsScore: optionalish(z.number().min(0).max(100)),
           symptomFrequencyScore: optionalish(z.number().min(0).max(100)),
@@ -29,7 +29,7 @@ export const symptomScoreConverter = new Lazy(
         .transform((values) => new SymptomScore(values)),
       encode: (object) => ({
         questionnaireResponseId: object.questionnaireResponseId ?? null,
-        date: dateConverter.encode(object.date),
+        date: dateTimeConverter.encode(object.date),
         overallScore: object.overallScore,
         physicalLimitsScore: object.physicalLimitsScore ?? null,
         symptomFrequencyScore: object.symptomFrequencyScore ?? null,

@@ -14,7 +14,7 @@ import {
   type VideoReference,
 } from '../codes/references.js'
 import { advanceDateByDays } from '../helpers/date+extras.js'
-import { dateConverter } from '../helpers/dateConverter.js'
+import { dateTimeConverter } from '../helpers/dateConverter.js'
 import { Lazy } from '../helpers/lazy.js'
 import { optionalish } from '../helpers/optionalish.js'
 import { SchemaConverter } from '../helpers/schemaConverter.js'
@@ -38,9 +38,9 @@ export const userMessageConverter = new Lazy(
     new SchemaConverter({
       schema: z
         .object({
-          creationDate: dateConverter.schema,
-          dueDate: optionalish(dateConverter.schema),
-          completionDate: optionalish(dateConverter.schema),
+          creationDate: dateTimeConverter.schema,
+          dueDate: optionalish(dateTimeConverter.schema),
+          completionDate: optionalish(dateTimeConverter.schema),
           type: z.nativeEnum(UserMessageType),
           title: z.lazy(() => localizedTextConverter.schema),
           description: optionalish(z.lazy(() => localizedTextConverter.schema)),
@@ -50,11 +50,12 @@ export const userMessageConverter = new Lazy(
         })
         .transform((content) => new UserMessage(content)),
       encode: (object) => ({
-        creationDate: dateConverter.encode(object.creationDate),
-        dueDate: object.dueDate ? dateConverter.encode(object.dueDate) : null,
+        creationDate: dateTimeConverter.encode(object.creationDate),
+        dueDate:
+          object.dueDate ? dateTimeConverter.encode(object.dueDate) : null,
         completionDate:
           object.completionDate ?
-            dateConverter.encode(object.completionDate)
+            dateTimeConverter.encode(object.completionDate)
           : null,
         type: object.type,
         title: localizedTextConverter.encode(object.title),
