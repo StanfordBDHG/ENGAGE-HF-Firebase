@@ -6,33 +6,11 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { z } from 'zod'
-import {
-  type FHIRCodeableConcept,
-  fhirCodeableConceptConverter,
-} from './baseTypes/fhirCodeableConcept.js'
-import { type FHIRCoding } from './baseTypes/fhirCoding.js'
-import {
-  FHIRResource,
-  fhirResourceConverter,
-  type FHIRResourceInput,
-} from './baseTypes/fhirElement.js'
-import { fhirPeriodConverter, type FHIRPeriod } from './baseTypes/fhirPeriod.js'
-import {
-  type FHIRQuantity,
-  fhirQuantityConverter,
-} from './baseTypes/fhirQuantity.js'
 import { CodingSystem, LoincCode } from '../codes/codes.js'
 import { QuantityUnit } from '../codes/quantityUnit.js'
-import { dateTimeConverter } from '../helpers/dateConverter.js'
-import { Lazy } from '../helpers/lazy.js'
-import { optionalish } from '../helpers/optionalish.js'
-import { SchemaConverter } from '../helpers/schemaConverter.js'
-import { type Observation } from '../types/observation.js'
-import {
-  type FHIRReference,
-  fhirReferenceConverter,
-} from './baseTypes/fhirReference.js'
+import { Coding, Observation, Reference } from 'fhir/r4b.js'
+import { ObservationQuantity } from '../types/observationQuantity.js'
+import { FHIRResource } from './fhirResource.js'
 
 export enum UserObservationCollection {
   bodyWeight = 'bodyWeightObservations',
@@ -44,96 +22,7 @@ export enum UserObservationCollection {
   potassium = 'potassiumObservations',
 }
 
-export enum FHIRObservationStatus {
-  registered = 'registered',
-  preliminary = 'preliminary',
-  final = 'final',
-  amended = 'amended',
-  corrected = 'corrected',
-  cancelled = 'cancelled',
-  entered_in_error = 'entered-in-error',
-  unknown = 'unknown',
-}
-
-export const fhirObservationComponentConverter = new Lazy(
-  () =>
-    new SchemaConverter({
-      schema: z.object({
-        code: z.lazy(() => fhirCodeableConceptConverter.value.schema),
-        valueQuantity: optionalish(
-          z.lazy(() => fhirQuantityConverter.value.schema),
-        ),
-      }),
-      encode: (object) => ({
-        code: fhirCodeableConceptConverter.value.encode(object.code),
-        valueQuantity:
-          object.valueQuantity ?
-            fhirQuantityConverter.value.encode(object.valueQuantity)
-          : null,
-      }),
-    }),
-)
-
-export type FHIRObservationComponent = z.output<
-  typeof fhirObservationComponentConverter.value.schema
->
-
-export const fhirObservationConverter = new Lazy(
-  () =>
-    new SchemaConverter({
-      schema: fhirResourceConverter.value.schema
-        .extend({
-          status: z.nativeEnum(FHIRObservationStatus),
-          code: z.lazy(() => fhirCodeableConceptConverter.value.schema),
-          component: optionalish(
-            z
-              .lazy(() => fhirObservationComponentConverter.value.schema)
-              .array(),
-          ),
-          valueQuantity: optionalish(
-            z.lazy(() => fhirQuantityConverter.value.schema),
-          ),
-          effectivePeriod: optionalish(
-            z.lazy(() => fhirPeriodConverter.value.schema),
-          ),
-          effectiveDateTime: optionalish(dateTimeConverter.schema),
-          effectiveInstant: optionalish(dateTimeConverter.schema),
-          derivedFrom: optionalish(fhirReferenceConverter.value.schema.array()),
-        })
-        .transform((values) => new FHIRObservation(values)),
-      encode: (object) => ({
-        ...fhirResourceConverter.value.encode(object),
-        status: object.status,
-        code: fhirCodeableConceptConverter.value.encode(object.code),
-        component:
-          object.component?.map(
-            fhirObservationComponentConverter.value.encode,
-          ) ?? null,
-        valueQuantity:
-          object.valueQuantity ?
-            fhirQuantityConverter.value.encode(object.valueQuantity)
-          : null,
-        effectivePeriod:
-          object.effectivePeriod ?
-            fhirPeriodConverter.value.encode(object.effectivePeriod)
-          : null,
-        effectiveDateTime:
-          object.effectiveDateTime ?
-            dateTimeConverter.encode(object.effectiveDateTime)
-          : null,
-        effectiveInstant:
-          object.effectiveInstant ?
-            dateTimeConverter.encode(object.effectiveInstant)
-          : null,
-        derivedFrom:
-          object.derivedFrom ?
-            object.derivedFrom.map(fhirReferenceConverter.value.encode)
-          : null,
-      }),
-    }),
-)
-
-export class FHIRObservation extends FHIRResource {
+export class FHIRObservation extends FHIRResource<Observation> {
   // Static Functions
 
   private static readonly loincDisplay = new Map<LoincCode, string>([
@@ -161,8 +50,9 @@ export class FHIRObservation extends FHIRResource {
     diastolic: number
   }): FHIRObservation {
     return new FHIRObservation({
+      resourceType: 'Observation',
       id: input.id,
-      status: FHIRObservationStatus.final,
+      status: 'final',
       code: {
         text: this.loincDisplay.get(LoincCode.bloodPressure),
         coding: [
@@ -213,7 +103,7 @@ export class FHIRObservation extends FHIRResource {
           },
         },
       ],
-      effectiveDateTime: input.date,
+      effectiveDateTime: input.date.toISOString(),
     })
   }
 
@@ -223,11 +113,12 @@ export class FHIRObservation extends FHIRResource {
     value: number
     unit: QuantityUnit
     code: LoincCode
-    derivedFrom?: FHIRReference[]
+    derivedFrom?: Reference[]
   }): FHIRObservation {
     return new FHIRObservation({
+      resourceType: 'Observation',
       id: input.id,
-      status: FHIRObservationStatus.final,
+      status: 'final',
       code: {
         text: this.loincDisplay.get(input.code) ?? undefined,
         coding: [
@@ -244,27 +135,15 @@ export class FHIRObservation extends FHIRResource {
         system: input.unit.system,
         code: input.unit.code,
       },
-      effectiveDateTime: input.date,
+      effectiveDateTime: input.date.toISOString(),
       derivedFrom: input.derivedFrom,
     })
   }
 
-  // Stored Properties
-
-  readonly resourceType: string = 'Observation'
-  readonly status: FHIRObservationStatus
-  readonly code: FHIRCodeableConcept
-  readonly component?: FHIRObservationComponent[]
-  readonly valueQuantity?: FHIRQuantity
-  readonly effectivePeriod?: FHIRPeriod
-  readonly effectiveDateTime?: Date
-  readonly effectiveInstant?: Date
-  readonly derivedFrom?: FHIRReference[]
-
   // Computed Properties
 
-  get systolicBloodPressure(): Observation | undefined {
-    return this.observations({
+  get systolicBloodPressure(): ObservationQuantity | undefined {
+    return this.observationQuantities({
       code: LoincCode.bloodPressure,
       system: CodingSystem.loinc,
       unit: QuantityUnit.mmHg,
@@ -275,8 +154,8 @@ export class FHIRObservation extends FHIRResource {
     }).at(0)
   }
 
-  get diastolicBloodPressure(): Observation | undefined {
-    return this.observations({
+  get diastolicBloodPressure(): ObservationQuantity | undefined {
+    return this.observationQuantities({
       code: LoincCode.bloodPressure,
       system: CodingSystem.loinc,
       unit: QuantityUnit.mmHg,
@@ -287,111 +166,86 @@ export class FHIRObservation extends FHIRResource {
     }).at(0)
   }
 
-  bodyWeight(unit: QuantityUnit): Observation | undefined {
-    return this.observations({
+  bodyWeight(unit: QuantityUnit): ObservationQuantity | undefined {
+    return this.observationQuantities({
       code: LoincCode.bodyWeight,
       system: CodingSystem.loinc,
       unit: unit,
     }).at(0)
   }
 
-  dryWeight(unit: QuantityUnit): Observation | undefined {
-    return this.observations({
+  dryWeight(unit: QuantityUnit): ObservationQuantity | undefined {
+    return this.observationQuantities({
       code: LoincCode.dryWeight,
       system: CodingSystem.loinc,
       unit: unit,
     }).at(0)
   }
 
-  get creatinine(): Observation | undefined {
-    return this.observations({
+  get creatinine(): ObservationQuantity | undefined {
+    return this.observationQuantities({
       code: LoincCode.creatinine,
       system: CodingSystem.loinc,
       unit: QuantityUnit.mg_dL,
     }).at(0)
   }
 
-  get estimatedGlomerularFiltrationRate(): Observation | undefined {
-    return this.observations({
+  get estimatedGlomerularFiltrationRate(): ObservationQuantity | undefined {
+    return this.observationQuantities({
       code: LoincCode.estimatedGlomerularFiltrationRate,
       system: CodingSystem.loinc,
       unit: QuantityUnit.mL_min_173m2,
     }).at(0)
   }
 
-  get heartRate(): Observation | undefined {
-    return this.observations({
+  get heartRate(): ObservationQuantity | undefined {
+    return this.observationQuantities({
       code: LoincCode.heartRate,
       system: CodingSystem.loinc,
       unit: QuantityUnit.bpm,
     }).at(0)
   }
 
-  get potassium(): Observation | undefined {
-    return this.observations({
+  get potassium(): ObservationQuantity | undefined {
+    return this.observationQuantities({
       code: LoincCode.potassium,
       system: CodingSystem.loinc,
       unit: QuantityUnit.mEq_L,
     }).at(0)
   }
 
-  // Constructor
-
-  constructor(
-    input: FHIRResourceInput & {
-      status: FHIRObservationStatus
-      code: FHIRCodeableConcept
-      component?: FHIRObservationComponent[]
-      valueQuantity?: FHIRQuantity
-      effectivePeriod?: FHIRPeriod
-      effectiveDateTime?: Date
-      effectiveInstant?: Date
-      derivedFrom?: FHIRReference[]
-    },
-  ) {
-    super(input)
-    this.status = input.status
-    this.code = input.code
-    this.component = input.component
-    this.valueQuantity = input.valueQuantity
-    this.effectivePeriod = input.effectivePeriod
-    this.effectiveDateTime = input.effectiveDateTime
-    this.effectiveInstant = input.effectiveInstant
-    this.derivedFrom = input.derivedFrom
-  }
-
   // Methods
 
-  private observations(
+  private observationQuantities(
     options: {
       unit: QuantityUnit
-      component?: FHIRCoding
-    } & FHIRCoding,
-  ): Observation[] {
-    const result: Observation[] = []
-    if (!this.containsCoding(this.code, [options])) return result
+      component?: Coding
+    } & Coding,
+  ): ObservationQuantity[] {
+    const result: ObservationQuantity[] = []
+    if (!this.containsCoding(this.data.code, [options])) return result
     const date =
-      this.effectiveDateTime ??
-      this.effectiveInstant ??
-      this.effectivePeriod?.start ??
-      this.effectivePeriod?.end
+      this.data.effectiveDateTime ??
+      this.data.effectiveInstant ??
+      this.data.effectivePeriod?.start ??
+      this.data.effectivePeriod?.end
     if (!date) return result
 
     if (options.component) {
-      for (const component of this.component ?? []) {
+      for (const component of this.data.component ?? []) {
         if (!this.containsCoding(component.code, [options.component])) continue
         const value = options.unit.valueOf(component.valueQuantity)
         if (!value) continue
         result.push({
-          date: date,
+          date: new Date(date),
           value: value,
           unit: options.unit,
         })
       }
     } else {
-      const value = options.unit.valueOf(this.valueQuantity)
+      const value = options.unit.valueOf(this.data.valueQuantity)
       if (!value) return result
-      result.push({ date: date, value: value, unit: options.unit })
+      result.push({ date: new Date(date), value: value, unit: options.unit })
     }
     return result
   }

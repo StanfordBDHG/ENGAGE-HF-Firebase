@@ -6,168 +6,13 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { z } from 'zod'
-import { fhirCodingConverter } from './baseTypes/fhirCoding.js'
-import {
-  FHIRResource,
-  fhirResourceConverter,
-  type FHIRResourceInput,
-} from './baseTypes/fhirElement.js'
-import { dateConverter, dateTimeConverter } from '../helpers/dateConverter.js'
-import { Lazy } from '../helpers/lazy.js'
-import { optionalish } from '../helpers/optionalish.js'
-import { SchemaConverter } from '../helpers/schemaConverter.js'
-import { fhirQuantityConverter } from './baseTypes/fhirQuantity.js'
+import { QuestionnaireResponse, QuestionnaireResponseItem } from 'fhir/r4b.js'
+import { FHIRResource } from './fhirResource.js'
 
-const fhirQuestionnaireResponseItemBaseConverter = new SchemaConverter({
-  schema: z.object({
-    answer: optionalish(
-      z
-        .object({
-          valueCoding: optionalish(
-            z.lazy(() => fhirCodingConverter.value.schema),
-          ),
-          valueDate: optionalish(dateConverter.schema),
-          valueDateTime: optionalish(dateTimeConverter.schema),
-          valueString: optionalish(z.string()),
-          valueBoolean: optionalish(z.boolean()),
-          valueInteger: optionalish(z.number().int()),
-          valueDecimal: optionalish(z.number()),
-          valueQuantity: optionalish(
-            z.lazy(() => fhirQuantityConverter.value.schema),
-          ),
-        })
-        .array(),
-    ),
-    linkId: optionalish(z.string()),
-  }),
-  encode: (object) => ({
-    answer:
-      object.answer?.flatMap((value) => ({
-        valueCoding:
-          value.valueCoding ?
-            fhirCodingConverter.value.encode(value.valueCoding)
-          : null,
-        valueDate:
-          value.valueDate ? dateConverter.encode(value.valueDate) : null,
-        valueDateTime:
-          value.valueDateTime ?
-            dateTimeConverter.encode(value.valueDateTime)
-          : null,
-        valueString: value.valueString ?? null,
-        valueBoolean: value.valueBoolean ?? null,
-        valueInteger: value.valueInteger ?? null,
-        valueDecimal: value.valueDecimal ?? null,
-        valueQuantity:
-          value.valueQuantity ?
-            fhirQuantityConverter.value.encode(value.valueQuantity)
-          : null,
-      })) ?? null,
-    linkId: object.linkId ?? null,
-  }),
-})
-
-export interface FHIRQuestionnaireResponseItemValue
-  extends z.input<
-    typeof fhirQuestionnaireResponseItemBaseConverter.value.schema
-  > {
-  item?:
-    | Array<z.input<typeof fhirQuestionnaireResponseItemConverter.value.schema>>
-    | null
-    | undefined
-}
-
-export const fhirQuestionnaireResponseItemConverter = (() => {
-  const fhirQuestionnaireResponseItemSchema: z.ZodType<
-    FHIRQuestionnaireResponseItem,
-    z.ZodTypeDef,
-    FHIRQuestionnaireResponseItemValue
-  > = fhirQuestionnaireResponseItemBaseConverter.value.schema.extend({
-    item: optionalish(
-      z.array(z.lazy(() => fhirQuestionnaireResponseItemSchema)),
-    ),
-  })
-
-  function fhirQuestionnaireResponseItemEncode(
-    object: z.output<typeof fhirQuestionnaireResponseItemSchema>,
-  ): z.input<typeof fhirQuestionnaireResponseItemSchema> {
-    return {
-      ...fhirQuestionnaireResponseItemBaseConverter.value.encode(object),
-      item:
-        object.item ?
-          object.item.map(fhirQuestionnaireResponseItemConverter.value.encode)
-        : null,
-    }
-  }
-
-  return new SchemaConverter({
-    schema: fhirQuestionnaireResponseItemSchema,
-    encode: fhirQuestionnaireResponseItemEncode,
-  })
-})()
-
-export interface FHIRQuestionnaireResponseItem
-  extends z.output<
-    typeof fhirQuestionnaireResponseItemBaseConverter.value.schema
-  > {
-  item?: FHIRQuestionnaireResponseItem[]
-}
-
-export const fhirQuestionnaireResponseConverter = new Lazy(
-  () =>
-    new SchemaConverter({
-      schema: fhirResourceConverter.value.schema
-        .extend({
-          authored: optionalish(dateTimeConverter.schema),
-          item: optionalish(
-            z
-              .lazy(() => fhirQuestionnaireResponseItemConverter.value.schema)
-              .array(),
-          ),
-          questionnaire: z.string(),
-        })
-        .transform((values) => new FHIRQuestionnaireResponse(values)),
-      encode: (object) => ({
-        ...fhirResourceConverter.value.encode(object),
-        authored:
-          object.authored !== undefined ?
-            dateTimeConverter.encode(object.authored)
-          : null,
-        item:
-          object.item?.map(
-            fhirQuestionnaireResponseItemConverter.value.encode,
-          ) ?? null,
-        questionnaire: object.questionnaire,
-      }),
-    }),
-)
-
-export class FHIRQuestionnaireResponse extends FHIRResource {
-  // Stored Properties
-
-  readonly resourceType: string = 'QuestionnaireResponse'
-  readonly authored?: Date
-  readonly item?: FHIRQuestionnaireResponseItem[]
-  readonly questionnaire: string
-
-  // Constructor
-
-  constructor(
-    input: FHIRResourceInput & {
-      authored?: Date
-      item?: FHIRQuestionnaireResponseItem[]
-      questionnaire: string
-    },
-  ) {
-    super(input)
-    this.authored = input.authored
-    this.item = input.item
-    this.questionnaire = input.questionnaire
-  }
-
+export class FHIRQuestionnaireResponse extends FHIRResource<QuestionnaireResponse> {
   // Methods - Response items from path
 
-  responseItem(linkIdPath: string[]): FHIRQuestionnaireResponseItem | null {
+  responseItem(linkIdPath: string[]): QuestionnaireResponseItem | null {
     const items = this.responseItems(linkIdPath)
     switch (items.length) {
       case 0:
@@ -179,9 +24,9 @@ export class FHIRQuestionnaireResponse extends FHIRResource {
     }
   }
 
-  responseItems(linkIdPath: string[]): FHIRQuestionnaireResponseItem[] {
-    const resultValue: FHIRQuestionnaireResponseItem[] = []
-    for (const child of this.item ?? []) {
+  responseItems(linkIdPath: string[]): QuestionnaireResponseItem[] {
+    const resultValue: QuestionnaireResponseItem[] = []
+    for (const child of this.data.item ?? []) {
       resultValue.push(...this.responseItemsRecursive(linkIdPath, child))
     }
     return resultValue
@@ -189,8 +34,8 @@ export class FHIRQuestionnaireResponse extends FHIRResource {
 
   private responseItemsRecursive(
     linkIdPath: string[],
-    item: FHIRQuestionnaireResponseItem,
-  ): FHIRQuestionnaireResponseItem[] {
+    item: QuestionnaireResponseItem,
+  ): QuestionnaireResponseItem[] {
     switch (linkIdPath.length) {
       case 0:
         break
@@ -202,7 +47,7 @@ export class FHIRQuestionnaireResponse extends FHIRResource {
       default:
         if (item.linkId === linkIdPath[0]) {
           const childLinkIds = linkIdPath.slice(1)
-          const resultValue: FHIRQuestionnaireResponseItem[] = []
+          const resultValue: QuestionnaireResponseItem[] = []
           for (const child of item.item ?? []) {
             resultValue.push(
               ...this.responseItemsRecursive(childLinkIds, child),
@@ -217,7 +62,7 @@ export class FHIRQuestionnaireResponse extends FHIRResource {
 
   // Methods - Response items from leaf link id
 
-  leafResponseItem(linkId: string): FHIRQuestionnaireResponseItem | null {
+  leafResponseItem(linkId: string): QuestionnaireResponseItem | null {
     const items = this.leafResponseItems(linkId)
     switch (items.length) {
       case 0:
@@ -229,9 +74,9 @@ export class FHIRQuestionnaireResponse extends FHIRResource {
     }
   }
 
-  leafResponseItems(linkId: string): FHIRQuestionnaireResponseItem[] {
-    const items: FHIRQuestionnaireResponseItem[] = []
-    for (const item of this.item ?? []) {
+  leafResponseItems(linkId: string): QuestionnaireResponseItem[] {
+    const items: QuestionnaireResponseItem[] = []
+    for (const item of this.data.item ?? []) {
       items.push(...this.leafResponseItemsRecursive(linkId, item))
     }
     return items
@@ -239,13 +84,13 @@ export class FHIRQuestionnaireResponse extends FHIRResource {
 
   private leafResponseItemsRecursive(
     linkId: string,
-    item: FHIRQuestionnaireResponseItem,
-  ): FHIRQuestionnaireResponseItem[] {
+    item: QuestionnaireResponseItem,
+  ): QuestionnaireResponseItem[] {
     const children = item.item ?? []
     if (children.length === 0 && item.linkId === linkId) {
       return [item]
     }
-    const items: FHIRQuestionnaireResponseItem[] = []
+    const items: QuestionnaireResponseItem[] = []
     for (const child of item.item ?? []) {
       items.push(...this.leafResponseItemsRecursive(linkId, child))
     }

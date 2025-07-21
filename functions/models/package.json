@@ -22,9 +22,11 @@
   ],
   "main": "lib/index.js",
   "dependencies": {
-    "zod": "^3.23.8"
+    "zod": "^3.23.8",
+    "spezi-firebase-fhir": "file:../../../spezi-firebase/packages/spezi-firebase-fhir"
   },
   "devDependencies": {
+    "@types/fhir": "^0.0.41",
     "@types/node": "^20",
     "eslint": "^9.22",
     "eslint-config-google": "^0.14",

@@ -6,6 +6,13 @@
 // SPDX-License-Identifier: MIT
 //
 
+import { Appointment } from 'fhir/r4b.js'
+import { FHIRResource } from './fhirResource.js'
+import { AppointmentStatus } from 'spezi-firebase-fhir'
+import { compactMap } from '../helpers/array.js'
+import { FHIRExtensionUrl } from '../codes/codes.js'
+
+/*
 import { z } from 'zod'
 import { fhirCodeableConceptConverter } from './baseTypes/fhirCodeableConcept.js'
 import {
@@ -93,26 +100,29 @@ export const fhirAppointmentConverter = new Lazy(
       }),
     }),
 )
+    */
 
-export class FHIRAppointment extends FHIRResource {
+export class FHIRAppointment extends FHIRResource<Appointment> {
   // Static Functions
 
   static create(input: {
     userId: string
     created: Date
-    status: FHIRAppointmentStatus
+    status: AppointmentStatus
     start: Date
     durationInMinutes: number
   }): FHIRAppointment {
     return new FHIRAppointment({
+      resourceType: 'Appointment',
       status: input.status,
-      created: input.created,
-      start: input.start,
+      created: input.created.toISOString(),
+      start: input.start.toISOString(),
       end: new Date(
         input.start.getTime() + input.durationInMinutes * 60 * 1000,
-      ),
+      ).toISOString(),
       participant: [
         {
+          status: 'accepted',
           actor: {
             reference: `users/${input.userId}`,
           },
@@ -121,17 +131,6 @@ export class FHIRAppointment extends FHIRResource {
     })
   }
 
-  // Stored Properties
-
-  readonly resourceType: string = 'Appointment'
-  readonly status: FHIRAppointmentStatus
-  readonly created: Date
-  readonly start: Date
-  readonly end: Date
-  readonly comment?: string
-  readonly patientInstruction?: string
-  readonly participant?: FHIRAppointmentParticipant[]
-
   // Computed Properties
 
   get providerNames(): string[] {
@@ -139,28 +138,5 @@ export class FHIRAppointment extends FHIRResource {
       this.extensionsWithUrl(FHIRExtensionUrl.providerName),
       (extension) => extension.valueString,
     )
-  }
-
-  // Constructor
-
-  constructor(
-    input: FHIRResourceInput & {
-      status: FHIRAppointmentStatus
-      created: Date
-      start: Date
-      end: Date
-      comment?: string
-      patientInstruction?: string
-      participant?: FHIRAppointmentParticipant[]
-    },
-  ) {
-    super(input)
-    this.status = input.status
-    this.created = input.created
-    this.start = input.start
-    this.end = input.end
-    this.comment = input.comment
-    this.patientInstruction = input.patientInstruction
-    this.participant = input.participant
   }
 }

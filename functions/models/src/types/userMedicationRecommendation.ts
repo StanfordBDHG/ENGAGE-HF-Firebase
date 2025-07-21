@@ -8,13 +8,11 @@
 
 import { z } from 'zod'
 import { localizedTextConverter } from './localizedText.js'
-import {
-  type FHIRReference,
-  fhirReferenceConverter,
-} from '../fhir/baseTypes/fhirReference.js'
 import { Lazy } from '../helpers/lazy.js'
 import { optionalish } from '../helpers/optionalish.js'
 import { SchemaConverter } from '../helpers/schemaConverter.js'
+import { Reference } from 'fhir/r4b.js'
+import { referenceSchema } from 'spezi-firebase-fhir'
 
 export enum UserMedicationRecommendationType {
   improvementAvailable = 'improvementAvailable',
@@ -120,12 +118,8 @@ export const userMedicationRecommendationConverter = new Lazy(
     new SchemaConverter({
       schema: z
         .object({
-          currentMedication: z
-            .lazy(() => fhirReferenceConverter.value.schema)
-            .array(),
-          recommendedMedication: optionalish(
-            z.lazy(() => fhirReferenceConverter.value.schema),
-          ),
+          currentMedication: z.lazy(() => referenceSchema).array(),
+          recommendedMedication: optionalish(z.lazy(() => referenceSchema)),
           displayInformation: z.lazy(
             () =>
               userMedicationRecommendationDisplayInformationConverter.value
@@ -152,15 +146,15 @@ export const userMedicationRecommendationConverter = new Lazy(
 export class UserMedicationRecommendation {
   // Properties
 
-  readonly currentMedication: FHIRReference[]
-  readonly recommendedMedication?: FHIRReference
+  readonly currentMedication: Reference[]
+  readonly recommendedMedication?: Reference
   readonly displayInformation: UserMedicationRecommendationDisplayInformation
 
   // Constructor
 
   constructor(input: {
-    currentMedication: FHIRReference[]
-    recommendedMedication?: FHIRReference
+    currentMedication: Reference[]
+    recommendedMedication?: Reference
     displayInformation: UserMedicationRecommendationDisplayInformation
   }) {
     this.currentMedication = input.currentMedication

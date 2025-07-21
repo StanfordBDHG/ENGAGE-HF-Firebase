@@ -7,34 +7,19 @@
 //
 
 import { z } from 'zod'
-import {
-  fhirCodeableConceptConverter,
-  type FHIRCodeableConcept,
-} from './baseTypes/fhirCodeableConcept.js'
-import {
-  FHIRResource,
-  fhirResourceConverter,
-  type FHIRResourceInput,
-} from './baseTypes/fhirElement.js'
 import { CodingSystem } from '../codes/codes.js'
 import { type MedicationReference } from '../codes/references.js'
 import { Lazy } from '../helpers/lazy.js'
 import { optionalish } from '../helpers/optionalish.js'
 import { SchemaConverter } from '../helpers/schemaConverter.js'
+import { AllergyIntolerance } from 'fhir/r4b.js'
+import { FHIRResource } from './fhirResource.js'
+import {
+  AllergyIntoleranceCriticality,
+  AllergyIntoleranceType,
+} from 'spezi-firebase-fhir'
 
-export enum FHIRAllergyIntoleranceType {
-  allergy = 'allergy',
-  intolerance = 'intolerance',
-  financial = 'financial',
-  preference = 'preference',
-}
-
-export enum FHIRAllergyIntoleranceCriticality {
-  low = 'low',
-  high = 'high',
-  unableToAssess = 'unable-to-assess',
-}
-
+/*
 export const fhirAllergyIntoleranceConverter = new Lazy(
   () =>
     new SchemaConverter({
@@ -60,16 +45,22 @@ export const fhirAllergyIntoleranceConverter = new Lazy(
       }),
     }),
 )
+    */
 
-export class FHIRAllergyIntolerance extends FHIRResource {
+export class FHIRAllergyIntolerance extends FHIRResource<AllergyIntolerance> {
   // Static Functions
 
   static create(input: {
-    type: FHIRAllergyIntoleranceType
-    criticality?: FHIRAllergyIntoleranceCriticality
+    type: AllergyIntoleranceType
+    criticality?: AllergyIntoleranceCriticality
     reference: MedicationReference
+    userId: string
   }): FHIRAllergyIntolerance {
     return new FHIRAllergyIntolerance({
+      resourceType: 'AllergyIntolerance',
+      patient: {
+        reference: `users/${input.userId}`,
+      },
       type: input.type,
       criticality: input.criticality,
       code: {
@@ -83,31 +74,9 @@ export class FHIRAllergyIntolerance extends FHIRResource {
     })
   }
 
-  // Stored Properties
-
-  readonly resourceType: string = 'AllergyIntolerance'
-  readonly type: FHIRAllergyIntoleranceType
-  readonly criticality?: FHIRAllergyIntoleranceCriticality
-  readonly code?: FHIRCodeableConcept
-
   // Computed Properties
 
   get rxNormCodes(): string[] {
-    return this.codes(this.code, { system: CodingSystem.rxNorm })
-  }
-
-  // Constructor
-
-  constructor(
-    input: FHIRResourceInput & {
-      type: FHIRAllergyIntoleranceType
-      criticality?: FHIRAllergyIntoleranceCriticality
-      code?: FHIRCodeableConcept
-    },
-  ) {
-    super(input)
-    this.type = input.type
-    this.criticality = input.criticality
-    this.code = input.code
+    return this.codes(this.data.code, { system: CodingSystem.rxNorm })
   }
 }

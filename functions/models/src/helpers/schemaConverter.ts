@@ -10,6 +10,21 @@ import { type z } from 'zod'
 import { type Lazy } from './lazy.js'
 
 export class SchemaConverter<Schema extends z.ZodTypeAny, Encoded> {
+  // Static functions
+
+  static keepingProperties<Schema extends z.ZodTypeAny>(
+    schema: Schema,
+    properties: (keyof z.infer<Schema>)[],
+  ): SchemaConverter<Schema, z.infer<Schema>> {
+    return new SchemaConverter({
+      schema: schema,
+      encode: (value) => {
+        const result = schema.parse(value)
+        return result
+      },
+    })
+  }
+
   // Properties
 
   readonly schema: Schema
