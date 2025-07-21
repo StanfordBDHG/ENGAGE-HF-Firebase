@@ -24,7 +24,7 @@ import {
 } from './baseTypes/fhirQuantity.js'
 import { CodingSystem, LoincCode } from '../codes/codes.js'
 import { QuantityUnit } from '../codes/quantityUnit.js'
-import { dateConverter } from '../helpers/dateConverter.js'
+import { dateTimeConverter } from '../helpers/dateConverter.js'
 import { Lazy } from '../helpers/lazy.js'
 import { optionalish } from '../helpers/optionalish.js'
 import { SchemaConverter } from '../helpers/schemaConverter.js'
@@ -96,8 +96,8 @@ export const fhirObservationConverter = new Lazy(
           effectivePeriod: optionalish(
             z.lazy(() => fhirPeriodConverter.value.schema),
           ),
-          effectiveDateTime: optionalish(dateConverter.schema),
-          effectiveInstant: optionalish(dateConverter.schema),
+          effectiveDateTime: optionalish(dateTimeConverter.schema),
+          effectiveInstant: optionalish(dateTimeConverter.schema),
           derivedFrom: optionalish(fhirReferenceConverter.value.schema.array()),
         })
         .transform((values) => new FHIRObservation(values)),
@@ -119,11 +119,11 @@ export const fhirObservationConverter = new Lazy(
           : null,
         effectiveDateTime:
           object.effectiveDateTime ?
-            dateConverter.encode(object.effectiveDateTime)
+            dateTimeConverter.encode(object.effectiveDateTime)
           : null,
         effectiveInstant:
           object.effectiveInstant ?
-            dateConverter.encode(object.effectiveInstant)
+            dateTimeConverter.encode(object.effectiveInstant)
           : null,
         derivedFrom:
           object.derivedFrom ?

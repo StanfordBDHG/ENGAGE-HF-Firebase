@@ -1738,8 +1738,8 @@
             "item": null
           },
           {
-            "linkId": "lab.2160-0.date",
-            "type": "date",
+            "linkId": "lab.2160-0.dateTime",
+            "type": "dateTime",
             "text": "Date:",
             "required": true,
             "unit": null,
@@ -1882,8 +1882,8 @@
             "item": null
           },
           {
-            "linkId": "lab.6298-4.date",
-            "type": "date",
+            "linkId": "lab.6298-4.dateTime",
+            "type": "dateTime",
             "text": "Date:",
             "required": true,
             "unit": null,
@@ -2026,8 +2026,8 @@
             "item": null
           },
           {
-            "linkId": "lab.8340-2.date",
-            "type": "date",
+            "linkId": "lab.8340-2.dateTime",
+            "type": "dateTime",
             "text": "Date:",
             "required": true,
             "unit": null,
@@ -2161,12 +2161,12 @@
             "answerDateTime": null,
             "answerString": null,
             "answerCoding": {
-              "id": null,
+              "id": "yes",
               "extension": null,
               "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-registration",
               "version": null,
               "code": "yes",
-              "display": null,
+              "display": "Yes",
               "userSelected": null
             },
             "answerQuantity": null,
@@ -2591,12 +2591,12 @@
             "answerDateTime": null,
             "answerString": null,
             "answerCoding": {
-              "id": null,
+              "id": "yes",
               "extension": null,
               "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-registration",
               "version": null,
               "code": "yes",
-              "display": null,
+              "display": "Yes",
               "userSelected": null
             },
             "answerQuantity": null,
@@ -3593,12 +3593,12 @@
             "answerDateTime": null,
             "answerString": null,
             "answerCoding": {
-              "id": null,
+              "id": "yes",
               "extension": null,
               "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-registration",
               "version": null,
               "code": "yes",
-              "display": null,
+              "display": "Yes",
               "userSelected": null
             },
             "answerQuantity": null,
@@ -3880,12 +3880,12 @@
             "answerDateTime": null,
             "answerString": null,
             "answerCoding": {
-              "id": null,
+              "id": "yes",
               "extension": null,
               "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-registration",
               "version": null,
               "code": "yes",
-              "display": null,
+              "display": "Yes",
               "userSelected": null
             },
             "answerQuantity": null,
@@ -4233,12 +4233,12 @@
             "answerDateTime": null,
             "answerString": null,
             "answerCoding": {
-              "id": null,
+              "id": "yes",
               "extension": null,
               "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-registration",
               "version": null,
               "code": "yes",
-              "display": null,
+              "display": "Yes",
               "userSelected": null
             },
             "answerQuantity": null,
@@ -4616,8 +4616,8 @@
             "item": null
           },
           {
-            "linkId": "appointment.date",
-            "type": "date",
+            "linkId": "appointment.dateTime",
+            "type": "dateTime",
             "text": "Date:",
             "required": true,
             "unit": null,
@@ -4801,8 +4801,8 @@
             "item": null
           },
           {
-            "linkId": "lab.2160-0.date",
-            "type": "date",
+            "linkId": "lab.2160-0.dateTime",
+            "type": "dateTime",
             "text": "Date:",
             "required": true,
             "unit": null,
@@ -4945,8 +4945,8 @@
             "item": null
           },
           {
-            "linkId": "lab.6298-4.date",
-            "type": "date",
+            "linkId": "lab.6298-4.dateTime",
+            "type": "dateTime",
             "text": "Date:",
             "required": true,
             "unit": null,
@@ -5089,8 +5089,8 @@
             "item": null
           },
           {
-            "linkId": "lab.8340-2.date",
-            "type": "date",
+            "linkId": "lab.8340-2.dateTime",
+            "type": "dateTime",
             "text": "Date:",
             "required": true,
             "unit": null,
@@ -5235,12 +5235,12 @@
             "answerDateTime": null,
             "answerString": null,
             "answerCoding": {
-              "id": null,
+              "id": "yes-changed",
               "extension": null,
               "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
               "version": null,
               "code": "yes-changed",
-              "display": null,
+              "display": "Yes, changed since last update",
               "userSelected": null
             },
             "answerQuantity": null,
@@ -5676,12 +5676,12 @@
             "answerDateTime": null,
             "answerString": null,
             "answerCoding": {
-              "id": null,
+              "id": "yes-changed",
               "extension": null,
               "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
               "version": null,
               "code": "yes-changed",
-              "display": null,
+              "display": "Yes, changed since last update",
               "userSelected": null
             },
             "answerQuantity": null,
@@ -6689,12 +6689,12 @@
             "answerDateTime": null,
             "answerString": null,
             "answerCoding": {
-              "id": null,
+              "id": "yes-changed",
               "extension": null,
               "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
               "version": null,
               "code": "yes-changed",
-              "display": null,
+              "display": "Yes, changed since last update",
               "userSelected": null
             },
             "answerQuantity": null,
@@ -6987,12 +6987,12 @@
             "answerDateTime": null,
             "answerString": null,
             "answerCoding": {
-              "id": null,
+              "id": "yes-changed",
               "extension": null,
               "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
               "version": null,
               "code": "yes-changed",
-              "display": null,
+              "display": "Yes, changed since last update",
               "userSelected": null
             },
             "answerQuantity": null,
@@ -7351,12 +7351,12 @@
             "answerDateTime": null,
             "answerString": null,
             "answerCoding": {
-              "id": null,
+              "id": "yes-changed",
               "extension": null,
               "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
               "version": null,
               "code": "yes-changed",
-              "display": null,
+              "display": "Yes, changed since last update",
               "userSelected": null
             },
             "answerQuantity": null,
@@ -7734,8 +7734,8 @@
             "item": null
           },
           {
-            "linkId": "appointment.date",
-            "type": "date",
+            "linkId": "appointment.dateTime",
+            "type": "dateTime",
             "text": "Date:",
             "required": true,
             "unit": null,
@@ -7919,8 +7919,8 @@
             "item": null
           },
           {
-            "linkId": "lab.2160-0.date",
-            "type": "date",
+            "linkId": "lab.2160-0.dateTime",
+            "type": "dateTime",
             "text": "Date:",
             "required": true,
             "unit": null,
@@ -8063,8 +8063,8 @@
             "item": null
           },
           {
-            "linkId": "lab.6298-4.date",
-            "type": "date",
+            "linkId": "lab.6298-4.dateTime",
+            "type": "dateTime",
             "text": "Date:",
             "required": true,
             "unit": null,
@@ -8207,8 +8207,8 @@
             "item": null
           },
           {
-            "linkId": "lab.8340-2.date",
-            "type": "date",
+            "linkId": "lab.8340-2.dateTime",
+            "type": "dateTime",
             "text": "Date:",
             "required": true,
             "unit": null,
@@ -8353,12 +8353,12 @@
             "answerDateTime": null,
             "answerString": null,
             "answerCoding": {
-              "id": null,
+              "id": "yes-changed",
               "extension": null,
               "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
               "version": null,
               "code": "yes-changed",
-              "display": null,
+              "display": "Yes, changed since last update",
               "userSelected": null
             },
             "answerQuantity": null,
@@ -8794,12 +8794,12 @@
             "answerDateTime": null,
             "answerString": null,
             "answerCoding": {
-              "id": null,
+              "id": "yes-changed",
               "extension": null,
               "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
               "version": null,
               "code": "yes-changed",
-              "display": null,
+              "display": "Yes, changed since last update",
               "userSelected": null
             },
             "answerQuantity": null,
@@ -9807,12 +9807,12 @@
             "answerDateTime": null,
             "answerString": null,
             "answerCoding": {
-              "id": null,
+              "id": "yes-changed",
               "extension": null,
               "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
               "version": null,
               "code": "yes-changed",
-              "display": null,
+              "display": "Yes, changed since last update",
               "userSelected": null
             },
             "answerQuantity": null,
@@ -10105,12 +10105,12 @@
             "answerDateTime": null,
             "answerString": null,
             "answerCoding": {
-              "id": null,
+              "id": "yes-changed",
               "extension": null,
               "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
               "version": null,
               "code": "yes-changed",
-              "display": null,
+              "display": "Yes, changed since last update",
               "userSelected": null
             },
             "answerQuantity": null,
@@ -10469,12 +10469,12 @@
             "answerDateTime": null,
             "answerString": null,
             "answerCoding": {
-              "id": null,
+              "id": "yes-changed",
               "extension": null,
               "system": "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
               "version": null,
               "code": "yes-changed",
-              "display": null,
+              "display": "Yes, changed since last update",
               "userSelected": null
             },
             "answerQuantity": null,
@@ -10852,8 +10852,8 @@
             "item": null
           },
           {
-            "linkId": "appointment.date",
-            "type": "date",
+            "linkId": "appointment.dateTime",
+            "type": "dateTime",
             "text": "Date:",
             "required": true,
             "unit": null,

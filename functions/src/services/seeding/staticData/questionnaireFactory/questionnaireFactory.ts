@@ -72,8 +72,8 @@ export abstract class QuestionnaireFactory<Input> {
             linkId: linkIds.description,
             text: 'Upcoming appointment',
           }),
-          this.dateItem({
-            linkId: linkIds.date,
+          this.dateTimeItem({
+            linkId: linkIds.dateTime,
             text: 'Date:',
           }),
         ],
@@ -163,8 +163,8 @@ export abstract class QuestionnaireFactory<Input> {
             minValue: input.minValue,
             maxValue: input.maxValue,
           }),
-          this.dateItem({
-            linkId: linkIds.date,
+          this.dateTimeItem({
+            linkId: linkIds.dateTime,
             text: 'Date:',
           }),
         ],
@@ -261,6 +261,39 @@ export abstract class QuestionnaireFactory<Input> {
         return text
       })
       .join('\n')
+
+    const answerOptions =
+      input.isRegistration ?
+        this.valueSetAnswerOptions({
+          system: linkIds.registrationExistsValueSet.system,
+          values: [
+            {
+              code: linkIds.registrationExistsValueSet.values.yes,
+              display: 'Yes',
+            },
+            {
+              code: linkIds.registrationExistsValueSet.values.no,
+              display: 'No',
+            },
+          ],
+        })
+      : this.valueSetAnswerOptions({
+          system: linkIds.updateExistsValueSet.system,
+          values: [
+            {
+              code: linkIds.updateExistsValueSet.values.yesChanged,
+              display: 'Yes, changed since last update',
+            },
+            {
+              code: linkIds.updateExistsValueSet.values.yesUnchanged,
+              display: 'Yes, unchanged since last update',
+            },
+            {
+              code: linkIds.updateExistsValueSet.values.no,
+              display: 'No',
+            },
+          ],
+        })
     return [
       this.pageItem({
         linkId: linkIds.page0,
@@ -273,38 +306,7 @@ export abstract class QuestionnaireFactory<Input> {
           this.radioButtonItem({
             linkId: linkIds.exists,
             text: 'Do you take any medication from the above list?',
-            answerOption:
-              input.isRegistration ?
-                this.valueSetAnswerOptions({
-                  system: linkIds.registrationExistsValueSet.system,
-                  values: [
-                    {
-                      code: linkIds.registrationExistsValueSet.values.yes,
-                      display: 'Yes',
-                    },
-                    {
-                      code: linkIds.registrationExistsValueSet.values.no,
-                      display: 'No',
-                    },
-                  ],
-                })
-              : this.valueSetAnswerOptions({
-                  system: linkIds.updateExistsValueSet.system,
-                  values: [
-                    {
-                      code: linkIds.updateExistsValueSet.values.yesChanged,
-                      display: 'Yes, changed since last update',
-                    },
-                    {
-                      code: linkIds.updateExistsValueSet.values.yesUnchanged,
-                      display: 'Yes, unchanged since last update',
-                    },
-                    {
-                      code: linkIds.updateExistsValueSet.values.no,
-                      display: 'No',
-                    },
-                  ],
-                }),
+            answerOption: answerOptions,
           }),
         ],
       }),
@@ -315,16 +317,18 @@ export abstract class QuestionnaireFactory<Input> {
           {
             question: linkIds.exists,
             operator: FHIRQuestionnaireItemEnableWhenOperator.equals,
-            answerCoding: {
-              system:
-                input.isRegistration ?
-                  linkIds.registrationExistsValueSet.system
-                : linkIds.updateExistsValueSet.system,
-              code:
-                input.isRegistration ?
-                  linkIds.registrationExistsValueSet.values.yes
-                : linkIds.updateExistsValueSet.values.yesChanged,
-            },
+            answerCoding:
+              input.isRegistration ?
+                answerOptions.find(
+                  (option) =>
+                    option.valueCoding?.code ===
+                    linkIds.registrationExistsValueSet.values.yes,
+                )?.valueCoding
+              : answerOptions.find(
+                  (option) =>
+                    option.valueCoding?.code ===
+                    linkIds.updateExistsValueSet.values.yesChanged,
+                )?.valueCoding,
           },
         ],
         item: [
@@ -383,6 +387,19 @@ export abstract class QuestionnaireFactory<Input> {
       linkId: input.linkId,
       text: input.text,
       type: FHIRQuestionnaireItemType.date,
+      required: input.required ?? true,
+    }
+  }
+
+  protected dateTimeItem(input: {
+    linkId: string
+    text: string
+    required?: boolean
+  }): FHIRQuestionnaireItem {
+    return {
+      linkId: input.linkId,
+      text: input.text,
+      type: FHIRQuestionnaireItemType.dateTime,
       required: input.required ?? true,
     }
   }
@@ -520,7 +537,7 @@ export abstract class QuestionnaireFactory<Input> {
   }
 
   protected valueSetAnswerOptions(input: {
-    system?: string
+    system: string
     values: Array<{
       id?: string
       code: string

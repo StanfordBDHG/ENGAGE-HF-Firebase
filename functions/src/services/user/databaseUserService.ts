@@ -10,6 +10,7 @@ import { setTimeout } from 'timers/promises'
 import {
   advanceDateByDays,
   dateConverter,
+  dateTimeConverter,
   type Invitation,
   type Organization,
   User,
@@ -344,7 +345,7 @@ export class DatabaseUserService implements UserService {
   async updateLastActiveDate(userId: string): Promise<void> {
     return this.databaseService.runTransaction((collections, transaction) => {
       transaction.update(collections.users.doc(userId), {
-        lastActiveDate: dateConverter.encode(new Date()),
+        lastActiveDate: dateTimeConverter.encode(new Date()),
       })
     })
   }

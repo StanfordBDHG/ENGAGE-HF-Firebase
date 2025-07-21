@@ -7,19 +7,19 @@
 //
 
 import { z } from 'zod'
-import { dateConverter } from '../helpers/dateConverter.js'
+import { dateTimeConverter } from '../helpers/dateConverter.js'
 import { SchemaConverter } from '../helpers/schemaConverter.js'
 
 export const userShareCodeConverter = new SchemaConverter({
   schema: z.object({
     code: z.string(),
     tries: z.number(),
-    expiresAt: dateConverter.schema,
+    expiresAt: dateTimeConverter.schema,
   }),
   encode: (object) => ({
     code: object.code,
     tries: object.tries,
-    expiresAt: dateConverter.encode(object.expiresAt),
+    expiresAt: dateTimeConverter.encode(object.expiresAt),
   }),
 })
 

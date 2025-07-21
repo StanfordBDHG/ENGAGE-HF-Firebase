@@ -13,7 +13,7 @@ import {
   fhirResourceConverter,
   type FHIRResourceInput,
 } from './baseTypes/fhirElement.js'
-import { dateConverter } from '../helpers/dateConverter.js'
+import { dateConverter, dateTimeConverter } from '../helpers/dateConverter.js'
 import { Lazy } from '../helpers/lazy.js'
 import { optionalish } from '../helpers/optionalish.js'
 import { SchemaConverter } from '../helpers/schemaConverter.js'
@@ -28,6 +28,7 @@ const fhirQuestionnaireResponseItemBaseConverter = new SchemaConverter({
             z.lazy(() => fhirCodingConverter.value.schema),
           ),
           valueDate: optionalish(dateConverter.schema),
+          valueDateTime: optionalish(dateTimeConverter.schema),
           valueString: optionalish(z.string()),
           valueBoolean: optionalish(z.boolean()),
           valueInteger: optionalish(z.number().int()),
@@ -49,6 +50,10 @@ const fhirQuestionnaireResponseItemBaseConverter = new SchemaConverter({
           : null,
         valueDate:
           value.valueDate ? dateConverter.encode(value.valueDate) : null,
+        valueDateTime:
+          value.valueDateTime ?
+            dateTimeConverter.encode(value.valueDateTime)
+          : null,
         valueString: value.valueString ?? null,
         valueBoolean: value.valueBoolean ?? null,
         valueInteger: value.valueInteger ?? null,
@@ -113,7 +118,7 @@ export const fhirQuestionnaireResponseConverter = new Lazy(
     new SchemaConverter({
       schema: fhirResourceConverter.value.schema
         .extend({
-          authored: optionalish(dateConverter.schema),
+          authored: optionalish(dateTimeConverter.schema),
           item: optionalish(
             z
               .lazy(() => fhirQuestionnaireResponseItemConverter.value.schema)
@@ -126,7 +131,7 @@ export const fhirQuestionnaireResponseConverter = new Lazy(
         ...fhirResourceConverter.value.encode(object),
         authored:
           object.authored !== undefined ?
-            dateConverter.encode(object.authored)
+            dateTimeConverter.encode(object.authored)
           : null,
         item:
           object.item?.map(
