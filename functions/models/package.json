@@ -22,8 +22,7 @@
   ],
   "main": "lib/index.js",
   "dependencies": {
-    "zod": "^3.23.8",
-    "spezi-firebase-fhir": "StanfordSpezi/spezi-firebase-fhir#fhir"
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/node": "^20",
