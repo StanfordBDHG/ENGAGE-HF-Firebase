@@ -544,12 +544,11 @@ export abstract class QuestionnaireFactory<Input> {
       display: string
     }>
   }): FHIRQuestionnaireItemAnswerOption[] {
-    const system = input.system ?? `urn:uuid:${randomUUID()}`
     return input.values.map((option) => ({
       valueCoding: {
         id: option.id ?? option.code,
         code: option.code,
-        system: system,
+        system: input.system,
         display: option.display,
       },
     }))
