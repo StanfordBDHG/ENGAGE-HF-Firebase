@@ -11,6 +11,10 @@
         {
           "fieldPath": "user.type",
           "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "__name__",
+          "order": "ASCENDING"
         }
       ]
     },
@@ -29,6 +33,10 @@
         {
           "fieldPath": "user.type",
           "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "__name__",
+          "order": "ASCENDING"
         }
       ]
     },
@@ -42,6 +50,10 @@
         },
         {
           "fieldPath": "type",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "__name__",
           "order": "ASCENDING"
         }
       ]
