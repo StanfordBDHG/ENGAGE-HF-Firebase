@@ -10,7 +10,7 @@ import {
   type createInvitationInputSchema,
   UserType,
 } from '@stanfordbdhg/engagehf-models'
-import { type z } from 'zod'
+import { type z } from 'zod/v4'
 import { createInvitation } from './createInvitation.js'
 import { describeWithEmulators } from '../tests/functions/testEnvironment.js'
 import { expectError } from '../tests/helpers.js'

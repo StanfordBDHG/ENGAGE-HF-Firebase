@@ -7,7 +7,6 @@
 //
 
 import {
-  type FHIRQuestionnaireItem,
   UserSex,
   type FHIRMedication,
   type FHIRQuestionnaire,
@@ -44,7 +43,7 @@ export class RegistrationQuestionnaireFactory extends QuestionnaireFactory<Regis
 
   // Helpers
 
-  private personalInformationPage(): FHIRQuestionnaireItem {
+  private personalInformationPage() {
     const linkIds = QuestionnaireLinkId.personalInformation
 
     return this.pageItem({

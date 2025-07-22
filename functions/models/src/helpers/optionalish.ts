@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { z } from 'zod'
+import { z } from 'zod/v4'
 
 export function optionalish<T extends z.ZodTypeAny>(type: T) {
   return type.or(z.null().transform(() => undefined)).optional()

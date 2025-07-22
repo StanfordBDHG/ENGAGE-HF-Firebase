@@ -11,7 +11,7 @@ import {
   type LocalizedText,
   localizedTextConverter,
 } from '@stanfordbdhg/engagehf-models'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 
 export enum HealthSummarySymptomScoreCategory {
   HIGH_STABLE_OR_IMPROVING = 'Change >-10 and KCCQ>=90',

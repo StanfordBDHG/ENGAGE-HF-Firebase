@@ -34,8 +34,7 @@
     "jsdom": "^24.1.0",
     "jspdf": "^3.0.1",
     "jspdf-autotable": "^5.0.2",
-    "twilio": "^5.4.5",
-    "zod": "^3.23.8"
+    "twilio": "^5.4.5"
   },
   "devDependencies": {
     "@firebase/rules-unit-testing": "^4.0.1",

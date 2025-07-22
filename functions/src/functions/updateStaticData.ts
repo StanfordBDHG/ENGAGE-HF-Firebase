@@ -11,7 +11,7 @@ import {
   updateStaticDataInputSchema,
   type UpdateStaticDataOutput,
 } from '@stanfordbdhg/engagehf-models'
-import { type z } from 'zod'
+import { type z } from 'zod/v4'
 import { validatedOnCall, validatedOnRequest } from './helpers.js'
 import { Flags } from '../flags.js'
 import { UserRole } from '../services/credential/credential.js'

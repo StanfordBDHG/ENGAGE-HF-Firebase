@@ -10,7 +10,7 @@ import fs from 'fs'
 import { CachingStrategy } from '@stanfordbdhg/engagehf-models'
 import { type CollectionReference } from 'firebase-admin/firestore'
 import { logger } from 'firebase-functions'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 
 export interface SeedingOptions {
   useIndicesAsKeys: boolean

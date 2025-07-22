@@ -6,6 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
+export * from 'spezi-firebase-fhir'
 export * from './codes/codes.js'
 export * from './codes/quantityUnit.js'
 export * from './codes/references.js'

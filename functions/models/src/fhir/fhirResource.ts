@@ -6,10 +6,12 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { CodeableConcept, Coding, DomainResource, Extension } from 'fhir/r4b'
-import { FHIRExtensionUrl } from '../codes/codes'
+import { CodeableConcept, Coding, DomainResource, Extension } from 'fhir/r4b.js'
+import { FHIRExtensionUrl } from '../codes/codes.js'
 
-export abstract class FHIRResource<ResourceType extends DomainResource> {
+export abstract class FHIRResource<
+  ResourceType extends DomainResource = DomainResource,
+> {
   // Properties
 
   data: ResourceType

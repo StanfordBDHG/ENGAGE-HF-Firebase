@@ -11,6 +11,8 @@ import { QuantityUnit } from '../codes/quantityUnit.js'
 import { Coding, Observation, Reference } from 'fhir/r4b.js'
 import { ObservationQuantity } from '../types/observationQuantity.js'
 import { FHIRResource } from './fhirResource.js'
+import { observationSchema } from 'spezi-firebase-fhir'
+import { FHIRSchemaConverter } from '../helpers/fhirSchemaConverter.js'
 
 export enum UserObservationCollection {
   bodyWeight = 'bodyWeightObservations',
@@ -250,3 +252,11 @@ export class FHIRObservation extends FHIRResource<Observation> {
     return result
   }
 }
+
+/*
+export const fhirObservationConverter =
+  new FHIRSchemaConverter<FHIRObservation>({
+    schema: observationSchema.transform((data) => new FHIRObservation(data)),
+    nullProperties: ['effectiveDateTime', 'effectiveInstant'],
+  })
+*/

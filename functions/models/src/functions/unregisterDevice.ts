@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { z } from 'zod'
+import { z } from 'zod/v4'
 import { UserDevicePlatform } from '../types/userDevice.js'
 
 export const unregisterDeviceInputSchema = z.object({

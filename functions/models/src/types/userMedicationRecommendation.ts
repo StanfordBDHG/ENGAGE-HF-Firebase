@@ -6,13 +6,12 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { z } from 'zod'
+import { z } from 'zod/v4'
 import { localizedTextConverter } from './localizedText.js'
 import { Lazy } from '../helpers/lazy.js'
 import { optionalish } from '../helpers/optionalish.js'
 import { SchemaConverter } from '../helpers/schemaConverter.js'
 import { Reference } from 'fhir/r4b.js'
-import { referenceSchema } from 'spezi-firebase-fhir'
 
 export enum UserMedicationRecommendationType {
   improvementAvailable = 'improvementAvailable',
@@ -113,13 +112,19 @@ export type UserMedicationRecommendationDisplayInformation = z.output<
   typeof userMedicationRecommendationDisplayInformationConverter.value.schema
 >
 
+const referenceSchema = z.object({
+  reference: z.string().optional(),
+  type: z.string().optional(),
+  display: z.string().optional(),
+})
+
 export const userMedicationRecommendationConverter = new Lazy(
   () =>
     new SchemaConverter({
       schema: z
         .object({
-          currentMedication: z.lazy(() => referenceSchema).array(),
-          recommendedMedication: optionalish(z.lazy(() => referenceSchema)),
+          currentMedication: referenceSchema.array(),
+          recommendedMedication: optionalish(referenceSchema),
           displayInformation: z.lazy(
             () =>
               userMedicationRecommendationDisplayInformationConverter.value
@@ -128,13 +133,8 @@ export const userMedicationRecommendationConverter = new Lazy(
         })
         .transform((values) => new UserMedicationRecommendation(values)),
       encode: (object) => ({
-        currentMedication: object.currentMedication.map(
-          fhirReferenceConverter.value.encode,
-        ),
-        recommendedMedication:
-          object.recommendedMedication ?
-            fhirReferenceConverter.value.encode(object.recommendedMedication)
-          : null,
+        currentMedication: object.currentMedication,
+        recommendedMedication: object.recommendedMedication ?? null,
         displayInformation:
           userMedicationRecommendationDisplayInformationConverter.value.encode(
             object.displayInformation,

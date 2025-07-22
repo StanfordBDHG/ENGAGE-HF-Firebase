@@ -20,7 +20,7 @@ import {
   MedicationReference,
 } from '@stanfordbdhg/engagehf-models'
 import { logger } from 'firebase-functions/v2'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 import { medicationClassReference } from '../../models/medicationRequestContext.js'
 import { type Document } from '../database/databaseService.js'
 import { type PatientService } from '../patient/patientService.js'

@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { z } from 'zod'
+import { z } from 'zod/v4'
 import { optionalish } from '../helpers/optionalish.js'
 import { userConverter } from '../types/user.js'
 
@@ -18,12 +18,12 @@ export const userSeedingOptionsSchema = z.object({
     displayName: z.string(),
   }),
   user: optionalish(z.lazy(() => userConverter.value.schema)),
-  collections: optionalish(z.record(z.record(z.any()))),
+  collections: optionalish(z.record(z.string(), z.record(z.string(), z.any()))),
 })
 export type UserSeedingOptions = z.output<typeof userSeedingOptionsSchema>
 
 export const customSeedingOptionsSchema = z.object({
   users: userSeedingOptionsSchema.array(),
-  firestore: optionalish(z.record(z.record(z.any()))),
+  firestore: optionalish(z.record(z.string(), z.record(z.string(), z.any()))),
 })
 export type CustomSeedingOptions = z.output<typeof customSeedingOptionsSchema>

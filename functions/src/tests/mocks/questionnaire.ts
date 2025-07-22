@@ -8,8 +8,6 @@
 
 import {
   FHIRQuestionnaire,
-  FHIRQuestionnaireItemType,
-  FHIRQuestionnairePublicationStatus,
 } from '@stanfordbdhg/engagehf-models'
 import {
   QuestionnaireId,
@@ -18,25 +16,26 @@ import {
 
 export function mockQuestionnaire(): FHIRQuestionnaire {
   return new FHIRQuestionnaire({
+    resourceType: 'Questionnaire',
     title: 'KCCQ-12',
     language: 'en-US',
-    status: FHIRQuestionnairePublicationStatus.draft,
+    status: 'draft',
     publisher: 'Stanford Biodesign Digital Health',
     url: QuestionnaireLinkId.url(QuestionnaireId.kccq),
     item: [
       {
         linkId: '73490535-203f-44b2-d1b7-7c0a786c16f9',
-        type: FHIRQuestionnaireItemType.display,
+        type: 'display',
         text: 'The following questions refer to your heart failure and how it may affect your life. Please read and complete the following questions. There are no right or wrong answers. Please mark the answer that best applies to you.\n\nThese results will be send to your care team.',
         required: false,
       },
       {
         linkId: 'c0b3bef6-1e2d-4621-d82e-b73069574dc4',
-        type: FHIRQuestionnaireItemType.group,
+        type: 'group',
         item: [
           {
             linkId: 'a459b804-35bf-4792-f1eb-0b52c4e176e1',
-            type: FHIRQuestionnaireItemType.choice,
+            type: 'choice',
             text: 'Showering/bathing',
             required: true,
             answerOption: [
@@ -93,7 +92,7 @@ export function mockQuestionnaire(): FHIRQuestionnaire {
           },
           {
             linkId: 'cf9c5031-1ed5-438a-fc7d-dc69234015a0',
-            type: FHIRQuestionnaireItemType.choice,
+            type: 'choice',
             text: 'Walking 1 block on level ground',
             required: true,
             answerOption: [
@@ -150,7 +149,7 @@ export function mockQuestionnaire(): FHIRQuestionnaire {
           },
           {
             linkId: '1fad0f81-b2a9-4c8f-9a78-4b2a5d7aef07',
-            type: FHIRQuestionnaireItemType.choice,
+            type: 'choice',
             text: 'Hurrying or jogging (as if to catch a bus)',
             required: true,
             answerOption: [
@@ -211,7 +210,7 @@ export function mockQuestionnaire(): FHIRQuestionnaire {
       },
       {
         linkId: '692bda7d-a616-43d1-8dc6-8291f6460ab2',
-        type: FHIRQuestionnaireItemType.choice,
+        type: 'choice',
         text: 'Over the past 2 weeks, how many times did you have swelling in your feet, ankles or legs when you woke up in the morning?',
         required: true,
         answerOption: [
@@ -259,7 +258,7 @@ export function mockQuestionnaire(): FHIRQuestionnaire {
       },
       {
         linkId: 'b1734b9e-1d16-4238-8556-5ae3fa0ba913',
-        type: FHIRQuestionnaireItemType.choice,
+        type: 'choice',
         text: 'Over the past 2 weeks, on average, how many times has fatigue limited your ability to do what you wanted',
         required: true,
         answerOption: [
@@ -323,7 +322,7 @@ export function mockQuestionnaire(): FHIRQuestionnaire {
       },
       {
         linkId: '57f37fb3-a0ad-4b1f-844e-3f67d9b76946',
-        type: FHIRQuestionnaireItemType.choice,
+        type: 'choice',
         text: 'Over the past 2 weeks, on average, how many times has shortness of breath limited your ability to do what you wanted',
         required: true,
         answerOption: [
@@ -387,7 +386,7 @@ export function mockQuestionnaire(): FHIRQuestionnaire {
       },
       {
         linkId: '396164df-d045-4c56-d710-513297bdc6f2',
-        type: FHIRQuestionnaireItemType.choice,
+        type: 'choice',
         text: 'Over the past 2 weeks, on average, how many times have you been forced to sleep sitting up in a chair or with at least 3 pillows to prop you up because of shortness of breath?',
         required: true,
         answerOption: [
@@ -435,7 +434,7 @@ export function mockQuestionnaire(): FHIRQuestionnaire {
       },
       {
         linkId: '75e3f62e-e37d-48a2-f4d9-af2db8922da0',
-        type: FHIRQuestionnaireItemType.choice,
+        type: 'choice',
         text: 'Over the past 2 weeks, how much has your heart failure limited your enjoyment of life?',
         required: true,
         answerOption: [
@@ -483,7 +482,7 @@ export function mockQuestionnaire(): FHIRQuestionnaire {
       },
       {
         linkId: 'fce3a16e-c6d8-4bac-8ab5-8f4aee4adc08',
-        type: FHIRQuestionnaireItemType.choice,
+        type: 'choice',
         text: 'If you had to spend the rest of your life with your heart failure the way it is right now, how would you feel about this?',
         required: true,
         answerOption: [
@@ -531,11 +530,11 @@ export function mockQuestionnaire(): FHIRQuestionnaire {
       },
       {
         linkId: '8649bc8c-f908-487d-87a4-a97106b1a4c3',
-        type: FHIRQuestionnaireItemType.group,
+        type: 'group',
         item: [
           {
             linkId: '8b022e69-127d-4447-8190-39ac645e60e1',
-            type: FHIRQuestionnaireItemType.choice,
+            type: 'choice',
             text: 'Hobbies, recreational activities',
             required: true,
             answerOption: [
@@ -591,7 +590,7 @@ export function mockQuestionnaire(): FHIRQuestionnaire {
           },
           {
             linkId: '1eee7259-da1c-4cba-80a9-e67e684573a1',
-            type: FHIRQuestionnaireItemType.choice,
+            type: 'choice',
             text: 'Working or doing household chores',
             required: true,
             answerOption: [
@@ -647,7 +646,7 @@ export function mockQuestionnaire(): FHIRQuestionnaire {
           },
           {
             linkId: '883a22a8-2f6e-4b41-84b7-0028ed543192',
-            type: FHIRQuestionnaireItemType.choice,
+            type: 'choice',
             text: 'Visiting family or friends out of your home',
             required: true,
             answerOption: [
@@ -707,7 +706,7 @@ export function mockQuestionnaire(): FHIRQuestionnaire {
       },
       {
         linkId: '24108967-2ff3-40d0-c54f-a7b97bb84d05',
-        type: FHIRQuestionnaireItemType.choice,
+        type: 'choice',
         text: 'In the last two weeks, how much has your dizziness affected you?',
         required: true,
         answerOption: [

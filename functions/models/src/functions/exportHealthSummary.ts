@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { z } from 'zod'
+import { z } from 'zod/v4'
 import { QuantityUnit } from '../codes/quantityUnit.js'
 import { optionalish, optionalishDefault } from '../helpers/optionalish.js'
 

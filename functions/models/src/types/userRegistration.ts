@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { z } from 'zod'
+import { z } from 'zod/v4'
 import { UserType } from './userType.js'
 import { dateConverter } from '../helpers/dateConverter.js'
 import { Lazy } from '../helpers/lazy.js'

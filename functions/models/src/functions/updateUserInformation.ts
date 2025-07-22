@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { z } from 'zod'
+import { z } from 'zod/v4'
 import { userAuthConverter } from '../types/userAuth.js'
 
 export const updateUserInformationInputSchema = z.object({

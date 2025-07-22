@@ -195,10 +195,14 @@ export class TriggerService {
       const reminderRangeStart = advanceDateByHours(now, -24)
       const reminderRangeEnd = advanceDateByHours(now, 24)
 
+      const newStartDate = newData?.startDate
+      const newEndDate = newData?.endDate
       if (
         newData === null ||
-        newData.start < reminderRangeStart ||
-        newData.end > reminderRangeEnd
+        newStartDate === undefined ||
+        newEndDate === undefined ||
+        newStartDate < reminderRangeStart ||
+        newEndDate > reminderRangeEnd
       ) {
         await messageService.completeMessages(
           userId,
@@ -207,7 +211,7 @@ export class TriggerService {
             message.reference ===
             `users/${userId}/appointments/${appointmentId}`,
         )
-      } else if (newData.start > now && newData.start < reminderRangeEnd) {
+      } else if (newStartDate > now && newStartDate < reminderRangeEnd) {
         const userService = this.factory.user()
         const message = UserMessage.createPreAppointment({
           creationDate: now,
@@ -401,8 +405,8 @@ export class TriggerService {
     // Drug
 
     const drugReference =
-      after?.medicationReference ?? before?.medicationReference
-    if (drugReference === undefined) {
+      after?.data.medicationReference ?? before?.data.medicationReference
+    if (!drugReference?.reference) {
       logger.error(
         `TriggerService.userMedicationRequestWritten(${userId}, ${medicationRequestId}): Neither before nor after data contains a medication reference`,
       )
@@ -837,7 +841,7 @@ export class TriggerService {
             await messageService.addMessage(
               userId,
               UserMessage.createPostAppointmentQuestionnaire({
-                creationDate: appointment.content.end,
+                creationDate: appointment.content.endDate,
                 questionnaireReference:
                   QuestionnaireReference.postAppointment_en_US,
               }),

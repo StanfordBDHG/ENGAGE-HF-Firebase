@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { z } from 'zod'
+import { z } from 'zod/v4'
 
 const phoneNumberRegex = /^\+?[1-9]\d{1,14}$/
 const codeRegex = /^\d{4,10}$/

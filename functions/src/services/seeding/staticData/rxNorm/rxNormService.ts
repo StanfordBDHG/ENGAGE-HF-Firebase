@@ -8,7 +8,6 @@
 
 import {
   CodingSystem,
-  type FHIRExtension,
   FHIRExtensionUrl,
   FHIRMedication,
   FHIRMedicationRequest,
@@ -17,7 +16,7 @@ import {
   QuantityUnit,
 } from '@stanfordbdhg/engagehf-models'
 import { logger } from 'firebase-functions'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 import { RxNormApi } from './rxNormApi.js'
 import {
   type RxNormConceptProperty,
@@ -25,6 +24,7 @@ import {
   rxTermInfo,
 } from './rxNormModels.js'
 import { capitalize } from '../../../../extensions/string.js'
+import { Extension, FhirResource, Medication } from 'fhir/r4b.js'
 
 export const medicationDailyDoseSpecificationSchema = z.object({
   drug: z.string(),
@@ -43,7 +43,7 @@ export const medicationSpecificationSchema = z.object({
   targetDailyDose: optionalish(medicationDailyDoseSpecificationSchema),
   ingredients: optionalish(z.string().array()),
   drugs: optionalish(z.string().array()),
-  fallbackTerms: optionalish(z.record(rxTermInfo)),
+  fallbackTerms: optionalish(z.record(z.string(), rxTermInfo)),
 })
 
 export type MedicationSpecification = z.output<
@@ -134,8 +134,8 @@ export class RxNormService {
                   ingredients,
                   medication.fallbackTerms?.[drug.rxcui] ?? {},
                 )
-                if (fhirDrug.id) {
-                  drugs[medication.code][fhirDrug.id] = fhirDrug
+                if (fhirDrug.data.id) {
+                  drugs[medication.code][fhirDrug.data.id] = fhirDrug
                 }
               } catch (error) {
                 logger.error(
@@ -183,9 +183,105 @@ export class RxNormService {
     targetDailyDose: MedicationDailyDoseSpecification | undefined,
     drugs: Record<string, FHIRMedication>,
   ): FHIRMedication {
-    const result = {
+    const containedResources: FhirResource[] = []
+    const extensions: Extension[] = []
+    if (medicationClassId) {
+      const localizedName = medicationClasses.get(medicationClassId)?.name
+      extensions.push({
+        url: FHIRExtensionUrl.medicationClass,
+        valueReference: {
+          reference: `medicationClasses/${medicationClassId}`,
+          display: localizedName?.localize(), // TODO: What to do about localization here? Ignore?
+        },
+      })
+    }
+    if (minimumDailyDose) {
+      const containedId = `#minimumDailyDose`
+      const containedDisplay =
+        drugs[minimumDailyDose.drug].data.code?.coding?.at(0)?.display
+      containedResources.push(
+        FHIRMedicationRequest.create({
+          id: containedId,
+          medicationReference: `medications/${rxcui}/drugs/${minimumDailyDose.drug}`,
+          medicationReferenceDisplay: containedDisplay,
+          extension: [
+            ...(drugs[minimumDailyDose.drug].data.ingredient ?? []).map(
+              (ingredient) => {
+                const value =
+                  QuantityUnit.mg.valueOf(ingredient.strength?.numerator) ?? 0
+                const quantity = QuantityUnit.mg.fhirQuantity(
+                  value *
+                    minimumDailyDose.quantity *
+                    minimumDailyDose.frequency,
+                )
+                return {
+                  url: FHIRExtensionUrl.totalDailyDose,
+                  valueQuantity: quantity,
+                }
+              },
+            ),
+          ],
+          frequencyPerDay: minimumDailyDose.frequency,
+          quantity: minimumDailyDose.quantity,
+        }).data,
+      )
+      extensions.push({
+        url: FHIRExtensionUrl.minimumDailyDose,
+        valueReference: {
+          reference: containedId,
+          display: containedDisplay,
+        },
+      })
+    }
+    if (targetDailyDose) {
+      const containedId = `#targetDailyDose`
+      const containedDisplay =
+        drugs[targetDailyDose.drug].data.code?.coding?.at(0)?.display
+      extensions.push({
+        url: FHIRExtensionUrl.targetDailyDose,
+        valueReference: {
+          reference: containedId,
+          display: containedDisplay,
+        },
+      })
+      containedResources.push(
+        FHIRMedicationRequest.create({
+          id: containedId,
+          medicationReference: `medications/${rxcui}/drugs/${targetDailyDose.drug}`,
+          medicationReferenceDisplay: containedDisplay,
+          extension: [
+            ...(drugs[targetDailyDose.drug].data.ingredient ?? []).map(
+              (ingredient) => {
+                const value =
+                  QuantityUnit.mg.valueOf(ingredient.strength?.numerator) ?? 0
+                const quantity = QuantityUnit.mg.fhirQuantity(
+                  value * targetDailyDose.quantity * targetDailyDose.frequency,
+                )
+                return {
+                  url: FHIRExtensionUrl.totalDailyDose,
+                  valueQuantity: quantity,
+                }
+              },
+            ),
+          ],
+          frequencyPerDay: targetDailyDose.frequency,
+          quantity: targetDailyDose.quantity,
+        }).data,
+      )
+    }
+
+    for (const brandName of brandNames) {
+      extensions.push({
+        url: FHIRExtensionUrl.brandName,
+        valueString: brandName,
+      })
+    }
+
+    return new FHIRMedication({
       resourceType: 'Medication',
       id: rxcui,
+      contained: containedResources,
+      extension: extensions,
       code: {
         coding: [
           {
@@ -209,82 +305,7 @@ export class RxNormService {
             },
           }))
         : undefined,
-      extension: [] as FHIRExtension[],
-    }
-    if (medicationClassId) {
-      const localizedName = medicationClasses.get(medicationClassId)?.name
-      result.extension.push({
-        url: FHIRExtensionUrl.medicationClass,
-        valueReference: {
-          reference: `medicationClasses/${medicationClassId}`,
-          display: localizedName?.localize(), // TODO: What to do about localization here? Ignore?
-        },
-      })
-    }
-    if (minimumDailyDose) {
-      result.extension.push({
-        url: FHIRExtensionUrl.minimumDailyDose,
-        valueMedicationRequest: FHIRMedicationRequest.create({
-          medicationReference: `medications/${rxcui}/drugs/${minimumDailyDose.drug}`,
-          medicationReferenceDisplay:
-            drugs[minimumDailyDose.drug].code?.coding?.at(0)?.display,
-          extension: [
-            {
-              url: FHIRExtensionUrl.totalDailyDose,
-              valueQuantities: drugs[minimumDailyDose.drug].ingredient?.map(
-                (ingredient) => {
-                  const value =
-                    QuantityUnit.mg.valueOf(ingredient.strength?.numerator) ?? 0
-                  return QuantityUnit.mg.fhirQuantity(
-                    value *
-                      minimumDailyDose.quantity *
-                      minimumDailyDose.frequency,
-                  )
-                },
-              ),
-            },
-          ],
-          frequencyPerDay: minimumDailyDose.frequency,
-          quantity: minimumDailyDose.quantity,
-        }),
-      })
-    }
-    if (targetDailyDose) {
-      result.extension.push({
-        url: FHIRExtensionUrl.targetDailyDose,
-        valueMedicationRequest: FHIRMedicationRequest.create({
-          medicationReference: `medications/${rxcui}/drugs/${targetDailyDose.drug}`,
-          medicationReferenceDisplay:
-            drugs[targetDailyDose.drug].code?.coding?.at(0)?.display,
-          extension: [
-            {
-              url: FHIRExtensionUrl.totalDailyDose,
-              valueQuantities: drugs[targetDailyDose.drug].ingredient?.map(
-                (ingredient) => {
-                  const value =
-                    QuantityUnit.mg.valueOf(ingredient.strength?.numerator) ?? 0
-                  return QuantityUnit.mg.fhirQuantity(
-                    value *
-                      targetDailyDose.quantity *
-                      targetDailyDose.frequency,
-                  )
-                },
-              ),
-            },
-          ],
-          frequencyPerDay: targetDailyDose.frequency,
-          quantity: targetDailyDose.quantity,
-        }),
-      })
-    }
-
-    for (const brandName of brandNames) {
-      result.extension.push({
-        url: FHIRExtensionUrl.brandName,
-        valueString: brandName,
-      })
-    }
-    return new FHIRMedication(result)
+    })
   }
 
   private async buildFHIRDrug(
@@ -313,6 +334,7 @@ export class RxNormService {
       throw new Error(`Missing display name for RXCUI ${rxcui}.`)
     }
     return new FHIRMedication({
+      resourceType: 'Medication',
       id: rxcui,
       code: {
         coding: [

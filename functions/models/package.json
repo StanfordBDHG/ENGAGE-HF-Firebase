@@ -22,7 +22,6 @@
   ],
   "main": "lib/index.js",
   "dependencies": {
-    "zod": "^3.23.8",
     "spezi-firebase-fhir": "file:../../../spezi-firebase/packages/spezi-firebase-fhir"
   },
   "devDependencies": {

@@ -7,7 +7,7 @@
 //
 
 import { QuantityUnit, UserSex } from '@stanfordbdhg/engagehf-models'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 import { EgfrCalculator } from './egfrCalculator.js'
 import { readCsv } from '../../../tests/helpers/csv.js'
 

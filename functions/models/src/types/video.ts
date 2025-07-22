@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { z } from 'zod'
+import { z } from 'zod/v4'
 import { localizedTextConverter, type LocalizedText } from './localizedText.js'
 import { Lazy } from '../helpers/lazy.js'
 import { SchemaConverter } from '../helpers/schemaConverter.js'

@@ -11,8 +11,8 @@ import { FHIRResource } from './fhirResource'
 import { CodingSystem, FHIRExtensionUrl } from '../codes/codes'
 import { QuantityUnit } from '../codes/quantityUnit'
 import { FHIRMedicationRequest } from './fhirMedicationRequest'
-
-
+import { FHIRSchemaConverter } from '../helpers/fhirSchemaConverter.js'
+import { medicationRequestSchema } from 'spezi-firebase-fhir'
 
 export class FHIRMedication extends FHIRResource<Medication> {
   // Computed Properties
@@ -86,3 +86,13 @@ export class FHIRMedication extends FHIRResource<Medication> {
     )?.code
   }
 }
+
+/*
+export const fhirMedicationConverter =
+  new FHIRSchemaConverter<FHIRMedicationRequest>({
+    schema: medicationRequestSchema.transform(
+      (data) => new FHIRMedicationRequest(data),
+    ),
+    nullProperties: [],
+  })
+*/

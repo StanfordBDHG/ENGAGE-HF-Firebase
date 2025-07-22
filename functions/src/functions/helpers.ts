@@ -17,7 +17,7 @@ import {
   onRequest,
   type Request,
 } from 'firebase-functions/v2/https'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 
 export const serviceAccount = `cloudfunctionsserviceaccount@${process.env.GCLOUD_PROJECT}.iam.gserviceaccount.com`
 

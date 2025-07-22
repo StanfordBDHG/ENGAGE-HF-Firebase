@@ -6,46 +6,17 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { z } from 'zod'
 import { CodingSystem } from '../codes/codes.js'
 import { type MedicationReference } from '../codes/references.js'
-import { Lazy } from '../helpers/lazy.js'
-import { optionalish } from '../helpers/optionalish.js'
-import { SchemaConverter } from '../helpers/schemaConverter.js'
 import { AllergyIntolerance } from 'fhir/r4b.js'
 import { FHIRResource } from './fhirResource.js'
 import {
   AllergyIntoleranceCriticality,
+  allergyIntoleranceSchema,
   AllergyIntoleranceType,
 } from 'spezi-firebase-fhir'
-
-/*
-export const fhirAllergyIntoleranceConverter = new Lazy(
-  () =>
-    new SchemaConverter({
-      schema: fhirResourceConverter.value.schema
-        .extend({
-          type: z.nativeEnum(FHIRAllergyIntoleranceType),
-          criticality: optionalish(
-            z.nativeEnum(FHIRAllergyIntoleranceCriticality),
-          ),
-          code: optionalish(
-            z.lazy(() => fhirCodeableConceptConverter.value.schema),
-          ),
-        })
-        .transform((values) => new FHIRAllergyIntolerance(values)),
-      encode: (object) => ({
-        ...fhirResourceConverter.value.encode(object),
-        type: object.type,
-        criticality: object.criticality ?? null,
-        code:
-          object.code ?
-            fhirCodeableConceptConverter.value.encode(object.code)
-          : null,
-      }),
-    }),
-)
-    */
+import { FHIRSchemaConverter } from '../helpers/fhirSchemaConverter.js'
+import { ZodType } from 'zod/v4'
 
 export class FHIRAllergyIntolerance extends FHIRResource<AllergyIntolerance> {
   // Static Functions
@@ -80,3 +51,14 @@ export class FHIRAllergyIntolerance extends FHIRResource<AllergyIntolerance> {
     return this.codes(this.data.code, { system: CodingSystem.rxNorm })
   }
 }
+
+const schema: ZodType<AllergyIntolerance> = allergyIntoleranceSchema
+/*
+export const allergyIntoleranceConverter =
+  new FHIRSchemaConverter<FHIRAllergyIntolerance>({
+    schema: allergyIntoleranceSchema.transform(
+      (data) => new FHIRAllergyIntolerance(data),
+    ),
+    nullProperties: [],
+  })
+    */

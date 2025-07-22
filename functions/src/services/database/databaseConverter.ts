@@ -13,7 +13,7 @@ import {
   type FirestoreDataConverter,
 } from 'firebase-admin/firestore'
 import { logger } from 'firebase-functions'
-import { type z } from 'zod'
+import { type z } from 'zod/v4'
 
 export class DatabaseConverter<Schema extends z.ZodTypeAny, Encoded>
   implements FirestoreDataConverter<z.output<Schema>>
