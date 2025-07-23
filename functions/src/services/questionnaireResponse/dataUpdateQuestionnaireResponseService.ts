@@ -60,7 +60,12 @@ export class DataUpdateQuestionnaireResponseService extends QuestionnaireRespons
       QuestionnaireLinkId.url(QuestionnaireId.dataUpdate),
       postAppointmentUrl,
     ]
-    if (!urls.includes(response.content.questionnaire)) return false
+    if (!urls.includes(response.content.questionnaire)) {
+      logger.info(
+        `${typeof this}.handle(${userId}): Url ${response.content.questionnaire} is not a data update / post appointment questionnaire, skipping.`,
+      )
+      return false
+    }
 
     let user: User | null
     try {
@@ -85,15 +90,24 @@ export class DataUpdateQuestionnaireResponseService extends QuestionnaireRespons
       patientService: this.patientService,
     })
 
-    const appointment = this.extractAppointment(response.content)
+    const appointment = this.extractAppointment(userId, response.content)
+    logger.info(
+      `${typeof this}.handle(${userId}): Extracted appointment: ${appointment !== null}`,
+    )
     if (appointment !== null) {
       await this.patientService.createAppointment(userId, appointment)
+      logger.info(
+        `${typeof this}.handle(${userId}): Successfully created appointment`,
+      )
     }
 
     if (
       options.isNew &&
       response.content.questionnaire === postAppointmentUrl
     ) {
+      logger.info(
+        `${typeof this}.handle(${userId}): About to complete post appointment questionnaire messages.`,
+      )
       await this.messageService.completeMessages(
         userId,
         UserMessageType.postAppointmentQuestionnaire,

@@ -20,6 +20,7 @@ import {
 } from '../seeding/staticData/questionnaireFactory/questionnaireLinkIds.js'
 import { type UserService } from '../user/userService.js'
 import { type EgfrCalculator } from './egfr/egfrCalculator.js'
+import { logger } from 'firebase-functions/v2'
 
 export class RegistrationQuestionnaireResponseService extends QuestionnaireResponseService {
   // Properties
@@ -52,11 +53,22 @@ export class RegistrationQuestionnaireResponseService extends QuestionnaireRespo
     options: { isNew: boolean },
   ): Promise<boolean> {
     const urls = [QuestionnaireLinkId.url(QuestionnaireId.registration)]
-    if (!urls.includes(response.content.questionnaire)) return false
+    if (!urls.includes(response.content.questionnaire)) {
+      logger.info(
+        `${typeof this}.handle(${userId}): Url ${response.content.questionnaire} is not a registration questionnaire, skipping.`,
+      )
+      return false
+    }
 
     const personalInfo = this.extractPersonalInfo(response.content)
+    logger.info(
+      `${typeof this}.handle(${userId}): Extracted personal info: ${personalInfo !== null}`,
+    )
     if (personalInfo !== null) {
       await this.userService.updatePersonalInfo(userId, personalInfo)
+      logger.info(
+        `${typeof this}.handle(${userId}): Successfully updated personal info.`,
+      )
     }
 
     await this.handleLabValues({
@@ -74,12 +86,21 @@ export class RegistrationQuestionnaireResponseService extends QuestionnaireRespo
       patientService: this.patientService,
     })
 
-    const appointment = this.extractAppointment(response.content)
+    const appointment = this.extractAppointment(userId, response.content)
+    logger.info(
+      `${typeof this}.handle(${userId}): Extracted appointment: ${appointment !== null}`,
+    )
     if (appointment !== null) {
       await this.patientService.createAppointment(userId, appointment)
+      logger.info(
+        `${typeof this}.handle(${userId}): Successfully created appointment`,
+      )
     }
 
     if (options.isNew) {
+      logger.info(
+        `${typeof this}.handle(${userId}): About to complete registration questionnaire messages.`,
+      )
       await this.messageService.completeMessages(
         userId,
         UserMessageType.registrationQuestionnaire,
