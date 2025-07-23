@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { z } from 'zod/v4'
+import { z } from 'zod'
 import { SchemaConverter } from './schemaConverter.js'
 
 export const dateConverter = new SchemaConverter({
@@ -15,7 +15,7 @@ export const dateConverter = new SchemaConverter({
       const date = new Date(string)
       if (isNaN(date.getTime())) {
         context.addIssue({
-          code: z.ZodIssueCode.custom,
+          code: 'custom',
           message: 'Invalid date',
         })
         return z.NEVER
@@ -23,7 +23,7 @@ export const dateConverter = new SchemaConverter({
       return date
     } catch (error) {
       context.addIssue({
-        code: z.ZodIssueCode.custom,
+        code: 'custom',
         message: String(error),
       })
       return z.NEVER
@@ -38,7 +38,7 @@ export const dateTimeConverter = new SchemaConverter({
       const date = new Date(string)
       if (isNaN(date.getTime())) {
         context.addIssue({
-          code: z.ZodIssueCode.custom,
+          code: 'custom',
           message: 'Invalid date',
         })
         return z.NEVER
@@ -46,7 +46,7 @@ export const dateTimeConverter = new SchemaConverter({
       return date
     } catch (error) {
       context.addIssue({
-        code: z.ZodIssueCode.custom,
+        code: 'custom',
         message: String(error),
       })
       return z.NEVER

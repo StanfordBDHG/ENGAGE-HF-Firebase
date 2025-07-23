@@ -6,10 +6,10 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { type z } from 'zod/v4'
+import { type z, type ZodType } from 'zod'
 import { type Lazy } from './lazy.js'
 
-export class SchemaConverter<Schema extends z.ZodTypeAny, Encoded> {
+export class SchemaConverter<Schema extends ZodType, Encoded> {
   // Properties
 
   readonly schema: Schema

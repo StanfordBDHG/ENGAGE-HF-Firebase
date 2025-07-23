@@ -6,11 +6,10 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { Appointment } from 'fhir/r4b.js'
+import { type Appointment } from 'fhir/r4b.js'
 import { FHIRResource } from './fhirResource.js'
-import { AppointmentStatus } from '@stanfordspezi/spezi-firebase-fhir'
-import { compactMap } from '../helpers/array.js'
 import { FHIRExtensionUrl } from '../codes/codes.js'
+import { compactMap } from '../helpers/array.js'
 
 export class FHIRAppointment extends FHIRResource<Appointment> {
   // Static Functions
@@ -18,7 +17,7 @@ export class FHIRAppointment extends FHIRResource<Appointment> {
   static create(input: {
     userId: string
     created: Date
-    status?: AppointmentStatus
+    status?: Appointment['status']
     start: Date
     durationInMinutes: number
   }): FHIRAppointment {
@@ -47,16 +46,16 @@ export class FHIRAppointment extends FHIRResource<Appointment> {
     return this.data.start ? new Date(this.data.start) : undefined
   }
 
-  set startDate(date: Date) {
-    this.data.start = date.toISOString()
+  set startDate(date: Date | undefined) {
+    this.data.start = date?.toISOString()
   }
 
   get endDate(): Date | undefined {
     return this.data.end ? new Date(this.data.end) : undefined
   }
 
-  set endDate(date: Date) {
-    this.data.end = date.toISOString()
+  set endDate(date: Date | undefined) {
+    this.data.end = date?.toISOString()
   }
 
   get providerNames(): string[] {

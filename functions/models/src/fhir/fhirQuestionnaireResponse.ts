@@ -6,12 +6,23 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { QuestionnaireResponse, QuestionnaireResponseItem } from 'fhir/r4b.js'
+import {
+  type QuestionnaireResponse,
+  type QuestionnaireResponseItem,
+} from 'fhir/r4b.js'
 import { FHIRResource } from './fhirResource.js'
-import { FHIRSchemaConverter } from '../helpers/fhirSchemaConverter.js'
-import { questionnaireResponseSchema } from '@stanfordspezi/spezi-firebase-fhir'
 
 export class FHIRQuestionnaireResponse extends FHIRResource<QuestionnaireResponse> {
+  // Computed Properties
+
+  get authoredDate(): Date | undefined {
+    return this.data.authored ? new Date(this.data.authored) : undefined
+  }
+
+  set authoredDate(date: Date | undefined) {
+    this.data.authored = date?.toISOString()
+  }
+
   // Methods - Response items from path
 
   responseItem(linkIdPath: string[]): QuestionnaireResponseItem | null {
@@ -99,13 +110,3 @@ export class FHIRQuestionnaireResponse extends FHIRResource<QuestionnaireRespons
     return items
   }
 }
-
-/*
-export const fhirQuestionnaireResponseConverter =
-  new FHIRSchemaConverter<FHIRQuestionnaireResponse>({
-    schema: questionnaireResponseSchema.transform(
-      (data) => new FHIRQuestionnaireResponse(data),
-    ),
-    nullProperties: ['authored'],
-  })
-*/

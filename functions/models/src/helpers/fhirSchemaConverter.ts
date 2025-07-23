@@ -6,10 +6,13 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { ZodType } from 'zod/v4'
-import { FHIRResource } from '../fhir/fhirResource.js'
+import { type DomainResource } from 'fhir/r4b.js'
+import { type ZodType } from 'zod'
+import { type FHIRResource } from '../fhir/fhirResource.js'
 
-export class FHIRSchemaConverter<FHIRResourceType extends FHIRResource> {
+export class FHIRSchemaConverter<
+  FHIRResourceType extends FHIRResource<DomainResource>,
+> {
   // Properties
 
   readonly schema: ZodType<FHIRResourceType>
@@ -30,32 +33,32 @@ export class FHIRSchemaConverter<FHIRResourceType extends FHIRResource> {
   // Methods
 
   decode(input: unknown) {
-    return this.schema.parse(this.removeNulls(input))
+    return this.schema.parse(removeNulls(input))
   }
 
   encode(input: FHIRResourceType): unknown {
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */ /* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */
     const returnValue = input.data as any
 
     for (const key of this.nullProperties) {
+      /* eslint-disable-next-line @typescript-eslint/no-unsafe-member-access */ /* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */
       returnValue[key] = returnValue[key] ?? null
     }
 
     return returnValue
   }
+}
 
-  // Helpers
-
-  private removeNulls(value: unknown): unknown {
-    if (Array.isArray(value)) {
-      return value.map(this.removeNulls).filter((v) => v !== null)
-    } else if (value !== null && typeof value === 'object') {
-      return Object.fromEntries(
-        Object.entries(value)
-          .filter(([, v]) => v !== null)
-          .map(([k, v]) => [k, this.removeNulls(v)]),
-      )
-    } else {
-      return value
-    }
+function removeNulls(value: unknown): unknown {
+  if (Array.isArray(value)) {
+    return value.map(removeNulls).filter((v) => v !== null)
+  } else if (value !== null && typeof value === 'object') {
+    return Object.fromEntries(
+      Object.entries(value)
+        .filter(([, v]) => v !== null)
+        .map(([k, v]) => [k, removeNulls(v)]),
+    )
+  } else {
+    return value
   }
 }

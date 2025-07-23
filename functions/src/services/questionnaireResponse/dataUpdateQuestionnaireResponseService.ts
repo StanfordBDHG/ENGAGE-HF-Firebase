@@ -60,9 +60,9 @@ export class DataUpdateQuestionnaireResponseService extends QuestionnaireRespons
       QuestionnaireLinkId.url(QuestionnaireId.dataUpdate),
       postAppointmentUrl,
     ]
-    if (!urls.includes(response.content.questionnaire)) {
+    if (!urls.includes(response.content.data.questionnaire ?? '')) {
       logger.info(
-        `${this.constructor.name}.handle(${userId}): Url ${response.content.questionnaire} is not a data update / post appointment questionnaire, skipping.`,
+        `${this.constructor.name}.handle(${userId}): Url ${response.content.data.questionnaire} is not a data update / post appointment questionnaire, skipping.`,
       )
       return false
     }
@@ -103,7 +103,7 @@ export class DataUpdateQuestionnaireResponseService extends QuestionnaireRespons
 
     if (
       options.isNew &&
-      response.content.questionnaire === postAppointmentUrl
+      response.content.data.questionnaire === postAppointmentUrl
     ) {
       logger.info(
         `${this.constructor.name}.handle(${userId}): About to complete post appointment questionnaire messages.`,

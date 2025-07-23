@@ -7,7 +7,6 @@
 //
 
 import {
-  AllergyIntoleranceType,
   CachingStrategy,
   DrugReference,
   FHIRAllergyIntolerance,
@@ -21,6 +20,7 @@ import { mockRecommendationVitals } from '../../tests/mocks/recommendationVitals
 import { setupMockFirebase } from '../../tests/setup.js'
 import { getServiceFactory } from '../factory/getServiceFactory.js'
 import { type MedicationService } from '../medication/medicationService.js'
+import { AllergyIntolerance } from 'fhir/r4b.js'
 
 describe('RecommendationService', () => {
   let medicationService: MedicationService
@@ -286,7 +286,7 @@ function getMedicationRequest(
 
 function getContraindications(
   field: string,
-  type: AllergyIntoleranceType | undefined,
+  type: AllergyIntolerance['type'] | undefined,
 ): FHIRAllergyIntolerance[] {
   switch (field.trim().toLowerCase().split(' ').join('')) {
     case 'none':

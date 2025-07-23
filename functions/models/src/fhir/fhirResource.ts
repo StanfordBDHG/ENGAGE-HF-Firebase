@@ -6,12 +6,15 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { CodeableConcept, Coding, DomainResource, Extension } from 'fhir/r4b.js'
-import { FHIRExtensionUrl } from '../codes/codes.js'
+import {
+  type CodeableConcept,
+  type Coding,
+  type DomainResource,
+  type Extension,
+} from 'fhir/r4b.js'
+import { type FHIRExtensionUrl } from '../codes/codes.js'
 
-export abstract class FHIRResource<
-  ResourceType extends DomainResource = DomainResource,
-> {
+export abstract class FHIRResource<ResourceType extends DomainResource> {
   // Properties
 
   data: ResourceType
@@ -52,10 +55,9 @@ export abstract class FHIRResource<
     )
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-parameters
   containedResource<T extends DomainResource>(id: string): T | undefined {
-    return this.data.contained?.find((resource) => resource.id === id) as
-      | T
-      | undefined
+    return this.data.contained?.find((resource) => resource.id === id) as T
   }
 
   extensionsWithUrl(url: FHIRExtensionUrl): Extension[] {

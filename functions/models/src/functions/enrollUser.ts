@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { z } from 'zod/v4'
+import { z } from 'zod'
 
 export const enrollUserInputSchema = z.object({
   invitationCode: z.string().regex(/^[A-Z0-9]{8,16}$/),

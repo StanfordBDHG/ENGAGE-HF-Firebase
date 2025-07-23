@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { z } from 'zod/v4'
+import { z } from 'zod'
 import { Lazy } from '../helpers/lazy.js'
 import { optionalish } from '../helpers/optionalish.js'
 import { SchemaConverter } from '../helpers/schemaConverter.js'
@@ -22,7 +22,7 @@ export const userDeviceConverter = new Lazy(
       schema: z
         .object({
           notificationToken: z.string(),
-          platform: z.nativeEnum(UserDevicePlatform),
+          platform: z.enum(UserDevicePlatform),
           osVersion: optionalish(z.string()),
           appVersion: optionalish(z.string()),
           appBuild: optionalish(z.string()),

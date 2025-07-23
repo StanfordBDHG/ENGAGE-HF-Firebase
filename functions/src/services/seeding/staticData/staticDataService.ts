@@ -9,17 +9,18 @@
 import {
   CachingStrategy,
   type FHIRMedication,
+  fhirMedicationConverter,
   type FHIRQuestionnaire,
+  fhirQuestionnaireConverter,
   localizedTextConverter,
   type MedicationClass,
   medicationClassConverter,
   organizationConverter,
   QuestionnaireReference,
-  questionnaireSchema,
   Video,
   VideoSection,
 } from '@stanfordbdhg/engagehf-models'
-import { z } from 'zod/v4'
+import { z } from 'zod'
 import {
   medicationClassSpecificationSchema,
   type RxNormService,
@@ -166,7 +167,11 @@ export class StaticDataService extends SeedingService {
 
     return this.cache(
       strategy,
-      () => this.readJSONRecord(questionnairesFile, fhirQuestionnaireConverter.schema),
+      () =>
+        this.readJSONRecord(
+          questionnairesFile,
+          fhirQuestionnaireConverter.schema,
+        ),
       async () => this.generateQuestionnaires(),
       (result) =>
         this.writeJSON(
@@ -226,11 +231,11 @@ export class StaticDataService extends SeedingService {
       () => ({
         medications: this.readJSONRecord(
           medicationsFile,
-          medicationSchema.value.schema,
+          fhirMedicationConverter.schema,
         ),
         drugs: this.readJSONRecord(
           drugsFile,
-          z.record(z.string(), fhirMedicationConverter.value.schema),
+          z.record(z.string(), fhirMedicationConverter.schema),
         ),
       }),
       async () => {

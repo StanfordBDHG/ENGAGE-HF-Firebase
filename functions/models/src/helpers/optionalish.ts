@@ -6,21 +6,19 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { z } from 'zod/v4'
+import { z, type ZodType } from 'zod'
 
-export function optionalish<T extends z.ZodTypeAny>(type: T) {
+export function optionalish<T extends ZodType>(type: T) {
   return type.or(z.null().transform(() => undefined)).optional()
 }
 
-export function optionalishDefault<T extends z.ZodTypeAny>(
+export function optionalishDefault<T extends ZodType>(
   type: T,
   defaultValue: z.output<T>,
 ) {
-  return (
-    type
-      .or(z.null().transform(() => undefined))
-      .optional()
-      /* eslint-disable-next-line @typescript-eslint/no-unsafe-return */
-      .transform((value) => value ?? defaultValue)
-  )
+  return type
+    .or(z.null().transform(() => undefined))
+    .optional()
+
+    .transform((value) => value ?? defaultValue)
 }

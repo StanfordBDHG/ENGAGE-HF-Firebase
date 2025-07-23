@@ -6,8 +6,8 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { Quantity } from 'fhir/r4b.js'
-import { ObservationQuantity } from '../types/observationQuantity.js'
+import { type Quantity } from 'fhir/r4b.js'
+import { type ObservationQuantity } from '../types/observationQuantity.js'
 
 export class QuantityUnit {
   // Static Properties

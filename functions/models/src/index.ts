@@ -6,12 +6,12 @@
 // SPDX-License-Identifier: MIT
 //
 
-export * from '@stanfordspezi/spezi-firebase-fhir'
 export * from './codes/codes.js'
 export * from './codes/quantityUnit.js'
 export * from './codes/references.js'
 export * from './fhir/fhirAllergyIntolerance.js'
 export * from './fhir/fhirAppointment.js'
+export * from './fhir/fhirConverters.js'
 export * from './fhir/fhirMedication.js'
 export * from './fhir/fhirMedicationRequest.js'
 export * from './fhir/fhirObservation.js'

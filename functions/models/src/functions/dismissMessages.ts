@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { z } from 'zod/v4'
+import { z } from 'zod'
 import { optionalish, optionalishDefault } from '../helpers/optionalish.js'
 
 export const dismissMessagesInputSchema = z.object({

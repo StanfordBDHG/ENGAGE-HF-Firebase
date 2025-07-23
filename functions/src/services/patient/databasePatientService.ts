@@ -64,8 +64,8 @@ export class DatabasePatientService implements PatientService {
     )
 
     return result.filter((appointment) => {
-      const start = new Date(appointment.content.start)
-      return start >= fromDate && start < toDate
+      const start = appointment.content.startDate
+      return start && start >= fromDate && start < toDate
     })
   }
 
@@ -135,15 +135,15 @@ export class DatabasePatientService implements PatientService {
           // We are assuming here that there will only ever be a single medication request per medicationReference!
           const equivalentDoc = documents.find(
             (doc) =>
-              doc.content.medicationReference?.reference ===
-              value.medicationReference?.reference,
+              doc.content.data.medicationReference?.reference ===
+              value.data.medicationReference?.reference,
           )
           if (equivalentDoc === undefined) {
             diffs.push({ successor: value })
           } else if (
             !isDeepStrictEqual(
-              equivalentDoc.content.dosageInstruction,
-              value.dosageInstruction,
+              equivalentDoc.content.data.dosageInstruction,
+              value.data.dosageInstruction,
             )
           ) {
             diffs.push({ predecessor: equivalentDoc, successor: value })
@@ -226,7 +226,7 @@ export class DatabasePatientService implements PatientService {
   async getBloodPressureObservations(
     userId: string,
     cutoffDate: Date,
-  ): Promise<[Observation[], Observation[]]> {
+  ): Promise<[ObservationQuantity[], ObservationQuantity[]]> {
     const observations = await this.databaseService.getQuery<FHIRObservation>(
       (collections) =>
         collections
@@ -250,7 +250,7 @@ export class DatabasePatientService implements PatientService {
     userId: string,
     unit: QuantityUnit,
     cutoffDate: Date,
-  ): Promise<Observation[]> {
+  ): Promise<ObservationQuantity[]> {
     const observations = await this.databaseService.getQuery<FHIRObservation>(
       (collections) =>
         collections
@@ -266,7 +266,7 @@ export class DatabasePatientService implements PatientService {
   async getHeartRateObservations(
     userId: string,
     cutoffDate: Date,
-  ): Promise<Observation[]> {
+  ): Promise<ObservationQuantity[]> {
     const observations = await this.databaseService.getQuery<FHIRObservation>(
       (collections) =>
         collections
@@ -282,7 +282,7 @@ export class DatabasePatientService implements PatientService {
 
   async getMostRecentCreatinineObservation(
     userId: string,
-  ): Promise<Observation | undefined> {
+  ): Promise<ObservationQuantity | undefined> {
     const result = await this.databaseService.getQuery<FHIRObservation>(
       (collections) =>
         collections
@@ -295,7 +295,7 @@ export class DatabasePatientService implements PatientService {
 
   async getMostRecentDryWeightObservation(
     userId: string,
-  ): Promise<Observation | undefined> {
+  ): Promise<ObservationQuantity | undefined> {
     const result = await this.databaseService.getQuery<FHIRObservation>(
       (collections) =>
         collections
@@ -308,7 +308,7 @@ export class DatabasePatientService implements PatientService {
 
   async getMostRecentEstimatedGlomerularFiltrationRateObservation(
     userId: string,
-  ): Promise<Observation | undefined> {
+  ): Promise<ObservationQuantity | undefined> {
     const result = await this.databaseService.getQuery<FHIRObservation>(
       (collections) =>
         collections
@@ -321,7 +321,7 @@ export class DatabasePatientService implements PatientService {
 
   async getMostRecentPotassiumObservation(
     userId: string,
-  ): Promise<Observation | undefined> {
+  ): Promise<ObservationQuantity | undefined> {
     const result = await this.databaseService.getQuery<FHIRObservation>(
       (collections) =>
         collections
@@ -335,11 +335,11 @@ export class DatabasePatientService implements PatientService {
   async createObservations(
     userId: string,
     values: Array<{
-      observation: Observation
+      observation: ObservationQuantity
       loincCode: LoincCode
       collection: UserObservationCollection
     }>,
-    reference: FHIRReference | null,
+    reference: Reference | null,
   ): Promise<void> {
     await this.databaseService.runTransaction((collections, transaction) => {
       for (const value of values) {

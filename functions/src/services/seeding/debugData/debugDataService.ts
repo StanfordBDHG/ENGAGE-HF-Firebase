@@ -24,6 +24,7 @@ import {
   userSeedingOptionsSchema,
   VideoReference,
   UserObservationCollection,
+  fhirQuestionnaireConverter,
 } from '@stanfordbdhg/engagehf-models'
 import { type Auth } from 'firebase-admin/auth'
 import { type CollectionReference } from 'firebase-admin/firestore'
@@ -405,7 +406,7 @@ export class DebugDataService extends SeedingService {
   async seedUserQuestionnaireResponses(userId: string, date: Date) {
     const questionnaire = this.readJSONRecord(
       '../questionnaires.json',
-      fhirQuestionnaireConverter.value.schema,
+      fhirQuestionnaireConverter.schema,
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     )[QuestionnaireReference.kccq_en_US.split('/').at(-1)!]
 
@@ -459,7 +460,7 @@ export class DebugDataService extends SeedingService {
 
     const values = chunks(randomNumbers, 13).map((chunk, index) =>
       createKccqQuestionnaireResponse({
-        questionnaire: questionnaire.url ?? '',
+        questionnaire: questionnaire.data.url ?? '',
         questionnaireResponse: index.toString(),
         date: advanceDateByDays(date, -(index * 14) - 2),
         answer1a: Math.floor(1 + chunk[0] * 6),

@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { z } from 'zod/v4'
+import { z } from 'zod'
 import { updateStaticDataInputSchema } from './updateStaticData.js'
 import { dateTimeConverter } from '../helpers/dateConverter.js'
 import { optionalish, optionalishDefault } from '../helpers/optionalish.js'
@@ -36,11 +36,11 @@ export enum UserDebugDataComponent {
 export const defaultSeedInputSchema = z.object({
   date: dateTimeConverter.schema.default(new Date()),
   only: optionalishDefault(
-    z.nativeEnum(DebugDataComponent).array(),
+    z.enum(DebugDataComponent).array(),
     Object.values(DebugDataComponent),
   ),
   onlyUserCollections: optionalishDefault(
-    z.nativeEnum(UserDebugDataComponent).array(),
+    z.enum(UserDebugDataComponent).array(),
     Object.values(UserDebugDataComponent),
   ),
   staticData: optionalish(updateStaticDataInputSchema),
@@ -49,7 +49,7 @@ export const defaultSeedInputSchema = z.object({
       .object({
         userId: z.string(),
         only: optionalishDefault(
-          z.nativeEnum(UserDebugDataComponent).array(),
+          z.enum(UserDebugDataComponent).array(),
           Object.values(UserDebugDataComponent),
         ),
       })

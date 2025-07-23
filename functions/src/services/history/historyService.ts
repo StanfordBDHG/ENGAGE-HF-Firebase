@@ -12,7 +12,7 @@ import {
 } from '@stanfordbdhg/engagehf-models'
 import { type DocumentSnapshot } from 'firebase-admin/firestore'
 import { type Change } from 'firebase-functions'
-import { z } from 'zod/v4'
+import { z } from 'zod'
 
 export const historyChangeItemConverter = new SchemaConverter({
   schema: z.object({

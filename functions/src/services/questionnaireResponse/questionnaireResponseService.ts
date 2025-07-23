@@ -19,7 +19,7 @@ import {
   MedicationReference,
 } from '@stanfordbdhg/engagehf-models'
 import { logger } from 'firebase-functions/v2'
-import { z } from 'zod/v4'
+import { z } from 'zod'
 import { medicationClassReference } from '../../models/medicationRequestContext.js'
 import { type Document } from '../database/databaseService.js'
 import { type PatientService } from '../patient/patientService.js'
@@ -84,7 +84,7 @@ export abstract class QuestionnaireResponseService {
 
       const sexCode = response.leafResponseItem(linkIds.sex)?.answer?.at(0)
         ?.valueCoding?.code
-      const sex = z.nativeEnum(UserSex).parse(sexCode)
+      const sex = z.enum(UserSex).parse(sexCode)
       return {
         dateOfBirth: new Date(dateOfBirth),
         sex,

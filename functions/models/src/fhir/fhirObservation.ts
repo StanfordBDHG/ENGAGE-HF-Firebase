@@ -6,13 +6,11 @@
 // SPDX-License-Identifier: MIT
 //
 
+import { type Coding, type Observation, type Reference } from 'fhir/r4b.js'
+import { FHIRResource } from './fhirResource.js'
 import { CodingSystem, LoincCode } from '../codes/codes.js'
 import { QuantityUnit } from '../codes/quantityUnit.js'
-import { Coding, Observation, Reference } from 'fhir/r4b.js'
-import { ObservationQuantity } from '../types/observationQuantity.js'
-import { FHIRResource } from './fhirResource.js'
-import { observationSchema } from '@stanfordspezi/spezi-firebase-fhir'
-import { FHIRSchemaConverter } from '../helpers/fhirSchemaConverter.js'
+import { type ObservationQuantity } from '../types/observationQuantity.js'
 
 export class FHIRObservation extends FHIRResource<Observation> {
   // Static Functions
@@ -242,11 +240,3 @@ export class FHIRObservation extends FHIRResource<Observation> {
     return result
   }
 }
-
-/*
-export const fhirObservationConverter =
-  new FHIRSchemaConverter<FHIRObservation>({
-    schema: observationSchema.transform((data) => new FHIRObservation(data)),
-    nullProperties: ['effectiveDateTime', 'effectiveInstant'],
-  })
-*/

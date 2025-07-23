@@ -7,8 +7,6 @@
 //
 
 import {
-  AllergyIntoleranceCriticality,
-  AllergyIntoleranceType,
   type FHIRAllergyIntolerance,
   MedicationClassReference,
   MedicationReference,
@@ -19,6 +17,7 @@ import {
   type ContraindicationService,
 } from './contraindicationService.js'
 import { medicationClassReference } from '../../models/medicationRequestContext.js'
+import { AllergyIntolerance } from 'fhir/r4b.js'
 
 interface ContraindicationRecord {
   category: ContraindicationCategory
@@ -120,8 +119,8 @@ export class DefaultContraindicationService implements ContraindicationService {
 
   private record(input: {
     medicationReference: MedicationReference
-    type?: AllergyIntoleranceType
-    criticality?: AllergyIntoleranceCriticality
+    type?: AllergyIntolerance['type']
+    criticality?: AllergyIntolerance['criticality']
   }): ContraindicationRecord {
     const medicationClass = medicationClassReference(input.medicationReference)
     const medicationReferences = this.medicationReferenceIncludingDerivatives(

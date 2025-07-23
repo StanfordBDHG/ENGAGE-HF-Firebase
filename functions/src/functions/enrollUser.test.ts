@@ -18,6 +18,8 @@ import {
   UserType,
   UserObservationCollection,
   QuestionnaireReference,
+  fhirAppointmentConverter,
+  fhirObservationConverter,
 } from '@stanfordbdhg/engagehf-models'
 import { enrollUser } from './enrollUser.js'
 import { QuestionnaireId } from '../services/seeding/staticData/questionnaireFactory/questionnaireLinkIds.js'
@@ -121,10 +123,8 @@ describeWithEmulators('function: enrollUser', (env) => {
     if (actualAppointment === undefined) {
       fail('actualAppointment is undefined')
     } else {
-      expect(
-        fhirAppointmentConverter.value.encode(actualAppointment),
-      ).toStrictEqual(
-        fhirAppointmentConverter.value.encode(expectedAppointment),
+      expect(fhirAppointmentConverter.encode(actualAppointment)).toStrictEqual(
+        fhirAppointmentConverter.encode(expectedAppointment),
       )
     }
 
@@ -137,9 +137,9 @@ describeWithEmulators('function: enrollUser', (env) => {
       fail('actualObservation is undefined')
     } else {
       expect(
-        fhirObservationConverter.value.encode(actualObservation),
+        fhirObservationConverter.encode(actualObservation),
       ).toStrictEqual(
-        fhirObservationConverter.value.encode(expectedObservation),
+        fhirObservationConverter.encode(expectedObservation),
       )
     }
 
@@ -242,9 +242,9 @@ describeWithEmulators('function: enrollUser', (env) => {
       fail('actualAppointment is undefined')
     } else {
       expect(
-        fhirAppointmentConverter.value.encode(actualAppointment),
+        fhirAppointmentConverter.encode(actualAppointment),
       ).toStrictEqual(
-        fhirAppointmentConverter.value.encode(expectedAppointment),
+        fhirAppointmentConverter.encode(expectedAppointment),
       )
     }
 
@@ -257,9 +257,9 @@ describeWithEmulators('function: enrollUser', (env) => {
       fail('actualObservation is undefined')
     } else {
       expect(
-        fhirObservationConverter.value.encode(actualObservation),
+        fhirObservationConverter.encode(actualObservation),
       ).toStrictEqual(
-        fhirObservationConverter.value.encode(expectedObservation),
+        fhirObservationConverter.encode(expectedObservation),
       )
     }
 

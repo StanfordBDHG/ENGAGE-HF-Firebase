@@ -16,7 +16,7 @@ import {
   QuantityUnit,
 } from '@stanfordbdhg/engagehf-models'
 import { logger } from 'firebase-functions'
-import { z } from 'zod/v4'
+import { z } from 'zod'
 import { RxNormApi } from './rxNormApi.js'
 import {
   type RxNormConceptProperty,

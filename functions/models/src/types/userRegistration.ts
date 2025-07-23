@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { z } from 'zod/v4'
+import { z } from 'zod'
 import { UserType } from './userType.js'
 import { dateConverter } from '../helpers/dateConverter.js'
 import { Lazy } from '../helpers/lazy.js'
@@ -22,11 +22,11 @@ export const userRegistrationInputConverter = new Lazy(
   () =>
     new SchemaConverter({
       schema: z.object({
-        type: z.nativeEnum(UserType),
+        type: z.enum(UserType),
         disabled: optionalishDefault(z.boolean(), false),
         organization: optionalish(z.string()),
         dateOfBirth: optionalish(dateConverter.schema),
-        sex: optionalish(z.nativeEnum(UserSex)),
+        sex: optionalish(z.enum(UserSex)),
         clinician: optionalish(z.string()),
         providerName: optionalish(z.string()),
         receivesAppointmentReminders: optionalishDefault(z.boolean(), true),
@@ -74,7 +74,7 @@ export const userRegistrationConverter = new Lazy(
 )
 
 export const userClaimsSchema = z.object({
-  type: z.nativeEnum(UserType),
+  type: z.enum(UserType),
   organization: optionalish(z.string()),
   disabled: optionalishDefault(z.boolean(), false),
 })

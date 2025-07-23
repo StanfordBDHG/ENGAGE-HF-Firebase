@@ -14,7 +14,6 @@ import {
   FHIRQuestionnaire,
   LoincCode,
   QuantityUnit,
-  QuestionnaireStatus,
 } from '@stanfordbdhg/engagehf-models'
 import {
   medicationClassesForGroup,
@@ -28,6 +27,7 @@ import {
   QuestionnaireItemAnswerOption,
   UsageContext,
   Extension,
+  Questionnaire,
 } from 'fhir/r4b.js'
 
 // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-parameters
@@ -471,7 +471,7 @@ export abstract class QuestionnaireFactory<Input> {
   protected questionnaire(input: {
     id: QuestionnaireId
     title: string
-    status?: QuestionnaireStatus
+    status?: Questionnaire['status']
     item: QuestionnaireItem[]
     useContext?: UsageContext[]
   }): FHIRQuestionnaire {

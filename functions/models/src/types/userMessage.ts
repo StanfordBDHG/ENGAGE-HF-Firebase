@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { z } from 'zod/v4'
+import { z } from 'zod'
 import { LocalizedText, localizedTextConverter } from './localizedText.js'
 import { messagesLocalization } from './userMesage+localization.js'
 import {
@@ -41,7 +41,7 @@ export const userMessageConverter = new Lazy(
           creationDate: dateTimeConverter.schema,
           dueDate: optionalish(dateTimeConverter.schema),
           completionDate: optionalish(dateTimeConverter.schema),
-          type: z.nativeEnum(UserMessageType),
+          type: z.enum(UserMessageType),
           title: z.lazy(() => localizedTextConverter.schema),
           description: optionalish(z.lazy(() => localizedTextConverter.schema)),
           action: optionalish(z.string()),

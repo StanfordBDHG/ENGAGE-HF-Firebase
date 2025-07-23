@@ -7,7 +7,7 @@
 //
 
 import { QuantityUnit, UserSex } from '@stanfordbdhg/engagehf-models'
-import { z } from 'zod/v4'
+import { z } from 'zod'
 import { EgfrCalculator } from './egfrCalculator.js'
 import { readCsv } from '../../../tests/helpers/csv.js'
 
@@ -18,7 +18,7 @@ describe('EgfrCalculator', () => {
     readCsv('src/tests/resources/egfr.csv', 547, (line, index) => {
       if (index === 0) return // Skip header line
 
-      const sexAssignedAtBirth = z.nativeEnum(UserSex).parse(line[0])
+      const sexAssignedAtBirth = z.enum(UserSex).parse(line[0])
       const age = z.number().parse(parseFloat(line[1]))
       const creatinine = z.number().parse(parseFloat(line[2]))
       const expectedValue = z.number().parse(parseFloat(line[3]))

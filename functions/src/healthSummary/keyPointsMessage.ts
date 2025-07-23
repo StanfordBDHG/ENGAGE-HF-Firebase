@@ -11,7 +11,7 @@ import {
   type LocalizedText,
   localizedTextConverter,
 } from '@stanfordbdhg/engagehf-models'
-import { z } from 'zod/v4'
+import { z } from 'zod'
 
 export enum HealthSummarySymptomScoreCategory {
   HIGH_STABLE_OR_IMPROVING = 'Change >-10 and KCCQ>=90',
@@ -70,12 +70,12 @@ export const healthSummaryKeyPointMessages = new Lazy<
 >(() =>
   z
     .object({
-      recommendationsCategory: z.nativeEnum(
+      recommendationsCategory: z.enum(
         HealthSummaryMedicationRecommendationsCategory,
       ),
-      symptomScoreCategory: z.nativeEnum(HealthSummarySymptomScoreCategory),
-      dizzinessCategory: z.nativeEnum(HealthSummaryDizzinessCategory),
-      weightCategory: z.nativeEnum(HealthSummaryWeightCategory),
+      symptomScoreCategory: z.enum(HealthSummarySymptomScoreCategory),
+      dizzinessCategory: z.enum(HealthSummaryDizzinessCategory),
+      weightCategory: z.enum(HealthSummaryWeightCategory),
       texts: z.array(localizedTextConverter.schema),
     })
     .array()

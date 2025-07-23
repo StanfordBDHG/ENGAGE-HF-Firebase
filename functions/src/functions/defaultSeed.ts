@@ -14,7 +14,7 @@ import {
   UserType,
 } from '@stanfordbdhg/engagehf-models'
 import { logger } from 'firebase-functions'
-import { type z } from 'zod/v4'
+import { type z } from 'zod'
 import { validatedOnCall, validatedOnRequest } from './helpers.js'
 import { _updateStaticData } from './updateStaticData.js'
 import { Flags } from '../flags.js'

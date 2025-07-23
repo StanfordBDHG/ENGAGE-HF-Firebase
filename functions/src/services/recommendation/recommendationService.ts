@@ -27,6 +27,7 @@ import { Sglt2iRecommender } from './recommenders/sglt2iRecommender.js'
 import { type MedicationRequestContext } from '../../models/medicationRequestContext.js'
 import { type ContraindicationService } from '../contraindication/contraindicationService.js'
 import { type MedicationService } from '../medication/medicationService.js'
+import { Medication, MedicationRequest } from 'fhir/r4b.js'
 
 export interface RecommendationInput {
   requests: MedicationRequestContext[]
@@ -143,12 +144,12 @@ export class RecommendationService {
       minimumDailyDoseRequest && minimumDailyDoseDrugReference ?
         this.doseSchedule(
           minimumDailyDoseRequest,
-          minimumDailyDoseDrugReference,
+          minimumDailyDoseDrugReference.data,
         )
       : []
 
     const currentDailyDoseSchedule = output.currentMedication.flatMap(
-      (context) => this.doseSchedule(context.request, context.drug),
+      (context) => this.doseSchedule(context.request.data, context.drug.data),
     )
 
     const targetDailyDoseRequest = medication?.targetDailyDoseRequest
@@ -162,7 +163,10 @@ export class RecommendationService {
       : undefined
     const targetDailyDoseSchedule =
       targetDailyDoseRequest && targetDailyDoseDrugReference ?
-        this.doseSchedule(targetDailyDoseRequest, targetDailyDoseDrugReference)
+        this.doseSchedule(
+          targetDailyDoseRequest,
+          targetDailyDoseDrugReference.data,
+        )
       : []
 
     return new UserMedicationRecommendation({

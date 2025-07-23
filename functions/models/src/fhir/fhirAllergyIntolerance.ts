@@ -6,21 +6,17 @@
 // SPDX-License-Identifier: MIT
 //
 
+import { type AllergyIntolerance } from 'fhir/r4b.js'
+import { FHIRResource } from './fhirResource.js'
 import { CodingSystem } from '../codes/codes.js'
 import { type MedicationReference } from '../codes/references.js'
-import { AllergyIntolerance } from 'fhir/r4b.js'
-import { FHIRResource } from './fhirResource.js'
-import {
-  AllergyIntoleranceCriticality,
-  AllergyIntoleranceType,
-} from '@stanfordspezi/spezi-firebase-fhir'
 
 export class FHIRAllergyIntolerance extends FHIRResource<AllergyIntolerance> {
   // Static Functions
 
   static create(input: {
-    type?: AllergyIntoleranceType
-    criticality?: AllergyIntoleranceCriticality
+    type?: AllergyIntolerance['type']
+    criticality?: AllergyIntolerance['criticality']
     reference: MedicationReference
     userId?: string
   }): FHIRAllergyIntolerance {

@@ -7,7 +7,7 @@
 //
 
 import { optionalish } from '@stanfordbdhg/engagehf-models'
-import { z } from 'zod/v4'
+import { z } from 'zod'
 
 export const rxTermInfo = z.object({
   displayName: optionalish(z.string()),

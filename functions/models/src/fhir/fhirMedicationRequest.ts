@@ -6,9 +6,8 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { Extension, MedicationRequest } from 'fhir/r4b.js'
+import { type Extension, type MedicationRequest } from 'fhir/r4b.js'
 import { FHIRResource } from './fhirResource.js'
-import { medicationRequestSchema } from '@stanfordspezi/spezi-firebase-fhir'
 import { QuantityUnit } from '../codes/quantityUnit.js'
 
 export class FHIRMedicationRequest extends FHIRResource<MedicationRequest> {
@@ -51,16 +50,4 @@ export class FHIRMedicationRequest extends FHIRResource<MedicationRequest> {
       ],
     })
   }
-
-  // Computed Properties
 }
-
-/*
-export const medicationRequestSchema =
-  new FHIRSchemaConverter<FHIRMedicationRequest>({
-    schema: medicationRequestSchema.transform(
-      (data) => new FHIRMedicationRequest(data),
-    ),
-    nullProperties: [],
-  })
-*/

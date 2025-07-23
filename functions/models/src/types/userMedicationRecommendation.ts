@@ -6,12 +6,12 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { z } from 'zod/v4'
+import { type Reference } from 'fhir/r4b.js'
+import { z } from 'zod'
 import { localizedTextConverter } from './localizedText.js'
 import { Lazy } from '../helpers/lazy.js'
 import { optionalish } from '../helpers/optionalish.js'
 import { SchemaConverter } from '../helpers/schemaConverter.js'
-import { Reference } from 'fhir/r4b.js'
 
 export enum UserMedicationRecommendationType {
   improvementAvailable = 'improvementAvailable',
@@ -87,7 +87,7 @@ export const userMedicationRecommendationDisplayInformationConverter = new Lazy(
         title: localizedTextConverter.schema,
         subtitle: localizedTextConverter.schema,
         description: localizedTextConverter.schema,
-        type: z.nativeEnum(UserMedicationRecommendationType),
+        type: z.enum(UserMedicationRecommendationType),
         videoPath: optionalish(z.string()),
         dosageInformation: z.lazy(
           () =>

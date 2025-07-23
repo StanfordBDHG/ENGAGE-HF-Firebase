@@ -8,8 +8,6 @@
 
 import fs from 'fs'
 import {
-  AllergyIntoleranceCriticality,
-  AllergyIntoleranceType,
   FHIRAllergyIntolerance,
   MedicationClassReference,
   MedicationReference,
@@ -20,6 +18,7 @@ import {
   type ContraindicationService,
 } from './contraindicationService.js'
 import { DefaultContraindicationService } from './defaultContraindicationService.js'
+import { AllergyIntolerance } from 'fhir/r4b.js'
 
 describe('DefaultContraindicationService', () => {
   const contraindicationService: ContraindicationService =
@@ -29,8 +28,8 @@ describe('DefaultContraindicationService', () => {
     field: string,
     options: {
       reference: MedicationReference
-      type?: AllergyIntoleranceType
-      criticality: AllergyIntoleranceCriticality
+      type?: AllergyIntolerance['type']
+      criticality: AllergyIntolerance['criticality']
       category: ContraindicationCategory
     },
   ) {
@@ -105,7 +104,7 @@ describe('DefaultContraindicationService', () => {
 
       check(fields[14], {
         reference: medicationReference,
-        type: undefined,  // TODO: 'financial',
+        type: undefined, // TODO: 'financial',
         criticality: 'low',
         category: ContraindicationCategory.clinicianListed,
       })

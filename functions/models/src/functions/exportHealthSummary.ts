@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { z } from 'zod/v4'
+import { z } from 'zod'
 import { QuantityUnit } from '../codes/quantityUnit.js'
 import { optionalish, optionalishDefault } from '../helpers/optionalish.js'
 
@@ -22,7 +22,7 @@ export const exportHealthSummaryInputSchema = z.object({
           .map((u) => `'${u.code}'`)
           .join(', ')
         context.addIssue({
-          code: z.ZodIssueCode.custom,
+          code: 'custom',
           message: `Invalid weight unit. Must be one of the following: ${availableUnitsString}.`,
         })
         return z.NEVER

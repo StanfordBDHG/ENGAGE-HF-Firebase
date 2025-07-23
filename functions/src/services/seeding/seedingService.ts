@@ -10,7 +10,7 @@ import fs from 'fs'
 import { CachingStrategy } from '@stanfordbdhg/engagehf-models'
 import { type CollectionReference } from 'firebase-admin/firestore'
 import { logger } from 'firebase-functions'
-import { z } from 'zod/v4'
+import { z, ZodType } from 'zod'
 
 export interface SeedingOptions {
   useIndicesAsKeys: boolean
@@ -91,7 +91,7 @@ export class SeedingService {
     )
   }
 
-  protected readJSONArray<Schema extends z.ZodTypeAny>(
+  protected readJSONArray<Schema extends ZodType>(
     filename: string,
     schema: Schema,
   ): Array<z.output<Schema>> {
@@ -102,7 +102,7 @@ export class SeedingService {
       ) as Array<z.output<Schema>>
   }
 
-  protected readJSONRecord<Schema extends z.ZodTypeAny>(
+  protected readJSONRecord<Schema extends ZodType>(
     filename: string,
     schema: Schema,
   ): Record<string, z.output<Schema>> {

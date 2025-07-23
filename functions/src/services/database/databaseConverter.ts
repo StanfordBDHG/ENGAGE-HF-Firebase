@@ -6,14 +6,15 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { type SchemaConverter } from '@stanfordbdhg/engagehf-models'
+import { FHIRResource, FHIRSchemaConverter, type SchemaConverter } from '@stanfordbdhg/engagehf-models'
+import { DomainResource } from 'fhir/r4b'
 import {
   type DocumentData,
   type DocumentSnapshot,
   type FirestoreDataConverter,
 } from 'firebase-admin/firestore'
 import { logger } from 'firebase-functions'
-import { ZodType, type z } from 'zod/v4'
+import { ZodType, type z } from 'zod'
 
 export class DatabaseConverter<Schema extends ZodType, Encoded>
   implements FirestoreDataConverter<z.output<Schema>>
@@ -44,6 +45,46 @@ export class DatabaseConverter<Schema extends ZodType, Encoded>
   }
 
   toFirestore(modelObject: z.output<Schema>): DocumentData {
+    try {
+      return this.converter.encode(modelObject) as DocumentData
+    } catch (error) {
+      logger.error(
+        `DatabaseDecoder(${typeof modelObject}): Failed to encode object ${modelObject} due to ${String(error)}.`,
+      )
+      throw error
+    }
+  }
+}
+
+export class FHIRDatabaseConverter<C extends FHIRSchemaConverter<FHIRResource<DomainResource>>>
+  implements FirestoreDataConverter<z.output<C['schema']>>
+{
+  // Properties
+
+  private readonly converter: C
+
+  // Constructor
+
+  constructor(converter: C) {
+    this.converter = converter
+  }
+
+  // Methods
+
+  fromFirestore(snapshot: DocumentSnapshot): z.output<C['schema']> {
+    const data = snapshot.data()
+    try {
+      /* eslint-disable-next-line @typescript-eslint/no-unsafe-return */
+      return this.converter.schema.parse(data) as z.output<C['schema']>
+    } catch (error) {
+      logger.error(
+        `DatabaseDecoder(${this.converter.schema._output}): Failed to decode object ${JSON.stringify(data)} due to ${String(error)}.`,
+      )
+      throw error
+    }
+  }
+
+  toFirestore(modelObject: z.output<C['schema']>): DocumentData {
     try {
       return this.converter.encode(modelObject) as DocumentData
     } catch (error) {

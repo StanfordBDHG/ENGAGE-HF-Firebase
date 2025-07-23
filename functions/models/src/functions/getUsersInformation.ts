@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { z } from 'zod/v4'
+import { z } from 'zod'
 import { optionalishDefault } from '../helpers/optionalish.js'
 import { type InferEncoded } from '../helpers/schemaConverter.js'
 import { type userConverter } from '../types/user.js'

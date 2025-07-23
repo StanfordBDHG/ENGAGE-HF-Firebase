@@ -17,11 +17,11 @@ import {
   onRequest,
   type Request,
 } from 'firebase-functions/v2/https'
-import { z } from 'zod/v4'
+import { z, ZodType } from 'zod'
 
 export const serviceAccount = `cloudfunctionsserviceaccount@${process.env.GCLOUD_PROJECT}.iam.gserviceaccount.com`
 
-export function validatedOnCall<Schema extends z.ZodTypeAny, Return, Stream>(
+export function validatedOnCall<Schema extends ZodType, Return, Stream>(
   name: string,
   schema: Schema,
   handler: (request: CallableRequest<z.output<Schema>>) => Promise<Return>,
@@ -58,7 +58,7 @@ export function validatedOnCall<Schema extends z.ZodTypeAny, Return, Stream>(
   )
 }
 
-export function validatedOnRequest<Schema extends z.ZodTypeAny>(
+export function validatedOnRequest<Schema extends ZodType>(
   name: string,
   schema: Schema,
   handler: (

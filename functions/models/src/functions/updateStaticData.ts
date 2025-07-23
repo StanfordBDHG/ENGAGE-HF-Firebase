@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { z } from 'zod/v4'
+import { z } from 'zod'
 import { optionalishDefault } from '../helpers/optionalish.js'
 
 export enum CachingStrategy {
@@ -26,11 +26,11 @@ export enum StaticDataComponent {
 
 export const updateStaticDataInputSchema = z.object({
   only: optionalishDefault(
-    z.array(z.nativeEnum(StaticDataComponent)),
+    z.array(z.enum(StaticDataComponent)),
     Object.values(StaticDataComponent),
   ),
   cachingStrategy: optionalishDefault(
-    z.nativeEnum(CachingStrategy),
+    z.enum(CachingStrategy),
     CachingStrategy.updateCacheIfNeeded,
   ),
 })
