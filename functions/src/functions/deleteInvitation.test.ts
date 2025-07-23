@@ -8,7 +8,6 @@
 
 import {
   FHIRAppointment,
-  FHIRAppointmentStatus,
   Invitation,
   UserAuth,
   UserRegistration,
@@ -45,7 +44,6 @@ describeWithEmulators('function: deleteInvitation', (env) => {
 
     const appointment = FHIRAppointment.create({
       userId: invitationRef.id,
-      status: FHIRAppointmentStatus.booked,
       created: new Date(),
       start: new Date(),
       durationInMinutes: 90,

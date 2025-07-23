@@ -8,7 +8,7 @@
 
 import { Extension, MedicationRequest } from 'fhir/r4b.js'
 import { FHIRResource } from './fhirResource.js'
-import { medicationRequestSchema } from 'spezi-firebase-fhir'
+import { medicationRequestSchema } from '@stanfordspezi/spezi-firebase-fhir'
 import { QuantityUnit } from '../codes/quantityUnit.js'
 
 export class FHIRMedicationRequest extends FHIRResource<MedicationRequest> {

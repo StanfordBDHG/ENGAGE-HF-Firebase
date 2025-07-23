@@ -17,12 +17,14 @@ export class FHIRSchemaConverter<FHIRResourceType extends FHIRResource> {
 
   // Constructor
 
-  constructor(input: {
-    schema: ZodType<FHIRResourceType>
-    nullProperties: string[]
-  }) {
-    this.schema = input.schema
-    this.nullProperties = input.nullProperties
+  constructor(
+    schema: ZodType<FHIRResourceType>,
+    options: {
+      nullProperties: string[]
+    },
+  ) {
+    this.schema = schema
+    this.nullProperties = options.nullProperties
   }
 
   // Methods

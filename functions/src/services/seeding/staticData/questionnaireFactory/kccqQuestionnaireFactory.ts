@@ -6,12 +6,10 @@
 // SPDX-License-Identifier: MIT
 //
 
-import {
-  type FHIRQuestionnaire,
-  type FHIRQuestionnaireItem,
-} from '@stanfordbdhg/engagehf-models'
+import { type FHIRQuestionnaire } from '@stanfordbdhg/engagehf-models'
 import { QuestionnaireFactory } from './questionnaireFactory.js'
 import { QuestionnaireId, QuestionnaireLinkId } from './questionnaireLinkIds.js'
+import { QuestionnaireItem } from 'fhir/r4b.js'
 
 export class KccqQuestionnaireFactory extends QuestionnaireFactory<void> {
   create(): FHIRQuestionnaire {
@@ -55,7 +53,7 @@ export class KccqQuestionnaireFactory extends QuestionnaireFactory<void> {
 
   // Helper methods
 
-  private question1(): FHIRQuestionnaireItem {
+  private question1(): QuestionnaireItem {
     return this.pageItem({
       linkId: QuestionnaireLinkId.kccq.question1,
       text: 'Heart failure affects different people in different ways. Some feel shortness of breath while others feel fatigue. Please indicate how much you are limited by heart failure (shortness of breath or fatigue) in your ability to do the following activities over the past 2 weeks.',
@@ -181,7 +179,7 @@ export class KccqQuestionnaireFactory extends QuestionnaireFactory<void> {
     })
   }
 
-  private question2(): FHIRQuestionnaireItem {
+  private question2(): QuestionnaireItem {
     return this.radioButtonItem({
       linkId: QuestionnaireLinkId.kccq.question2,
       text: 'Over the past 2 weeks, how many times did you have swelling in your feet, ankles or legs when you woke up in the morning?',
@@ -218,7 +216,7 @@ export class KccqQuestionnaireFactory extends QuestionnaireFactory<void> {
     })
   }
 
-  private question3(): FHIRQuestionnaireItem {
+  private question3(): QuestionnaireItem {
     return this.radioButtonItem({
       linkId: QuestionnaireLinkId.kccq.question3,
       text: 'Over the past 2 weeks, on average, how many times has fatigue limited your ability to do what you wanted',
@@ -265,7 +263,7 @@ export class KccqQuestionnaireFactory extends QuestionnaireFactory<void> {
     })
   }
 
-  private question4(): FHIRQuestionnaireItem {
+  private question4(): QuestionnaireItem {
     return this.radioButtonItem({
       linkId: QuestionnaireLinkId.kccq.question4,
       text: 'Over the past 2 weeks, on average, how many times has shortness of breath limited your ability to do what you wanted',
@@ -312,7 +310,7 @@ export class KccqQuestionnaireFactory extends QuestionnaireFactory<void> {
     })
   }
 
-  private question5(): FHIRQuestionnaireItem {
+  private question5(): QuestionnaireItem {
     return this.radioButtonItem({
       linkId: QuestionnaireLinkId.kccq.question5,
       text: 'Over the past 2 weeks, on average, how many times have you been forced to sleep sitting up in a chair or with at least 3 pillows to prop you up because of shortness of breath?',
@@ -349,7 +347,7 @@ export class KccqQuestionnaireFactory extends QuestionnaireFactory<void> {
     })
   }
 
-  private question6(): FHIRQuestionnaireItem {
+  private question6(): QuestionnaireItem {
     return this.radioButtonItem({
       linkId: QuestionnaireLinkId.kccq.question6,
       text: 'Over the past 2 weeks, how much has your heart failure limited your enjoyment of life?',
@@ -386,7 +384,7 @@ export class KccqQuestionnaireFactory extends QuestionnaireFactory<void> {
     })
   }
 
-  private question7(): FHIRQuestionnaireItem {
+  private question7(): QuestionnaireItem {
     return this.radioButtonItem({
       linkId: QuestionnaireLinkId.kccq.question7,
       text: 'If you had to spend the rest of your life with your heart failure the way it is right now, how would you feel about this?',
@@ -423,7 +421,7 @@ export class KccqQuestionnaireFactory extends QuestionnaireFactory<void> {
     })
   }
 
-  private question8(): FHIRQuestionnaireItem {
+  private question8(): QuestionnaireItem {
     return this.pageItem({
       linkId: QuestionnaireLinkId.kccq.question8,
       text: 'How much does your heart failure affect your lifestyle? Please indicate how your heart failure may have limited your participation in the following activities over the past 2 weeks.',
@@ -549,7 +547,7 @@ export class KccqQuestionnaireFactory extends QuestionnaireFactory<void> {
     })
   }
 
-  private question9(): FHIRQuestionnaireItem {
+  private question9(): QuestionnaireItem {
     return this.radioButtonItem({
       linkId: QuestionnaireLinkId.kccq.question9,
       text: 'In the last two weeks, how much has your dizziness affected you?',

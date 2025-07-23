@@ -8,7 +8,7 @@
 
 import { Appointment } from 'fhir/r4b.js'
 import { FHIRResource } from './fhirResource.js'
-import { AppointmentStatus } from 'spezi-firebase-fhir'
+import { AppointmentStatus } from '@stanfordspezi/spezi-firebase-fhir'
 import { compactMap } from '../helpers/array.js'
 import { FHIRExtensionUrl } from '../codes/codes.js'
 
@@ -18,13 +18,13 @@ export class FHIRAppointment extends FHIRResource<Appointment> {
   static create(input: {
     userId: string
     created: Date
-    status: AppointmentStatus
+    status?: AppointmentStatus
     start: Date
     durationInMinutes: number
   }): FHIRAppointment {
     return new FHIRAppointment({
       resourceType: 'Appointment',
-      status: input.status,
+      status: input.status ?? 'booked',
       created: input.created.toISOString(),
       start: input.start.toISOString(),
       end: new Date(
@@ -66,11 +66,3 @@ export class FHIRAppointment extends FHIRResource<Appointment> {
     )
   }
 }
-
-/*
-export const fhirAppointmentConverter =
-  new FHIRSchemaConverter<FHIRAppointment>({
-    schema: appointmentSchema.transform((data) => new FHIRAppointment(data)),
-    nullProperties: [],
-  })
-*/

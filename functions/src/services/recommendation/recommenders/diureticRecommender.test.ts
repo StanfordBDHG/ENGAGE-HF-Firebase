@@ -65,6 +65,7 @@ describe('DiureticRecommender', () => {
           reference: DrugReference.furosemide20,
         },
         drug: new FHIRMedication({
+          resourceType: 'Medication',
           code: {
             coding: [
               {
@@ -79,6 +80,7 @@ describe('DiureticRecommender', () => {
           reference: MedicationReference.furosemide,
         },
         medication: new FHIRMedication({
+          resourceType: 'Medication',
           code: {
             coding: [
               {

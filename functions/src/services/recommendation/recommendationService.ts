@@ -12,7 +12,7 @@ import {
   type FHIRMedicationRequest,
   LocalizedText,
   type MedicationReference,
-  type Observation,
+  type ObservationQuantity,
   UserMedicationRecommendation,
   type UserMedicationRecommendationDoseSchedule,
   UserMedicationRecommendationType,
@@ -36,11 +36,11 @@ export interface RecommendationInput {
 }
 
 export interface RecommendationVitals {
-  systolicBloodPressure: Observation[]
-  heartRate: Observation[]
-  creatinine?: Observation
-  estimatedGlomerularFiltrationRate?: Observation
-  potassium?: Observation
+  systolicBloodPressure: ObservationQuantity[]
+  heartRate: ObservationQuantity[]
+  creatinine?: ObservationQuantity
+  estimatedGlomerularFiltrationRate?: ObservationQuantity
+  potassium?: ObservationQuantity
 }
 
 export interface RecommendationOutput {
@@ -201,8 +201,8 @@ export class RecommendationService {
   }
 
   private doseSchedule(
-    request: FHIRMedicationRequest,
-    drug: FHIRMedication,
+    request: MedicationRequest,
+    drug: Medication,
   ): UserMedicationRecommendationDoseSchedule[] {
     const ingredients = (drug.ingredient ?? []).map(
       (ingredient) => ingredient.strength?.numerator?.value ?? 0,

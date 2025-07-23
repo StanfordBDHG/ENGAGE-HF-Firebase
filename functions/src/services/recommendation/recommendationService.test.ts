@@ -7,11 +7,10 @@
 //
 
 import {
+  AllergyIntoleranceType,
   CachingStrategy,
   DrugReference,
   FHIRAllergyIntolerance,
-  FHIRAllergyIntoleranceCriticality,
-  FHIRAllergyIntoleranceType,
   FHIRMedicationRequest,
   MedicationReference,
   UserMedicationRecommendationType,
@@ -63,10 +62,9 @@ describe('RecommendationService', () => {
           value.split(',').flatMap((field) =>
             getContraindications(
               field,
-              [0, 1, 2, 3].includes(index) ? FHIRAllergyIntoleranceType.allergy
-              : [4, 5, 6, 7].includes(index) ?
-                FHIRAllergyIntoleranceType.intolerance
-              : FHIRAllergyIntoleranceType.financial,
+              [0, 1, 2, 3].includes(index) ? 'allergy'
+              : [4, 5, 6, 7].includes(index) ? 'intolerance'
+              : undefined,
             ),
           ),
         )
@@ -120,7 +118,7 @@ describe('RecommendationService', () => {
             expect(expected.recommendedMedication).toBeDefined()
             expect(result[i].currentMedication.length).toBeGreaterThan(0)
             result[i].currentMedication.every((medication) =>
-              medication.reference.startsWith(
+              (medication.reference ?? '').startsWith(
                 (expected.recommendedMedication ?? '') + '/drugs/',
               ),
             )
@@ -288,7 +286,7 @@ function getMedicationRequest(
 
 function getContraindications(
   field: string,
-  type: FHIRAllergyIntoleranceType,
+  type: AllergyIntoleranceType | undefined,
 ): FHIRAllergyIntolerance[] {
   switch (field.trim().toLowerCase().split(' ').join('')) {
     case 'none':
@@ -298,7 +296,7 @@ function getContraindications(
         FHIRAllergyIntolerance.create({
           reference: MedicationReference.bisoprolol,
           type,
-          criticality: FHIRAllergyIntoleranceCriticality.low,
+          criticality: 'low',
         }),
       ]
     case 'carvedilol':
@@ -306,7 +304,7 @@ function getContraindications(
         FHIRAllergyIntolerance.create({
           reference: MedicationReference.carvedilol,
           type,
-          criticality: FHIRAllergyIntoleranceCriticality.low,
+          criticality: 'low',
         }),
       ]
     case 'dapagliflozin':
@@ -314,7 +312,7 @@ function getContraindications(
         FHIRAllergyIntolerance.create({
           reference: MedicationReference.dapagliflozin,
           type,
-          criticality: FHIRAllergyIntoleranceCriticality.low,
+          criticality: 'low',
         }),
       ]
     case 'empagliflozin':
@@ -322,7 +320,7 @@ function getContraindications(
         FHIRAllergyIntolerance.create({
           reference: MedicationReference.empagliflozin,
           type,
-          criticality: FHIRAllergyIntoleranceCriticality.low,
+          criticality: 'low',
         }),
       ]
     case 'eplerenone':
@@ -330,7 +328,7 @@ function getContraindications(
         FHIRAllergyIntolerance.create({
           reference: MedicationReference.eplerenone,
           type,
-          criticality: FHIRAllergyIntoleranceCriticality.low,
+          criticality: 'low',
         }),
       ]
     case 'lisinopril':
@@ -338,7 +336,7 @@ function getContraindications(
         FHIRAllergyIntolerance.create({
           reference: MedicationReference.lisinopril,
           type,
-          criticality: FHIRAllergyIntoleranceCriticality.low,
+          criticality: 'low',
         }),
       ]
     case 'lisinopril-anaphylaxis':
@@ -346,7 +344,7 @@ function getContraindications(
         FHIRAllergyIntolerance.create({
           reference: MedicationReference.lisinopril,
           type,
-          criticality: FHIRAllergyIntoleranceCriticality.high,
+          criticality: 'high',
         }),
       ]
     case 'losartan':
@@ -354,7 +352,7 @@ function getContraindications(
         FHIRAllergyIntolerance.create({
           reference: MedicationReference.losartan,
           type,
-          criticality: FHIRAllergyIntoleranceCriticality.low,
+          criticality: 'low',
         }),
       ]
     case 'metoprolol':
@@ -362,7 +360,7 @@ function getContraindications(
         FHIRAllergyIntolerance.create({
           reference: MedicationReference.metoprololSuccinate,
           type,
-          criticality: FHIRAllergyIntoleranceCriticality.high,
+          criticality: 'high',
         }),
       ]
     case 'sacubitril-valsartan':
@@ -370,7 +368,7 @@ function getContraindications(
         FHIRAllergyIntolerance.create({
           reference: MedicationReference.sacubitrilValsartan,
           type,
-          criticality: FHIRAllergyIntoleranceCriticality.low,
+          criticality: 'low',
         }),
       ]
     case 'sotagliflozin':
@@ -378,7 +376,7 @@ function getContraindications(
         FHIRAllergyIntolerance.create({
           reference: MedicationReference.sotagliflozin,
           type,
-          criticality: FHIRAllergyIntoleranceCriticality.low,
+          criticality: 'low',
         }),
       ]
     case 'spironolactone':
@@ -386,7 +384,7 @@ function getContraindications(
         FHIRAllergyIntolerance.create({
           reference: MedicationReference.spironolactone,
           type,
-          criticality: FHIRAllergyIntoleranceCriticality.low,
+          criticality: 'low',
         }),
       ]
     case 'valsartan':
@@ -394,7 +392,7 @@ function getContraindications(
         FHIRAllergyIntolerance.create({
           reference: MedicationReference.valsartan,
           type,
-          criticality: FHIRAllergyIntoleranceCriticality.low,
+          criticality: 'low',
         }),
       ]
     default:

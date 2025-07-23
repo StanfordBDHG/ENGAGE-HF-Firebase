@@ -21,8 +21,9 @@
     "README.md"
   ],
   "main": "lib/index.js",
-  "dependencies": {
-    "spezi-firebase-fhir": "file:../../../spezi-firebase/packages/spezi-firebase-fhir"
+  "peerDependencies": {
+    "@stanfordspezi/spezi-firebase-fhir": "^0.1.1",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/fhir": "^0.0.41",

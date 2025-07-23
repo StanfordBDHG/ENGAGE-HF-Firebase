@@ -12,7 +12,7 @@ import { CodingSystem, FHIRExtensionUrl } from '../codes/codes'
 import { QuantityUnit } from '../codes/quantityUnit'
 import { FHIRMedicationRequest } from './fhirMedicationRequest'
 import { FHIRSchemaConverter } from '../helpers/fhirSchemaConverter.js'
-import { medicationRequestSchema } from 'spezi-firebase-fhir'
+import { medicationRequestSchema } from '@stanfordspezi/spezi-firebase-fhir'
 
 export class FHIRMedication extends FHIRResource<Medication> {
   // Computed Properties

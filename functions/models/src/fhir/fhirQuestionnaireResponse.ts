@@ -9,7 +9,7 @@
 import { QuestionnaireResponse, QuestionnaireResponseItem } from 'fhir/r4b.js'
 import { FHIRResource } from './fhirResource.js'
 import { FHIRSchemaConverter } from '../helpers/fhirSchemaConverter.js'
-import { questionnaireResponseSchema } from 'spezi-firebase-fhir'
+import { questionnaireResponseSchema } from '@stanfordspezi/spezi-firebase-fhir'
 
 export class FHIRQuestionnaireResponse extends FHIRResource<QuestionnaireResponse> {
   // Methods - Response items from path

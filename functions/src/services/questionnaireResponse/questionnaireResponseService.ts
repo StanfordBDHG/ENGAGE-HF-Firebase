@@ -10,12 +10,11 @@ import assert from 'assert'
 import {
   FHIRMedicationRequest,
   LoincCode,
-  type Observation,
+  type ObservationQuantity,
   type FHIRQuestionnaireResponse,
   UserSex,
   QuantityUnit,
   FHIRAppointment,
-  FHIRAppointmentStatus,
   UserObservationCollection,
   MedicationReference,
 } from '@stanfordbdhg/engagehf-models'
@@ -67,8 +66,7 @@ export abstract class QuestionnaireResponseService {
     return FHIRAppointment.create({
       userId: '',
       created: new Date(),
-      status: FHIRAppointmentStatus.booked,
-      start: dateAnswer,
+      start: new Date(dateAnswer),
       durationInMinutes: 30,
     })
   }
@@ -87,7 +85,7 @@ export abstract class QuestionnaireResponseService {
         ?.valueCoding?.code
       const sex = z.nativeEnum(UserSex).parse(sexCode)
       return {
-        dateOfBirth,
+        dateOfBirth: new Date(dateOfBirth),
         sex,
       }
     } catch {}
@@ -100,7 +98,7 @@ export abstract class QuestionnaireResponseService {
       code: LoincCode
       unit: QuantityUnit
     },
-  ): Observation | null {
+  ): ObservationQuantity | null {
     const linkIds = QuestionnaireLinkId.labValue(options.code)
     const dateAnswer = response
       .leafResponseItem(linkIds.dateTime)
@@ -116,7 +114,7 @@ export abstract class QuestionnaireResponseService {
     return {
       value: decimalAnswer,
       unit: options.unit,
-      date: dateAnswer,
+      date: new Date(dateAnswer),
     }
   }
 
@@ -213,7 +211,7 @@ export abstract class QuestionnaireResponseService {
     response: Document<FHIRQuestionnaireResponse>
   }): Promise<void> {
     const observationValues: Array<{
-      observation: Observation
+      observation: ObservationQuantity
       loincCode: LoincCode
       collection: UserObservationCollection
     }> = []
@@ -280,7 +278,7 @@ export abstract class QuestionnaireResponseService {
         input.userId,
         observationValues,
         {
-          type: input.response.content.resourceType,
+          type: input.response.content.data.resourceType,
           reference: input.response.path,
         },
       )
@@ -303,7 +301,8 @@ export abstract class QuestionnaireResponseService {
       medicationExtraction.requests,
       medicationClasses.length > 0 ?
         (doc) => {
-          const referenceString = doc.content.medicationReference?.reference
+          const referenceString =
+            doc.content.data.medicationReference?.reference
           if (referenceString === undefined) {
             logger.error(
               `Encountered medication request without reference at ${doc.path}: ${JSON.stringify(doc.content)}`,

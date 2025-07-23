@@ -11,18 +11,8 @@ import { QuantityUnit } from '../codes/quantityUnit.js'
 import { Coding, Observation, Reference } from 'fhir/r4b.js'
 import { ObservationQuantity } from '../types/observationQuantity.js'
 import { FHIRResource } from './fhirResource.js'
-import { observationSchema } from 'spezi-firebase-fhir'
+import { observationSchema } from '@stanfordspezi/spezi-firebase-fhir'
 import { FHIRSchemaConverter } from '../helpers/fhirSchemaConverter.js'
-
-export enum UserObservationCollection {
-  bodyWeight = 'bodyWeightObservations',
-  bloodPressure = 'bloodPressureObservations',
-  creatinine = 'creatinineObservations',
-  dryWeight = 'dryWeightObservations',
-  eGfr = 'eGfrObservations',
-  heartRate = 'heartRateObservations',
-  potassium = 'potassiumObservations',
-}
 
 export class FHIRObservation extends FHIRResource<Observation> {
   // Static Functions

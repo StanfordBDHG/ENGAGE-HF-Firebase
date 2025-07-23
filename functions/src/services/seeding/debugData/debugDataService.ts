@@ -12,10 +12,8 @@ import {
   type CustomSeedingOptions,
   DrugReference,
   FHIRAppointment,
-  FHIRAppointmentStatus,
   FHIRMedicationRequest,
   FHIRObservation,
-  fhirQuestionnaireConverter,
   invitationConverter,
   LoincCode,
   MedicationReference,
@@ -106,7 +104,6 @@ export class DebugDataService extends SeedingService {
       FHIRAppointment.create({
         userId,
         created: advanceDateByDays(date, -2),
-        status: FHIRAppointmentStatus.booked,
         start: advanceDateByDays(date, 2),
         durationInMinutes: 30,
       }),

@@ -9,27 +9,26 @@
 import {
   CodingSystem,
   compactMap,
-  type FHIRExtension,
   FHIRExtensionUrl,
   type FHIRMedication,
   FHIRQuestionnaire,
-  type FHIRQuestionnaireItem,
-  type FHIRQuestionnaireItemAnswerOption,
-  type FHIRQuestionnaireItemEnableBehavior,
-  type FHIRQuestionnaireItemEnableWhen,
-  FHIRQuestionnaireItemEnableWhenOperator,
-  FHIRQuestionnaireItemType,
-  FHIRQuestionnairePublicationStatus,
   LoincCode,
   QuantityUnit,
+  QuestionnaireStatus,
 } from '@stanfordbdhg/engagehf-models'
-import { type FHIRUsageContext } from '@stanfordbdhg/engagehf-models/lib/fhir/baseTypes/fhirUsageContext'
 import {
   medicationClassesForGroup,
   MedicationGroup,
   type QuestionnaireId,
   QuestionnaireLinkId,
 } from './questionnaireLinkIds.js'
+import {
+  QuestionnaireItem,
+  QuestionnaireItemEnableWhen,
+  QuestionnaireItemAnswerOption,
+  UsageContext,
+  Extension,
+} from 'fhir/r4b.js'
 
 // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-parameters
 export abstract class QuestionnaireFactory<Input> {
@@ -39,7 +38,7 @@ export abstract class QuestionnaireFactory<Input> {
 
   // Helper functions - ENGAGE-HF specific
 
-  protected appointmentInputPages(): FHIRQuestionnaireItem[] {
+  protected appointmentInputPages(): QuestionnaireItem[] {
     const linkIds = QuestionnaireLinkId.appointment
     return [
       this.pageItem({
@@ -62,7 +61,7 @@ export abstract class QuestionnaireFactory<Input> {
         enableWhen: [
           {
             question: linkIds.exists,
-            operator: FHIRQuestionnaireItemEnableWhenOperator.equals,
+            operator: '=',
             answerBoolean: true,
           },
         ],
@@ -80,7 +79,7 @@ export abstract class QuestionnaireFactory<Input> {
     ]
   }
 
-  protected labInputPages(): FHIRQuestionnaireItem[] {
+  protected labInputPages(): QuestionnaireItem[] {
     return [
       ...this.labInputPagesForValue({
         loincCode: LoincCode.creatinine,
@@ -123,7 +122,7 @@ export abstract class QuestionnaireFactory<Input> {
     unit: QuantityUnit
     minValue?: number
     maxValue?: number
-  }): FHIRQuestionnaireItem[] {
+  }): QuestionnaireItem[] {
     const linkIds = QuestionnaireLinkId.labValue(input.loincCode)
     return [
       this.pageItem({
@@ -146,7 +145,7 @@ export abstract class QuestionnaireFactory<Input> {
         enableWhen: [
           {
             question: linkIds.exists,
-            operator: FHIRQuestionnaireItemEnableWhenOperator.equals,
+            operator: '=',
             answerBoolean: true,
           },
         ],
@@ -175,7 +174,7 @@ export abstract class QuestionnaireFactory<Input> {
     medications: Record<string, FHIRMedication>
     drugs: Record<string, Record<string, FHIRMedication>>
     isRegistration: boolean
-  }): FHIRQuestionnaireItem[] {
+  }): QuestionnaireItem[] {
     return [
       ...this.medicationInputPagesForMedicationGroup({
         ...input,
@@ -211,7 +210,7 @@ export abstract class QuestionnaireFactory<Input> {
     group: MedicationGroup
     text: string
     isRegistration: boolean
-  }): FHIRQuestionnaireItem[] {
+  }): QuestionnaireItem[] {
     const linkIds = QuestionnaireLinkId.medication(input.group)
     const medicationClasses = medicationClassesForGroup(input.group).map(
       (medicationClass) => medicationClass.toString(),
@@ -242,7 +241,7 @@ export abstract class QuestionnaireFactory<Input> {
         if (medication.brandNames.length > 0)
           text += ` (${medication.brandNames.join(', ')})`
 
-        text += `\n${drug.ingredient?.map((i) => i.strength?.numerator?.value ?? 0).join('/') ?? ''} mg ${drug.form?.text ?? ''}`
+        text += `\n${drug.data.ingredient?.map((i) => i.strength?.numerator?.value ?? 0).join('/') ?? ''} mg ${drug.data.form?.text ?? ''}`
         answers.push({
           id: `medications/${medicationId}/drugs/${drugId}`,
           medication,
@@ -315,7 +314,7 @@ export abstract class QuestionnaireFactory<Input> {
         enableWhen: [
           {
             question: linkIds.exists,
-            operator: FHIRQuestionnaireItemEnableWhenOperator.equals,
+            operator: '=',
             answerCoding:
               input.isRegistration ?
                 answerOptions.find(
@@ -368,11 +367,11 @@ export abstract class QuestionnaireFactory<Input> {
     linkId: string
     text: string
     required?: boolean
-  }): FHIRQuestionnaireItem {
+  }): QuestionnaireItem {
     return {
       linkId: input.linkId,
       text: input.text,
-      type: FHIRQuestionnaireItemType.boolean,
+      type: 'boolean',
       required: input.required ?? true,
     }
   }
@@ -381,11 +380,11 @@ export abstract class QuestionnaireFactory<Input> {
     linkId: string
     text: string
     required?: boolean
-  }): FHIRQuestionnaireItem {
+  }): QuestionnaireItem {
     return {
       linkId: input.linkId,
       text: input.text,
-      type: FHIRQuestionnaireItemType.date,
+      type: 'date',
       required: input.required ?? true,
     }
   }
@@ -394,11 +393,11 @@ export abstract class QuestionnaireFactory<Input> {
     linkId: string
     text: string
     required?: boolean
-  }): FHIRQuestionnaireItem {
+  }): QuestionnaireItem {
     return {
       linkId: input.linkId,
       text: input.text,
-      type: FHIRQuestionnaireItemType.dateTime,
+      type: 'dateTime',
       required: input.required ?? true,
     }
   }
@@ -410,12 +409,12 @@ export abstract class QuestionnaireFactory<Input> {
     unit?: string
     minValue?: number
     maxValue?: number
-  }): FHIRQuestionnaireItem {
+  }): QuestionnaireItem {
     return {
       linkId: input.linkId,
       text: input.text,
-      type: FHIRQuestionnaireItemType.decimal,
-      unit: input.unit,
+      type: 'decimal',
+      // unit: input.unit,
       required: input.required ?? true,
     }
   }
@@ -424,10 +423,10 @@ export abstract class QuestionnaireFactory<Input> {
     linkId: string
     text: string
     required?: boolean
-  }): FHIRQuestionnaireItem {
+  }): QuestionnaireItem {
     return {
       linkId: input.linkId,
-      type: FHIRQuestionnaireItemType.display,
+      type: 'display',
       text: input.text,
       required: input.required ?? false,
     }
@@ -436,15 +435,15 @@ export abstract class QuestionnaireFactory<Input> {
   protected pageItem(input: {
     linkId: string
     text: string
-    item: FHIRQuestionnaireItem[]
-    enableWhen?: FHIRQuestionnaireItemEnableWhen[]
-    enableBehavior?: FHIRQuestionnaireItemEnableBehavior
-    extension?: FHIRExtension[]
+    item: QuestionnaireItem[]
+    enableWhen?: QuestionnaireItemEnableWhen[]
+    enableBehavior?: 'all' | 'any'
+    extension?: Extension[]
     required?: boolean
-  }): FHIRQuestionnaireItem {
+  }): QuestionnaireItem {
     return {
       linkId: input.linkId,
-      type: FHIRQuestionnaireItemType.group,
+      type: 'group',
       extension: [
         ...(input.extension ?? []),
         {
@@ -472,15 +471,16 @@ export abstract class QuestionnaireFactory<Input> {
   protected questionnaire(input: {
     id: QuestionnaireId
     title: string
-    status?: FHIRQuestionnairePublicationStatus
-    item: FHIRQuestionnaireItem[]
-    useContext?: FHIRUsageContext[]
+    status?: QuestionnaireStatus
+    item: QuestionnaireItem[]
+    useContext?: UsageContext[]
   }): FHIRQuestionnaire {
     return new FHIRQuestionnaire({
+      resourceType: 'Questionnaire',
       id: input.id,
       title: input.title,
       language: 'en-US',
-      status: input.status ?? FHIRQuestionnairePublicationStatus.active,
+      status: input.status ?? 'active',
       publisher: 'Stanford Biodesign Digital Health',
       meta: {
         profile: [
@@ -509,9 +509,9 @@ export abstract class QuestionnaireFactory<Input> {
   protected radioButtonItem(input: {
     linkId: string
     text: string
-    answerOption: FHIRQuestionnaireItemAnswerOption[]
+    answerOption: QuestionnaireItemAnswerOption[]
     required?: boolean
-  }): FHIRQuestionnaireItem {
+  }): QuestionnaireItem {
     return {
       extension: [
         {
@@ -528,7 +528,7 @@ export abstract class QuestionnaireFactory<Input> {
         },
       ],
       linkId: input.linkId,
-      type: FHIRQuestionnaireItemType.choice,
+      type: 'choice',
       text: input.text,
       required: input.required ?? true,
       answerOption: input.answerOption,
@@ -542,7 +542,7 @@ export abstract class QuestionnaireFactory<Input> {
       code: string
       display: string
     }>
-  }): FHIRQuestionnaireItemAnswerOption[] {
+  }): QuestionnaireItemAnswerOption[] {
     return input.values.map((option) => ({
       valueCoding: {
         id: option.id ?? option.code,

@@ -34,9 +34,11 @@ export function createKccqQuestionnaireResponse(
   }
 
   return new FHIRQuestionnaireResponse({
+    resourceType: 'QuestionnaireResponse',
     id: input.questionnaireResponse,
+    status: 'completed',
     questionnaire: input.questionnaire,
-    authored: input.date,
+    authored: input.date.toISOString(),
     item: Object.entries(items).map((entry) => ({
       linkId: entry[0],
       answer: [

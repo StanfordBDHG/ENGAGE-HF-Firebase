@@ -7,13 +7,6 @@
 //
 
 import {
-  fhirAllergyIntoleranceConverter,
-  fhirAppointmentConverter,
-  fhirMedicationConverter,
-  fhirMedicationRequestConverter,
-  fhirObservationConverter,
-  fhirQuestionnaireConverter,
-  fhirQuestionnaireResponseConverter,
   invitationConverter,
   medicationClassConverter,
   organizationConverter,

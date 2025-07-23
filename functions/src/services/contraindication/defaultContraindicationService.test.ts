@@ -8,9 +8,9 @@
 
 import fs from 'fs'
 import {
+  AllergyIntoleranceCriticality,
+  AllergyIntoleranceType,
   FHIRAllergyIntolerance,
-  FHIRAllergyIntoleranceCriticality,
-  FHIRAllergyIntoleranceType,
   MedicationClassReference,
   MedicationReference,
 } from '@stanfordbdhg/engagehf-models'
@@ -29,13 +29,14 @@ describe('DefaultContraindicationService', () => {
     field: string,
     options: {
       reference: MedicationReference
-      type: FHIRAllergyIntoleranceType
-      criticality: FHIRAllergyIntoleranceCriticality
+      type?: AllergyIntoleranceType
+      criticality: AllergyIntoleranceCriticality
       category: ContraindicationCategory
     },
   ) {
     const contraindications = [
       FHIRAllergyIntolerance.create({
+        userId: 'testUser',
         type: options.type,
         criticality: options.criticality,
         reference: options.reference,
@@ -83,29 +84,29 @@ describe('DefaultContraindicationService', () => {
 
       check(fields[10], {
         reference: medicationReference,
-        type: FHIRAllergyIntoleranceType.allergy,
-        criticality: FHIRAllergyIntoleranceCriticality.low,
+        type: 'allergy',
+        criticality: 'low',
         category: ContraindicationCategory.allergyIntolerance,
       })
 
       check(fields[11], {
         reference: medicationReference,
-        type: FHIRAllergyIntoleranceType.allergy,
-        criticality: FHIRAllergyIntoleranceCriticality.high,
+        type: 'allergy',
+        criticality: 'high',
         category: ContraindicationCategory.severeAllergyIntolerance,
       })
 
       check(fields[12], {
         reference: medicationReference,
-        type: FHIRAllergyIntoleranceType.intolerance,
-        criticality: FHIRAllergyIntoleranceCriticality.low,
+        type: 'intolerance',
+        criticality: 'low',
         category: ContraindicationCategory.clinicianListed,
       })
 
       check(fields[14], {
         reference: medicationReference,
-        type: FHIRAllergyIntoleranceType.financial,
-        criticality: FHIRAllergyIntoleranceCriticality.low,
+        type: undefined,  // TODO: 'financial',
+        criticality: 'low',
         category: ContraindicationCategory.clinicianListed,
       })
     }

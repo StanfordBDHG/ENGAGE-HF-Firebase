@@ -16,9 +16,8 @@ import {
   type FHIRMedicationRequest,
   FHIRObservation,
   type FHIRQuestionnaireResponse,
-  type FHIRReference,
   type LoincCode,
-  type Observation,
+  type ObservationQuantity,
   QuantityUnit,
   type SymptomScore,
   type UserMedicationRecommendation,
@@ -26,6 +25,7 @@ import {
   UserObservationCollection,
   type UserShareCode,
 } from '@stanfordbdhg/engagehf-models'
+import { Reference } from 'fhir/r4b.js'
 import {
   FieldValue,
   type QueryDocumentSnapshot,

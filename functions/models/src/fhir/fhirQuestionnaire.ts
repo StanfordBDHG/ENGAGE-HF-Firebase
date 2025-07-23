@@ -8,7 +8,7 @@
 
 import { Questionnaire } from 'fhir/r4b.js'
 import { FHIRResource } from './fhirResource.js'
-import { questionnaireSchema } from 'spezi-firebase-fhir'
+import { questionnaireSchema } from '@stanfordspezi/spezi-firebase-fhir'
 import { FHIRSchemaConverter } from '../helpers/fhirSchemaConverter.js'
 
 export class FHIRQuestionnaire extends FHIRResource<Questionnaire> {}

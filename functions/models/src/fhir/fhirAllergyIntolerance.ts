@@ -12,25 +12,22 @@ import { AllergyIntolerance } from 'fhir/r4b.js'
 import { FHIRResource } from './fhirResource.js'
 import {
   AllergyIntoleranceCriticality,
-  allergyIntoleranceSchema,
   AllergyIntoleranceType,
-} from 'spezi-firebase-fhir'
-import { FHIRSchemaConverter } from '../helpers/fhirSchemaConverter.js'
-import { ZodType } from 'zod/v4'
+} from '@stanfordspezi/spezi-firebase-fhir'
 
 export class FHIRAllergyIntolerance extends FHIRResource<AllergyIntolerance> {
   // Static Functions
 
   static create(input: {
-    type: AllergyIntoleranceType
+    type?: AllergyIntoleranceType
     criticality?: AllergyIntoleranceCriticality
     reference: MedicationReference
-    userId: string
+    userId?: string
   }): FHIRAllergyIntolerance {
     return new FHIRAllergyIntolerance({
       resourceType: 'AllergyIntolerance',
       patient: {
-        reference: `users/${input.userId}`,
+        reference: input.userId ? `users/${input.userId}` : undefined,
       },
       type: input.type,
       criticality: input.criticality,
@@ -51,14 +48,3 @@ export class FHIRAllergyIntolerance extends FHIRResource<AllergyIntolerance> {
     return this.codes(this.data.code, { system: CodingSystem.rxNorm })
   }
 }
-
-const schema: ZodType<AllergyIntolerance> = allergyIntoleranceSchema
-/*
-export const allergyIntoleranceConverter =
-  new FHIRSchemaConverter<FHIRAllergyIntolerance>({
-    schema: allergyIntoleranceSchema.transform(
-      (data) => new FHIRAllergyIntolerance(data),
-    ),
-    nullProperties: [],
-  })
-    */

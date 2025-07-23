@@ -8,10 +8,7 @@
 
 import {
   FHIRAppointment,
-  fhirAppointmentConverter,
-  FHIRAppointmentStatus,
   FHIRObservation,
-  fhirObservationConverter,
   Invitation,
   LoincCode,
   QuantityUnit,
@@ -65,10 +62,11 @@ describeWithEmulators('function: enrollUser', (env) => {
     await invitationRef.set(invitation)
 
     const expectedAppointment = new FHIRAppointment({
-      status: FHIRAppointmentStatus.booked,
-      created: new Date('2023-12-24'),
-      start: new Date('2023-12-31'),
-      end: new Date('2024-01-01'),
+      resourceType: 'Appointment',
+      status: 'booked',
+      created: new Date('2023-12-24').toISOString(),
+      start: new Date('2023-12-31').toISOString(),
+      end: new Date('2024-01-01').toISOString(),
       participant: [],
     })
 
@@ -184,10 +182,11 @@ describeWithEmulators('function: enrollUser', (env) => {
     await invitationRef.set(invitation)
 
     const expectedAppointment = new FHIRAppointment({
-      status: FHIRAppointmentStatus.booked,
-      created: new Date('2023-12-24'),
-      start: new Date('2023-12-31'),
-      end: new Date('2024-01-01'),
+      resourceType: 'Appointment',
+      status: 'booked',
+      created: new Date('2023-12-24').toISOString(),
+      start: new Date('2023-12-31').toISOString(),
+      end: new Date('2024-01-01').toISOString(),
       participant: [],
     })
 

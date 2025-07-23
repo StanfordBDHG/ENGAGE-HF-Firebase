@@ -10,7 +10,6 @@ import {
   UserMessageType,
   UserType,
   FHIRAppointment,
-  FHIRAppointmentStatus,
   advanceDateByHours,
 } from '@stanfordbdhg/engagehf-models'
 import { type DocumentReference } from 'firebase-admin/firestore'
@@ -99,7 +98,6 @@ describeWithEmulators('onUserAppointmentWritten', (env) => {
     const appointment = FHIRAppointment.create({
       userId: patientId,
       created: now,
-      status: FHIRAppointmentStatus.booked,
       start: advanceDateByHours(now, 23),
       durationInMinutes: 60,
     })
@@ -123,7 +121,6 @@ describeWithEmulators('onUserAppointmentWritten', (env) => {
     const lateAppointment = FHIRAppointment.create({
       userId: patientId,
       created: now,
-      status: FHIRAppointmentStatus.booked,
       start: advanceDateByHours(now, 25),
       durationInMinutes: 60,
     })
@@ -173,7 +170,6 @@ describeWithEmulators('onUserAppointmentWritten', (env) => {
     const appointment = FHIRAppointment.create({
       userId: patientId,
       created: now,
-      status: FHIRAppointmentStatus.booked,
       start: advanceDateByHours(now, 23),
       durationInMinutes: 60,
     })
@@ -193,7 +189,6 @@ describeWithEmulators('onUserAppointmentWritten', (env) => {
     const laterAppointment = FHIRAppointment.create({
       userId: patientId,
       created: now,
-      status: FHIRAppointmentStatus.booked,
       start: advanceDateByHours(now, 25),
       durationInMinutes: 60,
     })

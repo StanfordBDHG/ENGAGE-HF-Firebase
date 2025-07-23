@@ -107,7 +107,7 @@ export class SeedingService {
     schema: Schema,
   ): Record<string, z.output<Schema>> {
     return z
-      .record(schema)
+      .record(z.string(), schema)
       .parse(
         JSON.parse(fs.readFileSync(this.path + filename, 'utf8')),
       ) as Record<string, z.output<Schema>>
