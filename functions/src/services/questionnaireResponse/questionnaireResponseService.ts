@@ -230,7 +230,7 @@ export abstract class QuestionnaireResponseService {
         collection: UserObservationCollection.creatinine,
       })
       logger.info(
-        `${typeof this}.handleLabValues(${input.userId}): Found creatinine value.`,
+        `${this.constructor.name}.handleLabValues(${input.userId}): Found creatinine value.`,
       )
 
       if (input.dateOfBirth !== null && input.sex !== null) {
@@ -249,7 +249,7 @@ export abstract class QuestionnaireResponseService {
           collection: UserObservationCollection.eGfr,
         })
         logger.info(
-          `${typeof this}.handleLabValues(${input.userId}): Calculated eGfr.`,
+          `${this.constructor.name}.handleLabValues(${input.userId}): Calculated eGfr.`,
         )
       } else {
         logger.error(
@@ -269,7 +269,7 @@ export abstract class QuestionnaireResponseService {
         collection: UserObservationCollection.dryWeight,
       })
       logger.info(
-        `${typeof this}.handleLabValues(${input.userId}): Found dry weight.`,
+        `${this.constructor.name}.handleLabValues(${input.userId}): Found dry weight.`,
       )
     }
 
@@ -284,7 +284,7 @@ export abstract class QuestionnaireResponseService {
         collection: UserObservationCollection.potassium,
       })
       logger.info(
-        `${typeof this}.handleLabValues(${input.userId}): Found potassium.`,
+        `${this.constructor.name}.handleLabValues(${input.userId}): Found potassium.`,
       )
     }
 
@@ -298,7 +298,7 @@ export abstract class QuestionnaireResponseService {
         },
       )
       logger.info(
-        `${typeof this}.handleLabValues(${input.userId}): Successfully stored ${observationValues.length} observations.`,
+        `${this.constructor.name}.handleLabValues(${input.userId}): Successfully stored ${observationValues.length} observations.`,
       )
     }
   }
@@ -315,7 +315,7 @@ export abstract class QuestionnaireResponseService {
       medicationClassesForGroup,
     )
     logger.info(
-      `${typeof this}.handleMedicationRequests(${input.userId}): About to store ${medicationExtraction.requests.length} medication requests and ignore ${medicationClasses.length} medication classes.`,
+      `${this.constructor.name}.handleMedicationRequests(${input.userId}): About to store ${medicationExtraction.requests.length} medication requests and ignore ${medicationClasses.length} medication classes.`,
     )
     await input.patientService.replaceMedicationRequests(
       input.userId,
@@ -343,7 +343,7 @@ export abstract class QuestionnaireResponseService {
       : undefined,
     )
     logger.info(
-      `${typeof this}.handleMedicationRequests(${input.userId}): Successfully stored medication requests.`,
+      `${this.constructor.name}.handleMedicationRequests(${input.userId}): Successfully stored medication requests.`,
     )
   }
 

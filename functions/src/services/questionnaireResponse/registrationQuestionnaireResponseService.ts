@@ -55,19 +55,19 @@ export class RegistrationQuestionnaireResponseService extends QuestionnaireRespo
     const urls = [QuestionnaireLinkId.url(QuestionnaireId.registration)]
     if (!urls.includes(response.content.questionnaire)) {
       logger.info(
-        `${typeof this}.handle(${userId}): Url ${response.content.questionnaire} is not a registration questionnaire, skipping.`,
+        `${this.constructor.name}.handle(${userId}): Url ${response.content.questionnaire} is not a registration questionnaire, skipping.`,
       )
       return false
     }
 
     const personalInfo = this.extractPersonalInfo(response.content)
     logger.info(
-      `${typeof this}.handle(${userId}): Extracted personal info: ${personalInfo !== null}`,
+      `${this.constructor.name}.handle(${userId}): Extracted personal info: ${personalInfo !== null}`,
     )
     if (personalInfo !== null) {
       await this.userService.updatePersonalInfo(userId, personalInfo)
       logger.info(
-        `${typeof this}.handle(${userId}): Successfully updated personal info.`,
+        `${this.constructor.name}.handle(${userId}): Successfully updated personal info.`,
       )
     }
 
@@ -88,18 +88,18 @@ export class RegistrationQuestionnaireResponseService extends QuestionnaireRespo
 
     const appointment = this.extractAppointment(userId, response.content)
     logger.info(
-      `${typeof this}.handle(${userId}): Extracted appointment: ${appointment !== null}`,
+      `${this.constructor.name}.handle(${userId}): Extracted appointment: ${appointment !== null}`,
     )
     if (appointment !== null) {
       await this.patientService.createAppointment(userId, appointment)
       logger.info(
-        `${typeof this}.handle(${userId}): Successfully created appointment`,
+        `${this.constructor.name}.handle(${userId}): Successfully created appointment`,
       )
     }
 
     if (options.isNew) {
       logger.info(
-        `${typeof this}.handle(${userId}): About to complete registration questionnaire messages.`,
+        `${this.constructor.name}.handle(${userId}): About to complete registration questionnaire messages.`,
       )
       await this.messageService.completeMessages(
         userId,

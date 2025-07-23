@@ -62,7 +62,7 @@ export class DataUpdateQuestionnaireResponseService extends QuestionnaireRespons
     ]
     if (!urls.includes(response.content.questionnaire)) {
       logger.info(
-        `${typeof this}.handle(${userId}): Url ${response.content.questionnaire} is not a data update / post appointment questionnaire, skipping.`,
+        `${this.constructor.name}.handle(${userId}): Url ${response.content.questionnaire} is not a data update / post appointment questionnaire, skipping.`,
       )
       return false
     }
@@ -92,12 +92,12 @@ export class DataUpdateQuestionnaireResponseService extends QuestionnaireRespons
 
     const appointment = this.extractAppointment(userId, response.content)
     logger.info(
-      `${typeof this}.handle(${userId}): Extracted appointment: ${appointment !== null}`,
+      `${this.constructor.name}.handle(${userId}): Extracted appointment: ${appointment !== null}`,
     )
     if (appointment !== null) {
       await this.patientService.createAppointment(userId, appointment)
       logger.info(
-        `${typeof this}.handle(${userId}): Successfully created appointment`,
+        `${this.constructor.name}.handle(${userId}): Successfully created appointment`,
       )
     }
 
@@ -106,7 +106,7 @@ export class DataUpdateQuestionnaireResponseService extends QuestionnaireRespons
       response.content.questionnaire === postAppointmentUrl
     ) {
       logger.info(
-        `${typeof this}.handle(${userId}): About to complete post appointment questionnaire messages.`,
+        `${this.constructor.name}.handle(${userId}): About to complete post appointment questionnaire messages.`,
       )
       await this.messageService.completeMessages(
         userId,
