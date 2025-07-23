@@ -170,17 +170,14 @@ export class StaticDataService extends SeedingService {
       () =>
         this.readJSONRecord(
           questionnairesFile,
-          fhirQuestionnaireConverter.value.schema,
+          fhirQuestionnaireConverter.schema,
         ),
       async () => this.generateQuestionnaires(),
       (result) =>
         this.writeJSON(
           'questionnaires.json',
           Object.fromEntries(
-            Object.entries(result).map(([key, value]) => [
-              key,
-              fhirQuestionnaireConverter.value.encode(value),
-            ]),
+            Object.entries(result).map(([key, value]) => [key, value.data]),
           ),
         ),
     )
@@ -234,11 +231,11 @@ export class StaticDataService extends SeedingService {
       () => ({
         medications: this.readJSONRecord(
           medicationsFile,
-          fhirMedicationConverter.value.schema,
+          fhirMedicationConverter.schema,
         ),
         drugs: this.readJSONRecord(
           drugsFile,
-          z.record(fhirMedicationConverter.value.schema),
+          z.record(z.string(), fhirMedicationConverter.schema),
         ),
       }),
       async () => {

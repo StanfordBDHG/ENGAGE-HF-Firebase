@@ -62,7 +62,7 @@ describeWithEmulators('DataUpdateQuestionnaireResponseService', (env) => {
     const ref = env.collections.userQuestionnaireResponses(userId).doc()
     await env.setWithTrigger(onUserQuestionnaireResponseWritten, {
       ref,
-      data: fhirQuestionnaireResponseConverter.value.schema.parse(
+      data: fhirQuestionnaireResponseConverter.schema.parse(
         dataUpdateResponseApple,
       ),
       params: {
@@ -82,8 +82,8 @@ describeWithEmulators('DataUpdateQuestionnaireResponseService', (env) => {
 
     const valsartan = medicationRequestsData.find(
       (req) =>
-        req.medicationReference?.reference === 'medications/69749/drugs/349201',
-    )
+        req.data.medicationReference?.reference === 'medications/69749/drugs/349201',
+    )?.data
     expect(valsartan).toBeDefined()
     expect(valsartan?.dosageInstruction?.length).toBe(1)
     const valsartanDosageInstruction = valsartan?.dosageInstruction?.at(0)
@@ -94,9 +94,9 @@ describeWithEmulators('DataUpdateQuestionnaireResponseService', (env) => {
 
     const bexagliflozin = medicationRequestsData.find(
       (req) =>
-        req.medicationReference?.reference ===
+        req.data.medicationReference?.reference ===
         'medications/2627044/drugs/2637859',
-    )
+    )?.data
     expect(bexagliflozin).toBeDefined()
     expect(bexagliflozin?.dosageInstruction?.length).toBe(1)
     const bexagliflozinDosageInstruction =
@@ -109,8 +109,8 @@ describeWithEmulators('DataUpdateQuestionnaireResponseService', (env) => {
 
     const furosemide = medicationRequestsData.find(
       (req) =>
-        req.medicationReference?.reference === DrugReference.furosemide20,
-    )
+        req.data.medicationReference?.reference === DrugReference.furosemide20,
+    )?.data
     expect(furosemide).toBeDefined()
     expect(furosemide?.dosageInstruction?.length).toBe(1)
     const furosemideDosageInstruction = furosemide?.dosageInstruction?.at(0)
@@ -147,7 +147,7 @@ describeWithEmulators('DataUpdateQuestionnaireResponseService', (env) => {
 
     const appointments = await env.collections.userAppointments(userId).get()
     expect(appointments.size).toBe(1)
-    expect(appointments.docs[0].data().start.toISOString()).toBe(
+    expect(appointments.docs[0].data().startDate?.toISOString()).toBe(
       '2025-05-14T12:00:00.000Z',
     )
   })
@@ -191,7 +191,7 @@ describeWithEmulators('DataUpdateQuestionnaireResponseService', (env) => {
     const ref = env.collections.userQuestionnaireResponses(userId).doc()
     await env.setWithTrigger(onUserQuestionnaireResponseWritten, {
       ref,
-      data: fhirQuestionnaireResponseConverter.value.schema.parse(
+      data: fhirQuestionnaireResponseConverter.schema.parse(
         postAppointmentResponseAndroid,
       ),
       params: {
@@ -210,9 +210,9 @@ describeWithEmulators('DataUpdateQuestionnaireResponseService', (env) => {
 
     const sacubitrilValsartan = medicationRequestsData.find(
       (req) =>
-        req.medicationReference?.reference ===
+        req.data.medicationReference?.reference ===
         'medications/1656339/drugs/1656349',
-    )
+    )?.data
     expect(sacubitrilValsartan).toBeDefined()
     expect(sacubitrilValsartan?.dosageInstruction?.length).toBe(1)
     const sacubitrilValsartanDosageInstruction =
@@ -227,9 +227,9 @@ describeWithEmulators('DataUpdateQuestionnaireResponseService', (env) => {
 
     const empagliflozin = medicationRequestsData.find(
       (req) =>
-        req.medicationReference?.reference ===
+        req.data.medicationReference?.reference ===
         'medications/1545653/drugs/1545658',
-    )
+    )?.data
     expect(empagliflozin).toBeDefined()
     expect(empagliflozin?.dosageInstruction?.length).toBe(1)
     const empagliflozinDosageInstruction =
@@ -269,7 +269,7 @@ describeWithEmulators('DataUpdateQuestionnaireResponseService', (env) => {
 
     const appointments = await env.collections.userAppointments(userId).get()
     expect(appointments.size).toBe(1)
-    expect(appointments.docs[0].data().start.toDateString()).toBe(
+    expect(appointments.docs[0].data().startDate?.toDateString()).toBe(
       new Date('2025-07-12').toDateString(),
     )
   })

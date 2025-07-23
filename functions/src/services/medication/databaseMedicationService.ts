@@ -9,9 +9,9 @@
 import {
   type FHIRMedication,
   type FHIRMedicationRequest,
-  type FHIRReference,
   type MedicationClass,
 } from '@stanfordbdhg/engagehf-models'
+import { Reference } from 'fhir/r4b.js'
 import { type MedicationService } from './medicationService.js'
 import { type MedicationRequestContext } from '../../models/medicationRequestContext.js'
 import {
@@ -35,13 +35,13 @@ export class DatabaseMedicationService implements MedicationService {
   async getContext(
     request: Document<FHIRMedicationRequest>,
   ): Promise<MedicationRequestContext> {
-    const drugReference = request.content.medicationReference
+    const drugReference = request.content.data.medicationReference
     if (drugReference === undefined) throw new Error('Drug reference not found')
     const drug = (await this.getReference(drugReference))?.content
     if (drug === undefined)
       throw new Error(`Drug not found at ${drugReference.reference}`)
-    const medicationReference: FHIRReference = {
-      reference: drugReference.reference.split('/').slice(0, 2).join('/'),
+    const medicationReference: Reference = {
+      reference: drugReference.reference?.split('/').slice(0, 2).join('/'),
     }
     const medication = (await this.getReference(medicationReference))?.content
     medicationReference.display = medication?.displayName
@@ -126,20 +126,22 @@ export class DatabaseMedicationService implements MedicationService {
   // References
 
   async getClassReference(
-    reference: FHIRReference | undefined,
+    reference: Reference | undefined,
   ): Promise<Document<MedicationClass> | undefined> {
-    if (!reference?.reference) return undefined
+    const doc = reference?.reference
+    if (!doc) return undefined
     return this.databaseService.getDocument<MedicationClass>((collections) =>
-      collections.medicationClassReference(reference.reference),
+      collections.medicationClassReference(doc),
     )
   }
 
   async getReference(
-    reference: FHIRReference | undefined,
+    reference: Reference | undefined,
   ): Promise<Document<FHIRMedication> | undefined> {
-    if (!reference?.reference) return undefined
+    const doc = reference?.reference
+    if (!doc) return undefined
     return this.databaseService.getDocument<FHIRMedication>((collections) =>
-      collections.medicationReference(reference.reference),
+      collections.medicationReference(doc),
     )
   }
 }

@@ -54,7 +54,7 @@ export class KccqQuestionnaireResponseService extends QuestionnaireResponseServi
     options: { isNew: boolean },
   ): Promise<boolean> {
     const urls = [QuestionnaireLinkId.url(QuestionnaireId.kccq)]
-    if (!urls.includes(response.content.questionnaire)) return false
+    if (!urls.includes(response.content.data.questionnaire ?? '')) return false
 
     const symptomScore = this.symptomScore(response.content)
     if (symptomScore === null) return false
@@ -126,7 +126,7 @@ export class KccqQuestionnaireResponseService extends QuestionnaireResponseServi
     }
 
     return new SymptomScore({
-      date: response.authored ?? new Date(),
+      date: response.authoredDate ?? new Date(),
       ...this.symptomScoreCalculator.calculate(input),
     })
   }

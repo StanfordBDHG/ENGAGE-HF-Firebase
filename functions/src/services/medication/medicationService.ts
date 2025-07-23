@@ -9,9 +9,9 @@
 import {
   type FHIRMedication,
   type FHIRMedicationRequest,
-  type FHIRReference,
   type MedicationClass,
 } from '@stanfordbdhg/engagehf-models'
+import { Reference } from 'fhir/r4b.js'
 import { type MedicationRequestContext } from '../../models/medicationRequestContext.js'
 import { type Document } from '../database/databaseService.js'
 
@@ -49,10 +49,10 @@ export interface MedicationService {
   // References
 
   getClassReference(
-    reference: FHIRReference | undefined,
+    reference: Reference | undefined,
   ): Promise<Document<MedicationClass> | undefined>
 
   getReference(
-    reference: FHIRReference | undefined,
+    reference: Reference | undefined,
   ): Promise<Document<FHIRMedication> | undefined>
 }

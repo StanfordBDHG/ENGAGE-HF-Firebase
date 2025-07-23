@@ -9,7 +9,10 @@
 import { fhirQuestionnaireResponseConverter } from '@stanfordbdhg/engagehf-models'
 import { onDocumentWritten } from 'firebase-functions/firestore'
 import { Env } from '../env.js'
-import { DatabaseConverter } from '../services/database/databaseConverter.js'
+import {
+  DatabaseConverter,
+  FHIRDatabaseConverter,
+} from '../services/database/databaseConverter.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
 export const onUserQuestionnaireResponseWritten = onDocumentWritten(
@@ -20,8 +23,8 @@ export const onUserQuestionnaireResponseWritten = onDocumentWritten(
   async (event) => {
     const beforeData = event.data?.before
     const afterData = event.data?.after
-    const converter = new DatabaseConverter(
-      fhirQuestionnaireResponseConverter.value,
+    const converter = new FHIRDatabaseConverter(
+      fhirQuestionnaireResponseConverter,
     )
     const factory = getServiceFactory()
     const triggerService = factory.trigger()

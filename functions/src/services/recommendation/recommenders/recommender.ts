@@ -10,7 +10,7 @@ import {
   median,
   type MedicationClassReference,
   type MedicationReference,
-  type Observation,
+  type ObservationQuantity,
   QuantityUnit,
   type UserMedicationRecommendationType,
 } from '@stanfordbdhg/engagehf-models'
@@ -96,7 +96,9 @@ export abstract class Recommender {
     )
   }
 
-  protected medianValue(observations: Observation[]): number | undefined {
+  protected medianValue(
+    observations: ObservationQuantity[],
+  ): number | undefined {
     if (observations.length < 3) return undefined
     return median(observations.map((observation) => observation.value)) ?? 0
   }
@@ -105,7 +107,7 @@ export abstract class Recommender {
     const dailyDoses: number[] = []
     for (const context of contexts) {
       let numberOfTabletsPerDay = 0
-      for (const instruction of context.request.dosageInstruction ?? []) {
+      for (const instruction of context.request.data.dosageInstruction ?? []) {
         const intakesPerDay = instruction.timing?.repeat?.frequency ?? 0
         for (const dose of instruction.doseAndRate ?? []) {
           const numberOfPills = dose.doseQuantity?.value
@@ -115,7 +117,7 @@ export abstract class Recommender {
         }
       }
 
-      const ingredients = context.drug.ingredient ?? []
+      const ingredients = context.drug.data.ingredient ?? []
 
       while (dailyDoses.length < ingredients.length) {
         dailyDoses.push(0)

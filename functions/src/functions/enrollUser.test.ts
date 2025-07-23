@@ -8,10 +8,7 @@
 
 import {
   FHIRAppointment,
-  fhirAppointmentConverter,
-  FHIRAppointmentStatus,
   FHIRObservation,
-  fhirObservationConverter,
   Invitation,
   LoincCode,
   QuantityUnit,
@@ -21,6 +18,8 @@ import {
   UserType,
   UserObservationCollection,
   QuestionnaireReference,
+  fhirAppointmentConverter,
+  fhirObservationConverter,
 } from '@stanfordbdhg/engagehf-models'
 import { enrollUser } from './enrollUser.js'
 import { QuestionnaireId } from '../services/seeding/staticData/questionnaireFactory/questionnaireLinkIds.js'
@@ -65,10 +64,11 @@ describeWithEmulators('function: enrollUser', (env) => {
     await invitationRef.set(invitation)
 
     const expectedAppointment = new FHIRAppointment({
-      status: FHIRAppointmentStatus.booked,
-      created: new Date('2023-12-24'),
-      start: new Date('2023-12-31'),
-      end: new Date('2024-01-01'),
+      resourceType: 'Appointment',
+      status: 'booked',
+      created: new Date('2023-12-24').toISOString(),
+      start: new Date('2023-12-31').toISOString(),
+      end: new Date('2024-01-01').toISOString(),
       participant: [],
     })
 
@@ -123,10 +123,8 @@ describeWithEmulators('function: enrollUser', (env) => {
     if (actualAppointment === undefined) {
       fail('actualAppointment is undefined')
     } else {
-      expect(
-        fhirAppointmentConverter.value.encode(actualAppointment),
-      ).toStrictEqual(
-        fhirAppointmentConverter.value.encode(expectedAppointment),
+      expect(fhirAppointmentConverter.encode(actualAppointment)).toStrictEqual(
+        fhirAppointmentConverter.encode(expectedAppointment),
       )
     }
 
@@ -139,9 +137,9 @@ describeWithEmulators('function: enrollUser', (env) => {
       fail('actualObservation is undefined')
     } else {
       expect(
-        fhirObservationConverter.value.encode(actualObservation),
+        fhirObservationConverter.encode(actualObservation),
       ).toStrictEqual(
-        fhirObservationConverter.value.encode(expectedObservation),
+        fhirObservationConverter.encode(expectedObservation),
       )
     }
 
@@ -184,10 +182,11 @@ describeWithEmulators('function: enrollUser', (env) => {
     await invitationRef.set(invitation)
 
     const expectedAppointment = new FHIRAppointment({
-      status: FHIRAppointmentStatus.booked,
-      created: new Date('2023-12-24'),
-      start: new Date('2023-12-31'),
-      end: new Date('2024-01-01'),
+      resourceType: 'Appointment',
+      status: 'booked',
+      created: new Date('2023-12-24').toISOString(),
+      start: new Date('2023-12-31').toISOString(),
+      end: new Date('2024-01-01').toISOString(),
       participant: [],
     })
 
@@ -243,9 +242,9 @@ describeWithEmulators('function: enrollUser', (env) => {
       fail('actualAppointment is undefined')
     } else {
       expect(
-        fhirAppointmentConverter.value.encode(actualAppointment),
+        fhirAppointmentConverter.encode(actualAppointment),
       ).toStrictEqual(
-        fhirAppointmentConverter.value.encode(expectedAppointment),
+        fhirAppointmentConverter.encode(expectedAppointment),
       )
     }
 
@@ -258,9 +257,9 @@ describeWithEmulators('function: enrollUser', (env) => {
       fail('actualObservation is undefined')
     } else {
       expect(
-        fhirObservationConverter.value.encode(actualObservation),
+        fhirObservationConverter.encode(actualObservation),
       ).toStrictEqual(
-        fhirObservationConverter.value.encode(expectedObservation),
+        fhirObservationConverter.encode(expectedObservation),
       )
     }
 

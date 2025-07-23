@@ -7,7 +7,7 @@
 //
 
 import {
-  type Observation,
+  type ObservationQuantity,
   type QuantityUnit,
   type FHIRAllergyIntolerance,
   type FHIRAppointment,
@@ -18,9 +18,9 @@ import {
   type UserShareCode,
   type UserObservationCollection,
   type LoincCode,
-  type FHIRReference,
 } from '@stanfordbdhg/engagehf-models'
 import { type Document } from '../database/databaseService.js'
+import { Reference } from 'fhir/r4b.js'
 
 export interface PatientService {
   // Appointments
@@ -67,39 +67,39 @@ export interface PatientService {
   getBloodPressureObservations(
     userId: string,
     cutoffDate: Date,
-  ): Promise<[Observation[], Observation[]]>
+  ): Promise<[ObservationQuantity[], ObservationQuantity[]]>
   getBodyWeightObservations(
     userId: string,
     unit: QuantityUnit,
     cutoffDate: Date,
-  ): Promise<Observation[]>
+  ): Promise<ObservationQuantity[]>
   getHeartRateObservations(
     userId: string,
     cutoffDate: Date,
-  ): Promise<Observation[]>
+  ): Promise<ObservationQuantity[]>
 
   getMostRecentCreatinineObservation(
     userId: string,
-  ): Promise<Observation | undefined>
+  ): Promise<ObservationQuantity | undefined>
   getMostRecentDryWeightObservation(
     userId: string,
     unit: QuantityUnit,
-  ): Promise<Observation | undefined>
+  ): Promise<ObservationQuantity | undefined>
   getMostRecentEstimatedGlomerularFiltrationRateObservation(
     userId: string,
-  ): Promise<Observation | undefined>
+  ): Promise<ObservationQuantity | undefined>
   getMostRecentPotassiumObservation(
     userId: string,
-  ): Promise<Observation | undefined>
+  ): Promise<ObservationQuantity | undefined>
 
   createObservations(
     userId: string,
     values: Array<{
-      observation: Observation
+      observation: ObservationQuantity
       loincCode: LoincCode
       collection: UserObservationCollection
     }>,
-    reference: FHIRReference | null,
+    reference: Reference | null,
   ): Promise<void>
 
   // Questionnaire Responses
