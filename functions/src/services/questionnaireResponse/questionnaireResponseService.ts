@@ -49,6 +49,7 @@ export abstract class QuestionnaireResponseService {
   // Methods - Extract
 
   protected extractAppointment(
+    userId: string,
     response: FHIRQuestionnaireResponse,
   ): FHIRAppointment | null {
     const linkIds = QuestionnaireLinkId.appointment
@@ -64,7 +65,7 @@ export abstract class QuestionnaireResponseService {
     if (dateAnswer === undefined) return null
 
     return FHIRAppointment.create({
-      userId: '',
+      userId,
       created: new Date(),
       start: new Date(dateAnswer),
       durationInMinutes: 30,
@@ -226,6 +227,9 @@ export abstract class QuestionnaireResponseService {
         loincCode: LoincCode.creatinine,
         collection: UserObservationCollection.creatinine,
       })
+      logger.info(
+        `${this.constructor.name}.handleLabValues(${input.userId}): Found creatinine value.`,
+      )
 
       if (input.dateOfBirth !== null && input.sex !== null) {
         const age = this.calculateAge(input.dateOfBirth, creatinine.date)
@@ -242,6 +246,9 @@ export abstract class QuestionnaireResponseService {
           loincCode: LoincCode.estimatedGlomerularFiltrationRate,
           collection: UserObservationCollection.eGfr,
         })
+        logger.info(
+          `${this.constructor.name}.handleLabValues(${input.userId}): Calculated eGfr.`,
+        )
       } else {
         logger.error(
           `Missing date of birth or user sex for eGFR calculation for user ${input.userId}.`,
@@ -259,6 +266,9 @@ export abstract class QuestionnaireResponseService {
         loincCode: LoincCode.dryWeight,
         collection: UserObservationCollection.dryWeight,
       })
+      logger.info(
+        `${this.constructor.name}.handleLabValues(${input.userId}): Found dry weight.`,
+      )
     }
 
     const potassium = this.extractLabValue(input.response.content, {
@@ -271,6 +281,9 @@ export abstract class QuestionnaireResponseService {
         loincCode: LoincCode.potassium,
         collection: UserObservationCollection.potassium,
       })
+      logger.info(
+        `${this.constructor.name}.handleLabValues(${input.userId}): Found potassium.`,
+      )
     }
 
     if (observationValues.length > 0) {
@@ -282,10 +295,13 @@ export abstract class QuestionnaireResponseService {
           reference: input.response.path,
         },
       )
+      logger.info(
+        `${this.constructor.name}.handleLabValues(${input.userId}): Successfully stored ${observationValues.length} observations.`,
+      )
     }
   }
 
-  protected handleMedicationRequests(input: {
+  protected async handleMedicationRequests(input: {
     userId: string
     patientService: PatientService
     response: Document<FHIRQuestionnaireResponse>
@@ -296,7 +312,10 @@ export abstract class QuestionnaireResponseService {
     const medicationClasses = medicationExtraction.keepUnchanged.flatMap(
       medicationClassesForGroup,
     )
-    return input.patientService.replaceMedicationRequests(
+    logger.info(
+      `${this.constructor.name}.handleMedicationRequests(${input.userId}): About to store ${medicationExtraction.requests.length} medication requests and ignore ${medicationClasses.length} medication classes.`,
+    )
+    await input.patientService.replaceMedicationRequests(
       input.userId,
       medicationExtraction.requests,
       medicationClasses.length > 0 ?
@@ -321,6 +340,9 @@ export abstract class QuestionnaireResponseService {
           return medicationClasses.includes(medicationClassReference(reference))
         }
       : undefined,
+    )
+    logger.info(
+      `${this.constructor.name}.handleMedicationRequests(${input.userId}): Successfully stored medication requests.`,
     )
   }
 

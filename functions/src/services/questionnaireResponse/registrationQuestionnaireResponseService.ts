@@ -10,6 +10,7 @@ import {
   UserMessageType,
   type FHIRQuestionnaireResponse,
 } from '@stanfordbdhg/engagehf-models'
+import { logger } from 'firebase-functions/v2'
 import { QuestionnaireResponseService } from './questionnaireResponseService.js'
 import { type Document } from '../database/databaseService.js'
 import { type MessageService } from '../message/messageService.js'
@@ -52,11 +53,22 @@ export class RegistrationQuestionnaireResponseService extends QuestionnaireRespo
     options: { isNew: boolean },
   ): Promise<boolean> {
     const urls = [QuestionnaireLinkId.url(QuestionnaireId.registration)]
-    if (!urls.includes(response.content.questionnaire)) return false
+    if (!urls.includes(response.content.questionnaire)) {
+      logger.info(
+        `${this.constructor.name}.handle(${userId}): Url ${response.content.questionnaire} is not a registration questionnaire, skipping.`,
+      )
+      return false
+    }
 
     const personalInfo = this.extractPersonalInfo(response.content)
+    logger.info(
+      `${this.constructor.name}.handle(${userId}): Extracted personal info: ${personalInfo !== null}`,
+    )
     if (personalInfo !== null) {
       await this.userService.updatePersonalInfo(userId, personalInfo)
+      logger.info(
+        `${this.constructor.name}.handle(${userId}): Successfully updated personal info.`,
+      )
     }
 
     await this.handleLabValues({
@@ -74,12 +86,21 @@ export class RegistrationQuestionnaireResponseService extends QuestionnaireRespo
       patientService: this.patientService,
     })
 
-    const appointment = this.extractAppointment(response.content)
+    const appointment = this.extractAppointment(userId, response.content)
+    logger.info(
+      `${this.constructor.name}.handle(${userId}): Extracted appointment: ${appointment !== null}`,
+    )
     if (appointment !== null) {
       await this.patientService.createAppointment(userId, appointment)
+      logger.info(
+        `${this.constructor.name}.handle(${userId}): Successfully created appointment`,
+      )
     }
 
     if (options.isNew) {
+      logger.info(
+        `${this.constructor.name}.handle(${userId}): About to complete registration questionnaire messages.`,
+      )
       await this.messageService.completeMessages(
         userId,
         UserMessageType.registrationQuestionnaire,
