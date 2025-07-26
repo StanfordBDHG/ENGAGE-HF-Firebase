@@ -35,6 +35,7 @@ export class DataUpdateQuestionnaireFactory extends QuestionnaireFactory<DataUpd
         ...this.medicationInputPages({
           medications: input.medications,
           drugs: input.drugs,
+          isRegistration: false,
         }),
         ...this.appointmentInputPages(),
       ],

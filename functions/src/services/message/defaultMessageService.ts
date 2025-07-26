@@ -9,7 +9,7 @@
 import {
   advanceDateByDays,
   compact,
-  dateConverter,
+  dateTimeConverter,
   type User,
   type UserDevice,
   type UserDevicePlatform,
@@ -537,7 +537,7 @@ export class DefaultMessageService implements MessageService {
     transaction: FirebaseFirestore.Transaction,
   ) {
     transaction.update(ref, {
-      completionDate: dateConverter.encode(new Date()),
+      completionDate: dateTimeConverter.encode(new Date()),
     })
   }
 
@@ -551,18 +551,24 @@ export class DefaultMessageService implements MessageService {
     switch (input.message.content.type) {
       case UserMessageType.medicationChange:
         if (!input.user.receivesMedicationUpdates) return
+        break
       case UserMessageType.weightGain:
         if (!input.user.receivesWeightAlerts) return
+        break
       case UserMessageType.medicationUptitration:
         if (!input.user.receivesRecommendationUpdates) return
+        break
       case UserMessageType.welcome:
         break
       case UserMessageType.vitals:
         if (!input.user.receivesVitalsReminders) return
+        break
       case UserMessageType.symptomQuestionnaire:
         if (!input.user.receivesQuestionnaireReminders) return
+        break
       case UserMessageType.preAppointment:
         if (!input.user.receivesAppointmentReminders) return
+        break
     }
 
     await Promise.all([

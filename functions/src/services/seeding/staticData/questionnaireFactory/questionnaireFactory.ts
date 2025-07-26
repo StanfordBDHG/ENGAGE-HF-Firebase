@@ -6,7 +6,6 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { randomUUID } from 'crypto'
 import {
   CodingSystem,
   compactMap,
@@ -72,8 +71,8 @@ export abstract class QuestionnaireFactory<Input> {
             linkId: linkIds.description,
             text: 'Upcoming appointment',
           }),
-          this.dateItem({
-            linkId: linkIds.date,
+          this.dateTimeItem({
+            linkId: linkIds.dateTime,
             text: 'Date:',
           }),
         ],
@@ -88,20 +87,10 @@ export abstract class QuestionnaireFactory<Input> {
         title: 'Creatinine',
         name: 'creatinine',
         description:
-          'The creatinine level in your body helps understand how your liver handles the drugs you are taking.',
+          'The creatinine level in your body helps understand how your kidneys handle the drugs you are taking.',
         unit: QuantityUnit.mg_dL,
         minValue: 0,
         maxValue: 100,
-      }),
-      ...this.labInputPagesForValue({
-        loincCode: LoincCode.estimatedGlomerularFiltrationRate,
-        title: 'eGFR',
-        name: 'eGFR',
-        description:
-          'eGFR (estimated Glomerular Filtration Rate) is a test that estimates how well your kidneys are filtering blood.',
-        unit: QuantityUnit.mL_min_173m2,
-        minValue: 0,
-        maxValue: 200,
       }),
       ...this.labInputPagesForValue({
         loincCode: LoincCode.potassium,
@@ -173,8 +162,8 @@ export abstract class QuestionnaireFactory<Input> {
             minValue: input.minValue,
             maxValue: input.maxValue,
           }),
-          this.dateItem({
-            linkId: linkIds.date,
+          this.dateTimeItem({
+            linkId: linkIds.dateTime,
             text: 'Date:',
           }),
         ],
@@ -185,35 +174,31 @@ export abstract class QuestionnaireFactory<Input> {
   protected medicationInputPages(input: {
     medications: Record<string, FHIRMedication>
     drugs: Record<string, Record<string, FHIRMedication>>
+    isRegistration: boolean
   }): FHIRQuestionnaireItem[] {
     return [
       ...this.medicationInputPagesForMedicationGroup({
-        medications: input.medications,
-        drugs: input.drugs,
+        ...input,
         text: 'Beta Blockers',
         group: MedicationGroup.betaBlockers,
       }),
       ...this.medicationInputPagesForMedicationGroup({
-        medications: input.medications,
-        drugs: input.drugs,
+        ...input,
         text: 'Renin-Angiotensin System Inhibitors (RASI)',
         group: MedicationGroup.rasi,
       }),
       ...this.medicationInputPagesForMedicationGroup({
-        medications: input.medications,
-        drugs: input.drugs,
+        ...input,
         text: 'Mineralocorticoid Receptor Antagonists (MRA)',
         group: MedicationGroup.mra,
       }),
       ...this.medicationInputPagesForMedicationGroup({
-        medications: input.medications,
-        drugs: input.drugs,
+        ...input,
         text: 'SGLT2 Inhibitors (SGLT2i)',
         group: MedicationGroup.sglt2i,
       }),
       ...this.medicationInputPagesForMedicationGroup({
-        medications: input.medications,
-        drugs: input.drugs,
+        ...input,
         text: 'Diuretics',
         group: MedicationGroup.diuretics,
       }),
@@ -225,6 +210,7 @@ export abstract class QuestionnaireFactory<Input> {
     medications: Record<string, FHIRMedication>
     group: MedicationGroup
     text: string
+    isRegistration: boolean
   }): FHIRQuestionnaireItem[] {
     const linkIds = QuestionnaireLinkId.medication(input.group)
     const medicationClasses = medicationClassesForGroup(input.group).map(
@@ -274,6 +260,39 @@ export abstract class QuestionnaireFactory<Input> {
         return text
       })
       .join('\n')
+
+    const answerOptions =
+      input.isRegistration ?
+        this.valueSetAnswerOptions({
+          system: linkIds.registrationExistsValueSet.system,
+          values: [
+            {
+              code: linkIds.registrationExistsValueSet.values.yes,
+              display: 'Yes',
+            },
+            {
+              code: linkIds.registrationExistsValueSet.values.no,
+              display: 'No',
+            },
+          ],
+        })
+      : this.valueSetAnswerOptions({
+          system: linkIds.updateExistsValueSet.system,
+          values: [
+            {
+              code: linkIds.updateExistsValueSet.values.yesChanged,
+              display: 'Yes, changed since last update',
+            },
+            {
+              code: linkIds.updateExistsValueSet.values.yesUnchanged,
+              display: 'Yes, unchanged since last update',
+            },
+            {
+              code: linkIds.updateExistsValueSet.values.no,
+              display: 'No',
+            },
+          ],
+        })
     return [
       this.pageItem({
         linkId: linkIds.page0,
@@ -283,9 +302,10 @@ export abstract class QuestionnaireFactory<Input> {
             linkId: linkIds.existsDescription,
             text: `Do you take any of the following medications?\n\n${medicationListTexts}`,
           }),
-          this.booleanItem({
+          this.radioButtonItem({
             linkId: linkIds.exists,
             text: 'Do you take any medication from the above list?',
+            answerOption: answerOptions,
           }),
         ],
       }),
@@ -296,7 +316,18 @@ export abstract class QuestionnaireFactory<Input> {
           {
             question: linkIds.exists,
             operator: FHIRQuestionnaireItemEnableWhenOperator.equals,
-            answerBoolean: true,
+            answerCoding:
+              input.isRegistration ?
+                answerOptions.find(
+                  (option) =>
+                    option.valueCoding?.code ===
+                    linkIds.registrationExistsValueSet.values.yes,
+                )?.valueCoding
+              : answerOptions.find(
+                  (option) =>
+                    option.valueCoding?.code ===
+                    linkIds.updateExistsValueSet.values.yesChanged,
+                )?.valueCoding,
           },
         ],
         item: [
@@ -355,6 +386,19 @@ export abstract class QuestionnaireFactory<Input> {
       linkId: input.linkId,
       text: input.text,
       type: FHIRQuestionnaireItemType.date,
+      required: input.required ?? true,
+    }
+  }
+
+  protected dateTimeItem(input: {
+    linkId: string
+    text: string
+    required?: boolean
+  }): FHIRQuestionnaireItem {
+    return {
+      linkId: input.linkId,
+      text: input.text,
+      type: FHIRQuestionnaireItemType.dateTime,
       required: input.required ?? true,
     }
   }
@@ -492,19 +536,18 @@ export abstract class QuestionnaireFactory<Input> {
   }
 
   protected valueSetAnswerOptions(input: {
-    system?: string
+    system: string
     values: Array<{
       id?: string
       code: string
       display: string
     }>
   }): FHIRQuestionnaireItemAnswerOption[] {
-    const system = input.system ?? `urn:uuid:${randomUUID()}`
     return input.values.map((option) => ({
       valueCoding: {
         id: option.id ?? option.code,
         code: option.code,
-        system: system,
+        system: input.system,
         display: option.display,
       },
     }))

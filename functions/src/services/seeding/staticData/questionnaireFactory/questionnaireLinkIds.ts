@@ -61,7 +61,7 @@ export const QuestionnaireLinkId = {
 
     page1: 'appointment.page1',
     description: 'appointment.description',
-    date: 'appointment.date',
+    dateTime: 'appointment.dateTime',
   },
 
   personalInformation: {
@@ -80,7 +80,7 @@ export const QuestionnaireLinkId = {
       page1: `lab.${loincCode}.page1`,
       description: `lab.${loincCode}.description`,
       number: `lab.${loincCode}.value`,
-      date: `lab.${loincCode}.date`,
+      dateTime: `lab.${loincCode}.dateTime`,
     }
   },
 
@@ -89,6 +89,24 @@ export const QuestionnaireLinkId = {
       page0: `medication.${medicationGroup}.exists`,
       existsDescription: `medication.${medicationGroup}.exists-description`,
       exists: `medication.${medicationGroup}.exists`,
+
+      registrationExistsValueSet: {
+        system:
+          'http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-registration',
+        values: {
+          yes: 'yes',
+          no: 'no',
+        },
+      },
+      updateExistsValueSet: {
+        system:
+          'http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update',
+        values: {
+          yesChanged: 'yes-changed',
+          yesUnchanged: 'yes-unchanged',
+          no: 'no',
+        },
+      },
 
       page1: `medication.${medicationGroup}.page1`,
       description: `medication.${medicationGroup}.description`,

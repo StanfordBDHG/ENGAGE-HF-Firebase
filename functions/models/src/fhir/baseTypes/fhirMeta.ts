@@ -8,14 +8,14 @@
 
 import { z } from 'zod'
 import { fhirCodingConverter } from './fhirCoding.js'
-import { dateConverter } from '../../helpers/dateConverter.js'
+import { dateTimeConverter } from '../../helpers/dateConverter.js'
 import { optionalish } from '../../helpers/optionalish.js'
 import { SchemaConverter } from '../../helpers/schemaConverter.js'
 
 export const fhirMetaConverter = new SchemaConverter({
   schema: z.object({
     versionId: optionalish(z.string()),
-    lastUpdated: optionalish(dateConverter.schema),
+    lastUpdated: optionalish(dateTimeConverter.schema),
     profile: optionalish(z.string().array()),
     security: optionalish(
       z.lazy(() => fhirCodingConverter.value.schema).array(),
@@ -25,7 +25,7 @@ export const fhirMetaConverter = new SchemaConverter({
   encode: (object) => ({
     versionId: object.versionId ?? null,
     lastUpdated:
-      object.lastUpdated ? dateConverter.encode(object.lastUpdated) : null,
+      object.lastUpdated ? dateTimeConverter.encode(object.lastUpdated) : null,
     profile: object.profile ?? null,
     security: object.security?.map(fhirCodingConverter.value.encode) ?? null,
     tag: object.tag?.map(fhirCodingConverter.value.encode) ?? null,

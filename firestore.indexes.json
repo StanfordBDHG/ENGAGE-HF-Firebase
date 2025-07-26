@@ -5,6 +5,10 @@
       "queryScope": "COLLECTION",
       "fields": [
         {
+          "fieldPath": "user.clinician",
+          "order": "ASCENDING"
+        },
+        {
           "fieldPath": "user.organization",
           "order": "ASCENDING"
         },
@@ -18,10 +22,6 @@
       "collectionGroup": "invitations",
       "queryScope": "COLLECTION",
       "fields": [
-        {
-          "fieldPath": "user.clinician",
-          "order": "ASCENDING"
-        },
         {
           "fieldPath": "user.organization",
           "order": "ASCENDING"

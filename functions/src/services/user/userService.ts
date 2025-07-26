@@ -15,11 +15,6 @@ import {
 } from '@stanfordbdhg/engagehf-models'
 import { type Document } from '../database/databaseService.js'
 
-export interface CreateInvitationData {
-  auth?: UserAuth
-  user?: User
-}
-
 export interface UserService {
   // Auth
 

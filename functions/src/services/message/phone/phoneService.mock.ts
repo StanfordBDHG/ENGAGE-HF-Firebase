@@ -9,7 +9,7 @@
 /* eslint-disable @typescript-eslint/require-await */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import { dateConverter } from '@stanfordbdhg/engagehf-models'
+import { dateTimeConverter } from '@stanfordbdhg/engagehf-models'
 import { type PhoneService } from './phoneService.js'
 import { type DatabaseService } from '../../database/databaseService.js'
 
@@ -92,7 +92,7 @@ export class MockPhoneService implements PhoneService {
     const mockPhoneMessage: MockPhoneMessage = {
       phoneNumber,
       message,
-      date: dateConverter.encode(new Date()),
+      date: dateTimeConverter.encode(new Date()),
     }
     await this.databaseService.runTransaction(
       async (collections, transaction) => {

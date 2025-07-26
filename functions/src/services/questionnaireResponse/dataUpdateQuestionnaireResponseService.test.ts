@@ -11,12 +11,11 @@ import {
   fhirQuestionnaireResponseConverter,
   StaticDataComponent,
   UserObservationCollection,
-  UserSex,
   UserType,
   QuantityUnit,
-  MedicationReference,
   FHIRMedicationRequest,
   DrugReference,
+  UserSex,
 } from '@stanfordbdhg/engagehf-models'
 import { _defaultSeed } from '../../functions/defaultSeed.js'
 import { onUserQuestionnaireResponseWritten } from '../../functions/onUserQuestionnaireResponseWritten.js'
@@ -34,6 +33,8 @@ describeWithEmulators('DataUpdateQuestionnaireResponseService', (env) => {
       type: UserType.patient,
       organization: 'stanford',
       selfManaged: true,
+      dateOfBirth: new Date('1980-01-01'),
+      sex: UserSex.female,
     })
 
     const previousMedicationRequests = [
@@ -46,6 +47,11 @@ describeWithEmulators('DataUpdateQuestionnaireResponseService', (env) => {
         medicationReference: DrugReference.sotagliflozin200,
         frequencyPerDay: 5,
         quantity: 0.5,
+      }),
+      FHIRMedicationRequest.create({
+        medicationReference: DrugReference.furosemide20,
+        frequencyPerDay: 4,
+        quantity: 2,
       }),
     ]
 
@@ -68,7 +74,7 @@ describeWithEmulators('DataUpdateQuestionnaireResponseService', (env) => {
     const medicationRequests = await env.collections
       .userMedicationRequests(userId)
       .get()
-    expect(medicationRequests.size).toBe(2)
+    expect(medicationRequests.size).toBe(3)
 
     const medicationRequestsData = medicationRequests.docs.map((doc) =>
       doc.data(),
@@ -101,6 +107,19 @@ describeWithEmulators('DataUpdateQuestionnaireResponseService', (env) => {
       bexagliflozinDosageInstruction?.doseAndRate?.at(0)
     expect(bexagliflozinDoseAndRate?.doseQuantity?.value).toBe(1.34)
 
+    const furosemide = medicationRequestsData.find(
+      (req) =>
+        req.medicationReference?.reference === DrugReference.furosemide20,
+    )
+    expect(furosemide).toBeDefined()
+    expect(furosemide?.dosageInstruction?.length).toBe(1)
+    const furosemideDosageInstruction = furosemide?.dosageInstruction?.at(0)
+    expect(furosemideDosageInstruction?.timing?.repeat?.frequency).toBe(4)
+    expect(furosemideDosageInstruction?.doseAndRate?.length).toBe(1)
+    const furosemideDoseAndRate =
+      furosemideDosageInstruction?.doseAndRate?.at(0)
+    expect(furosemideDoseAndRate?.doseQuantity?.value).toBe(2)
+
     const creatinineDocs = await env.collections
       .userObservations(userId, UserObservationCollection.creatinine)
       .get()
@@ -110,7 +129,10 @@ describeWithEmulators('DataUpdateQuestionnaireResponseService', (env) => {
     const egfrDocs = await env.collections
       .userObservations(userId, UserObservationCollection.eGfr)
       .get()
-    expect(egfrDocs.size).toBe(0)
+    expect(egfrDocs.size).toBe(1)
+    expect(
+      egfrDocs.docs[0].data().estimatedGlomerularFiltrationRate?.value,
+    ).toBeCloseTo(2.746196772902818, 5)
 
     const potassiumDocs = await env.collections
       .userObservations(userId, UserObservationCollection.potassium)
@@ -125,8 +147,8 @@ describeWithEmulators('DataUpdateQuestionnaireResponseService', (env) => {
 
     const appointments = await env.collections.userAppointments(userId).get()
     expect(appointments.size).toBe(1)
-    expect(appointments.docs[0].data().start.toDateString()).toBe(
-      new Date('2025-05-14').toDateString(),
+    expect(appointments.docs[0].data().start.toISOString()).toBe(
+      '2025-05-14T12:00:00.000Z',
     )
   })
 
@@ -140,6 +162,8 @@ describeWithEmulators('DataUpdateQuestionnaireResponseService', (env) => {
       type: UserType.patient,
       organization: 'stanford',
       selfManaged: true,
+      dateOfBirth: new Date('1980-01-01'),
+      sex: UserSex.male,
     })
 
     const previousMedicationRequests = [
@@ -152,6 +176,11 @@ describeWithEmulators('DataUpdateQuestionnaireResponseService', (env) => {
         medicationReference: DrugReference.bisoprolol5,
         frequencyPerDay: 7,
         quantity: 3,
+      }),
+      FHIRMedicationRequest.create({
+        medicationReference: DrugReference.sacubitrilValsartan49_51,
+        frequencyPerDay: 2.3,
+        quantity: 0.5,
       }),
     ]
 
@@ -179,18 +208,22 @@ describeWithEmulators('DataUpdateQuestionnaireResponseService', (env) => {
       doc.data(),
     )
 
-    const benazepril = medicationRequestsData.find(
+    const sacubitrilValsartan = medicationRequestsData.find(
       (req) =>
-        req.medicationReference?.reference === 'medications/18867/drugs/898719',
+        req.medicationReference?.reference ===
+        'medications/1656339/drugs/1656349',
     )
-    expect(benazepril).toBeDefined()
-    expect(benazepril?.dosageInstruction?.length).toBe(1)
-    const benazeprilDosageInstruction = benazepril?.dosageInstruction?.at(0)
-    expect(benazeprilDosageInstruction?.timing?.repeat?.frequency).toBe(2.3)
-    expect(benazeprilDosageInstruction?.doseAndRate?.length).toBe(1)
-    const benazeprilDoseAndRate =
-      benazeprilDosageInstruction?.doseAndRate?.at(0)
-    expect(benazeprilDoseAndRate?.doseQuantity?.value).toBe(0.5)
+    expect(sacubitrilValsartan).toBeDefined()
+    expect(sacubitrilValsartan?.dosageInstruction?.length).toBe(1)
+    const sacubitrilValsartanDosageInstruction =
+      sacubitrilValsartan?.dosageInstruction?.at(0)
+    expect(
+      sacubitrilValsartanDosageInstruction?.timing?.repeat?.frequency,
+    ).toBe(2.3)
+    expect(sacubitrilValsartanDosageInstruction?.doseAndRate?.length).toBe(1)
+    const sacubitrilValsartanDoseAndRate =
+      sacubitrilValsartanDosageInstruction?.doseAndRate?.at(0)
+    expect(sacubitrilValsartanDoseAndRate?.doseQuantity?.value).toBe(0.5)
 
     const empagliflozin = medicationRequestsData.find(
       (req) =>
@@ -219,7 +252,7 @@ describeWithEmulators('DataUpdateQuestionnaireResponseService', (env) => {
     expect(egfrDocs.size).toBe(1)
     expect(
       egfrDocs.docs[0].data().estimatedGlomerularFiltrationRate?.value,
-    ).toBe(55)
+    ).toBeCloseTo(15.65597089198832, 5)
 
     const potassiumDocs = await env.collections
       .userObservations(userId, UserObservationCollection.potassium)
@@ -248,17 +281,43 @@ const dataUpdateResponseApple = {
   item: [
     { answer: [{ valueBoolean: true }], linkId: 'lab.2160-0.exists' },
     { answer: [{ valueDecimal: 15 }], linkId: 'lab.2160-0.value' },
-    { answer: [{ valueDate: '2025-05-14' }], linkId: 'lab.2160-0.date' },
-    { linkId: 'lab.98979-8.exists', answer: [{ valueBoolean: false }] },
+    {
+      answer: [{ valueDateTime: '2025-05-14T12:00:00Z' }],
+      linkId: 'lab.2160-0.dateTime',
+    },
     { linkId: 'lab.6298-4.exists', answer: [{ valueBoolean: true }] },
     { linkId: 'lab.6298-4.value', answer: [{ valueDecimal: 1.75 }] },
-    { answer: [{ valueDate: '2025-05-14' }], linkId: 'lab.6298-4.date' },
+    {
+      answer: [{ valueDateTime: '2025-05-14T12:00:00Z' }],
+      linkId: 'lab.6298-4.dateTime',
+    },
     { answer: [{ valueBoolean: false }], linkId: 'lab.8340-2.exists' },
     {
       linkId: 'medication.betablockers.exists',
-      answer: [{ valueBoolean: false }],
+      answer: [
+        {
+          valueCoding: {
+            code: 'yes-unchanged',
+            display: 'Yes, unchanged since last update',
+            system:
+              'http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update',
+          },
+        },
+      ],
     },
-    { linkId: 'medication.rasi.exists', answer: [{ valueBoolean: true }] },
+    {
+      linkId: 'medication.rasi.exists',
+      answer: [
+        {
+          valueCoding: {
+            code: 'yes-changed',
+            display: 'Yes, changed since last update',
+            system:
+              'http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update',
+          },
+        },
+      ],
+    },
     { linkId: 'medication.rasi.frequency', answer: [{ valueDecimal: 2 }] },
     { linkId: 'medication.rasi.quantity', answer: [{ valueDecimal: 1.5 }] },
     {
@@ -273,8 +332,32 @@ const dataUpdateResponseApple = {
       ],
       linkId: 'medication.rasi.drug',
     },
-    { linkId: 'medication.mra.exists', answer: [{ valueBoolean: false }] },
-    { linkId: 'medication.sglt2i.exists', answer: [{ valueBoolean: true }] },
+    {
+      linkId: 'medication.mra.exists',
+      answer: [
+        {
+          valueCoding: {
+            code: 'no',
+            display: 'No',
+            system:
+              'http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update',
+          },
+        },
+      ],
+    },
+    {
+      linkId: 'medication.sglt2i.exists',
+      answer: [
+        {
+          valueCoding: {
+            code: 'yes-changed',
+            display: 'Yes, changed since last update',
+            system:
+              'http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update',
+          },
+        },
+      ],
+    },
     { linkId: 'medication.sglt2i.frequency', answer: [{ valueDecimal: 2 }] },
     { answer: [{ valueDecimal: 1.34 }], linkId: 'medication.sglt2i.quantity' },
     {
@@ -290,11 +373,23 @@ const dataUpdateResponseApple = {
       linkId: 'medication.sglt2i.drug',
     },
     {
-      answer: [{ valueBoolean: false }],
+      answer: [
+        {
+          valueCoding: {
+            code: 'yes-unchanged',
+            display: 'Yes, unchanged since last update',
+            system:
+              'http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update',
+          },
+        },
+      ],
       linkId: 'medication.diuretics.exists',
     },
     { answer: [{ valueBoolean: true }], linkId: 'appointment.exists' },
-    { linkId: 'appointment.date', answer: [{ valueDate: '2025-05-14' }] },
+    {
+      linkId: 'appointment.dateTime',
+      answer: [{ valueDateTime: '2025-05-14T12:00:00Z' }],
+    },
   ],
   id: 'D8083543-1DED-491E-9AEB-771E3FECB70C',
   questionnaire: 'http://spezi.health/fhir/questionnaire/engagehf-data-update',
@@ -312,7 +407,7 @@ const postAppointmentResponseAndroid = {
       item: [
         {
           linkId: 'lab.2160-0.exists-description',
-          text: 'The creatinine level in your body helps understand how your liver handles the drugs you are taking.',
+          text: 'The creatinine level in your body helps understand how your kidneys handle the drugs you are taking.',
         },
         {
           linkId: 'lab.2160-0.exists',
@@ -331,7 +426,7 @@ const postAppointmentResponseAndroid = {
       item: [
         {
           linkId: 'lab.2160-0.description',
-          text: 'The creatinine level in your body helps understand how your liver handles the drugs you are taking.',
+          text: 'The creatinine level in your body helps understand how your kidneys handle the drugs you are taking.',
         },
         {
           linkId: 'lab.2160-0.value',
@@ -343,11 +438,11 @@ const postAppointmentResponseAndroid = {
           ],
         },
         {
-          linkId: 'lab.2160-0.date',
+          linkId: 'lab.2160-0.dateTime',
           text: 'Date:',
           answer: [
             {
-              valueDate: '2024-10-12',
+              valueDateTime: '2024-10-12',
             },
           ],
         },
@@ -367,34 +462,6 @@ const postAppointmentResponseAndroid = {
           answer: [
             {
               valueBoolean: true,
-            },
-          ],
-        },
-      ],
-    },
-    {
-      linkId: 'lab.98979-8.page1',
-      text: 'eGFR',
-      item: [
-        {
-          linkId: 'lab.98979-8.description',
-          text: 'eGFR (estimated Glomerular Filtration Rate) is a test that estimates how well your kidneys are filtering blood.',
-        },
-        {
-          linkId: 'lab.98979-8.value',
-          text: 'eGFR (mL/min/1.73m2):',
-          answer: [
-            {
-              valueDecimal: 55.0,
-            },
-          ],
-        },
-        {
-          linkId: 'lab.98979-8.date',
-          text: 'Date:',
-          answer: [
-            {
-              valueDate: '2025-05-23',
             },
           ],
         },
@@ -456,11 +523,11 @@ const postAppointmentResponseAndroid = {
           ],
         },
         {
-          linkId: 'lab.8340-2.date',
+          linkId: 'lab.8340-2.dateTime',
           text: 'Date:',
           answer: [
             {
-              valueDate: '2025-04-03',
+              valueDateTime: '2025-04-03',
             },
           ],
         },
@@ -479,7 +546,12 @@ const postAppointmentResponseAndroid = {
           text: 'Do you take any medication from the above list?',
           answer: [
             {
-              valueBoolean: false,
+              valueCoding: {
+                code: 'no',
+                display: 'No',
+                system:
+                  'http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update',
+              },
             },
           ],
         },
@@ -498,48 +570,11 @@ const postAppointmentResponseAndroid = {
           text: 'Do you take any medication from the above list?',
           answer: [
             {
-              valueBoolean: true,
-            },
-          ],
-        },
-      ],
-    },
-    {
-      linkId: 'medication.rasi.page1',
-      text: 'Renin-Angiotensin System Inhibitors (RASI)',
-      item: [
-        {
-          linkId: 'medication.rasi.description',
-          text: 'Please enter which drug you are taking, how often you take it per day and how many pills/tablets you take per intake. Do not enter the total amount of pills/tablets you take per day.',
-        },
-        {
-          linkId: 'medication.rasi.frequency',
-          text: 'Intake frequency (per day):',
-          answer: [
-            {
-              valueDecimal: 2.3,
-            },
-          ],
-        },
-        {
-          linkId: 'medication.rasi.quantity',
-          text: 'Pills/tablets per intake:',
-          answer: [
-            {
-              valueDecimal: 0.5,
-            },
-          ],
-        },
-        {
-          linkId: 'medication.rasi.drug',
-          text: 'Which pill/tablet do you take?',
-          answer: [
-            {
               valueCoding: {
-                id: 'medications/18867/drugs/898719',
-                system: 'http://www.nlm.nih.gov/research/umls/rxnorm',
-                code: 'medications/18867/drugs/898719',
-                display: 'Benazepril (Lotensin)\n40 mg Oral Tablet',
+                code: 'yes-unchanged',
+                display: 'Yes, unchanged since last update',
+                system:
+                  'http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update',
               },
             },
           ],
@@ -559,7 +594,12 @@ const postAppointmentResponseAndroid = {
           text: 'Do you take any medication from the above list?',
           answer: [
             {
-              valueBoolean: false,
+              valueCoding: {
+                code: 'no',
+                display: 'No',
+                system:
+                  'http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update',
+              },
             },
           ],
         },
@@ -578,7 +618,12 @@ const postAppointmentResponseAndroid = {
           text: 'Do you take any medication from the above list?',
           answer: [
             {
-              valueBoolean: true,
+              valueCoding: {
+                code: 'yes-changed',
+                display: 'Yes, changed since last update',
+                system:
+                  'http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update',
+              },
             },
           ],
         },
@@ -639,7 +684,12 @@ const postAppointmentResponseAndroid = {
           text: 'Do you take any medication from the above list?',
           answer: [
             {
-              valueBoolean: false,
+              valueCoding: {
+                code: 'no',
+                display: 'No',
+                system:
+                  'http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update',
+              },
             },
           ],
         },
@@ -673,11 +723,11 @@ const postAppointmentResponseAndroid = {
           text: 'Upcoming appointment',
         },
         {
-          linkId: 'appointment.date',
+          linkId: 'appointment.dateTime',
           text: 'Date:',
           answer: [
             {
-              valueDate: '2025-07-12',
+              valueDateTime: '2025-07-12',
             },
           ],
         },

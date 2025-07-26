@@ -16,7 +16,6 @@ import { SchemaConverter } from '../helpers/schemaConverter.js'
 export enum UserSex {
   male = 'male',
   female = 'female',
-  other = 'other',
 }
 
 export const userRegistrationInputConverter = new Lazy(

@@ -29,6 +29,7 @@ import { TwilioPhoneService } from '../message/phone/twilioPhoneService.js'
 import { DatabasePatientService } from '../patient/databasePatientService.js'
 import { type PatientService } from '../patient/patientService.js'
 import { DataUpdateQuestionnaireResponseService } from '../questionnaireResponse/dataUpdateQuestionnaireResponseService.js'
+import { EgfrCalculator } from '../questionnaireResponse/egfr/egfrCalculator.js'
 import { KccqQuestionnaireResponseService } from '../questionnaireResponse/kccqQuestionnaireResponseService.js'
 import { MultiQuestionnaireResponseService } from '../questionnaireResponse/multiQuestionnaireResponseService.js'
 import { type QuestionnaireResponseService } from '../questionnaireResponse/questionnaireResponseService.js'
@@ -70,6 +71,8 @@ export class DefaultServiceFactory implements ServiceFactory {
         this.storage.value,
       ),
   )
+
+  private readonly egfrCalculator = new Lazy(() => new EgfrCalculator())
 
   private readonly healthSummaryService = new Lazy(
     () =>
@@ -123,10 +126,13 @@ export class DefaultServiceFactory implements ServiceFactory {
           userService: this.userService.value,
         }),
         new DataUpdateQuestionnaireResponseService({
+          egfrCalculator: this.egfrCalculator.value,
           messageService: this.messageService.value,
           patientService: this.patientService.value,
+          userService: this.userService.value,
         }),
         new RegistrationQuestionnaireResponseService({
+          egfrCalculator: this.egfrCalculator.value,
           messageService: this.messageService.value,
           patientService: this.patientService.value,
           userService: this.userService.value,
