@@ -161,9 +161,7 @@ export class EmulatorTestEnvironment {
       await this.firestore.recursiveDelete(collection)
     }
     const usersResult = await this.auth.listUsers()
-    for (const user of usersResult.users) {
-      await this.auth.deleteUser(user.uid)
-    }
+    await this.auth.deleteUsers(usersResult.users.map((user) => user.uid))
   }
 
   /* eslint-disable-next-line @typescript-eslint/no-explicit-any */

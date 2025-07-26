@@ -15,7 +15,11 @@ import {
 } from '@stanfordbdhg/engagehf-models'
 import { logger } from 'firebase-functions'
 import { type z } from 'zod'
-import { validatedOnCall, validatedOnRequest } from './helpers.js'
+import {
+  privilegedServiceAccount,
+  validatedOnCall,
+  validatedOnRequest,
+} from './helpers.js'
 import { _updateStaticData } from './updateStaticData.js'
 import { Flags } from '../flags.js'
 import { UserRole } from '../services/credential/credential.js'
@@ -200,5 +204,8 @@ export const defaultSeed =
         factory.credential(request.auth).check(UserRole.admin)
         await _defaultSeed(factory, request.data)
         return {}
+      },
+      {
+        serviceAccount: privilegedServiceAccount,
       },
     )

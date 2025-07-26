@@ -10,7 +10,7 @@ import {
   deleteUserInputSchema,
   type DeleteUserOutput,
 } from '@stanfordbdhg/engagehf-models'
-import { validatedOnCall } from './helpers.js'
+import { privilegedServiceAccount, validatedOnCall } from './helpers.js'
 import { UserRole } from '../services/credential/credential.js'
 import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
@@ -36,5 +36,8 @@ export const deleteUser = validatedOnCall(
     )
 
     await userService.deleteUser(request.data.userId)
+  },
+  {
+    serviceAccount: privilegedServiceAccount,
   },
 )
