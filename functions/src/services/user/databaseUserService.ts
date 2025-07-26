@@ -10,6 +10,7 @@ import { setTimeout } from 'timers/promises'
 import {
   advanceDateByDays,
   dateConverter,
+  dateTimeConverter,
   type Invitation,
   type Organization,
   User,
@@ -53,6 +54,7 @@ export class DatabaseUserService implements UserService {
 
   async updateAuth(userId: string, auth: UserAuth): Promise<void> {
     await this.auth.updateUser(userId, {
+      email: auth.email ?? undefined,
       displayName: auth.displayName ?? undefined,
       phoneNumber: auth.phoneNumber ?? undefined,
       photoURL: auth.photoURL ?? undefined,
@@ -343,7 +345,7 @@ export class DatabaseUserService implements UserService {
   async updateLastActiveDate(userId: string): Promise<void> {
     return this.databaseService.runTransaction((collections, transaction) => {
       transaction.update(collections.users.doc(userId), {
-        lastActiveDate: dateConverter.encode(new Date()),
+        lastActiveDate: dateTimeConverter.encode(new Date()),
       })
     })
   }
@@ -367,23 +369,32 @@ export class DatabaseUserService implements UserService {
     do {
       const usersResult = await this.auth.listUsers(1_000, pageToken)
       pageToken = usersResult.pageToken
-      for (const user of usersResult.users) {
-        if (
-          Object.keys(user.customClaims ?? {}).length === 0 &&
-          new Date(user.metadata.lastSignInTime) < oneDayAgo
-        ) {
-          logger.info(`Deleting expired account ${user.uid}`)
-          promises.push(
-            this.auth
-              .deleteUser(user.uid)
-              .catch((error: unknown) =>
+
+      promises.push(
+        ...usersResult.users.map(async (user) => {
+          try {
+            if (
+              Object.keys(user.customClaims ?? {}).length === 0 &&
+              new Date(user.metadata.lastSignInTime) < oneDayAgo
+            ) {
+              const userObject = await this.getUser(user.uid)
+              if (userObject !== undefined) return
+              logger.info(`Deleting expired account ${user.uid}`)
+              try {
+                await this.auth.deleteUser(user.uid)
+              } catch (error) {
                 console.error(
                   `Failed to delete expired account ${user.uid}: ${String(error)}`,
-                ),
-              ),
-          )
-        }
-      }
+                )
+              }
+            }
+          } catch (error) {
+            logger.error(
+              `UserService.deleteExpiredAccounts(): Failed to process user ${user.uid}: ${String(error)}`,
+            )
+          }
+        }),
+      )
     } while (pageToken !== undefined)
 
     await Promise.all(promises)

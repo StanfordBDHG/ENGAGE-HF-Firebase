@@ -16,7 +16,7 @@ import {
 import { fhirReferenceConverter } from './baseTypes/fhirReference.js'
 import { FHIRExtensionUrl } from '../codes/codes.js'
 import { compactMap } from '../helpers/array.js'
-import { dateConverter } from '../helpers/dateConverter.js'
+import { dateTimeConverter } from '../helpers/dateConverter.js'
 import { Lazy } from '../helpers/lazy.js'
 import { optionalish } from '../helpers/optionalish.js'
 import { SchemaConverter } from '../helpers/schemaConverter.js'
@@ -66,9 +66,9 @@ export const fhirAppointmentConverter = new Lazy(
       schema: fhirResourceConverter.value.schema
         .extend({
           status: z.nativeEnum(FHIRAppointmentStatus),
-          created: dateConverter.schema,
-          start: dateConverter.schema,
-          end: dateConverter.schema,
+          created: dateTimeConverter.schema,
+          start: dateTimeConverter.schema,
+          end: dateTimeConverter.schema,
           comment: optionalish(z.string()),
           patientInstruction: optionalish(z.string()),
           participant: optionalish(
@@ -81,9 +81,9 @@ export const fhirAppointmentConverter = new Lazy(
       encode: (object) => ({
         ...fhirResourceConverter.value.encode(object),
         status: object.status,
-        created: dateConverter.encode(object.created),
-        start: dateConverter.encode(object.start),
-        end: dateConverter.encode(object.end),
+        created: dateTimeConverter.encode(object.created),
+        start: dateTimeConverter.encode(object.start),
+        end: dateTimeConverter.encode(object.end),
         comment: object.comment ?? null,
         patientInstruction: object.patientInstruction ?? null,
         participant:

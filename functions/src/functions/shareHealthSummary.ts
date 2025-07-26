@@ -7,7 +7,7 @@
 //
 
 import {
-  dateConverter,
+  dateTimeConverter,
   shareHealthSummaryInputSchema,
   type ShareHealthSummaryOutput,
 } from '@stanfordbdhg/engagehf-models'
@@ -41,7 +41,7 @@ export const shareHealthSummary = validatedOnCall(
     const url = `${Env.webFrontendBaseUrl}/patients/${userId}/healthSummary/${shareCodeDocument.id}`
     return {
       code: shareCodeDocument.content.code,
-      expiresAt: dateConverter.encode(shareCodeDocument.content.expiresAt),
+      expiresAt: dateTimeConverter.encode(shareCodeDocument.content.expiresAt),
       url: url,
     }
   },

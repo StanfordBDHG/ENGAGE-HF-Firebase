@@ -147,8 +147,8 @@ describeWithEmulators('DataUpdateQuestionnaireResponseService', (env) => {
 
     const appointments = await env.collections.userAppointments(userId).get()
     expect(appointments.size).toBe(1)
-    expect(appointments.docs[0].data().start.toDateString()).toBe(
-      new Date('2025-05-14').toDateString(),
+    expect(appointments.docs[0].data().start.toISOString()).toBe(
+      '2025-05-14T12:00:00.000Z',
     )
   })
 
@@ -281,10 +281,16 @@ const dataUpdateResponseApple = {
   item: [
     { answer: [{ valueBoolean: true }], linkId: 'lab.2160-0.exists' },
     { answer: [{ valueDecimal: 15 }], linkId: 'lab.2160-0.value' },
-    { answer: [{ valueDate: '2025-05-14' }], linkId: 'lab.2160-0.date' },
+    {
+      answer: [{ valueDateTime: '2025-05-14T12:00:00Z' }],
+      linkId: 'lab.2160-0.dateTime',
+    },
     { linkId: 'lab.6298-4.exists', answer: [{ valueBoolean: true }] },
     { linkId: 'lab.6298-4.value', answer: [{ valueDecimal: 1.75 }] },
-    { answer: [{ valueDate: '2025-05-14' }], linkId: 'lab.6298-4.date' },
+    {
+      answer: [{ valueDateTime: '2025-05-14T12:00:00Z' }],
+      linkId: 'lab.6298-4.dateTime',
+    },
     { answer: [{ valueBoolean: false }], linkId: 'lab.8340-2.exists' },
     {
       linkId: 'medication.betablockers.exists',
@@ -380,7 +386,10 @@ const dataUpdateResponseApple = {
       linkId: 'medication.diuretics.exists',
     },
     { answer: [{ valueBoolean: true }], linkId: 'appointment.exists' },
-    { linkId: 'appointment.date', answer: [{ valueDate: '2025-05-14' }] },
+    {
+      linkId: 'appointment.dateTime',
+      answer: [{ valueDateTime: '2025-05-14T12:00:00Z' }],
+    },
   ],
   id: 'D8083543-1DED-491E-9AEB-771E3FECB70C',
   questionnaire: 'http://spezi.health/fhir/questionnaire/engagehf-data-update',
@@ -429,11 +438,11 @@ const postAppointmentResponseAndroid = {
           ],
         },
         {
-          linkId: 'lab.2160-0.date',
+          linkId: 'lab.2160-0.dateTime',
           text: 'Date:',
           answer: [
             {
-              valueDate: '2024-10-12',
+              valueDateTime: '2024-10-12',
             },
           ],
         },
@@ -514,11 +523,11 @@ const postAppointmentResponseAndroid = {
           ],
         },
         {
-          linkId: 'lab.8340-2.date',
+          linkId: 'lab.8340-2.dateTime',
           text: 'Date:',
           answer: [
             {
-              valueDate: '2025-04-03',
+              valueDateTime: '2025-04-03',
             },
           ],
         },
@@ -714,11 +723,11 @@ const postAppointmentResponseAndroid = {
           text: 'Upcoming appointment',
         },
         {
-          linkId: 'appointment.date',
+          linkId: 'appointment.dateTime',
           text: 'Date:',
           answer: [
             {
-              valueDate: '2025-07-12',
+              valueDateTime: '2025-07-12',
             },
           ],
         },

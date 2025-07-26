@@ -61,7 +61,7 @@ export const QuestionnaireLinkId = {
 
     page1: 'appointment.page1',
     description: 'appointment.description',
-    date: 'appointment.date',
+    dateTime: 'appointment.dateTime',
   },
 
   personalInformation: {
@@ -80,7 +80,7 @@ export const QuestionnaireLinkId = {
       page1: `lab.${loincCode}.page1`,
       description: `lab.${loincCode}.description`,
       number: `lab.${loincCode}.value`,
-      date: `lab.${loincCode}.date`,
+      dateTime: `lab.${loincCode}.dateTime`,
     }
   },
 

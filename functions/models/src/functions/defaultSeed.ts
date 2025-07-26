@@ -8,7 +8,7 @@
 
 import { z } from 'zod'
 import { updateStaticDataInputSchema } from './updateStaticData.js'
-import { dateConverter } from '../helpers/dateConverter.js'
+import { dateTimeConverter } from '../helpers/dateConverter.js'
 import { optionalish, optionalishDefault } from '../helpers/optionalish.js'
 
 export enum DebugDataComponent {
@@ -34,7 +34,7 @@ export enum UserDebugDataComponent {
 }
 
 export const defaultSeedInputSchema = z.object({
-  date: dateConverter.schema.default(new Date().toISOString()),
+  date: dateTimeConverter.schema.default(new Date().toISOString()),
   only: optionalishDefault(
     z.nativeEnum(DebugDataComponent).array(),
     Object.values(DebugDataComponent),

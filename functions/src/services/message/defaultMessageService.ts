@@ -9,7 +9,7 @@
 import {
   advanceDateByDays,
   compact,
-  dateConverter,
+  dateTimeConverter,
   type User,
   type UserDevice,
   type UserDevicePlatform,
@@ -537,7 +537,7 @@ export class DefaultMessageService implements MessageService {
     transaction: FirebaseFirestore.Transaction,
   ) {
     transaction.update(ref, {
-      completionDate: dateConverter.encode(new Date()),
+      completionDate: dateTimeConverter.encode(new Date()),
     })
   }
 
