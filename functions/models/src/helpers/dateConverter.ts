@@ -29,7 +29,7 @@ export const dateConverter = new SchemaConverter({
       return z.NEVER
     }
   }),
-  encode: (object) => object.toDateString(),
+  encode: (object) => object.toISOString().split('T')[0],
 })
 
 export const dateTimeConverter = new SchemaConverter({
