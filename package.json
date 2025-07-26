@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "firebase-admin": "^12.1.1"
+    "firebase-admin": "^13.4.0"
   },
   "scripts": {
     "install": "npm --prefix functions/models install --save-dev && npm --prefix functions install --save-dev",
