@@ -22,7 +22,7 @@
   ],
   "main": "lib/index.js",
   "dependencies": {
-    "@stanfordspezi/spezi-firebase-fhir": "^0.1.2"
+    "@stanfordspezi/spezi-firebase-fhir": "^0.1.3"
   },
   "devDependencies": {
     "@types/node": "^20",

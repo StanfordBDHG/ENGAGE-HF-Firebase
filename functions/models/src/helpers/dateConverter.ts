@@ -29,7 +29,11 @@ export const dateConverter = new SchemaConverter({
       return z.NEVER
     }
   }),
-  encode: (object) => object.toDateString(),
+  encode: (object) => {
+    const offset = object.getTimezoneOffset()
+    const localDate = new Date(object.getTime() - offset * 60 * 1000)
+    return localDate.toISOString().split('T')[0]
+  },
 })
 
 export const dateTimeConverter = new SchemaConverter({

@@ -1,7 +1,4 @@
 {
-  "dependencies": {
-    "firebase-admin": "^12.1.1"
-  },
   "scripts": {
     "install": "npm --prefix functions/models install --save-dev && npm --prefix functions install --save-dev",
     "lint": "npm --prefix functions/models run lint && npm --prefix functions run lint", 
