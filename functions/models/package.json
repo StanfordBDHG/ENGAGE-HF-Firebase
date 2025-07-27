@@ -39,7 +39,7 @@
     "typescript-eslint": "^8.26"
   },
   "peerDependencies": {
-    "zod": "^4.0.5",
-    "@types/fhir": "^0.0.41"
+    "@types/fhir": "^0.0.41",
+    "zod": "^4.0.5"
   }
 }

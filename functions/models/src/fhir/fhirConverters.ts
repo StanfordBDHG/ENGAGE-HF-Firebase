@@ -6,7 +6,15 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { z } from 'zod'
+import {
+  allergyIntoleranceSchema,
+  appointmentSchema,
+  medicationSchema,
+  medicationRequestSchema,
+  observationSchema,
+  questionnaireSchema,
+  questionnaireResponseSchema,
+} from '@stanfordspezi/spezi-firebase-fhir'
 import { FHIRAllergyIntolerance } from './fhirAllergyIntolerance.js'
 import { FHIRAppointment } from './fhirAppointment.js'
 import { FHIRMedication } from './fhirMedication.js'
@@ -18,21 +26,23 @@ import { FHIRSchemaConverter } from '../helpers/fhirSchemaConverter.js'
 
 export const fhirAllergyIntoleranceConverter =
   new FHIRSchemaConverter<FHIRAllergyIntolerance>(
-    z.object({}).transform((data: any) => new FHIRAllergyIntolerance(data)),
+    allergyIntoleranceSchema.transform(
+      (data) => new FHIRAllergyIntolerance(data),
+    ),
     {
       nullProperties: [],
     },
   )
 export const fhirAppointmentConverter =
   new FHIRSchemaConverter<FHIRAppointment>(
-    z.object({}).transform((data: any) => new FHIRAppointment(data)),
+    appointmentSchema.transform((data) => new FHIRAppointment(data)),
     {
       nullProperties: [],
     },
   )
 
 export const fhirMedicationConverter = new FHIRSchemaConverter<FHIRMedication>(
-  z.object({}).transform((data: any) => new FHIRMedication(data)),
+  medicationSchema.transform((data) => new FHIRMedication(data)),
   {
     nullProperties: [],
   },
@@ -40,7 +50,9 @@ export const fhirMedicationConverter = new FHIRSchemaConverter<FHIRMedication>(
 
 export const fhirMedicationRequestConverter =
   new FHIRSchemaConverter<FHIRMedicationRequest>(
-    z.object({}).transform((data: any) => new FHIRMedicationRequest(data)),
+    medicationRequestSchema.transform(
+      (data) => new FHIRMedicationRequest(data),
+    ),
     {
       nullProperties: [],
     },
@@ -48,7 +60,7 @@ export const fhirMedicationRequestConverter =
 
 export const fhirObservationConverter =
   new FHIRSchemaConverter<FHIRObservation>(
-    z.object({}).transform((data: any) => new FHIRObservation(data)),
+    observationSchema.transform((data) => new FHIRObservation(data)),
     {
       nullProperties: [],
     },
@@ -56,7 +68,7 @@ export const fhirObservationConverter =
 
 export const fhirQuestionnaireConverter =
   new FHIRSchemaConverter<FHIRQuestionnaire>(
-    z.object({}).transform((data: any) => new FHIRQuestionnaire(data)),
+    questionnaireSchema.transform((data) => new FHIRQuestionnaire(data)),
     {
       nullProperties: [],
     },
@@ -64,7 +76,9 @@ export const fhirQuestionnaireConverter =
 
 export const fhirQuestionnaireResponseConverter =
   new FHIRSchemaConverter<FHIRQuestionnaireResponse>(
-    z.object({}).transform((data: any) => new FHIRQuestionnaireResponse(data)),
+    questionnaireResponseSchema.transform(
+      (data) => new FHIRQuestionnaireResponse(data),
+    ),
     {
       nullProperties: [],
     },
