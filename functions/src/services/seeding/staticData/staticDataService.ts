@@ -257,8 +257,24 @@ export class StaticDataService extends SeedingService {
         )
       },
       (result) => {
-        this.writeJSON('medications.json', result.medications)
-        this.writeJSON('drugs.json', result.drugs)
+        this.writeJSON(
+          'medications.json',
+          Object.fromEntries(
+            Object.entries(result.medications).map(([key, value]) => [
+              key,
+              value.data,
+            ]),
+          ),
+        )
+        this.writeJSON(
+          'drugs.json',
+          Object.fromEntries(
+            Object.entries(result.drugs).map(([key, value]) => [
+              key,
+              value.data,
+            ]),
+          ),
+        )
       },
     )
   }
