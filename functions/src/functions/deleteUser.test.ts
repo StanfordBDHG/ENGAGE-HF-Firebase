@@ -70,7 +70,14 @@ describeWithEmulators('function: deleteUser', (env) => {
       created: new Date('2020-01-01').toISOString(),
       start: new Date('2020-01-01').toISOString(),
       end: new Date('2020-01-01').toISOString(),
-      participant: [],
+      participant: [
+        {
+          status: 'accepted',
+          actor: {
+            reference: `users/${userId}`,
+          },
+        },
+      ],
     })
     const appointmentRef = env.collections.userAppointments(userId).doc()
     await appointmentRef.set(appointment)

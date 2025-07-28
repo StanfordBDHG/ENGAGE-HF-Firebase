@@ -69,7 +69,14 @@ describeWithEmulators('function: enrollUser', (env) => {
       created: new Date('2023-12-24').toISOString(),
       start: new Date('2023-12-31').toISOString(),
       end: new Date('2024-01-01').toISOString(),
-      participant: [],
+      participant: [
+        {
+          status: 'accepted',
+          actor: {
+            reference: `users/${invitationRef.id}`,
+          },
+        },
+      ],
     })
 
     await env.collections
@@ -185,7 +192,14 @@ describeWithEmulators('function: enrollUser', (env) => {
       created: new Date('2023-12-24').toISOString(),
       start: new Date('2023-12-31').toISOString(),
       end: new Date('2024-01-01').toISOString(),
-      participant: [],
+      participant: [
+        {
+          status: 'accepted',
+          actor: {
+            reference: `users/${invitationRef.id}`,
+          },
+        },
+      ],
     })
 
     await env.collections

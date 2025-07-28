@@ -164,7 +164,7 @@ describeWithEmulators('RegistrationQuestionnaireResponseService', (env) => {
     expect(benazepril).toBeDefined()
     expect(benazepril?.dosageInstruction?.length).toBe(1)
     const benazeprilDosageInstruction = benazepril?.dosageInstruction?.at(0)
-    expect(benazeprilDosageInstruction?.timing?.repeat?.frequency).toBe(2.3)
+    expect(benazeprilDosageInstruction?.timing?.repeat?.frequency).toBe(2)
     expect(benazeprilDosageInstruction?.doseAndRate?.length).toBe(1)
     const benazeprilDoseAndRate =
       benazeprilDosageInstruction?.doseAndRate?.at(0)
@@ -360,6 +360,7 @@ const registrationResponseApple = {
 const registrationResponseAndroid = {
   resourceType: 'QuestionnaireResponse',
   questionnaire: 'http://spezi.health/fhir/questionnaire/engagehf-registration',
+  status: 'completed',
   item: [
     {
       linkId: 'de981575-bd5b-4d84-95bb-35ed6c7f5923',
@@ -591,7 +592,7 @@ const registrationResponseAndroid = {
           text: 'Intake frequency (per day):',
           answer: [
             {
-              valueDecimal: 2.3,
+              valueDecimal: 2,
             },
           ],
         },
@@ -681,7 +682,7 @@ const registrationResponseAndroid = {
           text: 'Intake frequency (per day):',
           answer: [
             {
-              valueDecimal: 3.0,
+              valueDecimal: 3,
             },
           ],
         },

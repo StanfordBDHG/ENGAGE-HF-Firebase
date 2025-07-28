@@ -180,7 +180,7 @@ describeWithEmulators('DataUpdateQuestionnaireResponseService', (env) => {
       }),
       FHIRMedicationRequest.create({
         medicationReference: DrugReference.sacubitrilValsartan49_51,
-        frequencyPerDay: 2.3,
+        frequencyPerDay: 2,
         quantity: 0.5,
       }),
     ]
@@ -220,7 +220,7 @@ describeWithEmulators('DataUpdateQuestionnaireResponseService', (env) => {
       sacubitrilValsartan?.dosageInstruction?.at(0)
     expect(
       sacubitrilValsartanDosageInstruction?.timing?.repeat?.frequency,
-    ).toBe(2.3)
+    ).toBe(2)
     expect(sacubitrilValsartanDosageInstruction?.doseAndRate?.length).toBe(1)
     const sacubitrilValsartanDoseAndRate =
       sacubitrilValsartanDosageInstruction?.doseAndRate?.at(0)
@@ -401,6 +401,7 @@ const postAppointmentResponseAndroid = {
   resourceType: 'QuestionnaireResponse',
   questionnaire:
     'http://spezi.health/fhir/questionnaire/engagehf-post-appointment',
+  status: 'completed',
   item: [
     {
       linkId: 'lab.2160-0.exists',

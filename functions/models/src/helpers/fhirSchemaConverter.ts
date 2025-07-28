@@ -33,12 +33,12 @@ export class FHIRSchemaConverter<
   // Methods
 
   decode(input: unknown) {
-    return this.schema.parse(removeNulls(input))
+    return this.schema.parse(removeNullOrUndefinedValues(input))
   }
 
   encode(input: FHIRResourceType): unknown {
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */ /* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */
-    const returnValue = input.data as any
+    const returnValue = removeNullOrUndefinedValues(input.data) as any
 
     for (const key of this.nullProperties) {
       /* eslint-disable-next-line @typescript-eslint/no-unsafe-member-access */ /* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */
@@ -49,14 +49,16 @@ export class FHIRSchemaConverter<
   }
 }
 
-function removeNulls(value: unknown): unknown {
+function removeNullOrUndefinedValues(value: unknown): unknown {
   if (Array.isArray(value)) {
-    return value.map(removeNulls).filter((v) => v !== null)
+    return value
+      .map(removeNullOrUndefinedValues)
+      .filter((v) => v !== null && v !== undefined)
   } else if (value !== null && typeof value === 'object') {
     return Object.fromEntries(
       Object.entries(value)
-        .filter(([, v]) => v !== null)
-        .map(([k, v]) => [k, removeNulls(v)]),
+        .filter(([, v]) => v !== null && v !== undefined)
+        .map(([k, v]) => [k, removeNullOrUndefinedValues(v)]),
     )
   } else {
     return value

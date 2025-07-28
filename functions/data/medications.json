@@ -31,7 +31,7 @@
     "id": "1998",
     "contained": [
       {
-        "id": "#minimumDailyDose",
+        "id": "minimumDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/1998/drugs/308963",
@@ -74,7 +74,7 @@
         ]
       },
       {
-        "id": "#targetDailyDose",
+        "id": "targetDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/1998/drugs/308964",
@@ -159,7 +159,7 @@
     "id": "3827",
     "contained": [
       {
-        "id": "#minimumDailyDose",
+        "id": "minimumDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/3827/drugs/858813",
@@ -202,7 +202,7 @@
         ]
       },
       {
-        "id": "#targetDailyDose",
+        "id": "targetDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/3827/drugs/858810",
@@ -341,7 +341,7 @@
     "id": "9997",
     "contained": [
       {
-        "id": "#minimumDailyDose",
+        "id": "minimumDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/9997/drugs/313096",
@@ -384,7 +384,7 @@
         ]
       },
       {
-        "id": "#targetDailyDose",
+        "id": "targetDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/9997/drugs/313096",
@@ -469,7 +469,7 @@
     "id": "18867",
     "contained": [
       {
-        "id": "#minimumDailyDose",
+        "id": "minimumDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/18867/drugs/898723",
@@ -512,7 +512,7 @@
         ]
       },
       {
-        "id": "#targetDailyDose",
+        "id": "targetDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/18867/drugs/898719",
@@ -597,7 +597,7 @@
     "id": "19484",
     "contained": [
       {
-        "id": "#minimumDailyDose",
+        "id": "minimumDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/19484/drugs/854905",
@@ -640,7 +640,7 @@
         ]
       },
       {
-        "id": "#targetDailyDose",
+        "id": "targetDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/19484/drugs/854901",
@@ -725,7 +725,7 @@
     "id": "20352",
     "contained": [
       {
-        "id": "#minimumDailyDose",
+        "id": "minimumDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/20352/drugs/200031",
@@ -768,7 +768,7 @@
         ]
       },
       {
-        "id": "#targetDailyDose",
+        "id": "targetDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/20352/drugs/200033",
@@ -853,7 +853,7 @@
     "id": "29046",
     "contained": [
       {
-        "id": "#minimumDailyDose",
+        "id": "minimumDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/29046/drugs/311353",
@@ -896,7 +896,7 @@
         ]
       },
       {
-        "id": "#targetDailyDose",
+        "id": "targetDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/29046/drugs/197884",
@@ -981,7 +981,7 @@
     "id": "30131",
     "contained": [
       {
-        "id": "#minimumDailyDose",
+        "id": "minimumDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/30131/drugs/1299897",
@@ -1024,7 +1024,7 @@
         ]
       },
       {
-        "id": "#targetDailyDose",
+        "id": "targetDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/30131/drugs/1299896",
@@ -1109,7 +1109,7 @@
     "id": "35208",
     "contained": [
       {
-        "id": "#minimumDailyDose",
+        "id": "minimumDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/35208/drugs/312748",
@@ -1152,7 +1152,7 @@
         ]
       },
       {
-        "id": "#targetDailyDose",
+        "id": "targetDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/35208/drugs/314203",
@@ -1237,7 +1237,7 @@
     "id": "35296",
     "contained": [
       {
-        "id": "#minimumDailyDose",
+        "id": "minimumDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/35296/drugs/401965",
@@ -1280,7 +1280,7 @@
         ]
       },
       {
-        "id": "#targetDailyDose",
+        "id": "targetDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/35296/drugs/401968",
@@ -1392,7 +1392,7 @@
     "id": "38454",
     "contained": [
       {
-        "id": "#minimumDailyDose",
+        "id": "minimumDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/38454/drugs/199353",
@@ -1435,7 +1435,7 @@
         ]
       },
       {
-        "id": "#targetDailyDose",
+        "id": "targetDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/38454/drugs/199352",
@@ -1520,7 +1520,7 @@
     "id": "54552",
     "contained": [
       {
-        "id": "#minimumDailyDose",
+        "id": "minimumDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/54552/drugs/854984",
@@ -1563,7 +1563,7 @@
         ]
       },
       {
-        "id": "#targetDailyDose",
+        "id": "targetDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/54552/drugs/854925",
@@ -1648,7 +1648,7 @@
     "id": "69749",
     "contained": [
       {
-        "id": "#minimumDailyDose",
+        "id": "minimumDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/69749/drugs/349483",
@@ -1691,7 +1691,7 @@
         ]
       },
       {
-        "id": "#targetDailyDose",
+        "id": "targetDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/69749/drugs/349201",
@@ -1776,7 +1776,7 @@
     "id": "73494",
     "contained": [
       {
-        "id": "#minimumDailyDose",
+        "id": "minimumDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/73494/drugs/205304",
@@ -1819,7 +1819,7 @@
         ]
       },
       {
-        "id": "#targetDailyDose",
+        "id": "targetDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/73494/drugs/205305",
@@ -1904,7 +1904,7 @@
     "id": "83515",
     "contained": [
       {
-        "id": "#minimumDailyDose",
+        "id": "minimumDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/83515/drugs/310139",
@@ -1947,7 +1947,7 @@
         ]
       },
       {
-        "id": "#targetDailyDose",
+        "id": "targetDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/83515/drugs/310139",
@@ -2032,7 +2032,7 @@
     "id": "83818",
     "contained": [
       {
-        "id": "#minimumDailyDose",
+        "id": "minimumDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/83818/drugs/200094",
@@ -2075,7 +2075,7 @@
         ]
       },
       {
-        "id": "#targetDailyDose",
+        "id": "targetDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/83818/drugs/200096",
@@ -2160,7 +2160,7 @@
     "id": "118463",
     "contained": [
       {
-        "id": "#minimumDailyDose",
+        "id": "minimumDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/118463/drugs/349373",
@@ -2203,7 +2203,7 @@
         ]
       },
       {
-        "id": "#targetDailyDose",
+        "id": "targetDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/118463/drugs/349405",
@@ -2288,7 +2288,7 @@
     "id": "203160",
     "contained": [
       {
-        "id": "#minimumDailyDose",
+        "id": "minimumDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/203160/drugs/979485",
@@ -2331,7 +2331,7 @@
         ]
       },
       {
-        "id": "#targetDailyDose",
+        "id": "targetDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/203160/drugs/979480",
@@ -2416,7 +2416,7 @@
     "id": "214354",
     "contained": [
       {
-        "id": "#minimumDailyDose",
+        "id": "minimumDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/214354/drugs/153822",
@@ -2459,7 +2459,7 @@
         ]
       },
       {
-        "id": "#targetDailyDose",
+        "id": "targetDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/214354/drugs/639537",
@@ -2544,7 +2544,7 @@
     "id": "221124",
     "contained": [
       {
-        "id": "#minimumDailyDose",
+        "id": "minimumDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/221124/drugs/1999035",
@@ -2587,7 +2587,7 @@
         ]
       },
       {
-        "id": "#targetDailyDose",
+        "id": "targetDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/221124/drugs/866419",
@@ -2672,7 +2672,7 @@
     "id": "227278",
     "contained": [
       {
-        "id": "#minimumDailyDose",
+        "id": "minimumDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/227278/drugs/857169",
@@ -2715,7 +2715,7 @@
         ]
       },
       {
-        "id": "#targetDailyDose",
+        "id": "targetDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/227278/drugs/857187",
@@ -2800,7 +2800,7 @@
     "id": "298869",
     "contained": [
       {
-        "id": "#minimumDailyDose",
+        "id": "minimumDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/298869/drugs/351256",
@@ -2843,7 +2843,7 @@
         ]
       },
       {
-        "id": "#targetDailyDose",
+        "id": "targetDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/298869/drugs/351257",
@@ -2928,7 +2928,7 @@
     "id": "668310",
     "contained": [
       {
-        "id": "#minimumDailyDose",
+        "id": "minimumDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/668310/drugs/860510",
@@ -2971,7 +2971,7 @@
         ]
       },
       {
-        "id": "#targetDailyDose",
+        "id": "targetDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/668310/drugs/860532",
@@ -3056,7 +3056,7 @@
     "id": "1091642",
     "contained": [
       {
-        "id": "#minimumDailyDose",
+        "id": "minimumDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/1091642/drugs/1091646",
@@ -3099,7 +3099,7 @@
         ]
       },
       {
-        "id": "#targetDailyDose",
+        "id": "targetDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/1091642/drugs/1091652",
@@ -3184,7 +3184,7 @@
     "id": "1373458",
     "contained": [
       {
-        "id": "#minimumDailyDose",
+        "id": "minimumDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/1373458/drugs/1373463",
@@ -3227,7 +3227,7 @@
         ]
       },
       {
-        "id": "#targetDailyDose",
+        "id": "targetDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/1373458/drugs/1373463",
@@ -3312,7 +3312,7 @@
     "id": "1488564",
     "contained": [
       {
-        "id": "#minimumDailyDose",
+        "id": "minimumDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/1488564/drugs/1488574",
@@ -3355,7 +3355,7 @@
         ]
       },
       {
-        "id": "#targetDailyDose",
+        "id": "targetDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/1488564/drugs/1488569",
@@ -3440,7 +3440,7 @@
     "id": "1545653",
     "contained": [
       {
-        "id": "#minimumDailyDose",
+        "id": "minimumDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/1545653/drugs/1545658",
@@ -3483,7 +3483,7 @@
         ]
       },
       {
-        "id": "#targetDailyDose",
+        "id": "targetDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/1545653/drugs/1545658",
@@ -3568,7 +3568,7 @@
     "id": "1656339",
     "contained": [
       {
-        "id": "#minimumDailyDose",
+        "id": "minimumDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/1656339/drugs/1656340",
@@ -3620,7 +3620,7 @@
         ]
       },
       {
-        "id": "#targetDailyDose",
+        "id": "targetDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/1656339/drugs/1656354",
@@ -3738,7 +3738,7 @@
     "id": "1992672",
     "contained": [
       {
-        "id": "#minimumDailyDose",
+        "id": "minimumDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/1992672/drugs/1992810",
@@ -3781,7 +3781,7 @@
         ]
       },
       {
-        "id": "#targetDailyDose",
+        "id": "targetDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/1992672/drugs/1992819",
@@ -3866,7 +3866,7 @@
     "id": "2627044",
     "contained": [
       {
-        "id": "#minimumDailyDose",
+        "id": "minimumDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/2627044/drugs/2637859",
@@ -3909,7 +3909,7 @@
         ]
       },
       {
-        "id": "#targetDailyDose",
+        "id": "targetDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/2627044/drugs/2637859",
@@ -3994,7 +3994,7 @@
     "id": "2638675",
     "contained": [
       {
-        "id": "#minimumDailyDose",
+        "id": "minimumDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/2638675/drugs/2638683",
@@ -4037,7 +4037,7 @@
         ]
       },
       {
-        "id": "#targetDailyDose",
+        "id": "targetDailyDose",
         "resourceType": "MedicationRequest",
         "medicationReference": {
           "reference": "medications/2638675/drugs/2638691",

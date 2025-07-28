@@ -196,9 +196,16 @@ export class RxNormService {
       })
     }
     if (minimumDailyDose) {
-      const containedId = `#minimumDailyDose`
+      const containedId = 'minimumDailyDose'
       const containedDisplay =
         drugs[minimumDailyDose.drug].data.code?.coding?.at(0)?.display
+      extensions.push({
+        url: FHIRExtensionUrl.minimumDailyDose,
+        valueReference: {
+          reference: '#' + containedId,
+          display: containedDisplay,
+        },
+      })
       containedResources.push(
         FHIRMedicationRequest.create({
           id: containedId,
@@ -225,22 +232,15 @@ export class RxNormService {
           quantity: minimumDailyDose.quantity,
         }).data,
       )
-      extensions.push({
-        url: FHIRExtensionUrl.minimumDailyDose,
-        valueReference: {
-          reference: containedId,
-          display: containedDisplay,
-        },
-      })
     }
     if (targetDailyDose) {
-      const containedId = `#targetDailyDose`
+      const containedId = `targetDailyDose`
       const containedDisplay =
         drugs[targetDailyDose.drug].data.code?.coding?.at(0)?.display
       extensions.push({
         url: FHIRExtensionUrl.targetDailyDose,
         valueReference: {
-          reference: containedId,
+          reference: '#' + containedId,
           display: containedDisplay,
         },
       })
