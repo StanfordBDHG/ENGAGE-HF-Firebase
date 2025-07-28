@@ -9,7 +9,7 @@
 import * as https from 'https'
 import { optionalish } from '@stanfordbdhg/engagehf-models'
 import { logger } from 'firebase-functions'
-import { z, ZodType } from 'zod'
+import { z, type ZodType } from 'zod'
 import {
   rxNormRelatedDrugGroupResponse,
   type RxNormRelatedDrugGroupResponse,

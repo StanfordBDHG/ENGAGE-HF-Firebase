@@ -61,7 +61,8 @@ describeWithEmulators('RegistrationQuestionnaireResponseService', (env) => {
 
     const valsartan = medicationRequestsData.find(
       (req) =>
-        req.data.medicationReference?.reference === 'medications/69749/drugs/349201',
+        req.data.medicationReference?.reference ===
+        'medications/69749/drugs/349201',
     )?.data
     expect(valsartan).toBeDefined()
     expect(valsartan?.dosageInstruction?.length).toBe(1)
@@ -157,7 +158,8 @@ describeWithEmulators('RegistrationQuestionnaireResponseService', (env) => {
 
     const benazepril = medicationRequestsData.find(
       (req) =>
-        req.data.medicationReference?.reference === 'medications/18867/drugs/898719',
+        req.data.medicationReference?.reference ===
+        'medications/18867/drugs/898719',
     )?.data
     expect(benazepril).toBeDefined()
     expect(benazepril?.dosageInstruction?.length).toBe(1)

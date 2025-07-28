@@ -14,17 +14,17 @@ import {
   FHIRMedicationRequest,
   type FHIRQuestionnaireResponse,
   type LoincCode,
-  ObservationQuantity,
+  type ObservationQuantity,
   QuantityUnit,
   SymptomScore,
   type UserMedicationRecommendation,
   type UserObservationCollection,
   type UserShareCode,
 } from '@stanfordbdhg/engagehf-models'
+import { type Reference } from 'fhir/r4b.js'
 import { type PatientService } from './patientService.js'
 import { mockQuestionnaireResponse } from '../../tests/mocks/questionnaireResponse.js'
 import { type Document } from '../database/databaseService.js'
-import { Reference } from 'fhir/r4b.js'
 
 /* eslint-disable @typescript-eslint/require-await */
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -170,7 +170,9 @@ export class MockPatientService implements PatientService {
     ]
   }
 
-  async getBodyWeightObservations(userId: string): Promise<ObservationQuantity[]> {
+  async getBodyWeightObservations(
+    userId: string,
+  ): Promise<ObservationQuantity[]> {
     return [
       this.bodyWeightObservation(
         269,
@@ -232,7 +234,9 @@ export class MockPatientService implements PatientService {
     }
   }
 
-  async getHeartRateObservations(userId: string): Promise<ObservationQuantity[]> {
+  async getHeartRateObservations(
+    userId: string,
+  ): Promise<ObservationQuantity[]> {
     return [
       this.heartRateObservation(79, new Date(2024, 1, 30, 12, 30)),
       this.heartRateObservation(62, new Date(2024, 1, 29, 12, 30)),
@@ -285,7 +289,9 @@ export class MockPatientService implements PatientService {
     }
   }
 
-  async getMostRecentPotassiumObservation(): Promise<ObservationQuantity | undefined> {
+  async getMostRecentPotassiumObservation(): Promise<
+    ObservationQuantity | undefined
+  > {
     return {
       date: new Date('2024-01-29'),
       unit: QuantityUnit.mEq_L,

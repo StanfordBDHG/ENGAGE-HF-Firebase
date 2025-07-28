@@ -82,7 +82,8 @@ describeWithEmulators('DataUpdateQuestionnaireResponseService', (env) => {
 
     const valsartan = medicationRequestsData.find(
       (req) =>
-        req.data.medicationReference?.reference === 'medications/69749/drugs/349201',
+        req.data.medicationReference?.reference ===
+        'medications/69749/drugs/349201',
     )?.data
     expect(valsartan).toBeDefined()
     expect(valsartan?.dosageInstruction?.length).toBe(1)

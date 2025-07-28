@@ -14,13 +14,13 @@ import {
   MedicationReference,
   UserMedicationRecommendationType,
 } from '@stanfordbdhg/engagehf-models'
+import { type AllergyIntolerance } from 'fhir/r4b.js'
 import { type RecommendationService } from './recommendationService.js'
 import { readCsv } from '../../tests/helpers/csv.js'
 import { mockRecommendationVitals } from '../../tests/mocks/recommendationVitals.js'
 import { setupMockFirebase } from '../../tests/setup.js'
 import { getServiceFactory } from '../factory/getServiceFactory.js'
 import { type MedicationService } from '../medication/medicationService.js'
-import { AllergyIntolerance } from 'fhir/r4b.js'
 
 describe('RecommendationService', () => {
   let medicationService: MedicationService

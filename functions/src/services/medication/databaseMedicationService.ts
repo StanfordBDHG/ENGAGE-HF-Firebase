@@ -11,7 +11,7 @@ import {
   type FHIRMedicationRequest,
   type MedicationClass,
 } from '@stanfordbdhg/engagehf-models'
-import { Reference } from 'fhir/r4b.js'
+import { type Reference } from 'fhir/r4b.js'
 import { type MedicationService } from './medicationService.js'
 import { type MedicationRequestContext } from '../../models/medicationRequestContext.js'
 import {

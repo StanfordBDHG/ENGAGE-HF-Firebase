@@ -15,6 +15,7 @@ import {
   optionalish,
   QuantityUnit,
 } from '@stanfordbdhg/engagehf-models'
+import { type Extension, type FhirResource } from 'fhir/r4b.js'
 import { logger } from 'firebase-functions'
 import { z } from 'zod'
 import { RxNormApi } from './rxNormApi.js'
@@ -24,7 +25,6 @@ import {
   rxTermInfo,
 } from './rxNormModels.js'
 import { capitalize } from '../../../../extensions/string.js'
-import { Extension, FhirResource, Medication } from 'fhir/r4b.js'
 
 export const medicationDailyDoseSpecificationSchema = z.object({
   drug: z.string(),

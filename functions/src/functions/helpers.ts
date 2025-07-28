@@ -17,7 +17,7 @@ import {
   onRequest,
   type Request,
 } from 'firebase-functions/v2/https'
-import { z, ZodType } from 'zod'
+import { z, type ZodType } from 'zod'
 
 export const serviceAccount = `cloudfunctionsserviceaccount@${process.env.GCLOUD_PROJECT}.iam.gserviceaccount.com`
 

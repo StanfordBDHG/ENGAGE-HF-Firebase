@@ -9,7 +9,6 @@
 import {
   type FHIRAllergyIntolerance,
   type FHIRMedication,
-  type FHIRMedicationRequest,
   LocalizedText,
   type MedicationReference,
   type ObservationQuantity,
@@ -17,6 +16,7 @@ import {
   type UserMedicationRecommendationDoseSchedule,
   UserMedicationRecommendationType,
 } from '@stanfordbdhg/engagehf-models'
+import { type Medication, type MedicationRequest } from 'fhir/r4b.js'
 import { recommendationLocalization } from './recommendationService+localization.js'
 import { BetaBlockerRecommender } from './recommenders/betaBlockerRecommender.js'
 import { DiureticRecommender } from './recommenders/diureticRecommender.js'
@@ -27,7 +27,6 @@ import { Sglt2iRecommender } from './recommenders/sglt2iRecommender.js'
 import { type MedicationRequestContext } from '../../models/medicationRequestContext.js'
 import { type ContraindicationService } from '../contraindication/contraindicationService.js'
 import { type MedicationService } from '../medication/medicationService.js'
-import { Medication, MedicationRequest } from 'fhir/r4b.js'
 
 export interface RecommendationInput {
   requests: MedicationRequestContext[]

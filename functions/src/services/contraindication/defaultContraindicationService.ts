@@ -11,13 +11,13 @@ import {
   MedicationClassReference,
   MedicationReference,
 } from '@stanfordbdhg/engagehf-models'
+import { type AllergyIntolerance } from 'fhir/r4b.js'
 import { logger } from 'firebase-functions'
 import {
   ContraindicationCategory,
   type ContraindicationService,
 } from './contraindicationService.js'
 import { medicationClassReference } from '../../models/medicationRequestContext.js'
-import { AllergyIntolerance } from 'fhir/r4b.js'
 
 interface ContraindicationRecord {
   category: ContraindicationCategory

@@ -136,9 +136,7 @@ describeWithEmulators('function: enrollUser', (env) => {
     if (actualObservation === undefined) {
       fail('actualObservation is undefined')
     } else {
-      expect(
-        fhirObservationConverter.encode(actualObservation),
-      ).toStrictEqual(
+      expect(fhirObservationConverter.encode(actualObservation)).toStrictEqual(
         fhirObservationConverter.encode(expectedObservation),
       )
     }
@@ -241,9 +239,7 @@ describeWithEmulators('function: enrollUser', (env) => {
     if (actualAppointment === undefined) {
       fail('actualAppointment is undefined')
     } else {
-      expect(
-        fhirAppointmentConverter.encode(actualAppointment),
-      ).toStrictEqual(
+      expect(fhirAppointmentConverter.encode(actualAppointment)).toStrictEqual(
         fhirAppointmentConverter.encode(expectedAppointment),
       )
     }
@@ -256,9 +252,7 @@ describeWithEmulators('function: enrollUser', (env) => {
     if (actualObservation === undefined) {
       fail('actualObservation is undefined')
     } else {
-      expect(
-        fhirObservationConverter.encode(actualObservation),
-      ).toStrictEqual(
+      expect(fhirObservationConverter.encode(actualObservation)).toStrictEqual(
         fhirObservationConverter.encode(expectedObservation),
       )
     }

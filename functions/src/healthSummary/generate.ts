@@ -495,7 +495,11 @@ class HealthSummaryPdfGenerator extends PdfGenerator {
 
   // Helpers - PDF Generation
 
-  private addChart(data: ObservationQuantity[], maxWidth?: number, baseline?: number) {
+  private addChart(
+    data: ObservationQuantity[],
+    maxWidth?: number,
+    baseline?: number,
+  ) {
     const width =
       maxWidth ?? this.pageWidth - this.cursor.x - this.margins.right
     const height = width * (9 / 16)

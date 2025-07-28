@@ -6,9 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import {
-  FHIRQuestionnaire,
-} from '@stanfordbdhg/engagehf-models'
+import { FHIRQuestionnaire } from '@stanfordbdhg/engagehf-models'
 import {
   QuestionnaireId,
   QuestionnaireLinkId,

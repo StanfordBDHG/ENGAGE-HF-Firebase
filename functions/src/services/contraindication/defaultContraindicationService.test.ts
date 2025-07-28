@@ -12,13 +12,13 @@ import {
   MedicationClassReference,
   MedicationReference,
 } from '@stanfordbdhg/engagehf-models'
+import { type AllergyIntolerance } from 'fhir/r4b.js'
 import { logger } from 'firebase-functions'
 import {
   ContraindicationCategory,
   type ContraindicationService,
 } from './contraindicationService.js'
 import { DefaultContraindicationService } from './defaultContraindicationService.js'
-import { AllergyIntolerance } from 'fhir/r4b.js'
 
 describe('DefaultContraindicationService', () => {
   const contraindicationService: ContraindicationService =

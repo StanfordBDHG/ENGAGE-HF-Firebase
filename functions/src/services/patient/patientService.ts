@@ -19,8 +19,8 @@ import {
   type UserObservationCollection,
   type LoincCode,
 } from '@stanfordbdhg/engagehf-models'
+import { type Reference } from 'fhir/r4b.js'
 import { type Document } from '../database/databaseService.js'
-import { Reference } from 'fhir/r4b.js'
 
 export interface PatientService {
   // Appointments

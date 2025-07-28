@@ -25,7 +25,7 @@ import {
   UserObservationCollection,
   type UserShareCode,
 } from '@stanfordbdhg/engagehf-models'
-import { Reference } from 'fhir/r4b.js'
+import { type Reference } from 'fhir/r4b.js'
 import {
   FieldValue,
   type QueryDocumentSnapshot,

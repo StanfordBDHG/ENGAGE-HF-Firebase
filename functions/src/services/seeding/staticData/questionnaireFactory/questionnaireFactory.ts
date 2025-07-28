@@ -16,19 +16,19 @@ import {
   QuantityUnit,
 } from '@stanfordbdhg/engagehf-models'
 import {
+  type QuestionnaireItem,
+  type QuestionnaireItemEnableWhen,
+  type QuestionnaireItemAnswerOption,
+  type UsageContext,
+  type Extension,
+  type Questionnaire,
+} from 'fhir/r4b.js'
+import {
   medicationClassesForGroup,
   MedicationGroup,
   type QuestionnaireId,
   QuestionnaireLinkId,
 } from './questionnaireLinkIds.js'
-import {
-  QuestionnaireItem,
-  QuestionnaireItemEnableWhen,
-  QuestionnaireItemAnswerOption,
-  UsageContext,
-  Extension,
-  Questionnaire,
-} from 'fhir/r4b.js'
 
 // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-parameters
 export abstract class QuestionnaireFactory<Input> {
