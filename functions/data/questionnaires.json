@@ -1446,7 +1446,7 @@
           {
             "linkId": "medication.betablockers.frequency",
             "text": "Intake frequency (per day):",
-            "type": "decimal",
+            "type": "integer",
             "required": true
           },
           {
@@ -1732,7 +1732,7 @@
           {
             "linkId": "medication.rasi.frequency",
             "text": "Intake frequency (per day):",
-            "type": "decimal",
+            "type": "integer",
             "required": true
           },
           {
@@ -2434,7 +2434,7 @@
           {
             "linkId": "medication.mra.frequency",
             "text": "Intake frequency (per day):",
-            "type": "decimal",
+            "type": "integer",
             "required": true
           },
           {
@@ -2616,7 +2616,7 @@
           {
             "linkId": "medication.sglt2i.frequency",
             "text": "Intake frequency (per day):",
-            "type": "decimal",
+            "type": "integer",
             "required": true
           },
           {
@@ -2846,7 +2846,7 @@
           {
             "linkId": "medication.diuretics.frequency",
             "text": "Intake frequency (per day):",
-            "type": "decimal",
+            "type": "integer",
             "required": true
           },
           {
@@ -3466,7 +3466,7 @@
           {
             "linkId": "medication.betablockers.frequency",
             "text": "Intake frequency (per day):",
-            "type": "decimal",
+            "type": "integer",
             "required": true
           },
           {
@@ -3760,7 +3760,7 @@
           {
             "linkId": "medication.rasi.frequency",
             "text": "Intake frequency (per day):",
-            "type": "decimal",
+            "type": "integer",
             "required": true
           },
           {
@@ -4470,7 +4470,7 @@
           {
             "linkId": "medication.mra.frequency",
             "text": "Intake frequency (per day):",
-            "type": "decimal",
+            "type": "integer",
             "required": true
           },
           {
@@ -4660,7 +4660,7 @@
           {
             "linkId": "medication.sglt2i.frequency",
             "text": "Intake frequency (per day):",
-            "type": "decimal",
+            "type": "integer",
             "required": true
           },
           {
@@ -4898,7 +4898,7 @@
           {
             "linkId": "medication.diuretics.frequency",
             "text": "Intake frequency (per day):",
-            "type": "decimal",
+            "type": "integer",
             "required": true
           },
           {
@@ -5518,7 +5518,7 @@
           {
             "linkId": "medication.betablockers.frequency",
             "text": "Intake frequency (per day):",
-            "type": "decimal",
+            "type": "integer",
             "required": true
           },
           {
@@ -5812,7 +5812,7 @@
           {
             "linkId": "medication.rasi.frequency",
             "text": "Intake frequency (per day):",
-            "type": "decimal",
+            "type": "integer",
             "required": true
           },
           {
@@ -6522,7 +6522,7 @@
           {
             "linkId": "medication.mra.frequency",
             "text": "Intake frequency (per day):",
-            "type": "decimal",
+            "type": "integer",
             "required": true
           },
           {
@@ -6712,7 +6712,7 @@
           {
             "linkId": "medication.sglt2i.frequency",
             "text": "Intake frequency (per day):",
-            "type": "decimal",
+            "type": "integer",
             "required": true
           },
           {
@@ -6950,7 +6950,7 @@
           {
             "linkId": "medication.diuretics.frequency",
             "text": "Intake frequency (per day):",
-            "type": "decimal",
+            "type": "integer",
             "required": true
           },
           {

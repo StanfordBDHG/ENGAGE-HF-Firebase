@@ -334,7 +334,7 @@ export abstract class QuestionnaireFactory<Input> {
             linkId: linkIds.description,
             text: 'Please enter which drug you are taking, how often you take it per day and how many pills/tablets you take per intake.\n\nDo not enter the total amount of pills/tablets you take per day.',
           }),
-          this.decimalItem({
+          this.integerItem({
             linkId: linkIds.frequency,
             text: 'Intake frequency (per day):',
           }),
@@ -414,7 +414,6 @@ export abstract class QuestionnaireFactory<Input> {
       linkId: input.linkId,
       text: input.text,
       type: 'decimal',
-      // unit: input.unit,
       required: input.required ?? true,
     }
   }
@@ -429,6 +428,22 @@ export abstract class QuestionnaireFactory<Input> {
       type: 'display',
       text: input.text,
       required: input.required ?? false,
+    }
+  }
+
+  protected integerItem(input: {
+    linkId: string
+    text: string
+    required?: boolean
+    unit?: string
+    minValue?: number
+    maxValue?: number
+  }): QuestionnaireItem {
+    return {
+      linkId: input.linkId,
+      text: input.text,
+      type: 'integer',
+      required: input.required ?? true,
     }
   }
 
