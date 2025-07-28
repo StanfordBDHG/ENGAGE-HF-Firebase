@@ -271,7 +271,12 @@ export class StaticDataService extends SeedingService {
           Object.fromEntries(
             Object.entries(result.drugs).map(([key, value]) => [
               key,
-              value.data,
+              Object.fromEntries(
+                Object.entries(value).map(([drugKey, drugValue]) => [
+                  drugKey,
+                  drugValue.data,
+                ]),
+              ),
             ]),
           ),
         )

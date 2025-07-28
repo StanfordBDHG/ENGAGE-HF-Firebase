@@ -1474,7 +1474,152 @@
             "type": "choice",
             "text": "Which pill/tablet do you take?",
             "required": true,
-            "answerOption": []
+            "answerOption": [
+              {
+                "valueCoding": {
+                  "id": "medications/19484/drugs/854901",
+                  "code": "medications/19484/drugs/854901",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Bisoprolol (Zebeta)\n10 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/19484/drugs/854905",
+                  "code": "medications/19484/drugs/854905",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Bisoprolol (Zebeta)\n5 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/20352/drugs/200032",
+                  "code": "medications/20352/drugs/200032",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Carvedilol (Coreg)\n12.5 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/20352/drugs/200033",
+                  "code": "medications/20352/drugs/200033",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Carvedilol (Coreg)\n25 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/20352/drugs/686924",
+                  "code": "medications/20352/drugs/686924",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Carvedilol (Coreg)\n3.125 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/20352/drugs/200031",
+                  "code": "medications/20352/drugs/200031",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Carvedilol (Coreg)\n6.25 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/668310/drugs/860510",
+                  "code": "medications/668310/drugs/860510",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Carvedilol Phosphate (Coreg CR)\n10 mg Extended Release Oral Capsule"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/668310/drugs/860516",
+                  "code": "medications/668310/drugs/860516",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Carvedilol Phosphate (Coreg CR)\n20 mg Extended Release Oral Capsule"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/668310/drugs/860522",
+                  "code": "medications/668310/drugs/860522",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Carvedilol Phosphate (Coreg CR)\n40 mg Extended Release Oral Capsule"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/668310/drugs/860532",
+                  "code": "medications/668310/drugs/860532",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Carvedilol Phosphate (Coreg CR)\n80 mg Extended Release Oral Capsule"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/221124/drugs/1999031",
+                  "code": "medications/221124/drugs/1999031",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Metoprolol Succinate (Toprol XL)\n100 mg Extended Release Oral Capsule"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/221124/drugs/866412",
+                  "code": "medications/221124/drugs/866412",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Metoprolol Succinate (Toprol XL)\n100 mg Extended Release Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/221124/drugs/1999033",
+                  "code": "medications/221124/drugs/1999033",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Metoprolol Succinate (Toprol XL)\n200 mg Extended Release Oral Capsule"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/221124/drugs/866419",
+                  "code": "medications/221124/drugs/866419",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Metoprolol Succinate (Toprol XL)\n200 mg Extended Release Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/221124/drugs/1999035",
+                  "code": "medications/221124/drugs/1999035",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Metoprolol Succinate (Toprol XL)\n25 mg Extended Release Oral Capsule"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/221124/drugs/866427",
+                  "code": "medications/221124/drugs/866427",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Metoprolol Succinate (Toprol XL)\n25 mg Extended Release Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/221124/drugs/1999037",
+                  "code": "medications/221124/drugs/1999037",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Metoprolol Succinate (Toprol XL)\n50 mg Extended Release Oral Capsule"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/221124/drugs/866436",
+                  "code": "medications/221124/drugs/866436",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Metoprolol Succinate (Toprol XL)\n50 mg Extended Release Oral Tablet"
+                }
+              }
+            ]
           }
         ],
         "required": false,
@@ -1615,7 +1760,568 @@
             "type": "choice",
             "text": "Which pill/tablet do you take?",
             "required": true,
-            "answerOption": []
+            "answerOption": [
+              {
+                "valueCoding": {
+                  "id": "medications/1091642/drugs/1091646",
+                  "code": "medications/1091642/drugs/1091646",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Azilsartan Medoxomil (Edarbi)\n40 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1091642/drugs/1091652",
+                  "code": "medications/1091642/drugs/1091652",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Azilsartan Medoxomil (Edarbi)\n80 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/18867/drugs/898687",
+                  "code": "medications/18867/drugs/898687",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Benazepril (Lotensin)\n10 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/18867/drugs/898690",
+                  "code": "medications/18867/drugs/898690",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Benazepril (Lotensin)\n20 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/18867/drugs/898719",
+                  "code": "medications/18867/drugs/898719",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Benazepril (Lotensin)\n40 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/18867/drugs/898723",
+                  "code": "medications/18867/drugs/898723",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Benazepril (Lotensin)\n5 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/214354/drugs/577776",
+                  "code": "medications/214354/drugs/577776",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Candesartan (Atacand)\n16 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/214354/drugs/639537",
+                  "code": "medications/214354/drugs/639537",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Candesartan (Atacand)\n32 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/214354/drugs/153822",
+                  "code": "medications/214354/drugs/153822",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Candesartan (Atacand)\n4 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/214354/drugs/153823",
+                  "code": "medications/214354/drugs/153823",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Candesartan (Atacand)\n8 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1998/drugs/308962",
+                  "code": "medications/1998/drugs/308962",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Captopril (Capoten)\n100 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1998/drugs/308963",
+                  "code": "medications/1998/drugs/308963",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Captopril (Capoten)\n12.5 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1998/drugs/317173",
+                  "code": "medications/1998/drugs/317173",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Captopril (Capoten)\n25 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1998/drugs/308964",
+                  "code": "medications/1998/drugs/308964",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Captopril (Capoten)\n50 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/3827/drugs/858817",
+                  "code": "medications/3827/drugs/858817",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Enalapril (Vasotec)\n10 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/3827/drugs/858804",
+                  "code": "medications/3827/drugs/858804",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Enalapril (Vasotec)\n2.5 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/3827/drugs/858810",
+                  "code": "medications/3827/drugs/858810",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Enalapril (Vasotec)\n20 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/3827/drugs/858813",
+                  "code": "medications/3827/drugs/858813",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Enalapril (Vasotec)\n5 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/83515/drugs/310139",
+                  "code": "medications/83515/drugs/310139",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Eprosartan (Teveten)\n400 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/83515/drugs/310140",
+                  "code": "medications/83515/drugs/310140",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Eprosartan (Teveten)\n600 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/227278/drugs/857169",
+                  "code": "medications/227278/drugs/857169",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Fosinopril Sodium (Monopril)\n10 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/227278/drugs/857183",
+                  "code": "medications/227278/drugs/857183",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Fosinopril Sodium (Monopril)\n20 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/227278/drugs/857187",
+                  "code": "medications/227278/drugs/857187",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Fosinopril Sodium (Monopril)\n40 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/83818/drugs/200095",
+                  "code": "medications/83818/drugs/200095",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Irbesartan (Avapro)\n150 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/83818/drugs/200096",
+                  "code": "medications/83818/drugs/200096",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Irbesartan (Avapro)\n300 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/83818/drugs/200094",
+                  "code": "medications/83818/drugs/200094",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Irbesartan (Avapro)\n75 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/29046/drugs/314076",
+                  "code": "medications/29046/drugs/314076",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Lisinopril (Zestril)\n10 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/29046/drugs/311353",
+                  "code": "medications/29046/drugs/311353",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Lisinopril (Zestril)\n2.5 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/29046/drugs/314077",
+                  "code": "medications/29046/drugs/314077",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Lisinopril (Zestril)\n20 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/29046/drugs/205326",
+                  "code": "medications/29046/drugs/205326",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Lisinopril (Zestril)\n30 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/29046/drugs/197884",
+                  "code": "medications/29046/drugs/197884",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Lisinopril (Zestril)\n40 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/29046/drugs/311354",
+                  "code": "medications/29046/drugs/311354",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Lisinopril (Zestril)\n5 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/203160/drugs/979480",
+                  "code": "medications/203160/drugs/979480",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Losartan Potassium (Cozaar)\n100 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/203160/drugs/979485",
+                  "code": "medications/203160/drugs/979485",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Losartan Potassium (Cozaar)\n25 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/203160/drugs/979492",
+                  "code": "medications/203160/drugs/979492",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Losartan Potassium (Cozaar)\n50 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/30131/drugs/1299896",
+                  "code": "medications/30131/drugs/1299896",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Moexipril (Univasc)\n15 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/30131/drugs/1299897",
+                  "code": "medications/30131/drugs/1299897",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Moexipril (Univasc)\n7.5 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/118463/drugs/349401",
+                  "code": "medications/118463/drugs/349401",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Olmesartan Medoxomil (Benicar)\n20 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/118463/drugs/349405",
+                  "code": "medications/118463/drugs/349405",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Olmesartan Medoxomil (Benicar)\n40 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/118463/drugs/349373",
+                  "code": "medications/118463/drugs/349373",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Olmesartan Medoxomil (Benicar)\n5 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/54552/drugs/854984",
+                  "code": "medications/54552/drugs/854984",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Perindopril (Aceon)\n2 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/54552/drugs/854988",
+                  "code": "medications/54552/drugs/854988",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Perindopril (Aceon)\n4 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/54552/drugs/854925",
+                  "code": "medications/54552/drugs/854925",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Perindopril (Aceon)\n8 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/35208/drugs/312748",
+                  "code": "medications/35208/drugs/312748",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Quinapril (Accupril)\n10 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/35208/drugs/312749",
+                  "code": "medications/35208/drugs/312749",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Quinapril (Accupril)\n20 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/35208/drugs/314203",
+                  "code": "medications/35208/drugs/314203",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Quinapril (Accupril)\n40 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/35208/drugs/312750",
+                  "code": "medications/35208/drugs/312750",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Quinapril (Accupril)\n5 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/35296/drugs/845488",
+                  "code": "medications/35296/drugs/845488",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Ramipril (Altace)\n1.25 mg Oral Capsule"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/35296/drugs/401965",
+                  "code": "medications/35296/drugs/401965",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Ramipril (Altace)\n1.25 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/35296/drugs/261962",
+                  "code": "medications/35296/drugs/261962",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Ramipril (Altace)\n10 mg Oral Capsule"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/35296/drugs/401968",
+                  "code": "medications/35296/drugs/401968",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Ramipril (Altace)\n10 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/35296/drugs/198188",
+                  "code": "medications/35296/drugs/198188",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Ramipril (Altace)\n2.5 mg Oral Capsule"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/35296/drugs/251856",
+                  "code": "medications/35296/drugs/251856",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Ramipril (Altace)\n2.5 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/35296/drugs/198189",
+                  "code": "medications/35296/drugs/198189",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Ramipril (Altace)\n5 mg Oral Capsule"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/35296/drugs/251857",
+                  "code": "medications/35296/drugs/251857",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Ramipril (Altace)\n5 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1656339/drugs/2679793",
+                  "code": "medications/1656339/drugs/2679793",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Sacubitril / Valsartan (Entresto)\n15/16 mg Oral Pellet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1656339/drugs/1656340",
+                  "code": "medications/1656339/drugs/1656340",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Sacubitril / Valsartan (Entresto)\n24/26 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1656339/drugs/1656349",
+                  "code": "medications/1656339/drugs/1656349",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Sacubitril / Valsartan (Entresto)\n49/51 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1656339/drugs/2679800",
+                  "code": "medications/1656339/drugs/2679800",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Sacubitril / Valsartan (Entresto)\n6/6 mg Oral Pellet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1656339/drugs/1656354",
+                  "code": "medications/1656339/drugs/1656354",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Sacubitril / Valsartan (Entresto)\n97/103 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/73494/drugs/282755",
+                  "code": "medications/73494/drugs/282755",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Telmisartan (Micardis)\n20 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/73494/drugs/205304",
+                  "code": "medications/73494/drugs/205304",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Telmisartan (Micardis)\n40 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/73494/drugs/205305",
+                  "code": "medications/73494/drugs/205305",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Telmisartan (Micardis)\n80 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/38454/drugs/199353",
+                  "code": "medications/38454/drugs/199353",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Trandolapril (Mavik)\n1 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/38454/drugs/199351",
+                  "code": "medications/38454/drugs/199351",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Trandolapril (Mavik)\n2 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/38454/drugs/199352",
+                  "code": "medications/38454/drugs/199352",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Trandolapril (Mavik)\n4 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/69749/drugs/349201",
+                  "code": "medications/69749/drugs/349201",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Valsartan (Diovan)\n160 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/69749/drugs/349200",
+                  "code": "medications/69749/drugs/349200",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Valsartan (Diovan)\n320 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/69749/drugs/349483",
+                  "code": "medications/69749/drugs/349483",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Valsartan (Diovan)\n40 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/69749/drugs/349199",
+                  "code": "medications/69749/drugs/349199",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Valsartan (Diovan)\n80 mg Oral Tablet"
+                }
+              }
+            ]
           }
         ],
         "required": false,
@@ -1756,7 +2462,48 @@
             "type": "choice",
             "text": "Which pill/tablet do you take?",
             "required": true,
-            "answerOption": []
+            "answerOption": [
+              {
+                "valueCoding": {
+                  "id": "medications/298869/drugs/351256",
+                  "code": "medications/298869/drugs/351256",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Eplerenone (Inspra)\n25 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/298869/drugs/351257",
+                  "code": "medications/298869/drugs/351257",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Eplerenone (Inspra)\n50 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/9997/drugs/198222",
+                  "code": "medications/9997/drugs/198222",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Spironolactone (Aldactone)\n100 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/9997/drugs/313096",
+                  "code": "medications/9997/drugs/313096",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Spironolactone (Aldactone)\n25 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/9997/drugs/198223",
+                  "code": "medications/9997/drugs/198223",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Spironolactone (Aldactone)\n50 mg Oral Tablet"
+                }
+              }
+            ]
           }
         ],
         "required": false,
@@ -1897,7 +2644,96 @@
             "type": "choice",
             "text": "Which pill/tablet do you take?",
             "required": true,
-            "answerOption": []
+            "answerOption": [
+              {
+                "valueCoding": {
+                  "id": "medications/2627044/drugs/2637859",
+                  "code": "medications/2627044/drugs/2637859",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Bexagliflozin (Brenzavvy)\n20 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1373458/drugs/1373463",
+                  "code": "medications/1373458/drugs/1373463",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Canagliflozin (Invokana)\n100 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1373458/drugs/1373471",
+                  "code": "medications/1373458/drugs/1373471",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Canagliflozin (Invokana)\n300 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1488564/drugs/1488569",
+                  "code": "medications/1488564/drugs/1488569",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Dapagliflozin (Farxiga)\n10 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1488564/drugs/1488574",
+                  "code": "medications/1488564/drugs/1488574",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Dapagliflozin (Farxiga)\n5 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1545653/drugs/1545658",
+                  "code": "medications/1545653/drugs/1545658",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Empagliflozin (Jardiance)\n10 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1545653/drugs/1545666",
+                  "code": "medications/1545653/drugs/1545666",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Empagliflozin (Jardiance)\n25 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1992672/drugs/1992819",
+                  "code": "medications/1992672/drugs/1992819",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Ertugliflozin (Steglatro)\n15 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1992672/drugs/1992810",
+                  "code": "medications/1992672/drugs/1992810",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Ertugliflozin (Steglatro)\n5 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/2638675/drugs/2638683",
+                  "code": "medications/2638675/drugs/2638683",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Sotagliflozin (Inpefa)\n200 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/2638675/drugs/2638691",
+                  "code": "medications/2638675/drugs/2638691",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Sotagliflozin (Inpefa)\n400 mg Oral Tablet"
+                }
+              }
+            ]
           }
         ],
         "required": false,
@@ -2038,7 +2874,120 @@
             "type": "choice",
             "text": "Which pill/tablet do you take?",
             "required": true,
-            "answerOption": []
+            "answerOption": [
+              {
+                "valueCoding": {
+                  "id": "medications/1808/drugs/197417",
+                  "code": "medications/1808/drugs/197417",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Bumetanide (Bumex)\n0.5 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1808/drugs/197418",
+                  "code": "medications/1808/drugs/197418",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Bumetanide (Bumex)\n1 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1808/drugs/197419",
+                  "code": "medications/1808/drugs/197419",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Bumetanide (Bumex)\n2 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/4109/drugs/1251903",
+                  "code": "medications/4109/drugs/1251903",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Ethacrynic Acid (Edecrin)\n25 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/4109/drugs/1251907",
+                  "code": "medications/4109/drugs/1251907",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Ethacrynic Acid (Edecrin)\n50 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/4603/drugs/310429",
+                  "code": "medications/4603/drugs/310429",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Furosemide (Lasix)\n20 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/4603/drugs/313988",
+                  "code": "medications/4603/drugs/313988",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Furosemide (Lasix)\n40 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/4603/drugs/197732",
+                  "code": "medications/4603/drugs/197732",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Furosemide (Lasix)\n80 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/38413/drugs/198369",
+                  "code": "medications/38413/drugs/198369",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Torsemide (Soaanz)\n10 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/38413/drugs/198370",
+                  "code": "medications/38413/drugs/198370",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Torsemide (Soaanz)\n100 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/38413/drugs/198371",
+                  "code": "medications/38413/drugs/198371",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Torsemide (Soaanz)\n20 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/38413/drugs/2589881",
+                  "code": "medications/38413/drugs/2589881",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Torsemide (Soaanz)\n40 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/38413/drugs/198372",
+                  "code": "medications/38413/drugs/198372",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Torsemide (Soaanz)\n5 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/38413/drugs/2589885",
+                  "code": "medications/38413/drugs/2589885",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Torsemide (Soaanz)\n60 mg Oral Tablet"
+                }
+              }
+            ]
           }
         ],
         "required": false,
@@ -2545,7 +3494,152 @@
             "type": "choice",
             "text": "Which pill/tablet do you take?",
             "required": true,
-            "answerOption": []
+            "answerOption": [
+              {
+                "valueCoding": {
+                  "id": "medications/19484/drugs/854901",
+                  "code": "medications/19484/drugs/854901",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Bisoprolol (Zebeta)\n10 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/19484/drugs/854905",
+                  "code": "medications/19484/drugs/854905",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Bisoprolol (Zebeta)\n5 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/20352/drugs/200032",
+                  "code": "medications/20352/drugs/200032",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Carvedilol (Coreg)\n12.5 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/20352/drugs/200033",
+                  "code": "medications/20352/drugs/200033",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Carvedilol (Coreg)\n25 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/20352/drugs/686924",
+                  "code": "medications/20352/drugs/686924",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Carvedilol (Coreg)\n3.125 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/20352/drugs/200031",
+                  "code": "medications/20352/drugs/200031",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Carvedilol (Coreg)\n6.25 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/668310/drugs/860510",
+                  "code": "medications/668310/drugs/860510",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Carvedilol Phosphate (Coreg CR)\n10 mg Extended Release Oral Capsule"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/668310/drugs/860516",
+                  "code": "medications/668310/drugs/860516",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Carvedilol Phosphate (Coreg CR)\n20 mg Extended Release Oral Capsule"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/668310/drugs/860522",
+                  "code": "medications/668310/drugs/860522",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Carvedilol Phosphate (Coreg CR)\n40 mg Extended Release Oral Capsule"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/668310/drugs/860532",
+                  "code": "medications/668310/drugs/860532",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Carvedilol Phosphate (Coreg CR)\n80 mg Extended Release Oral Capsule"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/221124/drugs/1999031",
+                  "code": "medications/221124/drugs/1999031",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Metoprolol Succinate (Toprol XL)\n100 mg Extended Release Oral Capsule"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/221124/drugs/866412",
+                  "code": "medications/221124/drugs/866412",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Metoprolol Succinate (Toprol XL)\n100 mg Extended Release Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/221124/drugs/1999033",
+                  "code": "medications/221124/drugs/1999033",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Metoprolol Succinate (Toprol XL)\n200 mg Extended Release Oral Capsule"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/221124/drugs/866419",
+                  "code": "medications/221124/drugs/866419",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Metoprolol Succinate (Toprol XL)\n200 mg Extended Release Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/221124/drugs/1999035",
+                  "code": "medications/221124/drugs/1999035",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Metoprolol Succinate (Toprol XL)\n25 mg Extended Release Oral Capsule"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/221124/drugs/866427",
+                  "code": "medications/221124/drugs/866427",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Metoprolol Succinate (Toprol XL)\n25 mg Extended Release Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/221124/drugs/1999037",
+                  "code": "medications/221124/drugs/1999037",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Metoprolol Succinate (Toprol XL)\n50 mg Extended Release Oral Capsule"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/221124/drugs/866436",
+                  "code": "medications/221124/drugs/866436",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Metoprolol Succinate (Toprol XL)\n50 mg Extended Release Oral Tablet"
+                }
+              }
+            ]
           }
         ],
         "required": false,
@@ -2694,7 +3788,568 @@
             "type": "choice",
             "text": "Which pill/tablet do you take?",
             "required": true,
-            "answerOption": []
+            "answerOption": [
+              {
+                "valueCoding": {
+                  "id": "medications/1091642/drugs/1091646",
+                  "code": "medications/1091642/drugs/1091646",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Azilsartan Medoxomil (Edarbi)\n40 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1091642/drugs/1091652",
+                  "code": "medications/1091642/drugs/1091652",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Azilsartan Medoxomil (Edarbi)\n80 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/18867/drugs/898687",
+                  "code": "medications/18867/drugs/898687",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Benazepril (Lotensin)\n10 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/18867/drugs/898690",
+                  "code": "medications/18867/drugs/898690",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Benazepril (Lotensin)\n20 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/18867/drugs/898719",
+                  "code": "medications/18867/drugs/898719",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Benazepril (Lotensin)\n40 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/18867/drugs/898723",
+                  "code": "medications/18867/drugs/898723",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Benazepril (Lotensin)\n5 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/214354/drugs/577776",
+                  "code": "medications/214354/drugs/577776",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Candesartan (Atacand)\n16 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/214354/drugs/639537",
+                  "code": "medications/214354/drugs/639537",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Candesartan (Atacand)\n32 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/214354/drugs/153822",
+                  "code": "medications/214354/drugs/153822",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Candesartan (Atacand)\n4 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/214354/drugs/153823",
+                  "code": "medications/214354/drugs/153823",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Candesartan (Atacand)\n8 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1998/drugs/308962",
+                  "code": "medications/1998/drugs/308962",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Captopril (Capoten)\n100 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1998/drugs/308963",
+                  "code": "medications/1998/drugs/308963",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Captopril (Capoten)\n12.5 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1998/drugs/317173",
+                  "code": "medications/1998/drugs/317173",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Captopril (Capoten)\n25 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1998/drugs/308964",
+                  "code": "medications/1998/drugs/308964",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Captopril (Capoten)\n50 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/3827/drugs/858817",
+                  "code": "medications/3827/drugs/858817",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Enalapril (Vasotec)\n10 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/3827/drugs/858804",
+                  "code": "medications/3827/drugs/858804",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Enalapril (Vasotec)\n2.5 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/3827/drugs/858810",
+                  "code": "medications/3827/drugs/858810",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Enalapril (Vasotec)\n20 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/3827/drugs/858813",
+                  "code": "medications/3827/drugs/858813",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Enalapril (Vasotec)\n5 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/83515/drugs/310139",
+                  "code": "medications/83515/drugs/310139",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Eprosartan (Teveten)\n400 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/83515/drugs/310140",
+                  "code": "medications/83515/drugs/310140",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Eprosartan (Teveten)\n600 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/227278/drugs/857169",
+                  "code": "medications/227278/drugs/857169",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Fosinopril Sodium (Monopril)\n10 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/227278/drugs/857183",
+                  "code": "medications/227278/drugs/857183",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Fosinopril Sodium (Monopril)\n20 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/227278/drugs/857187",
+                  "code": "medications/227278/drugs/857187",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Fosinopril Sodium (Monopril)\n40 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/83818/drugs/200095",
+                  "code": "medications/83818/drugs/200095",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Irbesartan (Avapro)\n150 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/83818/drugs/200096",
+                  "code": "medications/83818/drugs/200096",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Irbesartan (Avapro)\n300 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/83818/drugs/200094",
+                  "code": "medications/83818/drugs/200094",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Irbesartan (Avapro)\n75 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/29046/drugs/314076",
+                  "code": "medications/29046/drugs/314076",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Lisinopril (Zestril)\n10 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/29046/drugs/311353",
+                  "code": "medications/29046/drugs/311353",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Lisinopril (Zestril)\n2.5 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/29046/drugs/314077",
+                  "code": "medications/29046/drugs/314077",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Lisinopril (Zestril)\n20 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/29046/drugs/205326",
+                  "code": "medications/29046/drugs/205326",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Lisinopril (Zestril)\n30 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/29046/drugs/197884",
+                  "code": "medications/29046/drugs/197884",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Lisinopril (Zestril)\n40 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/29046/drugs/311354",
+                  "code": "medications/29046/drugs/311354",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Lisinopril (Zestril)\n5 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/203160/drugs/979480",
+                  "code": "medications/203160/drugs/979480",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Losartan Potassium (Cozaar)\n100 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/203160/drugs/979485",
+                  "code": "medications/203160/drugs/979485",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Losartan Potassium (Cozaar)\n25 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/203160/drugs/979492",
+                  "code": "medications/203160/drugs/979492",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Losartan Potassium (Cozaar)\n50 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/30131/drugs/1299896",
+                  "code": "medications/30131/drugs/1299896",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Moexipril (Univasc)\n15 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/30131/drugs/1299897",
+                  "code": "medications/30131/drugs/1299897",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Moexipril (Univasc)\n7.5 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/118463/drugs/349401",
+                  "code": "medications/118463/drugs/349401",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Olmesartan Medoxomil (Benicar)\n20 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/118463/drugs/349405",
+                  "code": "medications/118463/drugs/349405",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Olmesartan Medoxomil (Benicar)\n40 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/118463/drugs/349373",
+                  "code": "medications/118463/drugs/349373",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Olmesartan Medoxomil (Benicar)\n5 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/54552/drugs/854984",
+                  "code": "medications/54552/drugs/854984",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Perindopril (Aceon)\n2 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/54552/drugs/854988",
+                  "code": "medications/54552/drugs/854988",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Perindopril (Aceon)\n4 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/54552/drugs/854925",
+                  "code": "medications/54552/drugs/854925",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Perindopril (Aceon)\n8 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/35208/drugs/312748",
+                  "code": "medications/35208/drugs/312748",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Quinapril (Accupril)\n10 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/35208/drugs/312749",
+                  "code": "medications/35208/drugs/312749",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Quinapril (Accupril)\n20 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/35208/drugs/314203",
+                  "code": "medications/35208/drugs/314203",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Quinapril (Accupril)\n40 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/35208/drugs/312750",
+                  "code": "medications/35208/drugs/312750",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Quinapril (Accupril)\n5 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/35296/drugs/845488",
+                  "code": "medications/35296/drugs/845488",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Ramipril (Altace)\n1.25 mg Oral Capsule"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/35296/drugs/401965",
+                  "code": "medications/35296/drugs/401965",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Ramipril (Altace)\n1.25 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/35296/drugs/261962",
+                  "code": "medications/35296/drugs/261962",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Ramipril (Altace)\n10 mg Oral Capsule"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/35296/drugs/401968",
+                  "code": "medications/35296/drugs/401968",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Ramipril (Altace)\n10 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/35296/drugs/198188",
+                  "code": "medications/35296/drugs/198188",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Ramipril (Altace)\n2.5 mg Oral Capsule"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/35296/drugs/251856",
+                  "code": "medications/35296/drugs/251856",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Ramipril (Altace)\n2.5 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/35296/drugs/198189",
+                  "code": "medications/35296/drugs/198189",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Ramipril (Altace)\n5 mg Oral Capsule"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/35296/drugs/251857",
+                  "code": "medications/35296/drugs/251857",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Ramipril (Altace)\n5 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1656339/drugs/2679793",
+                  "code": "medications/1656339/drugs/2679793",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Sacubitril / Valsartan (Entresto)\n15/16 mg Oral Pellet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1656339/drugs/1656340",
+                  "code": "medications/1656339/drugs/1656340",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Sacubitril / Valsartan (Entresto)\n24/26 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1656339/drugs/1656349",
+                  "code": "medications/1656339/drugs/1656349",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Sacubitril / Valsartan (Entresto)\n49/51 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1656339/drugs/2679800",
+                  "code": "medications/1656339/drugs/2679800",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Sacubitril / Valsartan (Entresto)\n6/6 mg Oral Pellet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1656339/drugs/1656354",
+                  "code": "medications/1656339/drugs/1656354",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Sacubitril / Valsartan (Entresto)\n97/103 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/73494/drugs/282755",
+                  "code": "medications/73494/drugs/282755",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Telmisartan (Micardis)\n20 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/73494/drugs/205304",
+                  "code": "medications/73494/drugs/205304",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Telmisartan (Micardis)\n40 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/73494/drugs/205305",
+                  "code": "medications/73494/drugs/205305",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Telmisartan (Micardis)\n80 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/38454/drugs/199353",
+                  "code": "medications/38454/drugs/199353",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Trandolapril (Mavik)\n1 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/38454/drugs/199351",
+                  "code": "medications/38454/drugs/199351",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Trandolapril (Mavik)\n2 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/38454/drugs/199352",
+                  "code": "medications/38454/drugs/199352",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Trandolapril (Mavik)\n4 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/69749/drugs/349201",
+                  "code": "medications/69749/drugs/349201",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Valsartan (Diovan)\n160 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/69749/drugs/349200",
+                  "code": "medications/69749/drugs/349200",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Valsartan (Diovan)\n320 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/69749/drugs/349483",
+                  "code": "medications/69749/drugs/349483",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Valsartan (Diovan)\n40 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/69749/drugs/349199",
+                  "code": "medications/69749/drugs/349199",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Valsartan (Diovan)\n80 mg Oral Tablet"
+                }
+              }
+            ]
           }
         ],
         "required": false,
@@ -2843,7 +4498,48 @@
             "type": "choice",
             "text": "Which pill/tablet do you take?",
             "required": true,
-            "answerOption": []
+            "answerOption": [
+              {
+                "valueCoding": {
+                  "id": "medications/298869/drugs/351256",
+                  "code": "medications/298869/drugs/351256",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Eplerenone (Inspra)\n25 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/298869/drugs/351257",
+                  "code": "medications/298869/drugs/351257",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Eplerenone (Inspra)\n50 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/9997/drugs/198222",
+                  "code": "medications/9997/drugs/198222",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Spironolactone (Aldactone)\n100 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/9997/drugs/313096",
+                  "code": "medications/9997/drugs/313096",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Spironolactone (Aldactone)\n25 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/9997/drugs/198223",
+                  "code": "medications/9997/drugs/198223",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Spironolactone (Aldactone)\n50 mg Oral Tablet"
+                }
+              }
+            ]
           }
         ],
         "required": false,
@@ -2992,7 +4688,96 @@
             "type": "choice",
             "text": "Which pill/tablet do you take?",
             "required": true,
-            "answerOption": []
+            "answerOption": [
+              {
+                "valueCoding": {
+                  "id": "medications/2627044/drugs/2637859",
+                  "code": "medications/2627044/drugs/2637859",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Bexagliflozin (Brenzavvy)\n20 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1373458/drugs/1373463",
+                  "code": "medications/1373458/drugs/1373463",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Canagliflozin (Invokana)\n100 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1373458/drugs/1373471",
+                  "code": "medications/1373458/drugs/1373471",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Canagliflozin (Invokana)\n300 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1488564/drugs/1488569",
+                  "code": "medications/1488564/drugs/1488569",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Dapagliflozin (Farxiga)\n10 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1488564/drugs/1488574",
+                  "code": "medications/1488564/drugs/1488574",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Dapagliflozin (Farxiga)\n5 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1545653/drugs/1545658",
+                  "code": "medications/1545653/drugs/1545658",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Empagliflozin (Jardiance)\n10 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1545653/drugs/1545666",
+                  "code": "medications/1545653/drugs/1545666",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Empagliflozin (Jardiance)\n25 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1992672/drugs/1992819",
+                  "code": "medications/1992672/drugs/1992819",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Ertugliflozin (Steglatro)\n15 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1992672/drugs/1992810",
+                  "code": "medications/1992672/drugs/1992810",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Ertugliflozin (Steglatro)\n5 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/2638675/drugs/2638683",
+                  "code": "medications/2638675/drugs/2638683",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Sotagliflozin (Inpefa)\n200 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/2638675/drugs/2638691",
+                  "code": "medications/2638675/drugs/2638691",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Sotagliflozin (Inpefa)\n400 mg Oral Tablet"
+                }
+              }
+            ]
           }
         ],
         "required": false,
@@ -3141,7 +4926,120 @@
             "type": "choice",
             "text": "Which pill/tablet do you take?",
             "required": true,
-            "answerOption": []
+            "answerOption": [
+              {
+                "valueCoding": {
+                  "id": "medications/1808/drugs/197417",
+                  "code": "medications/1808/drugs/197417",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Bumetanide (Bumex)\n0.5 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1808/drugs/197418",
+                  "code": "medications/1808/drugs/197418",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Bumetanide (Bumex)\n1 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1808/drugs/197419",
+                  "code": "medications/1808/drugs/197419",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Bumetanide (Bumex)\n2 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/4109/drugs/1251903",
+                  "code": "medications/4109/drugs/1251903",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Ethacrynic Acid (Edecrin)\n25 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/4109/drugs/1251907",
+                  "code": "medications/4109/drugs/1251907",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Ethacrynic Acid (Edecrin)\n50 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/4603/drugs/310429",
+                  "code": "medications/4603/drugs/310429",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Furosemide (Lasix)\n20 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/4603/drugs/313988",
+                  "code": "medications/4603/drugs/313988",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Furosemide (Lasix)\n40 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/4603/drugs/197732",
+                  "code": "medications/4603/drugs/197732",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Furosemide (Lasix)\n80 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/38413/drugs/198369",
+                  "code": "medications/38413/drugs/198369",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Torsemide (Soaanz)\n10 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/38413/drugs/198370",
+                  "code": "medications/38413/drugs/198370",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Torsemide (Soaanz)\n100 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/38413/drugs/198371",
+                  "code": "medications/38413/drugs/198371",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Torsemide (Soaanz)\n20 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/38413/drugs/2589881",
+                  "code": "medications/38413/drugs/2589881",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Torsemide (Soaanz)\n40 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/38413/drugs/198372",
+                  "code": "medications/38413/drugs/198372",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Torsemide (Soaanz)\n5 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/38413/drugs/2589885",
+                  "code": "medications/38413/drugs/2589885",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Torsemide (Soaanz)\n60 mg Oral Tablet"
+                }
+              }
+            ]
           }
         ],
         "required": false,
@@ -3648,7 +5546,152 @@
             "type": "choice",
             "text": "Which pill/tablet do you take?",
             "required": true,
-            "answerOption": []
+            "answerOption": [
+              {
+                "valueCoding": {
+                  "id": "medications/19484/drugs/854901",
+                  "code": "medications/19484/drugs/854901",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Bisoprolol (Zebeta)\n10 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/19484/drugs/854905",
+                  "code": "medications/19484/drugs/854905",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Bisoprolol (Zebeta)\n5 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/20352/drugs/200032",
+                  "code": "medications/20352/drugs/200032",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Carvedilol (Coreg)\n12.5 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/20352/drugs/200033",
+                  "code": "medications/20352/drugs/200033",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Carvedilol (Coreg)\n25 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/20352/drugs/686924",
+                  "code": "medications/20352/drugs/686924",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Carvedilol (Coreg)\n3.125 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/20352/drugs/200031",
+                  "code": "medications/20352/drugs/200031",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Carvedilol (Coreg)\n6.25 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/668310/drugs/860510",
+                  "code": "medications/668310/drugs/860510",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Carvedilol Phosphate (Coreg CR)\n10 mg Extended Release Oral Capsule"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/668310/drugs/860516",
+                  "code": "medications/668310/drugs/860516",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Carvedilol Phosphate (Coreg CR)\n20 mg Extended Release Oral Capsule"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/668310/drugs/860522",
+                  "code": "medications/668310/drugs/860522",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Carvedilol Phosphate (Coreg CR)\n40 mg Extended Release Oral Capsule"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/668310/drugs/860532",
+                  "code": "medications/668310/drugs/860532",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Carvedilol Phosphate (Coreg CR)\n80 mg Extended Release Oral Capsule"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/221124/drugs/1999031",
+                  "code": "medications/221124/drugs/1999031",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Metoprolol Succinate (Toprol XL)\n100 mg Extended Release Oral Capsule"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/221124/drugs/866412",
+                  "code": "medications/221124/drugs/866412",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Metoprolol Succinate (Toprol XL)\n100 mg Extended Release Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/221124/drugs/1999033",
+                  "code": "medications/221124/drugs/1999033",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Metoprolol Succinate (Toprol XL)\n200 mg Extended Release Oral Capsule"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/221124/drugs/866419",
+                  "code": "medications/221124/drugs/866419",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Metoprolol Succinate (Toprol XL)\n200 mg Extended Release Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/221124/drugs/1999035",
+                  "code": "medications/221124/drugs/1999035",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Metoprolol Succinate (Toprol XL)\n25 mg Extended Release Oral Capsule"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/221124/drugs/866427",
+                  "code": "medications/221124/drugs/866427",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Metoprolol Succinate (Toprol XL)\n25 mg Extended Release Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/221124/drugs/1999037",
+                  "code": "medications/221124/drugs/1999037",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Metoprolol Succinate (Toprol XL)\n50 mg Extended Release Oral Capsule"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/221124/drugs/866436",
+                  "code": "medications/221124/drugs/866436",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Metoprolol Succinate (Toprol XL)\n50 mg Extended Release Oral Tablet"
+                }
+              }
+            ]
           }
         ],
         "required": false,
@@ -3797,7 +5840,568 @@
             "type": "choice",
             "text": "Which pill/tablet do you take?",
             "required": true,
-            "answerOption": []
+            "answerOption": [
+              {
+                "valueCoding": {
+                  "id": "medications/1091642/drugs/1091646",
+                  "code": "medications/1091642/drugs/1091646",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Azilsartan Medoxomil (Edarbi)\n40 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1091642/drugs/1091652",
+                  "code": "medications/1091642/drugs/1091652",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Azilsartan Medoxomil (Edarbi)\n80 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/18867/drugs/898687",
+                  "code": "medications/18867/drugs/898687",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Benazepril (Lotensin)\n10 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/18867/drugs/898690",
+                  "code": "medications/18867/drugs/898690",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Benazepril (Lotensin)\n20 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/18867/drugs/898719",
+                  "code": "medications/18867/drugs/898719",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Benazepril (Lotensin)\n40 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/18867/drugs/898723",
+                  "code": "medications/18867/drugs/898723",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Benazepril (Lotensin)\n5 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/214354/drugs/577776",
+                  "code": "medications/214354/drugs/577776",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Candesartan (Atacand)\n16 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/214354/drugs/639537",
+                  "code": "medications/214354/drugs/639537",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Candesartan (Atacand)\n32 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/214354/drugs/153822",
+                  "code": "medications/214354/drugs/153822",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Candesartan (Atacand)\n4 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/214354/drugs/153823",
+                  "code": "medications/214354/drugs/153823",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Candesartan (Atacand)\n8 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1998/drugs/308962",
+                  "code": "medications/1998/drugs/308962",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Captopril (Capoten)\n100 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1998/drugs/308963",
+                  "code": "medications/1998/drugs/308963",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Captopril (Capoten)\n12.5 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1998/drugs/317173",
+                  "code": "medications/1998/drugs/317173",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Captopril (Capoten)\n25 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1998/drugs/308964",
+                  "code": "medications/1998/drugs/308964",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Captopril (Capoten)\n50 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/3827/drugs/858817",
+                  "code": "medications/3827/drugs/858817",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Enalapril (Vasotec)\n10 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/3827/drugs/858804",
+                  "code": "medications/3827/drugs/858804",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Enalapril (Vasotec)\n2.5 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/3827/drugs/858810",
+                  "code": "medications/3827/drugs/858810",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Enalapril (Vasotec)\n20 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/3827/drugs/858813",
+                  "code": "medications/3827/drugs/858813",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Enalapril (Vasotec)\n5 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/83515/drugs/310139",
+                  "code": "medications/83515/drugs/310139",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Eprosartan (Teveten)\n400 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/83515/drugs/310140",
+                  "code": "medications/83515/drugs/310140",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Eprosartan (Teveten)\n600 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/227278/drugs/857169",
+                  "code": "medications/227278/drugs/857169",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Fosinopril Sodium (Monopril)\n10 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/227278/drugs/857183",
+                  "code": "medications/227278/drugs/857183",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Fosinopril Sodium (Monopril)\n20 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/227278/drugs/857187",
+                  "code": "medications/227278/drugs/857187",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Fosinopril Sodium (Monopril)\n40 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/83818/drugs/200095",
+                  "code": "medications/83818/drugs/200095",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Irbesartan (Avapro)\n150 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/83818/drugs/200096",
+                  "code": "medications/83818/drugs/200096",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Irbesartan (Avapro)\n300 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/83818/drugs/200094",
+                  "code": "medications/83818/drugs/200094",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Irbesartan (Avapro)\n75 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/29046/drugs/314076",
+                  "code": "medications/29046/drugs/314076",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Lisinopril (Zestril)\n10 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/29046/drugs/311353",
+                  "code": "medications/29046/drugs/311353",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Lisinopril (Zestril)\n2.5 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/29046/drugs/314077",
+                  "code": "medications/29046/drugs/314077",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Lisinopril (Zestril)\n20 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/29046/drugs/205326",
+                  "code": "medications/29046/drugs/205326",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Lisinopril (Zestril)\n30 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/29046/drugs/197884",
+                  "code": "medications/29046/drugs/197884",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Lisinopril (Zestril)\n40 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/29046/drugs/311354",
+                  "code": "medications/29046/drugs/311354",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Lisinopril (Zestril)\n5 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/203160/drugs/979480",
+                  "code": "medications/203160/drugs/979480",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Losartan Potassium (Cozaar)\n100 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/203160/drugs/979485",
+                  "code": "medications/203160/drugs/979485",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Losartan Potassium (Cozaar)\n25 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/203160/drugs/979492",
+                  "code": "medications/203160/drugs/979492",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Losartan Potassium (Cozaar)\n50 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/30131/drugs/1299896",
+                  "code": "medications/30131/drugs/1299896",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Moexipril (Univasc)\n15 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/30131/drugs/1299897",
+                  "code": "medications/30131/drugs/1299897",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Moexipril (Univasc)\n7.5 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/118463/drugs/349401",
+                  "code": "medications/118463/drugs/349401",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Olmesartan Medoxomil (Benicar)\n20 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/118463/drugs/349405",
+                  "code": "medications/118463/drugs/349405",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Olmesartan Medoxomil (Benicar)\n40 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/118463/drugs/349373",
+                  "code": "medications/118463/drugs/349373",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Olmesartan Medoxomil (Benicar)\n5 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/54552/drugs/854984",
+                  "code": "medications/54552/drugs/854984",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Perindopril (Aceon)\n2 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/54552/drugs/854988",
+                  "code": "medications/54552/drugs/854988",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Perindopril (Aceon)\n4 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/54552/drugs/854925",
+                  "code": "medications/54552/drugs/854925",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Perindopril (Aceon)\n8 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/35208/drugs/312748",
+                  "code": "medications/35208/drugs/312748",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Quinapril (Accupril)\n10 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/35208/drugs/312749",
+                  "code": "medications/35208/drugs/312749",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Quinapril (Accupril)\n20 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/35208/drugs/314203",
+                  "code": "medications/35208/drugs/314203",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Quinapril (Accupril)\n40 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/35208/drugs/312750",
+                  "code": "medications/35208/drugs/312750",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Quinapril (Accupril)\n5 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/35296/drugs/845488",
+                  "code": "medications/35296/drugs/845488",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Ramipril (Altace)\n1.25 mg Oral Capsule"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/35296/drugs/401965",
+                  "code": "medications/35296/drugs/401965",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Ramipril (Altace)\n1.25 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/35296/drugs/261962",
+                  "code": "medications/35296/drugs/261962",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Ramipril (Altace)\n10 mg Oral Capsule"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/35296/drugs/401968",
+                  "code": "medications/35296/drugs/401968",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Ramipril (Altace)\n10 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/35296/drugs/198188",
+                  "code": "medications/35296/drugs/198188",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Ramipril (Altace)\n2.5 mg Oral Capsule"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/35296/drugs/251856",
+                  "code": "medications/35296/drugs/251856",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Ramipril (Altace)\n2.5 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/35296/drugs/198189",
+                  "code": "medications/35296/drugs/198189",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Ramipril (Altace)\n5 mg Oral Capsule"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/35296/drugs/251857",
+                  "code": "medications/35296/drugs/251857",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Ramipril (Altace)\n5 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1656339/drugs/2679793",
+                  "code": "medications/1656339/drugs/2679793",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Sacubitril / Valsartan (Entresto)\n15/16 mg Oral Pellet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1656339/drugs/1656340",
+                  "code": "medications/1656339/drugs/1656340",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Sacubitril / Valsartan (Entresto)\n24/26 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1656339/drugs/1656349",
+                  "code": "medications/1656339/drugs/1656349",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Sacubitril / Valsartan (Entresto)\n49/51 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1656339/drugs/2679800",
+                  "code": "medications/1656339/drugs/2679800",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Sacubitril / Valsartan (Entresto)\n6/6 mg Oral Pellet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1656339/drugs/1656354",
+                  "code": "medications/1656339/drugs/1656354",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Sacubitril / Valsartan (Entresto)\n97/103 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/73494/drugs/282755",
+                  "code": "medications/73494/drugs/282755",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Telmisartan (Micardis)\n20 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/73494/drugs/205304",
+                  "code": "medications/73494/drugs/205304",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Telmisartan (Micardis)\n40 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/73494/drugs/205305",
+                  "code": "medications/73494/drugs/205305",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Telmisartan (Micardis)\n80 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/38454/drugs/199353",
+                  "code": "medications/38454/drugs/199353",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Trandolapril (Mavik)\n1 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/38454/drugs/199351",
+                  "code": "medications/38454/drugs/199351",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Trandolapril (Mavik)\n2 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/38454/drugs/199352",
+                  "code": "medications/38454/drugs/199352",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Trandolapril (Mavik)\n4 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/69749/drugs/349201",
+                  "code": "medications/69749/drugs/349201",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Valsartan (Diovan)\n160 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/69749/drugs/349200",
+                  "code": "medications/69749/drugs/349200",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Valsartan (Diovan)\n320 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/69749/drugs/349483",
+                  "code": "medications/69749/drugs/349483",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Valsartan (Diovan)\n40 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/69749/drugs/349199",
+                  "code": "medications/69749/drugs/349199",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Valsartan (Diovan)\n80 mg Oral Tablet"
+                }
+              }
+            ]
           }
         ],
         "required": false,
@@ -3946,7 +6550,48 @@
             "type": "choice",
             "text": "Which pill/tablet do you take?",
             "required": true,
-            "answerOption": []
+            "answerOption": [
+              {
+                "valueCoding": {
+                  "id": "medications/298869/drugs/351256",
+                  "code": "medications/298869/drugs/351256",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Eplerenone (Inspra)\n25 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/298869/drugs/351257",
+                  "code": "medications/298869/drugs/351257",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Eplerenone (Inspra)\n50 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/9997/drugs/198222",
+                  "code": "medications/9997/drugs/198222",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Spironolactone (Aldactone)\n100 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/9997/drugs/313096",
+                  "code": "medications/9997/drugs/313096",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Spironolactone (Aldactone)\n25 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/9997/drugs/198223",
+                  "code": "medications/9997/drugs/198223",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Spironolactone (Aldactone)\n50 mg Oral Tablet"
+                }
+              }
+            ]
           }
         ],
         "required": false,
@@ -4095,7 +6740,96 @@
             "type": "choice",
             "text": "Which pill/tablet do you take?",
             "required": true,
-            "answerOption": []
+            "answerOption": [
+              {
+                "valueCoding": {
+                  "id": "medications/2627044/drugs/2637859",
+                  "code": "medications/2627044/drugs/2637859",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Bexagliflozin (Brenzavvy)\n20 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1373458/drugs/1373463",
+                  "code": "medications/1373458/drugs/1373463",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Canagliflozin (Invokana)\n100 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1373458/drugs/1373471",
+                  "code": "medications/1373458/drugs/1373471",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Canagliflozin (Invokana)\n300 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1488564/drugs/1488569",
+                  "code": "medications/1488564/drugs/1488569",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Dapagliflozin (Farxiga)\n10 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1488564/drugs/1488574",
+                  "code": "medications/1488564/drugs/1488574",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Dapagliflozin (Farxiga)\n5 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1545653/drugs/1545658",
+                  "code": "medications/1545653/drugs/1545658",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Empagliflozin (Jardiance)\n10 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1545653/drugs/1545666",
+                  "code": "medications/1545653/drugs/1545666",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Empagliflozin (Jardiance)\n25 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1992672/drugs/1992819",
+                  "code": "medications/1992672/drugs/1992819",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Ertugliflozin (Steglatro)\n15 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1992672/drugs/1992810",
+                  "code": "medications/1992672/drugs/1992810",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Ertugliflozin (Steglatro)\n5 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/2638675/drugs/2638683",
+                  "code": "medications/2638675/drugs/2638683",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Sotagliflozin (Inpefa)\n200 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/2638675/drugs/2638691",
+                  "code": "medications/2638675/drugs/2638691",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Sotagliflozin (Inpefa)\n400 mg Oral Tablet"
+                }
+              }
+            ]
           }
         ],
         "required": false,
@@ -4244,7 +6978,120 @@
             "type": "choice",
             "text": "Which pill/tablet do you take?",
             "required": true,
-            "answerOption": []
+            "answerOption": [
+              {
+                "valueCoding": {
+                  "id": "medications/1808/drugs/197417",
+                  "code": "medications/1808/drugs/197417",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Bumetanide (Bumex)\n0.5 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1808/drugs/197418",
+                  "code": "medications/1808/drugs/197418",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Bumetanide (Bumex)\n1 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/1808/drugs/197419",
+                  "code": "medications/1808/drugs/197419",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Bumetanide (Bumex)\n2 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/4109/drugs/1251903",
+                  "code": "medications/4109/drugs/1251903",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Ethacrynic Acid (Edecrin)\n25 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/4109/drugs/1251907",
+                  "code": "medications/4109/drugs/1251907",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Ethacrynic Acid (Edecrin)\n50 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/4603/drugs/310429",
+                  "code": "medications/4603/drugs/310429",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Furosemide (Lasix)\n20 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/4603/drugs/313988",
+                  "code": "medications/4603/drugs/313988",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Furosemide (Lasix)\n40 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/4603/drugs/197732",
+                  "code": "medications/4603/drugs/197732",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Furosemide (Lasix)\n80 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/38413/drugs/198369",
+                  "code": "medications/38413/drugs/198369",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Torsemide (Soaanz)\n10 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/38413/drugs/198370",
+                  "code": "medications/38413/drugs/198370",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Torsemide (Soaanz)\n100 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/38413/drugs/198371",
+                  "code": "medications/38413/drugs/198371",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Torsemide (Soaanz)\n20 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/38413/drugs/2589881",
+                  "code": "medications/38413/drugs/2589881",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Torsemide (Soaanz)\n40 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/38413/drugs/198372",
+                  "code": "medications/38413/drugs/198372",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Torsemide (Soaanz)\n5 mg Oral Tablet"
+                }
+              },
+              {
+                "valueCoding": {
+                  "id": "medications/38413/drugs/2589885",
+                  "code": "medications/38413/drugs/2589885",
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "display": "Torsemide (Soaanz)\n60 mg Oral Tablet"
+                }
+              }
+            ]
           }
         ],
         "required": false,
