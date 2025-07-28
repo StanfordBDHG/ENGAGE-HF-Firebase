@@ -179,7 +179,7 @@ export abstract class QuestionnaireResponseService {
         ?.answer?.at(0)?.valueDecimal
       const frequency = response
         .leafResponseItem(linkIds.frequency)
-        ?.answer?.at(0)?.valueDecimal
+        ?.answer?.at(0)?.valueInteger
 
       if (
         drugCoding?.code === undefined ||

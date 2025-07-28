@@ -279,7 +279,7 @@ const registrationResponseApple = {
         },
       ],
     },
-    { linkId: 'medication.rasi.frequency', answer: [{ valueDecimal: 2 }] },
+    { linkId: 'medication.rasi.frequency', answer: [{ valueInteger: 2 }] },
     { linkId: 'medication.rasi.quantity', answer: [{ valueDecimal: 1.5 }] },
     {
       answer: [
@@ -319,7 +319,7 @@ const registrationResponseApple = {
         },
       ],
     },
-    { linkId: 'medication.sglt2i.frequency', answer: [{ valueDecimal: 2 }] },
+    { linkId: 'medication.sglt2i.frequency', answer: [{ valueInteger: 2 }] },
     { answer: [{ valueDecimal: 1.34 }], linkId: 'medication.sglt2i.quantity' },
     {
       answer: [
@@ -592,7 +592,7 @@ const registrationResponseAndroid = {
           text: 'Intake frequency (per day):',
           answer: [
             {
-              valueDecimal: 2,
+              valueInteger: 2,
             },
           ],
         },
@@ -682,7 +682,7 @@ const registrationResponseAndroid = {
           text: 'Intake frequency (per day):',
           answer: [
             {
-              valueDecimal: 3,
+              valueInteger: 3,
             },
           ],
         },
