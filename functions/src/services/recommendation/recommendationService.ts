@@ -176,7 +176,9 @@ export class RecommendationService {
         output.recommendedMedication ?
           {
             reference: output.recommendedMedication,
-            display: recommendedMedication?.content.displayName,
+            ...(recommendedMedication && {
+              display: recommendedMedication.content.displayName,
+            }),
           }
         : undefined,
       displayInformation: {
