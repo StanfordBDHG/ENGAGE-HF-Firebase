@@ -11,7 +11,7 @@ import {
   median,
   UserMedicationRecommendationType,
   type FHIRAppointment,
-  type Observation,
+  type ObservationQuantity,
   type SymptomScore,
   type UserMedicationRecommendation,
 } from '@stanfordbdhg/engagehf-models'
@@ -23,12 +23,12 @@ import {
 } from '../healthSummary/keyPointsMessage.js'
 
 export interface HealthSummaryVitals {
-  systolicBloodPressure: Observation[]
-  diastolicBloodPressure: Observation[]
-  heartRate: Observation[]
-  bodyWeight: Observation[]
+  systolicBloodPressure: ObservationQuantity[]
+  diastolicBloodPressure: ObservationQuantity[]
+  heartRate: ObservationQuantity[]
+  bodyWeight: ObservationQuantity[]
 
-  dryWeight?: Observation
+  dryWeight?: ObservationQuantity
 }
 
 export class HealthSummaryData {

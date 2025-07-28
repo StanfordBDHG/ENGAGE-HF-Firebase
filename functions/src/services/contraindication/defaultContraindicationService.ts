@@ -8,11 +8,10 @@
 
 import {
   type FHIRAllergyIntolerance,
-  FHIRAllergyIntoleranceCriticality,
-  FHIRAllergyIntoleranceType,
   MedicationClassReference,
   MedicationReference,
 } from '@stanfordbdhg/engagehf-models'
+import { type AllergyIntolerance } from 'fhir/r4b.js'
 import { logger } from 'firebase-functions'
 import {
   ContraindicationCategory,
@@ -109,8 +108,8 @@ export class DefaultContraindicationService implements ContraindicationService {
       for (const medicationReference of medicationReferences) {
         const record = this.record({
           medicationReference: medicationReference,
-          type: contraindication.type,
-          criticality: contraindication.criticality,
+          type: contraindication.data.type,
+          criticality: contraindication.data.criticality,
         })
         if (isRelevant(record)) category = Math.max(category, record.category)
       }
@@ -120,16 +119,16 @@ export class DefaultContraindicationService implements ContraindicationService {
 
   private record(input: {
     medicationReference: MedicationReference
-    type: FHIRAllergyIntoleranceType
-    criticality?: FHIRAllergyIntoleranceCriticality
+    type?: AllergyIntolerance['type']
+    criticality?: AllergyIntolerance['criticality']
   }): ContraindicationRecord {
     const medicationClass = medicationClassReference(input.medicationReference)
     const medicationReferences = this.medicationReferenceIncludingDerivatives(
       input.medicationReference,
     )
     switch (input.type) {
-      case FHIRAllergyIntoleranceType.allergy:
-        if (input.criticality === FHIRAllergyIntoleranceCriticality.high) {
+      case 'allergy':
+        if (input.criticality === 'high') {
           return {
             category: ContraindicationCategory.severeAllergyIntolerance,
             medications: medicationReferences,
@@ -150,7 +149,7 @@ export class DefaultContraindicationService implements ContraindicationService {
             ),
           }
         }
-      case FHIRAllergyIntoleranceType.intolerance:
+      case 'intolerance':
         switch (medicationClass) {
           case MedicationClassReference.angiotensinConvertingEnzymeInhibitors:
           case MedicationClassReference.angiotensinReceptorNeprilysinInhibitors:
@@ -172,8 +171,9 @@ export class DefaultContraindicationService implements ContraindicationService {
               medicationClasses: new Set(),
             }
         }
-      case FHIRAllergyIntoleranceType.financial:
-      case FHIRAllergyIntoleranceType.preference:
+      // TODO: case 'financial':
+      // TODO: case 'preference':
+      case undefined:
         return {
           category: ContraindicationCategory.clinicianListed,
           medications: medicationReferences,

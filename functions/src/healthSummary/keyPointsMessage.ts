@@ -70,12 +70,12 @@ export const healthSummaryKeyPointMessages = new Lazy<
 >(() =>
   z
     .object({
-      recommendationsCategory: z.nativeEnum(
+      recommendationsCategory: z.enum(
         HealthSummaryMedicationRecommendationsCategory,
       ),
-      symptomScoreCategory: z.nativeEnum(HealthSummarySymptomScoreCategory),
-      dizzinessCategory: z.nativeEnum(HealthSummaryDizzinessCategory),
-      weightCategory: z.nativeEnum(HealthSummaryWeightCategory),
+      symptomScoreCategory: z.enum(HealthSummarySymptomScoreCategory),
+      dizzinessCategory: z.enum(HealthSummaryDizzinessCategory),
+      weightCategory: z.enum(HealthSummaryWeightCategory),
       texts: z.array(localizedTextConverter.schema),
     })
     .array()

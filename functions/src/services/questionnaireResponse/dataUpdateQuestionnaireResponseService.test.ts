@@ -62,7 +62,7 @@ describeWithEmulators('DataUpdateQuestionnaireResponseService', (env) => {
     const ref = env.collections.userQuestionnaireResponses(userId).doc()
     await env.setWithTrigger(onUserQuestionnaireResponseWritten, {
       ref,
-      data: fhirQuestionnaireResponseConverter.value.schema.parse(
+      data: fhirQuestionnaireResponseConverter.schema.parse(
         dataUpdateResponseApple,
       ),
       params: {
@@ -82,8 +82,9 @@ describeWithEmulators('DataUpdateQuestionnaireResponseService', (env) => {
 
     const valsartan = medicationRequestsData.find(
       (req) =>
-        req.medicationReference?.reference === 'medications/69749/drugs/349201',
-    )
+        req.data.medicationReference?.reference ===
+        'medications/69749/drugs/349201',
+    )?.data
     expect(valsartan).toBeDefined()
     expect(valsartan?.dosageInstruction?.length).toBe(1)
     const valsartanDosageInstruction = valsartan?.dosageInstruction?.at(0)
@@ -94,9 +95,9 @@ describeWithEmulators('DataUpdateQuestionnaireResponseService', (env) => {
 
     const bexagliflozin = medicationRequestsData.find(
       (req) =>
-        req.medicationReference?.reference ===
+        req.data.medicationReference?.reference ===
         'medications/2627044/drugs/2637859',
-    )
+    )?.data
     expect(bexagliflozin).toBeDefined()
     expect(bexagliflozin?.dosageInstruction?.length).toBe(1)
     const bexagliflozinDosageInstruction =
@@ -109,8 +110,8 @@ describeWithEmulators('DataUpdateQuestionnaireResponseService', (env) => {
 
     const furosemide = medicationRequestsData.find(
       (req) =>
-        req.medicationReference?.reference === DrugReference.furosemide20,
-    )
+        req.data.medicationReference?.reference === DrugReference.furosemide20,
+    )?.data
     expect(furosemide).toBeDefined()
     expect(furosemide?.dosageInstruction?.length).toBe(1)
     const furosemideDosageInstruction = furosemide?.dosageInstruction?.at(0)
@@ -147,7 +148,7 @@ describeWithEmulators('DataUpdateQuestionnaireResponseService', (env) => {
 
     const appointments = await env.collections.userAppointments(userId).get()
     expect(appointments.size).toBe(1)
-    expect(appointments.docs[0].data().start.toISOString()).toBe(
+    expect(appointments.docs[0].data().startDate?.toISOString()).toBe(
       '2025-05-14T12:00:00.000Z',
     )
   })
@@ -179,7 +180,7 @@ describeWithEmulators('DataUpdateQuestionnaireResponseService', (env) => {
       }),
       FHIRMedicationRequest.create({
         medicationReference: DrugReference.sacubitrilValsartan49_51,
-        frequencyPerDay: 2.3,
+        frequencyPerDay: 2,
         quantity: 0.5,
       }),
     ]
@@ -191,7 +192,7 @@ describeWithEmulators('DataUpdateQuestionnaireResponseService', (env) => {
     const ref = env.collections.userQuestionnaireResponses(userId).doc()
     await env.setWithTrigger(onUserQuestionnaireResponseWritten, {
       ref,
-      data: fhirQuestionnaireResponseConverter.value.schema.parse(
+      data: fhirQuestionnaireResponseConverter.schema.parse(
         postAppointmentResponseAndroid,
       ),
       params: {
@@ -210,16 +211,16 @@ describeWithEmulators('DataUpdateQuestionnaireResponseService', (env) => {
 
     const sacubitrilValsartan = medicationRequestsData.find(
       (req) =>
-        req.medicationReference?.reference ===
+        req.data.medicationReference?.reference ===
         'medications/1656339/drugs/1656349',
-    )
+    )?.data
     expect(sacubitrilValsartan).toBeDefined()
     expect(sacubitrilValsartan?.dosageInstruction?.length).toBe(1)
     const sacubitrilValsartanDosageInstruction =
       sacubitrilValsartan?.dosageInstruction?.at(0)
     expect(
       sacubitrilValsartanDosageInstruction?.timing?.repeat?.frequency,
-    ).toBe(2.3)
+    ).toBe(2)
     expect(sacubitrilValsartanDosageInstruction?.doseAndRate?.length).toBe(1)
     const sacubitrilValsartanDoseAndRate =
       sacubitrilValsartanDosageInstruction?.doseAndRate?.at(0)
@@ -227,9 +228,9 @@ describeWithEmulators('DataUpdateQuestionnaireResponseService', (env) => {
 
     const empagliflozin = medicationRequestsData.find(
       (req) =>
-        req.medicationReference?.reference ===
+        req.data.medicationReference?.reference ===
         'medications/1545653/drugs/1545658',
-    )
+    )?.data
     expect(empagliflozin).toBeDefined()
     expect(empagliflozin?.dosageInstruction?.length).toBe(1)
     const empagliflozinDosageInstruction =
@@ -269,7 +270,7 @@ describeWithEmulators('DataUpdateQuestionnaireResponseService', (env) => {
 
     const appointments = await env.collections.userAppointments(userId).get()
     expect(appointments.size).toBe(1)
-    expect(appointments.docs[0].data().start.toDateString()).toBe(
+    expect(appointments.docs[0].data().startDate?.toDateString()).toBe(
       new Date('2025-07-12').toDateString(),
     )
   })
@@ -318,7 +319,7 @@ const dataUpdateResponseApple = {
         },
       ],
     },
-    { linkId: 'medication.rasi.frequency', answer: [{ valueDecimal: 2 }] },
+    { linkId: 'medication.rasi.frequency', answer: [{ valueInteger: 2 }] },
     { linkId: 'medication.rasi.quantity', answer: [{ valueDecimal: 1.5 }] },
     {
       answer: [
@@ -358,7 +359,7 @@ const dataUpdateResponseApple = {
         },
       ],
     },
-    { linkId: 'medication.sglt2i.frequency', answer: [{ valueDecimal: 2 }] },
+    { linkId: 'medication.sglt2i.frequency', answer: [{ valueInteger: 2 }] },
     { answer: [{ valueDecimal: 1.34 }], linkId: 'medication.sglt2i.quantity' },
     {
       answer: [
@@ -400,6 +401,7 @@ const postAppointmentResponseAndroid = {
   resourceType: 'QuestionnaireResponse',
   questionnaire:
     'http://spezi.health/fhir/questionnaire/engagehf-post-appointment',
+  status: 'completed',
   item: [
     {
       linkId: 'lab.2160-0.exists',
@@ -642,7 +644,7 @@ const postAppointmentResponseAndroid = {
           text: 'Intake frequency (per day):',
           answer: [
             {
-              valueDecimal: 3.0,
+              valueInteger: 3.0,
             },
           ],
         },

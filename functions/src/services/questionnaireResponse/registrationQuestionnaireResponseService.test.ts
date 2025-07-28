@@ -35,7 +35,7 @@ describeWithEmulators('RegistrationQuestionnaireResponseService', (env) => {
     const ref = env.collections.userQuestionnaireResponses(userId).doc()
     await env.setWithTrigger(onUserQuestionnaireResponseWritten, {
       ref,
-      data: fhirQuestionnaireResponseConverter.value.schema.parse(
+      data: fhirQuestionnaireResponseConverter.schema.parse(
         registrationResponseApple,
       ),
       params: {
@@ -61,8 +61,9 @@ describeWithEmulators('RegistrationQuestionnaireResponseService', (env) => {
 
     const valsartan = medicationRequestsData.find(
       (req) =>
-        req.medicationReference?.reference === 'medications/69749/drugs/349201',
-    )
+        req.data.medicationReference?.reference ===
+        'medications/69749/drugs/349201',
+    )?.data
     expect(valsartan).toBeDefined()
     expect(valsartan?.dosageInstruction?.length).toBe(1)
     const valsartanDosageInstruction = valsartan?.dosageInstruction?.at(0)
@@ -73,9 +74,9 @@ describeWithEmulators('RegistrationQuestionnaireResponseService', (env) => {
 
     const bexagliflozin = medicationRequestsData.find(
       (req) =>
-        req.medicationReference?.reference ===
+        req.data.medicationReference?.reference ===
         'medications/2627044/drugs/2637859',
-    )
+    )?.data
     expect(bexagliflozin).toBeDefined()
     expect(bexagliflozin?.dosageInstruction?.length).toBe(1)
     const bexagliflozinDosageInstruction =
@@ -113,7 +114,7 @@ describeWithEmulators('RegistrationQuestionnaireResponseService', (env) => {
 
     const appointments = await env.collections.userAppointments(userId).get()
     expect(appointments.size).toBe(1)
-    expect(appointments.docs[0].data().start.toISOString()).toBe(
+    expect(appointments.docs[0].data().startDate?.toISOString()).toBe(
       '2025-05-14T12:00:00.000Z',
     )
   })
@@ -132,7 +133,7 @@ describeWithEmulators('RegistrationQuestionnaireResponseService', (env) => {
     const ref = env.collections.userQuestionnaireResponses(userId).doc()
     await env.setWithTrigger(onUserQuestionnaireResponseWritten, {
       ref,
-      data: fhirQuestionnaireResponseConverter.value.schema.parse(
+      data: fhirQuestionnaireResponseConverter.schema.parse(
         registrationResponseAndroid,
       ),
       params: {
@@ -157,12 +158,13 @@ describeWithEmulators('RegistrationQuestionnaireResponseService', (env) => {
 
     const benazepril = medicationRequestsData.find(
       (req) =>
-        req.medicationReference?.reference === 'medications/18867/drugs/898719',
-    )
+        req.data.medicationReference?.reference ===
+        'medications/18867/drugs/898719',
+    )?.data
     expect(benazepril).toBeDefined()
     expect(benazepril?.dosageInstruction?.length).toBe(1)
     const benazeprilDosageInstruction = benazepril?.dosageInstruction?.at(0)
-    expect(benazeprilDosageInstruction?.timing?.repeat?.frequency).toBe(2.3)
+    expect(benazeprilDosageInstruction?.timing?.repeat?.frequency).toBe(2)
     expect(benazeprilDosageInstruction?.doseAndRate?.length).toBe(1)
     const benazeprilDoseAndRate =
       benazeprilDosageInstruction?.doseAndRate?.at(0)
@@ -170,9 +172,9 @@ describeWithEmulators('RegistrationQuestionnaireResponseService', (env) => {
 
     const empagliflozin = medicationRequestsData.find(
       (req) =>
-        req.medicationReference?.reference ===
+        req.data.medicationReference?.reference ===
         'medications/1545653/drugs/1545658',
-    )
+    )?.data
     expect(empagliflozin).toBeDefined()
     expect(empagliflozin?.dosageInstruction?.length).toBe(1)
     const empagliflozinDosageInstruction =
@@ -212,7 +214,7 @@ describeWithEmulators('RegistrationQuestionnaireResponseService', (env) => {
 
     const appointments = await env.collections.userAppointments(userId).get()
     expect(appointments.size).toBe(1)
-    expect(appointments.docs[0].data().start.toDateString()).toBe(
+    expect(appointments.docs[0].data().startDate?.toDateString()).toBe(
       new Date('2025-07-12').toDateString(),
     )
   })
@@ -277,7 +279,7 @@ const registrationResponseApple = {
         },
       ],
     },
-    { linkId: 'medication.rasi.frequency', answer: [{ valueDecimal: 2 }] },
+    { linkId: 'medication.rasi.frequency', answer: [{ valueInteger: 2 }] },
     { linkId: 'medication.rasi.quantity', answer: [{ valueDecimal: 1.5 }] },
     {
       answer: [
@@ -317,7 +319,7 @@ const registrationResponseApple = {
         },
       ],
     },
-    { linkId: 'medication.sglt2i.frequency', answer: [{ valueDecimal: 2 }] },
+    { linkId: 'medication.sglt2i.frequency', answer: [{ valueInteger: 2 }] },
     { answer: [{ valueDecimal: 1.34 }], linkId: 'medication.sglt2i.quantity' },
     {
       answer: [
@@ -358,6 +360,7 @@ const registrationResponseApple = {
 const registrationResponseAndroid = {
   resourceType: 'QuestionnaireResponse',
   questionnaire: 'http://spezi.health/fhir/questionnaire/engagehf-registration',
+  status: 'completed',
   item: [
     {
       linkId: 'de981575-bd5b-4d84-95bb-35ed6c7f5923',
@@ -589,7 +592,7 @@ const registrationResponseAndroid = {
           text: 'Intake frequency (per day):',
           answer: [
             {
-              valueDecimal: 2.3,
+              valueInteger: 2,
             },
           ],
         },
@@ -679,7 +682,7 @@ const registrationResponseAndroid = {
           text: 'Intake frequency (per day):',
           answer: [
             {
-              valueDecimal: 3.0,
+              valueInteger: 3,
             },
           ],
         },

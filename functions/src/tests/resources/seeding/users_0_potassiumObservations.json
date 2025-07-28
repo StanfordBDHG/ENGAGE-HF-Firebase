@@ -1,34 +1,24 @@
 {
   "0": {
-    "id": "0",
-    "extension": null,
     "resourceType": "Observation",
-    "meta": null,
+    "id": "0",
     "status": "final",
     "code": {
+      "text": "Potassium [Moles/volume] in Blood",
       "coding": [
         {
-          "id": null,
-          "extension": null,
           "system": "http://loinc.org",
-          "version": null,
           "code": "6298-4",
-          "display": "Potassium [Moles/volume] in Blood",
-          "userSelected": null
+          "display": "Potassium [Moles/volume] in Blood"
         }
-      ],
-      "text": "Potassium [Moles/volume] in Blood"
+      ]
     },
-    "component": null,
     "valueQuantity": {
-      "code": "meq/L",
-      "system": "http://unitsofmeasure.org",
+      "value": 4.2,
       "unit": "mEq/L",
-      "value": 4.2
+      "system": "http://unitsofmeasure.org",
+      "code": "meq/L"
     },
-    "effectivePeriod": null,
-    "effectiveDateTime": "2024-06-03T00:00:00.000Z",
-    "effectiveInstant": null,
-    "derivedFrom": null
+    "effectiveDateTime": "2024-06-03T00:00:00.000Z"
   }
 }

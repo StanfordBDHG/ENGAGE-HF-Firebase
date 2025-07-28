@@ -9,9 +9,8 @@
 import {
   advanceDateByDays,
   FHIRAppointment,
-  FHIRAppointmentStatus,
   LocalizedText,
-  type Observation,
+  type ObservationQuantity,
   QuantityUnit,
   SymptomScore,
   UserMedicationRecommendationType,
@@ -38,7 +37,6 @@ export class MockHealthSummaryService implements HealthSummaryService {
       providerName: 'Dr. XXX',
       nextAppointment: FHIRAppointment.create({
         userId,
-        status: FHIRAppointmentStatus.booked,
         created: advanceDateByDays(date, -10),
         start: advanceDateByDays(date, 1),
         durationInMinutes: 60,
@@ -160,7 +158,7 @@ export class MockHealthSummaryService implements HealthSummaryService {
 
   private async getBloodPressureObservations(
     date: Date,
-  ): Promise<[Observation[], Observation[]]> {
+  ): Promise<[ObservationQuantity[], ObservationQuantity[]]> {
     return [
       [
         {
@@ -259,7 +257,9 @@ export class MockHealthSummaryService implements HealthSummaryService {
     ]
   }
 
-  private async getHeartRateObservations(date: Date): Promise<Observation[]> {
+  private async getHeartRateObservations(
+    date: Date,
+  ): Promise<ObservationQuantity[]> {
     return [
       {
         date: advanceDateByDays(date, -1),
@@ -309,7 +309,9 @@ export class MockHealthSummaryService implements HealthSummaryService {
     ]
   }
 
-  private async getBodyWeightObservations(date: Date): Promise<Observation[]> {
+  private async getBodyWeightObservations(
+    date: Date,
+  ): Promise<ObservationQuantity[]> {
     return [
       {
         date: advanceDateByDays(date, -1),
@@ -361,7 +363,7 @@ export class MockHealthSummaryService implements HealthSummaryService {
 
   private async getMostRecentDryWeightObservation(
     date: Date,
-  ): Promise<Observation | undefined> {
+  ): Promise<ObservationQuantity | undefined> {
     return {
       date: advanceDateByDays(date, -4),
       value: 267.5,

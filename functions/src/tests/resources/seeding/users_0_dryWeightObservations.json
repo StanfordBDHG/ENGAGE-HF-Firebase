@@ -1,34 +1,24 @@
 {
   "0": {
-    "id": "0",
-    "extension": null,
     "resourceType": "Observation",
-    "meta": null,
+    "id": "0",
     "status": "final",
     "code": {
+      "text": "Body weight",
       "coding": [
         {
-          "id": null,
-          "extension": null,
           "system": "http://loinc.org",
-          "version": null,
           "code": "29463-7",
-          "display": "Body weight",
-          "userSelected": null
+          "display": "Body weight"
         }
-      ],
-      "text": "Body weight"
+      ]
     },
-    "component": null,
     "valueQuantity": {
-      "code": "kg",
-      "system": "http://unitsofmeasure.org",
+      "value": 71.5,
       "unit": "kg",
-      "value": 71.5
+      "system": "http://unitsofmeasure.org",
+      "code": "kg"
     },
-    "effectivePeriod": null,
-    "effectiveDateTime": "2024-06-03T00:00:00.000Z",
-    "effectiveInstant": null,
-    "derivedFrom": null
+    "effectiveDateTime": "2024-06-03T00:00:00.000Z"
   }
 }

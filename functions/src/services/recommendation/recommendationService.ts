@@ -9,14 +9,14 @@
 import {
   type FHIRAllergyIntolerance,
   type FHIRMedication,
-  type FHIRMedicationRequest,
   LocalizedText,
   type MedicationReference,
-  type Observation,
+  type ObservationQuantity,
   UserMedicationRecommendation,
   type UserMedicationRecommendationDoseSchedule,
   UserMedicationRecommendationType,
 } from '@stanfordbdhg/engagehf-models'
+import { type Medication, type MedicationRequest } from 'fhir/r4b.js'
 import { recommendationLocalization } from './recommendationService+localization.js'
 import { BetaBlockerRecommender } from './recommenders/betaBlockerRecommender.js'
 import { DiureticRecommender } from './recommenders/diureticRecommender.js'
@@ -36,11 +36,11 @@ export interface RecommendationInput {
 }
 
 export interface RecommendationVitals {
-  systolicBloodPressure: Observation[]
-  heartRate: Observation[]
-  creatinine?: Observation
-  estimatedGlomerularFiltrationRate?: Observation
-  potassium?: Observation
+  systolicBloodPressure: ObservationQuantity[]
+  heartRate: ObservationQuantity[]
+  creatinine?: ObservationQuantity
+  estimatedGlomerularFiltrationRate?: ObservationQuantity
+  potassium?: ObservationQuantity
 }
 
 export interface RecommendationOutput {
@@ -143,12 +143,12 @@ export class RecommendationService {
       minimumDailyDoseRequest && minimumDailyDoseDrugReference ?
         this.doseSchedule(
           minimumDailyDoseRequest,
-          minimumDailyDoseDrugReference,
+          minimumDailyDoseDrugReference.data,
         )
       : []
 
     const currentDailyDoseSchedule = output.currentMedication.flatMap(
-      (context) => this.doseSchedule(context.request, context.drug),
+      (context) => this.doseSchedule(context.request.data, context.drug.data),
     )
 
     const targetDailyDoseRequest = medication?.targetDailyDoseRequest
@@ -162,7 +162,10 @@ export class RecommendationService {
       : undefined
     const targetDailyDoseSchedule =
       targetDailyDoseRequest && targetDailyDoseDrugReference ?
-        this.doseSchedule(targetDailyDoseRequest, targetDailyDoseDrugReference)
+        this.doseSchedule(
+          targetDailyDoseRequest,
+          targetDailyDoseDrugReference.data,
+        )
       : []
 
     return new UserMedicationRecommendation({
@@ -173,7 +176,9 @@ export class RecommendationService {
         output.recommendedMedication ?
           {
             reference: output.recommendedMedication,
-            display: recommendedMedication?.content.displayName,
+            ...(recommendedMedication && {
+              display: recommendedMedication.content.displayName,
+            }),
           }
         : undefined,
       displayInformation: {
@@ -201,8 +206,8 @@ export class RecommendationService {
   }
 
   private doseSchedule(
-    request: FHIRMedicationRequest,
-    drug: FHIRMedication,
+    request: MedicationRequest,
+    drug: Medication,
   ): UserMedicationRecommendationDoseSchedule[] {
     const ingredients = (drug.ingredient ?? []).map(
       (ingredient) => ingredient.strength?.numerator?.value ?? 0,
