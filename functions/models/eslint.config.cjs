@@ -10,4 +10,11 @@ const {
   getEslintNodeConfig,
 } = require('@stanfordspezi/spezi-web-configurations')
 
-module.exports = getEslintNodeConfig({ tsconfigRootDir: __dirname })
+module.exports = [
+  ...getEslintNodeConfig({ tsconfigRootDir: __dirname }),
+  {
+    rules: {
+      'import/no-cycle': 'off',
+    },
+  },
+]
