@@ -213,9 +213,7 @@ export abstract class QuestionnaireFactory<Input> {
     isRegistration: boolean
   }): FHIRQuestionnaireItem[] {
     const linkIds = QuestionnaireLinkId.medication(input.group)
-    const medicationClasses = medicationClassesForGroup(input.group).map(
-      (medicationClass) => medicationClass.toString(),
-    )
+    const medicationClasses = medicationClassesForGroup(input.group) as string[]
     const medicationIds = compactMap(
       Object.entries(input.medications),
       ([id, medication]) =>
