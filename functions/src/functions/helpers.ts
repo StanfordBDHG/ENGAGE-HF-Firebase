@@ -6,9 +6,9 @@
 // SPDX-License-Identifier: MIT
 //
 
-import type express from 'express'
-import { logger } from 'firebase-functions'
-import { https } from 'firebase-functions/v2'
+import type express from "express";
+import { logger } from "firebase-functions";
+import { https } from "firebase-functions/v2";
 import {
   type CallableFunction,
   type CallableOptions,
@@ -16,10 +16,10 @@ import {
   onCall,
   onRequest,
   type Request,
-} from 'firebase-functions/v2/https'
-import { z } from 'zod'
+} from "firebase-functions/v2/https";
+import { z } from "zod";
 
-export const serviceAccount = `cloudfunctionsserviceaccount@${process.env.GCLOUD_PROJECT}.iam.gserviceaccount.com`
+export const serviceAccount = `cloudfunctionsserviceaccount@${process.env.GCLOUD_PROJECT}.iam.gserviceaccount.com`;
 
 export function validatedOnCall<Schema extends z.ZodTypeAny, Return, Stream>(
   name: string,
@@ -29,7 +29,7 @@ export function validatedOnCall<Schema extends z.ZodTypeAny, Return, Stream>(
 ): CallableFunction<z.input<Schema>, Promise<Return>, Stream> {
   return onCall(
     {
-      invoker: 'public',
+      invoker: "public",
       serviceAccount: serviceAccount,
       ...options,
     },
@@ -37,24 +37,24 @@ export function validatedOnCall<Schema extends z.ZodTypeAny, Return, Stream>(
       try {
         logger.debug(
           `onCall(${name}) from user '${request.auth?.uid}' with '${JSON.stringify(request.data)}'`,
-        )
-        request.data = schema.parse(request.data) as z.output<Schema>
-        return await handler(request as CallableRequest<z.output<Schema>>)
+        );
+        request.data = schema.parse(request.data) as z.output<Schema>;
+        return await handler(request as CallableRequest<z.output<Schema>>);
       } catch (error) {
         logger.debug(
           `onCall(${name}) from user '${request.auth?.uid}' failed with '${String(error)}'.`,
-        )
+        );
         if (error instanceof z.ZodError) {
           throw new https.HttpsError(
-            'invalid-argument',
-            'Invalid request data',
+            "invalid-argument",
+            "Invalid request data",
             error.errors,
-          )
+          );
         }
-        throw error
+        throw error;
       }
     },
-  )
+  );
 }
 
 export function validatedOnRequest<Schema extends z.ZodTypeAny>(
@@ -69,28 +69,28 @@ export function validatedOnRequest<Schema extends z.ZodTypeAny>(
 ): https.HttpsFunction {
   return onRequest(
     {
-      invoker: 'public',
+      invoker: "public",
       serviceAccount: serviceAccount,
       ...options,
     },
     async (request, response) => {
       try {
-        logger.debug(`onRequest(${name}) with ${JSON.stringify(request.body)}`)
-        const data = schema.parse(request.body) as z.output<Schema>
-        await handler(request, data, response)
-        return
+        logger.debug(`onRequest(${name}) with ${JSON.stringify(request.body)}`);
+        const data = schema.parse(request.body) as z.output<Schema>;
+        await handler(request, data, response);
+        return;
       } catch (error) {
-        logger.debug(`onRequest(${name}) failed with ${String(error)}.`)
+        logger.debug(`onRequest(${name}) failed with ${String(error)}.`);
         if (error instanceof z.ZodError) {
           response.status(400).send({
-            code: 'invalid-argument',
-            message: 'Invalid request data',
+            code: "invalid-argument",
+            message: "Invalid request data",
             details: error.errors,
-          })
-          return
+          });
+          return;
         }
-        throw error
+        throw error;
       }
     },
-  )
+  );
 }

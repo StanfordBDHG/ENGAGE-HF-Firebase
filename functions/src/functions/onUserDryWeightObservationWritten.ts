@@ -6,22 +6,22 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { UserObservationCollection } from '@stanfordbdhg/engagehf-models'
-import { onDocumentWritten } from 'firebase-functions/firestore'
-import { Env } from '../env.js'
-import { getServiceFactory } from '../services/factory/getServiceFactory.js'
+import { UserObservationCollection } from "@stanfordbdhg/engagehf-models";
+import { onDocumentWritten } from "firebase-functions/firestore";
+import { Env } from "../env.js";
+import { getServiceFactory } from "../services/factory/getServiceFactory.js";
 
 export const onUserDryWeightObservationWritten = onDocumentWritten(
   {
-    document: 'users/{userId}/dryWeightObservations/{observationId}',
+    document: "users/{userId}/dryWeightObservations/{observationId}",
     secrets: Env.twilioSecretKeys,
   },
   async (event) => {
-    const factory = getServiceFactory()
-    const triggerService = factory.trigger()
+    const factory = getServiceFactory();
+    const triggerService = factory.trigger();
     await triggerService.userObservationWritten(
       event.params.userId,
       UserObservationCollection.dryWeight,
-    )
+    );
   },
-)
+);

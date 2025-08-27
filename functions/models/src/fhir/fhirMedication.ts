@@ -6,24 +6,24 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { z } from 'zod'
+import { z } from "zod";
 import {
   type FHIRCodeableConcept,
   fhirCodeableConceptConverter,
-} from './baseTypes/fhirCodeableConcept.js'
+} from "./baseTypes/fhirCodeableConcept.js";
 import {
   FHIRResource,
   fhirResourceConverter,
   type FHIRResourceInput,
   type FHIRMedicationRequest,
-} from './baseTypes/fhirElement.js'
-import { fhirRatioConverter } from './baseTypes/fhirRatio.js'
-import { type FHIRReference } from './baseTypes/fhirReference.js'
-import { CodingSystem, FHIRExtensionUrl } from '../codes/codes.js'
-import { QuantityUnit } from '../codes/quantityUnit.js'
-import { Lazy } from '../helpers/lazy.js'
-import { optionalish } from '../helpers/optionalish.js'
-import { SchemaConverter } from '../helpers/schemaConverter.js'
+} from "./baseTypes/fhirElement.js";
+import { fhirRatioConverter } from "./baseTypes/fhirRatio.js";
+import { type FHIRReference } from "./baseTypes/fhirReference.js";
+import { CodingSystem, FHIRExtensionUrl } from "../codes/codes.js";
+import { QuantityUnit } from "../codes/quantityUnit.js";
+import { Lazy } from "../helpers/lazy.js";
+import { optionalish } from "../helpers/optionalish.js";
+import { SchemaConverter } from "../helpers/schemaConverter.js";
 
 export const fhirMedicationIngredientConverter = new Lazy(
   () =>
@@ -47,11 +47,11 @@ export const fhirMedicationIngredientConverter = new Lazy(
           : null,
       }),
     }),
-)
+);
 
 export type FHIRMedicationIngredient = z.output<
   typeof fhirMedicationIngredientConverter.value.schema
->
+>;
 
 export const fhirMedicationConverter = new Lazy(
   () =>
@@ -87,15 +87,15 @@ export const fhirMedicationConverter = new Lazy(
           ) ?? null,
       }),
     }),
-)
+);
 
 export class FHIRMedication extends FHIRResource {
   // Stored Properties
 
-  readonly resourceType: string = 'Medication'
-  readonly code?: FHIRCodeableConcept
-  readonly form?: FHIRCodeableConcept
-  readonly ingredient?: FHIRMedicationIngredient[]
+  readonly resourceType: string = "Medication";
+  readonly code?: FHIRCodeableConcept;
+  readonly form?: FHIRCodeableConcept;
+  readonly ingredient?: FHIRMedicationIngredient[];
 
   // Computed Properties
 
@@ -104,72 +104,72 @@ export class FHIRMedication extends FHIRResource {
       this.code?.text ??
       this.code?.coding?.find((coding) => coding.system === CodingSystem.rxNorm)
         ?.display
-    )
+    );
   }
 
   get brandNames(): string[] {
     return this.extensionsWithUrl(FHIRExtensionUrl.brandName).flatMap(
       (extension) => (extension.valueString ? [extension.valueString] : []),
-    )
+    );
   }
 
   get medicationClassReference(): FHIRReference | undefined {
     return this.extensionsWithUrl(FHIRExtensionUrl.medicationClass).at(0)
-      ?.valueReference
+      ?.valueReference;
   }
 
   get minimumDailyDoseRequest(): FHIRMedicationRequest | undefined {
     return this.extensionsWithUrl(FHIRExtensionUrl.minimumDailyDose).at(0)
-      ?.valueMedicationRequest
+      ?.valueMedicationRequest;
   }
 
   get minimumDailyDose(): number[] | undefined {
-    const request = this.minimumDailyDoseRequest
-    if (!request) return undefined
+    const request = this.minimumDailyDoseRequest;
+    if (!request) return undefined;
     return this.extensionsWithUrl(FHIRExtensionUrl.totalDailyDose)
       .at(0)
       ?.valueQuantities?.flatMap((quantity) => {
-        const value = QuantityUnit.mg.valueOf(quantity)
-        return value ? [value] : []
-      })
+        const value = QuantityUnit.mg.valueOf(quantity);
+        return value ? [value] : [];
+      });
   }
 
   get targetDailyDoseRequest(): FHIRMedicationRequest | undefined {
     return this.extensionsWithUrl(FHIRExtensionUrl.targetDailyDose).at(0)
-      ?.valueMedicationRequest
+      ?.valueMedicationRequest;
   }
 
   get targetDailyDose(): number[] | undefined {
-    const request = this.targetDailyDoseRequest
-    if (!request) return undefined
+    const request = this.targetDailyDoseRequest;
+    if (!request) return undefined;
     const result = request
       .extensionsWithUrl(FHIRExtensionUrl.totalDailyDose)
       .at(0)
       ?.valueQuantities?.flatMap((quantity) => {
-        const value = QuantityUnit.mg.valueOf(quantity)
-        return value ? [value] : []
-      })
-    return result
+        const value = QuantityUnit.mg.valueOf(quantity);
+        return value ? [value] : [];
+      });
+    return result;
   }
 
   get rxNormCode(): string | undefined {
     return this.code?.coding?.find(
       (coding) => coding.system === CodingSystem.rxNorm,
-    )?.code
+    )?.code;
   }
 
   // Constructor
 
   constructor(
     input: FHIRResourceInput & {
-      readonly code?: FHIRCodeableConcept
-      readonly form?: FHIRCodeableConcept
-      readonly ingredient?: FHIRMedicationIngredient[]
+      readonly code?: FHIRCodeableConcept;
+      readonly form?: FHIRCodeableConcept;
+      readonly ingredient?: FHIRMedicationIngredient[];
     },
   ) {
-    super(input)
-    this.code = input.code
-    this.ingredient = input.ingredient
-    this.form = input.form
+    super(input);
+    this.code = input.code;
+    this.ingredient = input.ingredient;
+    this.form = input.form;
   }
 }

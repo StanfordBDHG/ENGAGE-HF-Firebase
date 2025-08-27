@@ -6,18 +6,18 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { type FHIRQuestionnaireResponse } from '@stanfordbdhg/engagehf-models'
-import { createKccqQuestionnaireResponse } from '../../services/questionnaireResponse/createKccqQuestionnaireResponse.js'
+import { type FHIRQuestionnaireResponse } from "@stanfordbdhg/engagehf-models";
+import { createKccqQuestionnaireResponse } from "../../services/questionnaireResponse/createKccqQuestionnaireResponse.js";
 import {
   QuestionnaireId,
   QuestionnaireLinkId,
-} from '../../services/seeding/staticData/questionnaireFactory/questionnaireLinkIds.js'
+} from "../../services/seeding/staticData/questionnaireFactory/questionnaireLinkIds.js";
 
 export function mockQuestionnaireResponse(): FHIRQuestionnaireResponse {
   return createKccqQuestionnaireResponse({
     questionnaire: QuestionnaireLinkId.url(QuestionnaireId.kccq),
-    questionnaireResponse: '60193B69-B0F7-4708-8CCE-F3CB2936628D',
-    date: new Date('2024-07-18T18:46:37.219581961-07:00'),
+    questionnaireResponse: "60193B69-B0F7-4708-8CCE-F3CB2936628D",
+    date: new Date("2024-07-18T18:46:37.219581961-07:00"),
     answer1a: 1,
     answer1b: 4,
     answer1c: 3,
@@ -31,5 +31,5 @@ export function mockQuestionnaireResponse(): FHIRQuestionnaireResponse {
     answer8b: 4,
     answer8c: 4,
     answer9: 3,
-  })
+  });
 }

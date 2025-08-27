@@ -6,16 +6,16 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { z } from 'zod'
-import { userAuthConverter } from '../types/userAuth.js'
-import { userRegistrationConverter } from '../types/userRegistration.js'
+import { z } from "zod";
+import { userAuthConverter } from "../types/userAuth.js";
+import { userRegistrationConverter } from "../types/userRegistration.js";
 
 export const createInvitationInputSchema = z.object({
   auth: z.lazy(() => userAuthConverter.value.schema),
   user: z.lazy(() => userRegistrationConverter.value.schema),
-})
-export type CreateInvitationInput = z.input<typeof createInvitationInputSchema>
+});
+export type CreateInvitationInput = z.input<typeof createInvitationInputSchema>;
 
 export interface CreateInvitationOutput {
-  id: string
+  id: string;
 }

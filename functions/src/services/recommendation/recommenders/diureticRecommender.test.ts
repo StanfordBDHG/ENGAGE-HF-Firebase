@@ -17,47 +17,47 @@ import {
   MedicationClassReference,
   MedicationReference,
   UserMedicationRecommendationType,
-} from '@stanfordbdhg/engagehf-models'
-import { DiureticRecommender } from './diureticRecommender.js'
-import { type Recommender } from './recommender.js'
-import { type MedicationRequestContext } from '../../../models/medicationRequestContext.js'
-import { MockContraindicationService } from '../../../tests/mocks/contraindicationService.js'
-import { mockHealthSummaryData } from '../../../tests/mocks/healthSummaryData.js'
-import { ContraindicationCategory } from '../../contraindication/contraindicationService.js'
+} from "@stanfordbdhg/engagehf-models";
+import { DiureticRecommender } from "./diureticRecommender.js";
+import { type Recommender } from "./recommender.js";
+import { type MedicationRequestContext } from "../../../models/medicationRequestContext.js";
+import { MockContraindicationService } from "../../../tests/mocks/contraindicationService.js";
+import { mockHealthSummaryData } from "../../../tests/mocks/healthSummaryData.js";
+import { ContraindicationCategory } from "../../contraindication/contraindicationService.js";
 
-describe('DiureticRecommender', () => {
+describe("DiureticRecommender", () => {
   const recommender: Recommender = new DiureticRecommender(
     new MockContraindicationService(
       () => ContraindicationCategory.none,
       () => ContraindicationCategory.none,
       (_, medicationReferences) => medicationReferences.at(0),
     ),
-  )
+  );
 
-  describe('No treatment', () => {
-    it('correctly does not recommend new medications', async () => {
-      const healthSummaryData = await mockHealthSummaryData('')
+  describe("No treatment", () => {
+    it("correctly does not recommend new medications", async () => {
+      const healthSummaryData = await mockHealthSummaryData("");
       const result = recommender.compute({
         requests: [],
         contraindications: [],
         vitals: healthSummaryData.vitals,
         latestDizzinessScore: undefined,
-      })
-      expect(result).toHaveLength(0)
-    })
-  })
+      });
+      expect(result).toHaveLength(0);
+    });
+  });
 
-  describe('On furosemide', () => {
-    it('correctly keeps existing medication request', async () => {
+  describe("On furosemide", () => {
+    it("correctly keeps existing medication request", async () => {
       const existingMedication: MedicationRequestContext = {
         lastUpdate: new Date(),
         requestReference: {
           reference:
-            'users/mockPatient/medicationRequests/mockMedicationRequest',
+            "users/mockPatient/medicationRequests/mockMedicationRequest",
         },
         request: FHIRMedicationRequest.create({
           medicationReference: DrugReference.furosemide20,
-          medicationReferenceDisplay: 'Furosemide 20mg Oral Tablet',
+          medicationReferenceDisplay: "Furosemide 20mg Oral Tablet",
           frequencyPerDay: 1,
           quantity: 1,
         }),
@@ -69,8 +69,8 @@ describe('DiureticRecommender', () => {
             coding: [
               {
                 system: CodingSystem.rxNorm,
-                code: DrugReference.furosemide20.split('/').at(-1),
-                display: 'Furosemide 20mg',
+                code: DrugReference.furosemide20.split("/").at(-1),
+                display: "Furosemide 20mg",
               },
             ],
           },
@@ -83,8 +83,8 @@ describe('DiureticRecommender', () => {
             coding: [
               {
                 system: CodingSystem.rxNorm,
-                code: MedicationReference.furosemide.split('/').at(-1),
-                display: 'Furosemide',
+                code: MedicationReference.furosemide.split("/").at(-1),
+                display: "Furosemide",
               },
             ],
           },
@@ -98,26 +98,26 @@ describe('DiureticRecommender', () => {
           ],
         }),
         medicationClass: new MedicationClass({
-          name: LocalizedText.raw('Diuretics'),
-          videoPath: 'videoSections/1/videos/5',
+          name: LocalizedText.raw("Diuretics"),
+          videoPath: "videoSections/1/videos/5",
         }),
         medicationClassReference: {
           reference: MedicationClassReference.diuretics,
         },
-      }
-      const healthSummaryData = await mockHealthSummaryData('')
+      };
+      const healthSummaryData = await mockHealthSummaryData("");
       const result = recommender.compute({
         requests: [existingMedication],
         contraindications: [],
         vitals: healthSummaryData.vitals,
         latestDizzinessScore: undefined,
-      })
-      expect(result).toHaveLength(1)
+      });
+      expect(result).toHaveLength(1);
       expect(result.at(0)).toStrictEqual({
         currentMedication: [existingMedication],
         recommendedMedication: undefined,
         type: UserMedicationRecommendationType.personalTargetDoseReached,
-      })
-    })
-  })
-})
+      });
+    });
+  });
+});

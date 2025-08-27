@@ -10,19 +10,19 @@ import {
   QuestionnaireReference,
   UserMessage,
   UserType,
-} from '@stanfordbdhg/engagehf-models'
-import { dismissMessage } from './dismissMessage.js'
-import { describeWithEmulators } from '../tests/functions/testEnvironment.js'
-import { expectError } from '../tests/helpers.js'
+} from "@stanfordbdhg/engagehf-models";
+import { dismissMessage } from "./dismissMessage.js";
+import { describeWithEmulators } from "../tests/functions/testEnvironment.js";
+import { expectError } from "../tests/helpers.js";
 
-describeWithEmulators('function: dismissMessage', (env) => {
-  it('should fail dismissing a non-dismissible message', async () => {
-    const user = await env.auth.createUser({})
+describeWithEmulators("function: dismissMessage", (env) => {
+  it("should fail dismissing a non-dismissible message", async () => {
+    const user = await env.auth.createUser({});
     const message = UserMessage.createSymptomQuestionnaire({
       questionnaireReference: QuestionnaireReference.kccq_en_US,
-    })
-    const messageRef = env.collections.userMessages(user.uid).doc()
-    await messageRef.set(message)
+    });
+    const messageRef = env.collections.userMessages(user.uid).doc();
+    await messageRef.set(message);
 
     await expectError(
       async () =>
@@ -31,31 +31,31 @@ describeWithEmulators('function: dismissMessage', (env) => {
           { messageId: messageRef.id, didPerformAction: true },
           {
             uid: user.uid,
-            token: { type: UserType.patient, organization: 'stanford' },
+            token: { type: UserType.patient, organization: "stanford" },
           },
         ),
       (error) =>
-        expect(error).toHaveProperty('message', 'Message is not dismissible.'),
-    )
-  })
+        expect(error).toHaveProperty("message", "Message is not dismissible."),
+    );
+  });
 
-  it('should dismiss a dismissible message', async () => {
-    const user = await env.auth.createUser({})
-    const message = UserMessage.createWeightGain()
-    const messageRef = env.collections.userMessages(user.uid).doc()
-    await messageRef.set(message)
+  it("should dismiss a dismissible message", async () => {
+    const user = await env.auth.createUser({});
+    const message = UserMessage.createWeightGain();
+    const messageRef = env.collections.userMessages(user.uid).doc();
+    await messageRef.set(message);
 
     await env.call(
       dismissMessage,
       { messageId: messageRef.id, didPerformAction: true },
       {
         uid: user.uid,
-        token: { type: UserType.patient, organization: 'stanford' },
+        token: { type: UserType.patient, organization: "stanford" },
       },
-    )
+    );
 
-    const actualMessage = await messageRef.get()
-    expect(actualMessage.exists).toBe(true)
-    expect(actualMessage.data()?.completionDate).toBeDefined()
-  })
-})
+    const actualMessage = await messageRef.get();
+    expect(actualMessage.exists).toBe(true);
+    expect(actualMessage.data()?.completionDate).toBeDefined();
+  });
+});
