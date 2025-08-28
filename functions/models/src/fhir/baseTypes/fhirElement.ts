@@ -76,23 +76,21 @@ export const fhirExtensionConverter = (() => {
     ),
   })
 
-  function fhirExtensionEncode(
+  const fhirExtensionEncode = (
     object: z.output<typeof fhirExtensionSchema>,
-  ): z.input<typeof fhirExtensionSchema> {
-    return {
-      ...fhirExtensionBaseConverter.value.encode(object),
-      valueCodeableConcept:
-        object.valueCodeableConcept ?
-          fhirCodeableConceptConverter.value.encode(object.valueCodeableConcept)
-        : null,
-      valueMedicationRequest:
-        object.valueMedicationRequest ?
-          fhirMedicationRequestConverter.value.encode(
-            object.valueMedicationRequest,
-          )
-        : null,
-    }
-  }
+  ): z.input<typeof fhirExtensionSchema> => ({
+    ...fhirExtensionBaseConverter.value.encode(object),
+    valueCodeableConcept:
+      object.valueCodeableConcept ?
+        fhirCodeableConceptConverter.value.encode(object.valueCodeableConcept)
+      : null,
+    valueMedicationRequest:
+      object.valueMedicationRequest ?
+        fhirMedicationRequestConverter.value.encode(
+          object.valueMedicationRequest,
+        )
+      : null,
+  })
 
   return new SchemaConverter({
     schema: fhirExtensionSchema,
@@ -131,8 +129,9 @@ export abstract class FHIRElement {
 
   extensionsWithUrl(url: FHIRExtensionUrl): FHIRExtension[] {
     return (
-      this.extension?.filter((extension) => extension.url === url.toString()) ??
-      []
+      this.extension?.filter(
+        (extension) => extension.url === (url as string),
+      ) ?? []
     )
   }
 }

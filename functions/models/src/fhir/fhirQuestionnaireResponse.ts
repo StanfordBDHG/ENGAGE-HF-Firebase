@@ -88,17 +88,15 @@ export const fhirQuestionnaireResponseItemConverter = (() => {
     ),
   })
 
-  function fhirQuestionnaireResponseItemEncode(
+  const fhirQuestionnaireResponseItemEncode = (
     object: z.output<typeof fhirQuestionnaireResponseItemSchema>,
-  ): z.input<typeof fhirQuestionnaireResponseItemSchema> {
-    return {
-      ...fhirQuestionnaireResponseItemBaseConverter.value.encode(object),
-      item:
-        object.item ?
-          object.item.map(fhirQuestionnaireResponseItemConverter.value.encode)
-        : null,
-    }
-  }
+  ): z.input<typeof fhirQuestionnaireResponseItemSchema> => ({
+    ...fhirQuestionnaireResponseItemBaseConverter.value.encode(object),
+    item:
+      object.item ?
+        object.item.map(fhirQuestionnaireResponseItemConverter.value.encode)
+      : null,
+  })
 
   return new SchemaConverter({
     schema: fhirQuestionnaireResponseItemSchema,

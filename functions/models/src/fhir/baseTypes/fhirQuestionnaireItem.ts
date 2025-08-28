@@ -182,14 +182,12 @@ export const fhirQuestionnaireItemConverter = new Lazy(() => {
     item: optionalish(z.lazy(() => fhirQuestionnaireItemSchema.array())),
   })
 
-  function fhirQuestionnaireItemEncode(
+  const fhirQuestionnaireItemEncode = (
     object: z.output<typeof fhirQuestionnaireItemSchema>,
-  ): z.input<typeof fhirQuestionnaireItemSchema> {
-    return {
-      ...fhirQuestionnaireItemBaseConverter.value.encode(object),
-      item: object.item ? object.item.map(fhirQuestionnaireItemEncode) : null,
-    }
-  }
+  ): z.input<typeof fhirQuestionnaireItemSchema> => ({
+    ...fhirQuestionnaireItemBaseConverter.value.encode(object),
+    item: object.item ? object.item.map(fhirQuestionnaireItemEncode) : null,
+  })
 
   return new SchemaConverter({
     schema: fhirQuestionnaireItemSchema,

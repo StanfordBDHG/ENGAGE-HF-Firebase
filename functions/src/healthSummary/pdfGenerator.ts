@@ -309,7 +309,7 @@ export class PdfGenerator {
     const fontFileContent = fs.readFileSync(file).toString('base64')
     const fileName = file.split('/').at(-1) ?? file
     this.doc.addFileToVFS(fileName, fontFileContent)
-    this.doc.addFont(fileName, name, style.toString())
+    this.doc.addFont(fileName, name, style)
   }
 
   cell(title: string, styles: Partial<Styles> = {}): CellDef {
