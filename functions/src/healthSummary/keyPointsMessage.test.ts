@@ -26,19 +26,19 @@ describe('keyPointsMessage', () => {
 
       const recommendations =
         Object.values(HealthSummaryMedicationRecommendationsCategory).find(
-          (category) => line[0] === category.toString(),
+          (category) => line[0] === (category as string),
         ) ?? null
       const symptoms =
         Object.values(HealthSummarySymptomScoreCategory).find(
-          (category) => line[1] === category.toString(),
+          (category) => line[1] === (category as string),
         ) ?? null
       const dizziness =
         Object.values(HealthSummaryDizzinessCategory).find(
-          (category) => line[2] === category.toString(),
+          (category) => line[2] === (category as string),
         ) ?? null
       const weight =
         Object.values(HealthSummaryWeightCategory).find(
-          (category) => line[3] === category.toString(),
+          (category) => line[3] === (category as string),
         ) ?? null
       const texts = separateKeyPointTexts(line[4]).map((text) =>
         LocalizedText.create({ en: text }),

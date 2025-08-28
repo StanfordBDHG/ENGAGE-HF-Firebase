@@ -79,7 +79,7 @@ export abstract class Recommender {
     const validContexts = requests.filter((request) =>
       references.some(
         (reference) =>
-          request.medicationClassReference.reference === reference.toString(),
+          request.medicationClassReference.reference === (reference as string),
       ),
     )
     const latestContext =

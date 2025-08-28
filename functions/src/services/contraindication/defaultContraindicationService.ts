@@ -98,7 +98,7 @@ export class DefaultContraindicationService implements ContraindicationService {
       const medicationReferences = contraindication.rxNormCodes.flatMap(
         (code) => {
           const reference = Object.values(MedicationReference).find(
-            (value) => value.toString() === 'medications/' + code,
+            (value) => (value as string) === 'medications/' + code,
           )
           if (reference === undefined)
             logger.error(`Unknown RxNorm code in contraindication: ${code}`)

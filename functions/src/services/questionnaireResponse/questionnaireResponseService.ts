@@ -330,7 +330,7 @@ export abstract class QuestionnaireResponseService {
             return false
           }
           const reference = Object.values(MedicationReference).find((value) =>
-            referenceString.startsWith(value.toString() + '/'),
+            referenceString.startsWith(value + '/'),
           )
           if (reference === undefined) {
             logger.error(

@@ -74,7 +74,7 @@ describe('DefaultContraindicationService', () => {
       expect(fields).toHaveLength(15)
 
       const medicationReference = Object.values(MedicationReference).find(
-        (value) => value.toString() === 'medications/' + fields[0],
+        (value) => (value as string) === 'medications/' + fields[0],
       )
 
       expect(medicationReference).toBeDefined()
