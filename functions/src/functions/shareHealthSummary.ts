@@ -11,7 +11,7 @@ import {
   shareHealthSummaryInputSchema,
   type ShareHealthSummaryOutput,
 } from "@stanfordbdhg/engagehf-models";
-import { validatedOnCall } from "./helpers.js";
+import { privilegedServiceAccount, validatedOnCall } from "./helpers.js";
 import { Env } from "../env.js";
 import { UserRole } from "../services/credential/credential.js";
 import { getServiceFactory } from "../services/factory/getServiceFactory.js";
@@ -46,6 +46,7 @@ export const shareHealthSummary = validatedOnCall(
     };
   },
   {
+    serviceAccount: privilegedServiceAccount,
     secrets: [Env.webFrontendBaseUrlSecretKey],
   },
 );

@@ -19,7 +19,8 @@ import {
 } from "firebase-functions/v2/https";
 import { z } from "zod";
 
-export const serviceAccount = `cloudfunctionsserviceaccount@${process.env.GCLOUD_PROJECT}.iam.gserviceaccount.com`;
+export const privilegedServiceAccount = `cloudfunctionsserviceaccount@${process.env.GCLOUD_PROJECT}.iam.gserviceaccount.com`;
+export const defaultServiceAccount = `limited-cloudfunction-sa@${process.env.GCLOUD_PROJECT}.iam.gserviceaccount.com`;
 
 export function validatedOnCall<Schema extends z.ZodTypeAny, Return, Stream>(
   name: string,
@@ -30,7 +31,7 @@ export function validatedOnCall<Schema extends z.ZodTypeAny, Return, Stream>(
   return onCall(
     {
       invoker: "public",
-      serviceAccount: serviceAccount,
+      serviceAccount: defaultServiceAccount,
       ...options,
     },
     async (request) => {
@@ -70,7 +71,7 @@ export function validatedOnRequest<Schema extends z.ZodTypeAny>(
   return onRequest(
     {
       invoker: "public",
-      serviceAccount: serviceAccount,
+      serviceAccount: defaultServiceAccount,
       ...options,
     },
     async (request, response) => {

@@ -7,7 +7,7 @@
 //
 
 import { customSeedingOptionsSchema } from "@stanfordbdhg/engagehf-models";
-import { validatedOnRequest } from "./helpers.js";
+import { privilegedServiceAccount, validatedOnRequest } from "./helpers.js";
 import { Flags } from "../flags.js";
 import { getServiceFactory } from "../services/factory/getServiceFactory.js";
 
@@ -23,5 +23,8 @@ export const customSeed = validatedOnRequest(
     await factory.debugData().seedCustom(data);
     response.write("Success", "utf8");
     response.end();
+  },
+  {
+    serviceAccount: privilegedServiceAccount,
   },
 );
