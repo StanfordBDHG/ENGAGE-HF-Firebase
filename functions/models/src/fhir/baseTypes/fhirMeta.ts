@@ -6,11 +6,11 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { z } from 'zod'
-import { fhirCodingConverter } from './fhirCoding.js'
-import { dateTimeConverter } from '../../helpers/dateConverter.js'
-import { optionalish } from '../../helpers/optionalish.js'
-import { SchemaConverter } from '../../helpers/schemaConverter.js'
+import { z } from "zod";
+import { fhirCodingConverter } from "./fhirCoding.js";
+import { dateTimeConverter } from "../../helpers/dateConverter.js";
+import { optionalish } from "../../helpers/optionalish.js";
+import { SchemaConverter } from "../../helpers/schemaConverter.js";
 
 export const fhirMetaConverter = new SchemaConverter({
   schema: z.object({
@@ -30,6 +30,6 @@ export const fhirMetaConverter = new SchemaConverter({
     security: object.security?.map(fhirCodingConverter.value.encode) ?? null,
     tag: object.tag?.map(fhirCodingConverter.value.encode) ?? null,
   }),
-})
+});
 
-export type FHIRMeta = z.output<typeof fhirMetaConverter.schema>
+export type FHIRMeta = z.output<typeof fhirMetaConverter.schema>;

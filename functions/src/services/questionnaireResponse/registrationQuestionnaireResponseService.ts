@@ -9,40 +9,40 @@
 import {
   UserMessageType,
   type FHIRQuestionnaireResponse,
-} from '@stanfordbdhg/engagehf-models'
-import { logger } from 'firebase-functions/v2'
-import { QuestionnaireResponseService } from './questionnaireResponseService.js'
-import { type Document } from '../database/databaseService.js'
-import { type MessageService } from '../message/messageService.js'
-import { type PatientService } from '../patient/patientService.js'
+} from "@stanfordbdhg/engagehf-models";
+import { logger } from "firebase-functions/v2";
+import { QuestionnaireResponseService } from "./questionnaireResponseService.js";
+import { type Document } from "../database/databaseService.js";
+import { type MessageService } from "../message/messageService.js";
+import { type PatientService } from "../patient/patientService.js";
 import {
   QuestionnaireId,
   QuestionnaireLinkId,
-} from '../seeding/staticData/questionnaireFactory/questionnaireLinkIds.js'
-import { type UserService } from '../user/userService.js'
-import { type EgfrCalculator } from './egfr/egfrCalculator.js'
+} from "../seeding/staticData/questionnaireFactory/questionnaireLinkIds.js";
+import { type UserService } from "../user/userService.js";
+import { type EgfrCalculator } from "./egfr/egfrCalculator.js";
 
 export class RegistrationQuestionnaireResponseService extends QuestionnaireResponseService {
   // Properties
 
-  private readonly egfrCalculator: EgfrCalculator
-  private readonly messageService: MessageService
-  private readonly patientService: PatientService
-  private readonly userService: UserService
+  private readonly egfrCalculator: EgfrCalculator;
+  private readonly messageService: MessageService;
+  private readonly patientService: PatientService;
+  private readonly userService: UserService;
 
   // Constructor
 
   constructor(input: {
-    egfrCalculator: EgfrCalculator
-    messageService: MessageService
-    patientService: PatientService
-    userService: UserService
+    egfrCalculator: EgfrCalculator;
+    messageService: MessageService;
+    patientService: PatientService;
+    userService: UserService;
   }) {
-    super()
-    this.egfrCalculator = input.egfrCalculator
-    this.messageService = input.messageService
-    this.patientService = input.patientService
-    this.userService = input.userService
+    super();
+    this.egfrCalculator = input.egfrCalculator;
+    this.messageService = input.messageService;
+    this.patientService = input.patientService;
+    this.userService = input.userService;
   }
 
   // Methods
@@ -52,23 +52,23 @@ export class RegistrationQuestionnaireResponseService extends QuestionnaireRespo
     response: Document<FHIRQuestionnaireResponse>,
     options: { isNew: boolean },
   ): Promise<boolean> {
-    const urls = [QuestionnaireLinkId.url(QuestionnaireId.registration)]
+    const urls = [QuestionnaireLinkId.url(QuestionnaireId.registration)];
     if (!urls.includes(response.content.questionnaire)) {
       logger.info(
         `${this.constructor.name}.handle(${userId}): Url ${response.content.questionnaire} is not a registration questionnaire, skipping.`,
-      )
-      return false
+      );
+      return false;
     }
 
-    const personalInfo = this.extractPersonalInfo(response.content)
+    const personalInfo = this.extractPersonalInfo(response.content);
     logger.info(
       `${this.constructor.name}.handle(${userId}): Extracted personal info: ${personalInfo !== null}`,
-    )
+    );
     if (personalInfo !== null) {
-      await this.userService.updatePersonalInfo(userId, personalInfo)
+      await this.userService.updatePersonalInfo(userId, personalInfo);
       logger.info(
         `${this.constructor.name}.handle(${userId}): Successfully updated personal info.`,
-      )
+      );
     }
 
     await this.handleLabValues({
@@ -78,35 +78,35 @@ export class RegistrationQuestionnaireResponseService extends QuestionnaireRespo
       sex: personalInfo?.sex ?? null,
       egfrCalculator: this.egfrCalculator,
       patientService: this.patientService,
-    })
+    });
 
     await this.handleMedicationRequests({
       userId,
       response,
       patientService: this.patientService,
-    })
+    });
 
-    const appointment = this.extractAppointment(userId, response.content)
+    const appointment = this.extractAppointment(userId, response.content);
     logger.info(
       `${this.constructor.name}.handle(${userId}): Extracted appointment: ${appointment !== null}`,
-    )
+    );
     if (appointment !== null) {
-      await this.patientService.createAppointment(userId, appointment)
+      await this.patientService.createAppointment(userId, appointment);
       logger.info(
         `${this.constructor.name}.handle(${userId}): Successfully created appointment`,
-      )
+      );
     }
 
     if (options.isNew) {
       logger.info(
         `${this.constructor.name}.handle(${userId}): About to complete registration questionnaire messages.`,
-      )
+      );
       await this.messageService.completeMessages(
         userId,
         UserMessageType.registrationQuestionnaire,
-      )
+      );
     }
 
-    return true
+    return true;
   }
 }

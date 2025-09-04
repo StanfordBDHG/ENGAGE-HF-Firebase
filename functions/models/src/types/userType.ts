@@ -7,8 +7,8 @@
 //
 
 export enum UserType {
-  admin = 'admin',
-  owner = 'owner',
-  clinician = 'clinician',
-  patient = 'patient',
+  admin = "admin",
+  owner = "owner",
+  clinician = "clinician",
+  patient = "patient",
 }

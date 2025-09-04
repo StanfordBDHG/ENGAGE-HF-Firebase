@@ -10,51 +10,51 @@ import {
   StaticDataComponent,
   updateStaticDataInputSchema,
   type UpdateStaticDataOutput,
-} from '@stanfordbdhg/engagehf-models'
-import { type z } from 'zod'
-import { validatedOnCall, validatedOnRequest } from './helpers.js'
-import { Flags } from '../flags.js'
-import { UserRole } from '../services/credential/credential.js'
-import { getServiceFactory } from '../services/factory/getServiceFactory.js'
-import { type ServiceFactory } from '../services/factory/serviceFactory.js'
+} from "@stanfordbdhg/engagehf-models";
+import { type z } from "zod";
+import { validatedOnCall, validatedOnRequest } from "./helpers.js";
+import { Flags } from "../flags.js";
+import { UserRole } from "../services/credential/credential.js";
+import { getServiceFactory } from "../services/factory/getServiceFactory.js";
+import { type ServiceFactory } from "../services/factory/serviceFactory.js";
 
 export async function _updateStaticData(
   factory: ServiceFactory,
   input: z.output<typeof updateStaticDataInputSchema>,
 ) {
-  const service = factory.staticData()
-  const promises: Array<Promise<void>> = []
+  const service = factory.staticData();
+  const promises: Array<Promise<void>> = [];
   if (input.only.includes(StaticDataComponent.medicationClasses))
-    promises.push(service.updateMedicationClasses(input.cachingStrategy))
+    promises.push(service.updateMedicationClasses(input.cachingStrategy));
   if (input.only.includes(StaticDataComponent.medications))
-    promises.push(service.updateMedications(input.cachingStrategy))
+    promises.push(service.updateMedications(input.cachingStrategy));
   if (input.only.includes(StaticDataComponent.organizations))
-    promises.push(service.updateOrganizations(input.cachingStrategy))
+    promises.push(service.updateOrganizations(input.cachingStrategy));
   if (input.only.includes(StaticDataComponent.questionnaires))
-    promises.push(service.updateQuestionnaires(input.cachingStrategy))
+    promises.push(service.updateQuestionnaires(input.cachingStrategy));
   if (input.only.includes(StaticDataComponent.videoSections))
-    promises.push(service.updateVideoSections(input.cachingStrategy))
-  await Promise.all(promises)
+    promises.push(service.updateVideoSections(input.cachingStrategy));
+  await Promise.all(promises);
 }
 
 export const updateStaticData =
   Flags.isEmulator ?
     validatedOnRequest(
-      'updateStaticData',
+      "updateStaticData",
       updateStaticDataInputSchema,
       async (_, data, response) => {
-        await _updateStaticData(getServiceFactory(), data)
-        const result: UpdateStaticDataOutput = {}
-        response.send({ result })
+        await _updateStaticData(getServiceFactory(), data);
+        const result: UpdateStaticDataOutput = {};
+        response.send({ result });
       },
     )
   : validatedOnCall(
-      'updateStaticData',
+      "updateStaticData",
       updateStaticDataInputSchema,
       async (request): Promise<UpdateStaticDataOutput> => {
-        const factory = getServiceFactory()
-        factory.credential(request.auth).check(UserRole.admin)
-        await _updateStaticData(factory, request.data)
-        return {}
+        const factory = getServiceFactory();
+        factory.credential(request.auth).check(UserRole.admin);
+        await _updateStaticData(factory, request.data);
+        return {};
       },
-    )
+    );

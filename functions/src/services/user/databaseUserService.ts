@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { setTimeout } from 'timers/promises'
+import { setTimeout } from "timers/promises";
 import {
   advanceDateByDays,
   dateConverter,
@@ -17,39 +17,39 @@ import {
   type UserAuth,
   type UserSex,
   UserType,
-} from '@stanfordbdhg/engagehf-models'
-import { type Auth } from 'firebase-admin/auth'
-import { type UserRecord } from 'firebase-functions/v1/auth'
-import { https, logger } from 'firebase-functions/v2'
-import { type UserService } from './userService.js'
+} from "@stanfordbdhg/engagehf-models";
+import { type Auth } from "firebase-admin/auth";
+import { type UserRecord } from "firebase-functions/v1/auth";
+import { https, logger } from "firebase-functions/v2";
+import { type UserService } from "./userService.js";
 import {
   type Document,
   type DatabaseService,
-} from '../database/databaseService.js'
+} from "../database/databaseService.js";
 
 export class DatabaseUserService implements UserService {
   // Properties
 
-  private readonly auth: Auth
-  private readonly databaseService: DatabaseService
+  private readonly auth: Auth;
+  private readonly databaseService: DatabaseService;
 
   // Constructor
 
   constructor(auth: Auth, databaseService: DatabaseService) {
-    this.auth = auth
-    this.databaseService = databaseService
+    this.auth = auth;
+    this.databaseService = databaseService;
   }
 
   // Auth
 
   async getAuth(userId: string): Promise<UserAuth> {
-    const authUser = await this.auth.getUser(userId)
+    const authUser = await this.auth.getUser(userId);
     return {
       displayName: authUser.displayName,
       email: authUser.email,
       phoneNumber: authUser.phoneNumber,
       photoURL: authUser.photoURL,
-    }
+    };
   }
 
   async updateAuth(userId: string, auth: UserAuth): Promise<void> {
@@ -58,25 +58,25 @@ export class DatabaseUserService implements UserService {
       displayName: auth.displayName ?? undefined,
       phoneNumber: auth.phoneNumber ?? undefined,
       photoURL: auth.photoURL ?? undefined,
-    })
+    });
   }
 
   async updateClaims(userId: string): Promise<void> {
-    const user = await this.getUser(userId)
+    const user = await this.getUser(userId);
     if (user === undefined) {
       logger.error(
         `DatabaseUserService.updateClaims(${userId}): User not found.`,
-      )
-      throw new https.HttpsError('not-found', 'User not found.')
+      );
+      throw new https.HttpsError("not-found", "User not found.");
     }
-    const claims = user.content.claims
+    const claims = user.content.claims;
     logger.info(
       `DatabaseUserService.updateClaims(${userId}): Will set claims to ${JSON.stringify(claims)}.`,
-    )
-    await this.auth.setCustomUserClaims(userId, claims)
+    );
+    await this.auth.setCustomUserClaims(userId, claims);
     logger.info(
       `DatabaseUserService.updateClaims(${userId}): User claims updated.`,
-    )
+    );
   }
 
   // Invitations
@@ -85,26 +85,26 @@ export class DatabaseUserService implements UserService {
     const id = await this.databaseService.runTransaction(
       async (collections, transaction) => {
         const invitations = await transaction.get(
-          collections.invitations.where('code', '==', content.code).limit(1),
-        )
+          collections.invitations.where("code", "==", content.code).limit(1),
+        );
         if (!invitations.empty) {
           logger.error(
-            `Invitation code '${content.code}' already exists in invitations with ids [${invitations.docs.map((doc) => `'${doc.id}'`).join(', ')}].`,
-          )
+            `Invitation code '${content.code}' already exists in invitations with ids [${invitations.docs.map((doc) => `'${doc.id}'`).join(", ")}].`,
+          );
           throw new https.HttpsError(
-            'invalid-argument',
-            'Invitation code is not unique.',
-          )
+            "invalid-argument",
+            "Invitation code is not unique.",
+          );
         }
-        const invitationDoc = collections.invitations.doc()
-        transaction.create(invitationDoc, content)
+        const invitationDoc = collections.invitations.doc();
+        transaction.create(invitationDoc, content);
         logger.info(
           `Created invitation with code '${content.code}' using id '${invitationDoc.id}'.`,
-        )
-        return invitationDoc.id
+        );
+        return invitationDoc.id;
       },
-    )
-    return { id }
+    );
+    return { id };
   }
 
   async getInvitationByCode(
@@ -112,9 +112,9 @@ export class DatabaseUserService implements UserService {
   ): Promise<Document<Invitation> | undefined> {
     const result = await this.databaseService.getQuery<Invitation>(
       (collections) =>
-        collections.invitations.where('code', '==', invitationCode).limit(1),
-    )
-    return result.at(0)
+        collections.invitations.where("code", "==", invitationCode).limit(1),
+    );
+    return result.at(0);
   }
 
   async enrollUser(
@@ -124,18 +124,18 @@ export class DatabaseUserService implements UserService {
   ): Promise<Document<User>> {
     logger.info(
       `About to enroll user ${userId} using invitation at '${invitation.id}' with code '${invitation.content.code}'.`,
-    )
+    );
 
     const user = await this.databaseService.runTransaction(
       async (collections, transaction) => {
-        const user = await transaction.get(collections.users.doc(userId))
+        const user = await transaction.get(collections.users.doc(userId));
 
         if (user.exists) {
-          logger.error(`User with id ${userId} already exists.`)
+          logger.error(`User with id ${userId} already exists.`);
           throw new https.HttpsError(
-            'already-exists',
-            'User is already enrolled in the study.',
-          )
+            "already-exists",
+            "User is already enrolled in the study.",
+          );
         }
 
         if (!options.isSingleSignOn) {
@@ -143,14 +143,14 @@ export class DatabaseUserService implements UserService {
             displayName: invitation.content.auth?.displayName ?? undefined,
             phoneNumber: invitation.content.auth?.phoneNumber ?? undefined,
             photoURL: invitation.content.auth?.photoURL ?? undefined,
-          })
+          });
 
           logger.info(
             `Updated auth information for user with id '${userId}' using invitation auth content.`,
-          )
+          );
         }
 
-        const userRef = collections.users.doc(userId)
+        const userRef = collections.users.doc(userId);
         const userData = new User({
           // eslint-disable-next-line @typescript-eslint/no-misused-spread
           ...invitation.content.user,
@@ -158,11 +158,11 @@ export class DatabaseUserService implements UserService {
           invitationCode: invitation.content.code,
           dateOfEnrollment: new Date(),
           phoneNumbers: [],
-        })
-        transaction.set(userRef, userData)
+        });
+        transaction.set(userRef, userData);
 
         if (!options.isSingleSignOn) {
-          await this.auth.setCustomUserClaims(userId, userData.claims)
+          await this.auth.setCustomUserClaims(userId, userData.claims);
         }
 
         return {
@@ -170,94 +170,94 @@ export class DatabaseUserService implements UserService {
           path: userRef.path,
           lastUpdate: new Date(),
           content: userData,
-        }
+        };
       },
-    )
+    );
 
     logger.info(
       `DatabaseUserService.enrollUser(${userId}): Created user object using invitation content.`,
-    )
+    );
 
-    return user
+    return user;
   }
 
   async finishUserEnrollment(user: Document<User>): Promise<void> {
-    let authUser: UserRecord | undefined
-    let count = 0
+    let authUser: UserRecord | undefined;
+    let count = 0;
     do {
       try {
-        authUser = await this.auth.getUser(user.id)
+        authUser = await this.auth.getUser(user.id);
       } catch {}
-      count = await setTimeout(1_000, count + 1)
+      count = await setTimeout(1_000, count + 1);
       // beforeUserCreated has a timeout of 7 seconds
-    } while (authUser === undefined && count < 7)
+    } while (authUser === undefined && count < 7);
 
     if (authUser === undefined) {
       logger.error(
         `DatabaseUserService.finishUserEnrollment(${user.id}): Auth user not found in auth after 7 seconds.`,
-      )
+      );
       throw new https.HttpsError(
-        'not-found',
-        'User not found in authentication service.',
-      )
+        "not-found",
+        "User not found in authentication service.",
+      );
     }
 
     logger.info(
       `DatabaseUserService.finishUserEnrollment(${user.id}): Auth user found.`,
-    )
+    );
 
     const invitation = await this.getInvitationByCode(
       user.content.invitationCode,
-    )
+    );
 
     if (invitation?.content === undefined) {
       logger.error(
         `DatabaseUserService.finishUserEnrollment(${user.id}): Invitation not found for user.`,
-      )
-      throw new https.HttpsError('not-found', 'Invitation not found for user.')
+      );
+      throw new https.HttpsError("not-found", "Invitation not found for user.");
     }
 
     const invitationCollections = await this.databaseService.listCollections(
       (collections) => collections.invitations.doc(invitation.id),
-    )
+    );
 
     logger.info(
-      `DatabaseUserService.finishUserEnrollment(${user.id}): Will copy invitation collections: [${invitationCollections.map((collection) => `'${collection.id}'`).join(', ')}].`,
-    )
+      `DatabaseUserService.finishUserEnrollment(${user.id}): Will copy invitation collections: [${invitationCollections.map((collection) => `'${collection.id}'`).join(", ")}].`,
+    );
 
     await Promise.all(
       invitationCollections.map(async (invitationCollection) =>
         this.databaseService.runTransaction(
           async (collections, transaction) => {
-            const userRef = collections.users.doc(user.id)
-            const collectionId = invitationCollection.id
-            const items = await transaction.get(invitationCollection)
+            const userRef = collections.users.doc(user.id);
+            const collectionId = invitationCollection.id;
+            const items = await transaction.get(invitationCollection);
             for (const item of items.docs) {
               transaction.create(
                 userRef.collection(collectionId).doc(item.id),
                 item.data(),
-              )
-              transaction.delete(item.ref)
+              );
+              transaction.delete(item.ref);
             }
 
             logger.info(
               `DatabaseUserService.finishUserEnrollment(${user.id}): Copied invitation collection '${collectionId}' with ${items.size} items.`,
-            )
+            );
           },
         ),
       ),
-    )
+    );
 
-    await this.deleteInvitation(invitation)
+    await this.deleteInvitation(invitation);
   }
 
   async deleteInvitation(invitation: Document<Invitation>): Promise<void> {
     await this.databaseService.bulkWrite(async (collections, writer) => {
-      const ref = collections.invitations.doc(invitation.id)
-      await collections.firestore.recursiveDelete(ref, writer)
-    })
+      const ref = collections.invitations.doc(invitation.id);
+      await collections.firestore.recursiveDelete(ref, writer);
+    });
 
-    logger.info(`Deleted invitation with id '${invitation.id}' recursively.`)
+    logger.info(`Deleted invitation with id '${invitation.id}' recursively.`);
   }
 
   // Organizations
@@ -268,16 +268,16 @@ export class DatabaseUserService implements UserService {
     const result = await this.databaseService.getQuery<Organization>(
       (collections) =>
         collections.organizations
-          .where('ssoProviderId', '==', providerId)
+          .where("ssoProviderId", "==", providerId)
           .limit(1),
-    )
-    return result.at(0)
+    );
+    return result.at(0);
   }
 
   async getOrganizations(): Promise<Array<Document<Organization>>> {
     return this.databaseService.getQuery<Organization>(
       (collections) => collections.organizations,
-    )
+    );
   }
 
   async getOrganization(
@@ -285,7 +285,7 @@ export class DatabaseUserService implements UserService {
   ): Promise<Document<Organization> | undefined> {
     return this.databaseService.getDocument<Organization>((collections) =>
       collections.organizations.doc(organizationId),
-    )
+    );
   }
 
   // Users
@@ -298,56 +298,56 @@ export class DatabaseUserService implements UserService {
       transaction.update(collections.users.doc(userId), {
         dateOfBirth: dateConverter.encode(data.dateOfBirth),
         sex: data.sex,
-      })
-    })
+      });
+    });
   }
 
   async disableUser(userId: string): Promise<void> {
     await this.databaseService.runTransaction((collections, transaction) => {
       transaction.update(collections.users.doc(userId), {
         disabled: true,
-      })
-    })
+      });
+    });
 
-    await this.updateClaims(userId)
+    await this.updateClaims(userId);
   }
 
   async enableUser(userId: string): Promise<void> {
     await this.databaseService.runTransaction((collections, transaction) => {
       transaction.update(collections.users.doc(userId), {
         disabled: false,
-      })
-    })
+      });
+    });
 
-    await this.updateClaims(userId)
+    await this.updateClaims(userId);
   }
 
   async getAllOwners(organizationId: string): Promise<Array<Document<User>>> {
     return this.databaseService.getQuery<User>((collections) =>
       collections.users
-        .where('type', '==', UserType.owner)
-        .where('organization', '==', organizationId),
-    )
+        .where("type", "==", UserType.owner)
+        .where("organization", "==", organizationId),
+    );
   }
 
   async getAllPatients(): Promise<Array<Document<User>>> {
     return this.databaseService.getQuery<User>((collections) =>
-      collections.users.where('type', '==', UserType.patient),
-    )
+      collections.users.where("type", "==", UserType.patient),
+    );
   }
 
   async getUser(userId: string): Promise<Document<User> | undefined> {
     return this.databaseService.getDocument<User>((collections) =>
       collections.users.doc(userId),
-    )
+    );
   }
 
   async updateLastActiveDate(userId: string): Promise<void> {
     return this.databaseService.runTransaction((collections, transaction) => {
       transaction.update(collections.users.doc(userId), {
         lastActiveDate: dateTimeConverter.encode(new Date()),
-      })
-    })
+      });
+    });
   }
 
   async deleteUser(userId: string): Promise<void> {
@@ -355,20 +355,20 @@ export class DatabaseUserService implements UserService {
       await collections.firestore.recursiveDelete(
         collections.users.doc(userId),
         writer,
-      )
-      logger.info(`Deleted user with id '${userId}' recursively.`)
-      await this.auth.deleteUser(userId)
-      logger.info(`Deleted user auth with id '${userId}'.`)
-    })
+      );
+      logger.info(`Deleted user with id '${userId}' recursively.`);
+      await this.auth.deleteUser(userId);
+      logger.info(`Deleted user auth with id '${userId}'.`);
+    });
   }
 
   async deleteExpiredAccounts(): Promise<void> {
-    const oneDayAgo = advanceDateByDays(new Date(), -1)
-    const promises: Array<Promise<void>> = []
-    let pageToken: string | undefined = undefined
+    const oneDayAgo = advanceDateByDays(new Date(), -1);
+    const promises: Array<Promise<void>> = [];
+    let pageToken: string | undefined = undefined;
     do {
-      const usersResult = await this.auth.listUsers(1_000, pageToken)
-      pageToken = usersResult.pageToken
+      const usersResult = await this.auth.listUsers(1_000, pageToken);
+      pageToken = usersResult.pageToken;
 
       promises.push(
         ...usersResult.users.map(async (user) => {
@@ -377,26 +377,26 @@ export class DatabaseUserService implements UserService {
               Object.keys(user.customClaims ?? {}).length === 0 &&
               new Date(user.metadata.lastSignInTime) < oneDayAgo
             ) {
-              const userObject = await this.getUser(user.uid)
-              if (userObject !== undefined) return
-              logger.info(`Deleting expired account ${user.uid}`)
+              const userObject = await this.getUser(user.uid);
+              if (userObject !== undefined) return;
+              logger.info(`Deleting expired account ${user.uid}`);
               try {
-                await this.auth.deleteUser(user.uid)
+                await this.auth.deleteUser(user.uid);
               } catch (error) {
                 console.error(
                   `Failed to delete expired account ${user.uid}: ${String(error)}`,
-                )
+                );
               }
             }
           } catch (error) {
             logger.error(
               `UserService.deleteExpiredAccounts(): Failed to process user ${user.uid}: ${String(error)}`,
-            )
+            );
           }
         }),
-      )
-    } while (pageToken !== undefined)
+      );
+    } while (pageToken !== undefined);
 
-    await Promise.all(promises)
+    await Promise.all(promises);
   }
 }

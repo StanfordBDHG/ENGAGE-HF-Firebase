@@ -19,8 +19,8 @@ import {
   type UserObservationCollection,
   type LoincCode,
   type FHIRReference,
-} from '@stanfordbdhg/engagehf-models'
-import { type Document } from '../database/databaseService.js'
+} from "@stanfordbdhg/engagehf-models";
+import { type Document } from "../database/databaseService.js";
 
 export interface PatientService {
   // Appointments
@@ -28,105 +28,108 @@ export interface PatientService {
   getEveryAppoinment(
     fromDate: Date,
     toDate: Date,
-  ): Promise<Array<Document<FHIRAppointment>>>
+  ): Promise<Array<Document<FHIRAppointment>>>;
 
-  getAppointments(userId: string): Promise<Array<Document<FHIRAppointment>>>
+  getAppointments(userId: string): Promise<Array<Document<FHIRAppointment>>>;
   getNextAppointment(
     userId: string,
-  ): Promise<Document<FHIRAppointment> | undefined>
+  ): Promise<Document<FHIRAppointment> | undefined>;
 
-  createAppointment(userId: string, appointment: FHIRAppointment): Promise<void>
+  createAppointment(
+    userId: string,
+    appointment: FHIRAppointment,
+  ): Promise<void>;
 
   // Contraindications
 
   getContraindications(
     userId: string,
-  ): Promise<Array<Document<FHIRAllergyIntolerance>>>
+  ): Promise<Array<Document<FHIRAllergyIntolerance>>>;
 
   // Medication Requests
 
   getMedicationRequests(
     userId: string,
-  ): Promise<Array<Document<FHIRMedicationRequest>>>
+  ): Promise<Array<Document<FHIRMedicationRequest>>>;
   replaceMedicationRequests(
     userId: string,
     values: FHIRMedicationRequest[],
     keepUnchanged?: (request: Document<FHIRMedicationRequest>) => boolean,
-  ): Promise<void>
+  ): Promise<void>;
 
   getMedicationRecommendations(
     userId: string,
-  ): Promise<Array<Document<UserMedicationRecommendation>>>
+  ): Promise<Array<Document<UserMedicationRecommendation>>>;
   replaceMedicationRecommendations(
     userId: string,
     recommendations: UserMedicationRecommendation[],
-  ): Promise<void>
+  ): Promise<void>;
 
   // Observations
 
   getBloodPressureObservations(
     userId: string,
     cutoffDate: Date,
-  ): Promise<[Observation[], Observation[]]>
+  ): Promise<[Observation[], Observation[]]>;
   getBodyWeightObservations(
     userId: string,
     unit: QuantityUnit,
     cutoffDate: Date,
-  ): Promise<Observation[]>
+  ): Promise<Observation[]>;
   getHeartRateObservations(
     userId: string,
     cutoffDate: Date,
-  ): Promise<Observation[]>
+  ): Promise<Observation[]>;
 
   getMostRecentCreatinineObservation(
     userId: string,
-  ): Promise<Observation | undefined>
+  ): Promise<Observation | undefined>;
   getMostRecentDryWeightObservation(
     userId: string,
     unit: QuantityUnit,
-  ): Promise<Observation | undefined>
+  ): Promise<Observation | undefined>;
   getMostRecentEstimatedGlomerularFiltrationRateObservation(
     userId: string,
-  ): Promise<Observation | undefined>
+  ): Promise<Observation | undefined>;
   getMostRecentPotassiumObservation(
     userId: string,
-  ): Promise<Observation | undefined>
+  ): Promise<Observation | undefined>;
 
   createObservations(
     userId: string,
     values: Array<{
-      observation: Observation
-      loincCode: LoincCode
-      collection: UserObservationCollection
+      observation: Observation;
+      loincCode: LoincCode;
+      collection: UserObservationCollection;
     }>,
     reference: FHIRReference | null,
-  ): Promise<void>
+  ): Promise<void>;
 
   // Questionnaire Responses
 
   getQuestionnaireResponses(
     userId: string,
-  ): Promise<Array<Document<FHIRQuestionnaireResponse>>>
+  ): Promise<Array<Document<FHIRQuestionnaireResponse>>>;
   getSymptomScores(
     userId: string,
     options?: { limit?: number },
-  ): Promise<Array<Document<SymptomScore>>>
+  ): Promise<Array<Document<SymptomScore>>>;
   getLatestSymptomScore(
     userId: string,
-  ): Promise<Document<SymptomScore> | undefined>
+  ): Promise<Document<SymptomScore> | undefined>;
 
   updateSymptomScore(
     userId: string,
     symptomScoreId: string,
     symptomScore: SymptomScore | null,
-  ): Promise<void>
+  ): Promise<void>;
 
   // Share Code
 
-  createShareCode(userId: string): Promise<Document<UserShareCode>>
+  createShareCode(userId: string): Promise<Document<UserShareCode>>;
   validateShareCode(
     userId: string,
     documentId: string,
     code: string,
-  ): Promise<boolean>
+  ): Promise<boolean>;
 }

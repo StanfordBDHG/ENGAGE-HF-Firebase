@@ -12,55 +12,55 @@ import {
   type Organization,
   type User,
   type UserAuth,
-} from '@stanfordbdhg/engagehf-models'
-import { type Document } from '../database/databaseService.js'
+} from "@stanfordbdhg/engagehf-models";
+import { type Document } from "../database/databaseService.js";
 
 export interface UserService {
   // Auth
 
-  getAuth(userId: string): Promise<UserAuth>
-  updateAuth(userId: string, auth: UserAuth): Promise<void>
-  updateClaims(userId: string): Promise<void>
+  getAuth(userId: string): Promise<UserAuth>;
+  updateAuth(userId: string, auth: UserAuth): Promise<void>;
+  updateClaims(userId: string): Promise<void>;
 
   // Invitations
 
-  createInvitation(content: Invitation): Promise<{ id: string }>
+  createInvitation(content: Invitation): Promise<{ id: string }>;
   getInvitationByCode(
     invitationCode: string,
-  ): Promise<Document<Invitation> | undefined>
+  ): Promise<Document<Invitation> | undefined>;
   enrollUser(
     invitation: Document<Invitation>,
     userId: string,
     options: { isSingleSignOn: boolean },
-  ): Promise<Document<User>>
-  finishUserEnrollment(user: Document<User>): Promise<void>
-  deleteInvitation(invitation: Document<Invitation>): Promise<void>
+  ): Promise<Document<User>>;
+  finishUserEnrollment(user: Document<User>): Promise<void>;
+  deleteInvitation(invitation: Document<Invitation>): Promise<void>;
 
   // Organizations
 
   getOrganizationBySsoProviderId(
     providerId: string,
-  ): Promise<Document<Organization> | undefined>
-  getOrganizations(): Promise<Array<Document<Organization>>>
+  ): Promise<Document<Organization> | undefined>;
+  getOrganizations(): Promise<Array<Document<Organization>>>;
   getOrganization(
     organizationId: string,
-  ): Promise<Document<Organization> | undefined>
+  ): Promise<Document<Organization> | undefined>;
 
   // Users
 
   updatePersonalInfo(
     userId: string,
     data: {
-      dateOfBirth: Date
-      sex: UserSex
+      dateOfBirth: Date;
+      sex: UserSex;
     },
-  ): Promise<void>
-  disableUser(userId: string): Promise<void>
-  enableUser(userId: string): Promise<void>
-  getAllOwners(organizationId: string): Promise<Array<Document<User>>>
-  getAllPatients(): Promise<Array<Document<User>>>
-  getUser(userId: string): Promise<Document<User> | undefined>
-  updateLastActiveDate(userId: string): Promise<void>
-  deleteUser(userId: string): Promise<void>
-  deleteExpiredAccounts(): Promise<void>
+  ): Promise<void>;
+  disableUser(userId: string): Promise<void>;
+  enableUser(userId: string): Promise<void>;
+  getAllOwners(organizationId: string): Promise<Array<Document<User>>>;
+  getAllPatients(): Promise<Array<Document<User>>>;
+  getUser(userId: string): Promise<Document<User> | undefined>;
+  updateLastActiveDate(userId: string): Promise<void>;
+  deleteUser(userId: string): Promise<void>;
+  deleteExpiredAccounts(): Promise<void>;
 }

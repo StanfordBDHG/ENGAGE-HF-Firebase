@@ -6,20 +6,20 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { type FHIRQuestionnaireResponse } from '@stanfordbdhg/engagehf-models'
-import { QuestionnaireResponseService } from './questionnaireResponseService.js'
-import { type Document } from '../database/databaseService.js'
+import { type FHIRQuestionnaireResponse } from "@stanfordbdhg/engagehf-models";
+import { QuestionnaireResponseService } from "./questionnaireResponseService.js";
+import { type Document } from "../database/databaseService.js";
 
 export class MultiQuestionnaireResponseService extends QuestionnaireResponseService {
   // Properties
 
-  private readonly components: QuestionnaireResponseService[]
+  private readonly components: QuestionnaireResponseService[];
 
   // Constructor
 
   constructor(components: QuestionnaireResponseService[]) {
-    super()
-    this.components = components
+    super();
+    this.components = components;
   }
 
   // Methods
@@ -30,9 +30,9 @@ export class MultiQuestionnaireResponseService extends QuestionnaireResponseServ
     options: { isNew: boolean },
   ): Promise<boolean> {
     for (const components of this.components) {
-      const handled = await components.handle(userId, response, options)
-      if (handled) return true
+      const handled = await components.handle(userId, response, options);
+      if (handled) return true;
     }
-    return false
+    return false;
   }
 }

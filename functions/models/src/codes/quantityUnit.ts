@@ -6,24 +6,24 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { type FHIRQuantity } from '../fhir/baseTypes/fhirQuantity.js'
-import { type Observation } from '../types/observation.js'
+import { type FHIRQuantity } from "../fhir/baseTypes/fhirQuantity.js";
+import { type Observation } from "../types/observation.js";
 
 export class QuantityUnit {
   // Static Properties
 
-  static readonly mg = new QuantityUnit('mg', 'mg')
-  static readonly lbs = new QuantityUnit('[lb_av]', 'lbs')
-  static readonly kg = new QuantityUnit('kg', 'kg')
-  static readonly bpm = new QuantityUnit('/min', 'beats/minute')
-  static readonly mmHg = new QuantityUnit('mm[Hg]', 'mmHg')
-  static readonly mg_dL = new QuantityUnit('mg/dL', 'mg/dL')
-  static readonly mEq_L = new QuantityUnit('meq/L', 'mEq/L')
+  static readonly mg = new QuantityUnit("mg", "mg");
+  static readonly lbs = new QuantityUnit("[lb_av]", "lbs");
+  static readonly kg = new QuantityUnit("kg", "kg");
+  static readonly bpm = new QuantityUnit("/min", "beats/minute");
+  static readonly mmHg = new QuantityUnit("mm[Hg]", "mmHg");
+  static readonly mg_dL = new QuantityUnit("mg/dL", "mg/dL");
+  static readonly mEq_L = new QuantityUnit("meq/L", "mEq/L");
   static readonly mL_min_173m2 = new QuantityUnit(
-    'mL/min/{1.73_m2}',
-    'mL/min/1.73m2',
-  )
-  static readonly tablet = new QuantityUnit('{tbl}', 'tbl.')
+    "mL/min/{1.73_m2}",
+    "mL/min/1.73m2",
+  );
+  static readonly tablet = new QuantityUnit("{tbl}", "tbl.");
 
   static readonly allValues = [
     QuantityUnit.mg,
@@ -35,24 +35,24 @@ export class QuantityUnit {
     QuantityUnit.mEq_L,
     QuantityUnit.mL_min_173m2,
     QuantityUnit.tablet,
-  ]
+  ];
 
   // Properties
 
-  readonly unit: string
-  readonly code: string
-  readonly system: string
+  readonly unit: string;
+  readonly code: string;
+  readonly system: string;
 
   // Constructor
 
   constructor(
     code: string,
     unit: string,
-    system = 'http://unitsofmeasure.org',
+    system = "http://unitsofmeasure.org",
   ) {
-    this.unit = unit
-    this.code = code
-    this.system = system
+    this.unit = unit;
+    this.code = code;
+    this.system = system;
   }
 
   // Methods
@@ -62,7 +62,7 @@ export class QuantityUnit {
       this.code === other.code &&
       this.system === other.system &&
       this.unit === other.unit
-    )
+    );
   }
 
   equals(other: QuantityUnit): boolean {
@@ -70,7 +70,7 @@ export class QuantityUnit {
       this.code === other.code &&
       this.system === other.system &&
       this.unit === other.unit
-    )
+    );
   }
 
   convert(observation: Observation): Observation | undefined {
@@ -80,10 +80,10 @@ export class QuantityUnit {
           converter.sourceUnit.equals(observation.unit) &&
           converter.targetUnit.equals(this),
       )
-      ?.convert(observation.value)
+      ?.convert(observation.value);
     return value !== undefined ?
         { ...observation, value, unit: this }
-      : undefined
+      : undefined;
   }
 
   fhirQuantity(value: number): FHIRQuantity {
@@ -92,12 +92,12 @@ export class QuantityUnit {
       code: this.code,
       value: value,
       unit: this.unit,
-    }
+    };
   }
 
   valueOf(quantity: FHIRQuantity | undefined): number | undefined {
-    if (!quantity?.value) return undefined
-    if (this.isUsedIn(quantity)) return quantity.value
+    if (!quantity?.value) return undefined;
+    if (this.isUsedIn(quantity)) return quantity.value;
 
     return QuantityUnitConverter.allValues
       .find(
@@ -105,23 +105,23 @@ export class QuantityUnit {
           converter.sourceUnit.isUsedIn(quantity) &&
           converter.targetUnit.equals(this),
       )
-      ?.convert(quantity.value)
+      ?.convert(quantity.value);
   }
 }
 
 class QuantityUnitConverter {
-  readonly sourceUnit: QuantityUnit
-  readonly targetUnit: QuantityUnit
-  readonly convert: (value: number) => number
+  readonly sourceUnit: QuantityUnit;
+  readonly targetUnit: QuantityUnit;
+  readonly convert: (value: number) => number;
 
   constructor(
     sourceUnit: QuantityUnit,
     targetUnit: QuantityUnit,
     convert: (value: number) => number,
   ) {
-    this.sourceUnit = sourceUnit
-    this.targetUnit = targetUnit
-    this.convert = convert
+    this.sourceUnit = sourceUnit;
+    this.targetUnit = targetUnit;
+    this.convert = convert;
   }
 
   static readonly allValues = [
@@ -135,5 +135,5 @@ class QuantityUnitConverter {
       QuantityUnit.lbs,
       (value) => value / 0.45359237,
     ),
-  ]
+  ];
 }

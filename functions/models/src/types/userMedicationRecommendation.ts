@@ -6,24 +6,24 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { z } from 'zod'
-import { localizedTextConverter } from './localizedText.js'
+import { z } from "zod";
+import { localizedTextConverter } from "./localizedText.js";
 import {
   type FHIRReference,
   fhirReferenceConverter,
-} from '../fhir/baseTypes/fhirReference.js'
-import { Lazy } from '../helpers/lazy.js'
-import { optionalish } from '../helpers/optionalish.js'
-import { SchemaConverter } from '../helpers/schemaConverter.js'
+} from "../fhir/baseTypes/fhirReference.js";
+import { Lazy } from "../helpers/lazy.js";
+import { optionalish } from "../helpers/optionalish.js";
+import { SchemaConverter } from "../helpers/schemaConverter.js";
 
 export enum UserMedicationRecommendationType {
-  improvementAvailable = 'improvementAvailable',
-  moreLabObservationsRequired = 'moreLabObservationsRequired',
-  morePatientObservationsRequired = 'morePatientObservationsRequired',
-  noActionRequired = 'noActionRequired',
-  notStarted = 'notStarted',
-  personalTargetDoseReached = 'personalTargetDoseReached',
-  targetDoseReached = 'targetDoseReached',
+  improvementAvailable = "improvementAvailable",
+  moreLabObservationsRequired = "moreLabObservationsRequired",
+  morePatientObservationsRequired = "morePatientObservationsRequired",
+  noActionRequired = "noActionRequired",
+  notStarted = "notStarted",
+  personalTargetDoseReached = "personalTargetDoseReached",
+  targetDoseReached = "targetDoseReached",
 }
 
 export const userMedicationRecommendationDoseScheduleConverter = new Lazy(
@@ -38,11 +38,11 @@ export const userMedicationRecommendationDoseScheduleConverter = new Lazy(
         quantity: object.quantity,
       }),
     }),
-)
+);
 
 export type UserMedicationRecommendationDoseSchedule = z.output<
   typeof userMedicationRecommendationDoseScheduleConverter.value.schema
->
+>;
 
 export const userMedicationRecommendationDosageInformationConverter = new Lazy(
   () =>
@@ -81,7 +81,7 @@ export const userMedicationRecommendationDosageInformationConverter = new Lazy(
         unit: object.unit,
       }),
     }),
-)
+);
 
 export const userMedicationRecommendationDisplayInformationConverter = new Lazy(
   () =>
@@ -109,11 +109,11 @@ export const userMedicationRecommendationDisplayInformationConverter = new Lazy(
           ),
       }),
     }),
-)
+);
 
 export type UserMedicationRecommendationDisplayInformation = z.output<
   typeof userMedicationRecommendationDisplayInformationConverter.value.schema
->
+>;
 
 export const userMedicationRecommendationConverter = new Lazy(
   () =>
@@ -147,24 +147,24 @@ export const userMedicationRecommendationConverter = new Lazy(
           ),
       }),
     }),
-)
+);
 
 export class UserMedicationRecommendation {
   // Properties
 
-  readonly currentMedication: FHIRReference[]
-  readonly recommendedMedication?: FHIRReference
-  readonly displayInformation: UserMedicationRecommendationDisplayInformation
+  readonly currentMedication: FHIRReference[];
+  readonly recommendedMedication?: FHIRReference;
+  readonly displayInformation: UserMedicationRecommendationDisplayInformation;
 
   // Constructor
 
   constructor(input: {
-    currentMedication: FHIRReference[]
-    recommendedMedication?: FHIRReference
-    displayInformation: UserMedicationRecommendationDisplayInformation
+    currentMedication: FHIRReference[];
+    recommendedMedication?: FHIRReference;
+    displayInformation: UserMedicationRecommendationDisplayInformation;
   }) {
-    this.currentMedication = input.currentMedication
-    this.recommendedMedication = input.recommendedMedication
-    this.displayInformation = input.displayInformation
+    this.currentMedication = input.currentMedication;
+    this.recommendedMedication = input.recommendedMedication;
+    this.displayInformation = input.displayInformation;
   }
 }

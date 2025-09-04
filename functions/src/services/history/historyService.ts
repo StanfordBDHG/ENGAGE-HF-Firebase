@@ -9,10 +9,10 @@
 import {
   dateTimeConverter,
   SchemaConverter,
-} from '@stanfordbdhg/engagehf-models'
-import { type DocumentSnapshot } from 'firebase-admin/firestore'
-import { type Change } from 'firebase-functions'
-import { z } from 'zod'
+} from "@stanfordbdhg/engagehf-models";
+import { type DocumentSnapshot } from "firebase-admin/firestore";
+import { type Change } from "firebase-functions";
+import { z } from "zod";
 
 export const historyChangeItemConverter = new SchemaConverter({
   schema: z.object({
@@ -25,12 +25,12 @@ export const historyChangeItemConverter = new SchemaConverter({
     date: dateTimeConverter.encode(object.date),
     data: object.data === undefined ? null : object.data,
   }),
-})
+});
 export type HistoryChangeItem = z.output<
   typeof historyChangeItemConverter.schema
->
+>;
 
 export interface HistoryService {
-  isEmpty(): Promise<boolean>
-  recordChange(change: Change<DocumentSnapshot>): Promise<void>
+  isEmpty(): Promise<boolean>;
+  recordChange(change: Change<DocumentSnapshot>): Promise<void>;
 }

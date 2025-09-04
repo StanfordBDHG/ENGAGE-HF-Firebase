@@ -6,34 +6,34 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { UserType } from '@stanfordbdhg/engagehf-models'
-import admin from 'firebase-admin'
-import { type UserService } from './userService.js'
-import { type MockFirestore } from '../../tests/mocks/firestore.js'
-import { cleanupMocks, setupMockFirebase } from '../../tests/setup.js'
-import { CollectionsService } from '../database/collections.js'
-import { getServiceFactory } from '../factory/getServiceFactory.js'
+import { UserType } from "@stanfordbdhg/engagehf-models";
+import admin from "firebase-admin";
+import { type UserService } from "./userService.js";
+import { type MockFirestore } from "../../tests/mocks/firestore.js";
+import { cleanupMocks, setupMockFirebase } from "../../tests/setup.js";
+import { CollectionsService } from "../database/collections.js";
+import { getServiceFactory } from "../factory/getServiceFactory.js";
 
-describe('DatabaseUserService', () => {
-  let mockFirestore: MockFirestore
-  let userService: UserService
-  let collectionsService: CollectionsService
+describe("DatabaseUserService", () => {
+  let mockFirestore: MockFirestore;
+  let userService: UserService;
+  let collectionsService: CollectionsService;
 
   beforeEach(() => {
-    mockFirestore = setupMockFirebase().firestore
-    collectionsService = new CollectionsService(admin.firestore())
-    userService = getServiceFactory().user()
-  })
+    mockFirestore = setupMockFirebase().firestore;
+    collectionsService = new CollectionsService(admin.firestore());
+    userService = getServiceFactory().user();
+  });
 
   afterEach(() => {
-    cleanupMocks()
-  })
+    cleanupMocks();
+  });
 
-  describe('enrollUser', () => {
-    it('enrolls an admin', async () => {
-      const userId = 'mockAdminUserId'
-      const invitationCode = 'mockAdmin'
-      const displayName = 'Mock Admin'
+  describe("enrollUser", () => {
+    it("enrolls an admin", async () => {
+      const userId = "mockAdminUserId";
+      const invitationCode = "mockAdmin";
+      const displayName = "Mock Admin";
 
       mockFirestore.replaceAll({
         invitations: {
@@ -48,33 +48,33 @@ describe('DatabaseUserService', () => {
             },
           },
         },
-      })
+      });
 
-      const invitation = await userService.getInvitationByCode(invitationCode)
-      if (!invitation) fail('Invitation not found')
+      const invitation = await userService.getInvitationByCode(invitationCode);
+      if (!invitation) fail("Invitation not found");
       await userService.enrollUser(invitation, userId, {
         isSingleSignOn: false,
-      })
+      });
 
-      const auth = await admin.auth().getUser(userId)
-      expect(auth.displayName).toBe(displayName)
+      const auth = await admin.auth().getUser(userId);
+      expect(auth.displayName).toBe(displayName);
 
-      const userSnapshot = await collectionsService.users.doc(userId).get()
-      expect(userSnapshot.exists).toBe(true)
-      const userData = userSnapshot.data()
-      expect(userData).toBeDefined()
-      expect(userData?.invitationCode).toBe(invitationCode)
-      expect(userData?.dateOfEnrollment).toBeDefined()
+      const userSnapshot = await collectionsService.users.doc(userId).get();
+      expect(userSnapshot.exists).toBe(true);
+      const userData = userSnapshot.data();
+      expect(userData).toBeDefined();
+      expect(userData?.invitationCode).toBe(invitationCode);
+      expect(userData?.dateOfEnrollment).toBeDefined();
       expect(userData?.claims).toStrictEqual({
         type: UserType.admin,
         disabled: false,
-      })
-    })
+      });
+    });
 
-    it('enrolls a clinician', async () => {
-      const userId = 'mockClinicianUserId'
-      const invitationCode = 'mockClinician'
-      const displayName = 'Mock Clinician'
+    it("enrolls a clinician", async () => {
+      const userId = "mockClinicianUserId";
+      const invitationCode = "mockClinician";
+      const displayName = "Mock Clinician";
 
       mockFirestore.replaceAll({
         invitations: {
@@ -83,7 +83,7 @@ describe('DatabaseUserService', () => {
             userId,
             user: {
               type: UserType.clinician,
-              organization: 'mockOrganization',
+              organization: "mockOrganization",
             },
             auth: {
               displayName: displayName,
@@ -93,34 +93,34 @@ describe('DatabaseUserService', () => {
         organizations: {
           mockOrganization: {},
         },
-      })
+      });
 
-      const invitation = await userService.getInvitationByCode(invitationCode)
-      if (!invitation) fail('Invitation not found')
+      const invitation = await userService.getInvitationByCode(invitationCode);
+      if (!invitation) fail("Invitation not found");
       await userService.enrollUser(invitation, userId, {
         isSingleSignOn: false,
-      })
+      });
 
-      const auth = await admin.auth().getUser(userId)
-      expect(auth.displayName).toBe(displayName)
+      const auth = await admin.auth().getUser(userId);
+      expect(auth.displayName).toBe(displayName);
 
-      const userSnapshot = await collectionsService.users.doc(userId).get()
-      expect(userSnapshot.exists).toBe(true)
-      const userData = userSnapshot.data()
-      expect(userData).toBeDefined()
-      expect(userData?.invitationCode).toBe(invitationCode)
-      expect(userData?.dateOfEnrollment).toBeDefined()
+      const userSnapshot = await collectionsService.users.doc(userId).get();
+      expect(userSnapshot.exists).toBe(true);
+      const userData = userSnapshot.data();
+      expect(userData).toBeDefined();
+      expect(userData?.invitationCode).toBe(invitationCode);
+      expect(userData?.dateOfEnrollment).toBeDefined();
       expect(userData?.claims).toStrictEqual({
         type: UserType.clinician,
-        organization: 'mockOrganization',
+        organization: "mockOrganization",
         disabled: false,
-      })
-    })
+      });
+    });
 
-    it('enrolls a patient', async () => {
-      const userId = 'mockPatientUserId'
-      const invitationCode = 'mockPatient'
-      const displayName = 'Mock Patient'
+    it("enrolls a patient", async () => {
+      const userId = "mockPatientUserId";
+      const invitationCode = "mockPatient";
+      const displayName = "Mock Patient";
 
       mockFirestore.replaceAll({
         invitations: {
@@ -129,9 +129,9 @@ describe('DatabaseUserService', () => {
             userId,
             user: {
               type: UserType.patient,
-              clinician: 'mockClinician',
+              clinician: "mockClinician",
               dateOfBirth: new Date().toISOString(),
-              organization: 'mockOrganization',
+              organization: "mockOrganization",
             },
             auth: {
               displayName: displayName,
@@ -141,28 +141,28 @@ describe('DatabaseUserService', () => {
         organizations: {
           mockOrganization: {},
         },
-      })
+      });
 
-      const invitation = await userService.getInvitationByCode(invitationCode)
-      if (!invitation) fail('Invitation not found')
+      const invitation = await userService.getInvitationByCode(invitationCode);
+      if (!invitation) fail("Invitation not found");
       await userService.enrollUser(invitation, userId, {
         isSingleSignOn: false,
-      })
+      });
 
-      const auth = await admin.auth().getUser(userId)
-      expect(auth.displayName).toBe(displayName)
+      const auth = await admin.auth().getUser(userId);
+      expect(auth.displayName).toBe(displayName);
 
-      const userSnapshot = await collectionsService.users.doc(userId).get()
-      expect(userSnapshot.exists).toBe(true)
-      const userData = userSnapshot.data()
-      expect(userData).toBeDefined()
-      expect(userData?.invitationCode).toBe(invitationCode)
-      expect(userData?.dateOfEnrollment).toBeDefined()
+      const userSnapshot = await collectionsService.users.doc(userId).get();
+      expect(userSnapshot.exists).toBe(true);
+      const userData = userSnapshot.data();
+      expect(userData).toBeDefined();
+      expect(userData?.invitationCode).toBe(invitationCode);
+      expect(userData?.dateOfEnrollment).toBeDefined();
       expect(userData?.claims).toStrictEqual({
         type: UserType.patient,
-        organization: 'mockOrganization',
+        organization: "mockOrganization",
         disabled: false,
-      })
-    })
-  })
-})
+      });
+    });
+  });
+});
