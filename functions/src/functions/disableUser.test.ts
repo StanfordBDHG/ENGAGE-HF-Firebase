@@ -6,29 +6,29 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { UserType } from '@stanfordbdhg/engagehf-models'
-import { disableUser } from './disableUser.js'
-import { describeWithEmulators } from '../tests/functions/testEnvironment.js'
+import { UserType } from "@stanfordbdhg/engagehf-models";
+import { disableUser } from "./disableUser.js";
+import { describeWithEmulators } from "../tests/functions/testEnvironment.js";
 
-describeWithEmulators('function: disableUser', (env) => {
-  it('disables an enabled user', async () => {
+describeWithEmulators("function: disableUser", (env) => {
+  it("disables an enabled user", async () => {
     const clinicianId = await env.createUser({
       type: UserType.clinician,
-      organization: 'stanford',
-    })
+      organization: "stanford",
+    });
 
     const userId = await env.createUser({
       type: UserType.patient,
-      organization: 'stanford',
+      organization: "stanford",
       clinician: clinicianId,
-    })
+    });
 
-    const userService = env.factory.user()
+    const userService = env.factory.user();
 
-    const originalUser = await userService.getUser(userId)
-    expect(originalUser).toBeDefined()
-    expect(originalUser?.content.claims.disabled).toBe(false)
-    expect(originalUser?.content.disabled).toBe(false)
+    const originalUser = await userService.getUser(userId);
+    expect(originalUser).toBeDefined();
+    expect(originalUser?.content.claims.disabled).toBe(false);
+    expect(originalUser?.content.disabled).toBe(false);
 
     await env.call(
       disableUser,
@@ -37,37 +37,37 @@ describeWithEmulators('function: disableUser', (env) => {
         uid: clinicianId,
         token: {
           type: UserType.clinician,
-          organization: 'stanford',
+          organization: "stanford",
           disabled: false,
         },
       },
-    )
+    );
 
-    const user = await userService.getUser(userId)
-    expect(user).toBeDefined()
-    expect(user?.content.claims.disabled).toBe(true)
-    expect(user?.content.disabled).toBe(true)
-  })
+    const user = await userService.getUser(userId);
+    expect(user).toBeDefined();
+    expect(user?.content.claims.disabled).toBe(true);
+    expect(user?.content.disabled).toBe(true);
+  });
 
-  it('keeps disabled users disabled', async () => {
+  it("keeps disabled users disabled", async () => {
     const clinicianId = await env.createUser({
       type: UserType.clinician,
-      organization: 'stanford',
-    })
+      organization: "stanford",
+    });
 
     const userId = await env.createUser({
       type: UserType.patient,
-      organization: 'stanford',
+      organization: "stanford",
       clinician: clinicianId,
       disabled: true,
-    })
+    });
 
-    const userService = env.factory.user()
+    const userService = env.factory.user();
 
-    const originalUser = await userService.getUser(userId)
-    expect(originalUser).toBeDefined()
-    expect(originalUser?.content.claims.disabled).toBe(true)
-    expect(originalUser?.content.disabled).toBe(true)
+    const originalUser = await userService.getUser(userId);
+    expect(originalUser).toBeDefined();
+    expect(originalUser?.content.claims.disabled).toBe(true);
+    expect(originalUser?.content.disabled).toBe(true);
 
     await env.call(
       disableUser,
@@ -76,15 +76,15 @@ describeWithEmulators('function: disableUser', (env) => {
         uid: clinicianId,
         token: {
           type: UserType.clinician,
-          organization: 'stanford',
+          organization: "stanford",
           disabled: false,
         },
       },
-    )
+    );
 
-    const user = await userService.getUser(userId)
-    expect(user).toBeDefined()
-    expect(user?.content.claims.disabled).toBe(true)
-    expect(user?.content.disabled).toBe(true)
-  })
-})
+    const user = await userService.getUser(userId);
+    expect(user).toBeDefined();
+    expect(user?.content.claims.disabled).toBe(true);
+    expect(user?.content.disabled).toBe(true);
+  });
+});

@@ -6,35 +6,35 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { z } from 'zod'
-import { fhirCodingConverter } from './fhirCoding.js'
-import { fhirExtensionConverter } from './fhirElement.js'
-import { fhirQuantityConverter } from './fhirQuantity.js'
-import { fhirReferenceConverter } from './fhirReference.js'
+import { z } from "zod";
+import { fhirCodingConverter } from "./fhirCoding.js";
+import { fhirExtensionConverter } from "./fhirElement.js";
+import { fhirQuantityConverter } from "./fhirQuantity.js";
+import { fhirReferenceConverter } from "./fhirReference.js";
 import {
   dateConverter,
   dateTimeConverter,
-} from '../../helpers/dateConverter.js'
-import { Lazy } from '../../helpers/lazy.js'
-import { optionalish } from '../../helpers/optionalish.js'
-import { SchemaConverter } from '../../helpers/schemaConverter.js'
+} from "../../helpers/dateConverter.js";
+import { Lazy } from "../../helpers/lazy.js";
+import { optionalish } from "../../helpers/optionalish.js";
+import { SchemaConverter } from "../../helpers/schemaConverter.js";
 
 export enum FHIRQuestionnaireItemType {
-  group = 'group',
-  display = 'display',
-  boolean = 'boolean',
-  choice = 'choice',
-  decimal = 'decimal',
-  integer = 'integer',
-  date = 'date',
-  dateTime = 'dateTime',
-  time = 'time',
-  string = 'string',
-  text = 'text',
-  url = 'url',
-  coding = 'coding',
-  quantity = 'quantity',
-  reference = 'reference',
+  group = "group",
+  display = "display",
+  boolean = "boolean",
+  choice = "choice",
+  decimal = "decimal",
+  integer = "integer",
+  date = "date",
+  dateTime = "dateTime",
+  time = "time",
+  string = "string",
+  text = "text",
+  url = "url",
+  coding = "coding",
+  quantity = "quantity",
+  reference = "reference",
 }
 
 const fhirQuestionnaireItemAnswerOptionConverter = new Lazy(
@@ -52,25 +52,25 @@ const fhirQuestionnaireItemAnswerOptionConverter = new Lazy(
           : null,
       }),
     }),
-)
+);
 
 export type FHIRQuestionnaireItemAnswerOption = z.output<
   typeof fhirQuestionnaireItemAnswerOptionConverter.value.schema
->
+>;
 
 export enum FHIRQuestionnaireItemEnableWhenOperator {
-  exists = 'exists',
-  equals = '=',
-  notEquals = '!=',
-  greaterThan = '>',
-  lessThan = '<',
-  greaterThanOrEqual = '>=',
-  lessThanOrEqual = '<=',
+  exists = "exists",
+  equals = "=",
+  notEquals = "!=",
+  greaterThan = ">",
+  lessThan = "<",
+  greaterThanOrEqual = ">=",
+  lessThanOrEqual = "<=",
 }
 
 export enum FHIRQuestionnaireItemEnableBehavior {
-  all = 'all',
-  any = 'any',
+  all = "all",
+  any = "any",
 }
 
 const fhirQuestionnaireItemEnableWhenConverter = new SchemaConverter({
@@ -115,11 +115,11 @@ const fhirQuestionnaireItemEnableWhenConverter = new SchemaConverter({
         fhirReferenceConverter.value.encode(object.answerReference)
       : null,
   }),
-})
+});
 
 export type FHIRQuestionnaireItemEnableWhen = z.output<
   typeof fhirQuestionnaireItemEnableWhenConverter.schema
->
+>;
 
 const fhirQuestionnaireItemBaseConverter = new Lazy(
   () =>
@@ -161,16 +161,16 @@ const fhirQuestionnaireItemBaseConverter = new Lazy(
         extension: object.extension?.map(fhirExtensionConverter.encode) ?? null,
       }),
     }),
-)
+);
 
 export interface FHIRQuestionnaireItemInput
   extends z.input<typeof fhirQuestionnaireItemBaseConverter.value.schema> {
-  item?: FHIRQuestionnaireItemInput[] | null | undefined
+  item?: FHIRQuestionnaireItemInput[] | null | undefined;
 }
 
 export interface FHIRQuestionnaireItem
   extends z.output<typeof fhirQuestionnaireItemBaseConverter.value.schema> {
-  item?: FHIRQuestionnaireItem[]
+  item?: FHIRQuestionnaireItem[];
 }
 
 export const fhirQuestionnaireItemConverter = new Lazy(() => {
@@ -180,17 +180,17 @@ export const fhirQuestionnaireItemConverter = new Lazy(() => {
     FHIRQuestionnaireItemInput
   > = fhirQuestionnaireItemBaseConverter.value.schema.extend({
     item: optionalish(z.lazy(() => fhirQuestionnaireItemSchema.array())),
-  })
+  });
 
   const fhirQuestionnaireItemEncode = (
     object: z.output<typeof fhirQuestionnaireItemSchema>,
   ): z.input<typeof fhirQuestionnaireItemSchema> => ({
     ...fhirQuestionnaireItemBaseConverter.value.encode(object),
     item: object.item ? object.item.map(fhirQuestionnaireItemEncode) : null,
-  })
+  });
 
   return new SchemaConverter({
     schema: fhirQuestionnaireItemSchema,
     encode: fhirQuestionnaireItemEncode,
-  })
-})
+  });
+});

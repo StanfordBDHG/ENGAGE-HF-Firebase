@@ -9,33 +9,33 @@
 import {
   LocalizedText,
   type LocalizedTextParams,
-} from '@stanfordbdhg/engagehf-models'
+} from "@stanfordbdhg/engagehf-models";
 
 export class Localizer<
   Localization extends Record<string, Record<string, string>>,
 > {
   // Properties
 
-  private readonly languages: string[]
-  private readonly values: Localization
+  private readonly languages: string[];
+  private readonly values: Localization;
 
   // Constructor
 
   constructor(values: Localization, languages: string[]) {
-    this.languages = languages
-    this.values = values
+    this.languages = languages;
+    this.values = values;
   }
 
   // Methods
 
   text<Key extends keyof Localization>(
     id: Key,
-    ...params: Localization[Key]['en'] extends string ?
-      LocalizedTextParams<Localization[Key]['en']>
+    ...params: Localization[Key]["en"] extends string ?
+      LocalizedTextParams<Localization[Key]["en"]>
     : never
   ): string {
     return LocalizedText.create(this.values[id], ...params).localize(
       ...this.languages,
-    )
+    );
   }
 }

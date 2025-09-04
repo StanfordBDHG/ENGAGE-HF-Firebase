@@ -13,28 +13,28 @@ import {
   type Observation,
   QuantityUnit,
   type UserMedicationRecommendationType,
-} from '@stanfordbdhg/engagehf-models'
-import { type MedicationRequestContext } from '../../../models/medicationRequestContext.js'
-import { type ContraindicationService } from '../../contraindication/contraindicationService.js'
+} from "@stanfordbdhg/engagehf-models";
+import { type MedicationRequestContext } from "../../../models/medicationRequestContext.js";
+import { type ContraindicationService } from "../../contraindication/contraindicationService.js";
 import {
   type RecommendationInput,
   type RecommendationOutput,
-} from '../recommendationService.js'
+} from "../recommendationService.js";
 
 export abstract class Recommender {
   // Properties
 
-  protected readonly contraindicationService: ContraindicationService
+  protected readonly contraindicationService: ContraindicationService;
 
   // Constructor
 
   constructor(contraindicationService: ContraindicationService) {
-    this.contraindicationService = contraindicationService
+    this.contraindicationService = contraindicationService;
   }
 
   // Methods
 
-  abstract compute(input: RecommendationInput): RecommendationOutput[]
+  abstract compute(input: RecommendationInput): RecommendationOutput[];
 
   // Helpers
 
@@ -49,27 +49,27 @@ export abstract class Recommender {
         recommendedMedication: recommendedMedication,
         type: type,
       },
-    ]
+    ];
   }
 
   protected isTargetDailyDoseReached(
     currentMedication: MedicationRequestContext[],
   ): boolean {
-    const medication = currentMedication.at(0)?.medication
-    if (!medication) throw new Error('Medication is missing')
+    const medication = currentMedication.at(0)?.medication;
+    if (!medication) throw new Error("Medication is missing");
 
     const targetDailyDose = medication.targetDailyDose?.reduce(
       (acc, dose) => acc + dose,
       0,
-    )
-    if (!targetDailyDose) throw new Error('Target daily dose is missing')
+    );
+    if (!targetDailyDose) throw new Error("Target daily dose is missing");
 
     const currentDailyDose = this.currentDailyDose(currentMedication).reduce(
       (acc, dose) => acc + dose,
       0,
-    )
+    );
 
-    return currentDailyDose >= targetDailyDose
+    return currentDailyDose >= targetDailyDose;
   }
 
   protected findCurrentRequests(
@@ -81,7 +81,7 @@ export abstract class Recommender {
         (reference) =>
           request.medicationClassReference.reference === (reference as string),
       ),
-    )
+    );
     const latestContext =
       validContexts.length > 0 ?
         validContexts.reduce(
@@ -89,44 +89,44 @@ export abstract class Recommender {
             acc.lastUpdate < context.lastUpdate ? context : acc,
           validContexts[0],
         )
-      : undefined
+      : undefined;
     return validContexts.filter(
       (context) =>
         context.medicationReference === latestContext?.medicationReference,
-    )
+    );
   }
 
   protected medianValue(observations: Observation[]): number | undefined {
-    if (observations.length < 3) return undefined
-    return median(observations.map((observation) => observation.value)) ?? 0
+    if (observations.length < 3) return undefined;
+    return median(observations.map((observation) => observation.value)) ?? 0;
   }
 
   private currentDailyDose(contexts: MedicationRequestContext[]): number[] {
-    const dailyDoses: number[] = []
+    const dailyDoses: number[] = [];
     for (const context of contexts) {
-      let numberOfTabletsPerDay = 0
+      let numberOfTabletsPerDay = 0;
       for (const instruction of context.request.dosageInstruction ?? []) {
-        const intakesPerDay = instruction.timing?.repeat?.frequency ?? 0
+        const intakesPerDay = instruction.timing?.repeat?.frequency ?? 0;
         for (const dose of instruction.doseAndRate ?? []) {
-          const numberOfPills = dose.doseQuantity?.value
+          const numberOfPills = dose.doseQuantity?.value;
           if (!numberOfPills)
-            throw new Error('Invalid dose quantity encountered.')
-          numberOfTabletsPerDay += numberOfPills * intakesPerDay
+            throw new Error("Invalid dose quantity encountered.");
+          numberOfTabletsPerDay += numberOfPills * intakesPerDay;
         }
       }
 
-      const ingredients = context.drug.ingredient ?? []
+      const ingredients = context.drug.ingredient ?? [];
 
       while (dailyDoses.length < ingredients.length) {
-        dailyDoses.push(0)
+        dailyDoses.push(0);
       }
 
       ingredients.forEach((ingredient, index) => {
         const strength =
-          QuantityUnit.mg.valueOf(ingredient.strength?.numerator) ?? 0
-        dailyDoses[index] += numberOfTabletsPerDay * strength
-      })
+          QuantityUnit.mg.valueOf(ingredient.strength?.numerator) ?? 0;
+        dailyDoses[index] += numberOfTabletsPerDay * strength;
+      });
     }
-    return dailyDoses
+    return dailyDoses;
   }
 }

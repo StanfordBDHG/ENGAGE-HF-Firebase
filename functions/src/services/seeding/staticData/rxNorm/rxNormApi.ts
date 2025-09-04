@@ -6,16 +6,16 @@
 // SPDX-License-Identifier: MIT
 //
 
-import * as https from 'https'
-import { optionalish } from '@stanfordbdhg/engagehf-models'
-import { logger } from 'firebase-functions'
-import { z } from 'zod'
+import * as https from "https";
+import { optionalish } from "@stanfordbdhg/engagehf-models";
+import { logger } from "firebase-functions";
+import { z } from "zod";
 import {
   rxNormRelatedDrugGroupResponse,
   type RxNormRelatedDrugGroupResponse,
   rxTermInfo,
   type RxTermInfo,
-} from './rxNormModels.js'
+} from "./rxNormModels.js";
 
 export class RxNormApi {
   // Methods
@@ -25,8 +25,8 @@ export class RxNormApi {
     const data = await this.get(
       `RxTerms/rxcui/${rxcui}/allinfo.json`,
       z.object({ rxtermsProperties: optionalish(rxTermInfo) }),
-    )
-    return data.rxtermsProperties
+    );
+    return data.rxtermsProperties;
   }
 
   /// docs: https://lhncbc.nlm.nih.gov/RxNav/APIs/api-RxNorm.getRelatedByType.html
@@ -37,7 +37,7 @@ export class RxNormApi {
     return this.get(
       `rxcui/${rxcui}/related.json?rela=${relation}`,
       rxNormRelatedDrugGroupResponse,
-    )
+    );
   }
 
   /// docs: https://lhncbc.nlm.nih.gov/RxNav/APIs/api-RxNorm.getRxNormName.html
@@ -47,8 +47,8 @@ export class RxNormApi {
       z.object({
         idGroup: z.object({ name: z.string() }),
       }),
-    )
-    return data.idGroup.name
+    );
+    return data.idGroup.name;
   }
 
   // Helpers
@@ -57,53 +57,53 @@ export class RxNormApi {
     path: string,
     schema: Schema,
   ): Promise<z.output<Schema>> {
-    let isDone = false
+    let isDone = false;
     return new Promise((res, rej) => {
       function resolve(data: z.output<Schema>) {
-        if (isDone) return
-        isDone = true
-        res(data)
+        if (isDone) return;
+        isDone = true;
+        res(data);
       }
       function reject(reason: unknown) {
-        if (isDone) return
-        isDone = true
+        if (isDone) return;
+        isDone = true;
         // eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors
-        rej(reason)
+        rej(reason);
       }
       const request = https.get(
-        'https://rxnav.nlm.nih.gov/REST/' + path,
+        "https://rxnav.nlm.nih.gov/REST/" + path,
         (response) => {
-          let body = Buffer.alloc(0)
+          let body = Buffer.alloc(0);
           response.on(
-            'data',
+            "data",
             (chunk: Buffer) => (body = Buffer.concat([body, chunk])),
-          )
-          response.on('error', reject)
-          response.on('end', () => {
-            const statusCode = response.statusCode ?? 500
+          );
+          response.on("error", reject);
+          response.on("end", () => {
+            const statusCode = response.statusCode ?? 500;
             if (statusCode >= 200 && statusCode <= 299) {
               try {
-                logger.debug(body.toString('utf8'))
+                logger.debug(body.toString("utf8"));
                 resolve(
                   schema.parse(
-                    JSON.parse(body.toString('utf8')),
+                    JSON.parse(body.toString("utf8")),
                   ) as z.output<Schema>,
-                )
+                );
               } catch (error) {
-                reject(error)
+                reject(error);
               }
             } else {
               reject(
                 Error(
                   `Request failed with status code ${response.statusCode})`,
                 ),
-              )
+              );
             }
-          })
+          });
         },
-      )
-      request.on('error', reject)
-      request.end()
-    })
+      );
+      request.on("error", reject);
+      request.end();
+    });
   }
 }

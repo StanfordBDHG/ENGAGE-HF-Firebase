@@ -13,53 +13,56 @@ import {
   type DeletePhoneNumberOutput,
   startPhoneNumberVerificationInputSchema,
   type StartPhoneNumberVerificationOutput,
-} from '@stanfordbdhg/engagehf-models'
-import { validatedOnCall } from './helpers.js'
-import { Env } from '../env.js'
-import { getServiceFactory } from '../services/factory/getServiceFactory.js'
+} from "@stanfordbdhg/engagehf-models";
+import { validatedOnCall } from "./helpers.js";
+import { Env } from "../env.js";
+import { getServiceFactory } from "../services/factory/getServiceFactory.js";
 
 export const startPhoneNumberVerification = validatedOnCall(
-  'startPhoneNumberVerification',
+  "startPhoneNumberVerification",
   startPhoneNumberVerificationInputSchema,
   async (request): Promise<StartPhoneNumberVerificationOutput> => {
-    const factory = getServiceFactory()
-    const credential = factory.credential(request.auth)
+    const factory = getServiceFactory();
+    const credential = factory.credential(request.auth);
     await factory
       .message()
-      .startPhoneNumberVerification(credential.userId, request.data.phoneNumber)
+      .startPhoneNumberVerification(
+        credential.userId,
+        request.data.phoneNumber,
+      );
   },
   {
     secrets: Env.twilioSecretKeys,
   },
-)
+);
 
 export const checkPhoneNumberVerification = validatedOnCall(
-  'checkPhoneNumberVerification',
+  "checkPhoneNumberVerification",
   checkPhoneNumberVerificationInputSchema,
   async (request): Promise<CheckPhoneNumberVerificationOutput> => {
-    const factory = getServiceFactory()
-    const credential = factory.credential(request.auth)
+    const factory = getServiceFactory();
+    const credential = factory.credential(request.auth);
     await factory
       .message()
       .checkPhoneNumberVerification(
         credential.userId,
         request.data.phoneNumber,
         request.data.code,
-      )
+      );
   },
   {
     secrets: Env.twilioSecretKeys,
   },
-)
+);
 
 export const deletePhoneNumber = validatedOnCall(
-  'deletePhoneNumber',
+  "deletePhoneNumber",
   deletePhoneNumberInputSchema,
   async (request): Promise<DeletePhoneNumberOutput> => {
-    const factory = getServiceFactory()
-    const credential = factory.credential(request.auth)
+    const factory = getServiceFactory();
+    const credential = factory.credential(request.auth);
     await factory
       .message()
-      .deletePhoneNumber(credential.userId, request.data.phoneNumber)
+      .deletePhoneNumber(credential.userId, request.data.phoneNumber);
   },
-)
+);
