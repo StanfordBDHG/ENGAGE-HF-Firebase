@@ -12,18 +12,18 @@ import {
   FHIRAllergyIntoleranceType,
   MedicationClassReference,
   MedicationReference,
-} from '@stanfordbdhg/engagehf-models'
-import { logger } from 'firebase-functions'
+} from "@stanfordbdhg/engagehf-models";
+import { logger } from "firebase-functions";
 import {
   ContraindicationCategory,
   type ContraindicationService,
-} from './contraindicationService.js'
-import { medicationClassReference } from '../../models/medicationRequestContext.js'
+} from "./contraindicationService.js";
+import { medicationClassReference } from "../../models/medicationRequestContext.js";
 
 interface ContraindicationRecord {
-  category: ContraindicationCategory
-  medications: Set<MedicationReference>
-  medicationClasses: Set<MedicationClassReference>
+  category: ContraindicationCategory;
+  medications: Set<MedicationReference>;
+  medicationClasses: Set<MedicationClassReference>;
 }
 
 export class DefaultContraindicationService implements ContraindicationService {
@@ -32,18 +32,18 @@ export class DefaultContraindicationService implements ContraindicationService {
   readonly aceiArbMedicationClasses = [
     MedicationClassReference.angiotensinConvertingEnzymeInhibitors,
     MedicationClassReference.angiotensinReceptorBlockers,
-  ]
+  ];
 
   readonly arbArniMedicationClasses = [
     MedicationClassReference.angiotensinReceptorBlockers,
     MedicationClassReference.angiotensinReceptorNeprilysinInhibitors,
-  ]
+  ];
 
   readonly rasiMedicationClasses = [
     MedicationClassReference.angiotensinConvertingEnzymeInhibitors,
     MedicationClassReference.angiotensinReceptorBlockers,
     MedicationClassReference.angiotensinReceptorNeprilysinInhibitors,
-  ]
+  ];
 
   // Methods
 
@@ -51,13 +51,13 @@ export class DefaultContraindicationService implements ContraindicationService {
     contraindications: FHIRAllergyIntolerance[],
     medicationReference: MedicationReference,
   ): ContraindicationCategory {
-    const medicationClass = medicationClassReference(medicationReference)
+    const medicationClass = medicationClassReference(medicationReference);
     return this.checkAll(
       contraindications,
       (record) =>
         record.medications.has(medicationReference) ||
         record.medicationClasses.has(medicationClass),
-    )
+    );
   }
 
   checkMedicationClass(
@@ -66,25 +66,25 @@ export class DefaultContraindicationService implements ContraindicationService {
   ): ContraindicationCategory {
     return this.checkAll(contraindications, (record) =>
       record.medicationClasses.has(medicationClassReference),
-    )
+    );
   }
 
   findEligibleMedication(
     contraindications: FHIRAllergyIntolerance[],
     medicationReferences: MedicationReference[],
   ): MedicationReference | undefined {
-    let availableMedications = medicationReferences
+    let availableMedications = medicationReferences;
 
     this.checkAll(contraindications, (record) => {
       availableMedications = availableMedications.filter(
         (medication) =>
           !record.medications.has(medication) &&
           !record.medicationClasses.has(medicationClassReference(medication)),
-      )
-      return false
-    })
+      );
+      return false;
+    });
 
-    return availableMedications.at(0)
+    return availableMedications.at(0);
   }
 
   // Helpers
@@ -93,40 +93,40 @@ export class DefaultContraindicationService implements ContraindicationService {
     contraindications: FHIRAllergyIntolerance[],
     isRelevant: (record: ContraindicationRecord) => boolean,
   ): ContraindicationCategory {
-    let category = ContraindicationCategory.none
+    let category = ContraindicationCategory.none;
     for (const contraindication of contraindications) {
       const medicationReferences = contraindication.rxNormCodes.flatMap(
         (code) => {
           const reference = Object.values(MedicationReference).find(
-            (value) => value.toString() === 'medications/' + code,
-          )
+            (value) => (value as string) === "medications/" + code,
+          );
           if (reference === undefined)
-            logger.error(`Unknown RxNorm code in contraindication: ${code}`)
-          return reference !== undefined ? [reference] : []
+            logger.error(`Unknown RxNorm code in contraindication: ${code}`);
+          return reference !== undefined ? [reference] : [];
         },
-      )
+      );
 
       for (const medicationReference of medicationReferences) {
         const record = this.record({
           medicationReference: medicationReference,
           type: contraindication.type,
           criticality: contraindication.criticality,
-        })
-        if (isRelevant(record)) category = Math.max(category, record.category)
+        });
+        if (isRelevant(record)) category = Math.max(category, record.category);
       }
     }
-    return category
+    return category;
   }
 
   private record(input: {
-    medicationReference: MedicationReference
-    type: FHIRAllergyIntoleranceType
-    criticality?: FHIRAllergyIntoleranceCriticality
+    medicationReference: MedicationReference;
+    type: FHIRAllergyIntoleranceType;
+    criticality?: FHIRAllergyIntoleranceCriticality;
   }): ContraindicationRecord {
-    const medicationClass = medicationClassReference(input.medicationReference)
+    const medicationClass = medicationClassReference(input.medicationReference);
     const medicationReferences = this.medicationReferenceIncludingDerivatives(
       input.medicationReference,
-    )
+    );
     switch (input.type) {
       case FHIRAllergyIntoleranceType.allergy:
         if (input.criticality === FHIRAllergyIntoleranceCriticality.high) {
@@ -138,7 +138,7 @@ export class DefaultContraindicationService implements ContraindicationService {
                 this.rasiMedicationClasses
               : [medicationClass],
             ),
-          }
+          };
         } else {
           return {
             category: ContraindicationCategory.allergyIntolerance,
@@ -148,7 +148,7 @@ export class DefaultContraindicationService implements ContraindicationService {
                 this.arbArniMedicationClasses
               : [medicationClass],
             ),
-          }
+          };
         }
       case FHIRAllergyIntoleranceType.intolerance:
         switch (medicationClass) {
@@ -158,19 +158,19 @@ export class DefaultContraindicationService implements ContraindicationService {
               category: ContraindicationCategory.clinicianListed,
               medications: medicationReferences,
               medicationClasses: new Set([medicationClass]),
-            }
+            };
           case MedicationClassReference.angiotensinReceptorBlockers:
             return {
               category: ContraindicationCategory.clinicianListed,
               medications: medicationReferences,
               medicationClasses: new Set(this.arbArniMedicationClasses),
-            }
+            };
           default:
             return {
               category: ContraindicationCategory.clinicianListed,
               medications: medicationReferences,
               medicationClasses: new Set(),
-            }
+            };
         }
       case FHIRAllergyIntoleranceType.financial:
       case FHIRAllergyIntoleranceType.preference:
@@ -182,7 +182,7 @@ export class DefaultContraindicationService implements ContraindicationService {
               this.rasiMedicationClasses
             : [medicationClass],
           ),
-        }
+        };
     }
   }
 
@@ -195,9 +195,9 @@ export class DefaultContraindicationService implements ContraindicationService {
         return new Set([
           MedicationReference.carvedilol,
           MedicationReference.carvedilolPhosphate,
-        ])
+        ]);
       default:
-        return new Set([reference])
+        return new Set([reference]);
     }
   }
 }

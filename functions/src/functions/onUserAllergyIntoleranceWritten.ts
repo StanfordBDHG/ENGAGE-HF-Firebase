@@ -6,18 +6,18 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { onDocumentWritten } from 'firebase-functions/firestore'
-import { Env } from '../env.js'
-import { getServiceFactory } from '../services/factory/getServiceFactory.js'
+import { onDocumentWritten } from "firebase-functions/firestore";
+import { Env } from "../env.js";
+import { getServiceFactory } from "../services/factory/getServiceFactory.js";
 
 export const onUserAllergyIntoleranceWritten = onDocumentWritten(
   {
-    document: 'users/{userId}/allergyIntolerances/{allergyIntoleranceId}',
+    document: "users/{userId}/allergyIntolerances/{allergyIntoleranceId}",
     secrets: Env.twilioSecretKeys,
   },
   async (event) => {
-    const factory = getServiceFactory()
-    const triggerService = factory.trigger()
-    await triggerService.updateRecommendationsForUser(event.params.userId)
+    const factory = getServiceFactory();
+    const triggerService = factory.trigger();
+    await triggerService.updateRecommendationsForUser(event.params.userId);
   },
-)
+);

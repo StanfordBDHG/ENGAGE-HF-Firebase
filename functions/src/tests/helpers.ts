@@ -11,9 +11,9 @@ export async function expectError<T>(
   check: (error: unknown) => void,
 ): Promise<void> {
   try {
-    await func()
-    fail('Expected an error to be thrown')
+    await func();
+    fail("Expected an error to be thrown");
   } catch (error) {
-    check(error)
+    check(error);
   }
 }

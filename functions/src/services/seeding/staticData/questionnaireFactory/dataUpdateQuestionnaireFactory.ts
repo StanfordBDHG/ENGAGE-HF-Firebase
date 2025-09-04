@@ -9,14 +9,14 @@
 import {
   type FHIRMedication,
   type FHIRQuestionnaire,
-} from '@stanfordbdhg/engagehf-models'
-import { QuestionnaireFactory } from './questionnaireFactory.js'
-import { QuestionnaireId } from './questionnaireLinkIds.js'
+} from "@stanfordbdhg/engagehf-models";
+import { QuestionnaireFactory } from "./questionnaireFactory.js";
+import { QuestionnaireId } from "./questionnaireLinkIds.js";
 
 interface DataUpdateQuestionnaireFactoryInput {
-  medications: Record<string, FHIRMedication>
-  drugs: Record<string, Record<string, FHIRMedication>>
-  isPostAppointment: boolean
+  medications: Record<string, FHIRMedication>;
+  drugs: Record<string, Record<string, FHIRMedication>>;
+  isPostAppointment: boolean;
 }
 
 export class DataUpdateQuestionnaireFactory extends QuestionnaireFactory<DataUpdateQuestionnaireFactoryInput> {
@@ -29,7 +29,7 @@ export class DataUpdateQuestionnaireFactory extends QuestionnaireFactory<DataUpd
           QuestionnaireId.postAppointment
         : QuestionnaireId.dataUpdate,
       title:
-        input.isPostAppointment ? 'Post-Appointment Survey' : 'Update Survey',
+        input.isPostAppointment ? "Post-Appointment Survey" : "Update Survey",
       item: [
         ...this.labInputPages(),
         ...this.medicationInputPages({
@@ -39,6 +39,6 @@ export class DataUpdateQuestionnaireFactory extends QuestionnaireFactory<DataUpd
         }),
         ...this.appointmentInputPages(),
       ],
-    })
+    });
   }
 }

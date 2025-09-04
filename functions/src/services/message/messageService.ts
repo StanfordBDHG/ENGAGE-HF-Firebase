@@ -12,33 +12,33 @@ import {
   type UserDevice,
   type UserMessage,
   type UserMessageType,
-} from '@stanfordbdhg/engagehf-models'
-import { type Document } from '../database/databaseService.js'
+} from "@stanfordbdhg/engagehf-models";
+import { type Document } from "../database/databaseService.js";
 
 export interface MessageService {
   // Notifications
 
-  registerDevice(userId: string, device: UserDevice): Promise<void>
+  registerDevice(userId: string, device: UserDevice): Promise<void>;
   unregisterDevice(
     userId: string,
     notificationToken: string,
     platform: UserDevicePlatform,
-  ): Promise<void>
+  ): Promise<void>;
 
   // Text Messages
 
   startPhoneNumberVerification(
     userId: string,
     phoneNumber: string,
-  ): Promise<void>
+  ): Promise<void>;
 
   checkPhoneNumberVerification(
     userId: string,
     phoneNumber: string,
     code: string,
-  ): Promise<void>
+  ): Promise<void>;
 
-  deletePhoneNumber(userId: string, phoneNumber: string): Promise<void>
+  deletePhoneNumber(userId: string, phoneNumber: string): Promise<void>;
 
   // Messages
 
@@ -46,46 +46,46 @@ export interface MessageService {
     userId: string,
     message: UserMessage,
     options: {
-      notify: boolean
-      user: User | null
+      notify: boolean;
+      user: User | null;
     },
-  ): Promise<void>
+  ): Promise<void>;
 
   addMessage(
     userId: string,
     message: UserMessage,
     options: {
-      notify: boolean
-      user: User | null
+      notify: boolean;
+      user: User | null;
     },
-  ): Promise<Document<UserMessage> | undefined>
+  ): Promise<Document<UserMessage> | undefined>;
 
   completeMessages(
     userId: string,
     type: UserMessageType,
     filter?: (message: UserMessage) => boolean,
-  ): Promise<string[]>
+  ): Promise<string[]>;
 
   completeMessagesIncludingClinicianAndOwners(
     userId: string,
     type: UserMessageType,
     options: {
-      user?: User
+      user?: User;
     },
-  ): Promise<void>
+  ): Promise<void>;
 
   dismissMessage(
     userId: string,
     messageId: string,
     didPerformAction: boolean,
-  ): Promise<void>
+  ): Promise<void>;
 
   dismissMessages(
     userId: string,
     options: {
-      messageIds?: string[]
-      dismissAll?: boolean
-      didPerformAction: boolean
+      messageIds?: string[];
+      dismissAll?: boolean;
+      didPerformAction: boolean;
     },
-  ): Promise<number>
+  ): Promise<number>;
 }

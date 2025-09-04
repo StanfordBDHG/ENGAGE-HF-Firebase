@@ -9,7 +9,7 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 
 export namespace Flags {
-  export const disableTwilio = process.env.DISABLE_TWILIO === 'true'
-  export const isEmulator = process.env.FUNCTIONS_EMULATOR === 'true'
-  export const requireInvitationOrganizationToMatchSsoProviderId = false
+  export const disableTwilio = process.env.DISABLE_TWILIO === "true";
+  export const isEmulator = process.env.FUNCTIONS_EMULATOR === "true";
+  export const requireInvitationOrganizationToMatchSsoProviderId = false;
 }

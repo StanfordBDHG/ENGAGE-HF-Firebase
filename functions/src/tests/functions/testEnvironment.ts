@@ -11,26 +11,26 @@ import {
   User,
   type UserSex,
   type UserType,
-} from '@stanfordbdhg/engagehf-models'
-import admin from 'firebase-admin'
+} from "@stanfordbdhg/engagehf-models";
+import admin from "firebase-admin";
 import {
   type DocumentData,
   type DocumentReference,
   type DocumentSnapshot,
   Timestamp,
-} from 'firebase-admin/firestore'
-import { type CloudFunction, type Change, logger } from 'firebase-functions'
-import { type FirestoreEvent } from 'firebase-functions/firestore'
+} from "firebase-admin/firestore";
+import { type CloudFunction, type Change, logger } from "firebase-functions";
+import { type FirestoreEvent } from "firebase-functions/firestore";
 import {
   type CallableFunction,
   type CallableRequest,
-} from 'firebase-functions/v2/https'
-import firebaseFunctionsTest from 'firebase-functions-test'
-import { type DeepPartial } from 'firebase-functions-test/lib/cloudevent/types.js'
-import { CollectionsService } from '../../services/database/collections.js'
-import { getServiceFactory } from '../../services/factory/getServiceFactory.js'
-import { type ServiceFactory } from '../../services/factory/serviceFactory.js'
-import { TestFlags } from '../testFlags.js'
+} from "firebase-functions/v2/https";
+import firebaseFunctionsTest from "firebase-functions-test";
+import { type DeepPartial } from "firebase-functions-test/lib/cloudevent/types.js";
+import { CollectionsService } from "../../services/database/collections.js";
+import { getServiceFactory } from "../../services/factory/getServiceFactory.js";
+import { type ServiceFactory } from "../../services/factory/serviceFactory.js";
+import { TestFlags } from "../testFlags.js";
 
 export function describeWithEmulators(
   title: string,
@@ -38,51 +38,51 @@ export function describeWithEmulators(
 ) {
   describe(title, () => {
     if (!TestFlags.connectsToEmulator) {
-      it('skipped due to missing emulator', () => {
-        logger.warn('skipping test because emulator is not running')
-      })
-      return
+      it("skipped due to missing emulator", () => {
+        logger.warn("skipping test because emulator is not running");
+      });
+      return;
     }
 
-    const env = EmulatorTestEnvironment.instance
+    const env = EmulatorTestEnvironment.instance;
 
     beforeEach(async () => {
-      await env.cleanup()
-    }, 30_000)
+      await env.cleanup();
+    }, 30_000);
 
-    perform(env)
-  })
+    perform(env);
+  });
 }
 
 export class EmulatorTestEnvironment {
   // Static Properties
 
   private static lazyInstance = new Lazy<EmulatorTestEnvironment>(() => {
-    process.env.FIRESTORE_EMULATOR_HOST = 'localhost:8080'
-    admin.initializeApp()
-    return new EmulatorTestEnvironment()
-  })
+    process.env.FIRESTORE_EMULATOR_HOST = "localhost:8080";
+    admin.initializeApp();
+    return new EmulatorTestEnvironment();
+  });
 
   static get instance() {
-    return this.lazyInstance.value
+    return this.lazyInstance.value;
   }
 
   // Stored Properties
 
-  readonly auth = admin.auth()
-  readonly firestore = admin.firestore()
-  readonly messaging = admin.messaging()
-  readonly storage = admin.storage()
+  readonly auth = admin.auth();
+  readonly firestore = admin.firestore();
+  readonly messaging = admin.messaging();
+  readonly storage = admin.storage();
 
-  readonly collections = new CollectionsService(this.firestore)
-  readonly factory: ServiceFactory
+  readonly collections = new CollectionsService(this.firestore);
+  readonly factory: ServiceFactory;
 
-  private readonly wrapper = firebaseFunctionsTest()
+  private readonly wrapper = firebaseFunctionsTest();
 
   // Constructor
 
   private constructor() {
-    this.factory = getServiceFactory()
+    this.factory = getServiceFactory();
   }
 
   // Methods
@@ -92,7 +92,7 @@ export class EmulatorTestEnvironment {
     input: Input,
     auth: { uid?: string; token?: object },
   ): Promise<Output> {
-    const wrapped = this.wrapper.wrap(func)
+    const wrapped = this.wrapper.wrap(func);
     return wrapped({
       data: input,
       auth: {
@@ -101,67 +101,67 @@ export class EmulatorTestEnvironment {
           ...(auth.token ?? {}),
         },
       },
-    } as unknown as CallableRequest<Input>)
+    } as unknown as CallableRequest<Input>);
   }
 
   async deleteWithTrigger<Model, Params>(
     func: CloudFunction<FirestoreEvent<Change<DocumentSnapshot>, Params>>,
     input: {
-      ref: DocumentReference<Model>
-      params: Params
+      ref: DocumentReference<Model>;
+      params: Params;
     } & DeepPartial<FirestoreEvent<Change<DocumentSnapshot>, Params>>,
   ) {
-    const wrapped = this.wrapper.wrap(func)
-    const before = await input.ref.withConverter(null).get()
-    await input.ref.delete()
-    const after = await input.ref.withConverter(null).get()
+    const wrapped = this.wrapper.wrap(func);
+    const before = await input.ref.withConverter(null).get();
+    await input.ref.delete();
+    const after = await input.ref.withConverter(null).get();
     await wrapped({
       ...input,
       data: this.wrapper.makeChange(before, after),
-    })
+    });
   }
 
   async setWithTrigger<Model, Params>(
     func: CloudFunction<FirestoreEvent<Change<DocumentSnapshot>, Params>>,
     input: {
-      ref: DocumentReference<Model>
-      data: Model
-      params: Params
+      ref: DocumentReference<Model>;
+      data: Model;
+      params: Params;
     } & DeepPartial<FirestoreEvent<Change<DocumentSnapshot>, Params>>,
   ) {
-    const wrapped = this.wrapper.wrap(func)
-    const before = await input.ref.withConverter(null).get()
-    await input.ref.set(input.data)
-    const after = await input.ref.withConverter(null).get()
+    const wrapped = this.wrapper.wrap(func);
+    const before = await input.ref.withConverter(null).get();
+    await input.ref.set(input.data);
+    const after = await input.ref.withConverter(null).get();
     await wrapped({
       ...input,
       data: this.wrapper.makeChange(before, after),
-    })
+    });
   }
 
   async trigger<Model, Params>(
     func: CloudFunction<FirestoreEvent<Change<DocumentSnapshot>, Params>>,
     input: {
-      before?: DocumentData
-      after?: DocumentData
-      ref: DocumentReference<Model>
-      params: Params
+      before?: DocumentData;
+      after?: DocumentData;
+      ref: DocumentReference<Model>;
+      params: Params;
     } & DeepPartial<FirestoreEvent<Change<DocumentSnapshot>, Params>>,
   ) {
-    const wrapped = this.wrapper.wrap(func)
+    const wrapped = this.wrapper.wrap(func);
     await wrapped({
       ...input,
       data: this.createChange(input.ref.path, input.before, input.after),
-    })
+    });
   }
 
   async cleanup() {
-    const collections = await this.firestore.listCollections()
+    const collections = await this.firestore.listCollections();
     for (const collection of collections) {
-      await this.firestore.recursiveDelete(collection)
+      await this.firestore.recursiveDelete(collection);
     }
-    const usersResult = await this.auth.listUsers()
-    await this.auth.deleteUsers(usersResult.users.map((user) => user.uid))
+    const usersResult = await this.auth.listUsers();
+    await this.auth.deleteUsers(usersResult.users.map((user) => user.uid));
   }
 
   /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
@@ -174,38 +174,38 @@ export class EmulatorTestEnvironment {
     const beforeSnapshot: DocumentSnapshot<T> =
       before !== undefined ?
         this.wrapper.firestore.makeDocumentSnapshot(before, path)
-      : this.createEmptyDocumentSnapshot(path)
+      : this.createEmptyDocumentSnapshot(path);
     /* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */
     const afterSnapshot: DocumentSnapshot<T> =
       after !== undefined ?
         this.wrapper.firestore.makeDocumentSnapshot(after, path)
-      : this.createEmptyDocumentSnapshot(path)
-    return this.wrapper.makeChange(beforeSnapshot, afterSnapshot)
+      : this.createEmptyDocumentSnapshot(path);
+    return this.wrapper.makeChange(beforeSnapshot, afterSnapshot);
   }
 
   async createUser(
     options: {
-      type: UserType
-      disabled?: boolean
-      selfManaged?: boolean
-      organization?: string
-      clinician?: string
-      dateOfEnrollment?: Date
-      dateOfBirth?: Date
-      sex?: UserSex
-      lastActiveDate?: Date
-      invitationCode?: string
-      phoneNumbers?: string[]
-      receivesAppointmentReminders?: boolean
-      receivesInactivityReminders?: boolean
-      receivesMedicationUpdates?: boolean
-      receivesQuestionnaireReminders?: boolean
-      receivesRecommendationUpdates?: boolean
-      receivesVitalsReminders?: boolean
-      receivesWeightAlerts?: boolean
+      type: UserType;
+      disabled?: boolean;
+      selfManaged?: boolean;
+      organization?: string;
+      clinician?: string;
+      dateOfEnrollment?: Date;
+      dateOfBirth?: Date;
+      sex?: UserSex;
+      lastActiveDate?: Date;
+      invitationCode?: string;
+      phoneNumbers?: string[];
+      receivesAppointmentReminders?: boolean;
+      receivesInactivityReminders?: boolean;
+      receivesMedicationUpdates?: boolean;
+      receivesQuestionnaireReminders?: boolean;
+      receivesRecommendationUpdates?: boolean;
+      receivesVitalsReminders?: boolean;
+      receivesWeightAlerts?: boolean;
     } & admin.auth.CreateRequest,
   ) {
-    const authUser = await this.auth.createUser(options)
+    const authUser = await this.auth.createUser(options);
     await this.collections.users.doc(authUser.uid).set(
       new User({
         type: options.type,
@@ -217,7 +217,7 @@ export class EmulatorTestEnvironment {
         sex: options.sex,
         clinician: options.clinician,
         lastActiveDate: options.lastActiveDate ?? new Date(),
-        invitationCode: options.invitationCode ?? 'TESTCODE',
+        invitationCode: options.invitationCode ?? "TESTCODE",
         receivesAppointmentReminders:
           options.receivesAppointmentReminders ?? true,
         receivesInactivityReminders:
@@ -231,8 +231,8 @@ export class EmulatorTestEnvironment {
         receivesWeightAlerts: options.receivesWeightAlerts ?? true,
         phoneNumbers: options.phoneNumbers ?? [],
       }),
-    )
-    return authUser.uid
+    );
+    return authUser.uid;
   }
 
   // Helpers
@@ -240,16 +240,16 @@ export class EmulatorTestEnvironment {
   private createEmptyDocumentSnapshot(path: string): DocumentSnapshot {
     return {
       exists: false,
-      id: path.split('/').at(-1) ?? path,
+      id: path.split("/").at(-1) ?? path,
       ref: this.firestore.doc(path),
       readTime: Timestamp.now(),
       get() {
-        return undefined
+        return undefined;
       },
       isEqual() {
-        return false
+        return false;
       },
       data: () => undefined,
-    }
+    };
   }
 }

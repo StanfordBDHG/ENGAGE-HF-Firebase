@@ -10,13 +10,13 @@ import {
   MedicationClassReference,
   MedicationReference,
   UserMedicationRecommendationType,
-} from '@stanfordbdhg/engagehf-models'
-import { Recommender } from './recommender.js'
-import { ContraindicationCategory } from '../../contraindication/contraindicationService.js'
+} from "@stanfordbdhg/engagehf-models";
+import { Recommender } from "./recommender.js";
+import { ContraindicationCategory } from "../../contraindication/contraindicationService.js";
 import {
   type RecommendationInput,
   type RecommendationOutput,
-} from '../recommendationService.js'
+} from "../recommendationService.js";
 
 export class BetaBlockerRecommender extends Recommender {
   // Methods
@@ -24,32 +24,32 @@ export class BetaBlockerRecommender extends Recommender {
   compute(input: RecommendationInput): RecommendationOutput[] {
     const currentRequests = this.findCurrentRequests(input.requests, [
       MedicationClassReference.betaBlockers,
-    ])
-    if (currentRequests.length === 0) return this.computeNew(input)
+    ]);
+    if (currentRequests.length === 0) return this.computeNew(input);
 
     if (this.isTargetDailyDoseReached(currentRequests))
       return this.createRecommendation(
         currentRequests,
         undefined,
         UserMedicationRecommendationType.targetDoseReached,
-      )
+      );
 
-    const medianSystolic = this.medianValue(input.vitals.systolicBloodPressure)
-    const medianHeartRate = this.medianValue(input.vitals.heartRate)
+    const medianSystolic = this.medianValue(input.vitals.systolicBloodPressure);
+    const medianHeartRate = this.medianValue(input.vitals.heartRate);
 
     if (medianSystolic === undefined || medianHeartRate === undefined)
       return this.createRecommendation(
         currentRequests,
         undefined,
         UserMedicationRecommendationType.morePatientObservationsRequired,
-      )
+      );
 
     if (medianSystolic < 100 || medianHeartRate < 60)
       return this.createRecommendation(
         currentRequests,
         undefined,
         UserMedicationRecommendationType.personalTargetDoseReached,
-      )
+      );
 
     if (
       input.latestDizzinessScore !== undefined &&
@@ -59,13 +59,13 @@ export class BetaBlockerRecommender extends Recommender {
         currentRequests,
         undefined,
         UserMedicationRecommendationType.personalTargetDoseReached,
-      )
+      );
 
     return this.createRecommendation(
       currentRequests,
       undefined,
       UserMedicationRecommendationType.improvementAvailable,
-    )
+    );
   }
 
   // Helpers
@@ -75,7 +75,7 @@ export class BetaBlockerRecommender extends Recommender {
       this.contraindicationService.checkMedicationClass(
         input.contraindications,
         MedicationClassReference.betaBlockers,
-      )
+      );
 
     const eligibleMedication =
       this.contraindicationService.findEligibleMedication(
@@ -85,12 +85,12 @@ export class BetaBlockerRecommender extends Recommender {
           MedicationReference.metoprololSuccinate,
           MedicationReference.bisoprolol,
         ],
-      )
+      );
 
     switch (contraindicationCategory) {
       case ContraindicationCategory.severeAllergyIntolerance:
       case ContraindicationCategory.allergyIntolerance:
-        return []
+        return [];
       case ContraindicationCategory.clinicianListed:
         return eligibleMedication !== undefined ?
             this.createRecommendation(
@@ -98,34 +98,34 @@ export class BetaBlockerRecommender extends Recommender {
               eligibleMedication,
               UserMedicationRecommendationType.noActionRequired,
             )
-          : []
+          : [];
       case ContraindicationCategory.none:
-        break
+        break;
     }
 
-    if (eligibleMedication === undefined) return []
+    if (eligibleMedication === undefined) return [];
 
-    const medianSystolic = this.medianValue(input.vitals.systolicBloodPressure)
-    const medianHeartRate = this.medianValue(input.vitals.heartRate)
+    const medianSystolic = this.medianValue(input.vitals.systolicBloodPressure);
+    const medianHeartRate = this.medianValue(input.vitals.heartRate);
 
     if (medianSystolic === undefined || medianHeartRate === undefined)
       return this.createRecommendation(
         [],
         eligibleMedication,
         UserMedicationRecommendationType.morePatientObservationsRequired,
-      )
+      );
 
     if (medianSystolic < 100 || medianHeartRate < 60)
       return this.createRecommendation(
         [],
         eligibleMedication,
         UserMedicationRecommendationType.noActionRequired,
-      )
+      );
 
     return this.createRecommendation(
       [],
       eligibleMedication,
       UserMedicationRecommendationType.notStarted,
-    )
+    );
   }
 }

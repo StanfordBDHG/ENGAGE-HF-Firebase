@@ -6,225 +6,227 @@
 // SPDX-License-Identifier: MIT
 //
 
-import fs from 'fs'
+import fs from "fs";
 import {
   assertFails,
   assertSucceeds,
   initializeTestEnvironment,
   type RulesTestEnvironment,
-} from '@firebase/rules-unit-testing'
-import { UserType } from '@stanfordbdhg/engagehf-models'
-import type firebase from 'firebase/compat/app'
-import { logger } from 'firebase-functions/v2'
-import { TestFlags } from '../testFlags.js'
+} from "@firebase/rules-unit-testing";
+import { UserType } from "@stanfordbdhg/engagehf-models";
+import type firebase from "firebase/compat/app";
+import { logger } from "firebase-functions/v2";
+import { TestFlags } from "../testFlags.js";
 
-describe('firestore.rules: organizations/{organizationId}', () => {
+describe("firestore.rules: organizations/{organizationId}", () => {
   if (!TestFlags.connectsToEmulator) {
-    it('skipped due to missing emulator', () => {
-      logger.warn('skipping test because emulator is not running')
-    })
-    return
+    it("skipped due to missing emulator", () => {
+      logger.warn("skipping test because emulator is not running");
+    });
+    return;
   }
 
-  const organizationId = 'stanford'
-  const otherOrganizationId = 'jhu'
-  const nonExistingOrganizationId = 'ucb'
+  const organizationId = "stanford";
+  const otherOrganizationId = "jhu";
+  const nonExistingOrganizationId = "ucb";
 
-  const adminId = 'mockAdmin'
-  const ownerId = 'mockOwner'
-  const clinicianId = 'mockClinician'
-  const patientId = 'mockPatient'
-  const userId = 'mockUser'
+  const adminId = "mockAdmin";
+  const ownerId = "mockOwner";
+  const clinicianId = "mockClinician";
+  const patientId = "mockPatient";
+  const userId = "mockUser";
 
-  let testEnvironment: RulesTestEnvironment
-  let adminFirestore: firebase.firestore.Firestore
-  let ownerFirestore: firebase.firestore.Firestore
-  let clinicianFirestore: firebase.firestore.Firestore
-  let patientFirestore: firebase.firestore.Firestore
-  let userFirestore: firebase.firestore.Firestore
+  let testEnvironment: RulesTestEnvironment;
+  let adminFirestore: firebase.firestore.Firestore;
+  let ownerFirestore: firebase.firestore.Firestore;
+  let clinicianFirestore: firebase.firestore.Firestore;
+  let patientFirestore: firebase.firestore.Firestore;
+  let userFirestore: firebase.firestore.Firestore;
 
   beforeAll(async () => {
     testEnvironment = await initializeTestEnvironment({
-      projectId: 'stanford-bdhg-engage-hf',
+      projectId: "stanford-bdhg-engage-hf",
       firestore: {
-        rules: fs.readFileSync('../firestore.rules', 'utf8'),
-        host: 'localhost',
+        rules: fs.readFileSync("../firestore.rules", "utf8"),
+        host: "localhost",
         port: 8080,
       },
-    })
+    });
 
     adminFirestore = testEnvironment
       .authenticatedContext(adminId, { type: UserType.admin })
-      .firestore()
+      .firestore();
 
     ownerFirestore = testEnvironment
       .authenticatedContext(ownerId, {
         type: UserType.owner,
         organization: organizationId,
       })
-      .firestore()
+      .firestore();
 
     clinicianFirestore = testEnvironment
       .authenticatedContext(clinicianId, {
         type: UserType.clinician,
         organization: organizationId,
       })
-      .firestore()
+      .firestore();
 
     patientFirestore = testEnvironment
       .authenticatedContext(patientId, {
         type: UserType.patient,
         organization: organizationId,
       })
-      .firestore()
+      .firestore();
 
-    userFirestore = testEnvironment.authenticatedContext(userId, {}).firestore()
-  })
+    userFirestore = testEnvironment
+      .authenticatedContext(userId, {})
+      .firestore();
+  });
 
   beforeEach(async () => {
-    await testEnvironment.clearFirestore()
+    await testEnvironment.clearFirestore();
     await testEnvironment.withSecurityRulesDisabled(async (environment) => {
-      const firestore = environment.firestore()
-      await firestore.doc(`organizations/${organizationId}`).set({})
-      await firestore.doc(`organizations/${otherOrganizationId}`).set({})
-      await firestore.doc(`users/${adminId}`).set({ type: UserType.admin })
+      const firestore = environment.firestore();
+      await firestore.doc(`organizations/${organizationId}`).set({});
+      await firestore.doc(`organizations/${otherOrganizationId}`).set({});
+      await firestore.doc(`users/${adminId}`).set({ type: UserType.admin });
       await firestore
         .doc(`users/${ownerId}`)
-        .set({ type: UserType.owner, organization: organizationId })
+        .set({ type: UserType.owner, organization: organizationId });
       await firestore
         .doc(`users/${clinicianId}`)
-        .set({ type: UserType.clinician, organization: organizationId })
+        .set({ type: UserType.clinician, organization: organizationId });
       await firestore
         .doc(`users/${patientId}`)
-        .set({ type: UserType.patient, organization: organizationId })
-    })
-  })
+        .set({ type: UserType.patient, organization: organizationId });
+    });
+  });
 
   afterAll(async () => {
-    await testEnvironment.cleanup()
-  })
+    await testEnvironment.cleanup();
+  });
 
-  it('gets organizations/{organizationId}', async () => {
+  it("gets organizations/{organizationId}", async () => {
     await assertSucceeds(
       adminFirestore.doc(`organizations/${organizationId}`).get(),
-    )
+    );
     await assertSucceeds(
       adminFirestore.doc(`organizations/${otherOrganizationId}`).get(),
-    )
+    );
 
     await assertSucceeds(
       ownerFirestore.doc(`organizations/${organizationId}`).get(),
-    )
+    );
     await assertFails(
       ownerFirestore.doc(`organizations/${otherOrganizationId}`).get(),
-    )
+    );
 
     await assertSucceeds(
       clinicianFirestore.doc(`organizations/${organizationId}`).get(),
-    )
+    );
     await assertFails(
       clinicianFirestore.doc(`organizations/${otherOrganizationId}`).get(),
-    )
+    );
 
     await assertSucceeds(
       patientFirestore.doc(`organizations/${organizationId}`).get(),
-    )
+    );
     await assertFails(
       patientFirestore.doc(`organizations/${otherOrganizationId}`).get(),
-    )
+    );
 
     await assertFails(
       userFirestore.doc(`organizations/${organizationId}`).get(),
-    )
+    );
     await assertFails(
       userFirestore.doc(`organizations/${otherOrganizationId}`).get(),
-    )
-  })
+    );
+  });
 
-  it('lists organizations', async () => {
-    await assertSucceeds(adminFirestore.collection('organizations').get())
-    await assertFails(ownerFirestore.collection('organizations').get())
-    await assertFails(clinicianFirestore.collection('organizations').get())
-    await assertFails(patientFirestore.collection('organizations').get())
-    await assertFails(userFirestore.collection('organizations').get())
-  })
+  it("lists organizations", async () => {
+    await assertSucceeds(adminFirestore.collection("organizations").get());
+    await assertFails(ownerFirestore.collection("organizations").get());
+    await assertFails(clinicianFirestore.collection("organizations").get());
+    await assertFails(patientFirestore.collection("organizations").get());
+    await assertFails(userFirestore.collection("organizations").get());
+  });
 
-  it('creates organizations/{organizationsId}', async () => {
+  it("creates organizations/{organizationsId}", async () => {
     await assertSucceeds(
       adminFirestore.doc(`organizations/${nonExistingOrganizationId}`).set({}),
-    )
+    );
     await assertSucceeds(
       adminFirestore.doc(`organizations/${nonExistingOrganizationId}`).delete(),
-    )
+    );
 
     await assertFails(
       ownerFirestore.doc(`organizations/${nonExistingOrganizationId}`).set({}),
-    )
+    );
     await assertFails(
       clinicianFirestore
         .doc(`organizations/${nonExistingOrganizationId}`)
         .set({}),
-    )
+    );
     await assertFails(
       patientFirestore
         .doc(`organizations/${nonExistingOrganizationId}`)
         .set({}),
-    )
+    );
     await assertFails(
       userFirestore.doc(`organizations/${nonExistingOrganizationId}`).set({}),
-    )
-  })
+    );
+  });
 
-  it('updates organizations/{organizationsId}', async () => {
+  it("updates organizations/{organizationsId}", async () => {
     await assertSucceeds(
       adminFirestore
         .doc(`organizations/${organizationId}`)
-        .set({ name: 'Stanford' }),
-    )
+        .set({ name: "Stanford" }),
+    );
     await assertSucceeds(
       adminFirestore
         .doc(`organizations/${otherOrganizationId}`)
-        .set({ name: 'Stanford' }),
-    )
+        .set({ name: "Stanford" }),
+    );
     await assertSucceeds(
       ownerFirestore
         .doc(`organizations/${organizationId}`)
-        .set({ name: 'Stanford' }),
-    )
+        .set({ name: "Stanford" }),
+    );
     await assertFails(
       ownerFirestore
         .doc(`organizations/${otherOrganizationId}`)
-        .set({ name: 'Stanford' }),
-    )
+        .set({ name: "Stanford" }),
+    );
     await assertFails(
       clinicianFirestore
         .doc(`organizations/${organizationId}`)
-        .set({ name: 'Stanford' }),
-    )
+        .set({ name: "Stanford" }),
+    );
     await assertFails(
       clinicianFirestore
         .doc(`organizations/${otherOrganizationId}`)
-        .set({ name: 'Stanford' }),
-    )
+        .set({ name: "Stanford" }),
+    );
     await assertFails(
       patientFirestore
         .doc(`organizations/${organizationId}`)
-        .set({ name: 'Stanford' }),
-    )
+        .set({ name: "Stanford" }),
+    );
     await assertFails(
       patientFirestore
         .doc(`organizations/${otherOrganizationId}`)
-        .set({ name: 'Stanford' }),
-    )
+        .set({ name: "Stanford" }),
+    );
     await assertFails(
       userFirestore
         .doc(`organizations/${organizationId}`)
-        .set({ name: 'Stanford' }),
-    )
+        .set({ name: "Stanford" }),
+    );
     await assertFails(
       userFirestore
         .doc(`organizations/${otherOrganizationId}`)
-        .set({ name: 'Stanford' }),
-    )
-  })
-})
+        .set({ name: "Stanford" }),
+    );
+  });
+});

@@ -6,8 +6,8 @@
 // SPDX-License-Identifier: MIT
 //
 
-describe('setup', () => {
-  it('should always be using UTC timezone', () => {
-    expect(new Date().getTimezoneOffset()).toBe(0)
-  })
-})
+describe("setup", () => {
+  it("should always be using UTC timezone", () => {
+    expect(new Date().getTimezoneOffset()).toBe(0);
+  });
+});

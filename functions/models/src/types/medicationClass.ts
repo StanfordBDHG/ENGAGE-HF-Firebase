@@ -6,10 +6,10 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { z } from 'zod'
-import { localizedTextConverter, type LocalizedText } from './localizedText.js'
-import { Lazy } from '../helpers/lazy.js'
-import { SchemaConverter } from '../helpers/schemaConverter.js'
+import { z } from "zod";
+import { localizedTextConverter, type LocalizedText } from "./localizedText.js";
+import { Lazy } from "../helpers/lazy.js";
+import { SchemaConverter } from "../helpers/schemaConverter.js";
 
 export const medicationClassConverter = new Lazy(
   () =>
@@ -25,18 +25,18 @@ export const medicationClassConverter = new Lazy(
         videoPath: object.videoPath,
       }),
     }),
-)
+);
 
 export class MedicationClass {
   // Properties
 
-  readonly name: LocalizedText
-  readonly videoPath: string
+  readonly name: LocalizedText;
+  readonly videoPath: string;
 
   // Constructor
 
   constructor(input: { name: LocalizedText; videoPath: string }) {
-    this.name = input.name
-    this.videoPath = input.videoPath
+    this.name = input.name;
+    this.videoPath = input.videoPath;
   }
 }

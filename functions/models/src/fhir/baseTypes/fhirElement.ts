@@ -6,20 +6,20 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { z } from 'zod'
+import { z } from "zod";
 import {
   fhirCodeableConceptConverter,
   type FHIRCodeableConcept,
-} from './fhirCodeableConcept.js'
-import { type FHIRCoding } from './fhirCoding.js'
-import { type FHIRDosage, fhirDosageConverter } from './fhirDosage.js'
-import { type FHIRMeta, fhirMetaConverter } from './fhirMeta.js'
-import { fhirQuantityConverter } from './fhirQuantity.js'
-import { type FHIRReference, fhirReferenceConverter } from './fhirReference.js'
-import { type FHIRExtensionUrl } from '../../codes/codes.js'
-import { QuantityUnit } from '../../codes/quantityUnit.js'
-import { optionalish } from '../../helpers/optionalish.js'
-import { SchemaConverter } from '../../helpers/schemaConverter.js'
+} from "./fhirCodeableConcept.js";
+import { type FHIRCoding } from "./fhirCoding.js";
+import { type FHIRDosage, fhirDosageConverter } from "./fhirDosage.js";
+import { type FHIRMeta, fhirMetaConverter } from "./fhirMeta.js";
+import { fhirQuantityConverter } from "./fhirQuantity.js";
+import { type FHIRReference, fhirReferenceConverter } from "./fhirReference.js";
+import { type FHIRExtensionUrl } from "../../codes/codes.js";
+import { QuantityUnit } from "../../codes/quantityUnit.js";
+import { optionalish } from "../../helpers/optionalish.js";
+import { SchemaConverter } from "../../helpers/schemaConverter.js";
 
 const fhirExtensionBaseConverter = new SchemaConverter({
   schema: z.object({
@@ -42,24 +42,24 @@ const fhirExtensionBaseConverter = new SchemaConverter({
       : null,
     valueString: object.valueString ?? null,
   }),
-})
+});
 
 export interface FHIRExtensionInput
   extends z.input<typeof fhirExtensionBaseConverter.value.schema> {
   valueCodeableConcept?:
     | z.input<typeof fhirCodeableConceptConverter.value.schema>
     | null
-    | undefined
+    | undefined;
   valueMedicationRequest?:
     | z.input<typeof fhirMedicationRequestConverter.value.schema>
     | null
-    | undefined
+    | undefined;
 }
 
 export interface FHIRExtension
   extends z.output<typeof fhirExtensionBaseConverter.value.schema> {
-  valueCodeableConcept?: FHIRCodeableConcept
-  valueMedicationRequest?: FHIRMedicationRequest
+  valueCodeableConcept?: FHIRCodeableConcept;
+  valueMedicationRequest?: FHIRMedicationRequest;
 }
 
 export const fhirExtensionConverter = (() => {
@@ -74,31 +74,29 @@ export const fhirExtensionConverter = (() => {
     valueMedicationRequest: optionalish(
       z.lazy(() => fhirMedicationRequestConverter.value.schema),
     ),
-  })
+  });
 
-  function fhirExtensionEncode(
+  const fhirExtensionEncode = (
     object: z.output<typeof fhirExtensionSchema>,
-  ): z.input<typeof fhirExtensionSchema> {
-    return {
-      ...fhirExtensionBaseConverter.value.encode(object),
-      valueCodeableConcept:
-        object.valueCodeableConcept ?
-          fhirCodeableConceptConverter.value.encode(object.valueCodeableConcept)
-        : null,
-      valueMedicationRequest:
-        object.valueMedicationRequest ?
-          fhirMedicationRequestConverter.value.encode(
-            object.valueMedicationRequest,
-          )
-        : null,
-    }
-  }
+  ): z.input<typeof fhirExtensionSchema> => ({
+    ...fhirExtensionBaseConverter.value.encode(object),
+    valueCodeableConcept:
+      object.valueCodeableConcept ?
+        fhirCodeableConceptConverter.value.encode(object.valueCodeableConcept)
+      : null,
+    valueMedicationRequest:
+      object.valueMedicationRequest ?
+        fhirMedicationRequestConverter.value.encode(
+          object.valueMedicationRequest,
+        )
+      : null,
+  });
 
   return new SchemaConverter({
     schema: fhirExtensionSchema,
     encode: fhirExtensionEncode,
-  })
-})()
+  });
+})();
 
 export const fhirElementConverter = new SchemaConverter({
   schema: z.object({
@@ -112,28 +110,29 @@ export const fhirElementConverter = new SchemaConverter({
     extension:
       object.extension?.map(fhirExtensionConverter.value.encode) ?? null,
   }),
-})
+});
 
 export abstract class FHIRElement {
   // Properties
 
-  readonly id?: string
-  readonly extension?: FHIRExtension[]
+  readonly id?: string;
+  readonly extension?: FHIRExtension[];
 
   // Constructor
 
   constructor(input: { id?: string; extension?: FHIRExtension[] }) {
-    this.id = input.id
-    this.extension = input.extension
+    this.id = input.id;
+    this.extension = input.extension;
   }
 
   // Methods
 
   extensionsWithUrl(url: FHIRExtensionUrl): FHIRExtension[] {
     return (
-      this.extension?.filter((extension) => extension.url === url.toString()) ??
-      []
-    )
+      this.extension?.filter(
+        (extension) => extension.url === (url as string),
+      ) ?? []
+    );
   }
 }
 
@@ -147,23 +146,23 @@ export const fhirResourceConverter = new SchemaConverter({
     resourceType: object.resourceType,
     meta: object.meta ? fhirMetaConverter.encode(object.meta) : null,
   }),
-})
+});
 
 export type FHIRResourceInput = z.output<typeof fhirElementConverter.schema> & {
-  meta?: FHIRMeta
-}
+  meta?: FHIRMeta;
+};
 
 export abstract class FHIRResource extends FHIRElement {
   // Properties
 
-  abstract get resourceType(): string
-  readonly meta?: FHIRMeta
+  abstract get resourceType(): string;
+  readonly meta?: FHIRMeta;
 
   // Constructor
 
   constructor(input: FHIRResourceInput) {
-    super(input)
-    this.meta = input.meta
+    super(input);
+    this.meta = input.meta;
   }
 
   // Methods
@@ -174,11 +173,11 @@ export abstract class FHIRResource extends FHIRElement {
   ): string[] {
     return (
       concept?.coding?.flatMap((coding) => {
-        if (filter.system && coding.system !== filter.system) return []
-        if (filter.version && coding.version !== filter.version) return []
-        return coding.code ? [coding.code] : []
+        if (filter.system && coding.system !== filter.system) return [];
+        if (filter.version && coding.version !== filter.version) return [];
+        return coding.code ? [coding.code] : [];
       }) ?? []
-    )
+    );
   }
 
   containsCoding(
@@ -189,14 +188,14 @@ export abstract class FHIRResource extends FHIRElement {
       (filterCoding) =>
         concept?.coding?.some((coding) => {
           if (filterCoding.code && coding.code !== filterCoding.code)
-            return false
+            return false;
           if (filterCoding.system && coding.system !== filterCoding.system)
-            return false
+            return false;
           if (filterCoding.version && coding.version !== filterCoding.version)
-            return false
-          return true
+            return false;
+          return true;
         }) ?? false,
-    )
+    );
   }
 }
 
@@ -220,17 +219,17 @@ export const fhirMedicationRequestConverter = new SchemaConverter({
     dosageInstruction:
       object.dosageInstruction?.map(fhirDosageConverter.value.encode) ?? null,
   }),
-})
+});
 
 export class FHIRMedicationRequest extends FHIRResource {
   // Static Functions
 
   static create(input: {
-    medicationReference: string
-    medicationReferenceDisplay?: string
-    frequencyPerDay: number
-    quantity: number
-    extension?: FHIRExtension[]
+    medicationReference: string;
+    medicationReferenceDisplay?: string;
+    frequencyPerDay: number;
+    quantity: number;
+    extension?: FHIRExtension[];
   }): FHIRMedicationRequest {
     return new FHIRMedicationRequest({
       medicationReference: {
@@ -244,7 +243,7 @@ export class FHIRMedicationRequest extends FHIRResource {
             repeat: {
               frequency: input.frequencyPerDay,
               period: 1,
-              periodUnit: 'd',
+              periodUnit: "d",
             },
           },
           doseAndRate: [
@@ -254,25 +253,25 @@ export class FHIRMedicationRequest extends FHIRResource {
           ],
         },
       ],
-    })
+    });
   }
 
   // Properties
 
-  readonly resourceType: string = 'MedicationRequest'
-  readonly medicationReference?: FHIRReference
-  readonly dosageInstruction?: FHIRDosage[]
+  readonly resourceType: string = "MedicationRequest";
+  readonly medicationReference?: FHIRReference;
+  readonly dosageInstruction?: FHIRDosage[];
 
   // Constructor
 
   constructor(
     input: FHIRResourceInput & {
-      medicationReference?: FHIRReference
-      dosageInstruction?: FHIRDosage[]
+      medicationReference?: FHIRReference;
+      dosageInstruction?: FHIRDosage[];
     },
   ) {
-    super(input)
-    this.medicationReference = input.medicationReference
-    this.dosageInstruction = input.dosageInstruction
+    super(input);
+    this.medicationReference = input.medicationReference;
+    this.dosageInstruction = input.dosageInstruction;
   }
 }

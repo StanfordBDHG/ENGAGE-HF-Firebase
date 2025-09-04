@@ -10,11 +10,11 @@ import {
   type FHIRAllergyIntolerance,
   type MedicationClassReference,
   type MedicationReference,
-} from '@stanfordbdhg/engagehf-models'
+} from "@stanfordbdhg/engagehf-models";
 import {
   type ContraindicationCategory,
   type ContraindicationService,
-} from '../../services/contraindication/contraindicationService.js'
+} from "../../services/contraindication/contraindicationService.js";
 
 export class MockContraindicationService implements ContraindicationService {
   // Properties
@@ -22,15 +22,15 @@ export class MockContraindicationService implements ContraindicationService {
   private readonly _checkMedication: (
     allergies: FHIRAllergyIntolerance[],
     medication: MedicationReference,
-  ) => ContraindicationCategory
+  ) => ContraindicationCategory;
   private readonly _checkMedicationClass: (
     allergies: FHIRAllergyIntolerance[],
     medicationClass: MedicationClassReference,
-  ) => ContraindicationCategory
+  ) => ContraindicationCategory;
   private readonly _findEligibleMedication: (
     allergies: FHIRAllergyIntolerance[],
     medicationReferences: MedicationReference[],
-  ) => MedicationReference | undefined
+  ) => MedicationReference | undefined;
 
   // Constructor
 
@@ -48,9 +48,9 @@ export class MockContraindicationService implements ContraindicationService {
       medicationReferences: MedicationReference[],
     ) => MedicationReference | undefined,
   ) {
-    this._checkMedication = checkMedication
-    this._checkMedicationClass = checkMedicationClass
-    this._findEligibleMedication = findEligibleMedication
+    this._checkMedication = checkMedication;
+    this._checkMedicationClass = checkMedicationClass;
+    this._findEligibleMedication = findEligibleMedication;
   }
 
   // Methods
@@ -59,7 +59,7 @@ export class MockContraindicationService implements ContraindicationService {
     contraindications: FHIRAllergyIntolerance[],
     medicationReference: MedicationReference,
   ): ContraindicationCategory {
-    return this._checkMedication(contraindications, medicationReference)
+    return this._checkMedication(contraindications, medicationReference);
   }
 
   checkMedicationClass(
@@ -69,13 +69,16 @@ export class MockContraindicationService implements ContraindicationService {
     return this._checkMedicationClass(
       contraindications,
       medicationClassReference,
-    )
+    );
   }
 
   findEligibleMedication(
     contraindications: FHIRAllergyIntolerance[],
     medicationReferences: MedicationReference[],
   ): MedicationReference | undefined {
-    return this._findEligibleMedication(contraindications, medicationReferences)
+    return this._findEligibleMedication(
+      contraindications,
+      medicationReferences,
+    );
   }
 }
