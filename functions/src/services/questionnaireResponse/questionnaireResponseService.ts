@@ -356,7 +356,7 @@ export abstract class QuestionnaireResponseService {
     const monthDiff = present.getMonth() - dateOfBirth.getMonth();
     if (
       monthDiff < 0 ||
-      (monthDiff === 0 && present.getDate() <= dateOfBirth.getDate())
+      (monthDiff === 0 && present.getDate() < dateOfBirth.getDate())
     ) {
       return yearDiff - 1;
     }
