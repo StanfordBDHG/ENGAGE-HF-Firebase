@@ -7,11 +7,10 @@
 //
 
 import {
-  type FHIRResource,
-  type FHIRSchemaConverter,
+  type GenericFhirSchemaConverter,
+  type FhirSchemaConverter,
   type SchemaConverter,
 } from "@stanfordbdhg/engagehf-models";
-import { type DomainResource } from "fhir/r4b";
 import {
   type DocumentData,
   type DocumentSnapshot,
@@ -59,9 +58,11 @@ export class DatabaseConverter<Schema extends ZodType, Encoded>
   }
 }
 
-export class FHIRDatabaseConverter<
-  C extends FHIRSchemaConverter<FHIRResource<DomainResource>>,
-> implements FirestoreDataConverter<z.output<C["schema"]>>
+type FhirSchemaConverterResourceType<C> =
+  C extends FhirSchemaConverter<infer R> ? R : never;
+
+export class FhirDatabaseConverter<C extends GenericFhirSchemaConverter>
+  implements FirestoreDataConverter<FhirSchemaConverterResourceType<C>>
 {
   // Properties
 
@@ -75,10 +76,12 @@ export class FHIRDatabaseConverter<
 
   // Methods
 
-  fromFirestore(snapshot: DocumentSnapshot): z.output<C["schema"]> {
+  fromFirestore(
+    snapshot: DocumentSnapshot,
+  ): FhirSchemaConverterResourceType<C> {
     const data = snapshot.data();
     try {
-      return this.converter.schema.parse(data) as z.output<C["schema"]>;
+      return this.converter.decode(data) as FhirSchemaConverterResourceType<C>;
     } catch (error) {
       logger.error(
         `DatabaseDecoder: Failed to decode object ${JSON.stringify(data)} due to ${String(error)}.`,
@@ -87,7 +90,7 @@ export class FHIRDatabaseConverter<
     }
   }
 
-  toFirestore(modelObject: z.output<C["schema"]>): DocumentData {
+  toFirestore(modelObject: FhirSchemaConverterResourceType<C>): DocumentData {
     try {
       return this.converter.encode(modelObject) as DocumentData;
     } catch (error) {

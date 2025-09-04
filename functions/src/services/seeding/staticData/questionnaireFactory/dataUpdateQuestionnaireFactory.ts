@@ -7,22 +7,22 @@
 //
 
 import {
-  type FHIRMedication,
-  type FHIRQuestionnaire,
+  type FhirMedication,
+  type FhirQuestionnaire,
 } from "@stanfordbdhg/engagehf-models";
 import { QuestionnaireFactory } from "./questionnaireFactory.js";
 import { QuestionnaireId } from "./questionnaireLinkIds.js";
 
 interface DataUpdateQuestionnaireFactoryInput {
-  medications: Record<string, FHIRMedication>;
-  drugs: Record<string, Record<string, FHIRMedication>>;
+  medications: Record<string, FhirMedication>;
+  drugs: Record<string, Record<string, FhirMedication>>;
   isPostAppointment: boolean;
 }
 
 export class DataUpdateQuestionnaireFactory extends QuestionnaireFactory<DataUpdateQuestionnaireFactoryInput> {
   // Methods
 
-  create(input: DataUpdateQuestionnaireFactoryInput): FHIRQuestionnaire {
+  create(input: DataUpdateQuestionnaireFactoryInput): FhirQuestionnaire {
     return this.questionnaire({
       id:
         input.isPostAppointment ?

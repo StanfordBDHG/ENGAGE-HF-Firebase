@@ -6,14 +6,14 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { FHIRQuestionnaire } from "@stanfordbdhg/engagehf-models";
+import { FhirQuestionnaire } from "@stanfordbdhg/engagehf-models";
 import {
   QuestionnaireId,
   QuestionnaireLinkId,
 } from "../../services/seeding/staticData/questionnaireFactory/questionnaireLinkIds.js";
 
-export function mockQuestionnaire(): FHIRQuestionnaire {
-  return new FHIRQuestionnaire({
+export function mockQuestionnaire(): FhirQuestionnaire {
+  return new FhirQuestionnaire({
     resourceType: "Questionnaire",
     title: "KCCQ-12",
     language: "en-US",

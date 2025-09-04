@@ -9,8 +9,8 @@
 import {
   CodingSystem,
   FHIRExtensionUrl,
-  FHIRMedication,
-  FHIRMedicationRequest,
+  FhirMedication,
+  FhirMedicationRequest,
   type MedicationClass,
   optionalish,
   QuantityUnit,
@@ -70,11 +70,11 @@ export class RxNormService {
     medicationClasses: Map<string, MedicationClass>,
     specification: MedicationClassSpecification[],
   ): Promise<{
-    medications: Record<string, FHIRMedication>;
-    drugs: Record<string, Record<string, FHIRMedication>>;
+    medications: Record<string, FhirMedication>;
+    drugs: Record<string, Record<string, FhirMedication>>;
   }> {
-    const medications: Record<string, FHIRMedication> = {};
-    const drugs: Record<string, Record<string, FHIRMedication>> = {};
+    const medications: Record<string, FhirMedication> = {};
+    const drugs: Record<string, Record<string, FhirMedication>> = {};
 
     for (const medicationClass of specification) {
       logger.debug(`Processing medication class ${medicationClass.key}...`);
@@ -137,8 +137,8 @@ export class RxNormService {
                   ingredients,
                   medication.fallbackTerms?.[drug.rxcui] ?? {},
                 );
-                if (fhirDrug.data.id) {
-                  drugs[medication.code][fhirDrug.data.id] = fhirDrug;
+                if (fhirDrug.value.id) {
+                  drugs[medication.code][fhirDrug.value.id] = fhirDrug;
                 }
               } catch (error) {
                 logger.error(
@@ -155,7 +155,7 @@ export class RxNormService {
           throw error;
         }
 
-        const fhirMedication = this.buildFHIRMedication(
+        const fhirMedication = this.buildFhirMedication(
           medication.code,
           medicationName,
           medication.brandNames,
@@ -175,7 +175,7 @@ export class RxNormService {
 
   // Helpers - Build
 
-  private buildFHIRMedication(
+  private buildFhirMedication(
     rxcui: string,
     name: string,
     brandNames: string[],
@@ -184,8 +184,8 @@ export class RxNormService {
     ingredients: Array<{ rxcui: string; name: string }>,
     minimumDailyDose: MedicationDailyDoseSpecification | undefined,
     targetDailyDose: MedicationDailyDoseSpecification | undefined,
-    drugs: Record<string, FHIRMedication>,
-  ): FHIRMedication {
+    drugs: Record<string, FhirMedication>,
+  ): FhirMedication {
     const containedResources: FhirResource[] = [];
     const extensions: Extension[] = [];
     if (medicationClassId) {
@@ -201,7 +201,7 @@ export class RxNormService {
     if (minimumDailyDose) {
       const containedId = "minimumDailyDose";
       const containedDisplay =
-        drugs[minimumDailyDose.drug].data.code?.coding?.at(0)?.display;
+        drugs[minimumDailyDose.drug].value.code?.coding?.at(0)?.display;
       extensions.push({
         url: FHIRExtensionUrl.minimumDailyDose,
         valueReference: {
@@ -210,12 +210,12 @@ export class RxNormService {
         },
       });
       containedResources.push(
-        FHIRMedicationRequest.create({
+        FhirMedicationRequest.create({
           id: containedId,
           medicationReference: `medications/${rxcui}/drugs/${minimumDailyDose.drug}`,
           medicationReferenceDisplay: containedDisplay,
           extension: [
-            ...(drugs[minimumDailyDose.drug].data.ingredient ?? []).map(
+            ...(drugs[minimumDailyDose.drug].value.ingredient ?? []).map(
               (ingredient) => {
                 const value =
                   QuantityUnit.mg.valueOf(ingredient.strength?.numerator) ?? 0;
@@ -233,13 +233,13 @@ export class RxNormService {
           ],
           frequencyPerDay: minimumDailyDose.frequency,
           quantity: minimumDailyDose.quantity,
-        }).data,
+        }).value,
       );
     }
     if (targetDailyDose) {
       const containedId = `targetDailyDose`;
       const containedDisplay =
-        drugs[targetDailyDose.drug].data.code?.coding?.at(0)?.display;
+        drugs[targetDailyDose.drug].value.code?.coding?.at(0)?.display;
       extensions.push({
         url: FHIRExtensionUrl.targetDailyDose,
         valueReference: {
@@ -248,12 +248,12 @@ export class RxNormService {
         },
       });
       containedResources.push(
-        FHIRMedicationRequest.create({
+        FhirMedicationRequest.create({
           id: containedId,
           medicationReference: `medications/${rxcui}/drugs/${targetDailyDose.drug}`,
           medicationReferenceDisplay: containedDisplay,
           extension: [
-            ...(drugs[targetDailyDose.drug].data.ingredient ?? []).map(
+            ...(drugs[targetDailyDose.drug].value.ingredient ?? []).map(
               (ingredient) => {
                 const value =
                   QuantityUnit.mg.valueOf(ingredient.strength?.numerator) ?? 0;
@@ -269,7 +269,7 @@ export class RxNormService {
           ],
           frequencyPerDay: targetDailyDose.frequency,
           quantity: targetDailyDose.quantity,
-        }).data,
+        }).value,
       );
     }
 
@@ -280,7 +280,7 @@ export class RxNormService {
       });
     }
 
-    return new FHIRMedication({
+    return new FhirMedication({
       resourceType: "Medication",
       id: rxcui,
       contained: containedResources,
@@ -315,7 +315,7 @@ export class RxNormService {
     rxcui: string,
     ingredients: Array<{ rxcui: string; name: string }>,
     fallbackTerms: RxTermInfo | undefined,
-  ): Promise<FHIRMedication> {
+  ): Promise<FhirMedication> {
     let rxTermInfo = await this.api.getAllRxTermInfo(rxcui);
     if (rxTermInfo === undefined || Object.entries(rxTermInfo).length === 0) {
       logger.warn(
@@ -336,7 +336,7 @@ export class RxNormService {
     if (!display) {
       throw new Error(`Missing display name for RXCUI ${rxcui}.`);
     }
-    return new FHIRMedication({
+    return new FhirMedication({
       resourceType: "Medication",
       id: rxcui,
       code: {

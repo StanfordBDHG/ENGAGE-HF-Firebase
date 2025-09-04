@@ -6,7 +6,21 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { type Questionnaire } from "fhir/r4b.js";
-import { FHIRResource } from "./fhirResource.js";
+import {
+  FhirQuestionnaire as BaseFhirQuestionnaire,
+  questionnaireSchema,
+} from "@stanfordspezi/spezi-firebase-fhir";
 
-export class FHIRQuestionnaire extends FHIRResource<Questionnaire> {}
+export class FhirQuestionnaire extends BaseFhirQuestionnaire {
+  // Static Properties
+
+  static readonly schema = questionnaireSchema.transform(
+    (value) => new FhirQuestionnaire(value),
+  );
+
+  // Static Functions
+
+  static parse(value: unknown): FhirQuestionnaire {
+    return new FhirQuestionnaire(questionnaireSchema.parse(value));
+  }
+}

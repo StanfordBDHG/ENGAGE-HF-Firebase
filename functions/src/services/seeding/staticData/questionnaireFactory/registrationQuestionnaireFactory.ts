@@ -8,8 +8,8 @@
 
 import {
   UserSex,
-  type FHIRMedication,
-  type FHIRQuestionnaire,
+  type FhirMedication,
+  type FhirQuestionnaire,
 } from "@stanfordbdhg/engagehf-models";
 import { QuestionnaireFactory } from "./questionnaireFactory.js";
 import {
@@ -18,12 +18,12 @@ import {
 } from "./questionnaireLinkIds.js";
 
 interface RegistrationQuestionnaireFactoryInput {
-  medications: Record<string, FHIRMedication>;
-  drugs: Record<string, Record<string, FHIRMedication>>;
+  medications: Record<string, FhirMedication>;
+  drugs: Record<string, Record<string, FhirMedication>>;
 }
 
 export class RegistrationQuestionnaireFactory extends QuestionnaireFactory<RegistrationQuestionnaireFactoryInput> {
-  create(input: RegistrationQuestionnaireFactoryInput): FHIRQuestionnaire {
+  create(input: RegistrationQuestionnaireFactoryInput): FhirQuestionnaire {
     return this.questionnaire({
       id: QuestionnaireId.registration,
       title: "Registration Survey",

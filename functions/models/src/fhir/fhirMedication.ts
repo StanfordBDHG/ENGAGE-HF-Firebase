@@ -7,22 +7,33 @@
 //
 
 import {
-  type Medication,
-  type MedicationRequest,
-  type Reference,
-} from "fhir/r4b.js";
-import { FHIRMedicationRequest } from "./fhirMedicationRequest.js";
-import { FHIRResource } from "./fhirResource.js";
+  FhirMedication as BaseFhirMedication,
+  medicationSchema,
+} from "@stanfordspezi/spezi-firebase-fhir";
+import { type MedicationRequest, type Reference } from "fhir/r4b.js";
+import { FhirMedicationRequest } from "./fhirMedicationRequest.js";
 import { CodingSystem, FHIRExtensionUrl } from "../codes/codes.js";
 import { QuantityUnit } from "../codes/quantityUnit.js";
 
-export class FHIRMedication extends FHIRResource<Medication> {
+export class FhirMedication extends BaseFhirMedication {
+  // Static Properties
+
+  static readonly schema = medicationSchema.transform(
+    (value) => new FhirMedication(value),
+  );
+
+  // Static Functions
+
+  static parse(value: unknown): FhirMedication {
+    return new FhirMedication(medicationSchema.parse(value));
+  }
+
   // Computed Properties
 
   get displayName(): string | undefined {
     return (
-      this.data.code?.text ??
-      this.data.code?.coding?.find(
+      this.value.code?.text ??
+      this.value.code?.coding?.find(
         (coding) => coding.system === CodingSystem.rxNorm,
       )?.display
     );
@@ -50,7 +61,7 @@ export class FHIRMedication extends FHIRResource<Medication> {
   get minimumDailyDose(): number[] | undefined {
     const request = this.minimumDailyDoseRequest;
     if (!request) return undefined;
-    const requestResource = new FHIRMedicationRequest(request);
+    const requestResource = new FhirMedicationRequest(request);
     return requestResource
       .extensionsWithUrl(FHIRExtensionUrl.totalDailyDose)
       .map((extension) => extension.valueQuantity)
@@ -71,7 +82,7 @@ export class FHIRMedication extends FHIRResource<Medication> {
   get targetDailyDose(): number[] | undefined {
     const request = this.targetDailyDoseRequest;
     if (!request) return undefined;
-    const requestResource = new FHIRMedicationRequest(request);
+    const requestResource = new FhirMedicationRequest(request);
     const result = requestResource
       .extensionsWithUrl(FHIRExtensionUrl.totalDailyDose)
       .map((extension) => extension.valueQuantity)
@@ -83,7 +94,7 @@ export class FHIRMedication extends FHIRResource<Medication> {
   }
 
   get rxNormCode(): string | undefined {
-    return this.data.code?.coding?.find(
+    return this.value.code?.coding?.find(
       (coding) => coding.system === CodingSystem.rxNorm,
     )?.code;
   }

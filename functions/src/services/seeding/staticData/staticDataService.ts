@@ -8,10 +8,8 @@
 
 import {
   CachingStrategy,
-  type FHIRMedication,
-  fhirMedicationConverter,
-  type FHIRQuestionnaire,
-  fhirQuestionnaireConverter,
+  FhirMedication,
+  FhirQuestionnaire,
   localizedTextConverter,
   type MedicationClass,
   medicationClassConverter,
@@ -162,29 +160,25 @@ export class StaticDataService extends SeedingService {
 
   private async retrieveQuestionnaires(
     strategy: CachingStrategy,
-  ): Promise<Record<string, FHIRQuestionnaire>> {
+  ): Promise<Record<string, FhirQuestionnaire>> {
     const questionnairesFile = "questionnaires.json";
 
     return this.cache(
       strategy,
-      () =>
-        this.readJSONRecord(
-          questionnairesFile,
-          fhirQuestionnaireConverter.schema,
-        ),
+      () => this.readJSONRecord(questionnairesFile, FhirQuestionnaire.schema),
       async () => this.generateQuestionnaires(),
       (result) =>
         this.writeJSON(
           "questionnaires.json",
           Object.fromEntries(
-            Object.entries(result).map(([key, value]) => [key, value.data]),
+            Object.entries(result).map(([key, value]) => [key, value.value]),
           ),
         ),
     );
   }
 
   private async generateQuestionnaires(): Promise<
-    Record<string, FHIRQuestionnaire>
+    Record<string, FhirQuestionnaire>
   > {
     const { medications, drugs } = await this.retrieveMedicationsInformation(
       CachingStrategy.expectCache,
@@ -220,8 +214,8 @@ export class StaticDataService extends SeedingService {
   private async retrieveMedicationsInformation(
     strategy: CachingStrategy,
   ): Promise<{
-    medications: Record<string, FHIRMedication>;
-    drugs: Record<string, Record<string, FHIRMedication>>;
+    medications: Record<string, FhirMedication>;
+    drugs: Record<string, Record<string, FhirMedication>>;
   }> {
     const medicationsFile = "medications.json";
     const drugsFile = "drugs.json";
@@ -231,11 +225,11 @@ export class StaticDataService extends SeedingService {
       () => ({
         medications: this.readJSONRecord(
           medicationsFile,
-          fhirMedicationConverter.schema,
+          FhirMedication.schema,
         ),
         drugs: this.readJSONRecord(
           drugsFile,
-          z.record(z.string(), fhirMedicationConverter.schema),
+          z.record(z.string(), FhirMedication.schema),
         ),
       }),
       async () => {
@@ -262,7 +256,7 @@ export class StaticDataService extends SeedingService {
           Object.fromEntries(
             Object.entries(result.medications).map(([key, value]) => [
               key,
-              value.data,
+              value.value,
             ]),
           ),
         );
@@ -274,7 +268,7 @@ export class StaticDataService extends SeedingService {
               Object.fromEntries(
                 Object.entries(value).map(([drugKey, drugValue]) => [
                   drugKey,
-                  drugValue.data,
+                  drugValue.value,
                 ]),
               ),
             ]),

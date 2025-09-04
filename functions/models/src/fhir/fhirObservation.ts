@@ -6,14 +6,21 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { type Coding, type Observation, type Reference } from "fhir/r4b.js";
-import { FHIRResource } from "./fhirResource.js";
+import {
+  FhirObservation as BaseFhirObservation,
+  observationSchema,
+} from "@stanfordspezi/spezi-firebase-fhir";
+import { type Coding, type Reference } from "fhir/r4b.js";
 import { CodingSystem, LoincCode } from "../codes/codes.js";
 import { QuantityUnit } from "../codes/quantityUnit.js";
 import { type ObservationQuantity } from "../types/observationQuantity.js";
 
-export class FHIRObservation extends FHIRResource<Observation> {
-  // Static Functions
+export class FhirObservation extends BaseFhirObservation {
+  // Static Properties
+
+  static readonly schema = observationSchema.transform(
+    (value) => new FhirObservation(value),
+  );
 
   private static readonly loincDisplay = new Map<LoincCode, string>([
     [
@@ -33,13 +40,15 @@ export class FHIRObservation extends FHIRResource<Observation> {
     [LoincCode.potassium, "Potassium [Moles/volume] in Blood"],
   ]);
 
+  // Static Functions
+
   static createBloodPressure(input: {
     id: string;
     date: Date;
     systolic: number;
     diastolic: number;
-  }): FHIRObservation {
-    return new FHIRObservation({
+  }): FhirObservation {
+    return new FhirObservation({
       resourceType: "Observation",
       id: input.id,
       status: "final",
@@ -104,8 +113,8 @@ export class FHIRObservation extends FHIRResource<Observation> {
     unit: QuantityUnit;
     code: LoincCode;
     derivedFrom?: Reference[];
-  }): FHIRObservation {
-    return new FHIRObservation({
+  }): FhirObservation {
+    return new FhirObservation({
       resourceType: "Observation",
       id: input.id,
       status: "final",
@@ -128,6 +137,10 @@ export class FHIRObservation extends FHIRResource<Observation> {
       effectiveDateTime: input.date.toISOString(),
       derivedFrom: input.derivedFrom,
     });
+  }
+
+  static parse(value: unknown): FhirObservation {
+    return new FhirObservation(observationSchema.parse(value));
   }
 
   // Computed Properties
@@ -213,16 +226,16 @@ export class FHIRObservation extends FHIRResource<Observation> {
     } & Coding,
   ): ObservationQuantity[] {
     const result: ObservationQuantity[] = [];
-    if (!this.containsCoding(this.data.code, [options])) return result;
+    if (!this.containsCoding(this.value.code, [options])) return result;
     const date =
-      this.data.effectiveDateTime ??
-      this.data.effectiveInstant ??
-      this.data.effectivePeriod?.start ??
-      this.data.effectivePeriod?.end;
+      this.value.effectiveDateTime ??
+      this.value.effectiveInstant ??
+      this.value.effectivePeriod?.start ??
+      this.value.effectivePeriod?.end;
     if (!date) return result;
 
     if (options.component) {
-      for (const component of this.data.component ?? []) {
+      for (const component of this.value.component ?? []) {
         if (!this.containsCoding(component.code, [options.component])) continue;
         const value = options.unit.valueOf(component.valueQuantity);
         if (!value) continue;
@@ -233,7 +246,7 @@ export class FHIRObservation extends FHIRResource<Observation> {
         });
       }
     } else {
-      const value = options.unit.valueOf(this.data.valueQuantity);
+      const value = options.unit.valueOf(this.value.valueQuantity);
       if (!value) return result;
       result.push({ date: new Date(date), value: value, unit: options.unit });
     }

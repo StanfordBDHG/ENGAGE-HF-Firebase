@@ -6,79 +6,65 @@
 // SPDX-License-Identifier: MIT
 //
 
-import {
-  allergyIntoleranceSchema,
-  appointmentSchema,
-  medicationSchema,
-  medicationRequestSchema,
-  observationSchema,
-  questionnaireSchema,
-  questionnaireResponseSchema,
-} from "@stanfordspezi/spezi-firebase-fhir";
-import { FHIRAllergyIntolerance } from "./fhirAllergyIntolerance.js";
-import { FHIRAppointment } from "./fhirAppointment.js";
-import { FHIRMedication } from "./fhirMedication.js";
-import { FHIRMedicationRequest } from "./fhirMedicationRequest.js";
-import { FHIRObservation } from "./fhirObservation.js";
-import { FHIRQuestionnaire } from "./fhirQuestionnaire.js";
-import { FHIRQuestionnaireResponse } from "./fhirQuestionnaireResponse.js";
-import { FHIRSchemaConverter } from "../helpers/fhirSchemaConverter.js";
+import { FhirAllergyIntolerance } from "./fhirAllergyIntolerance.js";
+import { FhirAppointment } from "./fhirAppointment.js";
+import { FhirMedication } from "./fhirMedication.js";
+import { FhirMedicationRequest } from "./fhirMedicationRequest.js";
+import { FhirObservation } from "./fhirObservation.js";
+import { FhirQuestionnaire } from "./fhirQuestionnaire.js";
+import { FhirQuestionnaireResponse } from "./fhirQuestionnaireResponse.js";
+import { FhirSchemaConverter } from "../helpers/fhirSchemaConverter.js";
 
 export const fhirAllergyIntoleranceConverter =
-  new FHIRSchemaConverter<FHIRAllergyIntolerance>(
-    allergyIntoleranceSchema.transform(
-      (data) => new FHIRAllergyIntolerance(data),
-    ),
-    {
-      nullProperties: [],
-    },
-  );
-export const fhirAppointmentConverter =
-  new FHIRSchemaConverter<FHIRAppointment>(
-    appointmentSchema.transform((data) => new FHIRAppointment(data)),
+  new FhirSchemaConverter<FhirAllergyIntolerance>(
+    (data) => FhirAllergyIntolerance.parse(data),
     {
       nullProperties: [],
     },
   );
 
-export const fhirMedicationConverter = new FHIRSchemaConverter<FHIRMedication>(
-  medicationSchema.transform((data) => new FHIRMedication(data)),
+export const fhirAppointmentConverter =
+  new FhirSchemaConverter<FhirAppointment>(
+    (data) => FhirAppointment.parse(data),
+    {
+      nullProperties: [],
+    },
+  );
+
+export const fhirMedicationConverter = new FhirSchemaConverter<FhirMedication>(
+  (data) => FhirMedication.parse(data),
   {
     nullProperties: [],
   },
 );
 
 export const fhirMedicationRequestConverter =
-  new FHIRSchemaConverter<FHIRMedicationRequest>(
-    medicationRequestSchema.transform(
-      (data) => new FHIRMedicationRequest(data),
-    ),
+  new FhirSchemaConverter<FhirMedicationRequest>(
+    (data) => FhirMedicationRequest.parse(data),
     {
       nullProperties: [],
     },
   );
 
 export const fhirObservationConverter =
-  new FHIRSchemaConverter<FHIRObservation>(
-    observationSchema.transform((data) => new FHIRObservation(data)),
+  new FhirSchemaConverter<FhirObservation>(
+    (data) => FhirObservation.parse(data),
     {
       nullProperties: [],
     },
   );
 
 export const fhirQuestionnaireConverter =
-  new FHIRSchemaConverter<FHIRQuestionnaire>(
-    questionnaireSchema.transform((data) => new FHIRQuestionnaire(data)),
+  new FhirSchemaConverter<FhirQuestionnaire>(
+    (data) => FhirQuestionnaire.parse(data),
     {
       nullProperties: [],
     },
   );
 
 export const fhirQuestionnaireResponseConverter =
-  new FHIRSchemaConverter<FHIRQuestionnaireResponse>(
-    questionnaireResponseSchema.transform(
-      (data) => new FHIRQuestionnaireResponse(data),
-    ),
+  new FhirSchemaConverter<FhirQuestionnaireResponse>(
+    (data) => FhirQuestionnaireResponse.parse(data),
     {
       nullProperties: [],
     },

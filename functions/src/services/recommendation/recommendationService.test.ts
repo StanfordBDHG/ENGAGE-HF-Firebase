@@ -9,8 +9,8 @@
 import {
   CachingStrategy,
   DrugReference,
-  FHIRAllergyIntolerance,
-  FHIRMedicationRequest,
+  FhirAllergyIntolerance,
+  FhirMedicationRequest,
   MedicationReference,
   UserMedicationRecommendationType,
 } from "@stanfordbdhg/engagehf-models";
@@ -138,145 +138,145 @@ describe("RecommendationService", () => {
 
 function getMedicationRequest(
   value: string,
-): FHIRMedicationRequest | undefined {
+): FhirMedicationRequest | undefined {
   switch (value.trim().toLowerCase()) {
     case "none":
       return undefined;
     case "bisoprolol 2.5mg daily":
-      return FHIRMedicationRequest.create({
+      return FhirMedicationRequest.create({
         medicationReference: DrugReference.bisoprolol5,
         frequencyPerDay: 1,
         quantity: 0.5,
       });
     case "bisoprolol 10mg daily":
-      return FHIRMedicationRequest.create({
+      return FhirMedicationRequest.create({
         medicationReference: DrugReference.bisoprolol5,
         frequencyPerDay: 2,
         quantity: 1,
       });
     case "carvedilol 6.25 daily (3.125 bid)":
-      return FHIRMedicationRequest.create({
+      return FhirMedicationRequest.create({
         medicationReference: DrugReference.carvedilol3_125,
         frequencyPerDay: 2,
         quantity: 1,
       });
     case "carvedilol 50mg daily (25mg twice daily)":
-      return FHIRMedicationRequest.create({
+      return FhirMedicationRequest.create({
         medicationReference: DrugReference.carvedilol25,
         frequencyPerDay: 2,
         quantity: 1,
       });
     case "carvedilol 50mg   daily":
     case "carvedilol 50mg  daily":
-      return FHIRMedicationRequest.create({
+      return FhirMedicationRequest.create({
         medicationReference: DrugReference.carvedilol25,
         frequencyPerDay: 1,
         quantity: 2,
       });
     case "dapagliflozin 5mg daily":
-      return FHIRMedicationRequest.create({
+      return FhirMedicationRequest.create({
         medicationReference: DrugReference.dapagliflozin5,
         frequencyPerDay: 1,
         quantity: 1,
       });
     case "dapagliflozin 10mg daily":
-      return FHIRMedicationRequest.create({
+      return FhirMedicationRequest.create({
         medicationReference: DrugReference.dapagliflozin5,
         frequencyPerDay: 1,
         quantity: 2,
       });
     case "empagliflozin 5mg daily":
-      return FHIRMedicationRequest.create({
+      return FhirMedicationRequest.create({
         medicationReference: DrugReference.empagliflozin10,
         frequencyPerDay: 1,
         quantity: 0.5,
       });
     case "empagliflozin 10mg daily":
-      return FHIRMedicationRequest.create({
+      return FhirMedicationRequest.create({
         medicationReference: DrugReference.empagliflozin10,
         frequencyPerDay: 1,
         quantity: 1,
       });
     case "eplerenone 25mg daily":
-      return FHIRMedicationRequest.create({
+      return FhirMedicationRequest.create({
         medicationReference: DrugReference.eplerenone25,
         frequencyPerDay: 1,
         quantity: 1,
       });
     case "eplerenone 50mg daily":
-      return FHIRMedicationRequest.create({
+      return FhirMedicationRequest.create({
         medicationReference: DrugReference.eplerenone25,
         frequencyPerDay: 1,
         quantity: 2,
       });
     case "lisinopril 5mg daily":
-      return FHIRMedicationRequest.create({
+      return FhirMedicationRequest.create({
         medicationReference: DrugReference.lisinopril5,
         frequencyPerDay: 1,
         quantity: 1,
       });
     case "lisinopril 40mg daily":
-      return FHIRMedicationRequest.create({
+      return FhirMedicationRequest.create({
         medicationReference: DrugReference.lisinopril5,
         frequencyPerDay: 4,
         quantity: 2,
       });
     case "losartan 25mg daily":
-      return FHIRMedicationRequest.create({
+      return FhirMedicationRequest.create({
         medicationReference: DrugReference.losartan25,
         frequencyPerDay: 1,
         quantity: 1,
       });
     case "losartan 150mg daily":
-      return FHIRMedicationRequest.create({
+      return FhirMedicationRequest.create({
         medicationReference: DrugReference.losartan100,
         frequencyPerDay: 1,
         quantity: 1.5,
       });
     case "metoprolol 12.5mg daily":
-      return FHIRMedicationRequest.create({
+      return FhirMedicationRequest.create({
         medicationReference: DrugReference.metoprololSuccinate25Tablet,
         frequencyPerDay: 1,
         quantity: 0.5,
       });
     case "metoprolol 200mg daily":
-      return FHIRMedicationRequest.create({
+      return FhirMedicationRequest.create({
         medicationReference: DrugReference.metoprololSuccinate25Tablet,
         frequencyPerDay: 2,
         quantity: 4,
       });
     case "spironolactone 12.5 daily":
-      return FHIRMedicationRequest.create({
+      return FhirMedicationRequest.create({
         medicationReference: DrugReference.spironolactone25,
         frequencyPerDay: 1,
         quantity: 0.5,
       });
     case "spironolactone 25mg daily":
-      return FHIRMedicationRequest.create({
+      return FhirMedicationRequest.create({
         medicationReference: DrugReference.spironolactone25,
         frequencyPerDay: 1,
         quantity: 1,
       });
     case "sacubitril-valsartan 100mg daily (24-26mg twice daily)":
-      return FHIRMedicationRequest.create({
+      return FhirMedicationRequest.create({
         medicationReference: DrugReference.sacubitrilValsartan24_26,
         frequencyPerDay: 2,
         quantity: 1,
       });
     case "sacubitril-valsartan 200mg daily (49-51mg twice daily)":
-      return FHIRMedicationRequest.create({
+      return FhirMedicationRequest.create({
         medicationReference: DrugReference.sacubitrilValsartan49_51,
         frequencyPerDay: 2,
         quantity: 1,
       });
     case "sacubitril-valsartan 400mg daily (97-103mg twice daily)":
-      return FHIRMedicationRequest.create({
+      return FhirMedicationRequest.create({
         medicationReference: DrugReference.sacubitrilValsartan97_103,
         frequencyPerDay: 1,
         quantity: 2,
       });
     case "valsartan 40mg":
-      return FHIRMedicationRequest.create({
+      return FhirMedicationRequest.create({
         medicationReference: DrugReference.valsartan40,
         frequencyPerDay: 1,
         quantity: 1,
@@ -289,13 +289,13 @@ function getMedicationRequest(
 function getContraindications(
   field: string,
   type: AllergyIntolerance["type"] | undefined,
-): FHIRAllergyIntolerance[] {
+): FhirAllergyIntolerance[] {
   switch (field.trim().toLowerCase().split(" ").join("")) {
     case "none":
       return [];
     case "bisoprolol":
       return [
-        FHIRAllergyIntolerance.create({
+        FhirAllergyIntolerance.create({
           reference: MedicationReference.bisoprolol,
           type,
           criticality: "low",
@@ -303,7 +303,7 @@ function getContraindications(
       ];
     case "carvedilol":
       return [
-        FHIRAllergyIntolerance.create({
+        FhirAllergyIntolerance.create({
           reference: MedicationReference.carvedilol,
           type,
           criticality: "low",
@@ -311,7 +311,7 @@ function getContraindications(
       ];
     case "dapagliflozin":
       return [
-        FHIRAllergyIntolerance.create({
+        FhirAllergyIntolerance.create({
           reference: MedicationReference.dapagliflozin,
           type,
           criticality: "low",
@@ -319,7 +319,7 @@ function getContraindications(
       ];
     case "empagliflozin":
       return [
-        FHIRAllergyIntolerance.create({
+        FhirAllergyIntolerance.create({
           reference: MedicationReference.empagliflozin,
           type,
           criticality: "low",
@@ -327,7 +327,7 @@ function getContraindications(
       ];
     case "eplerenone":
       return [
-        FHIRAllergyIntolerance.create({
+        FhirAllergyIntolerance.create({
           reference: MedicationReference.eplerenone,
           type,
           criticality: "low",
@@ -335,7 +335,7 @@ function getContraindications(
       ];
     case "lisinopril":
       return [
-        FHIRAllergyIntolerance.create({
+        FhirAllergyIntolerance.create({
           reference: MedicationReference.lisinopril,
           type,
           criticality: "low",
@@ -343,7 +343,7 @@ function getContraindications(
       ];
     case "lisinopril-anaphylaxis":
       return [
-        FHIRAllergyIntolerance.create({
+        FhirAllergyIntolerance.create({
           reference: MedicationReference.lisinopril,
           type,
           criticality: "high",
@@ -351,7 +351,7 @@ function getContraindications(
       ];
     case "losartan":
       return [
-        FHIRAllergyIntolerance.create({
+        FhirAllergyIntolerance.create({
           reference: MedicationReference.losartan,
           type,
           criticality: "low",
@@ -359,7 +359,7 @@ function getContraindications(
       ];
     case "metoprolol":
       return [
-        FHIRAllergyIntolerance.create({
+        FhirAllergyIntolerance.create({
           reference: MedicationReference.metoprololSuccinate,
           type,
           criticality: "high",
@@ -367,7 +367,7 @@ function getContraindications(
       ];
     case "sacubitril-valsartan":
       return [
-        FHIRAllergyIntolerance.create({
+        FhirAllergyIntolerance.create({
           reference: MedicationReference.sacubitrilValsartan,
           type,
           criticality: "low",
@@ -375,7 +375,7 @@ function getContraindications(
       ];
     case "sotagliflozin":
       return [
-        FHIRAllergyIntolerance.create({
+        FhirAllergyIntolerance.create({
           reference: MedicationReference.sotagliflozin,
           type,
           criticality: "low",
@@ -383,7 +383,7 @@ function getContraindications(
       ];
     case "spironolactone":
       return [
-        FHIRAllergyIntolerance.create({
+        FhirAllergyIntolerance.create({
           reference: MedicationReference.spironolactone,
           type,
           criticality: "low",
@@ -391,7 +391,7 @@ function getContraindications(
       ];
     case "valsartan":
       return [
-        FHIRAllergyIntolerance.create({
+        FhirAllergyIntolerance.create({
           reference: MedicationReference.valsartan,
           type,
           criticality: "low",

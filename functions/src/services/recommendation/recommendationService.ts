@@ -7,8 +7,8 @@
 //
 
 import {
-  type FHIRAllergyIntolerance,
-  type FHIRMedication,
+  type FhirAllergyIntolerance,
+  type FhirMedication,
   LocalizedText,
   type MedicationReference,
   type ObservationQuantity,
@@ -30,7 +30,7 @@ import { type MedicationService } from "../medication/medicationService.js";
 
 export interface RecommendationInput {
   requests: MedicationRequestContext[];
-  contraindications: FHIRAllergyIntolerance[];
+  contraindications: FhirAllergyIntolerance[];
   vitals: RecommendationVitals;
   latestDizzinessScore?: number;
 }
@@ -143,12 +143,12 @@ export class RecommendationService {
       minimumDailyDoseRequest && minimumDailyDoseDrugReference ?
         this.doseSchedule(
           minimumDailyDoseRequest,
-          minimumDailyDoseDrugReference.data,
+          minimumDailyDoseDrugReference.value,
         )
       : [];
 
     const currentDailyDoseSchedule = output.currentMedication.flatMap(
-      (context) => this.doseSchedule(context.request.data, context.drug.data),
+      (context) => this.doseSchedule(context.request.value, context.drug.value),
     );
 
     const targetDailyDoseRequest = medication?.targetDailyDoseRequest;
@@ -164,7 +164,7 @@ export class RecommendationService {
       targetDailyDoseRequest && targetDailyDoseDrugReference ?
         this.doseSchedule(
           targetDailyDoseRequest,
-          targetDailyDoseDrugReference.data,
+          targetDailyDoseDrugReference.value,
         )
       : [];
 
@@ -227,7 +227,7 @@ export class RecommendationService {
 
   private recommendationDescription(
     output: RecommendationOutput,
-    recommendedMedication: FHIRMedication | undefined,
+    recommendedMedication: FhirMedication | undefined,
   ): LocalizedText {
     switch (output.type) {
       case UserMedicationRecommendationType.improvementAvailable: {

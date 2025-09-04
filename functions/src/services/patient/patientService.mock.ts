@@ -9,10 +9,10 @@
 import {
   advanceDateByDays,
   DrugReference,
-  type FHIRAllergyIntolerance,
-  FHIRAppointment,
-  FHIRMedicationRequest,
-  type FHIRQuestionnaireResponse,
+  type FhirAllergyIntolerance,
+  FhirAppointment,
+  FhirMedicationRequest,
+  type FhirQuestionnaireResponse,
   type LoincCode,
   type ObservationQuantity,
   QuantityUnit,
@@ -45,22 +45,22 @@ export class MockPatientService implements PatientService {
   async getEveryAppoinment(
     fromDate: Date,
     toDate: Date,
-  ): Promise<Array<Document<FHIRAppointment>>> {
+  ): Promise<Array<Document<FhirAppointment>>> {
     return [];
   }
   async getAppointments(
     userId: string,
-  ): Promise<Array<Document<FHIRAppointment>>> {
+  ): Promise<Array<Document<FhirAppointment>>> {
     return [];
   }
   async getNextAppointment(
     userId: string,
-  ): Promise<Document<FHIRAppointment> | undefined> {
+  ): Promise<Document<FhirAppointment> | undefined> {
     return {
       id: "123",
       lastUpdate: new Date(),
       path: `users/${userId}/appointments/123`,
-      content: FHIRAppointment.create({
+      content: FhirAppointment.create({
         userId,
         status: "booked",
         created: advanceDateByDays(this.startDate, -10),
@@ -72,7 +72,7 @@ export class MockPatientService implements PatientService {
 
   async createAppointment(
     userId: string,
-    appointment: FHIRAppointment,
+    appointment: FhirAppointment,
   ): Promise<void> {
     return;
   }
@@ -81,7 +81,7 @@ export class MockPatientService implements PatientService {
 
   async getContraindications(
     userId: string,
-  ): Promise<Array<Document<FHIRAllergyIntolerance>>> {
+  ): Promise<Array<Document<FhirAllergyIntolerance>>> {
     return [];
   }
 
@@ -89,9 +89,9 @@ export class MockPatientService implements PatientService {
 
   async getMedicationRequests(
     userId: string,
-  ): Promise<Array<Document<FHIRMedicationRequest>>> {
-    const values: FHIRMedicationRequest[] = [
-      FHIRMedicationRequest.create({
+  ): Promise<Array<Document<FhirMedicationRequest>>> {
+    const values: FhirMedicationRequest[] = [
+      FhirMedicationRequest.create({
         medicationReference: DrugReference.carvedilol3_125,
         frequencyPerDay: 1,
         quantity: 2,
@@ -107,8 +107,8 @@ export class MockPatientService implements PatientService {
 
   async replaceMedicationRequests(
     userId: string,
-    values: FHIRMedicationRequest[],
-    keepUnchanged?: (request: Document<FHIRMedicationRequest>) => boolean,
+    values: FhirMedicationRequest[],
+    keepUnchanged?: (request: Document<FhirMedicationRequest>) => boolean,
   ): Promise<void> {
     return;
   }
@@ -315,7 +315,7 @@ export class MockPatientService implements PatientService {
 
   async getQuestionnaireResponses(
     userId: string,
-  ): Promise<Array<Document<FHIRQuestionnaireResponse>>> {
+  ): Promise<Array<Document<FhirQuestionnaireResponse>>> {
     return [mockQuestionnaireResponse()].map((value, index) => ({
       id: index.toString(),
       lastUpdate: new Date(),

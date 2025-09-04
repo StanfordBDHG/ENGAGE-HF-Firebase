@@ -7,8 +7,8 @@
 //
 
 import {
-  type FHIRMedication,
-  type FHIRMedicationRequest,
+  type FhirMedication,
+  type FhirMedicationRequest,
   type MedicationClass,
 } from "@stanfordbdhg/engagehf-models";
 import { type Reference } from "fhir/r4b.js";
@@ -19,7 +19,7 @@ export interface MedicationService {
   // Medication Request Context
 
   getContext(
-    request: Document<FHIRMedicationRequest>,
+    request: Document<FhirMedicationRequest>,
   ): Promise<MedicationRequestContext>;
 
   // Medication Classes
@@ -31,20 +31,20 @@ export interface MedicationService {
 
   // Medications
 
-  getMedications(): Promise<Array<Document<FHIRMedication>>>;
+  getMedications(): Promise<Array<Document<FhirMedication>>>;
 
   getMedication(
     medicationId: string,
-  ): Promise<Document<FHIRMedication> | undefined>;
+  ): Promise<Document<FhirMedication> | undefined>;
 
   // Drugs
 
-  getDrugs(medicationId: string): Promise<Array<Document<FHIRMedication>>>;
+  getDrugs(medicationId: string): Promise<Array<Document<FhirMedication>>>;
 
   getDrug(
     medicationId: string,
     drugId: string,
-  ): Promise<Document<FHIRMedication> | undefined>;
+  ): Promise<Document<FhirMedication> | undefined>;
 
   // References
 
@@ -54,5 +54,5 @@ export interface MedicationService {
 
   getReference(
     reference: Reference | undefined,
-  ): Promise<Document<FHIRMedication> | undefined>;
+  ): Promise<Document<FhirMedication> | undefined>;
 }

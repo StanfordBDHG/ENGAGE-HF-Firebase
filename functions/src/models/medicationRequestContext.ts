@@ -9,19 +9,19 @@
 import {
   MedicationClassReference,
   MedicationReference,
-  type FHIRMedication,
-  type FHIRMedicationRequest,
+  type FhirMedication,
+  type FhirMedicationRequest,
   type MedicationClass,
 } from "@stanfordbdhg/engagehf-models";
 import { type Reference } from "fhir/r4b.js";
 
 export interface MedicationRequestContext {
   lastUpdate: Date;
-  request: FHIRMedicationRequest;
+  request: FhirMedicationRequest;
   requestReference: Reference;
-  drug: FHIRMedication;
+  drug: FhirMedication;
   drugReference: Reference;
-  medication: FHIRMedication;
+  medication: FhirMedication;
   medicationReference: Reference;
   medicationClass: MedicationClass;
   medicationClassReference: Reference;

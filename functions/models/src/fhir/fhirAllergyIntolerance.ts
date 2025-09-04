@@ -6,12 +6,21 @@
 // SPDX-License-Identifier: MIT
 //
 
+import {
+  FhirAllergyIntolerance as BaseFhirAllergyIntolerance,
+  allergyIntoleranceSchema,
+} from "@stanfordspezi/spezi-firebase-fhir";
 import { type AllergyIntolerance } from "fhir/r4b.js";
-import { FHIRResource } from "./fhirResource.js";
 import { CodingSystem } from "../codes/codes.js";
 import { type MedicationReference } from "../codes/references.js";
 
-export class FHIRAllergyIntolerance extends FHIRResource<AllergyIntolerance> {
+export class FhirAllergyIntolerance extends BaseFhirAllergyIntolerance {
+  // Static Properties
+
+  static readonly schema = allergyIntoleranceSchema.transform(
+    (value) => new FhirAllergyIntolerance(value),
+  );
+
   // Static Functions
 
   static create(input: {
@@ -19,8 +28,8 @@ export class FHIRAllergyIntolerance extends FHIRResource<AllergyIntolerance> {
     criticality?: AllergyIntolerance["criticality"];
     reference: MedicationReference;
     userId?: string;
-  }): FHIRAllergyIntolerance {
-    return new FHIRAllergyIntolerance({
+  }): FhirAllergyIntolerance {
+    return new FhirAllergyIntolerance({
       resourceType: "AllergyIntolerance",
       patient: {
         reference: input.userId ? `users/${input.userId}` : undefined,
@@ -38,9 +47,13 @@ export class FHIRAllergyIntolerance extends FHIRResource<AllergyIntolerance> {
     });
   }
 
+  static parse(value: unknown): FhirAllergyIntolerance {
+    return new FhirAllergyIntolerance(allergyIntoleranceSchema.parse(value));
+  }
+
   // Computed Properties
 
   get rxNormCodes(): string[] {
-    return this.codes(this.data.code, { system: CodingSystem.rxNorm });
+    return this.codes(this.value.code, { system: CodingSystem.rxNorm });
   }
 }

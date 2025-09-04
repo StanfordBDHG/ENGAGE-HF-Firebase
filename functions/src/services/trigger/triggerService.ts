@@ -8,8 +8,7 @@
 
 import {
   advanceDateByDays,
-  type FHIRMedicationRequest,
-  type FHIRQuestionnaireResponse,
+  type FhirMedicationRequest,
   median,
   QuantityUnit,
   QuestionnaireReference,
@@ -26,7 +25,8 @@ import {
   Invitation,
   UserRegistration,
   advanceDateByHours,
-  type FHIRAppointment,
+  type FhirAppointment,
+  type FhirQuestionnaireResponse,
 } from "@stanfordbdhg/engagehf-models";
 import { logger } from "firebase-functions";
 import { _updateStaticData } from "../../functions/updateStaticData.js";
@@ -82,8 +82,8 @@ export class TriggerService {
   async questionnaireResponseWritten(
     userId: string,
     questionnaireResponseId: string,
-    beforeData: FHIRQuestionnaireResponse | undefined,
-    afterData: FHIRQuestionnaireResponse | undefined,
+    beforeData: FhirQuestionnaireResponse | undefined,
+    afterData: FhirQuestionnaireResponse | undefined,
   ) {
     logger.debug(
       `questionnaireResponseWritten(${userId}, ${questionnaireResponseId}): beforeData: ${beforeData !== undefined ? "exists" : "undefined"}, afterData: ${afterData !== undefined ? "exists" : "undefined"}`,
@@ -187,7 +187,7 @@ export class TriggerService {
   async userAppointmentWritten(
     userId: string,
     appointmentId: string,
-    newData: FHIRAppointment | null,
+    newData: FhirAppointment | null,
   ): Promise<void> {
     try {
       const now = new Date();
@@ -391,8 +391,8 @@ export class TriggerService {
   async userMedicationRequestWritten(
     userId: string,
     medicationRequestId: string,
-    before: FHIRMedicationRequest | undefined,
-    after: FHIRMedicationRequest | undefined,
+    before: FhirMedicationRequest | undefined,
+    after: FhirMedicationRequest | undefined,
   ): Promise<void> {
     try {
       await this.updateRecommendationsForUser(userId);
@@ -405,7 +405,7 @@ export class TriggerService {
     // Drug
 
     const drugReference =
-      after?.data.medicationReference ?? before?.data.medicationReference;
+      after?.value.medicationReference ?? before?.value.medicationReference;
     if (!drugReference?.reference) {
       logger.error(
         `TriggerService.userMedicationRequestWritten(${userId}, ${medicationRequestId}): Neither before nor after data contains a medication reference`,

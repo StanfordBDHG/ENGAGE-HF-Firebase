@@ -107,7 +107,7 @@ export abstract class Recommender {
     const dailyDoses: number[] = [];
     for (const context of contexts) {
       let numberOfTabletsPerDay = 0;
-      for (const instruction of context.request.data.dosageInstruction ?? []) {
+      for (const instruction of context.request.value.dosageInstruction ?? []) {
         const intakesPerDay = instruction.timing?.repeat?.frequency ?? 0;
         for (const dose of instruction.doseAndRate ?? []) {
           const numberOfPills = dose.doseQuantity?.value;
@@ -117,7 +117,7 @@ export abstract class Recommender {
         }
       }
 
-      const ingredients = context.drug.data.ingredient ?? [];
+      const ingredients = context.drug.value.ingredient ?? [];
 
       while (dailyDoses.length < ingredients.length) {
         dailyDoses.push(0);

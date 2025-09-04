@@ -17,7 +17,6 @@ export * from "./fhir/fhirMedicationRequest.js";
 export * from "./fhir/fhirObservation.js";
 export * from "./fhir/fhirQuestionnaire.js";
 export * from "./fhir/fhirQuestionnaireResponse.js";
-export * from "./fhir/fhirResource.js";
 export * from "./functions/createInvitation.js";
 export * from "./functions/customSeed.js";
 export * from "./functions/defaultSeed.js";

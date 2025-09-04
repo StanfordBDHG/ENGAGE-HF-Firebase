@@ -9,7 +9,7 @@
 import {
   CachingStrategy,
   DrugReference,
-  FHIRMedicationRequest,
+  FhirMedicationRequest,
   type MedicationClassReference,
   MedicationReference,
   QuantityUnit,
@@ -181,7 +181,7 @@ describe("Sglt2iRecommender", () => {
   describe("On Sotagliflozin", () => {
     let contextBelowTarget: MedicationRequestContext;
     beforeAll(async () => {
-      const request = FHIRMedicationRequest.create({
+      const request = FhirMedicationRequest.create({
         medicationReference: DrugReference.sotagliflozin200,
         frequencyPerDay: 1,
         quantity: 1,
@@ -195,7 +195,7 @@ describe("Sglt2iRecommender", () => {
     });
 
     it("detects target dose", async () => {
-      const request = FHIRMedicationRequest.create({
+      const request = FhirMedicationRequest.create({
         medicationReference: DrugReference.sotagliflozin200,
         frequencyPerDay: 2,
         quantity: 1,

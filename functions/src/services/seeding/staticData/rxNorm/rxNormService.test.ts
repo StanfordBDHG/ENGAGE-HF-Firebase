@@ -56,12 +56,12 @@ describe("RxNormService", () => {
     const carvedilol6_25 = result.drugs["20352"]["200031"];
     expect(carvedilol6_25).toBeDefined();
     expect(
-      carvedilol6_25.data.code?.coding?.find(
+      carvedilol6_25.value.code?.coding?.find(
         (coding) => coding.code === "200031",
       ),
     ).toBeDefined();
     expect(
-      carvedilol6_25.data.ingredient?.find((ingredient) =>
+      carvedilol6_25.value.ingredient?.find((ingredient) =>
         ingredient.itemCodeableConcept?.coding?.some(
           (coding) => coding.code === "20352",
         ),
@@ -71,12 +71,12 @@ describe("RxNormService", () => {
     const carvedilol25 = result.drugs["20352"]["200033"];
     expect(carvedilol25).toBeDefined();
     expect(
-      carvedilol25.data.code?.coding?.find(
+      carvedilol25.value.code?.coding?.find(
         (coding) => coding.code === "200033",
       ),
     ).toBeDefined();
     expect(
-      carvedilol25.data.ingredient?.find((ingredient) =>
+      carvedilol25.value.ingredient?.find((ingredient) =>
         ingredient.itemCodeableConcept?.coding?.some(
           (coding) => coding.code === "20352",
         ),

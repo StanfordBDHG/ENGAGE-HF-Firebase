@@ -7,7 +7,7 @@
 //
 
 import {
-  type FHIRAllergyIntolerance,
+  type FhirAllergyIntolerance,
   MedicationClassReference,
   MedicationReference,
 } from "@stanfordbdhg/engagehf-models";
@@ -47,7 +47,7 @@ export class DefaultContraindicationService implements ContraindicationService {
   // Methods
 
   checkMedication(
-    contraindications: FHIRAllergyIntolerance[],
+    contraindications: FhirAllergyIntolerance[],
     medicationReference: MedicationReference,
   ): ContraindicationCategory {
     const medicationClass = medicationClassReference(medicationReference);
@@ -60,7 +60,7 @@ export class DefaultContraindicationService implements ContraindicationService {
   }
 
   checkMedicationClass(
-    contraindications: FHIRAllergyIntolerance[],
+    contraindications: FhirAllergyIntolerance[],
     medicationClassReference: MedicationClassReference,
   ): ContraindicationCategory {
     return this.checkAll(contraindications, (record) =>
@@ -69,7 +69,7 @@ export class DefaultContraindicationService implements ContraindicationService {
   }
 
   findEligibleMedication(
-    contraindications: FHIRAllergyIntolerance[],
+    contraindications: FhirAllergyIntolerance[],
     medicationReferences: MedicationReference[],
   ): MedicationReference | undefined {
     let availableMedications = medicationReferences;
@@ -89,7 +89,7 @@ export class DefaultContraindicationService implements ContraindicationService {
   // Helpers
 
   private checkAll(
-    contraindications: FHIRAllergyIntolerance[],
+    contraindications: FhirAllergyIntolerance[],
     isRelevant: (record: ContraindicationRecord) => boolean,
   ): ContraindicationCategory {
     let category = ContraindicationCategory.none;
@@ -108,8 +108,8 @@ export class DefaultContraindicationService implements ContraindicationService {
       for (const medicationReference of medicationReferences) {
         const record = this.record({
           medicationReference: medicationReference,
-          type: contraindication.data.type,
-          criticality: contraindication.data.criticality,
+          type: contraindication.value.type,
+          criticality: contraindication.value.criticality,
         });
         if (isRelevant(record)) category = Math.max(category, record.category);
       }

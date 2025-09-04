@@ -53,9 +53,5 @@
     "ts-node": "^10.9",
     "typescript": "^5"
   },
-  "peerDependencies": {
-    "zod": "^4.0.5",
-    "@types/fhir": "^0.0.41"
-  },
   "private": true
 }

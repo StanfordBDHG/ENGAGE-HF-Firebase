@@ -11,9 +11,9 @@ import {
   chunks,
   type CustomSeedingOptions,
   DrugReference,
-  FHIRAppointment,
-  FHIRMedicationRequest,
-  FHIRObservation,
+  FhirAppointment,
+  FhirMedicationRequest,
+  FhirObservation,
   invitationConverter,
   LoincCode,
   MedicationReference,
@@ -24,7 +24,7 @@ import {
   userSeedingOptionsSchema,
   VideoReference,
   UserObservationCollection,
-  fhirQuestionnaireConverter,
+  FhirQuestionnaire,
 } from "@stanfordbdhg/engagehf-models";
 import { type Auth } from "firebase-admin/auth";
 import { type CollectionReference } from "firebase-admin/firestore";
@@ -102,7 +102,7 @@ export class DebugDataService extends SeedingService {
 
   async seedUserAppointments(userId: string, date: Date) {
     const values = [
-      FHIRAppointment.create({
+      FhirAppointment.create({
         userId,
         created: advanceDateByDays(date, -2),
         start: advanceDateByDays(date, 2),
@@ -118,7 +118,7 @@ export class DebugDataService extends SeedingService {
 
   async seedUserMedicationRequests(userId: string) {
     const values = [
-      FHIRMedicationRequest.create({
+      FhirMedicationRequest.create({
         frequencyPerDay: 2,
         medicationReference: DrugReference.eplerenone25,
         quantity: 2,
@@ -222,7 +222,7 @@ export class DebugDataService extends SeedingService {
     ].map((n) => n / 100);
 
     const values = randomNumbers.map((number, index) =>
-      FHIRObservation.createBloodPressure({
+      FhirObservation.createBloodPressure({
         id: index.toString(),
         date: advanceDateByDays(date, -index - 2),
         systolic: 80 + number * 70,
@@ -258,7 +258,7 @@ export class DebugDataService extends SeedingService {
     ].map((n) => n / 100);
 
     const values = [
-      FHIRObservation.createSimple({
+      FhirObservation.createSimple({
         id: "0",
         date: advanceDateByDays(date, -2),
         value: 70,
@@ -266,7 +266,7 @@ export class DebugDataService extends SeedingService {
         code: LoincCode.bodyWeight,
       }),
       ...randomNumbers.map((number, index) =>
-        FHIRObservation.createSimple({
+        FhirObservation.createSimple({
           id: (index + 1).toString(),
           date: advanceDateByDays(date, -index - 3),
           value: 150 + number * 20,
@@ -287,7 +287,7 @@ export class DebugDataService extends SeedingService {
 
   async seedUserCreatinineObservations(userId: string, date: Date) {
     const values = [
-      FHIRObservation.createSimple({
+      FhirObservation.createSimple({
         id: "0",
         date: advanceDateByDays(date, -2),
         value: 1.2,
@@ -308,7 +308,7 @@ export class DebugDataService extends SeedingService {
 
   async seedUserDryWeightObservations(userId: string, date: Date) {
     const values = [
-      FHIRObservation.createSimple({
+      FhirObservation.createSimple({
         id: "0",
         date: advanceDateByDays(date, -2),
         value: 71.5,
@@ -329,7 +329,7 @@ export class DebugDataService extends SeedingService {
 
   async seedUserEgfrObservations(userId: string, date: Date) {
     const values = [
-      FHIRObservation.createSimple({
+      FhirObservation.createSimple({
         id: "0",
         date: advanceDateByDays(date, -2),
         value: 60,
@@ -363,7 +363,7 @@ export class DebugDataService extends SeedingService {
     ].map((n) => n / 100);
 
     const values = randomNumbers.map((number, index) =>
-      FHIRObservation.createSimple({
+      FhirObservation.createSimple({
         id: index.toString(),
         date: advanceDateByDays(date, -index - 2),
         value: 60 + number * 40,
@@ -384,7 +384,7 @@ export class DebugDataService extends SeedingService {
 
   async seedUserPotassiumObservations(userId: string, date: Date) {
     const values = [
-      FHIRObservation.createSimple({
+      FhirObservation.createSimple({
         id: "0",
         date: advanceDateByDays(date, -2),
         value: 4.2,
@@ -406,7 +406,7 @@ export class DebugDataService extends SeedingService {
   async seedUserQuestionnaireResponses(userId: string, date: Date) {
     const questionnaire = this.readJSONRecord(
       "../questionnaires.json",
-      fhirQuestionnaireConverter.schema,
+      FhirQuestionnaire.schema,
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     )[QuestionnaireReference.kccq_en_US.split("/").at(-1)!];
 
@@ -460,7 +460,7 @@ export class DebugDataService extends SeedingService {
 
     const values = chunks(randomNumbers, 13).map((chunk, index) =>
       createKccqQuestionnaireResponse({
-        questionnaire: questionnaire.data.url ?? "",
+        questionnaire: questionnaire.value.url ?? "",
         questionnaireResponse: index.toString(),
         date: advanceDateByDays(date, -(index * 14) - 2),
         answer1a: Math.floor(1 + chunk[0] * 6),

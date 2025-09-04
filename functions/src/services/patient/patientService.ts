@@ -9,10 +9,10 @@
 import {
   type ObservationQuantity,
   type QuantityUnit,
-  type FHIRAllergyIntolerance,
-  type FHIRAppointment,
-  type FHIRMedicationRequest,
-  type FHIRQuestionnaireResponse,
+  type FhirAllergyIntolerance,
+  type FhirAppointment,
+  type FhirMedicationRequest,
+  type FhirQuestionnaireResponse,
   type SymptomScore,
   type UserMedicationRecommendation,
   type UserShareCode,
@@ -28,33 +28,33 @@ export interface PatientService {
   getEveryAppoinment(
     fromDate: Date,
     toDate: Date,
-  ): Promise<Array<Document<FHIRAppointment>>>;
+  ): Promise<Array<Document<FhirAppointment>>>;
 
-  getAppointments(userId: string): Promise<Array<Document<FHIRAppointment>>>;
+  getAppointments(userId: string): Promise<Array<Document<FhirAppointment>>>;
   getNextAppointment(
     userId: string,
-  ): Promise<Document<FHIRAppointment> | undefined>;
+  ): Promise<Document<FhirAppointment> | undefined>;
 
   createAppointment(
     userId: string,
-    appointment: FHIRAppointment,
+    appointment: FhirAppointment,
   ): Promise<void>;
 
   // Contraindications
 
   getContraindications(
     userId: string,
-  ): Promise<Array<Document<FHIRAllergyIntolerance>>>;
+  ): Promise<Array<Document<FhirAllergyIntolerance>>>;
 
   // Medication Requests
 
   getMedicationRequests(
     userId: string,
-  ): Promise<Array<Document<FHIRMedicationRequest>>>;
+  ): Promise<Array<Document<FhirMedicationRequest>>>;
   replaceMedicationRequests(
     userId: string,
-    values: FHIRMedicationRequest[],
-    keepUnchanged?: (request: Document<FHIRMedicationRequest>) => boolean,
+    values: FhirMedicationRequest[],
+    keepUnchanged?: (request: Document<FhirMedicationRequest>) => boolean,
   ): Promise<void>;
 
   getMedicationRecommendations(
@@ -109,7 +109,7 @@ export interface PatientService {
 
   getQuestionnaireResponses(
     userId: string,
-  ): Promise<Array<Document<FHIRQuestionnaireResponse>>>;
+  ): Promise<Array<Document<FhirQuestionnaireResponse>>>;
   getSymptomScores(
     userId: string,
     options?: { limit?: number },

@@ -9,7 +9,7 @@
 import {
   CachingStrategy,
   DrugReference,
-  FHIRMedicationRequest,
+  FhirMedicationRequest,
   MedicationClassReference,
   MedicationReference,
   QuantityUnit,
@@ -259,7 +259,7 @@ describe("RasiRecommender", () => {
   describe("On perindopril (ACEI/ARB)", () => {
     let contextBelowTarget: MedicationRequestContext;
     beforeAll(async () => {
-      const request = FHIRMedicationRequest.create({
+      const request = FhirMedicationRequest.create({
         medicationReference: DrugReference.perindopril4,
         frequencyPerDay: 1,
         quantity: 1,
@@ -284,7 +284,7 @@ describe("RasiRecommender", () => {
       });
 
       it("detects target dose reached", async () => {
-        const request = FHIRMedicationRequest.create({
+        const request = FhirMedicationRequest.create({
           medicationReference: DrugReference.perindopril4,
           frequencyPerDay: 2,
           quantity: 2,
@@ -524,7 +524,7 @@ describe("RasiRecommender", () => {
   describe("On sacubitril/valsartan", () => {
     let contextBelowTarget: MedicationRequestContext;
     beforeAll(async () => {
-      const request = FHIRMedicationRequest.create({
+      const request = FhirMedicationRequest.create({
         medicationReference: DrugReference.sacubitrilValsartan49_51,
         frequencyPerDay: 1,
         quantity: 1,
@@ -538,7 +538,7 @@ describe("RasiRecommender", () => {
     });
 
     it("detects target dose reached", async () => {
-      const request = FHIRMedicationRequest.create({
+      const request = FhirMedicationRequest.create({
         medicationReference: DrugReference.sacubitrilValsartan49_51,
         frequencyPerDay: 2,
         quantity: 2,

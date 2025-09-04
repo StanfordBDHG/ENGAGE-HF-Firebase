@@ -8,13 +8,13 @@
 
 import assert from "assert";
 import {
-  FHIRMedicationRequest,
+  FhirMedicationRequest,
   LoincCode,
   type ObservationQuantity,
-  type FHIRQuestionnaireResponse,
+  type FhirQuestionnaireResponse,
   UserSex,
   QuantityUnit,
-  FHIRAppointment,
+  FhirAppointment,
   UserObservationCollection,
   MedicationReference,
 } from "@stanfordbdhg/engagehf-models";
@@ -42,7 +42,7 @@ export abstract class QuestionnaireResponseService {
 
   abstract handle(
     userId: string,
-    response: Document<FHIRQuestionnaireResponse>,
+    response: Document<FhirQuestionnaireResponse>,
     options: { isNew: boolean },
   ): Promise<boolean>;
 
@@ -50,21 +50,21 @@ export abstract class QuestionnaireResponseService {
 
   protected extractAppointment(
     userId: string,
-    response: FHIRQuestionnaireResponse,
-  ): FHIRAppointment | null {
+    response: FhirQuestionnaireResponse,
+  ): FhirAppointment | null {
     const linkIds = QuestionnaireLinkId.appointment;
 
     const exists = response
-      .leafResponseItem(linkIds.exists)
+      .uniqueLeafResponseItem(linkIds.exists)
       ?.answer?.at(0)?.valueBoolean;
     if (exists !== true) return null;
 
     const dateAnswer = response
-      .leafResponseItem(linkIds.dateTime)
+      .uniqueLeafResponseItem(linkIds.dateTime)
       ?.answer?.at(0)?.valueDateTime;
     if (dateAnswer === undefined) return null;
 
-    return FHIRAppointment.create({
+    return FhirAppointment.create({
       userId,
       created: new Date(),
       start: new Date(dateAnswer),
@@ -73,17 +73,18 @@ export abstract class QuestionnaireResponseService {
   }
 
   protected extractPersonalInfo(
-    response: FHIRQuestionnaireResponse,
+    response: FhirQuestionnaireResponse,
   ): { dateOfBirth: Date; sex: UserSex } | null {
     const linkIds = QuestionnaireLinkId.personalInformation;
     try {
       const dateOfBirth = response
-        .leafResponseItem(linkIds.dateOfBirth)
+        .uniqueLeafResponseItem(linkIds.dateOfBirth)
         ?.answer?.at(0)?.valueDate;
       if (dateOfBirth === undefined) return null;
 
-      const sexCode = response.leafResponseItem(linkIds.sex)?.answer?.at(0)
-        ?.valueCoding?.code;
+      const sexCode = response
+        .uniqueLeafResponseItem(linkIds.sex)
+        ?.answer?.at(0)?.valueCoding?.code;
       const sex = z.enum(UserSex).parse(sexCode);
       return {
         dateOfBirth: new Date(dateOfBirth),
@@ -94,7 +95,7 @@ export abstract class QuestionnaireResponseService {
   }
 
   protected extractLabValue(
-    response: FHIRQuestionnaireResponse,
+    response: FhirQuestionnaireResponse,
     options: {
       code: LoincCode;
       unit: QuantityUnit;
@@ -102,12 +103,12 @@ export abstract class QuestionnaireResponseService {
   ): ObservationQuantity | null {
     const linkIds = QuestionnaireLinkId.labValue(options.code);
     const dateAnswer = response
-      .leafResponseItem(linkIds.dateTime)
+      .uniqueLeafResponseItem(linkIds.dateTime)
       ?.answer?.at(0)?.valueDateTime;
     if (dateAnswer === undefined) return null;
 
     const decimalAnswer = response
-      .leafResponseItem(linkIds.number)
+      .uniqueLeafResponseItem(linkIds.number)
       ?.answer?.at(0)?.valueDecimal;
 
     if (decimalAnswer === undefined) return null;
@@ -119,16 +120,16 @@ export abstract class QuestionnaireResponseService {
     };
   }
 
-  protected extractMedicationRequests(response: FHIRQuestionnaireResponse): {
-    requests: FHIRMedicationRequest[];
+  protected extractMedicationRequests(response: FhirQuestionnaireResponse): {
+    requests: FhirMedicationRequest[];
     keepUnchanged: MedicationGroup[];
   } {
-    const requests: FHIRMedicationRequest[] = [];
+    const requests: FhirMedicationRequest[] = [];
     const keepUnchanged: MedicationGroup[] = [];
     for (const medicationGroup of Object.values(MedicationGroup)) {
       const linkIds = QuestionnaireLinkId.medication(medicationGroup);
       const existsCoding = response
-        .leafResponseItem(linkIds.exists)
+        .uniqueLeafResponseItem(linkIds.exists)
         ?.answer?.at(0)?.valueCoding;
 
       if (existsCoding === undefined) {
@@ -172,13 +173,13 @@ export abstract class QuestionnaireResponseService {
       }
 
       const drugCoding = response
-        .leafResponseItem(linkIds.drug)
+        .uniqueLeafResponseItem(linkIds.drug)
         ?.answer?.at(0)?.valueCoding;
       const quantity = response
-        .leafResponseItem(linkIds.quantity)
+        .uniqueLeafResponseItem(linkIds.quantity)
         ?.answer?.at(0)?.valueDecimal;
       const frequency = response
-        .leafResponseItem(linkIds.frequency)
+        .uniqueLeafResponseItem(linkIds.frequency)
         ?.answer?.at(0)?.valueInteger;
 
       if (
@@ -190,7 +191,7 @@ export abstract class QuestionnaireResponseService {
           `Missing medication group: ${medicationGroup} - drug, quantity or frequency.`,
         );
 
-      const request = FHIRMedicationRequest.create({
+      const request = FhirMedicationRequest.create({
         medicationReference: drugCoding.code,
         medicationReferenceDisplay: drugCoding.display?.replace(/\s+/g, " "),
         frequencyPerDay: frequency,
@@ -209,7 +210,7 @@ export abstract class QuestionnaireResponseService {
     egfrCalculator: EgfrCalculator;
     dateOfBirth: Date | null;
     sex: UserSex | null;
-    response: Document<FHIRQuestionnaireResponse>;
+    response: Document<FhirQuestionnaireResponse>;
   }): Promise<void> {
     const observationValues: Array<{
       observation: ObservationQuantity;
@@ -291,7 +292,7 @@ export abstract class QuestionnaireResponseService {
         input.userId,
         observationValues,
         {
-          type: input.response.content.data.resourceType,
+          type: input.response.content.value.resourceType,
           reference: input.response.path,
         },
       );
@@ -304,7 +305,7 @@ export abstract class QuestionnaireResponseService {
   protected async handleMedicationRequests(input: {
     userId: string;
     patientService: PatientService;
-    response: Document<FHIRQuestionnaireResponse>;
+    response: Document<FhirQuestionnaireResponse>;
   }): Promise<void> {
     const medicationExtraction = this.extractMedicationRequests(
       input.response.content,
@@ -321,7 +322,7 @@ export abstract class QuestionnaireResponseService {
       medicationClasses.length > 0 ?
         (doc) => {
           const referenceString =
-            doc.content.data.medicationReference?.reference;
+            doc.content.value.medicationReference?.reference;
           if (referenceString === undefined) {
             logger.error(
               `Encountered medication request without reference at ${doc.path}: ${JSON.stringify(doc.content)}`,

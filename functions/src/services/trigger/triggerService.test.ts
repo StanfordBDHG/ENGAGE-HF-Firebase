@@ -8,7 +8,7 @@
 
 import {
   advanceDateByDays,
-  FHIRAppointment,
+  FhirAppointment,
   UserMessage,
   UserMessageType,
   UserType,
@@ -36,7 +36,7 @@ describeWithEmulators("TriggerService", (env) => {
         clinician: clinicianId,
       });
 
-      const appointment = FHIRAppointment.create({
+      const appointment = FhirAppointment.create({
         userId: patientId,
         status: "proposed",
         created: advanceDateByDays(new Date(), -3),
@@ -95,7 +95,7 @@ describeWithEmulators("TriggerService", (env) => {
         clinician: clinicianId,
       });
 
-      const appointment = FHIRAppointment.create({
+      const appointment = FhirAppointment.create({
         userId: patientId,
         status: "proposed",
         created: advanceDateByDays(new Date(), -3),
@@ -161,7 +161,7 @@ describeWithEmulators("TriggerService", (env) => {
         selfManaged: true,
       });
 
-      const appointment = FHIRAppointment.create({
+      const appointment = FhirAppointment.create({
         userId: patientId,
         status: "proposed",
         created: advanceDateByDays(new Date(), -3),

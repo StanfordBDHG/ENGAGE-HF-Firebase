@@ -10,7 +10,7 @@ import {
   advanceDateByDays,
   median,
   UserMedicationRecommendationType,
-  type FHIRAppointment,
+  type FhirAppointment,
   type ObservationQuantity,
   type SymptomScore,
   type UserMedicationRecommendation,
@@ -37,7 +37,7 @@ export class HealthSummaryData {
   name?: string;
   dateOfBirth?: Date;
   providerName?: string;
-  nextAppointment?: FHIRAppointment;
+  nextAppointment?: FhirAppointment;
   recommendations: UserMedicationRecommendation[];
   vitals: HealthSummaryVitals;
   symptomScores: SymptomScore[];
@@ -167,7 +167,7 @@ export class HealthSummaryData {
     name?: string;
     dateOfBirth?: Date;
     providerName?: string;
-    nextAppointment?: FHIRAppointment;
+    nextAppointment?: FhirAppointment;
     recommendations: UserMedicationRecommendation[];
     vitals: HealthSummaryVitals;
     symptomScores: SymptomScore[];

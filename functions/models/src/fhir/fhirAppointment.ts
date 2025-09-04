@@ -6,12 +6,21 @@
 // SPDX-License-Identifier: MIT
 //
 
+import {
+  appointmentSchema,
+  FhirAppointment as BaseFhirAppointment,
+} from "@stanfordspezi/spezi-firebase-fhir";
 import { type Appointment } from "fhir/r4b.js";
-import { FHIRResource } from "./fhirResource.js";
 import { FHIRExtensionUrl } from "../codes/codes.js";
 import { compactMap } from "../helpers/array.js";
 
-export class FHIRAppointment extends FHIRResource<Appointment> {
+export class FhirAppointment extends BaseFhirAppointment {
+  // Static Properties
+
+  static readonly schema = appointmentSchema.transform(
+    (value) => new FhirAppointment(value),
+  );
+
   // Static Functions
 
   static create(input: {
@@ -20,8 +29,8 @@ export class FHIRAppointment extends FHIRResource<Appointment> {
     status?: Appointment["status"];
     start: Date;
     durationInMinutes: number;
-  }): FHIRAppointment {
-    return new FHIRAppointment({
+  }): FhirAppointment {
+    return new FhirAppointment({
       resourceType: "Appointment",
       status: input.status ?? "booked",
       created: input.created.toISOString(),
@@ -40,23 +49,11 @@ export class FHIRAppointment extends FHIRResource<Appointment> {
     });
   }
 
+  static parse(value: unknown): FhirAppointment {
+    return new FhirAppointment(appointmentSchema.parse(value));
+  }
+
   // Computed Properties
-
-  get startDate(): Date | undefined {
-    return this.data.start ? new Date(this.data.start) : undefined;
-  }
-
-  set startDate(date: Date | undefined) {
-    this.data.start = date?.toISOString();
-  }
-
-  get endDate(): Date | undefined {
-    return this.data.end ? new Date(this.data.end) : undefined;
-  }
-
-  set endDate(date: Date | undefined) {
-    this.data.end = date?.toISOString();
-  }
 
   get providerNames(): string[] {
     return compactMap(

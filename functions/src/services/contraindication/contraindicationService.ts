@@ -7,7 +7,7 @@
 //
 
 import {
-  type FHIRAllergyIntolerance,
+  type FhirAllergyIntolerance,
   type MedicationClassReference,
   type MedicationReference,
 } from "@stanfordbdhg/engagehf-models";
@@ -23,17 +23,17 @@ export interface ContraindicationService {
   // Methods
 
   checkMedication(
-    contraindications: FHIRAllergyIntolerance[],
+    contraindications: FhirAllergyIntolerance[],
     medicationReference: MedicationReference,
   ): ContraindicationCategory;
 
   checkMedicationClass(
-    contraindications: FHIRAllergyIntolerance[],
+    contraindications: FhirAllergyIntolerance[],
     medicationClassReference: MedicationClassReference,
   ): ContraindicationCategory;
 
   findEligibleMedication(
-    contraindications: FHIRAllergyIntolerance[],
+    contraindications: FhirAllergyIntolerance[],
     medicationReferences: MedicationReference[],
   ): MedicationReference | undefined;
 }

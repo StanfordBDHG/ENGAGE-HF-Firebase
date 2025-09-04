@@ -8,7 +8,7 @@
 
 import fs from "fs";
 import {
-  FHIRAllergyIntolerance,
+  FhirAllergyIntolerance,
   MedicationClassReference,
   MedicationReference,
 } from "@stanfordbdhg/engagehf-models";
@@ -34,7 +34,7 @@ describe("DefaultContraindicationService", () => {
     },
   ) {
     const contraindications = [
-      FHIRAllergyIntolerance.create({
+      FhirAllergyIntolerance.create({
         userId: "testUser",
         type: options.type,
         criticality: options.criticality,

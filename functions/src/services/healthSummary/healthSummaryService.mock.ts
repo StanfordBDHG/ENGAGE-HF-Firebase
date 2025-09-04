@@ -8,7 +8,7 @@
 
 import {
   advanceDateByDays,
-  FHIRAppointment,
+  FhirAppointment,
   LocalizedText,
   type ObservationQuantity,
   QuantityUnit,
@@ -35,7 +35,7 @@ export class MockHealthSummaryService implements HealthSummaryService {
       name: "John Doe",
       dateOfBirth: new Date("1970-01-02"),
       providerName: "Dr. XXX",
-      nextAppointment: FHIRAppointment.create({
+      nextAppointment: FhirAppointment.create({
         userId,
         created: advanceDateByDays(date, -10),
         start: advanceDateByDays(date, 1),

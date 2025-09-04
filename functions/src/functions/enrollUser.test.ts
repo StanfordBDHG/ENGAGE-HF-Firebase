@@ -7,8 +7,6 @@
 //
 
 import {
-  FHIRAppointment,
-  FHIRObservation,
   Invitation,
   LoincCode,
   QuantityUnit,
@@ -20,9 +18,10 @@ import {
   QuestionnaireReference,
   fhirAppointmentConverter,
   fhirObservationConverter,
+  FhirAppointment,
+  FhirObservation,
 } from "@stanfordbdhg/engagehf-models";
 import { enrollUser } from "./enrollUser.js";
-import { QuestionnaireId } from "../services/seeding/staticData/questionnaireFactory/questionnaireLinkIds.js";
 import { describeWithEmulators } from "../tests/functions/testEnvironment.js";
 import { expectError } from "../tests/helpers.js";
 
@@ -63,7 +62,7 @@ describeWithEmulators("function: enrollUser", (env) => {
     const invitationRef = env.collections.invitations.doc();
     await invitationRef.set(invitation);
 
-    const expectedAppointment = new FHIRAppointment({
+    const expectedAppointment = new FhirAppointment({
       resourceType: "Appointment",
       status: "booked",
       created: new Date("2023-12-24").toISOString(),
@@ -84,7 +83,7 @@ describeWithEmulators("function: enrollUser", (env) => {
       .doc()
       .set(expectedAppointment);
 
-    const expectedObservation = FHIRObservation.createSimple({
+    const expectedObservation = FhirObservation.createSimple({
       id: "1",
       code: LoincCode.bodyWeight,
       value: 70,
@@ -186,7 +185,7 @@ describeWithEmulators("function: enrollUser", (env) => {
     const invitationRef = env.collections.invitations.doc();
     await invitationRef.set(invitation);
 
-    const expectedAppointment = new FHIRAppointment({
+    const expectedAppointment = new FhirAppointment({
       resourceType: "Appointment",
       status: "booked",
       created: new Date("2023-12-24").toISOString(),
@@ -207,7 +206,7 @@ describeWithEmulators("function: enrollUser", (env) => {
       .doc()
       .set(expectedAppointment);
 
-    const expectedObservation = FHIRObservation.createSimple({
+    const expectedObservation = FhirObservation.createSimple({
       id: "1",
       code: LoincCode.bodyWeight,
       value: 70,

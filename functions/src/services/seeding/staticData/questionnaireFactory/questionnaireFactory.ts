@@ -10,8 +10,8 @@ import {
   CodingSystem,
   compactMap,
   FHIRExtensionUrl,
-  type FHIRMedication,
-  FHIRQuestionnaire,
+  type FhirMedication,
+  FhirQuestionnaire,
   LoincCode,
   QuantityUnit,
 } from "@stanfordbdhg/engagehf-models";
@@ -34,7 +34,7 @@ import {
 export abstract class QuestionnaireFactory<Input> {
   // Abstract functions
 
-  abstract create(input: Input): FHIRQuestionnaire;
+  abstract create(input: Input): FhirQuestionnaire;
 
   // Helper functions - ENGAGE-HF specific
 
@@ -171,8 +171,8 @@ export abstract class QuestionnaireFactory<Input> {
   }
 
   protected medicationInputPages(input: {
-    medications: Record<string, FHIRMedication>;
-    drugs: Record<string, Record<string, FHIRMedication>>;
+    medications: Record<string, FhirMedication>;
+    drugs: Record<string, Record<string, FhirMedication>>;
     isRegistration: boolean;
   }): QuestionnaireItem[] {
     return [
@@ -205,8 +205,8 @@ export abstract class QuestionnaireFactory<Input> {
   }
 
   protected medicationInputPagesForMedicationGroup(input: {
-    drugs: Record<string, Record<string, FHIRMedication>>;
-    medications: Record<string, FHIRMedication>;
+    drugs: Record<string, Record<string, FhirMedication>>;
+    medications: Record<string, FhirMedication>;
     group: MedicationGroup;
     text: string;
     isRegistration: boolean;
@@ -228,8 +228,8 @@ export abstract class QuestionnaireFactory<Input> {
     );
     const answers: Array<{
       id: string;
-      medication: FHIRMedication;
-      drug: FHIRMedication;
+      medication: FhirMedication;
+      drug: FhirMedication;
       text: string;
     }> = [];
     for (const medicationId of medicationIds) {
@@ -241,7 +241,7 @@ export abstract class QuestionnaireFactory<Input> {
         if (medication.brandNames.length > 0)
           text += ` (${medication.brandNames.join(", ")})`;
 
-        text += `\n${drug.data.ingredient?.map((i) => i.strength?.numerator?.value ?? 0).join("/") ?? ""} mg ${drug.data.form?.text ?? ""}`;
+        text += `\n${drug.value.ingredient?.map((i) => i.strength?.numerator?.value ?? 0).join("/") ?? ""} mg ${drug.value.form?.text ?? ""}`;
         answers.push({
           id: `medications/${medicationId}/drugs/${drugId}`,
           medication,
@@ -489,8 +489,8 @@ export abstract class QuestionnaireFactory<Input> {
     status?: Questionnaire["status"];
     item: QuestionnaireItem[];
     useContext?: UsageContext[];
-  }): FHIRQuestionnaire {
-    return new FHIRQuestionnaire({
+  }): FhirQuestionnaire {
+    return new FhirQuestionnaire({
       resourceType: "Questionnaire",
       id: input.id,
       title: input.title,

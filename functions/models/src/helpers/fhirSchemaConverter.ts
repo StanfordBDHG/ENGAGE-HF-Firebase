@@ -6,39 +6,42 @@
 // SPDX-License-Identifier: MIT
 //
 
+import { type FhirDomainResource } from "@stanfordspezi/spezi-firebase-fhir";
 import { type DomainResource } from "fhir/r4b.js";
-import { type ZodType } from "zod";
-import { type FHIRResource } from "../fhir/fhirResource.js";
 
-export class FHIRSchemaConverter<
-  FHIRResourceType extends FHIRResource<DomainResource>,
+export type GenericFhirSchemaConverter = FhirSchemaConverter<
+  FhirDomainResource<DomainResource>
+>;
+
+export class FhirSchemaConverter<
+  ResourceType extends FhirDomainResource<DomainResource>,
 > {
   // Properties
 
-  readonly schema: ZodType<FHIRResourceType>;
+  readonly _decode: (value: unknown) => ResourceType;
   readonly nullProperties: string[];
 
   // Constructor
 
   constructor(
-    schema: ZodType<FHIRResourceType>,
+    decode: (value: unknown) => ResourceType,
     options: {
       nullProperties: string[];
     },
   ) {
-    this.schema = schema;
+    this._decode = decode;
     this.nullProperties = options.nullProperties;
   }
 
   // Methods
 
   decode(input: unknown) {
-    return this.schema.parse(removeNullOrUndefinedValues(input));
+    return this._decode(removeNullOrUndefinedValues(input));
   }
 
-  encode(input: FHIRResourceType): unknown {
+  encode(input: ResourceType): unknown {
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */ /* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */
-    const returnValue = removeNullOrUndefinedValues(input.data) as any;
+    const returnValue = removeNullOrUndefinedValues(input.value) as any;
 
     for (const key of this.nullProperties) {
       /* eslint-disable-next-line @typescript-eslint/no-unsafe-member-access */ /* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */

@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { type FHIRQuestionnaireResponse } from "@stanfordbdhg/engagehf-models";
+import { type FhirQuestionnaireResponse } from "@stanfordbdhg/engagehf-models";
 import { QuestionnaireResponseService } from "./questionnaireResponseService.js";
 import { type Document } from "../database/databaseService.js";
 
@@ -26,7 +26,7 @@ export class MultiQuestionnaireResponseService extends QuestionnaireResponseServ
 
   async handle(
     userId: string,
-    response: Document<FHIRQuestionnaireResponse>,
+    response: Document<FhirQuestionnaireResponse>,
     options: { isNew: boolean },
   ): Promise<boolean> {
     for (const components of this.components) {

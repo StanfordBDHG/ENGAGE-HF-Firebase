@@ -14,6 +14,7 @@ import {
   UserSex,
   UserType,
   QuantityUnit,
+  FhirQuestionnaireResponse,
 } from "@stanfordbdhg/engagehf-models";
 import { _defaultSeed } from "../../functions/defaultSeed.js";
 import { onUserQuestionnaireResponseWritten } from "../../functions/onUserQuestionnaireResponseWritten.js";
@@ -35,9 +36,7 @@ describeWithEmulators("RegistrationQuestionnaireResponseService", (env) => {
     const ref = env.collections.userQuestionnaireResponses(userId).doc();
     await env.setWithTrigger(onUserQuestionnaireResponseWritten, {
       ref,
-      data: fhirQuestionnaireResponseConverter.schema.parse(
-        registrationResponseApple,
-      ),
+      data: FhirQuestionnaireResponse.parse(registrationResponseApple),
       params: {
         userId,
         questionnaireResponseId: ref.id,
@@ -63,9 +62,9 @@ describeWithEmulators("RegistrationQuestionnaireResponseService", (env) => {
 
     const valsartan = medicationRequestsData.find(
       (req) =>
-        req.data.medicationReference?.reference ===
+        req.value.medicationReference?.reference ===
         "medications/69749/drugs/349201",
-    )?.data;
+    )?.value;
     expect(valsartan).toBeDefined();
     expect(valsartan?.dosageInstruction?.length).toBe(1);
     const valsartanDosageInstruction = valsartan?.dosageInstruction?.at(0);
@@ -76,9 +75,9 @@ describeWithEmulators("RegistrationQuestionnaireResponseService", (env) => {
 
     const bexagliflozin = medicationRequestsData.find(
       (req) =>
-        req.data.medicationReference?.reference ===
+        req.value.medicationReference?.reference ===
         "medications/2627044/drugs/2637859",
-    )?.data;
+    )?.value;
     expect(bexagliflozin).toBeDefined();
     expect(bexagliflozin?.dosageInstruction?.length).toBe(1);
     const bexagliflozinDosageInstruction =
@@ -135,9 +134,7 @@ describeWithEmulators("RegistrationQuestionnaireResponseService", (env) => {
     const ref = env.collections.userQuestionnaireResponses(userId).doc();
     await env.setWithTrigger(onUserQuestionnaireResponseWritten, {
       ref,
-      data: fhirQuestionnaireResponseConverter.schema.parse(
-        registrationResponseAndroid,
-      ),
+      data: FhirQuestionnaireResponse.parse(registrationResponseAndroid),
       params: {
         userId,
         questionnaireResponseId: ref.id,
@@ -162,9 +159,9 @@ describeWithEmulators("RegistrationQuestionnaireResponseService", (env) => {
 
     const benazepril = medicationRequestsData.find(
       (req) =>
-        req.data.medicationReference?.reference ===
+        req.value.medicationReference?.reference ===
         "medications/18867/drugs/898719",
-    )?.data;
+    )?.value;
     expect(benazepril).toBeDefined();
     expect(benazepril?.dosageInstruction?.length).toBe(1);
     const benazeprilDosageInstruction = benazepril?.dosageInstruction?.at(0);
@@ -176,9 +173,9 @@ describeWithEmulators("RegistrationQuestionnaireResponseService", (env) => {
 
     const empagliflozin = medicationRequestsData.find(
       (req) =>
-        req.data.medicationReference?.reference ===
+        req.value.medicationReference?.reference ===
         "medications/1545653/drugs/1545658",
-    )?.data;
+    )?.value;
     expect(empagliflozin).toBeDefined();
     expect(empagliflozin?.dosageInstruction?.length).toBe(1);
     const empagliflozinDosageInstruction =

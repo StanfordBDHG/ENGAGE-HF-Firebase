@@ -8,7 +8,7 @@
 
 import {
   advanceDateByDays,
-  FHIRObservation,
+  FhirObservation,
   LoincCode,
   QuantityUnit,
   UserMessageType,
@@ -26,7 +26,7 @@ describeWithEmulators("onUserBodyWeightObservationWritten", (env) => {
   const date = new Date();
 
   const observations = Array.from({ length: 10 }).map((_, i) =>
-    FHIRObservation.createSimple({
+    FhirObservation.createSimple({
       id: i.toString(),
       date: advanceDateByDays(date, -i - 3),
       value: 100.0,
@@ -59,7 +59,7 @@ describeWithEmulators("onUserBodyWeightObservationWritten", (env) => {
   });
 
   it("creates message for high body weight, keeps it when still high and completes when it lowers again", async () => {
-    const observation0 = FHIRObservation.createSimple({
+    const observation0 = FhirObservation.createSimple({
       id: "100",
       date: advanceDateByDays(date, -2),
       value: 120.0,
@@ -85,7 +85,7 @@ describeWithEmulators("onUserBodyWeightObservationWritten", (env) => {
     expect(message0.type).toBe(UserMessageType.weightGain);
     expect(message0.completionDate).toBeUndefined();
 
-    const observation1 = FHIRObservation.createSimple({
+    const observation1 = FhirObservation.createSimple({
       id: "101",
       date: advanceDateByDays(date, -1),
       value: 120.0,
@@ -114,7 +114,7 @@ describeWithEmulators("onUserBodyWeightObservationWritten", (env) => {
     );
     expect(message1.completionDate).toBeUndefined();
 
-    const observation2 = FHIRObservation.createSimple({
+    const observation2 = FhirObservation.createSimple({
       id: "102",
       date: date,
       value: 100.0,
@@ -157,7 +157,7 @@ describeWithEmulators("onUserBodyWeightObservationWritten", (env) => {
     });
 
     const observations = Array.from({ length: 10 }, (_, i) =>
-      FHIRObservation.createSimple({
+      FhirObservation.createSimple({
         id: `observation-${i}`,
         code: LoincCode.bodyWeight,
         value: 200,
@@ -194,7 +194,7 @@ describeWithEmulators("onUserBodyWeightObservationWritten", (env) => {
     const ownerMessages0 = await env.collections.userMessages(ownerId).get();
     expect(ownerMessages0.docs).toHaveLength(0);
 
-    const slightlyHigherWeight = FHIRObservation.createSimple({
+    const slightlyHigherWeight = FhirObservation.createSimple({
       id: "observation-10",
       code: LoincCode.bodyWeight,
       value: 207.5,
@@ -234,7 +234,7 @@ describeWithEmulators("onUserBodyWeightObservationWritten", (env) => {
     expect(ownerMessage1?.type).toBe(UserMessageType.weightGain);
     expect(ownerMessage1?.completionDate).toBeUndefined();
 
-    const actuallyHigherWeight = FHIRObservation.createSimple({
+    const actuallyHigherWeight = FhirObservation.createSimple({
       id: "observation-11",
       code: LoincCode.bodyWeight,
       value: 208,

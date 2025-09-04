@@ -43,7 +43,7 @@ describeWithEmulators("function: updateStaticData", (env) => {
       fs.readFileSync("data/medications.json", "utf8"),
     );
     for (const medication of medications.docs) {
-      expect(simplify(medication.data().data)).toStrictEqual(
+      expect(simplify(medication.data().value)).toStrictEqual(
         medicationsJson[medication.id],
       );
     }

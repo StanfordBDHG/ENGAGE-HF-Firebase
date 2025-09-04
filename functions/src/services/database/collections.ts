@@ -30,7 +30,7 @@ import {
 import { type Firestore } from "firebase-admin/firestore";
 import {
   DatabaseConverter,
-  FHIRDatabaseConverter,
+  FhirDatabaseConverter,
 } from "./databaseConverter.js";
 import { historyChangeItemConverter } from "../history/historyService.js";
 
@@ -50,7 +50,7 @@ export class CollectionsService {
   get appointments() {
     return this.firestore
       .collectionGroup("appointments")
-      .withConverter(new FHIRDatabaseConverter(fhirAppointmentConverter));
+      .withConverter(new FhirDatabaseConverter(fhirAppointmentConverter));
   }
 
   get devices() {
@@ -77,7 +77,7 @@ export class CollectionsService {
       .doc(invitationId)
       .collection("allergyIntolerances")
       .withConverter(
-        new FHIRDatabaseConverter(fhirAllergyIntoleranceConverter),
+        new FhirDatabaseConverter(fhirAllergyIntoleranceConverter),
       );
   }
 
@@ -86,7 +86,7 @@ export class CollectionsService {
       .collection("invitations")
       .doc(invitationId)
       .collection("appointments")
-      .withConverter(new FHIRDatabaseConverter(fhirAppointmentConverter));
+      .withConverter(new FhirDatabaseConverter(fhirAppointmentConverter));
   }
 
   invitationDevices(invitationId: string) {
@@ -112,7 +112,7 @@ export class CollectionsService {
       .collection("invitations")
       .doc(invitationId)
       .collection("medicationRequests")
-      .withConverter(new FHIRDatabaseConverter(fhirMedicationRequestConverter));
+      .withConverter(new FhirDatabaseConverter(fhirMedicationRequestConverter));
   }
 
   invitationMessages(invitationId: string) {
@@ -131,7 +131,7 @@ export class CollectionsService {
       .collection("invitations")
       .doc(invitationId)
       .collection(collection)
-      .withConverter(new FHIRDatabaseConverter(fhirObservationConverter));
+      .withConverter(new FhirDatabaseConverter(fhirObservationConverter));
   }
 
   invitationQuestionnaireResponses(invitationId: string) {
@@ -140,7 +140,7 @@ export class CollectionsService {
       .doc(invitationId)
       .collection("questionnaireResponses")
       .withConverter(
-        new FHIRDatabaseConverter(fhirQuestionnaireResponseConverter),
+        new FhirDatabaseConverter(fhirQuestionnaireResponseConverter),
       );
   }
 
@@ -167,13 +167,13 @@ export class CollectionsService {
   get medications() {
     return this.firestore
       .collection("medications")
-      .withConverter(new FHIRDatabaseConverter(fhirMedicationConverter));
+      .withConverter(new FhirDatabaseConverter(fhirMedicationConverter));
   }
 
   medicationReference(reference: string) {
     return this.firestore
       .doc(reference)
-      .withConverter(new FHIRDatabaseConverter(fhirMedicationConverter));
+      .withConverter(new FhirDatabaseConverter(fhirMedicationConverter));
   }
 
   drugs(medicationId: string) {
@@ -181,7 +181,7 @@ export class CollectionsService {
       .collection("medications")
       .doc(medicationId)
       .collection("drugs")
-      .withConverter(new FHIRDatabaseConverter(fhirMedicationConverter));
+      .withConverter(new FhirDatabaseConverter(fhirMedicationConverter));
   }
 
   get organizations() {
@@ -193,7 +193,7 @@ export class CollectionsService {
   get questionnaires() {
     return this.firestore
       .collection("questionnaires")
-      .withConverter(new FHIRDatabaseConverter(fhirQuestionnaireConverter));
+      .withConverter(new FhirDatabaseConverter(fhirQuestionnaireConverter));
   }
 
   get users() {
@@ -208,7 +208,7 @@ export class CollectionsService {
       .doc(userId)
       .collection("allergyIntolerances")
       .withConverter(
-        new FHIRDatabaseConverter(fhirAllergyIntoleranceConverter),
+        new FhirDatabaseConverter(fhirAllergyIntoleranceConverter),
       );
   }
 
@@ -217,7 +217,7 @@ export class CollectionsService {
       .collection("users")
       .doc(userId)
       .collection("appointments")
-      .withConverter(new FHIRDatabaseConverter(fhirAppointmentConverter));
+      .withConverter(new FhirDatabaseConverter(fhirAppointmentConverter));
   }
 
   userDevices(userId: string) {
@@ -243,7 +243,7 @@ export class CollectionsService {
       .collection("users")
       .doc(userId)
       .collection("medicationRequests")
-      .withConverter(new FHIRDatabaseConverter(fhirMedicationRequestConverter));
+      .withConverter(new FhirDatabaseConverter(fhirMedicationRequestConverter));
   }
 
   userMessages(userId: string) {
@@ -259,7 +259,7 @@ export class CollectionsService {
       .collection("users")
       .doc(userId)
       .collection(collection)
-      .withConverter(new FHIRDatabaseConverter(fhirObservationConverter));
+      .withConverter(new FhirDatabaseConverter(fhirObservationConverter));
   }
 
   userQuestionnaireResponses(userId: string) {
@@ -268,7 +268,7 @@ export class CollectionsService {
       .doc(userId)
       .collection("questionnaireResponses")
       .withConverter(
-        new FHIRDatabaseConverter(fhirQuestionnaireResponseConverter),
+        new FhirDatabaseConverter(fhirQuestionnaireResponseConverter),
       );
   }
 
