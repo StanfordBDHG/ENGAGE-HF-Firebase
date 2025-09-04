@@ -6,70 +6,34 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { z } from "zod";
 import {
-  fhirCodeableConceptConverter,
-  type FHIRCodeableConcept,
-} from "./baseTypes/fhirCodeableConcept.js";
-import {
-  FHIRResource,
-  fhirResourceConverter,
-  type FHIRResourceInput,
-} from "./baseTypes/fhirElement.js";
+  FhirAllergyIntolerance as BaseFhirAllergyIntolerance,
+  allergyIntoleranceSchema,
+} from "@stanfordspezi/spezi-firebase-fhir";
+import { type AllergyIntolerance } from "fhir/r4b.js";
 import { CodingSystem } from "../codes/codes.js";
 import { type MedicationReference } from "../codes/references.js";
-import { Lazy } from "../helpers/lazy.js";
-import { optionalish } from "../helpers/optionalish.js";
-import { SchemaConverter } from "../helpers/schemaConverter.js";
 
-export enum FHIRAllergyIntoleranceType {
-  allergy = "allergy",
-  intolerance = "intolerance",
-  financial = "financial",
-  preference = "preference",
-}
+export class FhirAllergyIntolerance extends BaseFhirAllergyIntolerance {
+  // Static Properties
 
-export enum FHIRAllergyIntoleranceCriticality {
-  low = "low",
-  high = "high",
-  unableToAssess = "unable-to-assess",
-}
+  static readonly schema = allergyIntoleranceSchema.transform(
+    (value) => new FhirAllergyIntolerance(value),
+  );
 
-export const fhirAllergyIntoleranceConverter = new Lazy(
-  () =>
-    new SchemaConverter({
-      schema: fhirResourceConverter.value.schema
-        .extend({
-          type: z.nativeEnum(FHIRAllergyIntoleranceType),
-          criticality: optionalish(
-            z.nativeEnum(FHIRAllergyIntoleranceCriticality),
-          ),
-          code: optionalish(
-            z.lazy(() => fhirCodeableConceptConverter.value.schema),
-          ),
-        })
-        .transform((values) => new FHIRAllergyIntolerance(values)),
-      encode: (object) => ({
-        ...fhirResourceConverter.value.encode(object),
-        type: object.type,
-        criticality: object.criticality ?? null,
-        code:
-          object.code ?
-            fhirCodeableConceptConverter.value.encode(object.code)
-          : null,
-      }),
-    }),
-);
-
-export class FHIRAllergyIntolerance extends FHIRResource {
   // Static Functions
 
   static create(input: {
-    type: FHIRAllergyIntoleranceType;
-    criticality?: FHIRAllergyIntoleranceCriticality;
+    type?: AllergyIntolerance["type"];
+    criticality?: AllergyIntolerance["criticality"];
     reference: MedicationReference;
-  }): FHIRAllergyIntolerance {
-    return new FHIRAllergyIntolerance({
+    userId?: string;
+  }): FhirAllergyIntolerance {
+    return new FhirAllergyIntolerance({
+      resourceType: "AllergyIntolerance",
+      patient: {
+        reference: input.userId ? `users/${input.userId}` : undefined,
+      },
       type: input.type,
       criticality: input.criticality,
       code: {
@@ -83,31 +47,13 @@ export class FHIRAllergyIntolerance extends FHIRResource {
     });
   }
 
-  // Stored Properties
-
-  readonly resourceType: string = "AllergyIntolerance";
-  readonly type: FHIRAllergyIntoleranceType;
-  readonly criticality?: FHIRAllergyIntoleranceCriticality;
-  readonly code?: FHIRCodeableConcept;
+  static parse(value: unknown): FhirAllergyIntolerance {
+    return new FhirAllergyIntolerance(allergyIntoleranceSchema.parse(value));
+  }
 
   // Computed Properties
 
   get rxNormCodes(): string[] {
-    return this.codes(this.code, { system: CodingSystem.rxNorm });
-  }
-
-  // Constructor
-
-  constructor(
-    input: FHIRResourceInput & {
-      type: FHIRAllergyIntoleranceType;
-      criticality?: FHIRAllergyIntoleranceCriticality;
-      code?: FHIRCodeableConcept;
-    },
-  ) {
-    super(input);
-    this.type = input.type;
-    this.criticality = input.criticality;
-    this.code = input.code;
+    return this.codes(this.value.code, { system: CodingSystem.rxNorm });
   }
 }

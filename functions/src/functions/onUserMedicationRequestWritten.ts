@@ -9,7 +9,7 @@
 import { fhirMedicationRequestConverter } from "@stanfordbdhg/engagehf-models";
 import { onDocumentWritten } from "firebase-functions/firestore";
 import { Env } from "../env.js";
-import { DatabaseConverter } from "../services/database/databaseConverter.js";
+import { FhirDatabaseConverter } from "../services/database/databaseConverter.js";
 import { getServiceFactory } from "../services/factory/getServiceFactory.js";
 
 export const onUserMedicationRequestWritten = onDocumentWritten(
@@ -20,9 +20,7 @@ export const onUserMedicationRequestWritten = onDocumentWritten(
   async (event) => {
     const beforeData = event.data?.before;
     const afterData = event.data?.after;
-    const converter = new DatabaseConverter(
-      fhirMedicationRequestConverter.value,
-    );
+    const converter = new FhirDatabaseConverter(fhirMedicationRequestConverter);
     const factory = getServiceFactory();
     const triggerService = factory.trigger();
     await triggerService.userMedicationRequestWritten(

@@ -11,14 +11,13 @@ import {
   advanceDateByDays,
   advanceDateByMinutes,
   compactMap,
-  type FHIRAllergyIntolerance,
-  type FHIRAppointment,
-  type FHIRMedicationRequest,
-  FHIRObservation,
-  type FHIRQuestionnaireResponse,
-  type FHIRReference,
+  type FhirAllergyIntolerance,
+  type FhirAppointment,
+  type FhirMedicationRequest,
+  FhirObservation,
+  type FhirQuestionnaireResponse,
   type LoincCode,
-  type Observation,
+  type ObservationQuantity,
   QuantityUnit,
   type SymptomScore,
   type UserMedicationRecommendation,
@@ -26,6 +25,7 @@ import {
   UserObservationCollection,
   type UserShareCode,
 } from "@stanfordbdhg/engagehf-models";
+import { type Reference } from "fhir/r4b.js";
 import {
   FieldValue,
   type QueryDocumentSnapshot,
@@ -55,8 +55,8 @@ export class DatabasePatientService implements PatientService {
   async getEveryAppoinment(
     fromDate: Date,
     toDate: Date,
-  ): Promise<Array<Document<FHIRAppointment>>> {
-    const result = await this.databaseService.getQuery<FHIRAppointment>(
+  ): Promise<Array<Document<FhirAppointment>>> {
+    const result = await this.databaseService.getQuery<FhirAppointment>(
       (collections) =>
         collections.appointments
           .where("start", ">", advanceDateByDays(fromDate, -1).toISOString())
@@ -64,23 +64,23 @@ export class DatabasePatientService implements PatientService {
     );
 
     return result.filter((appointment) => {
-      const start = new Date(appointment.content.start);
-      return start >= fromDate && start < toDate;
+      const start = appointment.content.startDate;
+      return start && start >= fromDate && start < toDate;
     });
   }
 
   async getAppointments(
     userId: string,
-  ): Promise<Array<Document<FHIRAppointment>>> {
-    return this.databaseService.getQuery<FHIRAppointment>((collections) =>
+  ): Promise<Array<Document<FhirAppointment>>> {
+    return this.databaseService.getQuery<FhirAppointment>((collections) =>
       collections.userAppointments(userId),
     );
   }
 
   async getNextAppointment(
     userId: string,
-  ): Promise<Document<FHIRAppointment> | undefined> {
-    const result = await this.databaseService.getQuery<FHIRAppointment>(
+  ): Promise<Document<FhirAppointment> | undefined> {
+    const result = await this.databaseService.getQuery<FhirAppointment>(
       (collections) =>
         collections
           .userAppointments(userId)
@@ -93,7 +93,7 @@ export class DatabasePatientService implements PatientService {
 
   async createAppointment(
     userId: string,
-    appointment: FHIRAppointment,
+    appointment: FhirAppointment,
   ): Promise<void> {
     await this.databaseService.runTransaction((collections, transaction) => {
       const ref = collections.userAppointments(userId).doc();
@@ -105,8 +105,8 @@ export class DatabasePatientService implements PatientService {
 
   async getContraindications(
     userId: string,
-  ): Promise<Array<Document<FHIRAllergyIntolerance>>> {
-    return this.databaseService.getQuery<FHIRAllergyIntolerance>(
+  ): Promise<Array<Document<FhirAllergyIntolerance>>> {
+    return this.databaseService.getQuery<FhirAllergyIntolerance>(
       (collections) => collections.userAllergyIntolerances(userId),
     );
   }
@@ -115,35 +115,35 @@ export class DatabasePatientService implements PatientService {
 
   async getMedicationRequests(
     userId: string,
-  ): Promise<Array<Document<FHIRMedicationRequest>>> {
-    return this.databaseService.getQuery<FHIRMedicationRequest>((collections) =>
+  ): Promise<Array<Document<FhirMedicationRequest>>> {
+    return this.databaseService.getQuery<FhirMedicationRequest>((collections) =>
       collections.userMedicationRequests(userId),
     );
   }
 
   async replaceMedicationRequests(
     userId: string,
-    values: FHIRMedicationRequest[],
-    keepUnchanged?: (request: Document<FHIRMedicationRequest>) => boolean,
+    values: FhirMedicationRequest[],
+    keepUnchanged?: (request: Document<FhirMedicationRequest>) => boolean,
   ): Promise<void> {
     await this.databaseService.replaceCollection(
       (collections) => collections.userMedicationRequests(userId),
       (documents) => {
-        const diffs: Array<ReplaceDiff<FHIRMedicationRequest>> = [];
+        const diffs: Array<ReplaceDiff<FhirMedicationRequest>> = [];
 
         for (const value of values) {
           // We are assuming here that there will only ever be a single medication request per medicationReference!
           const equivalentDoc = documents.find(
             (doc) =>
-              doc.content.medicationReference?.reference ===
-              value.medicationReference?.reference,
+              doc.content.value.medicationReference?.reference ===
+              value.value.medicationReference?.reference,
           );
           if (equivalentDoc === undefined) {
             diffs.push({ successor: value });
           } else if (
             !isDeepStrictEqual(
-              equivalentDoc.content.dosageInstruction,
-              value.dosageInstruction,
+              equivalentDoc.content.value.dosageInstruction,
+              value.value.dosageInstruction,
             )
           ) {
             diffs.push({ predecessor: equivalentDoc, successor: value });
@@ -226,8 +226,8 @@ export class DatabasePatientService implements PatientService {
   async getBloodPressureObservations(
     userId: string,
     cutoffDate: Date,
-  ): Promise<[Observation[], Observation[]]> {
-    const observations = await this.databaseService.getQuery<FHIRObservation>(
+  ): Promise<[ObservationQuantity[], ObservationQuantity[]]> {
+    const observations = await this.databaseService.getQuery<FhirObservation>(
       (collections) =>
         collections
           .userObservations(userId, UserObservationCollection.bloodPressure)
@@ -250,8 +250,8 @@ export class DatabasePatientService implements PatientService {
     userId: string,
     unit: QuantityUnit,
     cutoffDate: Date,
-  ): Promise<Observation[]> {
-    const observations = await this.databaseService.getQuery<FHIRObservation>(
+  ): Promise<ObservationQuantity[]> {
+    const observations = await this.databaseService.getQuery<FhirObservation>(
       (collections) =>
         collections
           .userObservations(userId, UserObservationCollection.bodyWeight)
@@ -266,8 +266,8 @@ export class DatabasePatientService implements PatientService {
   async getHeartRateObservations(
     userId: string,
     cutoffDate: Date,
-  ): Promise<Observation[]> {
-    const observations = await this.databaseService.getQuery<FHIRObservation>(
+  ): Promise<ObservationQuantity[]> {
+    const observations = await this.databaseService.getQuery<FhirObservation>(
       (collections) =>
         collections
           .userObservations(userId, UserObservationCollection.heartRate)
@@ -282,8 +282,8 @@ export class DatabasePatientService implements PatientService {
 
   async getMostRecentCreatinineObservation(
     userId: string,
-  ): Promise<Observation | undefined> {
-    const result = await this.databaseService.getQuery<FHIRObservation>(
+  ): Promise<ObservationQuantity | undefined> {
+    const result = await this.databaseService.getQuery<FhirObservation>(
       (collections) =>
         collections
           .userObservations(userId, UserObservationCollection.creatinine)
@@ -295,8 +295,8 @@ export class DatabasePatientService implements PatientService {
 
   async getMostRecentDryWeightObservation(
     userId: string,
-  ): Promise<Observation | undefined> {
-    const result = await this.databaseService.getQuery<FHIRObservation>(
+  ): Promise<ObservationQuantity | undefined> {
+    const result = await this.databaseService.getQuery<FhirObservation>(
       (collections) =>
         collections
           .userObservations(userId, UserObservationCollection.dryWeight)
@@ -308,8 +308,8 @@ export class DatabasePatientService implements PatientService {
 
   async getMostRecentEstimatedGlomerularFiltrationRateObservation(
     userId: string,
-  ): Promise<Observation | undefined> {
-    const result = await this.databaseService.getQuery<FHIRObservation>(
+  ): Promise<ObservationQuantity | undefined> {
+    const result = await this.databaseService.getQuery<FhirObservation>(
       (collections) =>
         collections
           .userObservations(userId, UserObservationCollection.eGfr)
@@ -321,8 +321,8 @@ export class DatabasePatientService implements PatientService {
 
   async getMostRecentPotassiumObservation(
     userId: string,
-  ): Promise<Observation | undefined> {
-    const result = await this.databaseService.getQuery<FHIRObservation>(
+  ): Promise<ObservationQuantity | undefined> {
+    const result = await this.databaseService.getQuery<FhirObservation>(
       (collections) =>
         collections
           .userObservations(userId, UserObservationCollection.potassium)
@@ -335,18 +335,18 @@ export class DatabasePatientService implements PatientService {
   async createObservations(
     userId: string,
     values: Array<{
-      observation: Observation;
+      observation: ObservationQuantity;
       loincCode: LoincCode;
       collection: UserObservationCollection;
     }>,
-    reference: FHIRReference | null,
+    reference: Reference | null,
   ): Promise<void> {
     await this.databaseService.runTransaction((collections, transaction) => {
       for (const value of values) {
         const ref = collections
           .userObservations(userId, value.collection)
           .doc();
-        const fhirObservation = FHIRObservation.createSimple({
+        const fhirObservation = FhirObservation.createSimple({
           id: ref.id,
           date: value.observation.date,
           value: value.observation.value,
@@ -363,8 +363,8 @@ export class DatabasePatientService implements PatientService {
 
   async getQuestionnaireResponses(
     userId: string,
-  ): Promise<Array<Document<FHIRQuestionnaireResponse>>> {
-    return this.databaseService.getQuery<FHIRQuestionnaireResponse>(
+  ): Promise<Array<Document<FhirQuestionnaireResponse>>> {
+    return this.databaseService.getQuery<FhirQuestionnaireResponse>(
       (collections) => collections.userQuestionnaireResponses(userId),
     );
   }

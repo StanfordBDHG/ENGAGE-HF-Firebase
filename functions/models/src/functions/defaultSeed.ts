@@ -34,13 +34,13 @@ export enum UserDebugDataComponent {
 }
 
 export const defaultSeedInputSchema = z.object({
-  date: dateTimeConverter.schema.default(new Date().toISOString()),
+  date: dateTimeConverter.schema.default(new Date()),
   only: optionalishDefault(
-    z.nativeEnum(DebugDataComponent).array(),
+    z.enum(DebugDataComponent).array(),
     Object.values(DebugDataComponent),
   ),
   onlyUserCollections: optionalishDefault(
-    z.nativeEnum(UserDebugDataComponent).array(),
+    z.enum(UserDebugDataComponent).array(),
     Object.values(UserDebugDataComponent),
   ),
   staticData: optionalish(updateStaticDataInputSchema),
@@ -49,7 +49,7 @@ export const defaultSeedInputSchema = z.object({
       .object({
         userId: z.string(),
         only: optionalishDefault(
-          z.nativeEnum(UserDebugDataComponent).array(),
+          z.enum(UserDebugDataComponent).array(),
           Object.values(UserDebugDataComponent),
         ),
       })

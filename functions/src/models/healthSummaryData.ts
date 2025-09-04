@@ -10,8 +10,8 @@ import {
   advanceDateByDays,
   median,
   UserMedicationRecommendationType,
-  type FHIRAppointment,
-  type Observation,
+  type FhirAppointment,
+  type ObservationQuantity,
   type SymptomScore,
   type UserMedicationRecommendation,
 } from "@stanfordbdhg/engagehf-models";
@@ -23,12 +23,12 @@ import {
 } from "../healthSummary/keyPointsMessage.js";
 
 export interface HealthSummaryVitals {
-  systolicBloodPressure: Observation[];
-  diastolicBloodPressure: Observation[];
-  heartRate: Observation[];
-  bodyWeight: Observation[];
+  systolicBloodPressure: ObservationQuantity[];
+  diastolicBloodPressure: ObservationQuantity[];
+  heartRate: ObservationQuantity[];
+  bodyWeight: ObservationQuantity[];
 
-  dryWeight?: Observation;
+  dryWeight?: ObservationQuantity;
 }
 
 export class HealthSummaryData {
@@ -37,7 +37,7 @@ export class HealthSummaryData {
   name?: string;
   dateOfBirth?: Date;
   providerName?: string;
-  nextAppointment?: FHIRAppointment;
+  nextAppointment?: FhirAppointment;
   recommendations: UserMedicationRecommendation[];
   vitals: HealthSummaryVitals;
   symptomScores: SymptomScore[];
@@ -167,7 +167,7 @@ export class HealthSummaryData {
     name?: string;
     dateOfBirth?: Date;
     providerName?: string;
-    nextAppointment?: FHIRAppointment;
+    nextAppointment?: FhirAppointment;
     recommendations: UserMedicationRecommendation[];
     vitals: HealthSummaryVitals;
     symptomScores: SymptomScore[];

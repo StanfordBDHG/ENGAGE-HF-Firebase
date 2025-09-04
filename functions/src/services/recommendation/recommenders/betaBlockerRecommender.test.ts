@@ -9,7 +9,7 @@
 import {
   CachingStrategy,
   DrugReference,
-  FHIRMedicationRequest,
+  FhirMedicationRequest,
   type MedicationClassReference,
   MedicationReference,
   SymptomScore,
@@ -194,7 +194,7 @@ describe("BetaBlockerRecommender", () => {
   describe("Existing treatment: Bisoprolol", () => {
     let contextBelowTarget: MedicationRequestContext;
     beforeAll(async () => {
-      const request = FHIRMedicationRequest.create({
+      const request = FhirMedicationRequest.create({
         medicationReference: DrugReference.bisoprolol5,
         frequencyPerDay: 1,
         quantity: 1,
@@ -208,7 +208,7 @@ describe("BetaBlockerRecommender", () => {
     });
 
     it("states that it hit target dose", async () => {
-      const request = FHIRMedicationRequest.create({
+      const request = FhirMedicationRequest.create({
         medicationReference: DrugReference.bisoprolol5,
         frequencyPerDay: 1,
         quantity: 2,

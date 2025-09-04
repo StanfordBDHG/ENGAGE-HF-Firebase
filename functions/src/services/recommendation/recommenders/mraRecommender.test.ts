@@ -9,7 +9,7 @@
 import {
   CachingStrategy,
   DrugReference,
-  FHIRMedicationRequest,
+  FhirMedicationRequest,
   type MedicationClassReference,
   MedicationReference,
   QuantityUnit,
@@ -162,7 +162,7 @@ describe("MraRecommender", () => {
   describe("Existing treatment: Eplerenone", () => {
     let contextBelowTarget: MedicationRequestContext;
     beforeAll(async () => {
-      const request = FHIRMedicationRequest.create({
+      const request = FhirMedicationRequest.create({
         medicationReference: DrugReference.eplerenone25,
         frequencyPerDay: 1,
         quantity: 1,
@@ -176,7 +176,7 @@ describe("MraRecommender", () => {
     });
 
     it("states that target dose is reached", async () => {
-      const request = FHIRMedicationRequest.create({
+      const request = FhirMedicationRequest.create({
         medicationReference: DrugReference.eplerenone25,
         frequencyPerDay: 2,
         quantity: 1,

@@ -6,7 +6,10 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { type Observation, QuantityUnit } from "@stanfordbdhg/engagehf-models";
+import {
+  type ObservationQuantity,
+  QuantityUnit,
+} from "@stanfordbdhg/engagehf-models";
 import { type RecommendationVitals } from "../../services/recommendation/recommendationService.js";
 
 export function mockRecommendationVitals(options: {
@@ -25,7 +28,7 @@ export function mockRecommendationVitals(options: {
     systolicBloodPressure: [
       ...Array.from(
         { length: options.countBloodPressureBelow85 },
-        (_): Observation => ({
+        (_): ObservationQuantity => ({
           date: new Date(),
           value: 84,
           unit: QuantityUnit.mmHg,

@@ -7,19 +7,19 @@
 //
 
 import {
-  type Observation,
+  type ObservationQuantity,
   type QuantityUnit,
-  type FHIRAllergyIntolerance,
-  type FHIRAppointment,
-  type FHIRMedicationRequest,
-  type FHIRQuestionnaireResponse,
+  type FhirAllergyIntolerance,
+  type FhirAppointment,
+  type FhirMedicationRequest,
+  type FhirQuestionnaireResponse,
   type SymptomScore,
   type UserMedicationRecommendation,
   type UserShareCode,
   type UserObservationCollection,
   type LoincCode,
-  type FHIRReference,
 } from "@stanfordbdhg/engagehf-models";
+import { type Reference } from "fhir/r4b.js";
 import { type Document } from "../database/databaseService.js";
 
 export interface PatientService {
@@ -28,33 +28,33 @@ export interface PatientService {
   getEveryAppoinment(
     fromDate: Date,
     toDate: Date,
-  ): Promise<Array<Document<FHIRAppointment>>>;
+  ): Promise<Array<Document<FhirAppointment>>>;
 
-  getAppointments(userId: string): Promise<Array<Document<FHIRAppointment>>>;
+  getAppointments(userId: string): Promise<Array<Document<FhirAppointment>>>;
   getNextAppointment(
     userId: string,
-  ): Promise<Document<FHIRAppointment> | undefined>;
+  ): Promise<Document<FhirAppointment> | undefined>;
 
   createAppointment(
     userId: string,
-    appointment: FHIRAppointment,
+    appointment: FhirAppointment,
   ): Promise<void>;
 
   // Contraindications
 
   getContraindications(
     userId: string,
-  ): Promise<Array<Document<FHIRAllergyIntolerance>>>;
+  ): Promise<Array<Document<FhirAllergyIntolerance>>>;
 
   // Medication Requests
 
   getMedicationRequests(
     userId: string,
-  ): Promise<Array<Document<FHIRMedicationRequest>>>;
+  ): Promise<Array<Document<FhirMedicationRequest>>>;
   replaceMedicationRequests(
     userId: string,
-    values: FHIRMedicationRequest[],
-    keepUnchanged?: (request: Document<FHIRMedicationRequest>) => boolean,
+    values: FhirMedicationRequest[],
+    keepUnchanged?: (request: Document<FhirMedicationRequest>) => boolean,
   ): Promise<void>;
 
   getMedicationRecommendations(
@@ -70,46 +70,46 @@ export interface PatientService {
   getBloodPressureObservations(
     userId: string,
     cutoffDate: Date,
-  ): Promise<[Observation[], Observation[]]>;
+  ): Promise<[ObservationQuantity[], ObservationQuantity[]]>;
   getBodyWeightObservations(
     userId: string,
     unit: QuantityUnit,
     cutoffDate: Date,
-  ): Promise<Observation[]>;
+  ): Promise<ObservationQuantity[]>;
   getHeartRateObservations(
     userId: string,
     cutoffDate: Date,
-  ): Promise<Observation[]>;
+  ): Promise<ObservationQuantity[]>;
 
   getMostRecentCreatinineObservation(
     userId: string,
-  ): Promise<Observation | undefined>;
+  ): Promise<ObservationQuantity | undefined>;
   getMostRecentDryWeightObservation(
     userId: string,
     unit: QuantityUnit,
-  ): Promise<Observation | undefined>;
+  ): Promise<ObservationQuantity | undefined>;
   getMostRecentEstimatedGlomerularFiltrationRateObservation(
     userId: string,
-  ): Promise<Observation | undefined>;
+  ): Promise<ObservationQuantity | undefined>;
   getMostRecentPotassiumObservation(
     userId: string,
-  ): Promise<Observation | undefined>;
+  ): Promise<ObservationQuantity | undefined>;
 
   createObservations(
     userId: string,
     values: Array<{
-      observation: Observation;
+      observation: ObservationQuantity;
       loincCode: LoincCode;
       collection: UserObservationCollection;
     }>,
-    reference: FHIRReference | null,
+    reference: Reference | null,
   ): Promise<void>;
 
   // Questionnaire Responses
 
   getQuestionnaireResponses(
     userId: string,
-  ): Promise<Array<Document<FHIRQuestionnaireResponse>>>;
+  ): Promise<Array<Document<FhirQuestionnaireResponse>>>;
   getSymptomScores(
     userId: string,
     options?: { limit?: number },

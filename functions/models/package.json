@@ -22,7 +22,7 @@
   ],
   "main": "lib/index.js",
   "dependencies": {
-    "zod": "^3.23.8"
+    "@stanfordspezi/spezi-firebase-fhir": "^0.1.8"
   },
   "devDependencies": {
     "@stanfordspezi/spezi-web-configurations": "^0.6.0",
@@ -32,6 +32,7 @@
     "prettier": "^3.6",
     "ts-jest": "^29",
     "ts-node": "^10.9",
-    "typescript": "^5"
+    "typescript": "^5",
+    "typescript-eslint": "^8.26"
   }
 }

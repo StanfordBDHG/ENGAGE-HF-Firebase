@@ -7,14 +7,14 @@
 //
 
 import {
-  FHIRQuestionnaireResponse,
+  FhirQuestionnaireResponse,
   type SymptomQuestionnaireResponse,
 } from "@stanfordbdhg/engagehf-models";
 import { QuestionnaireLinkId } from "../seeding/staticData/questionnaireFactory/questionnaireLinkIds.js";
 
 export function createKccqQuestionnaireResponse(
   input: SymptomQuestionnaireResponse,
-): FHIRQuestionnaireResponse {
+): FhirQuestionnaireResponse {
   const linkIds = QuestionnaireLinkId.kccq;
 
   const items: Record<string, number> = {
@@ -33,10 +33,12 @@ export function createKccqQuestionnaireResponse(
     [linkIds.question9]: input.answer9,
   };
 
-  return new FHIRQuestionnaireResponse({
+  return new FhirQuestionnaireResponse({
+    resourceType: "QuestionnaireResponse",
     id: input.questionnaireResponse,
+    status: "completed",
     questionnaire: input.questionnaire,
-    authored: input.date,
+    authored: input.date.toISOString(),
     item: Object.entries(items).map((entry) => ({
       linkId: entry[0],
       answer: [

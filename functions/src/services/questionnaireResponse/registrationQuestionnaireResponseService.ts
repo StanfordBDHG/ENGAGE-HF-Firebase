@@ -8,7 +8,7 @@
 
 import {
   UserMessageType,
-  type FHIRQuestionnaireResponse,
+  type FhirQuestionnaireResponse,
 } from "@stanfordbdhg/engagehf-models";
 import { logger } from "firebase-functions/v2";
 import { QuestionnaireResponseService } from "./questionnaireResponseService.js";
@@ -49,13 +49,13 @@ export class RegistrationQuestionnaireResponseService extends QuestionnaireRespo
 
   async handle(
     userId: string,
-    response: Document<FHIRQuestionnaireResponse>,
+    response: Document<FhirQuestionnaireResponse>,
     options: { isNew: boolean },
   ): Promise<boolean> {
     const urls = [QuestionnaireLinkId.url(QuestionnaireId.registration)];
-    if (!urls.includes(response.content.questionnaire)) {
+    if (!urls.includes(response.content.value.questionnaire ?? "")) {
       logger.info(
-        `${this.constructor.name}.handle(${userId}): Url ${response.content.questionnaire} is not a registration questionnaire, skipping.`,
+        `${this.constructor.name}.handle(${userId}): Url ${response.content.value.questionnaire} is not a registration questionnaire, skipping.`,
       );
       return false;
     }

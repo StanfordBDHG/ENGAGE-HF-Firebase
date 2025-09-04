@@ -10,7 +10,7 @@ import {
   percentage,
   presortedMedian,
   presortedPercentile,
-  type Observation,
+  type ObservationQuantity,
   UserMedicationRecommendationType,
 } from "@stanfordbdhg/engagehf-models";
 import { logger } from "firebase-functions";
@@ -105,7 +105,7 @@ class HealthSummaryPdfGenerator extends PdfGenerator {
       this.localizer.text("headerProvider", this.data.providerName ?? "---"),
     );
     const appointment = this.data.nextAppointment;
-    const date = appointment?.start;
+    const date = appointment?.startDate;
     const providerNames = appointment?.providerNames ?? [];
     const providerText =
       providerNames.length === 0 ? "" : providerNames.join(", ") + " ";
@@ -498,7 +498,11 @@ class HealthSummaryPdfGenerator extends PdfGenerator {
 
   // Helpers - PDF Generation
 
-  private addChart(data: Observation[], maxWidth?: number, baseline?: number) {
+  private addChart(
+    data: ObservationQuantity[],
+    maxWidth?: number,
+    baseline?: number,
+  ) {
     const width =
       maxWidth ?? this.pageWidth - this.cursor.x - this.margins.right;
     const height = width * (9 / 16);

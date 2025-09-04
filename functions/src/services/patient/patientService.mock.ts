@@ -9,20 +9,19 @@
 import {
   advanceDateByDays,
   DrugReference,
-  type FHIRAllergyIntolerance,
-  FHIRAppointment,
-  FHIRAppointmentStatus,
-  FHIRMedicationRequest,
-  type FHIRQuestionnaireResponse,
-  type FHIRReference,
+  type FhirAllergyIntolerance,
+  FhirAppointment,
+  FhirMedicationRequest,
+  type FhirQuestionnaireResponse,
   type LoincCode,
-  type Observation,
+  type ObservationQuantity,
   QuantityUnit,
   SymptomScore,
   type UserMedicationRecommendation,
   type UserObservationCollection,
   type UserShareCode,
 } from "@stanfordbdhg/engagehf-models";
+import { type Reference } from "fhir/r4b.js";
 import { type PatientService } from "./patientService.js";
 import { mockQuestionnaireResponse } from "../../tests/mocks/questionnaireResponse.js";
 import { type Document } from "../database/databaseService.js";
@@ -46,24 +45,24 @@ export class MockPatientService implements PatientService {
   async getEveryAppoinment(
     fromDate: Date,
     toDate: Date,
-  ): Promise<Array<Document<FHIRAppointment>>> {
+  ): Promise<Array<Document<FhirAppointment>>> {
     return [];
   }
   async getAppointments(
     userId: string,
-  ): Promise<Array<Document<FHIRAppointment>>> {
+  ): Promise<Array<Document<FhirAppointment>>> {
     return [];
   }
   async getNextAppointment(
     userId: string,
-  ): Promise<Document<FHIRAppointment> | undefined> {
+  ): Promise<Document<FhirAppointment> | undefined> {
     return {
       id: "123",
       lastUpdate: new Date(),
       path: `users/${userId}/appointments/123`,
-      content: FHIRAppointment.create({
+      content: FhirAppointment.create({
         userId,
-        status: FHIRAppointmentStatus.booked,
+        status: "booked",
         created: advanceDateByDays(this.startDate, -10),
         start: advanceDateByDays(this.startDate, 1),
         durationInMinutes: 60,
@@ -73,7 +72,7 @@ export class MockPatientService implements PatientService {
 
   async createAppointment(
     userId: string,
-    appointment: FHIRAppointment,
+    appointment: FhirAppointment,
   ): Promise<void> {
     return;
   }
@@ -82,7 +81,7 @@ export class MockPatientService implements PatientService {
 
   async getContraindications(
     userId: string,
-  ): Promise<Array<Document<FHIRAllergyIntolerance>>> {
+  ): Promise<Array<Document<FhirAllergyIntolerance>>> {
     return [];
   }
 
@@ -90,9 +89,9 @@ export class MockPatientService implements PatientService {
 
   async getMedicationRequests(
     userId: string,
-  ): Promise<Array<Document<FHIRMedicationRequest>>> {
-    const values: FHIRMedicationRequest[] = [
-      FHIRMedicationRequest.create({
+  ): Promise<Array<Document<FhirMedicationRequest>>> {
+    const values: FhirMedicationRequest[] = [
+      FhirMedicationRequest.create({
         medicationReference: DrugReference.carvedilol3_125,
         frequencyPerDay: 1,
         quantity: 2,
@@ -108,8 +107,8 @@ export class MockPatientService implements PatientService {
 
   async replaceMedicationRequests(
     userId: string,
-    values: FHIRMedicationRequest[],
-    keepUnchanged?: (request: Document<FHIRMedicationRequest>) => boolean,
+    values: FhirMedicationRequest[],
+    keepUnchanged?: (request: Document<FhirMedicationRequest>) => boolean,
   ): Promise<void> {
     return;
   }
@@ -137,7 +136,7 @@ export class MockPatientService implements PatientService {
 
   async getBloodPressureObservations(
     userId: string,
-  ): Promise<[Observation[], Observation[]]> {
+  ): Promise<[ObservationQuantity[], ObservationQuantity[]]> {
     const values = [
       this.bloodPressureObservations(110, 70, new Date(2024, 1, 30, 12, 30)),
       this.bloodPressureObservations(114, 82, new Date(2024, 1, 29, 12, 30)),
@@ -156,7 +155,7 @@ export class MockPatientService implements PatientService {
     systolicBloodPressure: number,
     diastolicBloodPressure: number,
     date: Date,
-  ): [Observation, Observation] {
+  ): [ObservationQuantity, ObservationQuantity] {
     return [
       {
         value: systolicBloodPressure,
@@ -171,7 +170,9 @@ export class MockPatientService implements PatientService {
     ];
   }
 
-  async getBodyWeightObservations(userId: string): Promise<Observation[]> {
+  async getBodyWeightObservations(
+    userId: string,
+  ): Promise<ObservationQuantity[]> {
     return [
       this.bodyWeightObservation(
         269,
@@ -225,7 +226,7 @@ export class MockPatientService implements PatientService {
     value: number,
     unit: QuantityUnit,
     date: Date,
-  ): Observation {
+  ): ObservationQuantity {
     return {
       date: date,
       value: value,
@@ -233,7 +234,9 @@ export class MockPatientService implements PatientService {
     };
   }
 
-  async getHeartRateObservations(userId: string): Promise<Observation[]> {
+  async getHeartRateObservations(
+    userId: string,
+  ): Promise<ObservationQuantity[]> {
     return [
       this.heartRateObservation(79, new Date(2024, 1, 30, 12, 30)),
       this.heartRateObservation(62, new Date(2024, 1, 29, 12, 30)),
@@ -247,7 +250,7 @@ export class MockPatientService implements PatientService {
     ];
   }
 
-  private heartRateObservation(value: number, date: Date): Observation {
+  private heartRateObservation(value: number, date: Date): ObservationQuantity {
     return {
       date: date,
       value: value,
@@ -257,7 +260,7 @@ export class MockPatientService implements PatientService {
 
   async getMostRecentCreatinineObservation(
     userId: string,
-  ): Promise<Observation | undefined> {
+  ): Promise<ObservationQuantity | undefined> {
     return {
       date: new Date("2024-01-29"),
       value: 1.1,
@@ -268,7 +271,7 @@ export class MockPatientService implements PatientService {
   async getMostRecentDryWeightObservation(
     userId: string,
     unit: QuantityUnit,
-  ): Promise<Observation | undefined> {
+  ): Promise<ObservationQuantity | undefined> {
     return {
       date: new Date(2024, 1, 27, 12, 30),
       value: 267.5,
@@ -277,7 +280,7 @@ export class MockPatientService implements PatientService {
   }
 
   async getMostRecentEstimatedGlomerularFiltrationRateObservation(): Promise<
-    Observation | undefined
+    ObservationQuantity | undefined
   > {
     return {
       date: new Date("2024-01-29"),
@@ -286,7 +289,9 @@ export class MockPatientService implements PatientService {
     };
   }
 
-  async getMostRecentPotassiumObservation(): Promise<Observation | undefined> {
+  async getMostRecentPotassiumObservation(): Promise<
+    ObservationQuantity | undefined
+  > {
     return {
       date: new Date("2024-01-29"),
       unit: QuantityUnit.mEq_L,
@@ -297,11 +302,11 @@ export class MockPatientService implements PatientService {
   async createObservations(
     userId: string,
     values: Array<{
-      observation: Observation;
+      observation: ObservationQuantity;
       loincCode: LoincCode;
       collection: UserObservationCollection;
     }>,
-    reference: FHIRReference | null,
+    reference: Reference | null,
   ): Promise<void> {
     return;
   }
@@ -310,7 +315,7 @@ export class MockPatientService implements PatientService {
 
   async getQuestionnaireResponses(
     userId: string,
-  ): Promise<Array<Document<FHIRQuestionnaireResponse>>> {
+  ): Promise<Array<Document<FhirQuestionnaireResponse>>> {
     return [mockQuestionnaireResponse()].map((value, index) => ({
       id: index.toString(),
       lastUpdate: new Date(),

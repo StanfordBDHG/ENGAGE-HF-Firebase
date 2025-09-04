@@ -6,16 +6,20 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { type SchemaConverter } from "@stanfordbdhg/engagehf-models";
+import {
+  type GenericFhirSchemaConverter,
+  type FhirSchemaConverter,
+  type SchemaConverter,
+} from "@stanfordbdhg/engagehf-models";
 import {
   type DocumentData,
   type DocumentSnapshot,
   type FirestoreDataConverter,
 } from "firebase-admin/firestore";
 import { logger } from "firebase-functions";
-import { type z } from "zod";
+import { type ZodType, type z } from "zod";
 
-export class DatabaseConverter<Schema extends z.ZodTypeAny, Encoded>
+export class DatabaseConverter<Schema extends ZodType, Encoded>
   implements FirestoreDataConverter<z.output<Schema>>
 {
   // Properties
@@ -33,11 +37,10 @@ export class DatabaseConverter<Schema extends z.ZodTypeAny, Encoded>
   fromFirestore(snapshot: DocumentSnapshot): z.output<Schema> {
     const data = snapshot.data();
     try {
-      /* eslint-disable-next-line @typescript-eslint/no-unsafe-return */
-      return this.converter.schema.parse(data) as z.output<Schema>;
+      return this.converter.schema.parse(data);
     } catch (error) {
       logger.error(
-        `DatabaseDecoder(${this.converter.schema._output}): Failed to decode object ${JSON.stringify(data)} due to ${String(error)}.`,
+        `DatabaseDecoder: Failed to decode object ${JSON.stringify(data)} due to ${String(error)}.`,
       );
       throw error;
     }
@@ -48,7 +51,51 @@ export class DatabaseConverter<Schema extends z.ZodTypeAny, Encoded>
       return this.converter.encode(modelObject) as DocumentData;
     } catch (error) {
       logger.error(
-        `DatabaseDecoder(${typeof modelObject}): Failed to encode object ${modelObject} due to ${String(error)}.`,
+        `DatabaseDecoder(${typeof modelObject}): Failed to encode object ${JSON.stringify(modelObject)} due to ${String(error)}.`,
+      );
+      throw error;
+    }
+  }
+}
+
+type FhirSchemaConverterResourceType<C> =
+  C extends FhirSchemaConverter<infer R> ? R : never;
+
+export class FhirDatabaseConverter<C extends GenericFhirSchemaConverter>
+  implements FirestoreDataConverter<FhirSchemaConverterResourceType<C>>
+{
+  // Properties
+
+  private readonly converter: C;
+
+  // Constructor
+
+  constructor(converter: C) {
+    this.converter = converter;
+  }
+
+  // Methods
+
+  fromFirestore(
+    snapshot: DocumentSnapshot,
+  ): FhirSchemaConverterResourceType<C> {
+    const data = snapshot.data();
+    try {
+      return this.converter.decode(data) as FhirSchemaConverterResourceType<C>;
+    } catch (error) {
+      logger.error(
+        `DatabaseDecoder: Failed to decode object ${JSON.stringify(data)} due to ${String(error)}.`,
+      );
+      throw error;
+    }
+  }
+
+  toFirestore(modelObject: FhirSchemaConverterResourceType<C>): DocumentData {
+    try {
+      return this.converter.encode(modelObject) as DocumentData;
+    } catch (error) {
+      logger.error(
+        `DatabaseDecoder(${typeof modelObject}): Failed to encode object ${JSON.stringify(modelObject)} due to ${String(error)}.`,
       );
       throw error;
     }

@@ -6,11 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import {
-  FHIRAppointment,
-  FHIRAppointmentStatus,
-  UserType,
-} from "@stanfordbdhg/engagehf-models";
+import { FhirAppointment, UserType } from "@stanfordbdhg/engagehf-models";
 import { deleteUser } from "./deleteUser.js";
 import { describeWithEmulators } from "../tests/functions/testEnvironment.js";
 import { expectError } from "../tests/helpers.js";
@@ -68,11 +64,20 @@ describeWithEmulators("function: deleteUser", (env) => {
       organization: "stanford",
     });
 
-    const appointment = new FHIRAppointment({
-      status: FHIRAppointmentStatus.booked,
-      created: new Date("2020-01-01"),
-      start: new Date("2020-01-01"),
-      end: new Date("2020-01-01"),
+    const appointment = new FhirAppointment({
+      resourceType: "Appointment",
+      status: "booked",
+      created: new Date("2020-01-01").toISOString(),
+      start: new Date("2020-01-01").toISOString(),
+      end: new Date("2020-01-01").toISOString(),
+      participant: [
+        {
+          status: "accepted",
+          actor: {
+            reference: `users/${userId}`,
+          },
+        },
+      ],
     });
     const appointmentRef = env.collections.userAppointments(userId).doc();
     await appointmentRef.set(appointment);

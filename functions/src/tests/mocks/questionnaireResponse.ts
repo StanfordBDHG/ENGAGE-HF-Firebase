@@ -6,14 +6,14 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { type FHIRQuestionnaireResponse } from "@stanfordbdhg/engagehf-models";
+import { type FhirQuestionnaireResponse } from "@stanfordbdhg/engagehf-models";
 import { createKccqQuestionnaireResponse } from "../../services/questionnaireResponse/createKccqQuestionnaireResponse.js";
 import {
   QuestionnaireId,
   QuestionnaireLinkId,
 } from "../../services/seeding/staticData/questionnaireFactory/questionnaireLinkIds.js";
 
-export function mockQuestionnaireResponse(): FHIRQuestionnaireResponse {
+export function mockQuestionnaireResponse(): FhirQuestionnaireResponse {
   return createKccqQuestionnaireResponse({
     questionnaire: QuestionnaireLinkId.url(QuestionnaireId.kccq),
     questionnaireResponse: "60193B69-B0F7-4708-8CCE-F3CB2936628D",

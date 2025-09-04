@@ -10,8 +10,8 @@ import {
   CodingSystem,
   DrugReference,
   FHIRExtensionUrl,
-  FHIRMedication,
-  FHIRMedicationRequest,
+  FhirMedication,
+  FhirMedicationRequest,
   LocalizedText,
   MedicationClass,
   MedicationClassReference,
@@ -55,7 +55,7 @@ describe("DiureticRecommender", () => {
           reference:
             "users/mockPatient/medicationRequests/mockMedicationRequest",
         },
-        request: FHIRMedicationRequest.create({
+        request: FhirMedicationRequest.create({
           medicationReference: DrugReference.furosemide20,
           medicationReferenceDisplay: "Furosemide 20mg Oral Tablet",
           frequencyPerDay: 1,
@@ -64,7 +64,8 @@ describe("DiureticRecommender", () => {
         drugReference: {
           reference: DrugReference.furosemide20,
         },
-        drug: new FHIRMedication({
+        drug: new FhirMedication({
+          resourceType: "Medication",
           code: {
             coding: [
               {
@@ -78,7 +79,8 @@ describe("DiureticRecommender", () => {
         medicationReference: {
           reference: MedicationReference.furosemide,
         },
-        medication: new FHIRMedication({
+        medication: new FhirMedication({
+          resourceType: "Medication",
           code: {
             coding: [
               {

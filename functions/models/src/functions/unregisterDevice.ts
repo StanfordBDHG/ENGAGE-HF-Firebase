@@ -11,7 +11,7 @@ import { UserDevicePlatform } from "../types/userDevice.js";
 
 export const unregisterDeviceInputSchema = z.object({
   notificationToken: z.string(),
-  platform: z.nativeEnum(UserDevicePlatform),
+  platform: z.enum(UserDevicePlatform),
 });
 export type UnregisterDeviceInput = z.input<typeof unregisterDeviceInputSchema>;
 

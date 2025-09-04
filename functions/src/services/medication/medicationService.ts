@@ -7,11 +7,11 @@
 //
 
 import {
-  type FHIRMedication,
-  type FHIRMedicationRequest,
-  type FHIRReference,
+  type FhirMedication,
+  type FhirMedicationRequest,
   type MedicationClass,
 } from "@stanfordbdhg/engagehf-models";
+import { type Reference } from "fhir/r4b.js";
 import { type MedicationRequestContext } from "../../models/medicationRequestContext.js";
 import { type Document } from "../database/databaseService.js";
 
@@ -19,7 +19,7 @@ export interface MedicationService {
   // Medication Request Context
 
   getContext(
-    request: Document<FHIRMedicationRequest>,
+    request: Document<FhirMedicationRequest>,
   ): Promise<MedicationRequestContext>;
 
   // Medication Classes
@@ -31,28 +31,28 @@ export interface MedicationService {
 
   // Medications
 
-  getMedications(): Promise<Array<Document<FHIRMedication>>>;
+  getMedications(): Promise<Array<Document<FhirMedication>>>;
 
   getMedication(
     medicationId: string,
-  ): Promise<Document<FHIRMedication> | undefined>;
+  ): Promise<Document<FhirMedication> | undefined>;
 
   // Drugs
 
-  getDrugs(medicationId: string): Promise<Array<Document<FHIRMedication>>>;
+  getDrugs(medicationId: string): Promise<Array<Document<FhirMedication>>>;
 
   getDrug(
     medicationId: string,
     drugId: string,
-  ): Promise<Document<FHIRMedication> | undefined>;
+  ): Promise<Document<FhirMedication> | undefined>;
 
   // References
 
   getClassReference(
-    reference: FHIRReference | undefined,
+    reference: Reference | undefined,
   ): Promise<Document<MedicationClass> | undefined>;
 
   getReference(
-    reference: FHIRReference | undefined,
-  ): Promise<Document<FHIRMedication> | undefined>;
+    reference: Reference | undefined,
+  ): Promise<Document<FhirMedication> | undefined>;
 }

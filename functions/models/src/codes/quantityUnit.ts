@@ -6,8 +6,8 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { type FHIRQuantity } from "../fhir/baseTypes/fhirQuantity.js";
-import { type Observation } from "../types/observation.js";
+import { type Quantity } from "fhir/r4b.js";
+import { type ObservationQuantity } from "../types/observationQuantity.js";
 
 export class QuantityUnit {
   // Static Properties
@@ -57,7 +57,7 @@ export class QuantityUnit {
 
   // Methods
 
-  isUsedIn(other: FHIRQuantity): boolean {
+  isUsedIn(other: Quantity): boolean {
     return (
       this.code === other.code &&
       this.system === other.system &&
@@ -73,7 +73,7 @@ export class QuantityUnit {
     );
   }
 
-  convert(observation: Observation): Observation | undefined {
+  convert(observation: ObservationQuantity): ObservationQuantity | undefined {
     const value = QuantityUnitConverter.allValues
       .find(
         (converter) =>
@@ -86,7 +86,7 @@ export class QuantityUnit {
       : undefined;
   }
 
-  fhirQuantity(value: number): FHIRQuantity {
+  fhirQuantity(value: number): Quantity {
     return {
       system: this.system,
       code: this.code,
@@ -95,7 +95,7 @@ export class QuantityUnit {
     };
   }
 
-  valueOf(quantity: FHIRQuantity | undefined): number | undefined {
+  valueOf(quantity: Quantity | undefined): number | undefined {
     if (!quantity?.value) return undefined;
     if (this.isUsedIn(quantity)) return quantity.value;
 

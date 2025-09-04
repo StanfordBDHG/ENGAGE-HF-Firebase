@@ -17,11 +17,11 @@ import {
   onRequest,
   type Request,
 } from "firebase-functions/v2/https";
-import { z } from "zod";
+import { z, type ZodType } from "zod";
 
 export const serviceAccount = `cloudfunctionsserviceaccount@${process.env.GCLOUD_PROJECT}.iam.gserviceaccount.com`;
 
-export function validatedOnCall<Schema extends z.ZodTypeAny, Return, Stream>(
+export function validatedOnCall<Schema extends ZodType, Return, Stream>(
   name: string,
   schema: Schema,
   handler: (request: CallableRequest<z.output<Schema>>) => Promise<Return>,
@@ -38,8 +38,9 @@ export function validatedOnCall<Schema extends z.ZodTypeAny, Return, Stream>(
         logger.debug(
           `onCall(${name}) from user '${request.auth?.uid}' with '${JSON.stringify(request.data)}'`,
         );
-        request.data = schema.parse(request.data) as z.output<Schema>;
-        return await handler(request as CallableRequest<z.output<Schema>>);
+        const validatedRequest = request as CallableRequest<z.output<Schema>>;
+        validatedRequest.data = schema.parse(request.data);
+        return await handler(validatedRequest);
       } catch (error) {
         logger.debug(
           `onCall(${name}) from user '${request.auth?.uid}' failed with '${String(error)}'.`,
@@ -48,7 +49,7 @@ export function validatedOnCall<Schema extends z.ZodTypeAny, Return, Stream>(
           throw new https.HttpsError(
             "invalid-argument",
             "Invalid request data",
-            error.errors,
+            error.issues,
           );
         }
         throw error;
@@ -57,7 +58,7 @@ export function validatedOnCall<Schema extends z.ZodTypeAny, Return, Stream>(
   );
 }
 
-export function validatedOnRequest<Schema extends z.ZodTypeAny>(
+export function validatedOnRequest<Schema extends ZodType>(
   name: string,
   schema: Schema,
   handler: (
@@ -85,7 +86,7 @@ export function validatedOnRequest<Schema extends z.ZodTypeAny>(
           response.status(400).send({
             code: "invalid-argument",
             message: "Invalid request data",
-            details: error.errors,
+            details: error.issues,
           });
           return;
         }

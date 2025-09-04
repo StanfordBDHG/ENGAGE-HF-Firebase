@@ -6,6 +6,16 @@
 // SPDX-License-Identifier: MIT
 //
 
+export enum UserObservationCollection {
+  bodyWeight = "bodyWeightObservations",
+  bloodPressure = "bloodPressureObservations",
+  creatinine = "creatinineObservations",
+  dryWeight = "dryWeightObservations",
+  eGfr = "eGfrObservations",
+  heartRate = "heartRateObservations",
+  potassium = "potassiumObservations",
+}
+
 export enum MedicationClassReference {
   betaBlockers = "medicationClasses/0",
   sglt2inhibitors = "medicationClasses/1",

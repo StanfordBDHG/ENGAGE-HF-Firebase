@@ -1,8 +1,8 @@
 {
   "1808": {
     "197417": {
-      "id": "197417",
       "resourceType": "Medication",
+      "id": "197417",
       "code": {
         "coding": [
           {
@@ -11,6 +11,16 @@
             "display": "Bumetanide (Oral Pill)"
           }
         ]
+      },
+      "form": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "Oral Tablet",
+            "display": "Oral Tablet"
+          }
+        ],
+        "text": "Oral Tablet"
       },
       "ingredient": [
         {
@@ -35,7 +45,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "197418": {
+      "resourceType": "Medication",
+      "id": "197418",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "197418",
+            "display": "Bumetanide (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -45,19 +68,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "197418": {
-      "id": "197418",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "197418",
-            "display": "Bumetanide (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -82,7 +92,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "197419": {
+      "resourceType": "Medication",
+      "id": "197419",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "197419",
+            "display": "Bumetanide (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -92,19 +115,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "197419": {
-      "id": "197419",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "197419",
-            "display": "Bumetanide (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -129,7 +139,22 @@
             }
           }
         }
-      ],
+      ]
+    }
+  },
+  "1998": {
+    "308962": {
+      "resourceType": "Medication",
+      "id": "308962",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "308962",
+            "display": "Captopril (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -139,21 +164,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    }
-  },
-  "1998": {
-    "308962": {
-      "id": "308962",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "308962",
-            "display": "Captopril (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -178,7 +188,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "308963": {
+      "resourceType": "Medication",
+      "id": "308963",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "308963",
+            "display": "Captopril (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -188,19 +211,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "308963": {
-      "id": "308963",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "308963",
-            "display": "Captopril (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -225,7 +235,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "308964": {
+      "resourceType": "Medication",
+      "id": "308964",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "308964",
+            "display": "Captopril (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -235,19 +258,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "308964": {
-      "id": "308964",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "308964",
-            "display": "Captopril (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -272,7 +282,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "317173": {
+      "resourceType": "Medication",
+      "id": "317173",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "317173",
+            "display": "Captopril (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -282,19 +305,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "317173": {
-      "id": "317173",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "317173",
-            "display": "Captopril (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -319,7 +329,22 @@
             }
           }
         }
-      ],
+      ]
+    }
+  },
+  "3827": {
+    "858804": {
+      "resourceType": "Medication",
+      "id": "858804",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "858804",
+            "display": "Enalapril (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -329,21 +354,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    }
-  },
-  "3827": {
-    "858804": {
-      "id": "858804",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "858804",
-            "display": "Enalapril (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -368,7 +378,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "858810": {
+      "resourceType": "Medication",
+      "id": "858810",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "858810",
+            "display": "Enalapril (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -378,19 +401,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "858810": {
-      "id": "858810",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "858810",
-            "display": "Enalapril (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -415,7 +425,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "858813": {
+      "resourceType": "Medication",
+      "id": "858813",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "858813",
+            "display": "Enalapril (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -425,19 +448,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "858813": {
-      "id": "858813",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "858813",
-            "display": "Enalapril (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -462,7 +472,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "858817": {
+      "resourceType": "Medication",
+      "id": "858817",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "858817",
+            "display": "Enalapril (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -472,19 +495,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "858817": {
-      "id": "858817",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "858817",
-            "display": "Enalapril (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -509,7 +519,22 @@
             }
           }
         }
-      ],
+      ]
+    }
+  },
+  "4109": {
+    "1251903": {
+      "resourceType": "Medication",
+      "id": "1251903",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "1251903",
+            "display": "Ethacrynate (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -519,21 +544,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    }
-  },
-  "4109": {
-    "1251903": {
-      "id": "1251903",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "1251903",
-            "display": "Ethacrynate (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -558,7 +568,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "1251907": {
+      "resourceType": "Medication",
+      "id": "1251907",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "1251907",
+            "display": "Ethacrynate (Oral Tablet)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -568,19 +591,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "1251907": {
-      "id": "1251907",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "1251907",
-            "display": "Ethacrynate (Oral Tablet)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -605,7 +615,22 @@
             }
           }
         }
-      ],
+      ]
+    }
+  },
+  "4603": {
+    "197732": {
+      "resourceType": "Medication",
+      "id": "197732",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "197732",
+            "display": "Furosemide (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -615,21 +640,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    }
-  },
-  "4603": {
-    "197732": {
-      "id": "197732",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "197732",
-            "display": "Furosemide (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -654,7 +664,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "310429": {
+      "resourceType": "Medication",
+      "id": "310429",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "310429",
+            "display": "Furosemide (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -664,19 +687,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "310429": {
-      "id": "310429",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "310429",
-            "display": "Furosemide (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -701,7 +711,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "313988": {
+      "resourceType": "Medication",
+      "id": "313988",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "313988",
+            "display": "Furosemide (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -711,19 +734,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "313988": {
-      "id": "313988",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "313988",
-            "display": "Furosemide (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -748,7 +758,22 @@
             }
           }
         }
-      ],
+      ]
+    }
+  },
+  "9997": {
+    "198222": {
+      "resourceType": "Medication",
+      "id": "198222",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "198222",
+            "display": "Spironolactone (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -758,21 +783,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    }
-  },
-  "9997": {
-    "198222": {
-      "id": "198222",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "198222",
-            "display": "Spironolactone (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -797,7 +807,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "198223": {
+      "resourceType": "Medication",
+      "id": "198223",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "198223",
+            "display": "Spironolactone (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -807,19 +830,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "198223": {
-      "id": "198223",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "198223",
-            "display": "Spironolactone (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -844,7 +854,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "313096": {
+      "resourceType": "Medication",
+      "id": "313096",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "313096",
+            "display": "Spironolactone (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -854,19 +877,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "313096": {
-      "id": "313096",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "313096",
-            "display": "Spironolactone (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -891,7 +901,22 @@
             }
           }
         }
-      ],
+      ]
+    }
+  },
+  "18867": {
+    "898687": {
+      "resourceType": "Medication",
+      "id": "898687",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "898687",
+            "display": "Benazepril (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -901,21 +926,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    }
-  },
-  "18867": {
-    "898687": {
-      "id": "898687",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "898687",
-            "display": "Benazepril (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -940,7 +950,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "898690": {
+      "resourceType": "Medication",
+      "id": "898690",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "898690",
+            "display": "Benazepril (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -950,19 +973,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "898690": {
-      "id": "898690",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "898690",
-            "display": "Benazepril (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -987,7 +997,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "898719": {
+      "resourceType": "Medication",
+      "id": "898719",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "898719",
+            "display": "Benazepril (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -997,19 +1020,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "898719": {
-      "id": "898719",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "898719",
-            "display": "Benazepril (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -1034,7 +1044,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "898723": {
+      "resourceType": "Medication",
+      "id": "898723",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "898723",
+            "display": "Benazepril (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -1044,19 +1067,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "898723": {
-      "id": "898723",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "898723",
-            "display": "Benazepril (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -1081,7 +1091,22 @@
             }
           }
         }
-      ],
+      ]
+    }
+  },
+  "19484": {
+    "854901": {
+      "resourceType": "Medication",
+      "id": "854901",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "854901",
+            "display": "Bisoprolol (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -1091,21 +1116,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    }
-  },
-  "19484": {
-    "854901": {
-      "id": "854901",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "854901",
-            "display": "Bisoprolol (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -1130,7 +1140,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "854905": {
+      "resourceType": "Medication",
+      "id": "854905",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "854905",
+            "display": "Bisoprolol (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -1140,19 +1163,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "854905": {
-      "id": "854905",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "854905",
-            "display": "Bisoprolol (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -1177,7 +1187,22 @@
             }
           }
         }
-      ],
+      ]
+    }
+  },
+  "20352": {
+    "200031": {
+      "resourceType": "Medication",
+      "id": "200031",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "200031",
+            "display": "Carvedilol (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -1187,21 +1212,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    }
-  },
-  "20352": {
-    "200031": {
-      "id": "200031",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "200031",
-            "display": "Carvedilol (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -1226,7 +1236,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "200032": {
+      "resourceType": "Medication",
+      "id": "200032",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "200032",
+            "display": "Carvedilol (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -1236,19 +1259,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "200032": {
-      "id": "200032",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "200032",
-            "display": "Carvedilol (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -1273,7 +1283,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "200033": {
+      "resourceType": "Medication",
+      "id": "200033",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "200033",
+            "display": "Carvedilol (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -1283,19 +1306,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "200033": {
-      "id": "200033",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "200033",
-            "display": "Carvedilol (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -1320,7 +1330,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "686924": {
+      "resourceType": "Medication",
+      "id": "686924",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "686924",
+            "display": "Carvedilol (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -1330,19 +1353,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "686924": {
-      "id": "686924",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "686924",
-            "display": "Carvedilol (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -1367,7 +1377,22 @@
             }
           }
         }
-      ],
+      ]
+    }
+  },
+  "29046": {
+    "197884": {
+      "resourceType": "Medication",
+      "id": "197884",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "197884",
+            "display": "Lisinopril (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -1377,21 +1402,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    }
-  },
-  "29046": {
-    "197884": {
-      "id": "197884",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "197884",
-            "display": "Lisinopril (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -1416,7 +1426,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "205326": {
+      "resourceType": "Medication",
+      "id": "205326",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "205326",
+            "display": "Lisinopril (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -1426,19 +1449,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "205326": {
-      "id": "205326",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "205326",
-            "display": "Lisinopril (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -1463,7 +1473,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "311353": {
+      "resourceType": "Medication",
+      "id": "311353",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "311353",
+            "display": "Lisinopril (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -1473,19 +1496,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "311353": {
-      "id": "311353",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "311353",
-            "display": "Lisinopril (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -1510,7 +1520,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "311354": {
+      "resourceType": "Medication",
+      "id": "311354",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "311354",
+            "display": "Lisinopril (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -1520,19 +1543,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "311354": {
-      "id": "311354",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "311354",
-            "display": "Lisinopril (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -1557,7 +1567,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "314076": {
+      "resourceType": "Medication",
+      "id": "314076",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "314076",
+            "display": "Lisinopril (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -1567,19 +1590,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "314076": {
-      "id": "314076",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "314076",
-            "display": "Lisinopril (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -1604,7 +1614,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "314077": {
+      "resourceType": "Medication",
+      "id": "314077",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "314077",
+            "display": "Lisinopril (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -1614,19 +1637,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "314077": {
-      "id": "314077",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "314077",
-            "display": "Lisinopril (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -1651,7 +1661,22 @@
             }
           }
         }
-      ],
+      ]
+    }
+  },
+  "30131": {
+    "1299896": {
+      "resourceType": "Medication",
+      "id": "1299896",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "1299896",
+            "display": "Moexipril (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -1661,21 +1686,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    }
-  },
-  "30131": {
-    "1299896": {
-      "id": "1299896",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "1299896",
-            "display": "Moexipril (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -1700,7 +1710,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "1299897": {
+      "resourceType": "Medication",
+      "id": "1299897",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "1299897",
+            "display": "Moexipril (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -1710,19 +1733,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "1299897": {
-      "id": "1299897",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "1299897",
-            "display": "Moexipril (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -1747,7 +1757,22 @@
             }
           }
         }
-      ],
+      ]
+    }
+  },
+  "35208": {
+    "312748": {
+      "resourceType": "Medication",
+      "id": "312748",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "312748",
+            "display": "Quinapril (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -1757,21 +1782,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    }
-  },
-  "35208": {
-    "312748": {
-      "id": "312748",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "312748",
-            "display": "Quinapril (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -1796,7 +1806,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "312749": {
+      "resourceType": "Medication",
+      "id": "312749",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "312749",
+            "display": "Quinapril (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -1806,19 +1829,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "312749": {
-      "id": "312749",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "312749",
-            "display": "Quinapril (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -1843,7 +1853,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "312750": {
+      "resourceType": "Medication",
+      "id": "312750",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "312750",
+            "display": "Quinapril (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -1853,19 +1876,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "312750": {
-      "id": "312750",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "312750",
-            "display": "Quinapril (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -1890,7 +1900,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "314203": {
+      "resourceType": "Medication",
+      "id": "314203",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "314203",
+            "display": "Quinapril (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -1900,19 +1923,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "314203": {
-      "id": "314203",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "314203",
-            "display": "Quinapril (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -1937,23 +1947,13 @@
             }
           }
         }
-      ],
-      "form": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "Oral Tablet",
-            "display": "Oral Tablet"
-          }
-        ],
-        "text": "Oral Tablet"
-      }
+      ]
     }
   },
   "35296": {
     "198188": {
-      "id": "198188",
       "resourceType": "Medication",
+      "id": "198188",
       "code": {
         "coding": [
           {
@@ -1963,6 +1963,16 @@
           }
         ]
       },
+      "form": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "Oral Capsule",
+            "display": "Oral Capsule"
+          }
+        ],
+        "text": "Oral Capsule"
+      },
       "ingredient": [
         {
           "itemCodeableConcept": {
@@ -1986,21 +1996,11 @@
             }
           }
         }
-      ],
-      "form": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "Oral Capsule",
-            "display": "Oral Capsule"
-          }
-        ],
-        "text": "Oral Capsule"
-      }
+      ]
     },
     "198189": {
-      "id": "198189",
       "resourceType": "Medication",
+      "id": "198189",
       "code": {
         "coding": [
           {
@@ -2010,6 +2010,16 @@
           }
         ]
       },
+      "form": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "Oral Capsule",
+            "display": "Oral Capsule"
+          }
+        ],
+        "text": "Oral Capsule"
+      },
       "ingredient": [
         {
           "itemCodeableConcept": {
@@ -2033,21 +2043,11 @@
             }
           }
         }
-      ],
-      "form": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "Oral Capsule",
-            "display": "Oral Capsule"
-          }
-        ],
-        "text": "Oral Capsule"
-      }
+      ]
     },
     "251856": {
-      "id": "251856",
       "resourceType": "Medication",
+      "id": "251856",
       "code": {
         "coding": [
           {
@@ -2056,6 +2056,16 @@
             "display": "Ramipril (Oral Pill)"
           }
         ]
+      },
+      "form": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "Oral Tablet",
+            "display": "Oral Tablet"
+          }
+        ],
+        "text": "Oral Tablet"
       },
       "ingredient": [
         {
@@ -2080,7 +2090,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "251857": {
+      "resourceType": "Medication",
+      "id": "251857",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "251857",
+            "display": "Ramipril (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -2090,19 +2113,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "251857": {
-      "id": "251857",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "251857",
-            "display": "Ramipril (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -2127,21 +2137,11 @@
             }
           }
         }
-      ],
-      "form": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "Oral Tablet",
-            "display": "Oral Tablet"
-          }
-        ],
-        "text": "Oral Tablet"
-      }
+      ]
     },
     "261962": {
-      "id": "261962",
       "resourceType": "Medication",
+      "id": "261962",
       "code": {
         "coding": [
           {
@@ -2151,6 +2151,16 @@
           }
         ]
       },
+      "form": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "Oral Capsule",
+            "display": "Oral Capsule"
+          }
+        ],
+        "text": "Oral Capsule"
+      },
       "ingredient": [
         {
           "itemCodeableConcept": {
@@ -2174,21 +2184,11 @@
             }
           }
         }
-      ],
-      "form": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "Oral Capsule",
-            "display": "Oral Capsule"
-          }
-        ],
-        "text": "Oral Capsule"
-      }
+      ]
     },
     "401965": {
-      "id": "401965",
       "resourceType": "Medication",
+      "id": "401965",
       "code": {
         "coding": [
           {
@@ -2198,6 +2198,16 @@
           }
         ]
       },
+      "form": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "Oral Tablet",
+            "display": "Oral Tablet"
+          }
+        ],
+        "text": "Oral Tablet"
+      },
       "ingredient": [
         {
           "itemCodeableConcept": {
@@ -2221,7 +2231,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "401968": {
+      "resourceType": "Medication",
+      "id": "401968",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "401968",
+            "display": "Ramipril (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -2231,19 +2254,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "401968": {
-      "id": "401968",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "401968",
-            "display": "Ramipril (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -2268,21 +2278,11 @@
             }
           }
         }
-      ],
-      "form": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "Oral Tablet",
-            "display": "Oral Tablet"
-          }
-        ],
-        "text": "Oral Tablet"
-      }
+      ]
     },
     "845488": {
-      "id": "845488",
       "resourceType": "Medication",
+      "id": "845488",
       "code": {
         "coding": [
           {
@@ -2291,6 +2291,16 @@
             "display": "Ramipril (Oral Pill)"
           }
         ]
+      },
+      "form": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "Oral Capsule",
+            "display": "Oral Capsule"
+          }
+        ],
+        "text": "Oral Capsule"
       },
       "ingredient": [
         {
@@ -2315,23 +2325,13 @@
             }
           }
         }
-      ],
-      "form": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "Oral Capsule",
-            "display": "Oral Capsule"
-          }
-        ],
-        "text": "Oral Capsule"
-      }
+      ]
     }
   },
   "38413": {
     "198369": {
-      "id": "198369",
       "resourceType": "Medication",
+      "id": "198369",
       "code": {
         "coding": [
           {
@@ -2340,6 +2340,16 @@
             "display": "Torsemide (Oral Pill)"
           }
         ]
+      },
+      "form": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "Oral Tablet",
+            "display": "Oral Tablet"
+          }
+        ],
+        "text": "Oral Tablet"
       },
       "ingredient": [
         {
@@ -2364,7 +2374,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "198370": {
+      "resourceType": "Medication",
+      "id": "198370",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "198370",
+            "display": "Torsemide (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -2374,19 +2397,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "198370": {
-      "id": "198370",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "198370",
-            "display": "Torsemide (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -2411,7 +2421,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "198371": {
+      "resourceType": "Medication",
+      "id": "198371",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "198371",
+            "display": "Torsemide (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -2421,19 +2444,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "198371": {
-      "id": "198371",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "198371",
-            "display": "Torsemide (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -2458,7 +2468,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "198372": {
+      "resourceType": "Medication",
+      "id": "198372",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "198372",
+            "display": "Torsemide (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -2468,19 +2491,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "198372": {
-      "id": "198372",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "198372",
-            "display": "Torsemide (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -2505,7 +2515,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "2589881": {
+      "resourceType": "Medication",
+      "id": "2589881",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "2589881",
+            "display": "Torsemide (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -2515,19 +2538,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "2589881": {
-      "id": "2589881",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "2589881",
-            "display": "Torsemide (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -2552,7 +2562,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "2589885": {
+      "resourceType": "Medication",
+      "id": "2589885",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "2589885",
+            "display": "Torsemide (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -2562,19 +2585,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "2589885": {
-      "id": "2589885",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "2589885",
-            "display": "Torsemide (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -2599,7 +2609,22 @@
             }
           }
         }
-      ],
+      ]
+    }
+  },
+  "38454": {
+    "199351": {
+      "resourceType": "Medication",
+      "id": "199351",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "199351",
+            "display": "Trandolapril (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -2609,21 +2634,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    }
-  },
-  "38454": {
-    "199351": {
-      "id": "199351",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "199351",
-            "display": "Trandolapril (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -2648,7 +2658,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "199352": {
+      "resourceType": "Medication",
+      "id": "199352",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "199352",
+            "display": "Trandolapril (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -2658,19 +2681,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "199352": {
-      "id": "199352",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "199352",
-            "display": "Trandolapril (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -2695,7 +2705,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "199353": {
+      "resourceType": "Medication",
+      "id": "199353",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "199353",
+            "display": "Trandolapril (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -2705,19 +2728,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "199353": {
-      "id": "199353",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "199353",
-            "display": "Trandolapril (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -2742,7 +2752,22 @@
             }
           }
         }
-      ],
+      ]
+    }
+  },
+  "54552": {
+    "854925": {
+      "resourceType": "Medication",
+      "id": "854925",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "854925",
+            "display": "Perindopril (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -2752,21 +2777,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    }
-  },
-  "54552": {
-    "854925": {
-      "id": "854925",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "854925",
-            "display": "Perindopril (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -2791,7 +2801,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "854984": {
+      "resourceType": "Medication",
+      "id": "854984",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "854984",
+            "display": "Perindopril (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -2801,19 +2824,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "854984": {
-      "id": "854984",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "854984",
-            "display": "Perindopril (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -2838,7 +2848,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "854988": {
+      "resourceType": "Medication",
+      "id": "854988",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "854988",
+            "display": "Perindopril (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -2848,19 +2871,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "854988": {
-      "id": "854988",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "854988",
-            "display": "Perindopril (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -2885,7 +2895,22 @@
             }
           }
         }
-      ],
+      ]
+    }
+  },
+  "69749": {
+    "349199": {
+      "resourceType": "Medication",
+      "id": "349199",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "349199",
+            "display": "Valsartan (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -2895,21 +2920,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    }
-  },
-  "69749": {
-    "349199": {
-      "id": "349199",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "349199",
-            "display": "Valsartan (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -2934,7 +2944,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "349200": {
+      "resourceType": "Medication",
+      "id": "349200",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "349200",
+            "display": "Valsartan (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -2944,19 +2967,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "349200": {
-      "id": "349200",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "349200",
-            "display": "Valsartan (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -2981,7 +2991,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "349201": {
+      "resourceType": "Medication",
+      "id": "349201",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "349201",
+            "display": "Valsartan (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -2991,19 +3014,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "349201": {
-      "id": "349201",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "349201",
-            "display": "Valsartan (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -3028,7 +3038,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "349483": {
+      "resourceType": "Medication",
+      "id": "349483",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "349483",
+            "display": "Valsartan (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -3038,19 +3061,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "349483": {
-      "id": "349483",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "349483",
-            "display": "Valsartan (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -3075,7 +3085,22 @@
             }
           }
         }
-      ],
+      ]
+    }
+  },
+  "73494": {
+    "205304": {
+      "resourceType": "Medication",
+      "id": "205304",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "205304",
+            "display": "Telmisartan (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -3085,21 +3110,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    }
-  },
-  "73494": {
-    "205304": {
-      "id": "205304",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "205304",
-            "display": "Telmisartan (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -3124,7 +3134,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "205305": {
+      "resourceType": "Medication",
+      "id": "205305",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "205305",
+            "display": "Telmisartan (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -3134,19 +3157,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "205305": {
-      "id": "205305",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "205305",
-            "display": "Telmisartan (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -3171,7 +3181,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "282755": {
+      "resourceType": "Medication",
+      "id": "282755",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "282755",
+            "display": "Telmisartan (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -3181,19 +3204,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "282755": {
-      "id": "282755",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "282755",
-            "display": "Telmisartan (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -3218,7 +3228,22 @@
             }
           }
         }
-      ],
+      ]
+    }
+  },
+  "83515": {
+    "310139": {
+      "resourceType": "Medication",
+      "id": "310139",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "310139",
+            "display": "Eprosartan (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -3228,21 +3253,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    }
-  },
-  "83515": {
-    "310139": {
-      "id": "310139",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "310139",
-            "display": "Eprosartan (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -3267,7 +3277,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "310140": {
+      "resourceType": "Medication",
+      "id": "310140",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "310140",
+            "display": "Eprosartan (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -3277,19 +3300,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "310140": {
-      "id": "310140",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "310140",
-            "display": "Eprosartan (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -3314,7 +3324,22 @@
             }
           }
         }
-      ],
+      ]
+    }
+  },
+  "83818": {
+    "200094": {
+      "resourceType": "Medication",
+      "id": "200094",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "200094",
+            "display": "Irbesartan (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -3324,21 +3349,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    }
-  },
-  "83818": {
-    "200094": {
-      "id": "200094",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "200094",
-            "display": "Irbesartan (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -3363,7 +3373,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "200095": {
+      "resourceType": "Medication",
+      "id": "200095",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "200095",
+            "display": "Irbesartan (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -3373,19 +3396,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "200095": {
-      "id": "200095",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "200095",
-            "display": "Irbesartan (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -3410,7 +3420,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "200096": {
+      "resourceType": "Medication",
+      "id": "200096",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "200096",
+            "display": "Irbesartan (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -3420,19 +3443,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "200096": {
-      "id": "200096",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "200096",
-            "display": "Irbesartan (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -3457,7 +3467,22 @@
             }
           }
         }
-      ],
+      ]
+    }
+  },
+  "118463": {
+    "349373": {
+      "resourceType": "Medication",
+      "id": "349373",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "349373",
+            "display": "Olmesartan (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -3467,21 +3492,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    }
-  },
-  "118463": {
-    "349373": {
-      "id": "349373",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "349373",
-            "display": "Olmesartan (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -3506,7 +3516,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "349401": {
+      "resourceType": "Medication",
+      "id": "349401",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "349401",
+            "display": "Olmesartan (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -3516,19 +3539,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "349401": {
-      "id": "349401",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "349401",
-            "display": "Olmesartan (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -3553,7 +3563,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "349405": {
+      "resourceType": "Medication",
+      "id": "349405",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "349405",
+            "display": "Olmesartan (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -3563,19 +3586,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "349405": {
-      "id": "349405",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "349405",
-            "display": "Olmesartan (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -3600,7 +3610,22 @@
             }
           }
         }
-      ],
+      ]
+    }
+  },
+  "203160": {
+    "979480": {
+      "resourceType": "Medication",
+      "id": "979480",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "979480",
+            "display": "Losartan (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -3610,21 +3635,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    }
-  },
-  "203160": {
-    "979480": {
-      "id": "979480",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "979480",
-            "display": "Losartan (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -3649,7 +3659,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "979485": {
+      "resourceType": "Medication",
+      "id": "979485",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "979485",
+            "display": "Losartan (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -3659,19 +3682,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "979485": {
-      "id": "979485",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "979485",
-            "display": "Losartan (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -3696,7 +3706,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "979492": {
+      "resourceType": "Medication",
+      "id": "979492",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "979492",
+            "display": "Losartan (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -3706,19 +3729,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "979492": {
-      "id": "979492",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "979492",
-            "display": "Losartan (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -3743,7 +3753,22 @@
             }
           }
         }
-      ],
+      ]
+    }
+  },
+  "214354": {
+    "153822": {
+      "resourceType": "Medication",
+      "id": "153822",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "153822",
+            "display": "Candesartan (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -3753,21 +3778,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    }
-  },
-  "214354": {
-    "153822": {
-      "id": "153822",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "153822",
-            "display": "Candesartan (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -3792,7 +3802,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "153823": {
+      "resourceType": "Medication",
+      "id": "153823",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "153823",
+            "display": "Candesartan (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -3802,19 +3825,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "153823": {
-      "id": "153823",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "153823",
-            "display": "Candesartan (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -3839,7 +3849,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "577776": {
+      "resourceType": "Medication",
+      "id": "577776",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "577776",
+            "display": "Candesartan (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -3849,19 +3872,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "577776": {
-      "id": "577776",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "577776",
-            "display": "Candesartan (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -3886,7 +3896,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "639537": {
+      "resourceType": "Medication",
+      "id": "639537",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "639537",
+            "display": "Candesartan (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -3896,19 +3919,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "639537": {
-      "id": "639537",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "639537",
-            "display": "Candesartan (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -3933,23 +3943,13 @@
             }
           }
         }
-      ],
-      "form": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "Oral Tablet",
-            "display": "Oral Tablet"
-          }
-        ],
-        "text": "Oral Tablet"
-      }
+      ]
     }
   },
   "221124": {
     "866412": {
-      "id": "866412",
       "resourceType": "Medication",
+      "id": "866412",
       "code": {
         "coding": [
           {
@@ -3959,6 +3959,16 @@
           }
         ]
       },
+      "form": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "Extended Release Oral Tablet",
+            "display": "Extended Release Oral Tablet"
+          }
+        ],
+        "text": "Extended Release Oral Tablet"
+      },
       "ingredient": [
         {
           "itemCodeableConcept": {
@@ -3982,21 +3992,11 @@
             }
           }
         }
-      ],
-      "form": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "Extended Release Oral Tablet",
-            "display": "Extended Release Oral Tablet"
-          }
-        ],
-        "text": "Extended Release Oral Tablet"
-      }
+      ]
     },
     "866419": {
-      "id": "866419",
       "resourceType": "Medication",
+      "id": "866419",
       "code": {
         "coding": [
           {
@@ -4006,6 +4006,16 @@
           }
         ]
       },
+      "form": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "Extended Release Oral Tablet",
+            "display": "Extended Release Oral Tablet"
+          }
+        ],
+        "text": "Extended Release Oral Tablet"
+      },
       "ingredient": [
         {
           "itemCodeableConcept": {
@@ -4029,7 +4039,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "866427": {
+      "resourceType": "Medication",
+      "id": "866427",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "866427",
+            "display": "Metoprolol XR (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -4039,19 +4062,6 @@
           }
         ],
         "text": "Extended Release Oral Tablet"
-      }
-    },
-    "866427": {
-      "id": "866427",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "866427",
-            "display": "Metoprolol XR (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -4076,7 +4086,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "866436": {
+      "resourceType": "Medication",
+      "id": "866436",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "866436",
+            "display": "Metoprolol XR (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -4086,19 +4109,6 @@
           }
         ],
         "text": "Extended Release Oral Tablet"
-      }
-    },
-    "866436": {
-      "id": "866436",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "866436",
-            "display": "Metoprolol XR (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -4123,21 +4133,11 @@
             }
           }
         }
-      ],
-      "form": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "Extended Release Oral Tablet",
-            "display": "Extended Release Oral Tablet"
-          }
-        ],
-        "text": "Extended Release Oral Tablet"
-      }
+      ]
     },
     "1999031": {
-      "id": "1999031",
       "resourceType": "Medication",
+      "id": "1999031",
       "code": {
         "coding": [
           {
@@ -4146,6 +4146,16 @@
             "display": "Metoprolol XR (Oral Pill)"
           }
         ]
+      },
+      "form": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "Extended Release Oral Capsule",
+            "display": "Extended Release Oral Capsule"
+          }
+        ],
+        "text": "Extended Release Oral Capsule"
       },
       "ingredient": [
         {
@@ -4170,7 +4180,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "1999033": {
+      "resourceType": "Medication",
+      "id": "1999033",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "1999033",
+            "display": "Metoprolol XR (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -4180,19 +4203,6 @@
           }
         ],
         "text": "Extended Release Oral Capsule"
-      }
-    },
-    "1999033": {
-      "id": "1999033",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "1999033",
-            "display": "Metoprolol XR (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -4217,21 +4227,11 @@
             }
           }
         }
-      ],
-      "form": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "Extended Release Oral Capsule",
-            "display": "Extended Release Oral Capsule"
-          }
-        ],
-        "text": "Extended Release Oral Capsule"
-      }
+      ]
     },
     "1999035": {
-      "id": "1999035",
       "resourceType": "Medication",
+      "id": "1999035",
       "code": {
         "coding": [
           {
@@ -4241,6 +4241,16 @@
           }
         ]
       },
+      "form": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "Extended Release Oral Capsule",
+            "display": "Extended Release Oral Capsule"
+          }
+        ],
+        "text": "Extended Release Oral Capsule"
+      },
       "ingredient": [
         {
           "itemCodeableConcept": {
@@ -4264,21 +4274,11 @@
             }
           }
         }
-      ],
-      "form": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "Extended Release Oral Capsule",
-            "display": "Extended Release Oral Capsule"
-          }
-        ],
-        "text": "Extended Release Oral Capsule"
-      }
+      ]
     },
     "1999037": {
-      "id": "1999037",
       "resourceType": "Medication",
+      "id": "1999037",
       "code": {
         "coding": [
           {
@@ -4288,6 +4288,16 @@
           }
         ]
       },
+      "form": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "Extended Release Oral Capsule",
+            "display": "Extended Release Oral Capsule"
+          }
+        ],
+        "text": "Extended Release Oral Capsule"
+      },
       "ingredient": [
         {
           "itemCodeableConcept": {
@@ -4311,23 +4321,13 @@
             }
           }
         }
-      ],
-      "form": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "Extended Release Oral Capsule",
-            "display": "Extended Release Oral Capsule"
-          }
-        ],
-        "text": "Extended Release Oral Capsule"
-      }
+      ]
     }
   },
   "227278": {
     "857169": {
-      "id": "857169",
       "resourceType": "Medication",
+      "id": "857169",
       "code": {
         "coding": [
           {
@@ -4336,6 +4336,16 @@
             "display": "Fosinopril (Oral Pill)"
           }
         ]
+      },
+      "form": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "Oral Tablet",
+            "display": "Oral Tablet"
+          }
+        ],
+        "text": "Oral Tablet"
       },
       "ingredient": [
         {
@@ -4360,7 +4370,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "857183": {
+      "resourceType": "Medication",
+      "id": "857183",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "857183",
+            "display": "Fosinopril (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -4370,19 +4393,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "857183": {
-      "id": "857183",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "857183",
-            "display": "Fosinopril (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -4407,7 +4417,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "857187": {
+      "resourceType": "Medication",
+      "id": "857187",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "857187",
+            "display": "Fosinopril (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -4417,19 +4440,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "857187": {
-      "id": "857187",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "857187",
-            "display": "Fosinopril (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -4454,7 +4464,22 @@
             }
           }
         }
-      ],
+      ]
+    }
+  },
+  "298869": {
+    "351256": {
+      "resourceType": "Medication",
+      "id": "351256",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "351256",
+            "display": "Eplerenone (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -4464,21 +4489,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    }
-  },
-  "298869": {
-    "351256": {
-      "id": "351256",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "351256",
-            "display": "Eplerenone (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -4503,7 +4513,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "351257": {
+      "resourceType": "Medication",
+      "id": "351257",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "351257",
+            "display": "Eplerenone (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -4513,19 +4536,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "351257": {
-      "id": "351257",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "351257",
-            "display": "Eplerenone (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -4550,23 +4560,13 @@
             }
           }
         }
-      ],
-      "form": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "Oral Tablet",
-            "display": "Oral Tablet"
-          }
-        ],
-        "text": "Oral Tablet"
-      }
+      ]
     }
   },
   "668310": {
     "860510": {
-      "id": "860510",
       "resourceType": "Medication",
+      "id": "860510",
       "code": {
         "coding": [
           {
@@ -4575,6 +4575,16 @@
             "display": "Carvedilol XR (Oral Pill)"
           }
         ]
+      },
+      "form": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "Extended Release Oral Capsule",
+            "display": "Extended Release Oral Capsule"
+          }
+        ],
+        "text": "Extended Release Oral Capsule"
       },
       "ingredient": [
         {
@@ -4599,7 +4609,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "860516": {
+      "resourceType": "Medication",
+      "id": "860516",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "860516",
+            "display": "Carvedilol XR (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -4609,19 +4632,6 @@
           }
         ],
         "text": "Extended Release Oral Capsule"
-      }
-    },
-    "860516": {
-      "id": "860516",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "860516",
-            "display": "Carvedilol XR (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -4646,21 +4656,11 @@
             }
           }
         }
-      ],
-      "form": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "Extended Release Oral Capsule",
-            "display": "Extended Release Oral Capsule"
-          }
-        ],
-        "text": "Extended Release Oral Capsule"
-      }
+      ]
     },
     "860522": {
-      "id": "860522",
       "resourceType": "Medication",
+      "id": "860522",
       "code": {
         "coding": [
           {
@@ -4670,6 +4670,16 @@
           }
         ]
       },
+      "form": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "Extended Release Oral Capsule",
+            "display": "Extended Release Oral Capsule"
+          }
+        ],
+        "text": "Extended Release Oral Capsule"
+      },
       "ingredient": [
         {
           "itemCodeableConcept": {
@@ -4693,21 +4703,11 @@
             }
           }
         }
-      ],
-      "form": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "Extended Release Oral Capsule",
-            "display": "Extended Release Oral Capsule"
-          }
-        ],
-        "text": "Extended Release Oral Capsule"
-      }
+      ]
     },
     "860532": {
-      "id": "860532",
       "resourceType": "Medication",
+      "id": "860532",
       "code": {
         "coding": [
           {
@@ -4717,6 +4717,16 @@
           }
         ]
       },
+      "form": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "Extended Release Oral Capsule",
+            "display": "Extended Release Oral Capsule"
+          }
+        ],
+        "text": "Extended Release Oral Capsule"
+      },
       "ingredient": [
         {
           "itemCodeableConcept": {
@@ -4740,23 +4750,13 @@
             }
           }
         }
-      ],
-      "form": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "Extended Release Oral Capsule",
-            "display": "Extended Release Oral Capsule"
-          }
-        ],
-        "text": "Extended Release Oral Capsule"
-      }
+      ]
     }
   },
   "1091642": {
     "1091646": {
-      "id": "1091646",
       "resourceType": "Medication",
+      "id": "1091646",
       "code": {
         "coding": [
           {
@@ -4765,6 +4765,16 @@
             "display": "Azilsartan (Oral Pill)"
           }
         ]
+      },
+      "form": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "Oral Tablet",
+            "display": "Oral Tablet"
+          }
+        ],
+        "text": "Oral Tablet"
       },
       "ingredient": [
         {
@@ -4789,7 +4799,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "1091652": {
+      "resourceType": "Medication",
+      "id": "1091652",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "1091652",
+            "display": "Azilsartan (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -4799,19 +4822,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "1091652": {
-      "id": "1091652",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "1091652",
-            "display": "Azilsartan (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -4836,7 +4846,22 @@
             }
           }
         }
-      ],
+      ]
+    }
+  },
+  "1373458": {
+    "1373463": {
+      "resourceType": "Medication",
+      "id": "1373463",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "1373463",
+            "display": "Canagliflozin (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -4846,21 +4871,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    }
-  },
-  "1373458": {
-    "1373463": {
-      "id": "1373463",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "1373463",
-            "display": "Canagliflozin (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -4885,7 +4895,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "1373471": {
+      "resourceType": "Medication",
+      "id": "1373471",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "1373471",
+            "display": "Canagliflozin (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -4895,19 +4918,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "1373471": {
-      "id": "1373471",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "1373471",
-            "display": "Canagliflozin (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -4932,7 +4942,22 @@
             }
           }
         }
-      ],
+      ]
+    }
+  },
+  "1488564": {
+    "1488569": {
+      "resourceType": "Medication",
+      "id": "1488569",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "1488569",
+            "display": "Dapagliflozin (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -4942,21 +4967,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    }
-  },
-  "1488564": {
-    "1488569": {
-      "id": "1488569",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "1488569",
-            "display": "Dapagliflozin (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -4981,7 +4991,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "1488574": {
+      "resourceType": "Medication",
+      "id": "1488574",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "1488574",
+            "display": "Dapagliflozin (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -4991,19 +5014,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "1488574": {
-      "id": "1488574",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "1488574",
-            "display": "Dapagliflozin (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -5028,7 +5038,22 @@
             }
           }
         }
-      ],
+      ]
+    }
+  },
+  "1545653": {
+    "1545658": {
+      "resourceType": "Medication",
+      "id": "1545658",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "1545658",
+            "display": "Empagliflozin (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -5038,21 +5063,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    }
-  },
-  "1545653": {
-    "1545658": {
-      "id": "1545658",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "1545658",
-            "display": "Empagliflozin (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -5077,7 +5087,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "1545666": {
+      "resourceType": "Medication",
+      "id": "1545666",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "1545666",
+            "display": "Empagliflozin (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -5087,19 +5110,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "1545666": {
-      "id": "1545666",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "1545666",
-            "display": "Empagliflozin (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -5124,7 +5134,22 @@
             }
           }
         }
-      ],
+      ]
+    }
+  },
+  "1656339": {
+    "1656340": {
+      "resourceType": "Medication",
+      "id": "1656340",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "1656340",
+            "display": "Sacubitril/Valsartan (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -5134,21 +5159,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    }
-  },
-  "1656339": {
-    "1656340": {
-      "id": "1656340",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "1656340",
-            "display": "Sacubitril/Valsartan (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -5195,7 +5205,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "1656349": {
+      "resourceType": "Medication",
+      "id": "1656349",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "1656349",
+            "display": "Sacubitril/Valsartan (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -5205,19 +5228,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "1656349": {
-      "id": "1656349",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "1656349",
-            "display": "Sacubitril/Valsartan (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -5264,7 +5274,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "1656354": {
+      "resourceType": "Medication",
+      "id": "1656354",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "1656354",
+            "display": "Sacubitril/Valsartan (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -5274,19 +5297,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "1656354": {
-      "id": "1656354",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "1656354",
-            "display": "Sacubitril/Valsartan (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -5333,21 +5343,11 @@
             }
           }
         }
-      ],
-      "form": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "Oral Tablet",
-            "display": "Oral Tablet"
-          }
-        ],
-        "text": "Oral Tablet"
-      }
+      ]
     },
     "2679793": {
-      "id": "2679793",
       "resourceType": "Medication",
+      "id": "2679793",
       "code": {
         "coding": [
           {
@@ -5356,6 +5356,16 @@
             "display": "Sacubitril/Valsartan (Oral Pellet)"
           }
         ]
+      },
+      "form": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "Oral Pellet",
+            "display": "Oral Pellet"
+          }
+        ],
+        "text": "Oral Pellet"
       },
       "ingredient": [
         {
@@ -5402,7 +5412,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "2679800": {
+      "resourceType": "Medication",
+      "id": "2679800",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "2679800",
+            "display": "Sacubitril/Valsartan (Oral Pellet)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -5412,19 +5435,6 @@
           }
         ],
         "text": "Oral Pellet"
-      }
-    },
-    "2679800": {
-      "id": "2679800",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "2679800",
-            "display": "Sacubitril/Valsartan (Oral Pellet)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -5471,23 +5481,13 @@
             }
           }
         }
-      ],
-      "form": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "Oral Pellet",
-            "display": "Oral Pellet"
-          }
-        ],
-        "text": "Oral Pellet"
-      }
+      ]
     }
   },
   "1992672": {
     "1992810": {
-      "id": "1992810",
       "resourceType": "Medication",
+      "id": "1992810",
       "code": {
         "coding": [
           {
@@ -5496,6 +5496,16 @@
             "display": "Ertugliflozin (Oral Pill)"
           }
         ]
+      },
+      "form": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "Oral Tablet",
+            "display": "Oral Tablet"
+          }
+        ],
+        "text": "Oral Tablet"
       },
       "ingredient": [
         {
@@ -5520,7 +5530,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "1992819": {
+      "resourceType": "Medication",
+      "id": "1992819",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "1992819",
+            "display": "Ertugliflozin (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -5530,19 +5553,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "1992819": {
-      "id": "1992819",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "1992819",
-            "display": "Ertugliflozin (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -5567,7 +5577,22 @@
             }
           }
         }
-      ],
+      ]
+    }
+  },
+  "2627044": {
+    "2637859": {
+      "resourceType": "Medication",
+      "id": "2637859",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "2637859",
+            "display": "Bexagliflozin (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -5577,21 +5602,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    }
-  },
-  "2627044": {
-    "2637859": {
-      "id": "2637859",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "2637859",
-            "display": "Bexagliflozin (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -5616,7 +5626,22 @@
             }
           }
         }
-      ],
+      ]
+    }
+  },
+  "2638675": {
+    "2638683": {
+      "resourceType": "Medication",
+      "id": "2638683",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "2638683",
+            "display": "Sotagliflozin (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -5626,21 +5651,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    }
-  },
-  "2638675": {
-    "2638683": {
-      "id": "2638683",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "2638683",
-            "display": "Sotagliflozin (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -5665,7 +5675,20 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "2638691": {
+      "resourceType": "Medication",
+      "id": "2638691",
+      "code": {
+        "coding": [
+          {
+            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "code": "2638691",
+            "display": "Sotagliflozin (Oral Pill)"
+          }
+        ]
+      },
       "form": {
         "coding": [
           {
@@ -5675,19 +5698,6 @@
           }
         ],
         "text": "Oral Tablet"
-      }
-    },
-    "2638691": {
-      "id": "2638691",
-      "resourceType": "Medication",
-      "code": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "2638691",
-            "display": "Sotagliflozin (Oral Pill)"
-          }
-        ]
       },
       "ingredient": [
         {
@@ -5712,17 +5722,7 @@
             }
           }
         }
-      ],
-      "form": {
-        "coding": [
-          {
-            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "code": "Oral Tablet",
-            "display": "Oral Tablet"
-          }
-        ],
-        "text": "Oral Tablet"
-      }
+      ]
     }
   }
 }

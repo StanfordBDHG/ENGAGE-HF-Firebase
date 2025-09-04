@@ -6,12 +6,12 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { type Observation } from "@stanfordbdhg/engagehf-models";
+import { type ObservationQuantity } from "@stanfordbdhg/engagehf-models";
 import * as d3 from "d3";
 import { JSDOM } from "jsdom";
 
 export function generateChartSvg(
-  data: Observation[],
+  data: ObservationQuantity[],
   size: { width: number; height: number },
   margins: { top: number; right: number; bottom: number; left: number },
   baseline?: number,
@@ -82,7 +82,7 @@ export function generateChartSvg(
     .call(yAxis);
 
   const line = d3
-    .line<Observation>()
+    .line<ObservationQuantity>()
     .x((d) => xAxisScale(d.date))
     .y((d) => yAxisScale(d.value));
   svg

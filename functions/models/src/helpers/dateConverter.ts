@@ -15,7 +15,7 @@ export const dateConverter = new SchemaConverter({
       const date = new Date(string);
       if (isNaN(date.getTime())) {
         context.addIssue({
-          code: z.ZodIssueCode.custom,
+          code: "custom",
           message: "Invalid date",
         });
         return z.NEVER;
@@ -23,7 +23,7 @@ export const dateConverter = new SchemaConverter({
       return date;
     } catch (error) {
       context.addIssue({
-        code: z.ZodIssueCode.custom,
+        code: "custom",
         message: String(error),
       });
       return z.NEVER;
@@ -31,8 +31,8 @@ export const dateConverter = new SchemaConverter({
   }),
   encode: (object) => {
     const offset = object.getTimezoneOffset();
-    const utcDate = new Date(object.getTime() - offset * 60 * 1000);
-    return utcDate.toISOString().split("T")[0];
+    const localDate = new Date(object.getTime() - offset * 60 * 1000);
+    return localDate.toISOString().split("T")[0];
   },
 });
 
@@ -42,7 +42,7 @@ export const dateTimeConverter = new SchemaConverter({
       const date = new Date(string);
       if (isNaN(date.getTime())) {
         context.addIssue({
-          code: z.ZodIssueCode.custom,
+          code: "custom",
           message: "Invalid date",
         });
         return z.NEVER;
@@ -50,7 +50,7 @@ export const dateTimeConverter = new SchemaConverter({
       return date;
     } catch (error) {
       context.addIssue({
-        code: z.ZodIssueCode.custom,
+        code: "custom",
         message: String(error),
       });
       return z.NEVER;

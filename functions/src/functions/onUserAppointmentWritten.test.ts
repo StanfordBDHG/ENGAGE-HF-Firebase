@@ -9,8 +9,7 @@
 import {
   UserMessageType,
   UserType,
-  FHIRAppointment,
-  FHIRAppointmentStatus,
+  FhirAppointment,
   advanceDateByHours,
 } from "@stanfordbdhg/engagehf-models";
 import { type DocumentReference } from "firebase-admin/firestore";
@@ -96,10 +95,9 @@ describeWithEmulators("onUserAppointmentWritten", (env) => {
 
   it("should create a message when a new and upcoming appointment is created", async () => {
     const now = new Date();
-    const appointment = FHIRAppointment.create({
+    const appointment = FhirAppointment.create({
       userId: patientId,
       created: now,
-      status: FHIRAppointmentStatus.booked,
       start: advanceDateByHours(now, 23),
       durationInMinutes: 60,
     });
@@ -120,10 +118,9 @@ describeWithEmulators("onUserAppointmentWritten", (env) => {
   it("should create a message when a new and upcoming appointment is updated", async () => {
     const now = new Date();
 
-    const lateAppointment = FHIRAppointment.create({
+    const lateAppointment = FhirAppointment.create({
       userId: patientId,
       created: now,
-      status: FHIRAppointmentStatus.booked,
       start: advanceDateByHours(now, 25),
       durationInMinutes: 60,
     });
@@ -151,10 +148,10 @@ describeWithEmulators("onUserAppointmentWritten", (env) => {
     const ownerMessages0 = await env.collections.userMessages(ownerId).get();
     expect(ownerMessages0.docs).toHaveLength(0);
 
-    const earlierAppointment = FHIRAppointment.create({
+    const earlierAppointment = FhirAppointment.create({
       userId: patientId,
       created: now,
-      status: FHIRAppointmentStatus.booked,
+      status: "booked",
       start: advanceDateByHours(now, 23),
       durationInMinutes: 60,
     });
@@ -172,10 +169,9 @@ describeWithEmulators("onUserAppointmentWritten", (env) => {
 
   it("should complete the message when the appointment is updated to a future date", async () => {
     const now = new Date();
-    const appointment = FHIRAppointment.create({
+    const appointment = FhirAppointment.create({
       userId: patientId,
       created: now,
-      status: FHIRAppointmentStatus.booked,
       start: advanceDateByHours(now, 23),
       durationInMinutes: 60,
     });
@@ -192,10 +188,9 @@ describeWithEmulators("onUserAppointmentWritten", (env) => {
 
     await expectPreAppointmentMessage(ref);
 
-    const laterAppointment = FHIRAppointment.create({
+    const laterAppointment = FhirAppointment.create({
       userId: patientId,
       created: now,
-      status: FHIRAppointmentStatus.booked,
       start: advanceDateByHours(now, 25),
       durationInMinutes: 60,
     });
@@ -212,10 +207,10 @@ describeWithEmulators("onUserAppointmentWritten", (env) => {
   });
   it("should complete the message when the appointment is deleted", async () => {
     const now = new Date();
-    const appointment = FHIRAppointment.create({
+    const appointment = FhirAppointment.create({
       userId: patientId,
       created: now,
-      status: FHIRAppointmentStatus.booked,
+      status: "booked",
       start: advanceDateByHours(now, 23),
       durationInMinutes: 60,
     });

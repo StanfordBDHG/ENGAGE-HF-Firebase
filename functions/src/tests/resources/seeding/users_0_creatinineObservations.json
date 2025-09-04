@@ -1,34 +1,24 @@
 {
   "0": {
-    "id": "0",
-    "extension": null,
     "resourceType": "Observation",
-    "meta": null,
+    "id": "0",
     "status": "final",
     "code": {
+      "text": "Creatinine [Mass/volume] in Serum or Plasma",
       "coding": [
         {
-          "id": null,
-          "extension": null,
           "system": "http://loinc.org",
-          "version": null,
           "code": "2160-0",
-          "display": "Creatinine [Mass/volume] in Serum or Plasma",
-          "userSelected": null
+          "display": "Creatinine [Mass/volume] in Serum or Plasma"
         }
-      ],
-      "text": "Creatinine [Mass/volume] in Serum or Plasma"
+      ]
     },
-    "component": null,
     "valueQuantity": {
-      "code": "mg/dL",
-      "system": "http://unitsofmeasure.org",
+      "value": 1.2,
       "unit": "mg/dL",
-      "value": 1.2
+      "system": "http://unitsofmeasure.org",
+      "code": "mg/dL"
     },
-    "effectivePeriod": null,
-    "effectiveDateTime": "2024-06-03T00:00:00.000Z",
-    "effectiveInstant": null,
-    "derivedFrom": null
+    "effectiveDateTime": "2024-06-03T00:00:00.000Z"
   }
 }

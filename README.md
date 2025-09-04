@@ -461,8 +461,8 @@ These are the output values of the recommendation algorithms. Depending on the t
 
 |Property|Type|Values|Comments|
 |-|-|-|-|
-|currentMedication|optional Reference(FHIRMedicationRequest)|e.g. `{"reference":"users/123/medicationRequest/2"}`|Reference to the existing medication request, if applicable.|
-|recommendedMedication|optional Reference(FHIRMedication)|e.g. `{"reference":"medications/2"}`|Reference to the recommended medication, if applicable. This should always direct to a medication, not a drug.|
+|currentMedication|optional Reference(FhirMedicationRequest)|e.g. `{"reference":"users/123/medicationRequest/2"}`|Reference to the existing medication request, if applicable.|
+|recommendedMedication|optional Reference(FhirMedication)|e.g. `{"reference":"medications/2"}`|Reference to the recommended medication, if applicable. This should always direct to a medication, not a drug.|
 |displayInformation|DisplayInformation|-|The information necessary for the client to display the medication recommendation.|
 
 ##### Medication Recommendation Type

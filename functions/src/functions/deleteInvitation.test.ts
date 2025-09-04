@@ -7,8 +7,7 @@
 //
 
 import {
-  FHIRAppointment,
-  FHIRAppointmentStatus,
+  FhirAppointment,
   Invitation,
   UserAuth,
   UserRegistration,
@@ -43,9 +42,8 @@ describeWithEmulators("function: deleteInvitation", (env) => {
     const invitationRef = env.collections.invitations.doc();
     await invitationRef.set(invitation);
 
-    const appointment = FHIRAppointment.create({
+    const appointment = FhirAppointment.create({
       userId: invitationRef.id,
-      status: FHIRAppointmentStatus.booked,
       created: new Date(),
       start: new Date(),
       durationInMinutes: 90,

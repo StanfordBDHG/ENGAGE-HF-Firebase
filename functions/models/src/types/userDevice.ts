@@ -22,7 +22,7 @@ export const userDeviceConverter = new Lazy(
       schema: z
         .object({
           notificationToken: z.string(),
-          platform: z.nativeEnum(UserDevicePlatform),
+          platform: z.enum(UserDevicePlatform),
           osVersion: optionalish(z.string()),
           appVersion: optionalish(z.string()),
           appBuild: optionalish(z.string()),

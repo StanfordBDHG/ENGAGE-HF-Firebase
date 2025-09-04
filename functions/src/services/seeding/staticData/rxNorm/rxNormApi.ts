@@ -9,7 +9,7 @@
 import * as https from "https";
 import { optionalish } from "@stanfordbdhg/engagehf-models";
 import { logger } from "firebase-functions";
-import { z } from "zod";
+import { z, type ZodType } from "zod";
 import {
   rxNormRelatedDrugGroupResponse,
   type RxNormRelatedDrugGroupResponse,
@@ -53,7 +53,7 @@ export class RxNormApi {
 
   // Helpers
 
-  private async get<Schema extends z.ZodTypeAny>(
+  private async get<Schema extends ZodType>(
     path: string,
     schema: Schema,
   ): Promise<z.output<Schema>> {
