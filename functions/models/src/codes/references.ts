@@ -7,13 +7,13 @@
 //
 
 export enum UserObservationCollection {
-  bodyWeight = 'bodyWeightObservations',
-  bloodPressure = 'bloodPressureObservations',
-  creatinine = 'creatinineObservations',
-  dryWeight = 'dryWeightObservations',
-  eGfr = 'eGfrObservations',
-  heartRate = 'heartRateObservations',
-  potassium = 'potassiumObservations',
+  bodyWeight = "bodyWeightObservations",
+  bloodPressure = "bloodPressureObservations",
+  creatinine = "creatinineObservations",
+  dryWeight = "dryWeightObservations",
+  eGfr = "eGfrObservations",
+  heartRate = "heartRateObservations",
+  potassium = "potassiumObservations",
 }
 
 export enum MedicationClassReference {

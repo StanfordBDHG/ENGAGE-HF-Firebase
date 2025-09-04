@@ -195,8 +195,8 @@ export class TriggerService {
       const reminderRangeStart = advanceDateByHours(now, -24);
       const reminderRangeEnd = advanceDateByHours(now, 24);
 
-      const newStartDate = newData?.startDate
-      const newEndDate = newData?.endDate
+      const newStartDate = newData?.startDate;
+      const newEndDate = newData?.endDate;
       if (
         newData === null ||
         newStartDate === undefined ||
@@ -210,9 +210,9 @@ export class TriggerService {
           (message) =>
             message.reference ===
             `users/${userId}/appointments/${appointmentId}`,
-        )
+        );
       } else if (newStartDate > now && newStartDate < reminderRangeEnd) {
-        const userService = this.factory.user()
+        const userService = this.factory.user();
         const message = UserMessage.createPreAppointment({
           creationDate: now,
           reference: `users/${userId}/appointments/${appointmentId}`,
@@ -405,7 +405,7 @@ export class TriggerService {
     // Drug
 
     const drugReference =
-      after?.data.medicationReference ?? before?.data.medicationReference
+      after?.data.medicationReference ?? before?.data.medicationReference;
     if (!drugReference?.reference) {
       logger.error(
         `TriggerService.userMedicationRequestWritten(${userId}, ${medicationRequestId}): Neither before nor after data contains a medication reference`,

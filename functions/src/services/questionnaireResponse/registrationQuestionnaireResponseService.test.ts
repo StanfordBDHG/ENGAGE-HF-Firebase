@@ -62,23 +62,23 @@ describeWithEmulators("RegistrationQuestionnaireResponseService", (env) => {
     const valsartan = medicationRequestsData.find(
       (req) =>
         req.data.medicationReference?.reference ===
-        'medications/69749/drugs/349201',
-    )?.data
-    expect(valsartan).toBeDefined()
-    expect(valsartan?.dosageInstruction?.length).toBe(1)
-    const valsartanDosageInstruction = valsartan?.dosageInstruction?.at(0)
-    expect(valsartanDosageInstruction?.timing?.repeat?.frequency).toBe(2)
-    expect(valsartanDosageInstruction?.doseAndRate?.length).toBe(1)
-    const valsartanDoseAndRate = valsartanDosageInstruction?.doseAndRate?.at(0)
-    expect(valsartanDoseAndRate?.doseQuantity?.value).toBe(1.5)
+        "medications/69749/drugs/349201",
+    )?.data;
+    expect(valsartan).toBeDefined();
+    expect(valsartan?.dosageInstruction?.length).toBe(1);
+    const valsartanDosageInstruction = valsartan?.dosageInstruction?.at(0);
+    expect(valsartanDosageInstruction?.timing?.repeat?.frequency).toBe(2);
+    expect(valsartanDosageInstruction?.doseAndRate?.length).toBe(1);
+    const valsartanDoseAndRate = valsartanDosageInstruction?.doseAndRate?.at(0);
+    expect(valsartanDoseAndRate?.doseQuantity?.value).toBe(1.5);
 
     const bexagliflozin = medicationRequestsData.find(
       (req) =>
         req.data.medicationReference?.reference ===
-        'medications/2627044/drugs/2637859',
-    )?.data
-    expect(bexagliflozin).toBeDefined()
-    expect(bexagliflozin?.dosageInstruction?.length).toBe(1)
+        "medications/2627044/drugs/2637859",
+    )?.data;
+    expect(bexagliflozin).toBeDefined();
+    expect(bexagliflozin?.dosageInstruction?.length).toBe(1);
     const bexagliflozinDosageInstruction =
       bexagliflozin?.dosageInstruction?.at(0);
     expect(bexagliflozinDosageInstruction?.timing?.repeat?.frequency).toBe(2);
@@ -112,12 +112,12 @@ describeWithEmulators("RegistrationQuestionnaireResponseService", (env) => {
       .get();
     expect(dryWeightDocs.size).toBe(0);
 
-    const appointments = await env.collections.userAppointments(userId).get()
-    expect(appointments.size).toBe(1)
+    const appointments = await env.collections.userAppointments(userId).get();
+    expect(appointments.size).toBe(1);
     expect(appointments.docs[0].data().startDate?.toISOString()).toBe(
-      '2025-05-14T12:00:00.000Z',
-    )
-  })
+      "2025-05-14T12:00:00.000Z",
+    );
+  });
 
   it("should be able to extract the registration response from an Android device", async () => {
     await _updateStaticData(env.factory, {
@@ -159,13 +159,13 @@ describeWithEmulators("RegistrationQuestionnaireResponseService", (env) => {
     const benazepril = medicationRequestsData.find(
       (req) =>
         req.data.medicationReference?.reference ===
-        'medications/18867/drugs/898719',
-    )?.data
-    expect(benazepril).toBeDefined()
-    expect(benazepril?.dosageInstruction?.length).toBe(1)
-    const benazeprilDosageInstruction = benazepril?.dosageInstruction?.at(0)
-    expect(benazeprilDosageInstruction?.timing?.repeat?.frequency).toBe(2)
-    expect(benazeprilDosageInstruction?.doseAndRate?.length).toBe(1)
+        "medications/18867/drugs/898719",
+    )?.data;
+    expect(benazepril).toBeDefined();
+    expect(benazepril?.dosageInstruction?.length).toBe(1);
+    const benazeprilDosageInstruction = benazepril?.dosageInstruction?.at(0);
+    expect(benazeprilDosageInstruction?.timing?.repeat?.frequency).toBe(2);
+    expect(benazeprilDosageInstruction?.doseAndRate?.length).toBe(1);
     const benazeprilDoseAndRate =
       benazeprilDosageInstruction?.doseAndRate?.at(0);
     expect(benazeprilDoseAndRate?.doseQuantity?.value).toBe(0.5);
@@ -173,10 +173,10 @@ describeWithEmulators("RegistrationQuestionnaireResponseService", (env) => {
     const empagliflozin = medicationRequestsData.find(
       (req) =>
         req.data.medicationReference?.reference ===
-        'medications/1545653/drugs/1545658',
-    )?.data
-    expect(empagliflozin).toBeDefined()
-    expect(empagliflozin?.dosageInstruction?.length).toBe(1)
+        "medications/1545653/drugs/1545658",
+    )?.data;
+    expect(empagliflozin).toBeDefined();
+    expect(empagliflozin?.dosageInstruction?.length).toBe(1);
     const empagliflozinDosageInstruction =
       empagliflozin?.dosageInstruction?.at(0);
     expect(empagliflozinDosageInstruction?.timing?.repeat?.frequency).toBe(3);
@@ -212,13 +212,13 @@ describeWithEmulators("RegistrationQuestionnaireResponseService", (env) => {
       dryWeightDocs.docs[0].data().dryWeight(QuantityUnit.lbs)?.value,
     ).toBe(150);
 
-    const appointments = await env.collections.userAppointments(userId).get()
-    expect(appointments.size).toBe(1)
+    const appointments = await env.collections.userAppointments(userId).get();
+    expect(appointments.size).toBe(1);
     expect(appointments.docs[0].data().startDate?.toDateString()).toBe(
-      new Date('2025-07-12').toDateString(),
-    )
-  })
-})
+      new Date("2025-07-12").toDateString(),
+    );
+  });
+});
 
 const registrationResponseApple = {
   authored: "2025-05-14T21:00:08.836575031+02:00",
@@ -279,8 +279,8 @@ const registrationResponseApple = {
         },
       ],
     },
-    { linkId: 'medication.rasi.frequency', answer: [{ valueInteger: 2 }] },
-    { linkId: 'medication.rasi.quantity', answer: [{ valueDecimal: 1.5 }] },
+    { linkId: "medication.rasi.frequency", answer: [{ valueInteger: 2 }] },
+    { linkId: "medication.rasi.quantity", answer: [{ valueDecimal: 1.5 }] },
     {
       answer: [
         {
@@ -319,8 +319,8 @@ const registrationResponseApple = {
         },
       ],
     },
-    { linkId: 'medication.sglt2i.frequency', answer: [{ valueInteger: 2 }] },
-    { answer: [{ valueDecimal: 1.34 }], linkId: 'medication.sglt2i.quantity' },
+    { linkId: "medication.sglt2i.frequency", answer: [{ valueInteger: 2 }] },
+    { answer: [{ valueDecimal: 1.34 }], linkId: "medication.sglt2i.quantity" },
     {
       answer: [
         {
@@ -358,9 +358,9 @@ const registrationResponseApple = {
 };
 
 const registrationResponseAndroid = {
-  resourceType: 'QuestionnaireResponse',
-  questionnaire: 'http://spezi.health/fhir/questionnaire/engagehf-registration',
-  status: 'completed',
+  resourceType: "QuestionnaireResponse",
+  questionnaire: "http://spezi.health/fhir/questionnaire/engagehf-registration",
+  status: "completed",
   item: [
     {
       linkId: "de981575-bd5b-4d84-95bb-35ed6c7f5923",

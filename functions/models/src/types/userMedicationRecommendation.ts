@@ -6,12 +6,12 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { type Reference } from 'fhir/r4b.js'
-import { z } from 'zod'
-import { localizedTextConverter } from './localizedText.js'
-import { Lazy } from '../helpers/lazy.js'
-import { optionalish } from '../helpers/optionalish.js'
-import { SchemaConverter } from '../helpers/schemaConverter.js'
+import { type Reference } from "fhir/r4b.js";
+import { z } from "zod";
+import { localizedTextConverter } from "./localizedText.js";
+import { Lazy } from "../helpers/lazy.js";
+import { optionalish } from "../helpers/optionalish.js";
+import { SchemaConverter } from "../helpers/schemaConverter.js";
 
 export enum UserMedicationRecommendationType {
   improvementAvailable = "improvementAvailable",
@@ -116,7 +116,7 @@ const referenceSchema = z.object({
   reference: z.string().optional(),
   type: z.string().optional(),
   display: z.string().optional(),
-})
+});
 
 export const userMedicationRecommendationConverter = new Lazy(
   () =>
@@ -146,16 +146,16 @@ export const userMedicationRecommendationConverter = new Lazy(
 export class UserMedicationRecommendation {
   // Properties
 
-  readonly currentMedication: Reference[]
-  readonly recommendedMedication?: Reference
-  readonly displayInformation: UserMedicationRecommendationDisplayInformation
+  readonly currentMedication: Reference[];
+  readonly recommendedMedication?: Reference;
+  readonly displayInformation: UserMedicationRecommendationDisplayInformation;
 
   // Constructor
 
   constructor(input: {
-    currentMedication: Reference[]
-    recommendedMedication?: Reference
-    displayInformation: UserMedicationRecommendationDisplayInformation
+    currentMedication: Reference[];
+    recommendedMedication?: Reference;
+    displayInformation: UserMedicationRecommendationDisplayInformation;
   }) {
     this.currentMedication = input.currentMedication;
     this.recommendedMedication = input.recommendedMedication;

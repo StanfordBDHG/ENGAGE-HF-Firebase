@@ -6,24 +6,24 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { type Appointment } from 'fhir/r4b.js'
-import { FHIRResource } from './fhirResource.js'
-import { FHIRExtensionUrl } from '../codes/codes.js'
-import { compactMap } from '../helpers/array.js'
+import { type Appointment } from "fhir/r4b.js";
+import { FHIRResource } from "./fhirResource.js";
+import { FHIRExtensionUrl } from "../codes/codes.js";
+import { compactMap } from "../helpers/array.js";
 
 export class FHIRAppointment extends FHIRResource<Appointment> {
   // Static Functions
 
   static create(input: {
-    userId: string
-    created: Date
-    status?: Appointment['status']
-    start: Date
-    durationInMinutes: number
+    userId: string;
+    created: Date;
+    status?: Appointment["status"];
+    start: Date;
+    durationInMinutes: number;
   }): FHIRAppointment {
     return new FHIRAppointment({
-      resourceType: 'Appointment',
-      status: input.status ?? 'booked',
+      resourceType: "Appointment",
+      status: input.status ?? "booked",
       created: input.created.toISOString(),
       start: input.start.toISOString(),
       end: new Date(
@@ -31,7 +31,7 @@ export class FHIRAppointment extends FHIRResource<Appointment> {
       ).toISOString(),
       participant: [
         {
-          status: 'accepted',
+          status: "accepted",
           actor: {
             reference: `users/${input.userId}`,
           },
@@ -43,19 +43,19 @@ export class FHIRAppointment extends FHIRResource<Appointment> {
   // Computed Properties
 
   get startDate(): Date | undefined {
-    return this.data.start ? new Date(this.data.start) : undefined
+    return this.data.start ? new Date(this.data.start) : undefined;
   }
 
   set startDate(date: Date | undefined) {
-    this.data.start = date?.toISOString()
+    this.data.start = date?.toISOString();
   }
 
   get endDate(): Date | undefined {
-    return this.data.end ? new Date(this.data.end) : undefined
+    return this.data.end ? new Date(this.data.end) : undefined;
   }
 
   set endDate(date: Date | undefined) {
-    this.data.end = date?.toISOString()
+    this.data.end = date?.toISOString();
   }
 
   get providerNames(): string[] {

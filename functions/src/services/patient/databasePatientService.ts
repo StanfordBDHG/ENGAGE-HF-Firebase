@@ -24,8 +24,8 @@ import {
   UserMedicationRecommendationType,
   UserObservationCollection,
   type UserShareCode,
-} from '@stanfordbdhg/engagehf-models'
-import { type Reference } from 'fhir/r4b.js'
+} from "@stanfordbdhg/engagehf-models";
+import { type Reference } from "fhir/r4b.js";
 import {
   FieldValue,
   type QueryDocumentSnapshot,
@@ -64,9 +64,9 @@ export class DatabasePatientService implements PatientService {
     );
 
     return result.filter((appointment) => {
-      const start = appointment.content.startDate
-      return start && start >= fromDate && start < toDate
-    })
+      const start = appointment.content.startDate;
+      return start && start >= fromDate && start < toDate;
+    });
   }
 
   async getAppointments(
@@ -137,7 +137,7 @@ export class DatabasePatientService implements PatientService {
             (doc) =>
               doc.content.data.medicationReference?.reference ===
               value.data.medicationReference?.reference,
-          )
+          );
           if (equivalentDoc === undefined) {
             diffs.push({ successor: value });
           } else if (
@@ -335,9 +335,9 @@ export class DatabasePatientService implements PatientService {
   async createObservations(
     userId: string,
     values: Array<{
-      observation: ObservationQuantity
-      loincCode: LoincCode
-      collection: UserObservationCollection
+      observation: ObservationQuantity;
+      loincCode: LoincCode;
+      collection: UserObservationCollection;
     }>,
     reference: Reference | null,
   ): Promise<void> {

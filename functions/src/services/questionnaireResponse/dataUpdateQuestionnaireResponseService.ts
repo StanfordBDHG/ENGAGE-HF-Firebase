@@ -59,12 +59,12 @@ export class DataUpdateQuestionnaireResponseService extends QuestionnaireRespons
     const urls = [
       QuestionnaireLinkId.url(QuestionnaireId.dataUpdate),
       postAppointmentUrl,
-    ]
-    if (!urls.includes(response.content.data.questionnaire ?? '')) {
+    ];
+    if (!urls.includes(response.content.data.questionnaire ?? "")) {
       logger.info(
         `${this.constructor.name}.handle(${userId}): Url ${response.content.data.questionnaire} is not a data update / post appointment questionnaire, skipping.`,
-      )
-      return false
+      );
+      return false;
     }
 
     let user: User | null;

@@ -53,8 +53,8 @@ export class KccqQuestionnaireResponseService extends QuestionnaireResponseServi
     response: Document<FHIRQuestionnaireResponse>,
     options: { isNew: boolean },
   ): Promise<boolean> {
-    const urls = [QuestionnaireLinkId.url(QuestionnaireId.kccq)]
-    if (!urls.includes(response.content.data.questionnaire ?? '')) return false
+    const urls = [QuestionnaireLinkId.url(QuestionnaireId.kccq)];
+    if (!urls.includes(response.content.data.questionnaire ?? "")) return false;
 
     const symptomScore = this.symptomScore(response.content);
     if (symptomScore === null) return false;

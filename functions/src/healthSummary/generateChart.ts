@@ -6,9 +6,9 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { type ObservationQuantity } from '@stanfordbdhg/engagehf-models'
-import * as d3 from 'd3'
-import { JSDOM } from 'jsdom'
+import { type ObservationQuantity } from "@stanfordbdhg/engagehf-models";
+import * as d3 from "d3";
+import { JSDOM } from "jsdom";
 
 export function generateChartSvg(
   data: ObservationQuantity[],

@@ -52,12 +52,12 @@ export class RegistrationQuestionnaireResponseService extends QuestionnaireRespo
     response: Document<FHIRQuestionnaireResponse>,
     options: { isNew: boolean },
   ): Promise<boolean> {
-    const urls = [QuestionnaireLinkId.url(QuestionnaireId.registration)]
-    if (!urls.includes(response.content.data.questionnaire ?? '')) {
+    const urls = [QuestionnaireLinkId.url(QuestionnaireId.registration)];
+    if (!urls.includes(response.content.data.questionnaire ?? "")) {
       logger.info(
         `${this.constructor.name}.handle(${userId}): Url ${response.content.data.questionnaire} is not a registration questionnaire, skipping.`,
-      )
-      return false
+      );
+      return false;
     }
 
     const personalInfo = this.extractPersonalInfo(response.content);

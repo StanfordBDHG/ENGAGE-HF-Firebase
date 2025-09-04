@@ -9,8 +9,8 @@
 import {
   type ObservationQuantity,
   QuantityUnit,
-} from '@stanfordbdhg/engagehf-models'
-import { type RecommendationVitals } from '../../services/recommendation/recommendationService.js'
+} from "@stanfordbdhg/engagehf-models";
+import { type RecommendationVitals } from "../../services/recommendation/recommendationService.js";
 
 export function mockRecommendationVitals(options: {
   countBloodPressureBelow85: number;

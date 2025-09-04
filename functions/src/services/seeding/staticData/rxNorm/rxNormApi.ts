@@ -6,10 +6,10 @@
 // SPDX-License-Identifier: MIT
 //
 
-import * as https from 'https'
-import { optionalish } from '@stanfordbdhg/engagehf-models'
-import { logger } from 'firebase-functions'
-import { z, type ZodType } from 'zod'
+import * as https from "https";
+import { optionalish } from "@stanfordbdhg/engagehf-models";
+import { logger } from "firebase-functions";
+import { z, type ZodType } from "zod";
 import {
   rxNormRelatedDrugGroupResponse,
   type RxNormRelatedDrugGroupResponse,

@@ -9,24 +9,24 @@
 import {
   type QuestionnaireResponse,
   type QuestionnaireResponseItem,
-} from 'fhir/r4b.js'
-import { FHIRResource } from './fhirResource.js'
+} from "fhir/r4b.js";
+import { FHIRResource } from "./fhirResource.js";
 
 export class FHIRQuestionnaireResponse extends FHIRResource<QuestionnaireResponse> {
   // Computed Properties
 
   get authoredDate(): Date | undefined {
-    return this.data.authored ? new Date(this.data.authored) : undefined
+    return this.data.authored ? new Date(this.data.authored) : undefined;
   }
 
   set authoredDate(date: Date | undefined) {
-    this.data.authored = date?.toISOString()
+    this.data.authored = date?.toISOString();
   }
 
   // Methods - Response items from path
 
   responseItem(linkIdPath: string[]): QuestionnaireResponseItem | null {
-    const items = this.responseItems(linkIdPath)
+    const items = this.responseItems(linkIdPath);
     switch (items.length) {
       case 0:
         return null;
@@ -38,9 +38,9 @@ export class FHIRQuestionnaireResponse extends FHIRResource<QuestionnaireRespons
   }
 
   responseItems(linkIdPath: string[]): QuestionnaireResponseItem[] {
-    const resultValue: QuestionnaireResponseItem[] = []
+    const resultValue: QuestionnaireResponseItem[] = [];
     for (const child of this.data.item ?? []) {
-      resultValue.push(...this.responseItemsRecursive(linkIdPath, child))
+      resultValue.push(...this.responseItemsRecursive(linkIdPath, child));
     }
     return resultValue;
   }
@@ -59,8 +59,8 @@ export class FHIRQuestionnaireResponse extends FHIRResource<QuestionnaireRespons
         break;
       default:
         if (item.linkId === linkIdPath[0]) {
-          const childLinkIds = linkIdPath.slice(1)
-          const resultValue: QuestionnaireResponseItem[] = []
+          const childLinkIds = linkIdPath.slice(1);
+          const resultValue: QuestionnaireResponseItem[] = [];
           for (const child of item.item ?? []) {
             resultValue.push(
               ...this.responseItemsRecursive(childLinkIds, child),
@@ -76,7 +76,7 @@ export class FHIRQuestionnaireResponse extends FHIRResource<QuestionnaireRespons
   // Methods - Response items from leaf link id
 
   leafResponseItem(linkId: string): QuestionnaireResponseItem | null {
-    const items = this.leafResponseItems(linkId)
+    const items = this.leafResponseItems(linkId);
     switch (items.length) {
       case 0:
         return null;
@@ -88,9 +88,9 @@ export class FHIRQuestionnaireResponse extends FHIRResource<QuestionnaireRespons
   }
 
   leafResponseItems(linkId: string): QuestionnaireResponseItem[] {
-    const items: QuestionnaireResponseItem[] = []
+    const items: QuestionnaireResponseItem[] = [];
     for (const item of this.data.item ?? []) {
-      items.push(...this.leafResponseItemsRecursive(linkId, item))
+      items.push(...this.leafResponseItemsRecursive(linkId, item));
     }
     return items;
   }
@@ -99,11 +99,11 @@ export class FHIRQuestionnaireResponse extends FHIRResource<QuestionnaireRespons
     linkId: string,
     item: QuestionnaireResponseItem,
   ): QuestionnaireResponseItem[] {
-    const children = item.item ?? []
+    const children = item.item ?? [];
     if (children.length === 0 && item.linkId === linkId) {
       return [item];
     }
-    const items: QuestionnaireResponseItem[] = []
+    const items: QuestionnaireResponseItem[] = [];
     for (const child of item.item ?? []) {
       items.push(...this.leafResponseItemsRecursive(linkId, child));
     }

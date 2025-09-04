@@ -102,11 +102,11 @@ class HealthSummaryPdfGenerator extends PdfGenerator {
       ),
     );
     this.addText(
-      this.localizer.text('headerProvider', this.data.providerName ?? '---'),
-    )
-    const appointment = this.data.nextAppointment
-    const date = appointment?.startDate
-    const providerNames = appointment?.providerNames ?? []
+      this.localizer.text("headerProvider", this.data.providerName ?? "---"),
+    );
+    const appointment = this.data.nextAppointment;
+    const date = appointment?.startDate;
+    const providerNames = appointment?.providerNames ?? [];
     const providerText =
       providerNames.length === 0 ? "" : providerNames.join(", ") + " ";
     this.addText(

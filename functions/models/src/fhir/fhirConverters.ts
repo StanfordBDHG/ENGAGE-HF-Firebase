@@ -14,15 +14,15 @@ import {
   observationSchema,
   questionnaireSchema,
   questionnaireResponseSchema,
-} from '@stanfordspezi/spezi-firebase-fhir'
-import { FHIRAllergyIntolerance } from './fhirAllergyIntolerance.js'
-import { FHIRAppointment } from './fhirAppointment.js'
-import { FHIRMedication } from './fhirMedication.js'
-import { FHIRMedicationRequest } from './fhirMedicationRequest.js'
-import { FHIRObservation } from './fhirObservation.js'
-import { FHIRQuestionnaire } from './fhirQuestionnaire.js'
-import { FHIRQuestionnaireResponse } from './fhirQuestionnaireResponse.js'
-import { FHIRSchemaConverter } from '../helpers/fhirSchemaConverter.js'
+} from "@stanfordspezi/spezi-firebase-fhir";
+import { FHIRAllergyIntolerance } from "./fhirAllergyIntolerance.js";
+import { FHIRAppointment } from "./fhirAppointment.js";
+import { FHIRMedication } from "./fhirMedication.js";
+import { FHIRMedicationRequest } from "./fhirMedicationRequest.js";
+import { FHIRObservation } from "./fhirObservation.js";
+import { FHIRQuestionnaire } from "./fhirQuestionnaire.js";
+import { FHIRQuestionnaireResponse } from "./fhirQuestionnaireResponse.js";
+import { FHIRSchemaConverter } from "../helpers/fhirSchemaConverter.js";
 
 export const fhirAllergyIntoleranceConverter =
   new FHIRSchemaConverter<FHIRAllergyIntolerance>(
@@ -32,21 +32,21 @@ export const fhirAllergyIntoleranceConverter =
     {
       nullProperties: [],
     },
-  )
+  );
 export const fhirAppointmentConverter =
   new FHIRSchemaConverter<FHIRAppointment>(
     appointmentSchema.transform((data) => new FHIRAppointment(data)),
     {
       nullProperties: [],
     },
-  )
+  );
 
 export const fhirMedicationConverter = new FHIRSchemaConverter<FHIRMedication>(
   medicationSchema.transform((data) => new FHIRMedication(data)),
   {
     nullProperties: [],
   },
-)
+);
 
 export const fhirMedicationRequestConverter =
   new FHIRSchemaConverter<FHIRMedicationRequest>(
@@ -56,7 +56,7 @@ export const fhirMedicationRequestConverter =
     {
       nullProperties: [],
     },
-  )
+  );
 
 export const fhirObservationConverter =
   new FHIRSchemaConverter<FHIRObservation>(
@@ -64,7 +64,7 @@ export const fhirObservationConverter =
     {
       nullProperties: [],
     },
-  )
+  );
 
 export const fhirQuestionnaireConverter =
   new FHIRSchemaConverter<FHIRQuestionnaire>(
@@ -72,7 +72,7 @@ export const fhirQuestionnaireConverter =
     {
       nullProperties: [],
     },
-  )
+  );
 
 export const fhirQuestionnaireResponseConverter =
   new FHIRSchemaConverter<FHIRQuestionnaireResponse>(
@@ -82,4 +82,4 @@ export const fhirQuestionnaireResponseConverter =
     {
       nullProperties: [],
     },
-  )
+  );

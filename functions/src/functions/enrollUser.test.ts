@@ -20,11 +20,11 @@ import {
   QuestionnaireReference,
   fhirAppointmentConverter,
   fhirObservationConverter,
-} from '@stanfordbdhg/engagehf-models'
-import { enrollUser } from './enrollUser.js'
-import { QuestionnaireId } from '../services/seeding/staticData/questionnaireFactory/questionnaireLinkIds.js'
-import { describeWithEmulators } from '../tests/functions/testEnvironment.js'
-import { expectError } from '../tests/helpers.js'
+} from "@stanfordbdhg/engagehf-models";
+import { enrollUser } from "./enrollUser.js";
+import { QuestionnaireId } from "../services/seeding/staticData/questionnaireFactory/questionnaireLinkIds.js";
+import { describeWithEmulators } from "../tests/functions/testEnvironment.js";
+import { expectError } from "../tests/helpers.js";
 
 describeWithEmulators("function: enrollUser", (env) => {
   it("fails to enroll a user without an invitation code", async () => {
@@ -64,20 +64,20 @@ describeWithEmulators("function: enrollUser", (env) => {
     await invitationRef.set(invitation);
 
     const expectedAppointment = new FHIRAppointment({
-      resourceType: 'Appointment',
-      status: 'booked',
-      created: new Date('2023-12-24').toISOString(),
-      start: new Date('2023-12-31').toISOString(),
-      end: new Date('2024-01-01').toISOString(),
+      resourceType: "Appointment",
+      status: "booked",
+      created: new Date("2023-12-24").toISOString(),
+      start: new Date("2023-12-31").toISOString(),
+      end: new Date("2024-01-01").toISOString(),
       participant: [
         {
-          status: 'accepted',
+          status: "accepted",
           actor: {
             reference: `users/${invitationRef.id}`,
           },
         },
       ],
-    })
+    });
 
     await env.collections
       .invitationAppointments(invitationRef.id)
@@ -132,7 +132,7 @@ describeWithEmulators("function: enrollUser", (env) => {
     } else {
       expect(fhirAppointmentConverter.encode(actualAppointment)).toStrictEqual(
         fhirAppointmentConverter.encode(expectedAppointment),
-      )
+      );
     }
 
     const actualObservations = await env.collections
@@ -145,7 +145,7 @@ describeWithEmulators("function: enrollUser", (env) => {
     } else {
       expect(fhirObservationConverter.encode(actualObservation)).toStrictEqual(
         fhirObservationConverter.encode(expectedObservation),
-      )
+      );
     }
 
     const userMessages = await env.collections.userMessages(authUser.uid).get();
@@ -187,20 +187,20 @@ describeWithEmulators("function: enrollUser", (env) => {
     await invitationRef.set(invitation);
 
     const expectedAppointment = new FHIRAppointment({
-      resourceType: 'Appointment',
-      status: 'booked',
-      created: new Date('2023-12-24').toISOString(),
-      start: new Date('2023-12-31').toISOString(),
-      end: new Date('2024-01-01').toISOString(),
+      resourceType: "Appointment",
+      status: "booked",
+      created: new Date("2023-12-24").toISOString(),
+      start: new Date("2023-12-31").toISOString(),
+      end: new Date("2024-01-01").toISOString(),
       participant: [
         {
-          status: 'accepted',
+          status: "accepted",
           actor: {
             reference: `users/${invitationRef.id}`,
           },
         },
       ],
-    })
+    });
 
     await env.collections
       .invitationAppointments(invitationRef.id)
@@ -255,7 +255,7 @@ describeWithEmulators("function: enrollUser", (env) => {
     } else {
       expect(fhirAppointmentConverter.encode(actualAppointment)).toStrictEqual(
         fhirAppointmentConverter.encode(expectedAppointment),
-      )
+      );
     }
 
     const actualObservations = await env.collections
@@ -268,7 +268,7 @@ describeWithEmulators("function: enrollUser", (env) => {
     } else {
       expect(fhirObservationConverter.encode(actualObservation)).toStrictEqual(
         fhirObservationConverter.encode(expectedObservation),
-      )
+      );
     }
 
     const userMessages = await env.collections.userMessages(authUser.uid).get();

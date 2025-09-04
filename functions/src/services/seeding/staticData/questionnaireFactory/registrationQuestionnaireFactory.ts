@@ -47,7 +47,7 @@ export class RegistrationQuestionnaireFactory extends QuestionnaireFactory<Regis
   // Helpers
 
   private personalInformationPage() {
-    const linkIds = QuestionnaireLinkId.personalInformation
+    const linkIds = QuestionnaireLinkId.personalInformation;
 
     return this.pageItem({
       linkId: linkIds.page,

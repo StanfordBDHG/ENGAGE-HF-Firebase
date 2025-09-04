@@ -6,11 +6,11 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { type Coding, type Observation, type Reference } from 'fhir/r4b.js'
-import { FHIRResource } from './fhirResource.js'
-import { CodingSystem, LoincCode } from '../codes/codes.js'
-import { QuantityUnit } from '../codes/quantityUnit.js'
-import { type ObservationQuantity } from '../types/observationQuantity.js'
+import { type Coding, type Observation, type Reference } from "fhir/r4b.js";
+import { FHIRResource } from "./fhirResource.js";
+import { CodingSystem, LoincCode } from "../codes/codes.js";
+import { QuantityUnit } from "../codes/quantityUnit.js";
+import { type ObservationQuantity } from "../types/observationQuantity.js";
 
 export class FHIRObservation extends FHIRResource<Observation> {
   // Static Functions
@@ -40,9 +40,9 @@ export class FHIRObservation extends FHIRResource<Observation> {
     diastolic: number;
   }): FHIRObservation {
     return new FHIRObservation({
-      resourceType: 'Observation',
+      resourceType: "Observation",
       id: input.id,
-      status: 'final',
+      status: "final",
       code: {
         text: this.loincDisplay.get(LoincCode.bloodPressure),
         coding: [
@@ -94,21 +94,21 @@ export class FHIRObservation extends FHIRResource<Observation> {
         },
       ],
       effectiveDateTime: input.date.toISOString(),
-    })
+    });
   }
 
   static createSimple(input: {
-    id: string
-    date: Date
-    value: number
-    unit: QuantityUnit
-    code: LoincCode
-    derivedFrom?: Reference[]
+    id: string;
+    date: Date;
+    value: number;
+    unit: QuantityUnit;
+    code: LoincCode;
+    derivedFrom?: Reference[];
   }): FHIRObservation {
     return new FHIRObservation({
-      resourceType: 'Observation',
+      resourceType: "Observation",
       id: input.id,
-      status: 'final',
+      status: "final",
       code: {
         text: this.loincDisplay.get(input.code) ?? undefined,
         coding: [
@@ -208,24 +208,24 @@ export class FHIRObservation extends FHIRResource<Observation> {
 
   private observationQuantities(
     options: {
-      unit: QuantityUnit
-      component?: Coding
+      unit: QuantityUnit;
+      component?: Coding;
     } & Coding,
   ): ObservationQuantity[] {
-    const result: ObservationQuantity[] = []
-    if (!this.containsCoding(this.data.code, [options])) return result
+    const result: ObservationQuantity[] = [];
+    if (!this.containsCoding(this.data.code, [options])) return result;
     const date =
       this.data.effectiveDateTime ??
       this.data.effectiveInstant ??
       this.data.effectivePeriod?.start ??
-      this.data.effectivePeriod?.end
-    if (!date) return result
+      this.data.effectivePeriod?.end;
+    if (!date) return result;
 
     if (options.component) {
       for (const component of this.data.component ?? []) {
-        if (!this.containsCoding(component.code, [options.component])) continue
-        const value = options.unit.valueOf(component.valueQuantity)
-        if (!value) continue
+        if (!this.containsCoding(component.code, [options.component])) continue;
+        const value = options.unit.valueOf(component.valueQuantity);
+        if (!value) continue;
         result.push({
           date: new Date(date),
           value: value,
@@ -233,9 +233,9 @@ export class FHIRObservation extends FHIRResource<Observation> {
         });
       }
     } else {
-      const value = options.unit.valueOf(this.data.valueQuantity)
-      if (!value) return result
-      result.push({ date: new Date(date), value: value, unit: options.unit })
+      const value = options.unit.valueOf(this.data.valueQuantity);
+      if (!value) return result;
+      result.push({ date: new Date(date), value: value, unit: options.unit });
     }
     return result;
   }

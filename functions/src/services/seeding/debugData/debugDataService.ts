@@ -25,15 +25,15 @@ import {
   VideoReference,
   UserObservationCollection,
   fhirQuestionnaireConverter,
-} from '@stanfordbdhg/engagehf-models'
-import { type Auth } from 'firebase-admin/auth'
-import { type CollectionReference } from 'firebase-admin/firestore'
-import { type Storage } from 'firebase-admin/storage'
-import { logger } from 'firebase-functions'
-import { type CollectionsService } from '../../database/collections.js'
-import { type DatabaseService } from '../../database/databaseService.js'
-import { createKccqQuestionnaireResponse } from '../../questionnaireResponse/createKccqQuestionnaireResponse.js'
-import { SeedingService } from '../seedingService.js'
+} from "@stanfordbdhg/engagehf-models";
+import { type Auth } from "firebase-admin/auth";
+import { type CollectionReference } from "firebase-admin/firestore";
+import { type Storage } from "firebase-admin/storage";
+import { logger } from "firebase-functions";
+import { type CollectionsService } from "../../database/collections.js";
+import { type DatabaseService } from "../../database/databaseService.js";
+import { createKccqQuestionnaireResponse } from "../../questionnaireResponse/createKccqQuestionnaireResponse.js";
+import { SeedingService } from "../seedingService.js";
 
 export class DebugDataService extends SeedingService {
   // Properties
@@ -405,7 +405,7 @@ export class DebugDataService extends SeedingService {
 
   async seedUserQuestionnaireResponses(userId: string, date: Date) {
     const questionnaire = this.readJSONRecord(
-      '../questionnaires.json',
+      "../questionnaires.json",
       fhirQuestionnaireConverter.schema,
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     )[QuestionnaireReference.kccq_en_US.split("/").at(-1)!];
@@ -460,7 +460,7 @@ export class DebugDataService extends SeedingService {
 
     const values = chunks(randomNumbers, 13).map((chunk, index) =>
       createKccqQuestionnaireResponse({
-        questionnaire: questionnaire.data.url ?? '',
+        questionnaire: questionnaire.data.url ?? "",
         questionnaireResponse: index.toString(),
         date: advanceDateByDays(date, -(index * 14) - 2),
         answer1a: Math.floor(1 + chunk[0] * 6),

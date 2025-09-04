@@ -25,12 +25,12 @@ describe("HealthSummaryService", () => {
       "mockUser",
       new Date(2024, 2, 2, 12, 30),
       QuantityUnit.lbs,
-    )
+    );
     console.log(
-      'actualData:',
+      "actualData:",
       actualData.nextAppointment?.startDate?.toISOString(),
-    )
-    const expectedData = await mockHealthSummaryData('mockUser')
+    );
+    const expectedData = await mockHealthSummaryData("mockUser");
     // TODO: Remove the next line to check whether medication optimizations also match the expected value.
     expectedData.recommendations = [];
     expect(actualData).toStrictEqual(expectedData);

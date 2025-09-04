@@ -6,10 +6,13 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { type FHIRQuestionnaire } from '@stanfordbdhg/engagehf-models'
-import { type QuestionnaireItem } from 'fhir/r4b.js'
-import { QuestionnaireFactory } from './questionnaireFactory.js'
-import { QuestionnaireId, QuestionnaireLinkId } from './questionnaireLinkIds.js'
+import { type FHIRQuestionnaire } from "@stanfordbdhg/engagehf-models";
+import { type QuestionnaireItem } from "fhir/r4b.js";
+import { QuestionnaireFactory } from "./questionnaireFactory.js";
+import {
+  QuestionnaireId,
+  QuestionnaireLinkId,
+} from "./questionnaireLinkIds.js";
 
 export class KccqQuestionnaireFactory extends QuestionnaireFactory<void> {
   create(): FHIRQuestionnaire {

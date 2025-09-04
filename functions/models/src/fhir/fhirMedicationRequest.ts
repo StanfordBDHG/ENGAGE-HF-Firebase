@@ -6,30 +6,30 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { type Extension, type MedicationRequest } from 'fhir/r4b.js'
-import { FHIRResource } from './fhirResource.js'
-import { QuantityUnit } from '../codes/quantityUnit.js'
+import { type Extension, type MedicationRequest } from "fhir/r4b.js";
+import { FHIRResource } from "./fhirResource.js";
+import { QuantityUnit } from "../codes/quantityUnit.js";
 
 export class FHIRMedicationRequest extends FHIRResource<MedicationRequest> {
   // Static Functions
 
   static create(input: {
-    id?: string
-    medicationReference: string
-    medicationReferenceDisplay?: string
-    frequencyPerDay: number
-    quantity: number
-    extension?: Extension[]
+    id?: string;
+    medicationReference: string;
+    medicationReferenceDisplay?: string;
+    frequencyPerDay: number;
+    quantity: number;
+    extension?: Extension[];
   }): FHIRMedicationRequest {
     return new FHIRMedicationRequest({
       id: input.id,
-      resourceType: 'MedicationRequest',
+      resourceType: "MedicationRequest",
       medicationReference: {
         reference: input.medicationReference,
         display: input.medicationReferenceDisplay,
       },
-      intent: 'plan',
-      status: 'draft',
+      intent: "plan",
+      status: "draft",
       subject: {},
       extension: input.extension,
       dosageInstruction: [
@@ -38,7 +38,7 @@ export class FHIRMedicationRequest extends FHIRResource<MedicationRequest> {
             repeat: {
               frequency: input.frequencyPerDay,
               period: 1,
-              periodUnit: 'd',
+              periodUnit: "d",
             },
           },
           doseAndRate: [
@@ -48,6 +48,6 @@ export class FHIRMedicationRequest extends FHIRResource<MedicationRequest> {
           ],
         },
       ],
-    })
+    });
   }
 }

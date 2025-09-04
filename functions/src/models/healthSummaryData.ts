@@ -23,12 +23,12 @@ import {
 } from "../healthSummary/keyPointsMessage.js";
 
 export interface HealthSummaryVitals {
-  systolicBloodPressure: ObservationQuantity[]
-  diastolicBloodPressure: ObservationQuantity[]
-  heartRate: ObservationQuantity[]
-  bodyWeight: ObservationQuantity[]
+  systolicBloodPressure: ObservationQuantity[];
+  diastolicBloodPressure: ObservationQuantity[];
+  heartRate: ObservationQuantity[];
+  bodyWeight: ObservationQuantity[];
 
-  dryWeight?: ObservationQuantity
+  dryWeight?: ObservationQuantity;
 }
 
 export class HealthSummaryData {

@@ -10,9 +10,9 @@ import {
   type FHIRAllergyIntolerance,
   MedicationClassReference,
   MedicationReference,
-} from '@stanfordbdhg/engagehf-models'
-import { type AllergyIntolerance } from 'fhir/r4b.js'
-import { logger } from 'firebase-functions'
+} from "@stanfordbdhg/engagehf-models";
+import { type AllergyIntolerance } from "fhir/r4b.js";
+import { logger } from "firebase-functions";
 import {
   ContraindicationCategory,
   type ContraindicationService,
@@ -110,25 +110,25 @@ export class DefaultContraindicationService implements ContraindicationService {
           medicationReference: medicationReference,
           type: contraindication.data.type,
           criticality: contraindication.data.criticality,
-        })
-        if (isRelevant(record)) category = Math.max(category, record.category)
+        });
+        if (isRelevant(record)) category = Math.max(category, record.category);
       }
     }
     return category;
   }
 
   private record(input: {
-    medicationReference: MedicationReference
-    type?: AllergyIntolerance['type']
-    criticality?: AllergyIntolerance['criticality']
+    medicationReference: MedicationReference;
+    type?: AllergyIntolerance["type"];
+    criticality?: AllergyIntolerance["criticality"];
   }): ContraindicationRecord {
     const medicationClass = medicationClassReference(input.medicationReference);
     const medicationReferences = this.medicationReferenceIncludingDerivatives(
       input.medicationReference,
     );
     switch (input.type) {
-      case 'allergy':
-        if (input.criticality === 'high') {
+      case "allergy":
+        if (input.criticality === "high") {
           return {
             category: ContraindicationCategory.severeAllergyIntolerance,
             medications: medicationReferences,
@@ -149,7 +149,7 @@ export class DefaultContraindicationService implements ContraindicationService {
             ),
           };
         }
-      case 'intolerance':
+      case "intolerance":
         switch (medicationClass) {
           case MedicationClassReference.angiotensinConvertingEnzymeInhibitors:
           case MedicationClassReference.angiotensinReceptorNeprilysinInhibitors:

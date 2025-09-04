@@ -6,8 +6,8 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { type z, type ZodType } from 'zod'
-import { type Lazy } from './lazy.js'
+import { type z, type ZodType } from "zod";
+import { type Lazy } from "./lazy.js";
 
 export class SchemaConverter<Schema extends ZodType, Encoded> {
   // Properties

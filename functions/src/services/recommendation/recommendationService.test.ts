@@ -13,14 +13,14 @@ import {
   FHIRMedicationRequest,
   MedicationReference,
   UserMedicationRecommendationType,
-} from '@stanfordbdhg/engagehf-models'
-import { type AllergyIntolerance } from 'fhir/r4b.js'
-import { type RecommendationService } from './recommendationService.js'
-import { readCsv } from '../../tests/helpers/csv.js'
-import { mockRecommendationVitals } from '../../tests/mocks/recommendationVitals.js'
-import { setupMockFirebase } from '../../tests/setup.js'
-import { getServiceFactory } from '../factory/getServiceFactory.js'
-import { type MedicationService } from '../medication/medicationService.js'
+} from "@stanfordbdhg/engagehf-models";
+import { type AllergyIntolerance } from "fhir/r4b.js";
+import { type RecommendationService } from "./recommendationService.js";
+import { readCsv } from "../../tests/helpers/csv.js";
+import { mockRecommendationVitals } from "../../tests/mocks/recommendationVitals.js";
+import { setupMockFirebase } from "../../tests/setup.js";
+import { getServiceFactory } from "../factory/getServiceFactory.js";
+import { type MedicationService } from "../medication/medicationService.js";
 
 describe("RecommendationService", () => {
   let medicationService: MedicationService;
@@ -64,8 +64,8 @@ describe("RecommendationService", () => {
           value.split(",").flatMap((field) =>
             getContraindications(
               field,
-              [0, 1, 2, 3].includes(index) ? 'allergy'
-              : [4, 5, 6, 7].includes(index) ? 'intolerance'
+              [0, 1, 2, 3].includes(index) ? "allergy"
+              : [4, 5, 6, 7].includes(index) ? "intolerance"
               : undefined,
             ),
           ),
@@ -120,8 +120,8 @@ describe("RecommendationService", () => {
             expect(expected.recommendedMedication).toBeDefined();
             expect(result[i].currentMedication.length).toBeGreaterThan(0);
             result[i].currentMedication.every((medication) =>
-              (medication.reference ?? '').startsWith(
-                (expected.recommendedMedication ?? '') + '/drugs/',
+              (medication.reference ?? "").startsWith(
+                (expected.recommendedMedication ?? "") + "/drugs/",
               ),
             );
           } else if (expected.recommendedMedication) {
@@ -288,7 +288,7 @@ function getMedicationRequest(
 
 function getContraindications(
   field: string,
-  type: AllergyIntolerance['type'] | undefined,
+  type: AllergyIntolerance["type"] | undefined,
 ): FHIRAllergyIntolerance[] {
   switch (field.trim().toLowerCase().split(" ").join("")) {
     case "none":
@@ -298,7 +298,7 @@ function getContraindications(
         FHIRAllergyIntolerance.create({
           reference: MedicationReference.bisoprolol,
           type,
-          criticality: 'low',
+          criticality: "low",
         }),
       ];
     case "carvedilol":
@@ -306,7 +306,7 @@ function getContraindications(
         FHIRAllergyIntolerance.create({
           reference: MedicationReference.carvedilol,
           type,
-          criticality: 'low',
+          criticality: "low",
         }),
       ];
     case "dapagliflozin":
@@ -314,7 +314,7 @@ function getContraindications(
         FHIRAllergyIntolerance.create({
           reference: MedicationReference.dapagliflozin,
           type,
-          criticality: 'low',
+          criticality: "low",
         }),
       ];
     case "empagliflozin":
@@ -322,7 +322,7 @@ function getContraindications(
         FHIRAllergyIntolerance.create({
           reference: MedicationReference.empagliflozin,
           type,
-          criticality: 'low',
+          criticality: "low",
         }),
       ];
     case "eplerenone":
@@ -330,7 +330,7 @@ function getContraindications(
         FHIRAllergyIntolerance.create({
           reference: MedicationReference.eplerenone,
           type,
-          criticality: 'low',
+          criticality: "low",
         }),
       ];
     case "lisinopril":
@@ -338,7 +338,7 @@ function getContraindications(
         FHIRAllergyIntolerance.create({
           reference: MedicationReference.lisinopril,
           type,
-          criticality: 'low',
+          criticality: "low",
         }),
       ];
     case "lisinopril-anaphylaxis":
@@ -346,7 +346,7 @@ function getContraindications(
         FHIRAllergyIntolerance.create({
           reference: MedicationReference.lisinopril,
           type,
-          criticality: 'high',
+          criticality: "high",
         }),
       ];
     case "losartan":
@@ -354,7 +354,7 @@ function getContraindications(
         FHIRAllergyIntolerance.create({
           reference: MedicationReference.losartan,
           type,
-          criticality: 'low',
+          criticality: "low",
         }),
       ];
     case "metoprolol":
@@ -362,7 +362,7 @@ function getContraindications(
         FHIRAllergyIntolerance.create({
           reference: MedicationReference.metoprololSuccinate,
           type,
-          criticality: 'high',
+          criticality: "high",
         }),
       ];
     case "sacubitril-valsartan":
@@ -370,7 +370,7 @@ function getContraindications(
         FHIRAllergyIntolerance.create({
           reference: MedicationReference.sacubitrilValsartan,
           type,
-          criticality: 'low',
+          criticality: "low",
         }),
       ];
     case "sotagliflozin":
@@ -378,7 +378,7 @@ function getContraindications(
         FHIRAllergyIntolerance.create({
           reference: MedicationReference.sotagliflozin,
           type,
-          criticality: 'low',
+          criticality: "low",
         }),
       ];
     case "spironolactone":
@@ -386,7 +386,7 @@ function getContraindications(
         FHIRAllergyIntolerance.create({
           reference: MedicationReference.spironolactone,
           type,
-          criticality: 'low',
+          criticality: "low",
         }),
       ];
     case "valsartan":
@@ -394,7 +394,7 @@ function getContraindications(
         FHIRAllergyIntolerance.create({
           reference: MedicationReference.valsartan,
           type,
-          criticality: 'low',
+          criticality: "low",
         }),
       ];
     default:

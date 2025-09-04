@@ -18,10 +18,10 @@ describe("EgfrCalculator", () => {
     readCsv("src/tests/resources/egfr.csv", 547, (line, index) => {
       if (index === 0) return; // Skip header line
 
-      const sexAssignedAtBirth = z.enum(UserSex).parse(line[0])
-      const age = z.number().parse(parseFloat(line[1]))
-      const creatinine = z.number().parse(parseFloat(line[2]))
-      const expectedValue = z.number().parse(parseFloat(line[3]))
+      const sexAssignedAtBirth = z.enum(UserSex).parse(line[0]);
+      const age = z.number().parse(parseFloat(line[1]));
+      const creatinine = z.number().parse(parseFloat(line[2]));
+      const expectedValue = z.number().parse(parseFloat(line[3]));
 
       const result = egfrCalculator.calculate({
         sexAssignedAtBirth,

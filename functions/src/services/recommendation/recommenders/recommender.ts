@@ -99,16 +99,16 @@ export abstract class Recommender {
   protected medianValue(
     observations: ObservationQuantity[],
   ): number | undefined {
-    if (observations.length < 3) return undefined
-    return median(observations.map((observation) => observation.value)) ?? 0
+    if (observations.length < 3) return undefined;
+    return median(observations.map((observation) => observation.value)) ?? 0;
   }
 
   private currentDailyDose(contexts: MedicationRequestContext[]): number[] {
     const dailyDoses: number[] = [];
     for (const context of contexts) {
-      let numberOfTabletsPerDay = 0
+      let numberOfTabletsPerDay = 0;
       for (const instruction of context.request.data.dosageInstruction ?? []) {
-        const intakesPerDay = instruction.timing?.repeat?.frequency ?? 0
+        const intakesPerDay = instruction.timing?.repeat?.frequency ?? 0;
         for (const dose of instruction.doseAndRate ?? []) {
           const numberOfPills = dose.doseQuantity?.value;
           if (!numberOfPills)
@@ -117,7 +117,7 @@ export abstract class Recommender {
         }
       }
 
-      const ingredients = context.drug.data.ingredient ?? []
+      const ingredients = context.drug.data.ingredient ?? [];
 
       while (dailyDoses.length < ingredients.length) {
         dailyDoses.push(0);

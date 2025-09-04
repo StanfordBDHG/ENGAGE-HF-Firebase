@@ -11,9 +11,9 @@ import {
   FHIRAllergyIntolerance,
   MedicationClassReference,
   MedicationReference,
-} from '@stanfordbdhg/engagehf-models'
-import { type AllergyIntolerance } from 'fhir/r4b.js'
-import { logger } from 'firebase-functions'
+} from "@stanfordbdhg/engagehf-models";
+import { type AllergyIntolerance } from "fhir/r4b.js";
+import { logger } from "firebase-functions";
 import {
   ContraindicationCategory,
   type ContraindicationService,
@@ -27,15 +27,15 @@ describe("DefaultContraindicationService", () => {
   function check(
     field: string,
     options: {
-      reference: MedicationReference
-      type?: AllergyIntolerance['type']
-      criticality: AllergyIntolerance['criticality']
-      category: ContraindicationCategory
+      reference: MedicationReference;
+      type?: AllergyIntolerance["type"];
+      criticality: AllergyIntolerance["criticality"];
+      category: ContraindicationCategory;
     },
   ) {
     const contraindications = [
       FHIRAllergyIntolerance.create({
-        userId: 'testUser',
+        userId: "testUser",
         type: options.type,
         criticality: options.criticality,
         reference: options.reference,
@@ -83,29 +83,29 @@ describe("DefaultContraindicationService", () => {
 
       check(fields[10], {
         reference: medicationReference,
-        type: 'allergy',
-        criticality: 'low',
+        type: "allergy",
+        criticality: "low",
         category: ContraindicationCategory.allergyIntolerance,
       });
 
       check(fields[11], {
         reference: medicationReference,
-        type: 'allergy',
-        criticality: 'high',
+        type: "allergy",
+        criticality: "high",
         category: ContraindicationCategory.severeAllergyIntolerance,
       });
 
       check(fields[12], {
         reference: medicationReference,
-        type: 'intolerance',
-        criticality: 'low',
+        type: "intolerance",
+        criticality: "low",
         category: ContraindicationCategory.clinicianListed,
       });
 
       check(fields[14], {
         reference: medicationReference,
         type: undefined, // TODO: 'financial',
-        criticality: 'low',
+        criticality: "low",
         category: ContraindicationCategory.clinicianListed,
       });
     }

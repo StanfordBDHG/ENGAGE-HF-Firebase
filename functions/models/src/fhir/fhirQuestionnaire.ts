@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { type Questionnaire } from 'fhir/r4b.js'
-import { FHIRResource } from './fhirResource.js'
+import { type Questionnaire } from "fhir/r4b.js";
+import { FHIRResource } from "./fhirResource.js";
 
 export class FHIRQuestionnaire extends FHIRResource<Questionnaire> {}

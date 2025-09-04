@@ -15,18 +15,18 @@ import {
   UserMedicationRecommendation,
   type UserMedicationRecommendationDoseSchedule,
   UserMedicationRecommendationType,
-} from '@stanfordbdhg/engagehf-models'
-import { type Medication, type MedicationRequest } from 'fhir/r4b.js'
-import { recommendationLocalization } from './recommendationService+localization.js'
-import { BetaBlockerRecommender } from './recommenders/betaBlockerRecommender.js'
-import { DiureticRecommender } from './recommenders/diureticRecommender.js'
-import { MraRecommender } from './recommenders/mraRecommender.js'
-import { RasiRecommender } from './recommenders/rasiRecommender.js'
-import { type Recommender } from './recommenders/recommender.js'
-import { Sglt2iRecommender } from './recommenders/sglt2iRecommender.js'
-import { type MedicationRequestContext } from '../../models/medicationRequestContext.js'
-import { type ContraindicationService } from '../contraindication/contraindicationService.js'
-import { type MedicationService } from '../medication/medicationService.js'
+} from "@stanfordbdhg/engagehf-models";
+import { type Medication, type MedicationRequest } from "fhir/r4b.js";
+import { recommendationLocalization } from "./recommendationService+localization.js";
+import { BetaBlockerRecommender } from "./recommenders/betaBlockerRecommender.js";
+import { DiureticRecommender } from "./recommenders/diureticRecommender.js";
+import { MraRecommender } from "./recommenders/mraRecommender.js";
+import { RasiRecommender } from "./recommenders/rasiRecommender.js";
+import { type Recommender } from "./recommenders/recommender.js";
+import { Sglt2iRecommender } from "./recommenders/sglt2iRecommender.js";
+import { type MedicationRequestContext } from "../../models/medicationRequestContext.js";
+import { type ContraindicationService } from "../contraindication/contraindicationService.js";
+import { type MedicationService } from "../medication/medicationService.js";
 
 export interface RecommendationInput {
   requests: MedicationRequestContext[];
@@ -36,11 +36,11 @@ export interface RecommendationInput {
 }
 
 export interface RecommendationVitals {
-  systolicBloodPressure: ObservationQuantity[]
-  heartRate: ObservationQuantity[]
-  creatinine?: ObservationQuantity
-  estimatedGlomerularFiltrationRate?: ObservationQuantity
-  potassium?: ObservationQuantity
+  systolicBloodPressure: ObservationQuantity[];
+  heartRate: ObservationQuantity[];
+  creatinine?: ObservationQuantity;
+  estimatedGlomerularFiltrationRate?: ObservationQuantity;
+  potassium?: ObservationQuantity;
 }
 
 export interface RecommendationOutput {
@@ -149,7 +149,7 @@ export class RecommendationService {
 
     const currentDailyDoseSchedule = output.currentMedication.flatMap(
       (context) => this.doseSchedule(context.request.data, context.drug.data),
-    )
+    );
 
     const targetDailyDoseRequest = medication?.targetDailyDoseRequest;
     const targetDailyDoseDrugReference =
@@ -166,7 +166,7 @@ export class RecommendationService {
           targetDailyDoseRequest,
           targetDailyDoseDrugReference.data,
         )
-      : []
+      : [];
 
     return new UserMedicationRecommendation({
       currentMedication: output.currentMedication.map(

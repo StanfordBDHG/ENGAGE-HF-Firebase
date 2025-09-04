@@ -11,18 +11,18 @@ import {
   type Coding,
   type DomainResource,
   type Extension,
-} from 'fhir/r4b.js'
-import { type FHIRExtensionUrl } from '../codes/codes.js'
+} from "fhir/r4b.js";
+import { type FHIRExtensionUrl } from "../codes/codes.js";
 
 export abstract class FHIRResource<ResourceType extends DomainResource> {
   // Properties
 
-  data: ResourceType
+  data: ResourceType;
 
   // Constructor
 
   constructor(data: ResourceType) {
-    this.data = data
+    this.data = data;
   }
 
   // Methods
@@ -30,11 +30,11 @@ export abstract class FHIRResource<ResourceType extends DomainResource> {
   codes(concept: CodeableConcept | undefined, filter: Coding): string[] {
     return (
       concept?.coding?.flatMap((coding) => {
-        if (filter.system && coding.system !== filter.system) return []
-        if (filter.version && coding.version !== filter.version) return []
-        return coding.code ? [coding.code] : []
+        if (filter.system && coding.system !== filter.system) return [];
+        if (filter.version && coding.version !== filter.version) return [];
+        return coding.code ? [coding.code] : [];
       }) ?? []
-    )
+    );
   }
 
   containsCoding(
@@ -45,26 +45,26 @@ export abstract class FHIRResource<ResourceType extends DomainResource> {
       (filterCoding) =>
         concept?.coding?.some((coding) => {
           if (filterCoding.code && coding.code !== filterCoding.code)
-            return false
+            return false;
           if (filterCoding.system && coding.system !== filterCoding.system)
-            return false
+            return false;
           if (filterCoding.version && coding.version !== filterCoding.version)
-            return false
-          return true
+            return false;
+          return true;
         }) ?? false,
-    )
+    );
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-parameters
   containedResource<T extends DomainResource>(id: string): T | undefined {
-    return this.data.contained?.find((resource) => resource.id === id) as T
+    return this.data.contained?.find((resource) => resource.id === id) as T;
   }
 
   extensionsWithUrl(url: FHIRExtensionUrl): Extension[] {
     return (
       this.data.extension?.filter(
-        (extension) => extension.url === url.toString(),
+        (extension) => extension.url === (url as string),
       ) ?? []
-    )
+    );
   }
 }

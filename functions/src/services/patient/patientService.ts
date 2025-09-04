@@ -18,9 +18,9 @@ import {
   type UserShareCode,
   type UserObservationCollection,
   type LoincCode,
-} from '@stanfordbdhg/engagehf-models'
-import { type Reference } from 'fhir/r4b.js'
-import { type Document } from '../database/databaseService.js'
+} from "@stanfordbdhg/engagehf-models";
+import { type Reference } from "fhir/r4b.js";
+import { type Document } from "../database/databaseService.js";
 
 export interface PatientService {
   // Appointments
@@ -70,40 +70,40 @@ export interface PatientService {
   getBloodPressureObservations(
     userId: string,
     cutoffDate: Date,
-  ): Promise<[ObservationQuantity[], ObservationQuantity[]]>
+  ): Promise<[ObservationQuantity[], ObservationQuantity[]]>;
   getBodyWeightObservations(
     userId: string,
     unit: QuantityUnit,
     cutoffDate: Date,
-  ): Promise<ObservationQuantity[]>
+  ): Promise<ObservationQuantity[]>;
   getHeartRateObservations(
     userId: string,
     cutoffDate: Date,
-  ): Promise<ObservationQuantity[]>
+  ): Promise<ObservationQuantity[]>;
 
   getMostRecentCreatinineObservation(
     userId: string,
-  ): Promise<ObservationQuantity | undefined>
+  ): Promise<ObservationQuantity | undefined>;
   getMostRecentDryWeightObservation(
     userId: string,
     unit: QuantityUnit,
-  ): Promise<ObservationQuantity | undefined>
+  ): Promise<ObservationQuantity | undefined>;
   getMostRecentEstimatedGlomerularFiltrationRateObservation(
     userId: string,
-  ): Promise<ObservationQuantity | undefined>
+  ): Promise<ObservationQuantity | undefined>;
   getMostRecentPotassiumObservation(
     userId: string,
-  ): Promise<ObservationQuantity | undefined>
+  ): Promise<ObservationQuantity | undefined>;
 
   createObservations(
     userId: string,
     values: Array<{
-      observation: ObservationQuantity
-      loincCode: LoincCode
-      collection: UserObservationCollection
+      observation: ObservationQuantity;
+      loincCode: LoincCode;
+      collection: UserObservationCollection;
     }>,
     reference: Reference | null,
-  ): Promise<void>
+  ): Promise<void>;
 
   // Questionnaire Responses
 

@@ -14,7 +14,7 @@ import {
   FHIRQuestionnaire,
   LoincCode,
   QuantityUnit,
-} from '@stanfordbdhg/engagehf-models'
+} from "@stanfordbdhg/engagehf-models";
 import {
   type QuestionnaireItem,
   type QuestionnaireItemEnableWhen,
@@ -22,7 +22,7 @@ import {
   type UsageContext,
   type Extension,
   type Questionnaire,
-} from 'fhir/r4b.js'
+} from "fhir/r4b.js";
 import {
   medicationClassesForGroup,
   MedicationGroup,
@@ -39,7 +39,7 @@ export abstract class QuestionnaireFactory<Input> {
   // Helper functions - ENGAGE-HF specific
 
   protected appointmentInputPages(): QuestionnaireItem[] {
-    const linkIds = QuestionnaireLinkId.appointment
+    const linkIds = QuestionnaireLinkId.appointment;
     return [
       this.pageItem({
         linkId: linkIds.page0,
@@ -61,7 +61,7 @@ export abstract class QuestionnaireFactory<Input> {
         enableWhen: [
           {
             question: linkIds.exists,
-            operator: '=',
+            operator: "=",
             answerBoolean: true,
           },
         ],
@@ -115,15 +115,15 @@ export abstract class QuestionnaireFactory<Input> {
   }
 
   protected labInputPagesForValue(input: {
-    loincCode: LoincCode
-    title: string
-    name: string
-    description: string
-    unit: QuantityUnit
-    minValue?: number
-    maxValue?: number
+    loincCode: LoincCode;
+    title: string;
+    name: string;
+    description: string;
+    unit: QuantityUnit;
+    minValue?: number;
+    maxValue?: number;
   }): QuestionnaireItem[] {
-    const linkIds = QuestionnaireLinkId.labValue(input.loincCode)
+    const linkIds = QuestionnaireLinkId.labValue(input.loincCode);
     return [
       this.pageItem({
         linkId: linkIds.page0,
@@ -145,7 +145,7 @@ export abstract class QuestionnaireFactory<Input> {
         enableWhen: [
           {
             question: linkIds.exists,
-            operator: '=',
+            operator: "=",
             answerBoolean: true,
           },
         ],
@@ -171,9 +171,9 @@ export abstract class QuestionnaireFactory<Input> {
   }
 
   protected medicationInputPages(input: {
-    medications: Record<string, FHIRMedication>
-    drugs: Record<string, Record<string, FHIRMedication>>
-    isRegistration: boolean
+    medications: Record<string, FHIRMedication>;
+    drugs: Record<string, Record<string, FHIRMedication>>;
+    isRegistration: boolean;
   }): QuestionnaireItem[] {
     return [
       ...this.medicationInputPagesForMedicationGroup({
@@ -205,16 +205,16 @@ export abstract class QuestionnaireFactory<Input> {
   }
 
   protected medicationInputPagesForMedicationGroup(input: {
-    drugs: Record<string, Record<string, FHIRMedication>>
-    medications: Record<string, FHIRMedication>
-    group: MedicationGroup
-    text: string
-    isRegistration: boolean
+    drugs: Record<string, Record<string, FHIRMedication>>;
+    medications: Record<string, FHIRMedication>;
+    group: MedicationGroup;
+    text: string;
+    isRegistration: boolean;
   }): QuestionnaireItem[] {
-    const linkIds = QuestionnaireLinkId.medication(input.group)
+    const linkIds = QuestionnaireLinkId.medication(input.group);
     const medicationClasses = medicationClassesForGroup(input.group).map(
-      (medicationClass) => medicationClass.toString(),
-    )
+      (medicationClass) => medicationClass as string,
+    );
     const medicationIds = compactMap(
       Object.entries(input.medications),
       ([id, medication]) =>
@@ -241,7 +241,7 @@ export abstract class QuestionnaireFactory<Input> {
         if (medication.brandNames.length > 0)
           text += ` (${medication.brandNames.join(", ")})`;
 
-        text += `\n${drug.data.ingredient?.map((i) => i.strength?.numerator?.value ?? 0).join('/') ?? ''} mg ${drug.data.form?.text ?? ''}`
+        text += `\n${drug.data.ingredient?.map((i) => i.strength?.numerator?.value ?? 0).join("/") ?? ""} mg ${drug.data.form?.text ?? ""}`;
         answers.push({
           id: `medications/${medicationId}/drugs/${drugId}`,
           medication,
@@ -314,7 +314,7 @@ export abstract class QuestionnaireFactory<Input> {
         enableWhen: [
           {
             question: linkIds.exists,
-            operator: '=',
+            operator: "=",
             answerCoding:
               input.isRegistration ?
                 answerOptions.find(
@@ -364,101 +364,101 @@ export abstract class QuestionnaireFactory<Input> {
   // Helper functions - Generic
 
   protected booleanItem(input: {
-    linkId: string
-    text: string
-    required?: boolean
+    linkId: string;
+    text: string;
+    required?: boolean;
   }): QuestionnaireItem {
     return {
       linkId: input.linkId,
       text: input.text,
-      type: 'boolean',
+      type: "boolean",
       required: input.required ?? true,
     };
   }
 
   protected dateItem(input: {
-    linkId: string
-    text: string
-    required?: boolean
+    linkId: string;
+    text: string;
+    required?: boolean;
   }): QuestionnaireItem {
     return {
       linkId: input.linkId,
       text: input.text,
-      type: 'date',
+      type: "date",
       required: input.required ?? true,
     };
   }
 
   protected dateTimeItem(input: {
-    linkId: string
-    text: string
-    required?: boolean
+    linkId: string;
+    text: string;
+    required?: boolean;
   }): QuestionnaireItem {
     return {
       linkId: input.linkId,
       text: input.text,
-      type: 'dateTime',
+      type: "dateTime",
       required: input.required ?? true,
     };
   }
 
   protected decimalItem(input: {
-    linkId: string
-    text: string
-    required?: boolean
-    unit?: string
-    minValue?: number
-    maxValue?: number
+    linkId: string;
+    text: string;
+    required?: boolean;
+    unit?: string;
+    minValue?: number;
+    maxValue?: number;
   }): QuestionnaireItem {
     return {
       linkId: input.linkId,
       text: input.text,
-      type: 'decimal',
+      type: "decimal",
       required: input.required ?? true,
     };
   }
 
   protected displayItem(input: {
-    linkId: string
-    text: string
-    required?: boolean
+    linkId: string;
+    text: string;
+    required?: boolean;
   }): QuestionnaireItem {
     return {
       linkId: input.linkId,
-      type: 'display',
+      type: "display",
       text: input.text,
       required: input.required ?? false,
     };
   }
 
   protected integerItem(input: {
-    linkId: string
-    text: string
-    required?: boolean
-    unit?: string
-    minValue?: number
-    maxValue?: number
+    linkId: string;
+    text: string;
+    required?: boolean;
+    unit?: string;
+    minValue?: number;
+    maxValue?: number;
   }): QuestionnaireItem {
     return {
       linkId: input.linkId,
       text: input.text,
-      type: 'integer',
+      type: "integer",
       required: input.required ?? true,
-    }
+    };
   }
 
   protected pageItem(input: {
-    linkId: string
-    text: string
-    item: QuestionnaireItem[]
-    enableWhen?: QuestionnaireItemEnableWhen[]
-    enableBehavior?: 'all' | 'any'
-    extension?: Extension[]
-    required?: boolean
+    linkId: string;
+    text: string;
+    item: QuestionnaireItem[];
+    enableWhen?: QuestionnaireItemEnableWhen[];
+    enableBehavior?: "all" | "any";
+    extension?: Extension[];
+    required?: boolean;
   }): QuestionnaireItem {
     return {
       linkId: input.linkId,
-      type: 'group',
+      type: "group",
       extension: [
         ...(input.extension ?? []),
         {
@@ -484,19 +484,19 @@ export abstract class QuestionnaireFactory<Input> {
   }
 
   protected questionnaire(input: {
-    id: QuestionnaireId
-    title: string
-    status?: Questionnaire['status']
-    item: QuestionnaireItem[]
-    useContext?: UsageContext[]
+    id: QuestionnaireId;
+    title: string;
+    status?: Questionnaire["status"];
+    item: QuestionnaireItem[];
+    useContext?: UsageContext[];
   }): FHIRQuestionnaire {
     return new FHIRQuestionnaire({
-      resourceType: 'Questionnaire',
+      resourceType: "Questionnaire",
       id: input.id,
       title: input.title,
-      language: 'en-US',
-      status: input.status ?? 'active',
-      publisher: 'Stanford Biodesign Digital Health',
+      language: "en-US",
+      status: input.status ?? "active",
+      publisher: "Stanford Biodesign Digital Health",
       meta: {
         profile: [
           "http://spezi.health/fhir/StructureDefinition/sdf-Questionnaire",
@@ -522,10 +522,10 @@ export abstract class QuestionnaireFactory<Input> {
   }
 
   protected radioButtonItem(input: {
-    linkId: string
-    text: string
-    answerOption: QuestionnaireItemAnswerOption[]
-    required?: boolean
+    linkId: string;
+    text: string;
+    answerOption: QuestionnaireItemAnswerOption[];
+    required?: boolean;
   }): QuestionnaireItem {
     return {
       extension: [
@@ -543,7 +543,7 @@ export abstract class QuestionnaireFactory<Input> {
         },
       ],
       linkId: input.linkId,
-      type: 'choice',
+      type: "choice",
       text: input.text,
       required: input.required ?? true,
       answerOption: input.answerOption,
@@ -553,10 +553,10 @@ export abstract class QuestionnaireFactory<Input> {
   protected valueSetAnswerOptions(input: {
     system: string;
     values: Array<{
-      id?: string
-      code: string
-      display: string
-    }>
+      id?: string;
+      code: string;
+      display: string;
+    }>;
   }): QuestionnaireItemAnswerOption[] {
     return input.values.map((option) => ({
       valueCoding: {

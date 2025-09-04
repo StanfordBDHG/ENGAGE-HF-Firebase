@@ -12,7 +12,7 @@ import { UserDevicePlatform } from "../types/userDevice.js";
 export const unregisterDeviceInputSchema = z.object({
   notificationToken: z.string(),
   platform: z.enum(UserDevicePlatform),
-})
-export type UnregisterDeviceInput = z.input<typeof unregisterDeviceInputSchema>
+});
+export type UnregisterDeviceInput = z.input<typeof unregisterDeviceInputSchema>;
 
 export type UnregisterDeviceOutput = undefined;

@@ -151,7 +151,7 @@ describeWithEmulators("onUserAppointmentWritten", (env) => {
     const earlierAppointment = FHIRAppointment.create({
       userId: patientId,
       created: now,
-      status: 'booked',
+      status: "booked",
       start: advanceDateByHours(now, 23),
       durationInMinutes: 60,
     });
@@ -210,7 +210,7 @@ describeWithEmulators("onUserAppointmentWritten", (env) => {
     const appointment = FHIRAppointment.create({
       userId: patientId,
       created: now,
-      status: 'booked',
+      status: "booked",
       start: advanceDateByHours(now, 23),
       durationInMinutes: 60,
     });

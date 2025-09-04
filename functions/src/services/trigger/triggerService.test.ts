@@ -38,7 +38,7 @@ describeWithEmulators("TriggerService", (env) => {
 
       const appointment = FHIRAppointment.create({
         userId: patientId,
-        status: 'proposed',
+        status: "proposed",
         created: advanceDateByDays(new Date(), -3),
         start: advanceDateByDays(new Date(), 1.01),
         durationInMinutes: 60,
@@ -97,7 +97,7 @@ describeWithEmulators("TriggerService", (env) => {
 
       const appointment = FHIRAppointment.create({
         userId: patientId,
-        status: 'proposed',
+        status: "proposed",
         created: advanceDateByDays(new Date(), -3),
         start: advanceDateByDays(new Date(), -1),
         durationInMinutes: 60,
@@ -163,7 +163,7 @@ describeWithEmulators("TriggerService", (env) => {
 
       const appointment = FHIRAppointment.create({
         userId: patientId,
-        status: 'proposed',
+        status: "proposed",
         created: advanceDateByDays(new Date(), -3),
         start: advanceDateByDays(new Date(), -1),
         durationInMinutes: 60,

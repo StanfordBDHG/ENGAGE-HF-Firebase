@@ -10,10 +10,10 @@ import {
   type FHIRMedication,
   type FHIRMedicationRequest,
   type MedicationClass,
-} from '@stanfordbdhg/engagehf-models'
-import { type Reference } from 'fhir/r4b.js'
-import { type MedicationService } from './medicationService.js'
-import { type MedicationRequestContext } from '../../models/medicationRequestContext.js'
+} from "@stanfordbdhg/engagehf-models";
+import { type Reference } from "fhir/r4b.js";
+import { type MedicationService } from "./medicationService.js";
+import { type MedicationRequestContext } from "../../models/medicationRequestContext.js";
 import {
   type Document,
   type DatabaseService,
@@ -35,16 +35,17 @@ export class DatabaseMedicationService implements MedicationService {
   async getContext(
     request: Document<FHIRMedicationRequest>,
   ): Promise<MedicationRequestContext> {
-    const drugReference = request.content.data.medicationReference
-    if (drugReference === undefined) throw new Error('Drug reference not found')
-    const drug = (await this.getReference(drugReference))?.content
+    const drugReference = request.content.data.medicationReference;
+    if (drugReference === undefined)
+      throw new Error("Drug reference not found");
+    const drug = (await this.getReference(drugReference))?.content;
     if (drug === undefined)
-      throw new Error(`Drug not found at ${drugReference.reference}`)
+      throw new Error(`Drug not found at ${drugReference.reference}`);
     const medicationReference: Reference = {
-      reference: drugReference.reference?.split('/').slice(0, 2).join('/'),
-    }
-    const medication = (await this.getReference(medicationReference))?.content
-    medicationReference.display = medication?.displayName
+      reference: drugReference.reference?.split("/").slice(0, 2).join("/"),
+    };
+    const medication = (await this.getReference(medicationReference))?.content;
+    medicationReference.display = medication?.displayName;
     if (medication === undefined)
       throw new Error(
         `Medication not found at ${medicationReference.reference}`,
@@ -128,20 +129,20 @@ export class DatabaseMedicationService implements MedicationService {
   async getClassReference(
     reference: Reference | undefined,
   ): Promise<Document<MedicationClass> | undefined> {
-    const doc = reference?.reference
-    if (!doc) return undefined
+    const doc = reference?.reference;
+    if (!doc) return undefined;
     return this.databaseService.getDocument<MedicationClass>((collections) =>
       collections.medicationClassReference(doc),
-    )
+    );
   }
 
   async getReference(
     reference: Reference | undefined,
   ): Promise<Document<FHIRMedication> | undefined> {
-    const doc = reference?.reference
-    if (!doc) return undefined
+    const doc = reference?.reference;
+    if (!doc) return undefined;
     return this.databaseService.getDocument<FHIRMedication>((collections) =>
       collections.medicationReference(doc),
-    )
+    );
   }
 }

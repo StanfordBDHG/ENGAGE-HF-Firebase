@@ -83,8 +83,8 @@ export abstract class QuestionnaireResponseService {
       if (dateOfBirth === undefined) return null;
 
       const sexCode = response.leafResponseItem(linkIds.sex)?.answer?.at(0)
-        ?.valueCoding?.code
-      const sex = z.enum(UserSex).parse(sexCode)
+        ?.valueCoding?.code;
+      const sex = z.enum(UserSex).parse(sexCode);
       return {
         dateOfBirth: new Date(dateOfBirth),
         sex,
@@ -100,7 +100,7 @@ export abstract class QuestionnaireResponseService {
       unit: QuantityUnit;
     },
   ): ObservationQuantity | null {
-    const linkIds = QuestionnaireLinkId.labValue(options.code)
+    const linkIds = QuestionnaireLinkId.labValue(options.code);
     const dateAnswer = response
       .leafResponseItem(linkIds.dateTime)
       ?.answer?.at(0)?.valueDateTime;
@@ -116,7 +116,7 @@ export abstract class QuestionnaireResponseService {
       value: decimalAnswer,
       unit: options.unit,
       date: new Date(dateAnswer),
-    }
+    };
   }
 
   protected extractMedicationRequests(response: FHIRQuestionnaireResponse): {
@@ -179,7 +179,7 @@ export abstract class QuestionnaireResponseService {
         ?.answer?.at(0)?.valueDecimal;
       const frequency = response
         .leafResponseItem(linkIds.frequency)
-        ?.answer?.at(0)?.valueInteger
+        ?.answer?.at(0)?.valueInteger;
 
       if (
         drugCoding?.code === undefined ||
@@ -212,10 +212,10 @@ export abstract class QuestionnaireResponseService {
     response: Document<FHIRQuestionnaireResponse>;
   }): Promise<void> {
     const observationValues: Array<{
-      observation: ObservationQuantity
-      loincCode: LoincCode
-      collection: UserObservationCollection
-    }> = []
+      observation: ObservationQuantity;
+      loincCode: LoincCode;
+      collection: UserObservationCollection;
+    }> = [];
 
     const creatinine = this.extractLabValue(input.response.content, {
       code: LoincCode.creatinine,
@@ -321,7 +321,7 @@ export abstract class QuestionnaireResponseService {
       medicationClasses.length > 0 ?
         (doc) => {
           const referenceString =
-            doc.content.data.medicationReference?.reference
+            doc.content.data.medicationReference?.reference;
           if (referenceString === undefined) {
             logger.error(
               `Encountered medication request without reference at ${doc.path}: ${JSON.stringify(doc.content)}`,

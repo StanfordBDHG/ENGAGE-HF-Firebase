@@ -14,11 +14,11 @@ import {
   type MedicationClass,
   optionalish,
   QuantityUnit,
-} from '@stanfordbdhg/engagehf-models'
-import { type Extension, type FhirResource } from 'fhir/r4b.js'
-import { logger } from 'firebase-functions'
-import { z } from 'zod'
-import { RxNormApi } from './rxNormApi.js'
+} from "@stanfordbdhg/engagehf-models";
+import { type Extension, type FhirResource } from "fhir/r4b.js";
+import { logger } from "firebase-functions";
+import { z } from "zod";
+import { RxNormApi } from "./rxNormApi.js";
 import {
   type RxNormConceptProperty,
   type RxTermInfo,
@@ -44,7 +44,7 @@ export const medicationSpecificationSchema = z.object({
   ingredients: optionalish(z.string().array()),
   drugs: optionalish(z.string().array()),
   fallbackTerms: optionalish(z.record(z.string(), rxTermInfo)),
-})
+});
 
 export type MedicationSpecification = z.output<
   typeof medicationSpecificationSchema
@@ -136,9 +136,9 @@ export class RxNormService {
                   drug.rxcui,
                   ingredients,
                   medication.fallbackTerms?.[drug.rxcui] ?? {},
-                )
+                );
                 if (fhirDrug.data.id) {
-                  drugs[medication.code][fhirDrug.data.id] = fhirDrug
+                  drugs[medication.code][fhirDrug.data.id] = fhirDrug;
                 }
               } catch (error) {
                 logger.error(
@@ -186,29 +186,29 @@ export class RxNormService {
     targetDailyDose: MedicationDailyDoseSpecification | undefined,
     drugs: Record<string, FHIRMedication>,
   ): FHIRMedication {
-    const containedResources: FhirResource[] = []
-    const extensions: Extension[] = []
+    const containedResources: FhirResource[] = [];
+    const extensions: Extension[] = [];
     if (medicationClassId) {
-      const localizedName = medicationClasses.get(medicationClassId)?.name
+      const localizedName = medicationClasses.get(medicationClassId)?.name;
       extensions.push({
         url: FHIRExtensionUrl.medicationClass,
         valueReference: {
           reference: `medicationClasses/${medicationClassId}`,
           display: localizedName?.localize(), // TODO: What to do about localization here? Ignore?
         },
-      })
+      });
     }
     if (minimumDailyDose) {
-      const containedId = 'minimumDailyDose'
+      const containedId = "minimumDailyDose";
       const containedDisplay =
-        drugs[minimumDailyDose.drug].data.code?.coding?.at(0)?.display
+        drugs[minimumDailyDose.drug].data.code?.coding?.at(0)?.display;
       extensions.push({
         url: FHIRExtensionUrl.minimumDailyDose,
         valueReference: {
-          reference: '#' + containedId,
+          reference: "#" + containedId,
           display: containedDisplay,
         },
-      })
+      });
       containedResources.push(
         FHIRMedicationRequest.create({
           id: containedId,
@@ -218,35 +218,35 @@ export class RxNormService {
             ...(drugs[minimumDailyDose.drug].data.ingredient ?? []).map(
               (ingredient) => {
                 const value =
-                  QuantityUnit.mg.valueOf(ingredient.strength?.numerator) ?? 0
+                  QuantityUnit.mg.valueOf(ingredient.strength?.numerator) ?? 0;
                 const quantity = QuantityUnit.mg.fhirQuantity(
                   value *
                     minimumDailyDose.quantity *
                     minimumDailyDose.frequency,
-                )
+                );
                 return {
                   url: FHIRExtensionUrl.totalDailyDose,
                   valueQuantity: quantity,
-                }
+                };
               },
             ),
           ],
           frequencyPerDay: minimumDailyDose.frequency,
           quantity: minimumDailyDose.quantity,
         }).data,
-      )
+      );
     }
     if (targetDailyDose) {
-      const containedId = `targetDailyDose`
+      const containedId = `targetDailyDose`;
       const containedDisplay =
-        drugs[targetDailyDose.drug].data.code?.coding?.at(0)?.display
+        drugs[targetDailyDose.drug].data.code?.coding?.at(0)?.display;
       extensions.push({
         url: FHIRExtensionUrl.targetDailyDose,
         valueReference: {
-          reference: '#' + containedId,
+          reference: "#" + containedId,
           display: containedDisplay,
         },
-      })
+      });
       containedResources.push(
         FHIRMedicationRequest.create({
           id: containedId,
@@ -256,32 +256,32 @@ export class RxNormService {
             ...(drugs[targetDailyDose.drug].data.ingredient ?? []).map(
               (ingredient) => {
                 const value =
-                  QuantityUnit.mg.valueOf(ingredient.strength?.numerator) ?? 0
+                  QuantityUnit.mg.valueOf(ingredient.strength?.numerator) ?? 0;
                 const quantity = QuantityUnit.mg.fhirQuantity(
                   value * targetDailyDose.quantity * targetDailyDose.frequency,
-                )
+                );
                 return {
                   url: FHIRExtensionUrl.totalDailyDose,
                   valueQuantity: quantity,
-                }
+                };
               },
             ),
           ],
           frequencyPerDay: targetDailyDose.frequency,
           quantity: targetDailyDose.quantity,
         }).data,
-      )
+      );
     }
 
     for (const brandName of brandNames) {
       extensions.push({
         url: FHIRExtensionUrl.brandName,
         valueString: brandName,
-      })
+      });
     }
 
     return new FHIRMedication({
-      resourceType: 'Medication',
+      resourceType: "Medication",
       id: rxcui,
       contained: containedResources,
       extension: extensions,
@@ -308,7 +308,7 @@ export class RxNormService {
             },
           }))
         : undefined,
-    })
+    });
   }
 
   private async buildFHIRDrug(
@@ -337,7 +337,7 @@ export class RxNormService {
       throw new Error(`Missing display name for RXCUI ${rxcui}.`);
     }
     return new FHIRMedication({
-      resourceType: 'Medication',
+      resourceType: "Medication",
       id: rxcui,
       code: {
         coding: [

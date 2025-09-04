@@ -20,11 +20,11 @@ import {
   type UserMedicationRecommendation,
   type UserObservationCollection,
   type UserShareCode,
-} from '@stanfordbdhg/engagehf-models'
-import { type Reference } from 'fhir/r4b.js'
-import { type PatientService } from './patientService.js'
-import { mockQuestionnaireResponse } from '../../tests/mocks/questionnaireResponse.js'
-import { type Document } from '../database/databaseService.js'
+} from "@stanfordbdhg/engagehf-models";
+import { type Reference } from "fhir/r4b.js";
+import { type PatientService } from "./patientService.js";
+import { mockQuestionnaireResponse } from "../../tests/mocks/questionnaireResponse.js";
+import { type Document } from "../database/databaseService.js";
 
 /* eslint-disable @typescript-eslint/require-await */
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -62,7 +62,7 @@ export class MockPatientService implements PatientService {
       path: `users/${userId}/appointments/123`,
       content: FHIRAppointment.create({
         userId,
-        status: 'booked',
+        status: "booked",
         created: advanceDateByDays(this.startDate, -10),
         start: advanceDateByDays(this.startDate, 1),
         durationInMinutes: 60,
@@ -302,9 +302,9 @@ export class MockPatientService implements PatientService {
   async createObservations(
     userId: string,
     values: Array<{
-      observation: ObservationQuantity
-      loincCode: LoincCode
-      collection: UserObservationCollection
+      observation: ObservationQuantity;
+      loincCode: LoincCode;
+      collection: UserObservationCollection;
     }>,
     reference: Reference | null,
   ): Promise<void> {

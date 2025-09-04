@@ -258,16 +258,16 @@ export class StaticDataService extends SeedingService {
       },
       (result) => {
         this.writeJSON(
-          'medications.json',
+          "medications.json",
           Object.fromEntries(
             Object.entries(result.medications).map(([key, value]) => [
               key,
               value.data,
             ]),
           ),
-        )
+        );
         this.writeJSON(
-          'drugs.json',
+          "drugs.json",
           Object.fromEntries(
             Object.entries(result.drugs).map(([key, value]) => [
               key,
@@ -279,7 +279,7 @@ export class StaticDataService extends SeedingService {
               ),
             ]),
           ),
-        )
+        );
       },
     );
   }

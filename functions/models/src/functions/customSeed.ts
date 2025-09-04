@@ -19,11 +19,11 @@ export const userSeedingOptionsSchema = z.object({
   }),
   user: optionalish(z.lazy(() => userConverter.value.schema)),
   collections: optionalish(z.record(z.string(), z.record(z.string(), z.any()))),
-})
-export type UserSeedingOptions = z.output<typeof userSeedingOptionsSchema>
+});
+export type UserSeedingOptions = z.output<typeof userSeedingOptionsSchema>;
 
 export const customSeedingOptionsSchema = z.object({
   users: userSeedingOptionsSchema.array(),
   firestore: optionalish(z.record(z.string(), z.record(z.string(), z.any()))),
-})
-export type CustomSeedingOptions = z.output<typeof customSeedingOptionsSchema>
+});
+export type CustomSeedingOptions = z.output<typeof customSeedingOptionsSchema>;
