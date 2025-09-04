@@ -9,6 +9,7 @@
 import {
   advanceDateByDays,
   chunks,
+  compact,
   type CustomSeedingOptions,
   DrugReference,
   FHIRAppointment,
@@ -97,7 +98,7 @@ export class DebugDataService extends SeedingService {
           logger.error(error);
         }
       }),
-    )
+    );
     return compact(userIds);
   }
 
