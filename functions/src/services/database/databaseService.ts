@@ -10,19 +10,19 @@ import {
   type Transaction,
   type BulkWriter,
   type BulkWriterOptions,
-} from 'firebase-admin/firestore'
-import { type CollectionsService } from './collections.js'
+} from "firebase-admin/firestore";
+import { type CollectionsService } from "./collections.js";
 
 export interface ReplaceDiff<T> {
-  predecessor?: Document<T>
-  successor?: T
+  predecessor?: Document<T>;
+  successor?: T;
 }
 
 export interface Document<Content> {
-  id: string
-  path: string
-  lastUpdate: Date
-  content: Content
+  id: string;
+  path: string;
+  lastUpdate: Date;
+  content: Content;
 }
 
 export interface DatabaseService {
@@ -30,13 +30,13 @@ export interface DatabaseService {
     query: (
       collectionsService: CollectionsService,
     ) => FirebaseFirestore.Query<T>,
-  ): Promise<Array<Document<T>>>
+  ): Promise<Array<Document<T>>>;
 
   getDocument<T>(
     reference: (
       collectionsService: CollectionsService,
     ) => FirebaseFirestore.DocumentReference<T>,
-  ): Promise<Document<T> | undefined>
+  ): Promise<Document<T> | undefined>;
 
   bulkWrite(
     write: (
@@ -44,7 +44,7 @@ export interface DatabaseService {
       writer: BulkWriter,
     ) => Promise<void>,
     options?: BulkWriterOptions,
-  ): Promise<void>
+  ): Promise<void>;
 
   replaceCollection<T>(
     collection: (
@@ -53,18 +53,18 @@ export interface DatabaseService {
     diffs: (
       existing: Array<Document<T>>,
     ) => Promise<Array<ReplaceDiff<T>>> | Array<ReplaceDiff<T>>,
-  ): Promise<void>
+  ): Promise<void>;
 
   listCollections<T>(
     collection: (
       collections: CollectionsService,
     ) => FirebaseFirestore.DocumentReference<T>,
-  ): Promise<FirebaseFirestore.CollectionReference[]>
+  ): Promise<FirebaseFirestore.CollectionReference[]>;
 
   runTransaction<T>(
     run: (
       collectionsService: CollectionsService,
       transaction: Transaction,
     ) => Promise<T> | T,
-  ): Promise<T>
+  ): Promise<T>;
 }

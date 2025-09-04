@@ -22,44 +22,46 @@ import { setupMockFirebase } from '../../tests/setup.js'
 import { getServiceFactory } from '../factory/getServiceFactory.js'
 import { type MedicationService } from '../medication/medicationService.js'
 
-describe('RecommendationService', () => {
-  let medicationService: MedicationService
-  let recommendationService: RecommendationService
+describe("RecommendationService", () => {
+  let medicationService: MedicationService;
+  let recommendationService: RecommendationService;
 
   beforeAll(async () => {
-    setupMockFirebase()
-    const factory = getServiceFactory()
-    const staticDataService = factory.staticData()
-    await staticDataService.updateMedicationClasses(CachingStrategy.expectCache)
-    await staticDataService.updateMedications(CachingStrategy.expectCache)
-    medicationService = factory.medication()
-    recommendationService = factory.recommendation()
-  })
+    setupMockFirebase();
+    const factory = getServiceFactory();
+    const staticDataService = factory.staticData();
+    await staticDataService.updateMedicationClasses(
+      CachingStrategy.expectCache,
+    );
+    await staticDataService.updateMedications(CachingStrategy.expectCache);
+    medicationService = factory.medication();
+    recommendationService = factory.recommendation();
+  });
 
-  describe('should return the right value', () => {
-    readCsv('src/tests/resources/medtitrationtest.csv', 76, (values, index) => {
-      if (index === 0) return
-      it(`line ${index + 1}: ${values.join(',')}`, async () => {
-        expect(values).toHaveLength(24)
+  describe("should return the right value", () => {
+    readCsv("src/tests/resources/medtitrationtest.csv", 76, (values, index) => {
+      if (index === 0) return;
+      it(`line ${index + 1}: ${values.join(",")}`, async () => {
+        expect(values).toHaveLength(24);
 
         const medicationRequests = values
           .slice(0, 4)
           .map(getMedicationRequest)
-          .flatMap((x) => (x ? [x] : []))
+          .flatMap((x) => (x ? [x] : []));
 
         const vitals = mockRecommendationVitals({
           countBloodPressureBelow85: parseInt(values[4]),
           medianSystolicBloodPressure:
-            values[5] !== 'NA' ? parseInt(values[5]) : null,
-          medianHeartRate: values[6] !== 'NA' ? parseInt(values[6]) : null,
+            values[5] !== "NA" ? parseInt(values[5]) : null,
+          medianHeartRate: values[6] !== "NA" ? parseInt(values[6]) : null,
           potassium: parseFloat(values[7]),
           creatinine: parseFloat(values[8]),
           eGfr: parseFloat(values[9]),
-        })
-        const dizziness = parseInt(values[10])
+        });
+        const dizziness = parseInt(values[10]);
 
         const contraindications = values.slice(11, 20).flatMap((value, index) =>
-          value.split(',').flatMap((field) =>
+          value.split(",").flatMap((field) =>
             getContraindications(
               field,
               [0, 1, 2, 3].includes(index) ? 'allergy'
@@ -67,14 +69,14 @@ describe('RecommendationService', () => {
               : undefined,
             ),
           ),
-        )
+        );
 
         const expectedRecommendations = [
           getExpectedRecommendation(values[20]),
           getExpectedRecommendation(values[21]),
           getExpectedRecommendation(values[22]),
           getExpectedRecommendation(values[23]),
-        ].flatMap((x) => (x ? [x] : []))
+        ].flatMap((x) => (x ? [x] : []));
 
         const requestContexts = await Promise.all(
           medicationRequests.map(async (medicationRequest, index) =>
@@ -85,14 +87,14 @@ describe('RecommendationService', () => {
               content: medicationRequest,
             }),
           ),
-        )
+        );
 
         const result = await recommendationService.compute({
           requests: requestContexts,
           contraindications,
           vitals,
           latestDizzinessScore: dizziness,
-        })
+        });
 
         const actualRecommendations = result.map(
           (x): ExpectedRecommendation => ({
@@ -101,186 +103,186 @@ describe('RecommendationService', () => {
               | MedicationReference
               | undefined,
           }),
-        )
+        );
 
         expect(actualRecommendations).toHaveLength(
           expectedRecommendations.length,
-        )
+        );
 
         for (let i = 0; i < actualRecommendations.length; i++) {
-          const actual = actualRecommendations[i]
-          const expected = expectedRecommendations[i]
-          expect(actual.type).toBe(expected.type)
+          const actual = actualRecommendations[i];
+          const expected = expectedRecommendations[i];
+          expect(actual.type).toBe(expected.type);
           if (
             expected.type ===
             UserMedicationRecommendationType.improvementAvailable
           ) {
-            expect(expected.recommendedMedication).toBeDefined()
-            expect(result[i].currentMedication.length).toBeGreaterThan(0)
+            expect(expected.recommendedMedication).toBeDefined();
+            expect(result[i].currentMedication.length).toBeGreaterThan(0);
             result[i].currentMedication.every((medication) =>
               (medication.reference ?? '').startsWith(
                 (expected.recommendedMedication ?? '') + '/drugs/',
               ),
-            )
+            );
           } else if (expected.recommendedMedication) {
-            expect(actual.recommendedMedication).toBeDefined()
+            expect(actual.recommendedMedication).toBeDefined();
             expect(actual.recommendedMedication).toBe(
               expected.recommendedMedication,
-            )
+            );
           }
         }
-      })
-    })
-  })
-})
+      });
+    });
+  });
+});
 
 function getMedicationRequest(
   value: string,
 ): FHIRMedicationRequest | undefined {
   switch (value.trim().toLowerCase()) {
-    case 'none':
-      return undefined
-    case 'bisoprolol 2.5mg daily':
+    case "none":
+      return undefined;
+    case "bisoprolol 2.5mg daily":
       return FHIRMedicationRequest.create({
         medicationReference: DrugReference.bisoprolol5,
         frequencyPerDay: 1,
         quantity: 0.5,
-      })
-    case 'bisoprolol 10mg daily':
+      });
+    case "bisoprolol 10mg daily":
       return FHIRMedicationRequest.create({
         medicationReference: DrugReference.bisoprolol5,
         frequencyPerDay: 2,
         quantity: 1,
-      })
-    case 'carvedilol 6.25 daily (3.125 bid)':
+      });
+    case "carvedilol 6.25 daily (3.125 bid)":
       return FHIRMedicationRequest.create({
         medicationReference: DrugReference.carvedilol3_125,
         frequencyPerDay: 2,
         quantity: 1,
-      })
-    case 'carvedilol 50mg daily (25mg twice daily)':
+      });
+    case "carvedilol 50mg daily (25mg twice daily)":
       return FHIRMedicationRequest.create({
         medicationReference: DrugReference.carvedilol25,
         frequencyPerDay: 2,
         quantity: 1,
-      })
-    case 'carvedilol 50mg   daily':
-    case 'carvedilol 50mg  daily':
+      });
+    case "carvedilol 50mg   daily":
+    case "carvedilol 50mg  daily":
       return FHIRMedicationRequest.create({
         medicationReference: DrugReference.carvedilol25,
         frequencyPerDay: 1,
         quantity: 2,
-      })
-    case 'dapagliflozin 5mg daily':
+      });
+    case "dapagliflozin 5mg daily":
       return FHIRMedicationRequest.create({
         medicationReference: DrugReference.dapagliflozin5,
         frequencyPerDay: 1,
         quantity: 1,
-      })
-    case 'dapagliflozin 10mg daily':
+      });
+    case "dapagliflozin 10mg daily":
       return FHIRMedicationRequest.create({
         medicationReference: DrugReference.dapagliflozin5,
         frequencyPerDay: 1,
         quantity: 2,
-      })
-    case 'empagliflozin 5mg daily':
+      });
+    case "empagliflozin 5mg daily":
       return FHIRMedicationRequest.create({
         medicationReference: DrugReference.empagliflozin10,
         frequencyPerDay: 1,
         quantity: 0.5,
-      })
-    case 'empagliflozin 10mg daily':
+      });
+    case "empagliflozin 10mg daily":
       return FHIRMedicationRequest.create({
         medicationReference: DrugReference.empagliflozin10,
         frequencyPerDay: 1,
         quantity: 1,
-      })
-    case 'eplerenone 25mg daily':
+      });
+    case "eplerenone 25mg daily":
       return FHIRMedicationRequest.create({
         medicationReference: DrugReference.eplerenone25,
         frequencyPerDay: 1,
         quantity: 1,
-      })
-    case 'eplerenone 50mg daily':
+      });
+    case "eplerenone 50mg daily":
       return FHIRMedicationRequest.create({
         medicationReference: DrugReference.eplerenone25,
         frequencyPerDay: 1,
         quantity: 2,
-      })
-    case 'lisinopril 5mg daily':
+      });
+    case "lisinopril 5mg daily":
       return FHIRMedicationRequest.create({
         medicationReference: DrugReference.lisinopril5,
         frequencyPerDay: 1,
         quantity: 1,
-      })
-    case 'lisinopril 40mg daily':
+      });
+    case "lisinopril 40mg daily":
       return FHIRMedicationRequest.create({
         medicationReference: DrugReference.lisinopril5,
         frequencyPerDay: 4,
         quantity: 2,
-      })
-    case 'losartan 25mg daily':
+      });
+    case "losartan 25mg daily":
       return FHIRMedicationRequest.create({
         medicationReference: DrugReference.losartan25,
         frequencyPerDay: 1,
         quantity: 1,
-      })
-    case 'losartan 150mg daily':
+      });
+    case "losartan 150mg daily":
       return FHIRMedicationRequest.create({
         medicationReference: DrugReference.losartan100,
         frequencyPerDay: 1,
         quantity: 1.5,
-      })
-    case 'metoprolol 12.5mg daily':
+      });
+    case "metoprolol 12.5mg daily":
       return FHIRMedicationRequest.create({
         medicationReference: DrugReference.metoprololSuccinate25Tablet,
         frequencyPerDay: 1,
         quantity: 0.5,
-      })
-    case 'metoprolol 200mg daily':
+      });
+    case "metoprolol 200mg daily":
       return FHIRMedicationRequest.create({
         medicationReference: DrugReference.metoprololSuccinate25Tablet,
         frequencyPerDay: 2,
         quantity: 4,
-      })
-    case 'spironolactone 12.5 daily':
+      });
+    case "spironolactone 12.5 daily":
       return FHIRMedicationRequest.create({
         medicationReference: DrugReference.spironolactone25,
         frequencyPerDay: 1,
         quantity: 0.5,
-      })
-    case 'spironolactone 25mg daily':
+      });
+    case "spironolactone 25mg daily":
       return FHIRMedicationRequest.create({
         medicationReference: DrugReference.spironolactone25,
         frequencyPerDay: 1,
         quantity: 1,
-      })
-    case 'sacubitril-valsartan 100mg daily (24-26mg twice daily)':
+      });
+    case "sacubitril-valsartan 100mg daily (24-26mg twice daily)":
       return FHIRMedicationRequest.create({
         medicationReference: DrugReference.sacubitrilValsartan24_26,
         frequencyPerDay: 2,
         quantity: 1,
-      })
-    case 'sacubitril-valsartan 200mg daily (49-51mg twice daily)':
+      });
+    case "sacubitril-valsartan 200mg daily (49-51mg twice daily)":
       return FHIRMedicationRequest.create({
         medicationReference: DrugReference.sacubitrilValsartan49_51,
         frequencyPerDay: 2,
         quantity: 1,
-      })
-    case 'sacubitril-valsartan 400mg daily (97-103mg twice daily)':
+      });
+    case "sacubitril-valsartan 400mg daily (97-103mg twice daily)":
       return FHIRMedicationRequest.create({
         medicationReference: DrugReference.sacubitrilValsartan97_103,
         frequencyPerDay: 1,
         quantity: 2,
-      })
-    case 'valsartan 40mg':
+      });
+    case "valsartan 40mg":
       return FHIRMedicationRequest.create({
         medicationReference: DrugReference.valsartan40,
         frequencyPerDay: 1,
         quantity: 1,
-      })
+      });
     default:
-      fail(`Unhandled case for medication request: ${value}`)
+      fail(`Unhandled case for medication request: ${value}`);
   }
 }
 
@@ -288,274 +290,274 @@ function getContraindications(
   field: string,
   type: AllergyIntolerance['type'] | undefined,
 ): FHIRAllergyIntolerance[] {
-  switch (field.trim().toLowerCase().split(' ').join('')) {
-    case 'none':
-      return []
-    case 'bisoprolol':
+  switch (field.trim().toLowerCase().split(" ").join("")) {
+    case "none":
+      return [];
+    case "bisoprolol":
       return [
         FHIRAllergyIntolerance.create({
           reference: MedicationReference.bisoprolol,
           type,
           criticality: 'low',
         }),
-      ]
-    case 'carvedilol':
+      ];
+    case "carvedilol":
       return [
         FHIRAllergyIntolerance.create({
           reference: MedicationReference.carvedilol,
           type,
           criticality: 'low',
         }),
-      ]
-    case 'dapagliflozin':
+      ];
+    case "dapagliflozin":
       return [
         FHIRAllergyIntolerance.create({
           reference: MedicationReference.dapagliflozin,
           type,
           criticality: 'low',
         }),
-      ]
-    case 'empagliflozin':
+      ];
+    case "empagliflozin":
       return [
         FHIRAllergyIntolerance.create({
           reference: MedicationReference.empagliflozin,
           type,
           criticality: 'low',
         }),
-      ]
-    case 'eplerenone':
+      ];
+    case "eplerenone":
       return [
         FHIRAllergyIntolerance.create({
           reference: MedicationReference.eplerenone,
           type,
           criticality: 'low',
         }),
-      ]
-    case 'lisinopril':
+      ];
+    case "lisinopril":
       return [
         FHIRAllergyIntolerance.create({
           reference: MedicationReference.lisinopril,
           type,
           criticality: 'low',
         }),
-      ]
-    case 'lisinopril-anaphylaxis':
+      ];
+    case "lisinopril-anaphylaxis":
       return [
         FHIRAllergyIntolerance.create({
           reference: MedicationReference.lisinopril,
           type,
           criticality: 'high',
         }),
-      ]
-    case 'losartan':
+      ];
+    case "losartan":
       return [
         FHIRAllergyIntolerance.create({
           reference: MedicationReference.losartan,
           type,
           criticality: 'low',
         }),
-      ]
-    case 'metoprolol':
+      ];
+    case "metoprolol":
       return [
         FHIRAllergyIntolerance.create({
           reference: MedicationReference.metoprololSuccinate,
           type,
           criticality: 'high',
         }),
-      ]
-    case 'sacubitril-valsartan':
+      ];
+    case "sacubitril-valsartan":
       return [
         FHIRAllergyIntolerance.create({
           reference: MedicationReference.sacubitrilValsartan,
           type,
           criticality: 'low',
         }),
-      ]
-    case 'sotagliflozin':
+      ];
+    case "sotagliflozin":
       return [
         FHIRAllergyIntolerance.create({
           reference: MedicationReference.sotagliflozin,
           type,
           criticality: 'low',
         }),
-      ]
-    case 'spironolactone':
+      ];
+    case "spironolactone":
       return [
         FHIRAllergyIntolerance.create({
           reference: MedicationReference.spironolactone,
           type,
           criticality: 'low',
         }),
-      ]
-    case 'valsartan':
+      ];
+    case "valsartan":
       return [
         FHIRAllergyIntolerance.create({
           reference: MedicationReference.valsartan,
           type,
           criticality: 'low',
         }),
-      ]
+      ];
     default:
-      fail(`Unhandled case for contraindication: ${field}`)
+      fail(`Unhandled case for contraindication: ${field}`);
   }
 }
 
 interface ExpectedRecommendation {
-  type: UserMedicationRecommendationType
-  recommendedMedication?: MedicationReference
+  type: UserMedicationRecommendationType;
+  recommendedMedication?: MedicationReference;
 }
 
 function getExpectedRecommendation(
   value: string,
 ): ExpectedRecommendation | undefined {
   switch (value.trim().toLowerCase()) {
-    case 'no message listed':
-    case 'no med listed':
-      return undefined
-    case 'no message, carvedilol listed':
+    case "no message listed":
+    case "no med listed":
+      return undefined;
+    case "no message, carvedilol listed":
       return {
         type: UserMedicationRecommendationType.noActionRequired,
         recommendedMedication: MedicationReference.carvedilol,
-      }
-    case 'no message, empagliflozin listed':
+      };
+    case "no message, empagliflozin listed":
       return {
         type: UserMedicationRecommendationType.noActionRequired,
         recommendedMedication: MedicationReference.empagliflozin,
-      }
-    case 'no message, sacubitril-valsartan listed':
+      };
+    case "no message, sacubitril-valsartan listed":
       return {
         type: UserMedicationRecommendationType.noActionRequired,
         recommendedMedication: MedicationReference.sacubitrilValsartan,
-      }
-    case 'no message, spironolactone listed':
+      };
+    case "no message, spironolactone listed":
       return {
         type: UserMedicationRecommendationType.noActionRequired,
         recommendedMedication: MedicationReference.spironolactone,
-      }
-    case 'discuss increasing bisoprolol':
+      };
+    case "discuss increasing bisoprolol":
       return {
         type: UserMedicationRecommendationType.improvementAvailable,
         recommendedMedication: MedicationReference.bisoprolol,
-      }
-    case 'discuss increasing carvedilol':
+      };
+    case "discuss increasing carvedilol":
       return {
         type: UserMedicationRecommendationType.improvementAvailable,
         recommendedMedication: MedicationReference.carvedilol,
-      }
-    case 'discuss increasing dapagliflozin':
+      };
+    case "discuss increasing dapagliflozin":
       return {
         type: UserMedicationRecommendationType.improvementAvailable,
         recommendedMedication: MedicationReference.dapagliflozin,
-      }
-    case 'discuss increasing empagliflozin':
+      };
+    case "discuss increasing empagliflozin":
       return {
         type: UserMedicationRecommendationType.improvementAvailable,
         recommendedMedication: MedicationReference.empagliflozin,
-      }
-    case 'discuss increasing eplerenone':
+      };
+    case "discuss increasing eplerenone":
       return {
         type: UserMedicationRecommendationType.improvementAvailable,
         recommendedMedication: MedicationReference.eplerenone,
-      }
-    case 'discuss increasing lisinopril':
+      };
+    case "discuss increasing lisinopril":
       return {
         type: UserMedicationRecommendationType.improvementAvailable,
         recommendedMedication: MedicationReference.lisinopril,
-      }
-    case 'discuss increasing losartan':
+      };
+    case "discuss increasing losartan":
       return {
         type: UserMedicationRecommendationType.improvementAvailable,
         recommendedMedication: MedicationReference.losartan,
-      }
-    case 'discuss increasing metoprolol':
+      };
+    case "discuss increasing metoprolol":
       return {
         type: UserMedicationRecommendationType.improvementAvailable,
         recommendedMedication: MedicationReference.metoprololSuccinate,
-      }
-    case 'discuss increasing sacubitril-valsartan':
+      };
+    case "discuss increasing sacubitril-valsartan":
       return {
         type: UserMedicationRecommendationType.improvementAvailable,
         recommendedMedication: MedicationReference.sacubitrilValsartan,
-      }
-    case 'discuss increasing spironolactone':
+      };
+    case "discuss increasing spironolactone":
       return {
         type: UserMedicationRecommendationType.improvementAvailable,
         recommendedMedication: MedicationReference.spironolactone,
-      }
-    case 'discuss increasing valsartan':
+      };
+    case "discuss increasing valsartan":
       return {
         type: UserMedicationRecommendationType.improvementAvailable,
         recommendedMedication: MedicationReference.valsartan,
-      }
-    case 'discuss starting bisoprolol':
+      };
+    case "discuss starting bisoprolol":
       return {
         type: UserMedicationRecommendationType.notStarted,
         recommendedMedication: MedicationReference.bisoprolol,
-      }
-    case 'discuss starting carvedilol':
+      };
+    case "discuss starting carvedilol":
       return {
         type: UserMedicationRecommendationType.notStarted,
         recommendedMedication: MedicationReference.carvedilol,
-      }
-    case 'discuss starting dapagliflozin':
+      };
+    case "discuss starting dapagliflozin":
       return {
         type: UserMedicationRecommendationType.notStarted,
         recommendedMedication: MedicationReference.dapagliflozin,
-      }
-    case 'discuss starting empagliflozin':
+      };
+    case "discuss starting empagliflozin":
       return {
         type: UserMedicationRecommendationType.notStarted,
         recommendedMedication: MedicationReference.empagliflozin,
-      }
-    case 'discuss starting eplerenone':
+      };
+    case "discuss starting eplerenone":
       return {
         type: UserMedicationRecommendationType.notStarted,
         recommendedMedication: MedicationReference.eplerenone,
-      }
-    case 'discuss starting losartan':
+      };
+    case "discuss starting losartan":
       return {
         type: UserMedicationRecommendationType.notStarted,
         recommendedMedication: MedicationReference.losartan,
-      }
-    case 'discuss starting metoprolol':
+      };
+    case "discuss starting metoprolol":
       return {
         type: UserMedicationRecommendationType.notStarted,
         recommendedMedication: MedicationReference.metoprololSuccinate,
-      }
-    case 'discuss starting sacubitril-valsartan':
+      };
+    case "discuss starting sacubitril-valsartan":
       return {
         type: UserMedicationRecommendationType.notStarted,
         recommendedMedication: MedicationReference.sacubitrilValsartan,
-      }
-    case 'discuss starting sacubitril-valsartan (more effective med)':
+      };
+    case "discuss starting sacubitril-valsartan (more effective med)":
       return {
         type: UserMedicationRecommendationType.improvementAvailable,
         recommendedMedication: MedicationReference.sacubitrilValsartan,
-      }
-    case 'discuss starting sotagliflozin':
+      };
+    case "discuss starting sotagliflozin":
       return {
         type: UserMedicationRecommendationType.notStarted,
         recommendedMedication: MedicationReference.sotagliflozin,
-      }
-    case 'discuss starting spironolactone':
+      };
+    case "discuss starting spironolactone":
       return {
         type: UserMedicationRecommendationType.notStarted,
         recommendedMedication: MedicationReference.spironolactone,
-      }
-    case 'goal dose reached':
+      };
+    case "goal dose reached":
       return {
         type: UserMedicationRecommendationType.targetDoseReached,
-      }
-    case 'measure bp':
-    case 'measure bb/hr':
+      };
+    case "measure bp":
+    case "measure bb/hr":
       return {
         type: UserMedicationRecommendationType.morePatientObservationsRequired,
-      }
-    case 'possible personal target reached':
+      };
+    case "possible personal target reached":
       return {
         type: UserMedicationRecommendationType.personalTargetDoseReached,
-      }
+      };
     default:
-      fail(`Unhandled case for expected recommendation: ${value}`)
+      fail(`Unhandled case for expected recommendation: ${value}`);
   }
 }

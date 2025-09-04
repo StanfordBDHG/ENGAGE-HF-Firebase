@@ -20,31 +20,31 @@ export interface MedicationService {
 
   getContext(
     request: Document<FHIRMedicationRequest>,
-  ): Promise<MedicationRequestContext>
+  ): Promise<MedicationRequestContext>;
 
   // Medication Classes
 
-  getMedicationClasses(): Promise<Array<Document<MedicationClass>>>
+  getMedicationClasses(): Promise<Array<Document<MedicationClass>>>;
   getMedicationClass(
     medicationClassId: string,
-  ): Promise<Document<MedicationClass> | undefined>
+  ): Promise<Document<MedicationClass> | undefined>;
 
   // Medications
 
-  getMedications(): Promise<Array<Document<FHIRMedication>>>
+  getMedications(): Promise<Array<Document<FHIRMedication>>>;
 
   getMedication(
     medicationId: string,
-  ): Promise<Document<FHIRMedication> | undefined>
+  ): Promise<Document<FHIRMedication> | undefined>;
 
   // Drugs
 
-  getDrugs(medicationId: string): Promise<Array<Document<FHIRMedication>>>
+  getDrugs(medicationId: string): Promise<Array<Document<FHIRMedication>>>;
 
   getDrug(
     medicationId: string,
     drugId: string,
-  ): Promise<Document<FHIRMedication> | undefined>
+  ): Promise<Document<FHIRMedication> | undefined>;
 
   // References
 

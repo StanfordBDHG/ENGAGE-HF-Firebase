@@ -28,13 +28,13 @@ import {
   MedicationGroup,
   type QuestionnaireId,
   QuestionnaireLinkId,
-} from './questionnaireLinkIds.js'
+} from "./questionnaireLinkIds.js";
 
 // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-parameters
 export abstract class QuestionnaireFactory<Input> {
   // Abstract functions
 
-  abstract create(input: Input): FHIRQuestionnaire
+  abstract create(input: Input): FHIRQuestionnaire;
 
   // Helper functions - ENGAGE-HF specific
 
@@ -43,21 +43,21 @@ export abstract class QuestionnaireFactory<Input> {
     return [
       this.pageItem({
         linkId: linkIds.page0,
-        text: 'Next appointment',
+        text: "Next appointment",
         item: [
           this.displayItem({
             linkId: linkIds.existsDescription,
-            text: 'Next appointment',
+            text: "Next appointment",
           }),
           this.booleanItem({
             linkId: linkIds.exists,
-            text: 'Do you already have a new appointment scheduled?',
+            text: "Do you already have a new appointment scheduled?",
           }),
         ],
       }),
       this.pageItem({
         linkId: linkIds.page1,
-        text: 'Next appointment',
+        text: "Next appointment",
         enableWhen: [
           {
             question: linkIds.exists,
@@ -68,50 +68,50 @@ export abstract class QuestionnaireFactory<Input> {
         item: [
           this.displayItem({
             linkId: linkIds.description,
-            text: 'Upcoming appointment',
+            text: "Upcoming appointment",
           }),
           this.dateTimeItem({
             linkId: linkIds.dateTime,
-            text: 'Date:',
+            text: "Date:",
           }),
         ],
       }),
-    ]
+    ];
   }
 
   protected labInputPages(): QuestionnaireItem[] {
     return [
       ...this.labInputPagesForValue({
         loincCode: LoincCode.creatinine,
-        title: 'Creatinine',
-        name: 'creatinine',
+        title: "Creatinine",
+        name: "creatinine",
         description:
-          'The creatinine level in your body helps understand how your kidneys handle the drugs you are taking.',
+          "The creatinine level in your body helps understand how your kidneys handle the drugs you are taking.",
         unit: QuantityUnit.mg_dL,
         minValue: 0,
         maxValue: 100,
       }),
       ...this.labInputPagesForValue({
         loincCode: LoincCode.potassium,
-        title: 'Potassium',
-        name: 'potassium',
+        title: "Potassium",
+        name: "potassium",
         description:
-          'The potassium level in your body helps understand how your liver handles the drugs you are taking.',
+          "The potassium level in your body helps understand how your liver handles the drugs you are taking.",
         unit: QuantityUnit.mEq_L,
         minValue: 0,
         maxValue: 100,
       }),
       ...this.labInputPagesForValue({
         loincCode: LoincCode.dryWeight,
-        title: 'Dry Weight',
-        name: 'dry weight',
+        title: "Dry Weight",
+        name: "dry weight",
         description:
-          'The dry weight is useful to set a baseline to check that your weight does not increase unnoticed.',
+          "The dry weight is useful to set a baseline to check that your weight does not increase unnoticed.",
         unit: QuantityUnit.lbs,
         minValue: 0,
         maxValue: 1000,
       }),
-    ]
+    ];
   }
 
   protected labInputPagesForValue(input: {
@@ -163,11 +163,11 @@ export abstract class QuestionnaireFactory<Input> {
           }),
           this.dateTimeItem({
             linkId: linkIds.dateTime,
-            text: 'Date:',
+            text: "Date:",
           }),
         ],
       }),
-    ]
+    ];
   }
 
   protected medicationInputPages(input: {
@@ -178,30 +178,30 @@ export abstract class QuestionnaireFactory<Input> {
     return [
       ...this.medicationInputPagesForMedicationGroup({
         ...input,
-        text: 'Beta Blockers',
+        text: "Beta Blockers",
         group: MedicationGroup.betaBlockers,
       }),
       ...this.medicationInputPagesForMedicationGroup({
         ...input,
-        text: 'Renin-Angiotensin System Inhibitors (RASI)',
+        text: "Renin-Angiotensin System Inhibitors (RASI)",
         group: MedicationGroup.rasi,
       }),
       ...this.medicationInputPagesForMedicationGroup({
         ...input,
-        text: 'Mineralocorticoid Receptor Antagonists (MRA)',
+        text: "Mineralocorticoid Receptor Antagonists (MRA)",
         group: MedicationGroup.mra,
       }),
       ...this.medicationInputPagesForMedicationGroup({
         ...input,
-        text: 'SGLT2 Inhibitors (SGLT2i)',
+        text: "SGLT2 Inhibitors (SGLT2i)",
         group: MedicationGroup.sglt2i,
       }),
       ...this.medicationInputPagesForMedicationGroup({
         ...input,
-        text: 'Diuretics',
+        text: "Diuretics",
         group: MedicationGroup.diuretics,
       }),
-    ]
+    ];
   }
 
   protected medicationInputPagesForMedicationGroup(input: {
@@ -220,26 +220,26 @@ export abstract class QuestionnaireFactory<Input> {
       ([id, medication]) =>
         (
           medicationClasses.includes(
-            medication.medicationClassReference?.reference ?? '',
+            medication.medicationClassReference?.reference ?? "",
           )
         ) ?
           id
         : undefined,
-    )
+    );
     const answers: Array<{
-      id: string
-      medication: FHIRMedication
-      drug: FHIRMedication
-      text: string
-    }> = []
+      id: string;
+      medication: FHIRMedication;
+      drug: FHIRMedication;
+      text: string;
+    }> = [];
     for (const medicationId of medicationIds) {
-      const medication = input.medications[medicationId]
+      const medication = input.medications[medicationId];
       for (const [drugId, drug] of Object.entries(
         input.drugs[medicationId] ?? {},
       )) {
-        let text = medication.displayName ?? ''
+        let text = medication.displayName ?? "";
         if (medication.brandNames.length > 0)
-          text += ` (${medication.brandNames.join(', ')})`
+          text += ` (${medication.brandNames.join(", ")})`;
 
         text += `\n${drug.data.ingredient?.map((i) => i.strength?.numerator?.value ?? 0).join('/') ?? ''} mg ${drug.data.form?.text ?? ''}`
         answers.push({
@@ -247,18 +247,18 @@ export abstract class QuestionnaireFactory<Input> {
           medication,
           drug,
           text,
-        })
+        });
       }
     }
     const medicationListTexts = medicationIds
       .map((id) => {
-        const medication = input.medications[id]
-        let text = medication.displayName ?? ''
+        const medication = input.medications[id];
+        let text = medication.displayName ?? "";
         if (medication.brandNames.length > 0)
-          text += ` (${medication.brandNames.join(', ')})`
-        return text
+          text += ` (${medication.brandNames.join(", ")})`;
+        return text;
       })
-      .join('\n')
+      .join("\n");
 
     const answerOptions =
       input.isRegistration ?
@@ -267,11 +267,11 @@ export abstract class QuestionnaireFactory<Input> {
           values: [
             {
               code: linkIds.registrationExistsValueSet.values.yes,
-              display: 'Yes',
+              display: "Yes",
             },
             {
               code: linkIds.registrationExistsValueSet.values.no,
-              display: 'No',
+              display: "No",
             },
           ],
         })
@@ -280,18 +280,18 @@ export abstract class QuestionnaireFactory<Input> {
           values: [
             {
               code: linkIds.updateExistsValueSet.values.yesChanged,
-              display: 'Yes, changed since last update',
+              display: "Yes, changed since last update",
             },
             {
               code: linkIds.updateExistsValueSet.values.yesUnchanged,
-              display: 'Yes, unchanged since last update',
+              display: "Yes, unchanged since last update",
             },
             {
               code: linkIds.updateExistsValueSet.values.no,
-              display: 'No',
+              display: "No",
             },
           ],
-        })
+        });
     return [
       this.pageItem({
         linkId: linkIds.page0,
@@ -303,7 +303,7 @@ export abstract class QuestionnaireFactory<Input> {
           }),
           this.radioButtonItem({
             linkId: linkIds.exists,
-            text: 'Do you take any medication from the above list?',
+            text: "Do you take any medication from the above list?",
             answerOption: answerOptions,
           }),
         ],
@@ -332,19 +332,19 @@ export abstract class QuestionnaireFactory<Input> {
         item: [
           this.displayItem({
             linkId: linkIds.description,
-            text: 'Please enter which drug you are taking, how often you take it per day and how many pills/tablets you take per intake.\n\nDo not enter the total amount of pills/tablets you take per day.',
+            text: "Please enter which drug you are taking, how often you take it per day and how many pills/tablets you take per intake.\n\nDo not enter the total amount of pills/tablets you take per day.",
           }),
           this.integerItem({
             linkId: linkIds.frequency,
-            text: 'Intake frequency (per day):',
+            text: "Intake frequency (per day):",
           }),
           this.decimalItem({
             linkId: linkIds.quantity,
-            text: 'Pills/tablets per intake:',
+            text: "Pills/tablets per intake:",
           }),
           this.radioButtonItem({
             linkId: linkIds.drug,
-            text: 'Which pill/tablet do you take?',
+            text: "Which pill/tablet do you take?",
             answerOption: this.valueSetAnswerOptions({
               system: CodingSystem.rxNorm,
               values: answers
@@ -358,7 +358,7 @@ export abstract class QuestionnaireFactory<Input> {
           }),
         ],
       }),
-    ]
+    ];
   }
 
   // Helper functions - Generic
@@ -373,7 +373,7 @@ export abstract class QuestionnaireFactory<Input> {
       text: input.text,
       type: 'boolean',
       required: input.required ?? true,
-    }
+    };
   }
 
   protected dateItem(input: {
@@ -386,7 +386,7 @@ export abstract class QuestionnaireFactory<Input> {
       text: input.text,
       type: 'date',
       required: input.required ?? true,
-    }
+    };
   }
 
   protected dateTimeItem(input: {
@@ -399,7 +399,7 @@ export abstract class QuestionnaireFactory<Input> {
       text: input.text,
       type: 'dateTime',
       required: input.required ?? true,
-    }
+    };
   }
 
   protected decimalItem(input: {
@@ -415,7 +415,7 @@ export abstract class QuestionnaireFactory<Input> {
       text: input.text,
       type: 'decimal',
       required: input.required ?? true,
-    }
+    };
   }
 
   protected displayItem(input: {
@@ -428,7 +428,7 @@ export abstract class QuestionnaireFactory<Input> {
       type: 'display',
       text: input.text,
       required: input.required ?? false,
-    }
+    };
   }
 
   protected integerItem(input: {
@@ -467,11 +467,11 @@ export abstract class QuestionnaireFactory<Input> {
             coding: [
               {
                 system: CodingSystem.questionnaireItemControl,
-                code: 'page',
-                display: 'Page',
+                code: "page",
+                display: "Page",
               },
             ],
-            text: 'Page',
+            text: "Page",
           },
         },
       ],
@@ -480,7 +480,7 @@ export abstract class QuestionnaireFactory<Input> {
       text: input.text,
       enableWhen: input.enableWhen,
       enableBehavior: input.enableBehavior,
-    }
+    };
   }
 
   protected questionnaire(input: {
@@ -499,26 +499,26 @@ export abstract class QuestionnaireFactory<Input> {
       publisher: 'Stanford Biodesign Digital Health',
       meta: {
         profile: [
-          'http://spezi.health/fhir/StructureDefinition/sdf-Questionnaire',
+          "http://spezi.health/fhir/StructureDefinition/sdf-Questionnaire",
         ],
         tag: [
           {
-            system: 'urn:ietf:bcp:47',
-            code: 'en-US',
-            display: 'English',
+            system: "urn:ietf:bcp:47",
+            code: "en-US",
+            display: "English",
           },
         ],
       },
       useContext: input.useContext ?? [],
       contact: [
         {
-          name: 'http://spezi.health',
+          name: "http://spezi.health",
         },
       ],
-      subjectType: ['Patient'],
+      subjectType: ["Patient"],
       url: QuestionnaireLinkId.url(input.id),
       item: input.item,
-    })
+    });
   }
 
   protected radioButtonItem(input: {
@@ -535,8 +535,8 @@ export abstract class QuestionnaireFactory<Input> {
             coding: [
               {
                 system: CodingSystem.questionnaireItemControl,
-                code: 'radio-button',
-                display: 'Radio Button',
+                code: "radio-button",
+                display: "Radio Button",
               },
             ],
           },
@@ -547,11 +547,11 @@ export abstract class QuestionnaireFactory<Input> {
       text: input.text,
       required: input.required ?? true,
       answerOption: input.answerOption,
-    }
+    };
   }
 
   protected valueSetAnswerOptions(input: {
-    system: string
+    system: string;
     values: Array<{
       id?: string
       code: string
@@ -565,6 +565,6 @@ export abstract class QuestionnaireFactory<Input> {
         system: input.system,
         display: option.display,
       },
-    }))
+    }));
   }
 }

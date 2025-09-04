@@ -6,22 +6,22 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { z } from 'zod'
-import { optionalishDefault } from '../helpers/optionalish.js'
+import { z } from "zod";
+import { optionalishDefault } from "../helpers/optionalish.js";
 
 export enum CachingStrategy {
-  expectCache = 'expectCache',
-  ignoreCache = 'ignoreCache',
-  updateCache = 'updateCache',
-  updateCacheIfNeeded = 'updateCacheIfNeeded',
+  expectCache = "expectCache",
+  ignoreCache = "ignoreCache",
+  updateCache = "updateCache",
+  updateCacheIfNeeded = "updateCacheIfNeeded",
 }
 
 export enum StaticDataComponent {
-  medicationClasses = 'medicationClasses',
-  medications = 'medications',
-  organizations = 'organizations',
-  questionnaires = 'questionnaires',
-  videoSections = 'videoSections',
+  medicationClasses = "medicationClasses",
+  medications = "medications",
+  organizations = "organizations",
+  questionnaires = "questionnaires",
+  videoSections = "videoSections",
 }
 
 export const updateStaticDataInputSchema = z.object({
@@ -33,6 +33,6 @@ export const updateStaticDataInputSchema = z.object({
     z.enum(CachingStrategy),
     CachingStrategy.updateCacheIfNeeded,
   ),
-})
-export type UpdateStaticDataInput = z.input<typeof updateStaticDataInputSchema>
-export type UpdateStaticDataOutput = Record<string, never>
+});
+export type UpdateStaticDataInput = z.input<typeof updateStaticDataInputSchema>;
+export type UpdateStaticDataOutput = Record<string, never>;

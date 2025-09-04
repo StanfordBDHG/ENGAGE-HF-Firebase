@@ -9,13 +9,13 @@
 import {
   FHIRQuestionnaireResponse,
   type SymptomQuestionnaireResponse,
-} from '@stanfordbdhg/engagehf-models'
-import { QuestionnaireLinkId } from '../seeding/staticData/questionnaireFactory/questionnaireLinkIds.js'
+} from "@stanfordbdhg/engagehf-models";
+import { QuestionnaireLinkId } from "../seeding/staticData/questionnaireFactory/questionnaireLinkIds.js";
 
 export function createKccqQuestionnaireResponse(
   input: SymptomQuestionnaireResponse,
 ): FHIRQuestionnaireResponse {
-  const linkIds = QuestionnaireLinkId.kccq
+  const linkIds = QuestionnaireLinkId.kccq;
 
   const items: Record<string, number> = {
     [linkIds.question1a]: input.answer1a,
@@ -31,7 +31,7 @@ export function createKccqQuestionnaireResponse(
     [linkIds.question8b]: input.answer8b,
     [linkIds.question8c]: input.answer8c,
     [linkIds.question9]: input.answer9,
-  }
+  };
 
   return new FHIRQuestionnaireResponse({
     resourceType: 'QuestionnaireResponse',
@@ -49,5 +49,5 @@ export function createKccqQuestionnaireResponse(
         },
       ],
     })),
-  })
+  });
 }

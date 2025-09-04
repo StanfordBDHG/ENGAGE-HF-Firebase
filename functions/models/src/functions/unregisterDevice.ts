@@ -6,8 +6,8 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { z } from 'zod'
-import { UserDevicePlatform } from '../types/userDevice.js'
+import { z } from "zod";
+import { UserDevicePlatform } from "../types/userDevice.js";
 
 export const unregisterDeviceInputSchema = z.object({
   notificationToken: z.string(),
@@ -15,4 +15,4 @@ export const unregisterDeviceInputSchema = z.object({
 })
 export type UnregisterDeviceInput = z.input<typeof unregisterDeviceInputSchema>
 
-export type UnregisterDeviceOutput = undefined
+export type UnregisterDeviceOutput = undefined;

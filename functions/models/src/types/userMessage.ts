@@ -6,31 +6,31 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { z } from 'zod'
-import { LocalizedText, localizedTextConverter } from './localizedText.js'
-import { messagesLocalization } from './userMesage+localization.js'
+import { z } from "zod";
+import { LocalizedText, localizedTextConverter } from "./localizedText.js";
+import { messagesLocalization } from "./userMesage+localization.js";
 import {
   type QuestionnaireReference,
   type VideoReference,
-} from '../codes/references.js'
-import { advanceDateByDays } from '../helpers/date+extras.js'
-import { dateTimeConverter } from '../helpers/dateConverter.js'
-import { Lazy } from '../helpers/lazy.js'
-import { optionalish } from '../helpers/optionalish.js'
-import { SchemaConverter } from '../helpers/schemaConverter.js'
+} from "../codes/references.js";
+import { advanceDateByDays } from "../helpers/date+extras.js";
+import { dateTimeConverter } from "../helpers/dateConverter.js";
+import { Lazy } from "../helpers/lazy.js";
+import { optionalish } from "../helpers/optionalish.js";
+import { SchemaConverter } from "../helpers/schemaConverter.js";
 
 export enum UserMessageType {
-  medicationChange = 'MedicationChange',
-  weightGain = 'WeightGain',
-  medicationUptitration = 'MedicationUptitration',
-  welcome = 'Welcome',
-  vitals = 'Vitals',
-  kccqDecline = 'KccqDecline',
-  registrationQuestionnaire = 'RegistrationQuestionnaire',
-  postAppointmentQuestionnaire = 'PostAppointmentQuestionnaire',
-  symptomQuestionnaire = 'SymptomQuestionnaire',
-  preAppointment = 'PreAppointment',
-  inactive = 'Inactive',
+  medicationChange = "MedicationChange",
+  weightGain = "WeightGain",
+  medicationUptitration = "MedicationUptitration",
+  welcome = "Welcome",
+  vitals = "Vitals",
+  kccqDecline = "KccqDecline",
+  registrationQuestionnaire = "RegistrationQuestionnaire",
+  postAppointmentQuestionnaire = "PostAppointmentQuestionnaire",
+  symptomQuestionnaire = "SymptomQuestionnaire",
+  preAppointment = "PreAppointment",
+  inactive = "Inactive",
 }
 
 export const userMessageConverter = new Lazy(
@@ -68,14 +68,14 @@ export const userMessageConverter = new Lazy(
         reference: object.reference ?? null,
       }),
     }),
-)
+);
 
 export class UserMessage {
   // Static Functions
 
   static createInactive(
     input: {
-      creationDate?: Date
+      creationDate?: Date;
     } = {},
   ): UserMessage {
     return new UserMessage({
@@ -87,14 +87,14 @@ export class UserMessage {
       action: undefined,
       type: UserMessageType.inactive,
       isDismissible: false,
-    })
+    });
   }
 
   static createInactiveForClinician(input: {
-    creationDate?: Date
-    userId: string
-    userName?: string
-    reference: string
+    creationDate?: Date;
+    userId: string;
+    userName?: string;
+    reference: string;
   }): UserMessage {
     return new UserMessage({
       creationDate: input.creationDate ?? new Date(),
@@ -112,14 +112,14 @@ export class UserMessage {
       type: UserMessageType.inactive,
       isDismissible: true,
       reference: input.reference,
-    })
+    });
   }
 
   static createKccqDeclineForClinician(input: {
-    creationDate?: Date
-    userId: string
-    userName?: string
-    reference: string
+    creationDate?: Date;
+    userId: string;
+    userName?: string;
+    reference: string;
   }): UserMessage {
     return new UserMessage({
       creationDate: input.creationDate ?? new Date(),
@@ -139,14 +139,14 @@ export class UserMessage {
       action: `users/${input.userId}/medications`,
       type: UserMessageType.kccqDecline,
       isDismissible: true,
-    })
+    });
   }
 
   static createMedicationChange(input: {
-    creationDate?: Date
-    reference: string
-    medicationName: string
-    videoReference?: string
+    creationDate?: Date;
+    reference: string;
+    medicationName: string;
+    videoReference?: string;
   }): UserMessage {
     return new UserMessage({
       creationDate: input.creationDate ?? new Date(),
@@ -159,13 +159,13 @@ export class UserMessage {
       type: UserMessageType.medicationChange,
       isDismissible: true,
       reference: input.reference,
-    })
+    });
   }
 
   static createMedicationUptitration(
     input: {
-      creationDate?: Date
-      reference?: string
+      creationDate?: Date;
+      reference?: string;
     } = {},
   ): UserMessage {
     return new UserMessage({
@@ -177,17 +177,17 @@ export class UserMessage {
         messagesLocalization.medicationUptitrationDescription,
       ),
       reference: input.reference,
-      action: 'medications',
+      action: "medications",
       type: UserMessageType.medicationUptitration,
       isDismissible: true,
-    })
+    });
   }
 
   static createMedicationUptitrationForClinician(input: {
-    creationDate?: Date
-    userId: string
-    userName?: string
-    reference: string
+    creationDate?: Date;
+    userId: string;
+    userName?: string;
+    reference: string;
   }): UserMessage {
     return new UserMessage({
       creationDate: input.creationDate ?? new Date(),
@@ -207,12 +207,12 @@ export class UserMessage {
       action: `users/${input.userId}/medications`,
       type: UserMessageType.medicationUptitration,
       isDismissible: true,
-    })
+    });
   }
 
   static createPreAppointment(input: {
-    creationDate?: Date
-    reference: string
+    creationDate?: Date;
+    reference: string;
   }): UserMessage {
     return new UserMessage({
       creationDate: input.creationDate ?? new Date(),
@@ -220,18 +220,18 @@ export class UserMessage {
       description: LocalizedText.create(
         messagesLocalization.preAppointmentDescription,
       ),
-      action: 'healthSummary',
+      action: "healthSummary",
       type: UserMessageType.preAppointment,
       isDismissible: false,
       reference: input.reference,
-    })
+    });
   }
 
   static createPreAppointmentForClinician(input: {
-    creationDate?: Date
-    userId: string
-    userName?: string
-    reference: string
+    creationDate?: Date;
+    userId: string;
+    userName?: string;
+    reference: string;
   }): UserMessage {
     return new UserMessage({
       creationDate: input.creationDate ?? new Date(),
@@ -251,12 +251,12 @@ export class UserMessage {
       reference: input.reference,
       type: UserMessageType.preAppointment,
       isDismissible: true,
-    })
+    });
   }
 
   static createRegistrationQuestionnaire(input: {
-    creationDate?: Date
-    questionnaireReference: QuestionnaireReference
+    creationDate?: Date;
+    questionnaireReference: QuestionnaireReference;
   }): UserMessage {
     return new UserMessage({
       creationDate: input.creationDate ?? new Date(),
@@ -269,12 +269,12 @@ export class UserMessage {
       action: input.questionnaireReference,
       type: UserMessageType.registrationQuestionnaire,
       isDismissible: false,
-    })
+    });
   }
 
   static createPostAppointmentQuestionnaire(input: {
-    creationDate?: Date
-    questionnaireReference: QuestionnaireReference
+    creationDate?: Date;
+    questionnaireReference: QuestionnaireReference;
   }): UserMessage {
     return new UserMessage({
       creationDate: input.creationDate ?? new Date(),
@@ -285,12 +285,12 @@ export class UserMessage {
       action: input.questionnaireReference,
       type: UserMessageType.postAppointmentQuestionnaire,
       isDismissible: false,
-    })
+    });
   }
 
   static createSymptomQuestionnaire(input: {
-    creationDate?: Date
-    questionnaireReference: QuestionnaireReference
+    creationDate?: Date;
+    questionnaireReference: QuestionnaireReference;
   }): UserMessage {
     return new UserMessage({
       creationDate: input.creationDate ?? new Date(),
@@ -303,29 +303,29 @@ export class UserMessage {
       action: input.questionnaireReference,
       type: UserMessageType.symptomQuestionnaire,
       isDismissible: false,
-    })
+    });
   }
 
   static createVitals(
     input: {
-      creationDate?: Date
+      creationDate?: Date;
     } = {},
   ): UserMessage {
-    const creationDate = input.creationDate ?? new Date()
+    const creationDate = input.creationDate ?? new Date();
     return new UserMessage({
       creationDate: creationDate,
       dueDate: advanceDateByDays(creationDate, 1),
       title: LocalizedText.create(messagesLocalization.vitalsTitle),
       description: LocalizedText.create(messagesLocalization.vitalsDescription),
-      action: 'observations',
+      action: "observations",
       type: UserMessageType.vitals,
       isDismissible: false,
-    })
+    });
   }
 
   static createWeightGain(
     input: {
-      creationDate?: Date
+      creationDate?: Date;
     } = {},
   ): UserMessage {
     return new UserMessage({
@@ -334,17 +334,17 @@ export class UserMessage {
       description: LocalizedText.create(
         messagesLocalization.weightGainDescription,
       ),
-      action: 'medications',
+      action: "medications",
       type: UserMessageType.weightGain,
       isDismissible: true,
-    })
+    });
   }
 
   static createWeightGainForClinician(input: {
-    creationDate?: Date
-    userId: string
-    userName?: string
-    reference: string
+    creationDate?: Date;
+    userId: string;
+    userName?: string;
+    reference: string;
   }): UserMessage {
     return new UserMessage({
       creationDate: input.creationDate ?? new Date(),
@@ -364,12 +364,12 @@ export class UserMessage {
       reference: input.reference,
       type: UserMessageType.weightGain,
       isDismissible: true,
-    })
+    });
   }
 
   static createWelcome(input: {
-    creationDate?: Date
-    videoReference: VideoReference
+    creationDate?: Date;
+    videoReference: VideoReference;
   }): UserMessage {
     return new UserMessage({
       creationDate: input.creationDate ?? new Date(),
@@ -380,42 +380,42 @@ export class UserMessage {
       action: input.videoReference,
       type: UserMessageType.welcome,
       isDismissible: true,
-    })
+    });
   }
 
   // Properties
 
-  readonly creationDate: Date
-  readonly dueDate?: Date
-  readonly completionDate?: Date
-  readonly type: UserMessageType
-  readonly title: LocalizedText
-  readonly description?: LocalizedText
-  readonly action?: string
-  readonly isDismissible: boolean
-  readonly reference?: string
+  readonly creationDate: Date;
+  readonly dueDate?: Date;
+  readonly completionDate?: Date;
+  readonly type: UserMessageType;
+  readonly title: LocalizedText;
+  readonly description?: LocalizedText;
+  readonly action?: string;
+  readonly isDismissible: boolean;
+  readonly reference?: string;
 
   // Constructor
 
   constructor(input: {
-    creationDate: Date
-    dueDate?: Date
-    completionDate?: Date
-    type: UserMessageType
-    title: LocalizedText
-    description?: LocalizedText
-    action?: string
-    isDismissible: boolean
-    reference?: string
+    creationDate: Date;
+    dueDate?: Date;
+    completionDate?: Date;
+    type: UserMessageType;
+    title: LocalizedText;
+    description?: LocalizedText;
+    action?: string;
+    isDismissible: boolean;
+    reference?: string;
   }) {
-    this.creationDate = input.creationDate
-    this.dueDate = input.dueDate
-    this.completionDate = input.completionDate
-    this.type = input.type
-    this.title = input.title
-    this.description = input.description
-    this.action = input.action
-    this.isDismissible = input.isDismissible
-    this.reference = input.reference
+    this.creationDate = input.creationDate;
+    this.dueDate = input.dueDate;
+    this.completionDate = input.completionDate;
+    this.type = input.type;
+    this.title = input.title;
+    this.description = input.description;
+    this.action = input.action;
+    this.isDismissible = input.isDismissible;
+    this.reference = input.reference;
   }
 }

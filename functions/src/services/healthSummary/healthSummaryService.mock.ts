@@ -14,13 +14,13 @@ import {
   QuantityUnit,
   SymptomScore,
   UserMedicationRecommendationType,
-} from '@stanfordbdhg/engagehf-models'
-import { type HealthSummaryService } from './healthSummaryService.js'
+} from "@stanfordbdhg/engagehf-models";
+import { type HealthSummaryService } from "./healthSummaryService.js";
 import {
   HealthSummaryData,
   type HealthSummaryVitals,
-} from '../../models/healthSummaryData.js'
-import { recommendationLocalization } from '../recommendation/recommendationService+localization.js'
+} from "../../models/healthSummaryData.js";
+import { recommendationLocalization } from "../recommendation/recommendationService+localization.js";
 
 /* eslint-disable @typescript-eslint/require-await */
 
@@ -32,9 +32,9 @@ export class MockHealthSummaryService implements HealthSummaryService {
     date: Date,
   ): Promise<HealthSummaryData> {
     return new HealthSummaryData({
-      name: 'John Doe',
-      dateOfBirth: new Date('1970-01-02'),
-      providerName: 'Dr. XXX',
+      name: "John Doe",
+      dateOfBirth: new Date("1970-01-02"),
+      providerName: "Dr. XXX",
       nextAppointment: FHIRAppointment.create({
         userId,
         created: advanceDateByDays(date, -10),
@@ -45,26 +45,26 @@ export class MockHealthSummaryService implements HealthSummaryService {
         {
           currentMedication: [],
           displayInformation: {
-            title: LocalizedText.raw('Losartan (Cozaar)'),
-            subtitle: LocalizedText.raw(''),
+            title: LocalizedText.raw("Losartan (Cozaar)"),
+            subtitle: LocalizedText.raw(""),
             description: LocalizedText.create(
               recommendationLocalization.improvementAvailableMoreEffectiveMed,
-              'Sacubitril-Valsartan',
+              "Sacubitril-Valsartan",
             ),
             type: UserMedicationRecommendationType.improvementAvailable,
             dosageInformation: {
               minimumSchedule: [{ frequency: 1, quantity: [25] }],
               currentSchedule: [{ frequency: 1, quantity: [25] }],
               targetSchedule: [{ frequency: 1, quantity: [100] }],
-              unit: 'mg',
+              unit: "mg",
             },
           },
         },
         {
           currentMedication: [],
           displayInformation: {
-            title: LocalizedText.raw('Dapagliflozin (Farxiga)'),
-            subtitle: LocalizedText.raw(''),
+            title: LocalizedText.raw("Dapagliflozin (Farxiga)"),
+            subtitle: LocalizedText.raw(""),
             description: LocalizedText.create(
               recommendationLocalization.targetDoseReached,
             ),
@@ -73,15 +73,15 @@ export class MockHealthSummaryService implements HealthSummaryService {
               minimumSchedule: [{ frequency: 1, quantity: [5] }],
               currentSchedule: [{ frequency: 1, quantity: [10] }],
               targetSchedule: [{ frequency: 1, quantity: [10] }],
-              unit: 'mg',
+              unit: "mg",
             },
           },
         },
         {
           currentMedication: [],
           displayInformation: {
-            title: LocalizedText.raw('Carvedilol (Coreg)'),
-            subtitle: LocalizedText.raw(''),
+            title: LocalizedText.raw("Carvedilol (Coreg)"),
+            subtitle: LocalizedText.raw(""),
             description: LocalizedText.create(
               recommendationLocalization.notStarted,
             ),
@@ -90,7 +90,7 @@ export class MockHealthSummaryService implements HealthSummaryService {
               minimumSchedule: [{ frequency: 1, quantity: [5] }],
               currentSchedule: [],
               targetSchedule: [{ frequency: 2, quantity: [50] }],
-              unit: 'mg',
+              unit: "mg",
             },
           },
         },
@@ -98,7 +98,7 @@ export class MockHealthSummaryService implements HealthSummaryService {
       vitals: await this.getVitals(date),
       symptomScores: [
         new SymptomScore({
-          questionnaireResponseId: '4',
+          questionnaireResponseId: "4",
           overallScore: 40,
           physicalLimitsScore: 50,
           socialLimitsScore: 38,
@@ -108,7 +108,7 @@ export class MockHealthSummaryService implements HealthSummaryService {
           date: advanceDateByDays(date, -9),
         }),
         new SymptomScore({
-          questionnaireResponseId: '3',
+          questionnaireResponseId: "3",
           overallScore: 60,
           physicalLimitsScore: 58,
           socialLimitsScore: 75,
@@ -118,7 +118,7 @@ export class MockHealthSummaryService implements HealthSummaryService {
           date: advanceDateByDays(date, -18),
         }),
         new SymptomScore({
-          questionnaireResponseId: '2',
+          questionnaireResponseId: "2",
           overallScore: 44,
           physicalLimitsScore: 50,
           socialLimitsScore: 41,
@@ -128,7 +128,7 @@ export class MockHealthSummaryService implements HealthSummaryService {
           date: advanceDateByDays(date, -34),
         }),
         new SymptomScore({
-          questionnaireResponseId: '1',
+          questionnaireResponseId: "1",
           overallScore: 75,
           physicalLimitsScore: 58,
           socialLimitsScore: 75,
@@ -139,21 +139,21 @@ export class MockHealthSummaryService implements HealthSummaryService {
         }),
       ],
       now: date,
-    })
+    });
   }
 
   // Helpers
 
   private async getVitals(date: Date): Promise<HealthSummaryVitals> {
     const [systolicBloodPressure, diastolicBloodPressure] =
-      await this.getBloodPressureObservations(date)
+      await this.getBloodPressureObservations(date);
     return {
       systolicBloodPressure: systolicBloodPressure,
       diastolicBloodPressure: diastolicBloodPressure,
       heartRate: await this.getHeartRateObservations(date),
       bodyWeight: await this.getBodyWeightObservations(date),
       dryWeight: await this.getMostRecentDryWeightObservation(date),
-    }
+    };
   }
 
   private async getBloodPressureObservations(
@@ -254,7 +254,7 @@ export class MockHealthSummaryService implements HealthSummaryService {
           unit: QuantityUnit.mmHg,
         },
       ],
-    ]
+    ];
   }
 
   private async getHeartRateObservations(
@@ -306,7 +306,7 @@ export class MockHealthSummaryService implements HealthSummaryService {
         value: 65,
         unit: QuantityUnit.bpm,
       },
-    ]
+    ];
   }
 
   private async getBodyWeightObservations(
@@ -358,7 +358,7 @@ export class MockHealthSummaryService implements HealthSummaryService {
         value: 267,
         unit: QuantityUnit.lbs,
       },
-    ]
+    ];
   }
 
   private async getMostRecentDryWeightObservation(
@@ -368,6 +368,6 @@ export class MockHealthSummaryService implements HealthSummaryService {
       date: advanceDateByDays(date, -4),
       value: 267.5,
       unit: QuantityUnit.lbs,
-    }
+    };
   }
 }

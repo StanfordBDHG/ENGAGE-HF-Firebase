@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import fs from 'fs'
+import fs from "fs";
 import {
   FHIRAllergyIntolerance,
   MedicationClassReference,
@@ -17,12 +17,12 @@ import { logger } from 'firebase-functions'
 import {
   ContraindicationCategory,
   type ContraindicationService,
-} from './contraindicationService.js'
-import { DefaultContraindicationService } from './defaultContraindicationService.js'
+} from "./contraindicationService.js";
+import { DefaultContraindicationService } from "./defaultContraindicationService.js";
 
-describe('DefaultContraindicationService', () => {
+describe("DefaultContraindicationService", () => {
   const contraindicationService: ContraindicationService =
-    new DefaultContraindicationService()
+    new DefaultContraindicationService();
 
   function check(
     field: string,
@@ -40,160 +40,163 @@ describe('DefaultContraindicationService', () => {
         criticality: options.criticality,
         reference: options.reference,
       }),
-    ]
+    ];
 
-    const { medications, medicationClasses } = references(field)
+    const { medications, medicationClasses } = references(field);
 
     medications.forEach((medication) => {
       const category = contraindicationService.checkMedication(
         contraindications,
         medication,
-      )
-      expect(category).toBe(options.category)
-    })
+      );
+      expect(category).toBe(options.category);
+    });
 
     medicationClasses.forEach((medicationClass) => {
       const category = contraindicationService.checkMedicationClass(
         contraindications,
         medicationClass,
-      )
-      expect(category).toBe(options.category)
-    })
+      );
+      expect(category).toBe(options.category);
+    });
   }
 
-  it('correctly specifies contraindications as documented in reference', () => {
+  it("correctly specifies contraindications as documented in reference", () => {
     const fileContents = fs.readFileSync(
-      'src/tests/resources/contraindications.csv',
-      'utf8',
-    )
-    const lines = fileContents.split('\n').slice(1)
-    expect(lines).toHaveLength(35)
+      "src/tests/resources/contraindications.csv",
+      "utf8",
+    );
+    const lines = fileContents.split("\n").slice(1);
+    expect(lines).toHaveLength(35);
 
     for (const line of lines) {
-      const fields = line.split(',')
-      expect(fields).toHaveLength(15)
+      const fields = line.split(",");
+      expect(fields).toHaveLength(15);
 
       const medicationReference = Object.values(MedicationReference).find(
-        (value) => value.toString() === 'medications/' + fields[0],
-      )
+        (value) => (value as string) === "medications/" + fields[0],
+      );
 
-      expect(medicationReference).toBeDefined()
+      expect(medicationReference).toBeDefined();
       if (medicationReference === undefined)
-        throw new Error('Medication reference not found')
+        throw new Error("Medication reference not found");
 
       check(fields[10], {
         reference: medicationReference,
         type: 'allergy',
         criticality: 'low',
         category: ContraindicationCategory.allergyIntolerance,
-      })
+      });
 
       check(fields[11], {
         reference: medicationReference,
         type: 'allergy',
         criticality: 'high',
         category: ContraindicationCategory.severeAllergyIntolerance,
-      })
+      });
 
       check(fields[12], {
         reference: medicationReference,
         type: 'intolerance',
         criticality: 'low',
         category: ContraindicationCategory.clinicianListed,
-      })
+      });
 
       check(fields[14], {
         reference: medicationReference,
         type: undefined, // TODO: 'financial',
         criticality: 'low',
         category: ContraindicationCategory.clinicianListed,
-      })
+      });
     }
-  })
-})
+  });
+});
 
 function references(field: string): {
-  medications: Set<MedicationReference>
-  medicationClasses: Set<MedicationClassReference>
+  medications: Set<MedicationReference>;
+  medicationClasses: Set<MedicationClassReference>;
 } {
   const result = {
     medications: new Set<MedicationReference>(),
     medicationClasses: new Set<MedicationClassReference>(),
-  }
+  };
 
-  field.split('/').forEach((value) => {
+  field.split("/").forEach((value) => {
     switch (value.trim()) {
-      case 'ACEI':
+      case "ACEI":
         result.medicationClasses.add(
           MedicationClassReference.angiotensinConvertingEnzymeInhibitors,
-        )
-        break
-      case 'ARB':
+        );
+        break;
+      case "ARB":
         result.medicationClasses.add(
           MedicationClassReference.angiotensinReceptorBlockers,
-        )
-        break
-      case 'ARNI':
+        );
+        break;
+      case "ARNI":
         result.medicationClasses.add(
           MedicationClassReference.angiotensinReceptorNeprilysinInhibitors,
-        )
-        break
-      case 'BB':
-        result.medicationClasses.add(MedicationClassReference.betaBlockers)
-        break
-      case 'MRA':
+        );
+        break;
+      case "BB":
+        result.medicationClasses.add(MedicationClassReference.betaBlockers);
+        break;
+      case "MRA":
         result.medicationClasses.add(
           MedicationClassReference.mineralocorticoidReceptorAntagonists,
-        )
-        break
-      case 'SGLT':
-        result.medicationClasses.add(MedicationClassReference.sglt2inhibitors)
-        break
+        );
+        break;
+      case "SGLT":
+        result.medicationClasses.add(MedicationClassReference.sglt2inhibitors);
+        break;
 
-      case 'Bexagliflozin':
-        result.medications.add(MedicationReference.bexagliflozin)
-        break
-      case 'Bisoprolol':
-        result.medications.add(MedicationReference.bisoprolol)
-        break
-      case 'Canagliflozin':
-        result.medications.add(MedicationReference.canagliflozin)
-        break
-      case 'Carvedilol':
-        result.medications.add(MedicationReference.carvedilol)
-        result.medications.add(MedicationReference.carvedilolPhosphate)
-        break
-      case 'Dapagliflozin':
-        result.medications.add(MedicationReference.dapagliflozin)
-        break
-      case 'Empagliflozin':
-        result.medications.add(MedicationReference.empagliflozin)
-        break
-      case 'Eplerenone':
-        result.medications.add(MedicationReference.eplerenone)
-        break
-      case 'Ertugliflozin':
-        result.medications.add(MedicationReference.ertugliflozin)
-        break
-      case 'Losartan':
-        result.medications.add(MedicationReference.losartan)
-        break
-      case 'Metoprolol':
-        result.medications.add(MedicationReference.metoprololSuccinate)
-        break
-      case 'Sotagliflozin':
-        result.medications.add(MedicationReference.sotagliflozin)
-        break
-      case 'Spironolactone':
-        result.medications.add(MedicationReference.spironolactone)
-        break
-      case '':
-        break
+      case "Bexagliflozin":
+        result.medications.add(MedicationReference.bexagliflozin);
+        break;
+      case "Bisoprolol":
+        result.medications.add(MedicationReference.bisoprolol);
+        break;
+      case "Canagliflozin":
+        result.medications.add(MedicationReference.canagliflozin);
+        break;
+      case "Carvedilol":
+        result.medications.add(MedicationReference.carvedilol);
+        result.medications.add(MedicationReference.carvedilolPhosphate);
+        break;
+      case "Dapagliflozin":
+        result.medications.add(MedicationReference.dapagliflozin);
+        break;
+      case "Empagliflozin":
+        result.medications.add(MedicationReference.empagliflozin);
+        break;
+      case "Eplerenone":
+        result.medications.add(MedicationReference.eplerenone);
+        break;
+      case "Ertugliflozin":
+        result.medications.add(MedicationReference.ertugliflozin);
+        break;
+      case "Losartan":
+        result.medications.add(MedicationReference.losartan);
+        break;
+      case "Metoprolol":
+        result.medications.add(MedicationReference.metoprololSuccinate);
+        break;
+      case "Sotagliflozin":
+        result.medications.add(MedicationReference.sotagliflozin);
+        break;
+      case "Spironolactone":
+        result.medications.add(MedicationReference.spironolactone);
+        break;
+      case "":
+        break;
       default:
-        logger.error('Unknown medication or medication class reference:', value)
-        break
+        logger.error(
+          "Unknown medication or medication class reference:",
+          value,
+        );
+        break;
     }
-  })
+  });
 
-  return result
+  return result;
 }

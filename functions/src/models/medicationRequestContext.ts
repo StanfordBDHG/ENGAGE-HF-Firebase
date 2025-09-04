@@ -35,7 +35,7 @@ export function medicationClassReference(
     case MedicationReference.carvedilol:
     case MedicationReference.carvedilolPhosphate:
     case MedicationReference.bisoprolol:
-      return MedicationClassReference.betaBlockers
+      return MedicationClassReference.betaBlockers;
 
     case MedicationReference.dapagliflozin:
     case MedicationReference.empagliflozin:
@@ -43,11 +43,11 @@ export function medicationClassReference(
     case MedicationReference.bexagliflozin:
     case MedicationReference.canagliflozin:
     case MedicationReference.ertugliflozin:
-      return MedicationClassReference.sglt2inhibitors
+      return MedicationClassReference.sglt2inhibitors;
 
     case MedicationReference.spironolactone:
     case MedicationReference.eplerenone:
-      return MedicationClassReference.mineralocorticoidReceptorAntagonists
+      return MedicationClassReference.mineralocorticoidReceptorAntagonists;
 
     case MedicationReference.quinapril:
     case MedicationReference.perindopril:
@@ -59,7 +59,7 @@ export function medicationClassReference(
     case MedicationReference.fosinopril:
     case MedicationReference.trandolapril:
     case MedicationReference.moexepril:
-      return MedicationClassReference.angiotensinConvertingEnzymeInhibitors
+      return MedicationClassReference.angiotensinConvertingEnzymeInhibitors;
 
     case MedicationReference.losartan:
     case MedicationReference.valsartan:
@@ -69,15 +69,15 @@ export function medicationClassReference(
     case MedicationReference.olmesartan:
     case MedicationReference.azilsartan:
     case MedicationReference.eprosartan:
-      return MedicationClassReference.angiotensinReceptorBlockers
+      return MedicationClassReference.angiotensinReceptorBlockers;
 
     case MedicationReference.sacubitrilValsartan:
-      return MedicationClassReference.angiotensinReceptorNeprilysinInhibitors
+      return MedicationClassReference.angiotensinReceptorNeprilysinInhibitors;
 
     case MedicationReference.furosemide:
     case MedicationReference.bumetanide:
     case MedicationReference.torsemide:
     case MedicationReference.ethacrynicAcid:
-      return MedicationClassReference.diuretics
+      return MedicationClassReference.diuretics;
   }
 }

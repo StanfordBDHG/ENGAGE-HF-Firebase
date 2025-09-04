@@ -18,26 +18,26 @@ export class FHIRObservation extends FHIRResource<Observation> {
   private static readonly loincDisplay = new Map<LoincCode, string>([
     [
       LoincCode.bloodPressure,
-      'Blood pressure panel with all children optional',
+      "Blood pressure panel with all children optional",
     ],
-    [LoincCode.systolicBloodPressure, 'Systolic blood pressure'],
-    [LoincCode.diastolicBloodPressure, 'Diastolic blood pressure'],
-    [LoincCode.bodyWeight, 'Body weight'],
-    [LoincCode.dryWeight, 'Dry body weight Estimated'],
-    [LoincCode.creatinine, 'Creatinine [Mass/volume] in Serum or Plasma'],
+    [LoincCode.systolicBloodPressure, "Systolic blood pressure"],
+    [LoincCode.diastolicBloodPressure, "Diastolic blood pressure"],
+    [LoincCode.bodyWeight, "Body weight"],
+    [LoincCode.dryWeight, "Dry body weight Estimated"],
+    [LoincCode.creatinine, "Creatinine [Mass/volume] in Serum or Plasma"],
     [
       LoincCode.estimatedGlomerularFiltrationRate,
-      'Glomerular filtration rate/1.73 sq M.predicted [Volume Rate/Area] in Serum, Plasma or Blood by Creatinine-based formula (CKD-EPI 2021)',
+      "Glomerular filtration rate/1.73 sq M.predicted [Volume Rate/Area] in Serum, Plasma or Blood by Creatinine-based formula (CKD-EPI 2021)",
     ],
-    [LoincCode.heartRate, 'Heart rate'],
-    [LoincCode.potassium, 'Potassium [Moles/volume] in Blood'],
-  ])
+    [LoincCode.heartRate, "Heart rate"],
+    [LoincCode.potassium, "Potassium [Moles/volume] in Blood"],
+  ]);
 
   static createBloodPressure(input: {
-    id: string
-    date: Date
-    systolic: number
-    diastolic: number
+    id: string;
+    date: Date;
+    systolic: number;
+    diastolic: number;
   }): FHIRObservation {
     return new FHIRObservation({
       resourceType: 'Observation',
@@ -127,7 +127,7 @@ export class FHIRObservation extends FHIRResource<Observation> {
       },
       effectiveDateTime: input.date.toISOString(),
       derivedFrom: input.derivedFrom,
-    })
+    });
   }
 
   // Computed Properties
@@ -141,7 +141,7 @@ export class FHIRObservation extends FHIRResource<Observation> {
         code: LoincCode.systolicBloodPressure,
         system: CodingSystem.loinc,
       },
-    }).at(0)
+    }).at(0);
   }
 
   get diastolicBloodPressure(): ObservationQuantity | undefined {
@@ -153,7 +153,7 @@ export class FHIRObservation extends FHIRResource<Observation> {
         code: LoincCode.diastolicBloodPressure,
         system: CodingSystem.loinc,
       },
-    }).at(0)
+    }).at(0);
   }
 
   bodyWeight(unit: QuantityUnit): ObservationQuantity | undefined {
@@ -161,7 +161,7 @@ export class FHIRObservation extends FHIRResource<Observation> {
       code: LoincCode.bodyWeight,
       system: CodingSystem.loinc,
       unit: unit,
-    }).at(0)
+    }).at(0);
   }
 
   dryWeight(unit: QuantityUnit): ObservationQuantity | undefined {
@@ -169,7 +169,7 @@ export class FHIRObservation extends FHIRResource<Observation> {
       code: LoincCode.dryWeight,
       system: CodingSystem.loinc,
       unit: unit,
-    }).at(0)
+    }).at(0);
   }
 
   get creatinine(): ObservationQuantity | undefined {
@@ -177,7 +177,7 @@ export class FHIRObservation extends FHIRResource<Observation> {
       code: LoincCode.creatinine,
       system: CodingSystem.loinc,
       unit: QuantityUnit.mg_dL,
-    }).at(0)
+    }).at(0);
   }
 
   get estimatedGlomerularFiltrationRate(): ObservationQuantity | undefined {
@@ -185,7 +185,7 @@ export class FHIRObservation extends FHIRResource<Observation> {
       code: LoincCode.estimatedGlomerularFiltrationRate,
       system: CodingSystem.loinc,
       unit: QuantityUnit.mL_min_173m2,
-    }).at(0)
+    }).at(0);
   }
 
   get heartRate(): ObservationQuantity | undefined {
@@ -193,7 +193,7 @@ export class FHIRObservation extends FHIRResource<Observation> {
       code: LoincCode.heartRate,
       system: CodingSystem.loinc,
       unit: QuantityUnit.bpm,
-    }).at(0)
+    }).at(0);
   }
 
   get potassium(): ObservationQuantity | undefined {
@@ -201,7 +201,7 @@ export class FHIRObservation extends FHIRResource<Observation> {
       code: LoincCode.potassium,
       system: CodingSystem.loinc,
       unit: QuantityUnit.mEq_L,
-    }).at(0)
+    }).at(0);
   }
 
   // Methods
@@ -230,13 +230,13 @@ export class FHIRObservation extends FHIRResource<Observation> {
           date: new Date(date),
           value: value,
           unit: options.unit,
-        })
+        });
       }
     } else {
       const value = options.unit.valueOf(this.data.valueQuantity)
       if (!value) return result
       result.push({ date: new Date(date), value: value, unit: options.unit })
     }
-    return result
+    return result;
   }
 }

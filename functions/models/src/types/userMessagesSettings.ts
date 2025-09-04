@@ -6,10 +6,10 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { z } from 'zod'
-import { Lazy } from '../helpers/lazy.js'
-import { optionalish } from '../helpers/optionalish.js'
-import { SchemaConverter } from '../helpers/schemaConverter.js'
+import { z } from "zod";
+import { Lazy } from "../helpers/lazy.js";
+import { optionalish } from "../helpers/optionalish.js";
+import { SchemaConverter } from "../helpers/schemaConverter.js";
 
 export const userMessagesSettingsConverter = new Lazy(
   () =>
@@ -28,24 +28,24 @@ export const userMessagesSettingsConverter = new Lazy(
           object.medicationRemindersAreActive ?? null,
       }),
     }),
-)
+);
 
 export class UserMessagesSettings {
   // Properties
 
-  readonly dailyRemindersAreActive?: boolean
-  readonly textNotificationsAreActive?: boolean
-  readonly medicationRemindersAreActive?: boolean
+  readonly dailyRemindersAreActive?: boolean;
+  readonly textNotificationsAreActive?: boolean;
+  readonly medicationRemindersAreActive?: boolean;
 
   // Constructor
 
   constructor(input: {
-    dailyRemindersAreActive?: boolean
-    textNotificationsAreActive?: boolean
-    medicationRemindersAreActive?: boolean
+    dailyRemindersAreActive?: boolean;
+    textNotificationsAreActive?: boolean;
+    medicationRemindersAreActive?: boolean;
   }) {
-    this.dailyRemindersAreActive = input.dailyRemindersAreActive
-    this.textNotificationsAreActive = input.textNotificationsAreActive
-    this.medicationRemindersAreActive = input.medicationRemindersAreActive
+    this.dailyRemindersAreActive = input.dailyRemindersAreActive;
+    this.textNotificationsAreActive = input.textNotificationsAreActive;
+    this.medicationRemindersAreActive = input.medicationRemindersAreActive;
   }
 }

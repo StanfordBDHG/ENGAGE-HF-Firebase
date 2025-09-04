@@ -14,13 +14,13 @@ import { optionalish } from '../helpers/optionalish.js'
 import { SchemaConverter } from '../helpers/schemaConverter.js'
 
 export enum UserMedicationRecommendationType {
-  improvementAvailable = 'improvementAvailable',
-  moreLabObservationsRequired = 'moreLabObservationsRequired',
-  morePatientObservationsRequired = 'morePatientObservationsRequired',
-  noActionRequired = 'noActionRequired',
-  notStarted = 'notStarted',
-  personalTargetDoseReached = 'personalTargetDoseReached',
-  targetDoseReached = 'targetDoseReached',
+  improvementAvailable = "improvementAvailable",
+  moreLabObservationsRequired = "moreLabObservationsRequired",
+  morePatientObservationsRequired = "morePatientObservationsRequired",
+  noActionRequired = "noActionRequired",
+  notStarted = "notStarted",
+  personalTargetDoseReached = "personalTargetDoseReached",
+  targetDoseReached = "targetDoseReached",
 }
 
 export const userMedicationRecommendationDoseScheduleConverter = new Lazy(
@@ -35,11 +35,11 @@ export const userMedicationRecommendationDoseScheduleConverter = new Lazy(
         quantity: object.quantity,
       }),
     }),
-)
+);
 
 export type UserMedicationRecommendationDoseSchedule = z.output<
   typeof userMedicationRecommendationDoseScheduleConverter.value.schema
->
+>;
 
 export const userMedicationRecommendationDosageInformationConverter = new Lazy(
   () =>
@@ -78,7 +78,7 @@ export const userMedicationRecommendationDosageInformationConverter = new Lazy(
         unit: object.unit,
       }),
     }),
-)
+);
 
 export const userMedicationRecommendationDisplayInformationConverter = new Lazy(
   () =>
@@ -106,11 +106,11 @@ export const userMedicationRecommendationDisplayInformationConverter = new Lazy(
           ),
       }),
     }),
-)
+);
 
 export type UserMedicationRecommendationDisplayInformation = z.output<
   typeof userMedicationRecommendationDisplayInformationConverter.value.schema
->
+>;
 
 const referenceSchema = z.object({
   reference: z.string().optional(),
@@ -141,7 +141,7 @@ export const userMedicationRecommendationConverter = new Lazy(
           ),
       }),
     }),
-)
+);
 
 export class UserMedicationRecommendation {
   // Properties
@@ -157,8 +157,8 @@ export class UserMedicationRecommendation {
     recommendedMedication?: Reference
     displayInformation: UserMedicationRecommendationDisplayInformation
   }) {
-    this.currentMedication = input.currentMedication
-    this.recommendedMedication = input.recommendedMedication
-    this.displayInformation = input.displayInformation
+    this.currentMedication = input.currentMedication;
+    this.recommendedMedication = input.recommendedMedication;
+    this.displayInformation = input.displayInformation;
   }
 }

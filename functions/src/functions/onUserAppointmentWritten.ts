@@ -14,7 +14,7 @@ import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
 export const onUserAppointmentWritten = onDocumentWritten(
   {
-    document: 'users/{userId}/appointments/{appointmentId}',
+    document: "users/{userId}/appointments/{appointmentId}",
     secrets: Env.twilioSecretKeys,
   },
   async (event) => {
@@ -26,6 +26,6 @@ export const onUserAppointmentWritten = onDocumentWritten(
       event.params.userId,
       event.params.appointmentId,
       data?.exists ? converter.fromFirestore(data) : null,
-    )
+    );
   },
-)
+);

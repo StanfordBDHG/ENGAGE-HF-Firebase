@@ -10,18 +10,18 @@ import {
   UserDevice,
   userDeviceConverter,
   UserDevicePlatform,
-} from '@stanfordbdhg/engagehf-models'
-import { registerDevice } from './registerDevice.js'
-import { describeWithEmulators } from '../tests/functions/testEnvironment.js'
-import { expectError } from '../tests/helpers.js'
+} from "@stanfordbdhg/engagehf-models";
+import { registerDevice } from "./registerDevice.js";
+import { describeWithEmulators } from "../tests/functions/testEnvironment.js";
+import { expectError } from "../tests/helpers.js";
 
-describeWithEmulators('function: registerDevice', (env) => {
+describeWithEmulators("function: registerDevice", (env) => {
   const userDevice = new UserDevice({
-    notificationToken: 'abc123',
+    notificationToken: "abc123",
     platform: UserDevicePlatform.iOS,
-  })
+  });
 
-  it('should fail registering a device when unauthenticated', async () => {
+  it("should fail registering a device when unauthenticated", async () => {
     await expectError(
       async () =>
         env.call(
@@ -31,64 +31,64 @@ describeWithEmulators('function: registerDevice', (env) => {
           {} as any, // eslint-disable-line @typescript-eslint/no-explicit-any
         ),
       (error) => {
-        console.error(error)
-        expect(error).toHaveProperty('code', 'unauthenticated')
+        console.error(error);
+        expect(error).toHaveProperty("code", "unauthenticated");
       },
-    )
-  })
+    );
+  });
 
-  it('should succeed registering an new and existing device', async () => {
+  it("should succeed registering an new and existing device", async () => {
     await env.call(
       registerDevice,
       userDeviceConverter.value.encode(userDevice),
-      { uid: 'patient0' },
-    )
+      { uid: "patient0" },
+    );
 
-    const userDevices = await env.collections.userDevices('patient0').get()
-    expect(userDevices.docs).toHaveLength(1)
+    const userDevices = await env.collections.userDevices("patient0").get();
+    expect(userDevices.docs).toHaveLength(1);
 
     const newUserDevice = new UserDevice({
-      notificationToken: 'abc123',
+      notificationToken: "abc123",
       platform: UserDevicePlatform.iOS,
-      language: 'fr',
-    })
+      language: "fr",
+    });
 
     await env.call(
       registerDevice,
       userDeviceConverter.value.encode(newUserDevice),
-      { uid: 'patient0' },
-    )
+      { uid: "patient0" },
+    );
 
-    const newUserDevices = await env.collections.userDevices('patient0').get()
-    expect(newUserDevices.docs).toHaveLength(1)
-  })
+    const newUserDevices = await env.collections.userDevices("patient0").get();
+    expect(newUserDevices.docs).toHaveLength(1);
+  });
 
-  it('should remove a device from other users when registering it for a new user', async () => {
+  it("should remove a device from other users when registering it for a new user", async () => {
     await env.call(
       registerDevice,
       userDeviceConverter.value.encode(userDevice),
-      { uid: 'patient0' },
-    )
+      { uid: "patient0" },
+    );
 
-    const userDevices = await env.collections.userDevices('patient0').get()
-    expect(userDevices.docs).toHaveLength(1)
+    const userDevices = await env.collections.userDevices("patient0").get();
+    expect(userDevices.docs).toHaveLength(1);
 
     const newUserDevice = new UserDevice({
-      notificationToken: 'abc123',
+      notificationToken: "abc123",
       platform: UserDevicePlatform.iOS,
-      language: 'fr',
-    })
+      language: "fr",
+    });
 
     await env.call(
       registerDevice,
       userDeviceConverter.value.encode(newUserDevice),
-      { uid: 'patient1' },
-    )
+      { uid: "patient1" },
+    );
 
-    const newUserDevices0 = await env.collections.userDevices('patient0').get()
-    expect(newUserDevices0.docs).toHaveLength(0)
+    const newUserDevices0 = await env.collections.userDevices("patient0").get();
+    expect(newUserDevices0.docs).toHaveLength(0);
 
-    const newUserDevices1 = await env.collections.userDevices('patient1').get()
-    expect(newUserDevices1.docs).toHaveLength(1)
-  })
-})
+    const newUserDevices1 = await env.collections.userDevices("patient1").get();
+    expect(newUserDevices1.docs).toHaveLength(1);
+  });
+});

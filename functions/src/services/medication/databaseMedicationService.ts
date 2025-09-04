@@ -17,17 +17,17 @@ import { type MedicationRequestContext } from '../../models/medicationRequestCon
 import {
   type Document,
   type DatabaseService,
-} from '../database/databaseService.js'
+} from "../database/databaseService.js";
 
 export class DatabaseMedicationService implements MedicationService {
   // Properties
 
-  private readonly databaseService: DatabaseService
+  private readonly databaseService: DatabaseService;
 
   // Constructor
 
   constructor(databaseService: DatabaseService) {
-    this.databaseService = databaseService
+    this.databaseService = databaseService;
   }
 
   // Methods - Medication Request Context
@@ -48,17 +48,17 @@ export class DatabaseMedicationService implements MedicationService {
     if (medication === undefined)
       throw new Error(
         `Medication not found at ${medicationReference.reference}`,
-      )
-    const medicationClassReference = medication.medicationClassReference
+      );
+    const medicationClassReference = medication.medicationClassReference;
     if (medicationClassReference === undefined)
-      throw new Error('Medication class reference not found')
+      throw new Error("Medication class reference not found");
     const medicationClass = (
       await this.getClassReference(medicationClassReference)
-    )?.content
+    )?.content;
     if (medicationClass === undefined)
       throw new Error(
         `Medication class not found at ${medicationClassReference.reference}`,
-      )
+      );
     return {
       lastUpdate: request.lastUpdate,
       requestReference: { reference: request.path },
@@ -69,7 +69,7 @@ export class DatabaseMedicationService implements MedicationService {
       medication,
       medicationClassReference,
       medicationClass,
-    }
+    };
   }
 
   // Methods - Medication Classes
@@ -77,7 +77,7 @@ export class DatabaseMedicationService implements MedicationService {
   async getMedicationClasses(): Promise<Array<Document<MedicationClass>>> {
     return this.databaseService.getQuery(
       (collections) => collections.medicationClasses,
-    )
+    );
   }
 
   async getMedicationClass(
@@ -85,7 +85,7 @@ export class DatabaseMedicationService implements MedicationService {
   ): Promise<Document<MedicationClass> | undefined> {
     return this.databaseService.getDocument((collections) =>
       collections.medicationClasses.doc(medicationClassId),
-    )
+    );
   }
 
   // Methods - Medications
@@ -93,7 +93,7 @@ export class DatabaseMedicationService implements MedicationService {
   async getMedications(): Promise<Array<Document<FHIRMedication>>> {
     return this.databaseService.getQuery(
       (collections) => collections.medications,
-    )
+    );
   }
 
   async getMedication(
@@ -101,7 +101,7 @@ export class DatabaseMedicationService implements MedicationService {
   ): Promise<Document<FHIRMedication> | undefined> {
     return this.databaseService.getDocument((collections) =>
       collections.medications.doc(medicationId),
-    )
+    );
   }
 
   // Methods - Drugs
@@ -111,7 +111,7 @@ export class DatabaseMedicationService implements MedicationService {
   ): Promise<Array<Document<FHIRMedication>>> {
     return this.databaseService.getQuery((collections) =>
       collections.drugs(medicationId),
-    )
+    );
   }
 
   async getDrug(
@@ -120,7 +120,7 @@ export class DatabaseMedicationService implements MedicationService {
   ): Promise<Document<FHIRMedication> | undefined> {
     return this.databaseService.getDocument((collections) =>
       collections.drugs(medicationId).doc(drugId),
-    )
+    );
   }
 
   // References

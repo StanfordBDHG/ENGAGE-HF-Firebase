@@ -29,11 +29,11 @@ export class FHIRQuestionnaireResponse extends FHIRResource<QuestionnaireRespons
     const items = this.responseItems(linkIdPath)
     switch (items.length) {
       case 0:
-        return null
+        return null;
       case 1:
-        return items[0]
+        return items[0];
       default:
-        throw new Error(`Unexpected number of response items found.`)
+        throw new Error(`Unexpected number of response items found.`);
     }
   }
 
@@ -42,7 +42,7 @@ export class FHIRQuestionnaireResponse extends FHIRResource<QuestionnaireRespons
     for (const child of this.data.item ?? []) {
       resultValue.push(...this.responseItemsRecursive(linkIdPath, child))
     }
-    return resultValue
+    return resultValue;
   }
 
   private responseItemsRecursive(
@@ -51,12 +51,12 @@ export class FHIRQuestionnaireResponse extends FHIRResource<QuestionnaireRespons
   ): QuestionnaireResponseItem[] {
     switch (linkIdPath.length) {
       case 0:
-        break
+        break;
       case 1:
         if (item.linkId === linkIdPath[0]) {
-          return [item]
+          return [item];
         }
-        break
+        break;
       default:
         if (item.linkId === linkIdPath[0]) {
           const childLinkIds = linkIdPath.slice(1)
@@ -64,13 +64,13 @@ export class FHIRQuestionnaireResponse extends FHIRResource<QuestionnaireRespons
           for (const child of item.item ?? []) {
             resultValue.push(
               ...this.responseItemsRecursive(childLinkIds, child),
-            )
+            );
           }
-          return resultValue
+          return resultValue;
         }
-        break
+        break;
     }
-    return []
+    return [];
   }
 
   // Methods - Response items from leaf link id
@@ -79,11 +79,11 @@ export class FHIRQuestionnaireResponse extends FHIRResource<QuestionnaireRespons
     const items = this.leafResponseItems(linkId)
     switch (items.length) {
       case 0:
-        return null
+        return null;
       case 1:
-        return items[0]
+        return items[0];
       default:
-        throw new Error('Unexpected number of leaf response items found.')
+        throw new Error("Unexpected number of leaf response items found.");
     }
   }
 
@@ -92,7 +92,7 @@ export class FHIRQuestionnaireResponse extends FHIRResource<QuestionnaireRespons
     for (const item of this.data.item ?? []) {
       items.push(...this.leafResponseItemsRecursive(linkId, item))
     }
-    return items
+    return items;
   }
 
   private leafResponseItemsRecursive(
@@ -101,12 +101,12 @@ export class FHIRQuestionnaireResponse extends FHIRResource<QuestionnaireRespons
   ): QuestionnaireResponseItem[] {
     const children = item.item ?? []
     if (children.length === 0 && item.linkId === linkId) {
-      return [item]
+      return [item];
     }
     const items: QuestionnaireResponseItem[] = []
     for (const child of item.item ?? []) {
-      items.push(...this.leafResponseItemsRecursive(linkId, child))
+      items.push(...this.leafResponseItemsRecursive(linkId, child));
     }
-    return items
+    return items;
   }
 }

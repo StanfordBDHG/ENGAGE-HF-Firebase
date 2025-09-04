@@ -6,52 +6,52 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { UserType } from '@stanfordbdhg/engagehf-models'
+import { UserType } from "@stanfordbdhg/engagehf-models";
 import {
   checkPhoneNumberVerification,
   deletePhoneNumber,
   startPhoneNumberVerification,
-} from './phoneNumber.js'
-import { MockPhoneService } from '../services/message/phone/phoneService.mock.js'
-import { describeWithEmulators } from '../tests/functions/testEnvironment.js'
-import { expectError } from '../tests/helpers.js'
+} from "./phoneNumber.js";
+import { MockPhoneService } from "../services/message/phone/phoneService.mock.js";
+import { describeWithEmulators } from "../tests/functions/testEnvironment.js";
+import { expectError } from "../tests/helpers.js";
 
-describeWithEmulators('PhoneNumber', (env) => {
-  it('verifies phone number successfully', async () => {
-    const phoneNumber = '+15555555555'
+describeWithEmulators("PhoneNumber", (env) => {
+  it("verifies phone number successfully", async () => {
+    const phoneNumber = "+15555555555";
     const patientId = await env.createUser({
       type: UserType.patient,
-      organization: 'stanford',
-    })
+      organization: "stanford",
+    });
 
     await env.call(
       startPhoneNumberVerification,
       { phoneNumber },
       {
         uid: patientId,
-        token: { type: UserType.patient, organization: 'stanford' },
+        token: { type: UserType.patient, organization: "stanford" },
       },
-    )
+    );
 
     await env.call(
       checkPhoneNumberVerification,
       { phoneNumber, code: MockPhoneService.correctCode },
       {
         uid: patientId,
-        token: { type: UserType.patient, organization: 'stanford' },
+        token: { type: UserType.patient, organization: "stanford" },
       },
-    )
+    );
 
-    const user = await env.collections.users.doc(patientId).get()
-    expect(user.data()?.phoneNumbers).toContainEqual(phoneNumber)
-  })
+    const user = await env.collections.users.doc(patientId).get();
+    expect(user.data()?.phoneNumbers).toContainEqual(phoneNumber);
+  });
 
-  it('fails to verify phone number without calling startPhoneNumberVerification', async () => {
-    const phoneNumber = '+15555555555'
+  it("fails to verify phone number without calling startPhoneNumberVerification", async () => {
+    const phoneNumber = "+15555555555";
     const patientId = await env.createUser({
       type: UserType.patient,
-      organization: 'stanford',
-    })
+      organization: "stanford",
+    });
 
     await expectError(
       async () =>
@@ -60,32 +60,32 @@ describeWithEmulators('PhoneNumber', (env) => {
           { phoneNumber, code: MockPhoneService.correctCode },
           {
             uid: patientId,
-            token: { type: UserType.patient, organization: 'stanford' },
+            token: { type: UserType.patient, organization: "stanford" },
           },
         ),
       (error) =>
         expect(error).toHaveProperty(
-          'message',
-          'Phone number verification not found.',
+          "message",
+          "Phone number verification not found.",
         ),
-    )
-  })
+    );
+  });
 
-  it('fails to verify phone number with incorrect code', async () => {
-    const phoneNumber = '+15551234567'
+  it("fails to verify phone number with incorrect code", async () => {
+    const phoneNumber = "+15551234567";
     const patientId = await env.createUser({
       type: UserType.patient,
-      organization: 'stanford',
-    })
+      organization: "stanford",
+    });
 
     await env.call(
       startPhoneNumberVerification,
       { phoneNumber },
       {
         uid: patientId,
-        token: { type: UserType.patient, organization: 'stanford' },
+        token: { type: UserType.patient, organization: "stanford" },
       },
-    )
+    );
 
     await expectError(
       async () =>
@@ -94,36 +94,36 @@ describeWithEmulators('PhoneNumber', (env) => {
           { phoneNumber, code: MockPhoneService.incorrectCode },
           {
             uid: patientId,
-            token: { type: UserType.patient, organization: 'stanford' },
+            token: { type: UserType.patient, organization: "stanford" },
           },
         ),
       (error) =>
-        expect(error).toHaveProperty('message', 'Invalid verification code.'),
-    )
-  })
+        expect(error).toHaveProperty("message", "Invalid verification code."),
+    );
+  });
 
-  it('deletes an existing phone number successfully', async () => {
-    const phoneNumber0 = '+15555555555'
-    const phoneNumber1 = '+15551234567'
+  it("deletes an existing phone number successfully", async () => {
+    const phoneNumber0 = "+15555555555";
+    const phoneNumber1 = "+15551234567";
     const patientId = await env.createUser({
       type: UserType.patient,
-      organization: 'stanford',
+      organization: "stanford",
       phoneNumbers: [phoneNumber0, phoneNumber1],
-    })
+    });
 
     await env.call(
       deletePhoneNumber,
       { phoneNumber: phoneNumber0 },
       {
         uid: patientId,
-        token: { type: UserType.patient, organization: 'stanford' },
+        token: { type: UserType.patient, organization: "stanford" },
       },
-    )
+    );
 
-    const user = await env.collections.users.doc(patientId).get()
-    const userData = user.data()
-    expect(userData?.phoneNumbers).not.toContainEqual(phoneNumber0)
-    expect(userData?.phoneNumbers).toContainEqual(phoneNumber1)
-    expect(userData?.phoneNumbers).toHaveLength(1)
-  })
-})
+    const user = await env.collections.users.doc(patientId).get();
+    const userData = user.data();
+    expect(userData?.phoneNumbers).not.toContainEqual(phoneNumber0);
+    expect(userData?.phoneNumbers).toContainEqual(phoneNumber1);
+    expect(userData?.phoneNumbers).toHaveLength(1);
+  });
+});

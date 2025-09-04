@@ -6,17 +6,17 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { QuantityUnit, UserSex } from '@stanfordbdhg/engagehf-models'
-import { z } from 'zod'
-import { EgfrCalculator } from './egfrCalculator.js'
-import { readCsv } from '../../../tests/helpers/csv.js'
+import { QuantityUnit, UserSex } from "@stanfordbdhg/engagehf-models";
+import { z } from "zod";
+import { EgfrCalculator } from "./egfrCalculator.js";
+import { readCsv } from "../../../tests/helpers/csv.js";
 
-describe('EgfrCalculator', () => {
-  const egfrCalculator = new EgfrCalculator()
+describe("EgfrCalculator", () => {
+  const egfrCalculator = new EgfrCalculator();
 
-  it('should calculate the same eGFR as the reference values', () => {
-    readCsv('src/tests/resources/egfr.csv', 547, (line, index) => {
-      if (index === 0) return // Skip header line
+  it("should calculate the same eGFR as the reference values", () => {
+    readCsv("src/tests/resources/egfr.csv", 547, (line, index) => {
+      if (index === 0) return; // Skip header line
 
       const sexAssignedAtBirth = z.enum(UserSex).parse(line[0])
       const age = z.number().parse(parseFloat(line[1]))
@@ -27,10 +27,10 @@ describe('EgfrCalculator', () => {
         sexAssignedAtBirth,
         age,
         creatinine,
-      })
+      });
 
-      expect(result.unit).toBe(QuantityUnit.mL_min_173m2)
-      expect(result.value).toBeCloseTo(expectedValue, 0)
-    })
-  })
-})
+      expect(result.unit).toBe(QuantityUnit.mL_min_173m2);
+      expect(result.value).toBeCloseTo(expectedValue, 0);
+    });
+  });
+});

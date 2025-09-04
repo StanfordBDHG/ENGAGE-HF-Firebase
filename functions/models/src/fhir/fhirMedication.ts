@@ -31,12 +31,12 @@ export class FHIRMedication extends FHIRResource<Medication> {
   get brandNames(): string[] {
     return this.extensionsWithUrl(FHIRExtensionUrl.brandName).flatMap(
       (extension) => (extension.valueString ? [extension.valueString] : []),
-    )
+    );
   }
 
   get medicationClassReference(): Reference | undefined {
     return this.extensionsWithUrl(FHIRExtensionUrl.medicationClass).at(0)
-      ?.valueReference
+      ?.valueReference;
   }
 
   get minimumDailyDoseRequest(): MedicationRequest | undefined {
@@ -85,6 +85,6 @@ export class FHIRMedication extends FHIRResource<Medication> {
   get rxNormCode(): string | undefined {
     return this.data.code?.coding?.find(
       (coding) => coding.system === CodingSystem.rxNorm,
-    )?.code
+    )?.code;
   }
 }

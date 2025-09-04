@@ -6,16 +6,16 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { z } from 'zod'
-import { UserType } from './userType.js'
-import { dateConverter } from '../helpers/dateConverter.js'
-import { Lazy } from '../helpers/lazy.js'
-import { optionalish, optionalishDefault } from '../helpers/optionalish.js'
-import { SchemaConverter } from '../helpers/schemaConverter.js'
+import { z } from "zod";
+import { UserType } from "./userType.js";
+import { dateConverter } from "../helpers/dateConverter.js";
+import { Lazy } from "../helpers/lazy.js";
+import { optionalish, optionalishDefault } from "../helpers/optionalish.js";
+import { SchemaConverter } from "../helpers/schemaConverter.js";
 
 export enum UserSex {
-  male = 'male',
-  female = 'female',
+  male = "male",
+  female = "female",
 }
 
 export const userRegistrationInputConverter = new Lazy(
@@ -61,7 +61,7 @@ export const userRegistrationInputConverter = new Lazy(
         selfManaged: object.selfManaged,
       }),
     }),
-)
+);
 
 export const userRegistrationConverter = new Lazy(
   () =>
@@ -71,39 +71,39 @@ export const userRegistrationConverter = new Lazy(
       ),
       encode: (object) => userRegistrationInputConverter.value.encode(object),
     }),
-)
+);
 
 export const userClaimsSchema = z.object({
   type: z.enum(UserType),
   organization: optionalish(z.string()),
   disabled: optionalishDefault(z.boolean(), false),
-})
+});
 
-export type UserClaims = z.output<typeof userClaimsSchema>
+export type UserClaims = z.output<typeof userClaimsSchema>;
 
 export class UserRegistration {
   // Stored Properties
 
-  readonly type: UserType
-  readonly disabled: boolean
-  readonly organization?: string
-  readonly selfManaged: boolean
+  readonly type: UserType;
+  readonly disabled: boolean;
+  readonly organization?: string;
+  readonly selfManaged: boolean;
 
-  readonly dateOfBirth?: Date
-  readonly sex?: UserSex
-  readonly clinician?: string
-  readonly providerName?: string
+  readonly dateOfBirth?: Date;
+  readonly sex?: UserSex;
+  readonly clinician?: string;
+  readonly providerName?: string;
 
-  readonly receivesAppointmentReminders: boolean
-  readonly receivesInactivityReminders: boolean
-  readonly receivesMedicationUpdates: boolean
-  readonly receivesQuestionnaireReminders: boolean
-  readonly receivesRecommendationUpdates: boolean
-  readonly receivesVitalsReminders: boolean
-  readonly receivesWeightAlerts: boolean
+  readonly receivesAppointmentReminders: boolean;
+  readonly receivesInactivityReminders: boolean;
+  readonly receivesMedicationUpdates: boolean;
+  readonly receivesQuestionnaireReminders: boolean;
+  readonly receivesRecommendationUpdates: boolean;
+  readonly receivesVitalsReminders: boolean;
+  readonly receivesWeightAlerts: boolean;
 
-  readonly language?: string
-  readonly timeZone?: string
+  readonly language?: string;
+  readonly timeZone?: string;
 
   // Computed Properties
 
@@ -111,50 +111,50 @@ export class UserRegistration {
     const result: UserClaims = {
       type: this.type,
       disabled: this.disabled,
-    }
+    };
     if (this.organization !== undefined) {
-      result.organization = this.organization
+      result.organization = this.organization;
     }
-    return result
+    return result;
   }
 
   // Constructor
 
   constructor(input: {
-    type: UserType
-    disabled: boolean
-    organization?: string
-    selfManaged: boolean
-    dateOfBirth?: Date
-    sex?: UserSex
-    clinician?: string
-    providerName?: string
-    receivesAppointmentReminders: boolean
-    receivesInactivityReminders: boolean
-    receivesMedicationUpdates: boolean
-    receivesQuestionnaireReminders: boolean
-    receivesRecommendationUpdates: boolean
-    receivesVitalsReminders: boolean
-    receivesWeightAlerts: boolean
-    language?: string
-    timeZone?: string
+    type: UserType;
+    disabled: boolean;
+    organization?: string;
+    selfManaged: boolean;
+    dateOfBirth?: Date;
+    sex?: UserSex;
+    clinician?: string;
+    providerName?: string;
+    receivesAppointmentReminders: boolean;
+    receivesInactivityReminders: boolean;
+    receivesMedicationUpdates: boolean;
+    receivesQuestionnaireReminders: boolean;
+    receivesRecommendationUpdates: boolean;
+    receivesVitalsReminders: boolean;
+    receivesWeightAlerts: boolean;
+    language?: string;
+    timeZone?: string;
   }) {
-    this.type = input.type
-    this.disabled = input.disabled
-    this.organization = input.organization
-    this.selfManaged = input.selfManaged
-    this.dateOfBirth = input.dateOfBirth
-    this.sex = input.sex
-    this.clinician = input.clinician
-    this.providerName = input.providerName
-    this.receivesAppointmentReminders = input.receivesAppointmentReminders
-    this.receivesInactivityReminders = input.receivesInactivityReminders
-    this.receivesMedicationUpdates = input.receivesMedicationUpdates
-    this.receivesQuestionnaireReminders = input.receivesQuestionnaireReminders
-    this.receivesRecommendationUpdates = input.receivesRecommendationUpdates
-    this.receivesVitalsReminders = input.receivesVitalsReminders
-    this.receivesWeightAlerts = input.receivesWeightAlerts
-    this.language = input.language
-    this.timeZone = input.timeZone
+    this.type = input.type;
+    this.disabled = input.disabled;
+    this.organization = input.organization;
+    this.selfManaged = input.selfManaged;
+    this.dateOfBirth = input.dateOfBirth;
+    this.sex = input.sex;
+    this.clinician = input.clinician;
+    this.providerName = input.providerName;
+    this.receivesAppointmentReminders = input.receivesAppointmentReminders;
+    this.receivesInactivityReminders = input.receivesInactivityReminders;
+    this.receivesMedicationUpdates = input.receivesMedicationUpdates;
+    this.receivesQuestionnaireReminders = input.receivesQuestionnaireReminders;
+    this.receivesRecommendationUpdates = input.receivesRecommendationUpdates;
+    this.receivesVitalsReminders = input.receivesVitalsReminders;
+    this.receivesWeightAlerts = input.receivesWeightAlerts;
+    this.language = input.language;
+    this.timeZone = input.timeZone;
   }
 }

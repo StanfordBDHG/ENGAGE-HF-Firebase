@@ -38,28 +38,28 @@ import { SeedingService } from '../seedingService.js'
 export class DebugDataService extends SeedingService {
   // Properties
 
-  private readonly auth: Auth
-  private readonly storage: Storage
-  private readonly databaseService: DatabaseService
+  private readonly auth: Auth;
+  private readonly storage: Storage;
+  private readonly databaseService: DatabaseService;
 
   // Constructor
 
   constructor(auth: Auth, databaseService: DatabaseService, storage: Storage) {
-    super({ useIndicesAsKeys: true, path: './data/debug/' })
-    this.auth = auth
-    this.databaseService = databaseService
-    this.storage = storage
+    super({ useIndicesAsKeys: true, path: "./data/debug/" });
+    this.auth = auth;
+    this.databaseService = databaseService;
+    this.storage = storage;
   }
 
   // Methods
 
   async seedCustom(input: CustomSeedingOptions): Promise<string[]> {
-    const userIds: string[] = []
+    const userIds: string[] = [];
     for (const user of input.users) {
       try {
-        userIds.push(await this.createUser(user))
+        userIds.push(await this.createUser(user));
       } catch (error) {
-        logger.error(error)
+        logger.error(error);
       }
     }
     await this.databaseService.runTransaction((collections, transaction) => {
@@ -68,36 +68,36 @@ export class DebugDataService extends SeedingService {
           collections.firestore.collection(collectionName),
           input.firestore[collectionName],
           transaction,
-        )
+        );
       }
-    })
-    return userIds
+    });
+    return userIds;
   }
 
   async seedInvitations() {
     const invitations = this.readJSONRecord(
-      'invitations.json',
+      "invitations.json",
       invitationConverter.value.schema,
-    )
+    );
     await this.replaceCollection(
       (collections) => collections.invitations,
       invitations,
-    )
+    );
   }
 
   async seedUsers() {
-    const users = this.readJSONArray('users.json', userSeedingOptionsSchema)
+    const users = this.readJSONArray("users.json", userSeedingOptionsSchema);
     const userIds = await Promise.all(
       users.map((user) => this.createUser(user)),
-    )
-    return userIds
+    );
+    return userIds;
   }
 
   async seedUserConsent(userId: string) {
-    await this.storage.bucket().upload('data/consent.pdf', {
+    await this.storage.bucket().upload("data/consent.pdf", {
       destination: `users/${userId}/consent/consent.pdf`,
-      contentType: 'application/pdf',
-    })
+      contentType: "application/pdf",
+    });
   }
 
   async seedUserAppointments(userId: string, date: Date) {
@@ -108,12 +108,12 @@ export class DebugDataService extends SeedingService {
         start: advanceDateByDays(date, 2),
         durationInMinutes: 30,
       }),
-    ]
+    ];
 
     await this.replaceCollection(
       (collections) => collections.userAppointments(userId),
       values,
-    )
+    );
   }
 
   async seedUserMedicationRequests(userId: string) {
@@ -123,11 +123,11 @@ export class DebugDataService extends SeedingService {
         medicationReference: DrugReference.eplerenone25,
         quantity: 2,
       }),
-    ]
+    ];
     await this.replaceCollection(
       (collections) => collections.userMedicationRequests(userId),
       values,
-    )
+    );
   }
 
   async seedUserMessages(userId: string, date: Date) {
@@ -137,7 +137,7 @@ export class DebugDataService extends SeedingService {
       }),
       UserMessage.createMedicationChange({
         creationDate: date,
-        medicationName: 'Losartan Potassium',
+        medicationName: "Losartan Potassium",
         reference: MedicationReference.losartan,
         videoReference: VideoReference.acei_arbs,
       }),
@@ -162,46 +162,46 @@ export class DebugDataService extends SeedingService {
         creationDate: date,
         videoReference: VideoReference.welcome,
       }),
-    ]
+    ];
     await this.replaceCollection(
       (collections) => collections.userMessages(userId),
       values,
-    )
+    );
   }
 
   async seedClinicianMessages(
     userId: string,
     patients: Array<{
-      id: string
-      name: string | undefined
+      id: string;
+      name: string | undefined;
     }>,
   ) {
     const values = patients.flatMap((patient) => [
       UserMessage.createInactiveForClinician({
         userId: patient.id,
         userName: patient.name,
-        reference: '',
+        reference: "",
       }),
       UserMessage.createMedicationUptitrationForClinician({
         userId: patient.id,
         userName: patient.name,
-        reference: '',
+        reference: "",
       }),
       UserMessage.createPreAppointmentForClinician({
         userId: patient.id,
         userName: patient.name,
-        reference: '',
+        reference: "",
       }),
       UserMessage.createWeightGainForClinician({
         userId: patient.id,
         userName: patient.name,
-        reference: '',
+        reference: "",
       }),
-    ])
+    ]);
     await this.replaceCollection(
       (collections) => collections.userMessages(userId),
       values,
-    )
+    );
   }
 
   async seedUserBloodPressureObservations(userId: string, date: Date) {
@@ -219,7 +219,7 @@ export class DebugDataService extends SeedingService {
       75, 96, 56, 15, 30, 95, 47, 89, 55, 84, 57, 9, 58, 24, 10, 45, 86, 61, 54,
       87, 17, 41, 62, 49, 34, 4, 92, 14, 59, 16, 18, 3, 35, 2, 72, 50, 22, 1,
       80, 7, 29, 82, 31, 94, 19, 27, 70, 20,
-    ].map((n) => n / 100)
+    ].map((n) => n / 100);
 
     const values = randomNumbers.map((number, index) =>
       FHIRObservation.createBloodPressure({
@@ -228,7 +228,7 @@ export class DebugDataService extends SeedingService {
         systolic: 80 + number * 70,
         diastolic: 50 + number * 40,
       }),
-    )
+    );
 
     await this.replaceCollection(
       (collections) =>
@@ -237,7 +237,7 @@ export class DebugDataService extends SeedingService {
           UserObservationCollection.bloodPressure,
         ),
       values,
-    )
+    );
   }
 
   async seedUserBodyWeightObservations(userId: string, date: Date) {
@@ -255,11 +255,11 @@ export class DebugDataService extends SeedingService {
       58, 39, 2, 70, 16, 64, 56, 59, 19, 33, 99, 13, 23, 81, 27, 38, 65, 26, 45,
       7, 72, 30, 28, 12, 73, 31, 89, 25, 36, 96, 91, 35, 48, 21, 62, 51, 9, 68,
       82, 93, 94, 54, 32, 66, 20, 75, 67,
-    ].map((n) => n / 100)
+    ].map((n) => n / 100);
 
     const values = [
       FHIRObservation.createSimple({
-        id: '0',
+        id: "0",
         date: advanceDateByDays(date, -2),
         value: 70,
         unit: QuantityUnit.kg,
@@ -274,7 +274,7 @@ export class DebugDataService extends SeedingService {
           code: LoincCode.bodyWeight,
         }),
       ),
-    ]
+    ];
     await this.replaceCollection(
       (collections) =>
         collections.userObservations(
@@ -282,19 +282,19 @@ export class DebugDataService extends SeedingService {
           UserObservationCollection.bodyWeight,
         ),
       values,
-    )
+    );
   }
 
   async seedUserCreatinineObservations(userId: string, date: Date) {
     const values = [
       FHIRObservation.createSimple({
-        id: '0',
+        id: "0",
         date: advanceDateByDays(date, -2),
         value: 1.2,
         unit: QuantityUnit.mg_dL,
         code: LoincCode.creatinine,
       }),
-    ]
+    ];
 
     await this.replaceCollection(
       (collections) =>
@@ -303,19 +303,19 @@ export class DebugDataService extends SeedingService {
           UserObservationCollection.creatinine,
         ),
       values,
-    )
+    );
   }
 
   async seedUserDryWeightObservations(userId: string, date: Date) {
     const values = [
       FHIRObservation.createSimple({
-        id: '0',
+        id: "0",
         date: advanceDateByDays(date, -2),
         value: 71.5,
         unit: QuantityUnit.kg,
         code: LoincCode.bodyWeight,
       }),
-    ]
+    ];
 
     await this.replaceCollection(
       (collections) =>
@@ -324,25 +324,25 @@ export class DebugDataService extends SeedingService {
           UserObservationCollection.dryWeight,
         ),
       values,
-    )
+    );
   }
 
   async seedUserEgfrObservations(userId: string, date: Date) {
     const values = [
       FHIRObservation.createSimple({
-        id: '0',
+        id: "0",
         date: advanceDateByDays(date, -2),
         value: 60,
         unit: QuantityUnit.mL_min_173m2,
         code: LoincCode.estimatedGlomerularFiltrationRate,
       }),
-    ]
+    ];
 
     await this.replaceCollection(
       (collections) =>
         collections.userObservations(userId, UserObservationCollection.eGfr),
       values,
-    )
+    );
   }
 
   async seedUserHeartRateObservations(userId: string, date: Date) {
@@ -360,7 +360,7 @@ export class DebugDataService extends SeedingService {
       58, 39, 2, 70, 16, 64, 56, 59, 19, 33, 99, 13, 23, 81, 27, 38, 65, 26, 45,
       7, 72, 30, 28, 12, 73, 31, 89, 25, 36, 96, 91, 35, 48, 21, 62, 51, 9, 68,
       82, 93, 94, 54, 32, 66, 20, 75, 67,
-    ].map((n) => n / 100)
+    ].map((n) => n / 100);
 
     const values = randomNumbers.map((number, index) =>
       FHIRObservation.createSimple({
@@ -370,7 +370,7 @@ export class DebugDataService extends SeedingService {
         unit: QuantityUnit.bpm,
         code: LoincCode.heartRate,
       }),
-    )
+    );
 
     await this.replaceCollection(
       (collections) =>
@@ -379,19 +379,19 @@ export class DebugDataService extends SeedingService {
           UserObservationCollection.heartRate,
         ),
       values,
-    )
+    );
   }
 
   async seedUserPotassiumObservations(userId: string, date: Date) {
     const values = [
       FHIRObservation.createSimple({
-        id: '0',
+        id: "0",
         date: advanceDateByDays(date, -2),
         value: 4.2,
         unit: QuantityUnit.mEq_L,
         code: LoincCode.potassium,
       }),
-    ]
+    ];
 
     await this.replaceCollection(
       (collections) =>
@@ -400,7 +400,7 @@ export class DebugDataService extends SeedingService {
           UserObservationCollection.potassium,
         ),
       values,
-    )
+    );
   }
 
   async seedUserQuestionnaireResponses(userId: string, date: Date) {
@@ -408,7 +408,7 @@ export class DebugDataService extends SeedingService {
       '../questionnaires.json',
       fhirQuestionnaireConverter.schema,
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    )[QuestionnaireReference.kccq_en_US.split('/').at(-1)!]
+    )[QuestionnaireReference.kccq_en_US.split("/").at(-1)!];
 
     // This is just a list of pseudo-random numbers that is used to generate
     // the different user collections
@@ -456,7 +456,7 @@ export class DebugDataService extends SeedingService {
       59, 98, 40, 69, 93, 95, 78, 17, 23, 2, 73, 96, 68, 60, 39, 49, 85, 19, 80,
       35, 0, 75, 14, 10, 31, 4, 13, 30, 62, 56, 18, 21, 72, 3, 63, 92, 6, 99,
       56, 42, 12,
-    ].map((n) => n / 100)
+    ].map((n) => n / 100);
 
     const values = chunks(randomNumbers, 13).map((chunk, index) =>
       createKccqQuestionnaireResponse({
@@ -477,28 +477,28 @@ export class DebugDataService extends SeedingService {
         answer8c: Math.floor(1 + chunk[11] * 6),
         answer9: Math.floor(chunk[12] * 6),
       }),
-    )
+    );
     await this.replaceCollection(
       (collections) => collections.userQuestionnaireResponses(userId),
       values,
-    )
+    );
   }
 
   // Helpers
 
   private async createUser(user: UserSeedingOptions): Promise<string> {
-    const authUser = await this.auth.createUser(user.auth)
+    const authUser = await this.auth.createUser(user.auth);
     await this.databaseService.runTransaction((collections, transaction) => {
-      transaction.set(collections.users.doc(authUser.uid), user.user)
+      transaction.set(collections.users.doc(authUser.uid), user.user);
       for (const collectionName in user.collections ?? {}) {
         this.setCollection(
           collections.firestore.collection(collectionName),
           user.collections?.[collectionName] ?? [],
           transaction,
-        )
+        );
       }
-    })
-    return authUser.uid
+    });
+    return authUser.uid;
   }
 
   private async replaceCollection<T>(
@@ -507,9 +507,9 @@ export class DebugDataService extends SeedingService {
   ) {
     await this.databaseService.runTransaction(
       async (collections, transaction) => {
-        await this.deleteCollection(collection(collections), transaction)
-        this.setCollection(collection(collections), data, transaction)
+        await this.deleteCollection(collection(collections), transaction);
+        this.setCollection(collection(collections), data, transaction);
       },
-    )
+    );
   }
 }

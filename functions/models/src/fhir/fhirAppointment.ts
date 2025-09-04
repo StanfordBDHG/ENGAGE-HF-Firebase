@@ -37,7 +37,7 @@ export class FHIRAppointment extends FHIRResource<Appointment> {
           },
         },
       ],
-    })
+    });
   }
 
   // Computed Properties
@@ -62,6 +62,6 @@ export class FHIRAppointment extends FHIRResource<Appointment> {
     return compactMap(
       this.extensionsWithUrl(FHIRExtensionUrl.providerName),
       (extension) => extension.valueString,
-    )
+    );
   }
 }

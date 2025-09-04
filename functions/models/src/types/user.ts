@@ -6,18 +6,18 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { z } from 'zod'
+import { z } from "zod";
 import {
   userRegistrationConverter,
   userRegistrationInputConverter,
   UserRegistration,
   type UserSex,
-} from './userRegistration.js'
-import { type UserType } from './userType.js'
-import { dateTimeConverter } from '../helpers/dateConverter.js'
-import { Lazy } from '../helpers/lazy.js'
-import { optionalishDefault } from '../helpers/optionalish.js'
-import { SchemaConverter } from '../helpers/schemaConverter.js'
+} from "./userRegistration.js";
+import { type UserType } from "./userType.js";
+import { dateTimeConverter } from "../helpers/dateConverter.js";
+import { Lazy } from "../helpers/lazy.js";
+import { optionalishDefault } from "../helpers/optionalish.js";
+import { SchemaConverter } from "../helpers/schemaConverter.js";
 
 export const userConverter = new Lazy(
   () =>
@@ -38,44 +38,44 @@ export const userConverter = new Lazy(
         phoneNumbers: object.phoneNumbers,
       }),
     }),
-)
+);
 
 export class User extends UserRegistration {
   // Properties
 
-  readonly dateOfEnrollment: Date
-  readonly invitationCode: string
-  readonly lastActiveDate: Date
-  readonly phoneNumbers: string[]
+  readonly dateOfEnrollment: Date;
+  readonly invitationCode: string;
+  readonly lastActiveDate: Date;
+  readonly phoneNumbers: string[];
 
   // Constructor
 
   constructor(input: {
-    type: UserType
-    disabled: boolean
-    selfManaged: boolean
-    organization?: string
-    dateOfBirth?: Date
-    sex?: UserSex
-    clinician?: string
-    receivesAppointmentReminders: boolean
-    receivesInactivityReminders: boolean
-    receivesMedicationUpdates: boolean
-    receivesQuestionnaireReminders: boolean
-    receivesRecommendationUpdates: boolean
-    receivesVitalsReminders: boolean
-    receivesWeightAlerts: boolean
-    language?: string
-    timeZone?: string
-    dateOfEnrollment: Date
-    invitationCode: string
-    lastActiveDate: Date
-    phoneNumbers: string[]
+    type: UserType;
+    disabled: boolean;
+    selfManaged: boolean;
+    organization?: string;
+    dateOfBirth?: Date;
+    sex?: UserSex;
+    clinician?: string;
+    receivesAppointmentReminders: boolean;
+    receivesInactivityReminders: boolean;
+    receivesMedicationUpdates: boolean;
+    receivesQuestionnaireReminders: boolean;
+    receivesRecommendationUpdates: boolean;
+    receivesVitalsReminders: boolean;
+    receivesWeightAlerts: boolean;
+    language?: string;
+    timeZone?: string;
+    dateOfEnrollment: Date;
+    invitationCode: string;
+    lastActiveDate: Date;
+    phoneNumbers: string[];
   }) {
-    super(input)
-    this.dateOfEnrollment = input.dateOfEnrollment
-    this.invitationCode = input.invitationCode
-    this.lastActiveDate = input.lastActiveDate
-    this.phoneNumbers = input.phoneNumbers
+    super(input);
+    this.dateOfEnrollment = input.dateOfEnrollment;
+    this.invitationCode = input.invitationCode;
+    this.lastActiveDate = input.lastActiveDate;
+    this.phoneNumbers = input.phoneNumbers;
   }
 }

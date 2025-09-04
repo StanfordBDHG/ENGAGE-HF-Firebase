@@ -10,7 +10,7 @@ import {
   type FHIRAllergyIntolerance,
   type MedicationClassReference,
   type MedicationReference,
-} from '@stanfordbdhg/engagehf-models'
+} from "@stanfordbdhg/engagehf-models";
 
 export enum ContraindicationCategory {
   none = 0,
@@ -25,15 +25,15 @@ export interface ContraindicationService {
   checkMedication(
     contraindications: FHIRAllergyIntolerance[],
     medicationReference: MedicationReference,
-  ): ContraindicationCategory
+  ): ContraindicationCategory;
 
   checkMedicationClass(
     contraindications: FHIRAllergyIntolerance[],
     medicationClassReference: MedicationClassReference,
-  ): ContraindicationCategory
+  ): ContraindicationCategory;
 
   findEligibleMedication(
     contraindications: FHIRAllergyIntolerance[],
     medicationReferences: MedicationReference[],
-  ): MedicationReference | undefined
+  ): MedicationReference | undefined;
 }

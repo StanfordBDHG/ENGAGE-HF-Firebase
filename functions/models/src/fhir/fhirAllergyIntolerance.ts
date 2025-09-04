@@ -31,11 +31,11 @@ export class FHIRAllergyIntolerance extends FHIRResource<AllergyIntolerance> {
         coding: [
           {
             system: CodingSystem.rxNorm,
-            code: input.reference.split('/')[1],
+            code: input.reference.split("/")[1],
           },
         ],
       },
-    })
+    });
   }
 
   // Computed Properties

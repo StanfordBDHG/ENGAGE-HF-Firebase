@@ -9,12 +9,12 @@
 import {
   MedicationClassReference,
   UserMedicationRecommendationType,
-} from '@stanfordbdhg/engagehf-models'
-import { Recommender } from './recommender.js'
+} from "@stanfordbdhg/engagehf-models";
+import { Recommender } from "./recommender.js";
 import {
   type RecommendationInput,
   type RecommendationOutput,
-} from '../recommendationService.js'
+} from "../recommendationService.js";
 
 export class DiureticRecommender extends Recommender {
   // Methods
@@ -22,12 +22,12 @@ export class DiureticRecommender extends Recommender {
   compute(input: RecommendationInput): RecommendationOutput[] {
     const currentRequests = this.findCurrentRequests(input.requests, [
       MedicationClassReference.diuretics,
-    ])
-    if (currentRequests.length === 0) return []
+    ]);
+    if (currentRequests.length === 0) return [];
     return this.createRecommendation(
       currentRequests,
       undefined,
       UserMedicationRecommendationType.personalTargetDoseReached,
-    )
+    );
   }
 }

@@ -6,15 +6,15 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { z } from 'zod'
-import { userAuthConverter, type UserAuth } from './userAuth.js'
+import { z } from "zod";
+import { userAuthConverter, type UserAuth } from "./userAuth.js";
 import {
   userRegistrationConverter,
   type UserRegistration,
-} from './userRegistration.js'
-import { Lazy } from '../helpers/lazy.js'
-import { optionalish } from '../helpers/optionalish.js'
-import { SchemaConverter } from '../helpers/schemaConverter.js'
+} from "./userRegistration.js";
+import { Lazy } from "../helpers/lazy.js";
+import { optionalish } from "../helpers/optionalish.js";
+import { SchemaConverter } from "../helpers/schemaConverter.js";
 
 export const invitationConverter = new Lazy(
   () =>
@@ -32,24 +32,24 @@ export const invitationConverter = new Lazy(
         user: userRegistrationConverter.value.encode(object.user),
       }),
     }),
-)
+);
 
 export class Invitation {
   // Properties
 
-  readonly code: string
-  readonly auth?: UserAuth
-  readonly user: UserRegistration
+  readonly code: string;
+  readonly auth?: UserAuth;
+  readonly user: UserRegistration;
 
   // Constructor
 
   constructor(input: {
-    code: string
-    auth?: UserAuth
-    user: UserRegistration
+    code: string;
+    auth?: UserAuth;
+    user: UserRegistration;
   }) {
-    this.code = input.code
-    this.auth = input.auth
-    this.user = input.user
+    this.code = input.code;
+    this.auth = input.auth;
+    this.user = input.user;
   }
 }

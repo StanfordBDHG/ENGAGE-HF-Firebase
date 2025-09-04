@@ -25,18 +25,18 @@ export class DatabaseConverter<Schema extends ZodType, Encoded>
 {
   // Properties
 
-  private readonly converter: SchemaConverter<Schema, Encoded>
+  private readonly converter: SchemaConverter<Schema, Encoded>;
 
   // Constructor
 
   constructor(converter: SchemaConverter<Schema, Encoded>) {
-    this.converter = converter
+    this.converter = converter;
   }
 
   // Methods
 
   fromFirestore(snapshot: DocumentSnapshot): z.output<Schema> {
-    const data = snapshot.data()
+    const data = snapshot.data();
     try {
       return this.converter.schema.parse(data)
     } catch (error) {
@@ -49,7 +49,7 @@ export class DatabaseConverter<Schema extends ZodType, Encoded>
 
   toFirestore(modelObject: z.output<Schema>): DocumentData {
     try {
-      return this.converter.encode(modelObject) as DocumentData
+      return this.converter.encode(modelObject) as DocumentData;
     } catch (error) {
       logger.error(
         `DatabaseDecoder(${typeof modelObject}): Failed to encode object ${JSON.stringify(modelObject)} due to ${String(error)}.`,

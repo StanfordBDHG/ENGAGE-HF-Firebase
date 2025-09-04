@@ -6,9 +6,9 @@
 // SPDX-License-Identifier: MIT
 //
 
-import type express from 'express'
-import { logger } from 'firebase-functions'
-import { https } from 'firebase-functions/v2'
+import type express from "express";
+import { logger } from "firebase-functions";
+import { https } from "firebase-functions/v2";
 import {
   type CallableFunction,
   type CallableOptions,
@@ -19,7 +19,7 @@ import {
 } from 'firebase-functions/v2/https'
 import { z, type ZodType } from 'zod'
 
-export const serviceAccount = `cloudfunctionsserviceaccount@${process.env.GCLOUD_PROJECT}.iam.gserviceaccount.com`
+export const serviceAccount = `cloudfunctionsserviceaccount@${process.env.GCLOUD_PROJECT}.iam.gserviceaccount.com`;
 
 export function validatedOnCall<Schema extends ZodType, Return, Stream>(
   name: string,
@@ -29,7 +29,7 @@ export function validatedOnCall<Schema extends ZodType, Return, Stream>(
 ): CallableFunction<z.input<Schema>, Promise<Return>, Stream> {
   return onCall(
     {
-      invoker: 'public',
+      invoker: "public",
       serviceAccount: serviceAccount,
       ...options,
     },
@@ -44,7 +44,7 @@ export function validatedOnCall<Schema extends ZodType, Return, Stream>(
       } catch (error) {
         logger.debug(
           `onCall(${name}) from user '${request.auth?.uid}' failed with '${String(error)}'.`,
-        )
+        );
         if (error instanceof z.ZodError) {
           throw new https.HttpsError(
             'invalid-argument',
@@ -52,10 +52,10 @@ export function validatedOnCall<Schema extends ZodType, Return, Stream>(
             error.issues,
           )
         }
-        throw error
+        throw error;
       }
     },
-  )
+  );
 }
 
 export function validatedOnRequest<Schema extends ZodType>(
@@ -70,18 +70,18 @@ export function validatedOnRequest<Schema extends ZodType>(
 ): https.HttpsFunction {
   return onRequest(
     {
-      invoker: 'public',
+      invoker: "public",
       serviceAccount: serviceAccount,
       ...options,
     },
     async (request, response) => {
       try {
-        logger.debug(`onRequest(${name}) with ${JSON.stringify(request.body)}`)
-        const data = schema.parse(request.body) as z.output<Schema>
-        await handler(request, data, response)
-        return
+        logger.debug(`onRequest(${name}) with ${JSON.stringify(request.body)}`);
+        const data = schema.parse(request.body) as z.output<Schema>;
+        await handler(request, data, response);
+        return;
       } catch (error) {
-        logger.debug(`onRequest(${name}) failed with ${String(error)}.`)
+        logger.debug(`onRequest(${name}) failed with ${String(error)}.`);
         if (error instanceof z.ZodError) {
           response.status(400).send({
             code: 'invalid-argument',
@@ -90,8 +90,8 @@ export function validatedOnRequest<Schema extends ZodType>(
           })
           return
         }
-        throw error
+        throw error;
       }
     },
-  )
+  );
 }

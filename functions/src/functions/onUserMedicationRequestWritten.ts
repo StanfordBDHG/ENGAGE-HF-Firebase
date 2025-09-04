@@ -14,7 +14,7 @@ import { getServiceFactory } from '../services/factory/getServiceFactory.js'
 
 export const onUserMedicationRequestWritten = onDocumentWritten(
   {
-    document: 'users/{userId}/medicationRequests/{medicationRequestId}',
+    document: "users/{userId}/medicationRequests/{medicationRequestId}",
     secrets: Env.twilioSecretKeys,
   },
   async (event) => {
@@ -28,6 +28,6 @@ export const onUserMedicationRequestWritten = onDocumentWritten(
       event.params.medicationRequestId,
       beforeData?.exists ? converter.fromFirestore(beforeData) : undefined,
       afterData?.exists ? converter.fromFirestore(afterData) : undefined,
-    )
+    );
   },
-)
+);

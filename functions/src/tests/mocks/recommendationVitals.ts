@@ -13,17 +13,17 @@ import {
 import { type RecommendationVitals } from '../../services/recommendation/recommendationService.js'
 
 export function mockRecommendationVitals(options: {
-  countBloodPressureBelow85: number
-  medianSystolicBloodPressure: number | null
-  medianHeartRate: number | null
-  potassium: number
-  creatinine: number
-  eGfr: number
+  countBloodPressureBelow85: number;
+  medianSystolicBloodPressure: number | null;
+  medianHeartRate: number | null;
+  potassium: number;
+  creatinine: number;
+  eGfr: number;
 }): RecommendationVitals {
   const regularBloodPressureCount =
     options.medianSystolicBloodPressure ?
       Math.min(options.countBloodPressureBelow85 + 5, 10)
-    : 0
+    : 0;
   return {
     systolicBloodPressure: [
       ...Array.from(
@@ -63,5 +63,5 @@ export function mockRecommendationVitals(options: {
       value: options.potassium,
       unit: QuantityUnit.mEq_L,
     },
-  }
+  };
 }

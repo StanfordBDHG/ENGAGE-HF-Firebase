@@ -10,11 +10,11 @@ export interface PhoneService {
   startVerification(
     phoneNumber: string,
     options: {
-      locale?: string
+      locale?: string;
     },
-  ): Promise<void>
+  ): Promise<void>;
 
-  checkVerification(verificationId: string, code: string): Promise<void>
+  checkVerification(verificationId: string, code: string): Promise<void>;
 
-  sendTextMessage(phoneNumber: string, message: string): Promise<void>
+  sendTextMessage(phoneNumber: string, message: string): Promise<void>;
 }
