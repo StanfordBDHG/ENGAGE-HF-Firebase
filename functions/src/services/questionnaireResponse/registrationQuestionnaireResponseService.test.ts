@@ -47,7 +47,9 @@ describeWithEmulators("RegistrationQuestionnaireResponseService", (env) => {
     const userDoc = await env.collections.users.doc(userId).get();
     const userData = userDoc.data();
     expect(userData).toBeDefined();
-    expect(userData?.dateOfBirth).toBeDefined();
+    expect(userData?.dateOfBirth?.toDateString()).toBe(
+      new Date("2005-05-14").toDateString(),
+    );
     expect(userData?.sex).toBe(UserSex.female);
 
     const medicationRequests = await env.collections
@@ -98,7 +100,7 @@ describeWithEmulators("RegistrationQuestionnaireResponseService", (env) => {
     expect(egfrDocs.size).toBe(1);
     expect(
       egfrDocs.docs[0].data().estimatedGlomerularFiltrationRate?.value,
-    ).toBeCloseTo(3.6557627356369444, 5);
+    ).toBeCloseTo(3.2081660764751323, 5);
 
     const potassiumDocs = await env.collections
       .userObservations(userId, UserObservationCollection.potassium)
@@ -144,7 +146,9 @@ describeWithEmulators("RegistrationQuestionnaireResponseService", (env) => {
     const userDoc = await env.collections.users.doc(userId).get();
     const userData = userDoc.data();
     expect(userData).toBeDefined();
-    expect(userData?.dateOfBirth).toBeDefined();
+    expect(userData?.dateOfBirth?.toDateString()).toBe(
+      new Date("2004-10-21").toDateString(),
+    );
     expect(userData?.sex).toBe(UserSex.male);
 
     const medicationRequests = await env.collections
@@ -195,7 +199,7 @@ describeWithEmulators("RegistrationQuestionnaireResponseService", (env) => {
     expect(egfrDocs.size).toBe(1);
     expect(
       egfrDocs.docs[0].data().estimatedGlomerularFiltrationRate?.value,
-    ).toBeCloseTo(20.712157826973794, 5);
+    ).toBeCloseTo(18.289641589254195, 5);
 
     const potassiumDocs = await env.collections
       .userObservations(userId, UserObservationCollection.potassium)
@@ -223,7 +227,7 @@ const registrationResponseApple = {
   resourceType: "QuestionnaireResponse",
   item: [
     {
-      answer: [{ valueDate: "2025-05-14" }],
+      answer: [{ valueDate: "2005-05-14" }],
       linkId: "personal-information.dateOfBirth",
     },
     {
@@ -376,7 +380,7 @@ const registrationResponseAndroid = {
           text: "Date of Birth",
           answer: [
             {
-              valueDate: "2024-10-21",
+              valueDate: "2004-10-21",
             },
           ],
         },
