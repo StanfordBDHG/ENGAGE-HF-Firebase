@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { isDeepStrictEqual } from 'util'
+import { isDeepStrictEqual } from "util";
 import {
   advanceDateByDays,
   advanceDateByMinutes,
@@ -25,29 +25,29 @@ import {
   UserMedicationRecommendationType,
   UserObservationCollection,
   type UserShareCode,
-} from '@stanfordbdhg/engagehf-models'
+} from "@stanfordbdhg/engagehf-models";
 import {
   FieldValue,
   type QueryDocumentSnapshot,
   type Transaction,
-} from 'firebase-admin/firestore'
-import { type PatientService } from './patientService.js'
-import { type CollectionsService } from '../database/collections.js'
+} from "firebase-admin/firestore";
+import { type PatientService } from "./patientService.js";
+import { type CollectionsService } from "../database/collections.js";
 import {
   type Document,
   type DatabaseService,
   type ReplaceDiff,
-} from '../database/databaseService.js'
+} from "../database/databaseService.js";
 
 export class DatabasePatientService implements PatientService {
   // Properties
 
-  private databaseService: DatabaseService
+  private databaseService: DatabaseService;
 
   // Constructor
 
   constructor(databaseService: DatabaseService) {
-    this.databaseService = databaseService
+    this.databaseService = databaseService;
   }
 
   // Methods - Appointments
@@ -59,14 +59,14 @@ export class DatabasePatientService implements PatientService {
     const result = await this.databaseService.getQuery<FHIRAppointment>(
       (collections) =>
         collections.appointments
-          .where('start', '>', advanceDateByDays(fromDate, -1).toISOString())
-          .where('start', '<', advanceDateByDays(toDate, 1).toISOString()),
-    )
+          .where("start", ">", advanceDateByDays(fromDate, -1).toISOString())
+          .where("start", "<", advanceDateByDays(toDate, 1).toISOString()),
+    );
 
     return result.filter((appointment) => {
-      const start = new Date(appointment.content.start)
-      return start >= fromDate && start < toDate
-    })
+      const start = new Date(appointment.content.start);
+      return start >= fromDate && start < toDate;
+    });
   }
 
   async getAppointments(
@@ -74,7 +74,7 @@ export class DatabasePatientService implements PatientService {
   ): Promise<Array<Document<FHIRAppointment>>> {
     return this.databaseService.getQuery<FHIRAppointment>((collections) =>
       collections.userAppointments(userId),
-    )
+    );
   }
 
   async getNextAppointment(
@@ -84,11 +84,11 @@ export class DatabasePatientService implements PatientService {
       (collections) =>
         collections
           .userAppointments(userId)
-          .where('start', '>', new Date().toISOString())
-          .orderBy('start', 'asc')
+          .where("start", ">", new Date().toISOString())
+          .orderBy("start", "asc")
           .limit(1),
-    )
-    return result.at(0)
+    );
+    return result.at(0);
   }
 
   async createAppointment(
@@ -96,9 +96,9 @@ export class DatabasePatientService implements PatientService {
     appointment: FHIRAppointment,
   ): Promise<void> {
     await this.databaseService.runTransaction((collections, transaction) => {
-      const ref = collections.userAppointments(userId).doc()
-      transaction.set(ref, appointment)
-    })
+      const ref = collections.userAppointments(userId).doc();
+      transaction.set(ref, appointment);
+    });
   }
 
   // Methods - Contraindications
@@ -108,7 +108,7 @@ export class DatabasePatientService implements PatientService {
   ): Promise<Array<Document<FHIRAllergyIntolerance>>> {
     return this.databaseService.getQuery<FHIRAllergyIntolerance>(
       (collections) => collections.userAllergyIntolerances(userId),
-    )
+    );
   }
 
   // Methods - Medication Requests
@@ -118,7 +118,7 @@ export class DatabasePatientService implements PatientService {
   ): Promise<Array<Document<FHIRMedicationRequest>>> {
     return this.databaseService.getQuery<FHIRMedicationRequest>((collections) =>
       collections.userMedicationRequests(userId),
-    )
+    );
   }
 
   async replaceMedicationRequests(
@@ -129,7 +129,7 @@ export class DatabasePatientService implements PatientService {
     await this.databaseService.replaceCollection(
       (collections) => collections.userMedicationRequests(userId),
       (documents) => {
-        const diffs: Array<ReplaceDiff<FHIRMedicationRequest>> = []
+        const diffs: Array<ReplaceDiff<FHIRMedicationRequest>> = [];
 
         for (const value of values) {
           // We are assuming here that there will only ever be a single medication request per medicationReference!
@@ -137,16 +137,16 @@ export class DatabasePatientService implements PatientService {
             (doc) =>
               doc.content.medicationReference?.reference ===
               value.medicationReference?.reference,
-          )
+          );
           if (equivalentDoc === undefined) {
-            diffs.push({ successor: value })
+            diffs.push({ successor: value });
           } else if (
             !isDeepStrictEqual(
               equivalentDoc.content.dosageInstruction,
               value.dosageInstruction,
             )
           ) {
-            diffs.push({ predecessor: equivalentDoc, successor: value })
+            diffs.push({ predecessor: equivalentDoc, successor: value });
           }
         }
 
@@ -155,13 +155,13 @@ export class DatabasePatientService implements PatientService {
             !diffs.some((diff) => diff.predecessor?.id === doc.id) &&
             keepUnchanged?.(doc) !== true
           ) {
-            diffs.push({ predecessor: doc })
+            diffs.push({ predecessor: doc });
           }
         }
 
-        return diffs
+        return diffs;
       },
-    )
+    );
   }
 
   async getMedicationRecommendations(
@@ -170,18 +170,18 @@ export class DatabasePatientService implements PatientService {
     const result =
       await this.databaseService.getQuery<UserMedicationRecommendation>(
         (collections) => collections.userMedicationRecommendations(userId),
-      )
+      );
 
     return result.sort((a, b) => {
       const priorityDiff =
         this.priorityForRecommendationType(a.content.displayInformation.type) -
-        this.priorityForRecommendationType(b.content.displayInformation.type)
-      if (priorityDiff !== 0) return priorityDiff
+        this.priorityForRecommendationType(b.content.displayInformation.type);
+      if (priorityDiff !== 0) return priorityDiff;
 
-      const medicationClassA = a.content.displayInformation.subtitle.localize()
-      const medicationClassB = b.content.displayInformation.subtitle.localize()
-      return medicationClassA.localeCompare(medicationClassB, 'en')
-    })
+      const medicationClassA = a.content.displayInformation.subtitle.localize();
+      const medicationClassB = b.content.displayInformation.subtitle.localize();
+      return medicationClassA.localeCompare(medicationClassB, "en");
+    });
   }
 
   async replaceMedicationRecommendations(
@@ -191,7 +191,7 @@ export class DatabasePatientService implements PatientService {
     await this.databaseService.replaceCollection(
       (collections) => collections.userMedicationRecommendations(userId),
       (documents) => {
-        const diffs: Array<ReplaceDiff<UserMedicationRecommendation>> = []
+        const diffs: Array<ReplaceDiff<UserMedicationRecommendation>> = [];
 
         for (const value of newRecommendations) {
           const equivalentDoc = documents
@@ -200,25 +200,25 @@ export class DatabasePatientService implements PatientService {
                 doc.content.displayInformation.title ===
                 value.displayInformation.title,
             )
-            .at(0)
+            .at(0);
           // TODO: We are assuming here that there will only ever be a single medication request per medication!
 
           if (equivalentDoc === undefined) {
-            diffs.push({ successor: value })
+            diffs.push({ successor: value });
           } else if (!isDeepStrictEqual(equivalentDoc.content, value)) {
-            diffs.push({ predecessor: equivalentDoc, successor: value })
+            diffs.push({ predecessor: equivalentDoc, successor: value });
           }
         }
 
         for (const doc of documents) {
           if (!diffs.some((diff) => diff.predecessor?.id === doc.id)) {
-            diffs.push({ predecessor: doc })
+            diffs.push({ predecessor: doc });
           }
         }
 
-        return diffs
+        return diffs;
       },
-    )
+    );
   }
 
   // Methods - Observations
@@ -231,9 +231,9 @@ export class DatabasePatientService implements PatientService {
       (collections) =>
         collections
           .userObservations(userId, UserObservationCollection.bloodPressure)
-          .where('effectiveDateTime', '>', cutoffDate.toISOString())
-          .orderBy('effectiveDateTime', 'desc'),
-    )
+          .where("effectiveDateTime", ">", cutoffDate.toISOString())
+          .orderBy("effectiveDateTime", "desc"),
+    );
     return [
       compactMap(
         observations,
@@ -243,7 +243,7 @@ export class DatabasePatientService implements PatientService {
         observations,
         (observation) => observation.content.diastolicBloodPressure,
       ),
-    ]
+    ];
   }
 
   async getBodyWeightObservations(
@@ -255,12 +255,12 @@ export class DatabasePatientService implements PatientService {
       (collections) =>
         collections
           .userObservations(userId, UserObservationCollection.bodyWeight)
-          .where('effectiveDateTime', '>', cutoffDate.toISOString())
-          .orderBy('effectiveDateTime', 'desc'),
-    )
+          .where("effectiveDateTime", ">", cutoffDate.toISOString())
+          .orderBy("effectiveDateTime", "desc"),
+    );
     return compactMap(observations, (observation) =>
       observation.content.bodyWeight(unit),
-    )
+    );
   }
 
   async getHeartRateObservations(
@@ -271,13 +271,13 @@ export class DatabasePatientService implements PatientService {
       (collections) =>
         collections
           .userObservations(userId, UserObservationCollection.heartRate)
-          .where('effectiveDateTime', '>', cutoffDate.toISOString())
-          .orderBy('effectiveDateTime', 'desc'),
-    )
+          .where("effectiveDateTime", ">", cutoffDate.toISOString())
+          .orderBy("effectiveDateTime", "desc"),
+    );
     return compactMap(
       observations,
       (observation) => observation.content.heartRate,
-    )
+    );
   }
 
   async getMostRecentCreatinineObservation(
@@ -287,10 +287,10 @@ export class DatabasePatientService implements PatientService {
       (collections) =>
         collections
           .userObservations(userId, UserObservationCollection.creatinine)
-          .orderBy('effectiveDateTime', 'desc')
+          .orderBy("effectiveDateTime", "desc")
           .limit(1),
-    )
-    return result.at(0)?.content.creatinine
+    );
+    return result.at(0)?.content.creatinine;
   }
 
   async getMostRecentDryWeightObservation(
@@ -300,10 +300,10 @@ export class DatabasePatientService implements PatientService {
       (collections) =>
         collections
           .userObservations(userId, UserObservationCollection.dryWeight)
-          .orderBy('effectiveDateTime', 'desc')
+          .orderBy("effectiveDateTime", "desc")
           .limit(1),
-    )
-    return result.at(0)?.content.dryWeight(QuantityUnit.lbs)
+    );
+    return result.at(0)?.content.dryWeight(QuantityUnit.lbs);
   }
 
   async getMostRecentEstimatedGlomerularFiltrationRateObservation(
@@ -313,10 +313,10 @@ export class DatabasePatientService implements PatientService {
       (collections) =>
         collections
           .userObservations(userId, UserObservationCollection.eGfr)
-          .orderBy('effectiveDateTime', 'desc')
+          .orderBy("effectiveDateTime", "desc")
           .limit(1),
-    )
-    return result.at(0)?.content.estimatedGlomerularFiltrationRate
+    );
+    return result.at(0)?.content.estimatedGlomerularFiltrationRate;
   }
 
   async getMostRecentPotassiumObservation(
@@ -326,24 +326,26 @@ export class DatabasePatientService implements PatientService {
       (collections) =>
         collections
           .userObservations(userId, UserObservationCollection.potassium)
-          .orderBy('effectiveDateTime', 'desc')
+          .orderBy("effectiveDateTime", "desc")
           .limit(1),
-    )
-    return result.at(0)?.content.potassium
+    );
+    return result.at(0)?.content.potassium;
   }
 
   async createObservations(
     userId: string,
     values: Array<{
-      observation: Observation
-      loincCode: LoincCode
-      collection: UserObservationCollection
+      observation: Observation;
+      loincCode: LoincCode;
+      collection: UserObservationCollection;
     }>,
     reference: FHIRReference | null,
   ): Promise<void> {
     await this.databaseService.runTransaction((collections, transaction) => {
       for (const value of values) {
-        const ref = collections.userObservations(userId, value.collection).doc()
+        const ref = collections
+          .userObservations(userId, value.collection)
+          .doc();
         const fhirObservation = FHIRObservation.createSimple({
           id: ref.id,
           date: value.observation.date,
@@ -351,10 +353,10 @@ export class DatabasePatientService implements PatientService {
           unit: value.observation.unit,
           code: value.loincCode,
           derivedFrom: [...(reference !== null ? [reference] : [])],
-        })
-        transaction.set(ref, fhirObservation)
+        });
+        transaction.set(ref, fhirObservation);
       }
-    })
+    });
   }
 
   // Methods - Questionnaire Responses
@@ -364,7 +366,7 @@ export class DatabasePatientService implements PatientService {
   ): Promise<Array<Document<FHIRQuestionnaireResponse>>> {
     return this.databaseService.getQuery<FHIRQuestionnaireResponse>(
       (collections) => collections.userQuestionnaireResponses(userId),
-    )
+    );
   }
 
   async getSymptomScores(
@@ -374,9 +376,9 @@ export class DatabasePatientService implements PatientService {
     return this.databaseService.getQuery<SymptomScore>((collections) => {
       const query = collections
         .userSymptomScores(userId)
-        .orderBy('date', 'desc')
-      return options?.limit ? query.limit(options.limit) : query
-    })
+        .orderBy("date", "desc");
+      return options?.limit ? query.limit(options.limit) : query;
+    });
   }
 
   async getLatestSymptomScore(
@@ -384,9 +386,9 @@ export class DatabasePatientService implements PatientService {
   ): Promise<Document<SymptomScore> | undefined> {
     const result = await this.databaseService.getQuery<SymptomScore>(
       (collections) =>
-        collections.userSymptomScores(userId).orderBy('date', 'desc').limit(1),
-    )
-    return result.at(0)
+        collections.userSymptomScores(userId).orderBy("date", "desc").limit(1),
+    );
+    return result.at(0);
   }
 
   async updateSymptomScore(
@@ -395,13 +397,13 @@ export class DatabasePatientService implements PatientService {
     symptomScore: SymptomScore | null,
   ): Promise<void> {
     return this.databaseService.runTransaction((collections, transaction) => {
-      const ref = collections.userSymptomScores(userId).doc(symptomScoreId)
+      const ref = collections.userSymptomScores(userId).doc(symptomScoreId);
       if (symptomScore !== null) {
-        transaction.set(ref, symptomScore)
+        transaction.set(ref, symptomScore);
       } else {
-        transaction.delete(ref)
+        transaction.delete(ref);
       }
-    })
+    });
   }
 
   // Helpers
@@ -411,48 +413,48 @@ export class DatabasePatientService implements PatientService {
   ): number {
     switch (type) {
       case UserMedicationRecommendationType.improvementAvailable:
-        return 1
+        return 1;
       case UserMedicationRecommendationType.morePatientObservationsRequired:
-        return 2
+        return 2;
       case UserMedicationRecommendationType.moreLabObservationsRequired:
-        return 3
+        return 3;
       case UserMedicationRecommendationType.personalTargetDoseReached:
-        return 4
+        return 4;
       case UserMedicationRecommendationType.targetDoseReached:
-        return 5
+        return 5;
       case UserMedicationRecommendationType.notStarted:
-        return 6
+        return 6;
       case UserMedicationRecommendationType.noActionRequired:
-        return 7
+        return 7;
     }
   }
 
   // Share Code
 
   async createShareCode(userId: string): Promise<Document<UserShareCode>> {
-    const now = new Date()
+    const now = new Date();
     const object: UserShareCode = {
       code: Math.random().toString(36).substring(2, 6),
       tries: 3,
       expiresAt: advanceDateByMinutes(now, 5),
-    }
+    };
 
     const ref = await this.runShareCodeTransaction(
       userId,
       now,
       (collections, transaction) => {
-        const ref = collections.userShareCodes(userId).doc()
-        transaction.create(ref, object)
-        return ref
+        const ref = collections.userShareCodes(userId).doc();
+        transaction.create(ref, object);
+        return ref;
       },
-    )
+    );
 
     return {
       id: ref.id,
       path: ref.path,
       lastUpdate: now,
       content: object,
-    }
+    };
   }
 
   async validateShareCode(
@@ -460,26 +462,26 @@ export class DatabasePatientService implements PatientService {
     documentId: string,
     code: string,
   ): Promise<boolean> {
-    const now = new Date()
+    const now = new Date();
 
     return this.runShareCodeTransaction(userId, now, (_, transaction, docs) => {
-      const shareCodeDoc = docs.find((doc) => doc.id === documentId)
-      if (shareCodeDoc === undefined) return false
-      const shareCodeData = shareCodeDoc.data()
+      const shareCodeDoc = docs.find((doc) => doc.id === documentId);
+      if (shareCodeDoc === undefined) return false;
+      const shareCodeData = shareCodeDoc.data();
       if (shareCodeData.code.toLowerCase() !== code.toLowerCase()) {
         if (shareCodeData.tries > 1) {
           transaction.update(
             shareCodeDoc.ref,
-            'tries',
+            "tries",
             FieldValue.increment(-1),
-          )
+          );
         } else {
-          transaction.delete(shareCodeDoc.ref)
+          transaction.delete(shareCodeDoc.ref);
         }
-        return false
+        return false;
       }
-      return true
-    })
+      return true;
+    });
   }
 
   private async runShareCodeTransaction<T>(
@@ -493,20 +495,20 @@ export class DatabasePatientService implements PatientService {
   ): Promise<T> {
     return this.databaseService.runTransaction(
       async (collections, transaction) => {
-        const existingCodes = await collections.userShareCodes(userId).get()
-        const nonExpiredCodes: Array<QueryDocumentSnapshot<UserShareCode>> = []
+        const existingCodes = await collections.userShareCodes(userId).get();
+        const nonExpiredCodes: Array<QueryDocumentSnapshot<UserShareCode>> = [];
 
         for (const existingDoc of existingCodes.docs) {
-          const existingCode = existingDoc.data()
+          const existingCode = existingDoc.data();
           if (existingCode.expiresAt < now) {
-            transaction.delete(existingDoc.ref)
+            transaction.delete(existingDoc.ref);
           } else {
-            nonExpiredCodes.push(existingDoc)
+            nonExpiredCodes.push(existingDoc);
           }
         }
 
-        return perform(collections, transaction, nonExpiredCodes)
+        return perform(collections, transaction, nonExpiredCodes);
       },
-    )
+    );
   }
 }

@@ -6,10 +6,10 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { z } from 'zod'
-import { localizedTextConverter, type LocalizedText } from './localizedText.js'
-import { Lazy } from '../helpers/lazy.js'
-import { SchemaConverter } from '../helpers/schemaConverter.js'
+import { z } from "zod";
+import { localizedTextConverter, type LocalizedText } from "./localizedText.js";
+import { Lazy } from "../helpers/lazy.js";
+import { SchemaConverter } from "../helpers/schemaConverter.js";
 
 export const videoSectionConverter = new Lazy(
   () =>
@@ -27,24 +27,24 @@ export const videoSectionConverter = new Lazy(
         orderIndex: object.orderIndex,
       }),
     }),
-)
+);
 
 export class VideoSection {
   // Properties
 
-  readonly title: LocalizedText
-  readonly description: LocalizedText
-  readonly orderIndex: number
+  readonly title: LocalizedText;
+  readonly description: LocalizedText;
+  readonly orderIndex: number;
 
   // Constructor
 
   constructor(input: {
-    title: LocalizedText
-    description: LocalizedText
-    orderIndex: number
+    title: LocalizedText;
+    description: LocalizedText;
+    orderIndex: number;
   }) {
-    this.title = input.title
-    this.description = input.description
-    this.orderIndex = input.orderIndex
+    this.title = input.title;
+    this.description = input.description;
+    this.orderIndex = input.orderIndex;
   }
 }

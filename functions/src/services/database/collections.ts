@@ -26,100 +26,100 @@ import {
   videoConverter,
   videoSectionConverter,
   type UserObservationCollection,
-} from '@stanfordbdhg/engagehf-models'
-import { type Firestore } from 'firebase-admin/firestore'
-import { DatabaseConverter } from './databaseConverter.js'
-import { historyChangeItemConverter } from '../history/historyService.js'
+} from "@stanfordbdhg/engagehf-models";
+import { type Firestore } from "firebase-admin/firestore";
+import { DatabaseConverter } from "./databaseConverter.js";
+import { historyChangeItemConverter } from "../history/historyService.js";
 
 export class CollectionsService {
   // Properties
 
-  readonly firestore: Firestore
+  readonly firestore: Firestore;
 
   // Constructor
 
   constructor(firestore: Firestore) {
-    this.firestore = firestore
+    this.firestore = firestore;
   }
 
   // Methods
 
   get appointments() {
     return this.firestore
-      .collectionGroup('appointments')
-      .withConverter(new DatabaseConverter(fhirAppointmentConverter.value))
+      .collectionGroup("appointments")
+      .withConverter(new DatabaseConverter(fhirAppointmentConverter.value));
   }
 
   get devices() {
     return this.firestore
-      .collectionGroup('devices')
-      .withConverter(new DatabaseConverter(userDeviceConverter.value))
+      .collectionGroup("devices")
+      .withConverter(new DatabaseConverter(userDeviceConverter.value));
   }
 
   get history() {
     return this.firestore
-      .collection('history')
-      .withConverter(new DatabaseConverter(historyChangeItemConverter))
+      .collection("history")
+      .withConverter(new DatabaseConverter(historyChangeItemConverter));
   }
 
   get invitations() {
     return this.firestore
-      .collection('invitations')
-      .withConverter(new DatabaseConverter(invitationConverter.value))
+      .collection("invitations")
+      .withConverter(new DatabaseConverter(invitationConverter.value));
   }
 
   invitationAllergyIntolerances(invitationId: string) {
     return this.firestore
-      .collection('invitations')
+      .collection("invitations")
       .doc(invitationId)
-      .collection('allergyIntolerances')
+      .collection("allergyIntolerances")
       .withConverter(
         new DatabaseConverter(fhirAllergyIntoleranceConverter.value),
-      )
+      );
   }
 
   invitationAppointments(invitationId: string) {
     return this.firestore
-      .collection('invitations')
+      .collection("invitations")
       .doc(invitationId)
-      .collection('appointments')
-      .withConverter(new DatabaseConverter(fhirAppointmentConverter.value))
+      .collection("appointments")
+      .withConverter(new DatabaseConverter(fhirAppointmentConverter.value));
   }
 
   invitationDevices(invitationId: string) {
     return this.firestore
-      .collection('invitations')
+      .collection("invitations")
       .doc(invitationId)
-      .collection('devices')
-      .withConverter(new DatabaseConverter(userDeviceConverter.value))
+      .collection("devices")
+      .withConverter(new DatabaseConverter(userDeviceConverter.value));
   }
 
   invitationMedicationRecommendations(invitationId: string) {
     return this.firestore
-      .collection('invitations')
+      .collection("invitations")
       .doc(invitationId)
-      .collection('medicationRecommendations')
+      .collection("medicationRecommendations")
       .withConverter(
         new DatabaseConverter(userMedicationRecommendationConverter.value),
-      )
+      );
   }
 
   invitationMedicationRequests(invitationId: string) {
     return this.firestore
-      .collection('invitations')
+      .collection("invitations")
       .doc(invitationId)
-      .collection('medicationRequests')
+      .collection("medicationRequests")
       .withConverter(
         new DatabaseConverter(fhirMedicationRequestConverter.value),
-      )
+      );
   }
 
   invitationMessages(invitationId: string) {
     return this.firestore
-      .collection('invitations')
+      .collection("invitations")
       .doc(invitationId)
-      .collection('messages')
-      .withConverter(new DatabaseConverter(userMessageConverter.value))
+      .collection("messages")
+      .withConverter(new DatabaseConverter(userMessageConverter.value));
   }
 
   invitationObservations(
@@ -127,179 +127,179 @@ export class CollectionsService {
     collection: UserObservationCollection,
   ) {
     return this.firestore
-      .collection('invitations')
+      .collection("invitations")
       .doc(invitationId)
       .collection(collection)
-      .withConverter(new DatabaseConverter(fhirObservationConverter.value))
+      .withConverter(new DatabaseConverter(fhirObservationConverter.value));
   }
 
   invitationQuestionnaireResponses(invitationId: string) {
     return this.firestore
-      .collection('invitations')
+      .collection("invitations")
       .doc(invitationId)
-      .collection('questionnaireResponses')
+      .collection("questionnaireResponses")
       .withConverter(
         new DatabaseConverter(fhirQuestionnaireResponseConverter.value),
-      )
+      );
   }
 
   invitationSymptomScores(invitationId: string) {
     return this.firestore
-      .collection('invitations')
+      .collection("invitations")
       .doc(invitationId)
-      .collection('symptomScores')
-      .withConverter(new DatabaseConverter(symptomScoreConverter.value))
+      .collection("symptomScores")
+      .withConverter(new DatabaseConverter(symptomScoreConverter.value));
   }
 
   get medicationClasses() {
     return this.firestore
-      .collection('medicationClasses')
-      .withConverter(new DatabaseConverter(medicationClassConverter.value))
+      .collection("medicationClasses")
+      .withConverter(new DatabaseConverter(medicationClassConverter.value));
   }
 
   medicationClassReference(reference: string) {
     return this.firestore
       .doc(reference)
-      .withConverter(new DatabaseConverter(medicationClassConverter.value))
+      .withConverter(new DatabaseConverter(medicationClassConverter.value));
   }
 
   get medications() {
     return this.firestore
-      .collection('medications')
-      .withConverter(new DatabaseConverter(fhirMedicationConverter.value))
+      .collection("medications")
+      .withConverter(new DatabaseConverter(fhirMedicationConverter.value));
   }
 
   medicationReference(reference: string) {
     return this.firestore
       .doc(reference)
-      .withConverter(new DatabaseConverter(fhirMedicationConverter.value))
+      .withConverter(new DatabaseConverter(fhirMedicationConverter.value));
   }
 
   drugs(medicationId: string) {
     return this.firestore
-      .collection('medications')
+      .collection("medications")
       .doc(medicationId)
-      .collection('drugs')
-      .withConverter(new DatabaseConverter(fhirMedicationConverter.value))
+      .collection("drugs")
+      .withConverter(new DatabaseConverter(fhirMedicationConverter.value));
   }
 
   get organizations() {
     return this.firestore
-      .collection('organizations')
-      .withConverter(new DatabaseConverter(organizationConverter.value))
+      .collection("organizations")
+      .withConverter(new DatabaseConverter(organizationConverter.value));
   }
 
   get questionnaires() {
     return this.firestore
-      .collection('questionnaires')
-      .withConverter(new DatabaseConverter(fhirQuestionnaireConverter.value))
+      .collection("questionnaires")
+      .withConverter(new DatabaseConverter(fhirQuestionnaireConverter.value));
   }
 
   get users() {
     return this.firestore
-      .collection('users')
-      .withConverter(new DatabaseConverter(userConverter.value))
+      .collection("users")
+      .withConverter(new DatabaseConverter(userConverter.value));
   }
 
   userAllergyIntolerances(userId: string) {
     return this.firestore
-      .collection('users')
+      .collection("users")
       .doc(userId)
-      .collection('allergyIntolerances')
+      .collection("allergyIntolerances")
       .withConverter(
         new DatabaseConverter(fhirAllergyIntoleranceConverter.value),
-      )
+      );
   }
 
   userAppointments(userId: string) {
     return this.firestore
-      .collection('users')
+      .collection("users")
       .doc(userId)
-      .collection('appointments')
-      .withConverter(new DatabaseConverter(fhirAppointmentConverter.value))
+      .collection("appointments")
+      .withConverter(new DatabaseConverter(fhirAppointmentConverter.value));
   }
 
   userDevices(userId: string) {
     return this.firestore
-      .collection('users')
+      .collection("users")
       .doc(userId)
-      .collection('devices')
-      .withConverter(new DatabaseConverter(userDeviceConverter.value))
+      .collection("devices")
+      .withConverter(new DatabaseConverter(userDeviceConverter.value));
   }
 
   userMedicationRecommendations(userId: string) {
     return this.firestore
-      .collection('users')
+      .collection("users")
       .doc(userId)
-      .collection('medicationRecommendations')
+      .collection("medicationRecommendations")
       .withConverter(
         new DatabaseConverter(userMedicationRecommendationConverter.value),
-      )
+      );
   }
 
   userMedicationRequests(userId: string) {
     return this.firestore
-      .collection('users')
+      .collection("users")
       .doc(userId)
-      .collection('medicationRequests')
+      .collection("medicationRequests")
       .withConverter(
         new DatabaseConverter(fhirMedicationRequestConverter.value),
-      )
+      );
   }
 
   userMessages(userId: string) {
     return this.firestore
-      .collection('users')
+      .collection("users")
       .doc(userId)
-      .collection('messages')
-      .withConverter(new DatabaseConverter(userMessageConverter.value))
+      .collection("messages")
+      .withConverter(new DatabaseConverter(userMessageConverter.value));
   }
 
   userObservations(userId: string, collection: UserObservationCollection) {
     return this.firestore
-      .collection('users')
+      .collection("users")
       .doc(userId)
       .collection(collection)
-      .withConverter(new DatabaseConverter(fhirObservationConverter.value))
+      .withConverter(new DatabaseConverter(fhirObservationConverter.value));
   }
 
   userQuestionnaireResponses(userId: string) {
     return this.firestore
-      .collection('users')
+      .collection("users")
       .doc(userId)
-      .collection('questionnaireResponses')
+      .collection("questionnaireResponses")
       .withConverter(
         new DatabaseConverter(fhirQuestionnaireResponseConverter.value),
-      )
+      );
   }
 
   userShareCodes(userId: string) {
     return this.firestore
-      .collection('users')
+      .collection("users")
       .doc(userId)
-      .collection('shareCodes')
-      .withConverter(new DatabaseConverter(userShareCodeConverter.value))
+      .collection("shareCodes")
+      .withConverter(new DatabaseConverter(userShareCodeConverter.value));
   }
 
   userSymptomScores(userId: string) {
     return this.firestore
-      .collection('users')
+      .collection("users")
       .doc(userId)
-      .collection('symptomScores')
-      .withConverter(new DatabaseConverter(symptomScoreConverter.value))
+      .collection("symptomScores")
+      .withConverter(new DatabaseConverter(symptomScoreConverter.value));
   }
 
   get videoSections() {
     return this.firestore
-      .collection('videoSections')
-      .withConverter(new DatabaseConverter(videoSectionConverter.value))
+      .collection("videoSections")
+      .withConverter(new DatabaseConverter(videoSectionConverter.value));
   }
 
   videos(videoSectionId: string) {
     return this.firestore
-      .collection('videoSections')
+      .collection("videoSections")
       .doc(videoSectionId)
-      .collection('videos')
-      .withConverter(new DatabaseConverter(videoConverter.value))
+      .collection("videos")
+      .withConverter(new DatabaseConverter(videoConverter.value));
   }
 }

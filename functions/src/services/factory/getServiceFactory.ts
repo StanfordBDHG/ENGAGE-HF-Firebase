@@ -6,11 +6,11 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { DefaultServiceFactory } from './defaultServiceFactory.js'
-import { type ServiceFactory } from './serviceFactory.js'
+import { DefaultServiceFactory } from "./defaultServiceFactory.js";
+import { type ServiceFactory } from "./serviceFactory.js";
 
 export interface ServiceFactoryOptions {
-  allowCaching: boolean
+  allowCaching: boolean;
 }
 
 export function getServiceFactory(
@@ -18,5 +18,5 @@ export function getServiceFactory(
 ): ServiceFactory {
   return new DefaultServiceFactory({
     allowCaching: options.allowCaching ?? true,
-  })
+  });
 }

@@ -6,55 +6,55 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { z } from 'zod'
-import { SchemaConverter } from './schemaConverter.js'
+import { z } from "zod";
+import { SchemaConverter } from "./schemaConverter.js";
 
 export const dateConverter = new SchemaConverter({
   schema: z.string().transform((string, context) => {
     try {
-      const date = new Date(string)
+      const date = new Date(string);
       if (isNaN(date.getTime())) {
         context.addIssue({
           code: z.ZodIssueCode.custom,
-          message: 'Invalid date',
-        })
-        return z.NEVER
+          message: "Invalid date",
+        });
+        return z.NEVER;
       }
-      return date
+      return date;
     } catch (error) {
       context.addIssue({
         code: z.ZodIssueCode.custom,
         message: String(error),
-      })
-      return z.NEVER
+      });
+      return z.NEVER;
     }
   }),
   encode: (object) => {
-    const offset = object.getTimezoneOffset()
-    const utcDate = new Date(object.getTime() - offset * 60 * 1000)
-    return utcDate.toISOString().split('T')[0]
+    const offset = object.getTimezoneOffset();
+    const utcDate = new Date(object.getTime() - offset * 60 * 1000);
+    return utcDate.toISOString().split("T")[0];
   },
-})
+});
 
 export const dateTimeConverter = new SchemaConverter({
   schema: z.string().transform((string, context) => {
     try {
-      const date = new Date(string)
+      const date = new Date(string);
       if (isNaN(date.getTime())) {
         context.addIssue({
           code: z.ZodIssueCode.custom,
-          message: 'Invalid date',
-        })
-        return z.NEVER
+          message: "Invalid date",
+        });
+        return z.NEVER;
       }
-      return date
+      return date;
     } catch (error) {
       context.addIssue({
         code: z.ZodIssueCode.custom,
         message: String(error),
-      })
-      return z.NEVER
+      });
+      return z.NEVER;
     }
   }),
   encode: (object) => object.toISOString(),
-})
+});

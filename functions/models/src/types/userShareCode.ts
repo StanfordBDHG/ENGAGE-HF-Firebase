@@ -6,9 +6,9 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { z } from 'zod'
-import { dateTimeConverter } from '../helpers/dateConverter.js'
-import { SchemaConverter } from '../helpers/schemaConverter.js'
+import { z } from "zod";
+import { dateTimeConverter } from "../helpers/dateConverter.js";
+import { SchemaConverter } from "../helpers/schemaConverter.js";
 
 export const userShareCodeConverter = new SchemaConverter({
   schema: z.object({
@@ -21,6 +21,6 @@ export const userShareCodeConverter = new SchemaConverter({
     tries: object.tries,
     expiresAt: dateTimeConverter.encode(object.expiresAt),
   }),
-})
+});
 
-export type UserShareCode = z.output<typeof userShareCodeConverter.schema>
+export type UserShareCode = z.output<typeof userShareCodeConverter.schema>;

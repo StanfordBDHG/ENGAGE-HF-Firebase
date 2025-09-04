@@ -6,11 +6,11 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { z } from 'zod'
+import { z } from "zod";
 
 export const deleteInvitationInputSchema = z.object({
   invitationCode: z.string(),
-})
-export type DeleteInvitationInput = z.input<typeof deleteInvitationInputSchema>
+});
+export type DeleteInvitationInput = z.input<typeof deleteInvitationInputSchema>;
 
-export type DeleteInvitationOutput = undefined
+export type DeleteInvitationOutput = undefined;

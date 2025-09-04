@@ -6,11 +6,11 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { z } from 'zod'
-import { dateTimeConverter } from '../helpers/dateConverter.js'
-import { Lazy } from '../helpers/lazy.js'
-import { optionalish } from '../helpers/optionalish.js'
-import { SchemaConverter } from '../helpers/schemaConverter.js'
+import { z } from "zod";
+import { dateTimeConverter } from "../helpers/dateConverter.js";
+import { Lazy } from "../helpers/lazy.js";
+import { optionalish } from "../helpers/optionalish.js";
+import { SchemaConverter } from "../helpers/schemaConverter.js";
 
 export const symptomScoreConverter = new Lazy(
   () =>
@@ -38,39 +38,39 @@ export const symptomScoreConverter = new Lazy(
         dizzinessScore: object.dizzinessScore,
       }),
     }),
-)
+);
 
 export class SymptomScore {
   // Properties
 
-  readonly questionnaireResponseId?: string
-  readonly date: Date
-  readonly overallScore: number
-  readonly physicalLimitsScore?: number
-  readonly symptomFrequencyScore?: number
-  readonly socialLimitsScore?: number
-  readonly qualityOfLifeScore?: number
-  readonly dizzinessScore: number
+  readonly questionnaireResponseId?: string;
+  readonly date: Date;
+  readonly overallScore: number;
+  readonly physicalLimitsScore?: number;
+  readonly symptomFrequencyScore?: number;
+  readonly socialLimitsScore?: number;
+  readonly qualityOfLifeScore?: number;
+  readonly dizzinessScore: number;
 
   // Constructor
 
   constructor(input: {
-    questionnaireResponseId?: string
-    date: Date
-    overallScore: number
-    physicalLimitsScore?: number
-    symptomFrequencyScore?: number
-    socialLimitsScore?: number
-    qualityOfLifeScore?: number
-    dizzinessScore: number
+    questionnaireResponseId?: string;
+    date: Date;
+    overallScore: number;
+    physicalLimitsScore?: number;
+    symptomFrequencyScore?: number;
+    socialLimitsScore?: number;
+    qualityOfLifeScore?: number;
+    dizzinessScore: number;
   }) {
-    this.questionnaireResponseId = input.questionnaireResponseId
-    this.date = input.date
-    this.overallScore = input.overallScore
-    this.physicalLimitsScore = input.physicalLimitsScore
-    this.symptomFrequencyScore = input.symptomFrequencyScore
-    this.socialLimitsScore = input.socialLimitsScore
-    this.qualityOfLifeScore = input.qualityOfLifeScore
-    this.dizzinessScore = input.dizzinessScore
+    this.questionnaireResponseId = input.questionnaireResponseId;
+    this.date = input.date;
+    this.overallScore = input.overallScore;
+    this.physicalLimitsScore = input.physicalLimitsScore;
+    this.symptomFrequencyScore = input.symptomFrequencyScore;
+    this.socialLimitsScore = input.socialLimitsScore;
+    this.qualityOfLifeScore = input.qualityOfLifeScore;
+    this.dizzinessScore = input.dizzinessScore;
   }
 }

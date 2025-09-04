@@ -6,13 +6,13 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { QuantityUnit, UserSex } from '@stanfordbdhg/engagehf-models'
+import { QuantityUnit, UserSex } from "@stanfordbdhg/engagehf-models";
 
 export class EgfrCalculator {
   calculate(input: {
-    sexAssignedAtBirth: UserSex
-    age: number
-    creatinine: number
+    sexAssignedAtBirth: UserSex;
+    age: number;
+    creatinine: number;
   }): { value: number; unit: QuantityUnit } {
     //
     // https://www.kidney.org/ckd-epi-creatinine-equation-2021
@@ -31,36 +31,36 @@ export class EgfrCalculator {
     // - https://www.mdcalc.com/calc/3939/ckd-epi-equations-glomerular-filtration-rate-gfr
     //
 
-    let value: number
+    let value: number;
     switch (input.sexAssignedAtBirth) {
       case UserSex.female: {
-        const k = 0.7
-        const min = Math.min(input.creatinine / k, 1)
-        const max = Math.max(input.creatinine / k, 1)
+        const k = 0.7;
+        const min = Math.min(input.creatinine / k, 1);
+        const max = Math.max(input.creatinine / k, 1);
         value =
           142 *
           Math.pow(min, -0.241) *
           Math.pow(max, -1.2) *
           Math.pow(0.9938, input.age) *
-          1.012
-        break
+          1.012;
+        break;
       }
       case UserSex.male: {
-        const k = 0.9
-        const min = Math.min(input.creatinine / k, 1)
-        const max = Math.max(input.creatinine / k, 1)
+        const k = 0.9;
+        const min = Math.min(input.creatinine / k, 1);
+        const max = Math.max(input.creatinine / k, 1);
         value =
           142 *
           Math.pow(min, -0.302) *
           Math.pow(max, -1.2) *
-          Math.pow(0.9938, input.age)
-        break
+          Math.pow(0.9938, input.age);
+        break;
       }
     }
 
     return {
       value,
       unit: QuantityUnit.mL_min_173m2,
-    }
+    };
   }
 }
