@@ -12,14 +12,14 @@ import {
   beforeUserCreated,
   beforeUserSignedIn,
 } from "firebase-functions/v2/identity";
-import { serviceAccount } from "./helpers.js";
+import { privilegedServiceAccount } from "./helpers.js";
 import { Env } from "../env.js";
 import { Flags } from "../flags.js";
 import { getServiceFactory } from "../services/factory/getServiceFactory.js";
 
 export const beforeUserCreatedFunction = beforeUserCreated(
   {
-    serviceAccount: serviceAccount,
+    serviceAccount: privilegedServiceAccount,
     secrets: Env.twilioSecretKeys,
   },
   async (event) => {
@@ -124,7 +124,10 @@ export const beforeUserCreatedFunction = beforeUserCreated(
 );
 
 export const beforeUserSignedInFunction = beforeUserSignedIn(
-  { serviceAccount: serviceAccount, secrets: Env.twilioSecretKeys },
+  {
+    serviceAccount: privilegedServiceAccount,
+    secrets: Env.twilioSecretKeys,
+  },
   async (event) => {
     try {
       if (event.data === undefined) {

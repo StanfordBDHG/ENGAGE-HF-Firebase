@@ -14,7 +14,7 @@ import {
   startPhoneNumberVerificationInputSchema,
   type StartPhoneNumberVerificationOutput,
 } from "@stanfordbdhg/engagehf-models";
-import { validatedOnCall } from "./helpers.js";
+import { privilegedServiceAccount, validatedOnCall } from "./helpers.js";
 import { Env } from "../env.js";
 import { getServiceFactory } from "../services/factory/getServiceFactory.js";
 
@@ -32,6 +32,7 @@ export const startPhoneNumberVerification = validatedOnCall(
       );
   },
   {
+    serviceAccount: privilegedServiceAccount,
     secrets: Env.twilioSecretKeys,
   },
 );
@@ -51,6 +52,7 @@ export const checkPhoneNumberVerification = validatedOnCall(
       );
   },
   {
+    serviceAccount: privilegedServiceAccount,
     secrets: Env.twilioSecretKeys,
   },
 );
