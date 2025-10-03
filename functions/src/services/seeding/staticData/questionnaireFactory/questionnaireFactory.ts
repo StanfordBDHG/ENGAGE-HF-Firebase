@@ -462,7 +462,7 @@ export abstract class QuestionnaireFactory<Input> {
         },
       ],
       item: input.item,
-      required: input.required ?? false,
+      required: input.required ?? true,
       text: input.text,
       enableWhen: input.enableWhen,
       enableBehavior: input.enableBehavior,
