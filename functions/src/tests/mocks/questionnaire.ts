@@ -206,7 +206,7 @@ export function mockQuestionnaire(): FHIRQuestionnaire {
             ],
           },
         ],
-        required: false,
+        required: true,
         text: "Heart failure affects different people in different ways. Some feel shortness of breath while others feel fatigue. Please indicate how much you are limited by heart failure (shortness of breath or fatigue) in your ability to do the following activities over the past 2 weeks.",
       },
       {
@@ -702,7 +702,7 @@ export function mockQuestionnaire(): FHIRQuestionnaire {
             ],
           },
         ],
-        required: false,
+        required: true,
         text: "How much does your heart failure affect your lifestyle? Please indicate how your heart failure may have limited your participation in the following activities over the past 2 weeks.",
       },
       {
