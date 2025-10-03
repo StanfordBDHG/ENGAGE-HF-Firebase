@@ -12,7 +12,11 @@ import {
   type UpdateStaticDataOutput,
 } from "@stanfordbdhg/engagehf-models";
 import { type z } from "zod";
-import { validatedOnCall, validatedOnRequest } from "./helpers.js";
+import {
+  privilegedServiceAccount,
+  validatedOnCall,
+  validatedOnRequest,
+} from "./helpers.js";
 import { Flags } from "../flags.js";
 import { UserRole } from "../services/credential/credential.js";
 import { getServiceFactory } from "../services/factory/getServiceFactory.js";
@@ -56,5 +60,8 @@ export const updateStaticData =
         factory.credential(request.auth).check(UserRole.admin);
         await _updateStaticData(factory, request.data);
         return {};
+      },
+      {
+        serviceAccount: privilegedServiceAccount,
       },
     );
