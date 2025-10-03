@@ -70,4 +70,48 @@ describeWithEmulators("function: defaultSeed", (env) => {
       .get();
     expect(userSymptomScores.docs.length).toBeGreaterThanOrEqual(1);
   }, 30_000);
+
+  it("seeds clinician messages for specific userIds", async () => {
+    // First seed all users
+    await _defaultSeed(env.factory, {
+      date: new Date(),
+      only: [DebugDataComponent.users],
+      staticData: undefined,
+      onlyUserCollections: [],
+      userData: [],
+    });
+
+    const users = await env.collections.users.get();
+    const clinician = users.docs.find(
+      (userDoc) => userDoc.data().type === UserType.clinician,
+    );
+    const patient = users.docs.find(
+      (userDoc) => userDoc.data().type === UserType.patient,
+    );
+    expect(clinician).toBeDefined();
+    expect(patient).toBeDefined();
+
+    if (clinician === undefined) fail("clinician is undefined");
+    if (patient === undefined) fail("patient is undefined");
+
+    // Seed clinician messages for specific clinician userId
+    await _defaultSeed(env.factory, {
+      date: new Date(),
+      only: [],
+      staticData: undefined,
+      onlyUserCollections: [UserDebugDataComponent.messages],
+      userData: [
+        {
+          userId: clinician.id,
+          only: [UserDebugDataComponent.messages],
+        },
+      ],
+    });
+
+    // Verify clinician messages were seeded
+    const clinicianMessages = await env.collections
+      .userMessages(clinician.id)
+      .get();
+    expect(clinicianMessages.docs.length).toBeGreaterThan(0);
+  }, 30_000);
 });
