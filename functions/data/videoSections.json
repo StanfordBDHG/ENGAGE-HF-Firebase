@@ -2,131 +2,235 @@
   {
     "title": {
       "en": "ENGAGE-HF Application",
-      "en-CA": "ENGAGE-HF Application (Canada)",
-      "de": "ENGAGE-HF Anwendung"
+      "es": "Aplicación ENGAGE-HF"
     },
-    "description": "Helpful videos on the ENGAGE-HF mobile application.",
+    "description": {
+      "en": "Helpful videos on the ENGAGE-HF mobile application.",
+      "es": "Videos útiles sobre la aplicación móvil ENGAGE-HF."
+    },
     "orderIndex": 1,
     "videos": [
       {
-        "title": "Welcome Video",
+        "title": {
+          "en": "Welcome Video",
+          "es": "Video de bienvenida"
+        },
         "youtubeId": "EcwB48zjGXM",
         "orderIndex": 1,
-        "description": "The ENGAGE-HF app helps you and your care team track your heart and your heart failure medicines.  Every day, measure your blood pressure and weight and check for messages. Every two weeks, fill out a survey about your symptoms and receive a summary of your heart health and your medicines. This summary will be shared with your care team when there are opportunities to improve your meds and before your visits. This information will help them know how you have been doing. You can also review these educational videos to learn how to best care for your heart."
+        "description": {
+          "en": "The ENGAGE-HF app helps you and your care team track your heart and your heart failure medicines.  Every day, measure your blood pressure and weight and check for messages. Every two weeks, fill out a survey about your symptoms and receive a summary of your heart health and your medicines. This summary will be shared with your care team when there are opportunities to improve your meds and before your visits. This information will help them know how you have been doing. You can also review these educational videos to learn how to best care for your heart.",
+          "es": "La aplicación ENGAGE-HF les ayuda a usted y a su equipo médico a hacer seguimiento a su salud cardíaca y a sus medicamentos para la insuficiencia cardíaca. Mida su presión arterial y peso a diario y revise sus notificaciones. Cada dos semanas, complete un cuestionario sobre sus síntomas y reciba un resumen de su salud cardíaca y sus medicamentos. Este resumen se compartirá con su equipo médico cuando haya oportunidades para mejorar su medicamento y antes de sus consultas médicas. Esta información les ayudará a saber cómo se encuentra. También puede revisar estos videos educativos para aprender a cuidar mejor su corazón."
+        }
       },
       {
-        "title": "How to Install the App and Connect Omron Devices",
+        "title": {
+          "en": "How to Install the App and Connect Omron Devices",
+          "es": "Cómo instalar la aplicación y conectar los dispositivos Omron"
+        },
         "youtubeId": "wW03MCNngGA",
         "orderIndex": 2,
-        "description": "This video contains information about how to connect your blood pressure cuff and scale to the ENGAGE-HF app."
+        "description": {
+          "en": "This video contains information about how to connect your blood pressure cuff and scale to the ENGAGE-HF app.",
+          "es": "Este video contiene información sobre cómo conectar el tensiómetro y la báscula a la aplicación ENGAGE-HF."
+        }
       }
     ]
   },
   {
-    "title": "Medication Videos",
+    "title": {
+      "en": "Medication Videos",
+      "es": "Videos sobre medicamentos"
+    },
     "description": {
       "en": "Learn about heart failure medications and their effects.",
-      "de": "Erfahren Sie mehr über Herzmedikamente und ihre Wirkungen."
+      "es": "Obtenga información sobre los medicamentos para la insuficiencia cardíaca y sus efectos."
     },
     "orderIndex": 2,
     "videos": [
       {
         "title": {
           "en": "Importance of Heart Meds",
-          "de": "Wichtigkeit von Herzmedikamenten"
+          "es": "Importancia de los medicamentos para el corazón"
         },
         "youtubeId": "RDWYlyAMRAo",
         "orderIndex": 1,
-        "description": "There are 4 types of medications that can help people with heart failure feel better, live longer, and avoid hospitalization. These medicines are often called guideline-directed medical therapy, or GDMT. Your heart care team will aim to get you on these medications. They will then increase the dose to target levels every 1 to 2 weeks. These are the doses that helped patients live longer and feel better in clinical studies. Your care team will help you monitor closely for side effects. If you have side effects, the dose may need to be reduced or the medication may need to be changed."
+        "description": {
+          "en": "There are 4 types of medications that can help people with heart failure feel better, live longer, and avoid hospitalization. These medicines are often called guideline-directed medical therapy, or GDMT. Your heart care team will aim to get you on these medications. They will then increase the dose to target levels every 1 to 2 weeks. These are the doses that helped patients live longer and feel better in clinical studies. Your care team will help you monitor closely for side effects. If you have side effects, the dose may need to be reduced or the medication may need to be changed.",
+          "es": "Existen 4 tipos de medicamentos que pueden ayudar a las personas con insuficiencia cardíaca a sentirse mejor, vivir más y evitar la hospitalización. Estos medicamentos se conocen como tratamiento médico dirigido por pautas (guideline-directed medical therapy, GDMT). Su equipo de atención cardíaca intentará que usted reciba estos medicamentos. Posteriormente, aumentarán la dosis hasta alcanzar los niveles objetivo cada 1 o 2 semanas. Estas son las dosis que ayudaron a los pacientes a vivir más y sentirse mejor en estudios clínicos. Su equipo de atención médica lo ayudará a hacer seguimiento detallado a la aparición de efectos secundarios. Si presenta efectos secundarios, es posible que deba reducir la dosis o cambiar el medicamento."
+        }
       },
       {
-        "title": "Beta Blockers",
+        "title": {
+          "en": "Beta Blockers",
+          "es": "Betabloqueantes"
+        },
         "youtubeId": {
           "en": "XfgcXkq61k0",
           "de": "XfgcXkq61k0"
         },
         "orderIndex": 2,
-        "description": "One of the 4 classes of medicines is beta blockers. Beta blockers include carvedilol, bisoprolol, and metoprolol. With heart failure, your body has a harmful increase in adrenaline that weakens your heart over time. These medicines block this response and help the heart get stronger over time. These medicines can also lower your heart rate and blood pressure. Side effects of beta blockers include fatigue and dizziness. These side effects are worse at first and often get better after a couple weeks."
+        "description": {
+          "en": "One of the 4 classes of medicines is beta blockers. Beta blockers include carvedilol, bisoprolol, and metoprolol. With heart failure, your body has a harmful increase in adrenaline that weakens your heart over time. These medicines block this response and help the heart get stronger over time. These medicines can also lower your heart rate and blood pressure. Side effects of beta blockers include fatigue and dizziness. These side effects are worse at first and often get better after a couple weeks.",
+          "es": "Una de las 4 clases de medicamentos son los betabloqueantes. Estos incluyen carvedilol, bisoprolol y metoprolol. Con la insuficiencia cardíaca, el cuerpo experimenta un aumento perjudicial de adrenalina que debilita el corazón con el tiempo. Estos medicamentos bloquean esta respuesta y ayudan al corazón a fortalecerse con el tiempo. También pueden reducir la frecuencia cardíaca y la presión arterial. Los efectos secundarios de los betabloqueantes incluyen cansancio y mareos. Estos efectos secundarios son más intensos al principio y suelen mejorar después de un par de semanas."
+        }
       },
       {
-        "title": "ACE inhibitors and ARBs",
+        "title": {
+          "en": "ACE inhibitors and ARBs",
+          "es": "Inhibidores de la ECA y ARA"
+        },
         "youtubeId": "iY7I1g5Vxck",
         "orderIndex": 3,
-        "description": "One of the 4 classes of medicine are ACE inhibitors and ARBs. This includes medicines like lisinopril, losartan, and valsartan. These medicines block the “renin angiotensin aldosterone system.” This system is what your body uses to control your fluid level and your blood vessels.  With heart failure, these hormones are increased and you retain too much salt and your blood vessels get constricted. ACE inhibitors and ARBs block this response and help your heart get stronger. They help the body remove extra salt and fluid. They also relax your blood vessels to help your heart pump better. These medicines can cause dizziness and require monitoring of your kidney function and potassium levels."
+        "description": {
+          "en": "One of the 4 classes of medicine are ACE inhibitors and ARBs. This includes medicines like lisinopril, losartan, and valsartan. These medicines block the “renin angiotensin aldosterone system.” This system is what your body uses to control your fluid level and your blood vessels.  With heart failure, these hormones are increased and you retain too much salt and your blood vessels get constricted. ACE inhibitors and ARBs block this response and help your heart get stronger. They help the body remove extra salt and fluid. They also relax your blood vessels to help your heart pump better. These medicines can cause dizziness and require monitoring of your kidney function and potassium levels.",
+          "es": "Una de las 4 clases de medicamentos son los inhibidores de la enzima convertidora de la angiotensina (ECA) y los antagonistas de los receptores de angiotensina (ARA). Esto incluye medicamentos como lisinopril, losartán y valsartán. Estos medicamentos bloquean el “sistema renina-angiotensina-aldosterona”, que es el que el cuerpo utiliza para controlar el nivel de líquidos y los vasos sanguíneos. Con la insuficiencia cardíaca, estas hormonas aumentan, se retiene demasiada sal y los vasos sanguíneos se contraen. Los inhibidores de la ECA y los ARA bloquean esta respuesta y ayudan al corazón a fortalecerse. Ayudan al cuerpo a eliminar el exceso de sal y líquidos. También relajan los vasos sanguíneos para que el corazón bombee mejor. Estos medicamentos pueden causar mareos y requieren monitorización de la función renal y los niveles de potasio."
+        }
       },
       {
-        "title": "Angiotensin Receptor/Neprilysin Inhibitors (ARNI)",
+        "title": {
+          "en": "Angiotensin Receptor/Neprilysin Inhibitors (ARNI)",
+          "es": "Inhibidores duales de la neprilisina y del receptor de la angiotensina (INRA)"
+        },
         "youtubeId": "bh-_1GkZmok",
         "orderIndex": 4,
-        "description": "ARNI is a combination of 2 medicines: sacubitril and valsartan. In heart failure, the pressure in your heart is too high. This is because the heart muscle is weak and the body is holding on to salt. Sacubitril increases helpful hormones called natriuretic peptides. Valsartan is an ARB that blocks the overactive “renin angiotensin aldosterone system”. Together, these medicines remove extra salt from the body. They also relax blood vessels to help the heart pump better. These medicines improves how you feel and help your heart get stronger. The most common side effect is dizziness due to low blood pressure. You also need to monitor your potassium levels and kidney function."
+        "description": {
+          "en": "ARNI is a combination of 2 medicines: sacubitril and valsartan. In heart failure, the pressure in your heart is too high. This is because the heart muscle is weak and the body is holding on to salt. Sacubitril increases helpful hormones called natriuretic peptides. Valsartan is an ARB that blocks the overactive “renin angiotensin aldosterone system”. Together, these medicines remove extra salt from the body. They also relax blood vessels to help the heart pump better. These medicines improves how you feel and help your heart get stronger. The most common side effect is dizziness due to low blood pressure. You also need to monitor your potassium levels and kidney function.",
+          "es": "El INRA es una combinación de 2 medicamentos: el sacubitrilo y el valsartán. En el caso de la insuficiencia cardíaca, la presión en el corazón es demasiado alta. Esto se debe a que el músculo cardíaco está débil y el cuerpo retiene sal. El sacubitrilo aumenta la producción de hormonas beneficiosas llamadas péptidos natriuréticos. El valsartán es un ARA que bloquea el hiperactivo “sistema renina-angiotensina-aldosterona”. Juntos, estos medicamentos eliminan el exceso de sal del cuerpo. También relajan los vasos sanguíneos para ayudar al corazón a bombear mejor. Estos medicamentos mejoran cómo se siente y ayudan a fortalecer el corazón. El efecto secundario más común es el mareo debido a la presión arterial baja. También es necesario controlar los niveles de potasio y la función renal."
+        }
       },
       {
-        "title": "Mineralocorticoid Receptor Antagonists (MRAs)",
+        "title": {
+          "en": "Mineralocorticoid Receptor Antagonists (MRAs)",
+          "es": "Antagonistas de los receptores de mineralocorticoides (ARM)"
+        },
         "youtubeId": "YhfPNHtvnLk",
         "orderIndex": 5,
-        "description": "One of the 4 classes of medicine are MRAs. These include spironolactone and eplerenone. With heart failure, you have increased levels of a hormone called aldosterone. This leads to holding onto salt and fluid and damage to the heart over time. These medicines block the harmful action of this hormone. This helps strengthen the heart and keep you out of the hospital. After starting this medicine or changing the dose, you need blood tests to monitor your potassium level."
+        "description": {
+          "en": "One of the 4 classes of medicine are MRAs. These include spironolactone and eplerenone. With heart failure, you have increased levels of a hormone called aldosterone. This leads to holding onto salt and fluid and damage to the heart over time. These medicines block the harmful action of this hormone. This helps strengthen the heart and keep you out of the hospital. After starting this medicine or changing the dose, you need blood tests to monitor your potassium level.",
+          "es": "Una de las 4 clases de medicamentos son los ARM. Estos incluyen la espironolactona y la eplerenona. La insuficiencia cardíaca aumenta los niveles de una hormona llamada aldosterona. Esto provoca la retención de sal y líquidos, y con el tiempo, daña el corazón. Estos medicamentos bloquean la acción dañina de esta hormona. Esto ayuda a fortalecer el corazón y a evitar la hospitalización. Después de comenzar a tomar este medicamento o de ajustar la dosis, es necesario realizar análisis de sangre para controlar el nivel de potasio."
+        }
       },
       {
-        "title": "SGLT2 Inhibitors",
+        "title": {
+          "en": "SGLT2 Inhibitors",
+          "es": "Inhibidores del cotransportador 2 de sodio y glucosa (SGLT2)"
+        },
         "youtubeId": "SKrk3OuIiyE",
         "orderIndex": 6,
-        "description": "One of the 4 classes of medicines are SGLT2 inhibitors. These include dapagliflozin, empagliflozin, and sotagliflozin. With heart failure, the pressure in the heart is increased. These medicines lower the extra pressure in the heart by removing water and sugar through the kidneys. This helps people feel better and stay out of the hospital. These medicines can lead to yeast or urine infections. You can lower this risk by keeping the genital area dry after urinating. Let your doctor know if you have any symptoms of an infection."
+        "description": {
+          "en": "One of the 4 classes of medicines are SGLT2 inhibitors. These include dapagliflozin, empagliflozin, and sotagliflozin. With heart failure, the pressure in the heart is increased. These medicines lower the extra pressure in the heart by removing water and sugar through the kidneys. This helps people feel better and stay out of the hospital. These medicines can lead to yeast or urine infections. You can lower this risk by keeping the genital area dry after urinating. Let your doctor know if you have any symptoms of an infection.",
+          "es": "Una de las 4 clases de medicamentos son los inhibidores del cotransportador 2 de sodio y glucosa (sodium-glucose linked transporter-2, SGLT2). Estos incluyen dapagliflozina, empagliflozina y sotagliflozina. En caso de insuficiencia cardíaca, la presión arterial aumenta. Estos medicamentos reducen la presión arterial extra al eliminar agua y azúcar a través de los riñones. Esto ayuda a las personas a sentirse mejor y a evitar la hospitalización. Estos medicamentos pueden provocar infecciones por hongos o infecciones de las vías urinarias. Puede reducir este riesgo manteniendo la zona genital seca después de orinar. Informe a su médico si presenta algún síntoma de infección."
+        }
       },
       {
-        "title": "Diuretics",
+        "title": {
+          "en": "Diuretics",
+          "es": "Diuréticos"
+        },
         "youtubeId": "16UFTq-mZro",
         "orderIndex": 7,
-        "description": "Diuretics are also often called water pills. These include furosemide, bumetanide, and torsemide. With heart failure, your kidneys retain extra salt. The extra salt makes breathing harder and increases swelling. These medicines increase the amount of salt you urinate. This improves how you feel by reducing your swelling and improving your breathing. Too much diuretic can lead to dehydration. Your team may need to adjust the diuretic dose based on your symptoms, your weight, and your blood tests."
+        "description": {
+          "en": "Diuretics are also often called water pills. These include furosemide, bumetanide, and torsemide. With heart failure, your kidneys retain extra salt. The extra salt makes breathing harder and increases swelling. These medicines increase the amount of salt you urinate. This improves how you feel by reducing your swelling and improving your breathing. Too much diuretic can lead to dehydration. Your team may need to adjust the diuretic dose based on your symptoms, your weight, and your blood tests.",
+          "es": "Los diuréticos suelen denominarse píldoras de agua e incluyen la furosemida, la bumetanida y la torsemida. Con la insuficiencia cardíaca, los riñones retienen sal en exceso. Esta sal dificulta la respiración y aumenta la hinchazón. Estos medicamentos aumentan la cantidad de sal que se excreta en la orina. Esto mejora cómo se siente al reducir la hinchazón y mejorar la respiración. Un exceso de diuréticos puede causar deshidratación. Es posible que su equipo deba ajustar la dosis del diurético según sus síntomas, su peso y sus análisis de sangre."
+        }
       }
     ]
   },
   {
-    "title": "Vitals and Lifestyle Videos",
-    "description": "Learn about your vitals and how it affects your heart failure.",
+    "title": {
+      "en": "Vitals and Lifestyle Videos",
+      "es": "Videos sobre signos vitales y estilo de vida"
+    },
+    "description": {
+      "en": "Learn about your vitals and how it affects your heart failure.",
+      "es": "Obtenga información sobre sus signos vitales y cómo afectan su insuficiencia cardíaca."
+    },
     "orderIndex": 3,
     "videos": [
       {
-        "title": "Introduction to Heart Failure",
+        "title": {
+          "en": "Introduction to Heart Failure",
+          "es": "Introducción a la insuficiencia cardíaca"
+        },
         "youtubeId": "-uMPchtoxWQ",
         "orderIndex": 1,
-        "description": "This video explains what heart failure is. The heart works like a pump, pushing blood to the rest of the body. In heart failure, this pump is not working effectively. It is a serious condition. It is treatable with lifelong medications discussed in other videos. The main symptoms of heart failure are shortness of breath, swelling in legs and abdomen, weight gain, and fatigue. Heart failure also increases the risk of abnormal heart rhythms or arrhythmias."
+        "description": {
+          "en": "This video explains what heart failure is. The heart works like a pump, pushing blood to the rest of the body. In heart failure, this pump is not working effectively. It is a serious condition. It is treatable with lifelong medications discussed in other videos. The main symptoms of heart failure are shortness of breath, swelling in legs and abdomen, weight gain, and fatigue. Heart failure also increases the risk of abnormal heart rhythms or arrhythmias.",
+          "es": "Este video explica qué es la insuficiencia cardíaca. El corazón funciona como una bomba, impulsando la sangre al resto del cuerpo. En la insuficiencia cardíaca, esta bomba no funciona eficazmente. Es una afección grave. Se puede tratar con medicamentos de por vida, como se explica en otros videos. Los principales síntomas de la insuficiencia cardíaca son dificultad para respirar, hinchazón en piernas y abdomen, aumento de peso y cansancio. La insuficiencia cardíaca también aumenta el riesgo de ritmos cardíacos anormales o arritmias."
+        }
       },
       {
-        "title": "Blood Pressure Monitoring",
+        "title": {
+          "en": "Blood Pressure Monitoring",
+          "es": "Seguimiento de la presión arterial"
+        },
         "youtubeId": "KBbePdLbwUE",
         "orderIndex": 2,
-        "description": "Monitoring blood pressure is a key part of caring for your heart failure. High blood pressure can worsen your heart function. Many of the heart failure medicines can also lower blood pressure as a side effect. This lower blood pressure can lead to dizziness. You should check your blood pressure daily after your diagnosis or when your medicines are being adjusted. Your blood pressure numbers can guide you and your care team on improving your heart medicines. In the ENGAGE-HF app, you can see your blood pressure trend in the heart health section."
+        "description": {
+          "en": "Monitoring blood pressure is a key part of caring for your heart failure. High blood pressure can worsen your heart function. Many of the heart failure medicines can also lower blood pressure as a side effect. This lower blood pressure can lead to dizziness. You should check your blood pressure daily after your diagnosis or when your medicines are being adjusted. Your blood pressure numbers can guide you and your care team on improving your heart medicines. In the ENGAGE-HF app, you can see your blood pressure trend in the heart health section.",
+          "es": "El seguimiento de la presión arterial es fundamental para la atención médica de la insuficiencia cardíaca. La hipertensión arterial puede empeorar la función cardíaca. Muchos medicamentos para la insuficiencia cardíaca también pueden disminuir la presión arterial como efecto secundario. Esta disminución de la presión arterial puede provocar mareos. Debe hacer seguimiento a su presión arterial diariamente después del diagnóstico o cuando se ajusten sus medicamentos. Sus valores de presión arterial pueden orientarlos a usted y a su equipo médico para mejorar sus medicamentos para el corazón. En la aplicación ENGAGE-HF, puede ver la tendencia de su presión arterial en la sección de salud cardíaca."
+        }
       },
       {
-        "title": "Weight Monitoring",
+        "title": {
+          "en": "Weight Monitoring",
+          "es": "Seguimiento del peso"
+        },
         "youtubeId": "p1fHRIt8Sxc",
         "orderIndex": 3,
-        "description": "A sudden increase in weight is usually related to fluid retention from your heart. You should check your weight at the same time every day. In the ENGAGE-HF app, you can see your weight trend in the heart health section. An increase in weight of more than 3 pounds in one day or 5 pounds in one week might require a change in your care. This can include a change in your diuretics or your water pill. Talk to your care team about what you should do if your weight suddenly increases."
+        "description": {
+          "en": "A sudden increase in weight is usually related to fluid retention from your heart. You should check your weight at the same time every day. In the ENGAGE-HF app, you can see your weight trend in the heart health section. An increase in weight of more than 3 pounds in one day or 5 pounds in one week might require a change in your care. This can include a change in your diuretics or your water pill. Talk to your care team about what you should do if your weight suddenly increases.",
+          "es": "Un aumento repentino de peso suele estar relacionado con la retención de líquidos en el corazón. Debe hacer seguimiento a su peso a la misma hora todos los días. En la aplicación ENGAGE-HF, puede ver la tendencia de su peso en la sección de salud cardíaca. Un aumento de peso de más de 1.36 kg en un día o 2.26 kg en una semana podría requerir un cambio en su atención médica. Esto puede incluir un cambio en sus diuréticos. Consulte con su equipo de atención médica sobre qué debe hacer si su peso aumenta repentinamente."
+        }
       },
       {
-        "title": "Diet and Exercise",
+        "title": {
+          "en": "Diet and Exercise",
+          "es": "Dieta y ejercicio"
+        },
         "youtubeId": "8ETOXtCyO9k",
         "orderIndex": 4,
-        "description": "A good diet and daily exercise is important for your health. High amounts of salt can increase the pressure in your heart and make your breathing worse. Try to eat fresh, non-frozen foods to lower your salt intake. Also avoid adding salt to your meals. We would not generally advise limiting your water intake. Instead, we would have you drink when thirsty. Staying active is also important for feeling better and helping your heart get stronger. If you have not been active recently, speak with your care team first. You should also ask them if you would benefit from cardiac rehab. In general, start slowly and at a level that is comfortable for your body."
+        "description": {
+          "en": "A good diet and daily exercise is important for your health. High amounts of salt can increase the pressure in your heart and make your breathing worse. Try to eat fresh, non-frozen foods to lower your salt intake. Also avoid adding salt to your meals. We would not generally advise limiting your water intake. Instead, we would have you drink when thirsty. Staying active is also important for feeling better and helping your heart get stronger. If you have not been active recently, speak with your care team first. You should also ask them if you would benefit from cardiac rehab. In general, start slowly and at a level that is comfortable for your body.",
+          "es": "Una buena alimentación y el ejercicio diario son importantes para su salud. Un consumo elevado de sal puede aumentar la presión arterial y dificultar la respiración. Intente consumir alimentos frescos y no congelados para reducir su consumo de sal. Evite también añadir sal a sus comidas. Generalmente, no recomendamos limitar el consumo de agua. En su lugar, le recomendamos beber cuando tenga sed. Mantenerse activo también es importante para sentirse mejor y fortalecer su corazón. Si no ha hecho actividad física recientemente, hable primero con su equipo de atención médica. También debería preguntarles si lo beneficiaría la rehabilitación cardíaca. En general, comience lentamente y a un nivel que le resulte cómodo para su cuerpo."
+        }
       }
     ]
   },
   {
-    "title": "Symptom Videos",
-    "description": "Learn about the significance of the Symptom Survey, otherwise known as the KCCQ-12, and dizziness score.",
+    "title": {
+      "en": "Symptom Videos",
+      "es": "Videos sobre síntomas"
+    },
+    "description": {
+      "en": "Learn about the significance of the Symptom Survey, otherwise known as the KCCQ-12, and dizziness score.",
+      "es": "Conozca la importancia del Cuestionario de síntomas, también conocido como Cuestionario de cardiomiopatía de Kansas City 12 (Kansas City Cardiomyopathy questionaire 12, KCCQ-12), y la puntuación de mareos."
+    },
     "orderIndex": 4,
     "videos": [
       {
-        "title": "Health Status",
+        "title": {
+          "en": "Health Status",
+          "es": "Estado de salud"
+        },
         "youtubeId": "5TqT6OMnCbE",
         "orderIndex": 1,
-        "description": "The KCCQ-12 is a set of 12 questions that measure how your heart affects how you feel. There are four different categories. First, how your heart affects what you can do physically (physical limitations). Second, how frequently you have symptoms from your heart (symptom frequency). Third, how your heart affects how you feel overall (qualify of life). Finally, how your heart affects what you can do socially (social limitations). For each question, it asks you to think back about how you felt over the prior 2 weeks. Your answers lead to a score in each category and a combined score. Scores go from 0% (poor status) to 100% (ideal status). Scores on the KCCQ-12 every 2 weeks can help you and your care team track how you are doing over time. Also, the scores on the KCCQ-12 are strong predictors for your risk with your heart. Scores of over 80 indicate lower risk of ending up in the hospital."
+        "description": {
+          "en": "The KCCQ-12 is a set of 12 questions that measure how your heart affects how you feel. There are four different categories. First, how your heart affects what you can do physically (physical limitations). Second, how frequently you have symptoms from your heart (symptom frequency). Third, how your heart affects how you feel overall (qualify of life). Finally, how your heart affects what you can do socially (social limitations). For each question, it asks you to think back about how you felt over the prior 2 weeks. Your answers lead to a score in each category and a combined score. Scores go from 0% (poor status) to 100% (ideal status). Scores on the KCCQ-12 every 2 weeks can help you and your care team track how you are doing over time. Also, the scores on the KCCQ-12 are strong predictors for your risk with your heart. Scores of over 80 indicate lower risk of ending up in the hospital.",
+          "es": "El KCCQ-12 es un conjunto de 12 preguntas que miden cómo su corazón afecta cómo se siente. Hay cuatro categorías diferentes. Primero, cómo su corazón afecta lo que puede hacer físicamente (limitaciones físicas). Segundo, con qué frecuencia tiene síntomas cardíacos (frecuencia de los síntomas). Tercero, cómo su corazón afecta cómo se siente en general (calidad de vida). Finalmente, cómo su corazón afecta lo que puede hacer socialmente (limitaciones sociales). Para cada pregunta, le pide que recuerde cómo se sintió durante las 2 semanas anteriores. Sus respuestas conducen a una puntuación en cada categoría y una puntuación combinada. Las puntuaciones van del 0 % (estado malo) al 100 % (estado ideal). Las puntuaciones en el KCCQ-12 cada 2 semanas pueden ayudarlos a usted y a su equipo de atención médica a realizar un seguimiento de su estado a lo largo del tiempo. Además, las puntuaciones en el KCCQ-12 son predictores sólidos de su riesgo cardíaco. Las puntuaciones de más de 80 indican un menor riesgo de terminar en el hospital."
+        }
       },
       {
-        "title": "Dizziness",
+        "title": {
+          "en": "Dizziness",
+          "es": "Mareos"
+        },
         "youtubeId": "d_MVN08JdTs",
         "orderIndex": 2,
-        "description": "Dizziness is a common symptom in heart failure. Dizziness can happen for multiple reasons. First, it can be related to the heart’s weakness. Second, it could be related to the medicines being used to treat the heart. Third, it could be related to abnormal heart rhythms. Finally, it could be related to other conditions other than the heart. The ENGAGE-HF app tracks the severity of your dizziness every 2 weeks to help you and your care team make decisions about your medicines. There are multiple tips to control your dizziness. First, you can try to change positions slowly and steady yourself before walking. Second, you can also try to pump your legs up and down before standing. Third, you can spread your medications over the day rather than taking them at one time."
+        "description": {
+          "en": "Dizziness is a common symptom in heart failure. Dizziness can happen for multiple reasons. First, it can be related to the heart’s weakness. Second, it could be related to the medicines being used to treat the heart. Third, it could be related to abnormal heart rhythms. Finally, it could be related to other conditions other than the heart. The ENGAGE-HF app tracks the severity of your dizziness every 2 weeks to help you and your care team make decisions about your medicines. There are multiple tips to control your dizziness. First, you can try to change positions slowly and steady yourself before walking. Second, you can also try to pump your legs up and down before standing. Third, you can spread your medications over the day rather than taking them at one time.",
+          "es": "El mareo es un síntoma común en la insuficiencia cardíaca. Puede ocurrir por varias razones. Primero, puede estar relacionado con la debilidad cardíaca. Segundo, podría estar relacionado con los medicamentos que se usan para tratar el corazón. Tercero, podría estar relacionado con ritmos cardíacos anormales. Finalmente, podría estar relacionado con otras afecciones además de las del corazón. La aplicación ENGAGE-HF hace seguimiento a la gravedad de su mareo cada 2 semanas para ayudarlos a usted y a su equipo de atención médica a tomar decisiones sobre sus medicamentos. Hay varios consejos para controlar el mareo. Primero, puede intentar cambiar de posición lentamente y estabilizarse antes de caminar. Segundo, también puede intentar mover las piernas hacia arriba y hacia abajo antes de ponerse de pie. Tercero, puede distribuir sus medicamentos a lo largo del día en lugar de tomarlos todos a la vez."
+        }
       }
     ]
   }
