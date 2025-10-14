@@ -25,12 +25,15 @@ export const messagesLocalization = {
   },
   kccqDeclineTitleForClinician: {
     en: "KCCQ Score dropped",
+    es: "La puntuación del KCCQ bajó",
   },
   kccqDeclineDescriptionForClinician: {
     en: "@0 has submitted a drop in KCCQ score. You can review med information on the user detail page.",
+    es: "@0 ha presentado una bajada en su puntuación del KCCQ. Puede consultar la información médica en la página de detalles del usuario.",
   },
   kccqDeclineDescriptionForClinicianNoName: {
     en: "Patient has submitted a drop in KCCQ score. You can review med information on the user detail page.",
+    es: "El paciente ha reportado una disminución en su puntuación del KCCQ. Puede revisar la información médica en la página de detalles del usuario.",
   },
   medicationChangeTitle: {
     en: "Medication Change",
@@ -62,9 +65,11 @@ export const messagesLocalization = {
   },
   postAppointmentTitle: {
     en: "Post-Appointment Survey",
+    es: "Cuestionario posterior a la cita",
   },
   postAppointmentDescription: {
     en: "Update us about what has changed during your last appointment.",
+    es: "Infórmenos sobre lo que ha cambiado durante su última cita.",
   },
   preAppointmentTitle: {
     en: "Appointment Reminder",
@@ -88,9 +93,11 @@ export const messagesLocalization = {
   },
   registrationQuestionnaireTitle: {
     en: "Registration Survey",
+    es: "Cuestionario de registro",
   },
   registrationQuestionnaireDescription: {
     en: "Complete registration by filling out this survey.",
+    es: "Complete el registro rellenando este cuestionario.",
   },
   symptomQuestionnaireTitle: {
     en: "Symptom Questionnaire",
