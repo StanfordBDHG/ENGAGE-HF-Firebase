@@ -50,14 +50,13 @@ export const beforeUserCreatedFunction = beforeUserCreated(
 
     let emailAddress: string | undefined = undefined;
     try {
-      const credentialClaims = event.credential?.claims ?? {};
       emailAddress = z
         .string()
         .optional()
         .parse(
           event.data.email ??
-            credentialClaims["upn"] ??
-            credentialClaims["unique_name"],
+            credential.claims?.["upn"] ??
+            credential.claims?.["unique_name"],
         );
     } catch (error: unknown) {
       logger.error(
