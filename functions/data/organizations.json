@@ -25,6 +25,6 @@
     "contactName": "University of Washington Study Coordinator",
     "phoneNumber": "",
     "emailAddress": "",
-    "ssoProviderId": ""
+    "ssoProviderId": "oidc.entra.uw.edu"
   }
 }
