@@ -16,6 +16,7 @@ import { privilegedServiceAccount } from "./helpers.js";
 import { Env } from "../env.js";
 import { Flags } from "../flags.js";
 import { getServiceFactory } from "../services/factory/getServiceFactory.js";
+import z from "zod";
 
 export const beforeUserCreatedFunction = beforeUserCreated(
   {
@@ -47,11 +48,30 @@ export const beforeUserCreatedFunction = beforeUserCreated(
       return { customClaims: {} };
     }
 
-    logger.info(
-      `${userId}: About to check email address: ${event.data.email}.`,
-    );
+    let emailAddress: string | undefined = undefined;
+    try {
+      const credentialClaims = event.credential?.claims ?? {};
+      emailAddress = z
+        .string()
+        .optional()
+        .parse(
+          event.data.email ??
+            credentialClaims["upn"] ??
+            credentialClaims["unique_name"],
+        );
+    } catch (error: unknown) {
+      logger.error(
+        `${userId}: Email address validation failed ${String(error)}.`,
+      );
+      throw new https.HttpsError(
+        "invalid-argument",
+        "Email address validation failed.",
+      );
+    }
 
-    if (event.data.email === undefined) {
+    logger.info(`${userId}: About to check email address: ${emailAddress}.`);
+
+    if (emailAddress === undefined) {
       logger.error(`Email address not set.`);
       throw new https.HttpsError(
         "invalid-argument",
@@ -77,14 +97,12 @@ export const beforeUserCreatedFunction = beforeUserCreated(
       );
     }
 
-    logger.info(
-      `${userId}: About to get invitation by code: ${event.data.email}.`,
-    );
+    logger.info(`${userId}: About to get invitation by code: ${emailAddress}.`);
 
-    const invitation = await userService.getInvitationByCode(event.data.email);
+    const invitation = await userService.getInvitationByCode(emailAddress);
     if (invitation?.content === undefined) {
       logger.error(
-        `${userId}: No valid invitation code found for user with email ${event.data.email}.`,
+        `${userId}: No valid invitation code found for user with email ${emailAddress}.`,
       );
       throw new https.HttpsError(
         "not-found",
