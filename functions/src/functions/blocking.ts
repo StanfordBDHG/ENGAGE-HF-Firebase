@@ -12,11 +12,11 @@ import {
   beforeUserCreated,
   beforeUserSignedIn,
 } from "firebase-functions/v2/identity";
+import z from "zod";
 import { privilegedServiceAccount } from "./helpers.js";
 import { Env } from "../env.js";
 import { Flags } from "../flags.js";
 import { getServiceFactory } from "../services/factory/getServiceFactory.js";
-import z from "zod";
 
 export const beforeUserCreatedFunction = beforeUserCreated(
   {
