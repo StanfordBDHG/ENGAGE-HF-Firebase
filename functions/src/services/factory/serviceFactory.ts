@@ -19,6 +19,7 @@ import { type DebugDataService } from "../seeding/debugData/debugDataService.js"
 import { type StaticDataService } from "../seeding/staticData/staticDataService.js";
 import { type TriggerService } from "../trigger/triggerService.js";
 import { type UserService } from "../user/userService.js";
+import { ExportService } from "../export/exportService.js";
 
 export interface ServiceFactory {
   // Users
@@ -35,6 +36,7 @@ export interface ServiceFactory {
 
   // Patients
 
+  export(): ExportService;
   healthSummary(): HealthSummaryService;
   patient(): PatientService;
   questionnaireResponse(): QuestionnaireResponseService;

@@ -23,6 +23,7 @@ export * from "./functions/dismissMessage.js";
 export * from "./functions/dismissMessages.js";
 export * from "./functions/enableUser.js";
 export * from "./functions/enrollUser.js";
+export * from "./functions/exportData.js";
 export * from "./functions/exportHealthSummary.js";
 export * from "./functions/getUsersInformation.js";
 export * from "./functions/onHistoryWritten.js";

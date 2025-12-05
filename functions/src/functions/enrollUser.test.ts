@@ -23,7 +23,6 @@ import {
   QuestionnaireReference,
 } from "@stanfordbdhg/engagehf-models";
 import { enrollUser } from "./enrollUser.js";
-import { QuestionnaireId } from "../services/seeding/staticData/questionnaireFactory/questionnaireLinkIds.js";
 import { describeWithEmulators } from "../tests/functions/testEnvironment.js";
 import { expectError } from "../tests/helpers.js";
 

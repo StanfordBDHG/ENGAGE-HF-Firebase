@@ -42,6 +42,8 @@ import { StaticDataService } from "../seeding/staticData/staticDataService.js";
 import { TriggerService } from "../trigger/triggerService.js";
 import { DatabaseUserService } from "../user/databaseUserService.js";
 import { type UserService } from "../user/userService.js";
+import { DefaultExportService } from "../export/defaultExportService.js";
+import { ExportService } from "../export/exportService.js";
 
 export class DefaultServiceFactory implements ServiceFactory {
   // Properties - Options
@@ -73,6 +75,11 @@ export class DefaultServiceFactory implements ServiceFactory {
   );
 
   private readonly egfrCalculator = new Lazy(() => new EgfrCalculator());
+
+  private readonly exportService = new Lazy(
+    () =>
+      new DefaultExportService(this.databaseService.value, this.userService.value),
+  );
 
   private readonly healthSummaryService = new Lazy(
     () =>
@@ -198,6 +205,10 @@ export class DefaultServiceFactory implements ServiceFactory {
   }
 
   // Methods - Patient
+
+  export(): ExportService {
+    return this.exportService.value;
+  }
 
   healthSummary(): HealthSummaryService {
     return this.healthSummaryService.value;
