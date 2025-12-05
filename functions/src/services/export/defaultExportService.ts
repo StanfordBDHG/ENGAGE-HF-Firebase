@@ -6,22 +6,26 @@
 // SPDX-License-Identifier: MIT
 //
 
-import archiver, { Archiver } from "archiver";
-import { UserService } from "../user/userService";
-import { ExportService } from "./exportService";
-import { FHIRQuestionnaireItem, FHIRQuestionnaireResponseItem, LoincCode, UserObservationCollection } from "@stanfordbdhg/engagehf-models";
-import { DatabaseService } from "../database/databaseService";
-import { QuestionnaireId, QuestionnaireLinkId } from "../seeding/staticData/questionnaireFactory/questionnaireLinkIds";
+import {
+  type FHIRQuestionnaireItem,
+  LoincCode,
+  UserObservationCollection,
+} from "@stanfordbdhg/engagehf-models";
+import archiver, { type Archiver } from "archiver";
 import { https } from "firebase-functions/v2";
+import { type ExportService } from "./exportService.js";
+import { type DatabaseService } from "../database/databaseService.js";
+import {
+  QuestionnaireId,
+  QuestionnaireLinkId,
+} from "../seeding/staticData/questionnaireFactory/questionnaireLinkIds.js";
+import { type UserService } from "../user/userService.js";
 
 export class DefaultExportService implements ExportService {
   private readonly databaseService: DatabaseService;
   private readonly userService: UserService;
 
-  constructor(
-    databaseService: DatabaseService, 
-    userService: UserService
-  ) {
+  constructor(databaseService: DatabaseService, userService: UserService) {
     this.databaseService = databaseService;
     this.userService = userService;
   }
@@ -29,55 +33,54 @@ export class DefaultExportService implements ExportService {
   async exportPatientDataForUser(userId: string): Promise<Buffer> {
     const patient = await this.userService.getUser(userId);
     if (!patient) {
-      throw new https.HttpsError("not-found", `Patient with ID ${userId} not found`);
+      throw new https.HttpsError(
+        "not-found",
+        `Patient with ID ${userId} not found`,
+      );
     }
-    return await this.createPatientsZipBuffer([patient.id]);
+    return this.createPatientsZipBuffer([patient.id]);
   }
 
-  async exportPatientDataForOrganization(organizationId: string): Promise<Buffer> {
+  async exportPatientDataForOrganization(
+    organizationId: string,
+  ): Promise<Buffer> {
     const patients = await this.userService.getAllPatients();
     const filteredPatients = patients.filter(
       (patient) => patient.content.organization === organizationId,
     );
-    return await this.createPatientsZipBuffer(
-      filteredPatients.map(patient => patient.id)
+    return this.createPatientsZipBuffer(
+      filteredPatients.map((patient) => patient.id),
     );
   }
 
   async exportPatientDataForAll(): Promise<Buffer> {
     const patients = await this.userService.getAllPatients();
-    return await this.createPatientsZipBuffer(
-      patients.map(patient => patient.id)
-    );
+    return this.createPatientsZipBuffer(patients.map((patient) => patient.id));
   }
 
   // Helpers - Patient Data Export
 
-  private async createPatientsZipBuffer(
-    userIds: string[],
-  ): Promise<Buffer> {
-    return this.createZipBuffer(
-      async (archive) => {
-        await this.addQuestionnaires(archive);
-        for (const userId of userIds) {
-          await Promise.all([
-            this.addUserAppointments(userId, archive),
-            this.addUserMedicationRequests(userId, archive),
-            this.addUserMessages(userId, archive),
-            ...Object.values(UserObservationCollection).map(
-              (collection) => this.addUserObservations(userId, collection, archive)
-            ),
-            this.addUserQuestionnaireResponses(userId, archive),
-            this.addUserSymptomScores(userId, archive),
-          ]);
-        }
-      },
-    );
+  private async createPatientsZipBuffer(userIds: string[]): Promise<Buffer> {
+    return this.createZipBuffer(async (archive) => {
+      await this.addQuestionnaires(archive);
+      for (const userId of userIds) {
+        await Promise.all([
+          this.addUserAppointments(userId, archive),
+          this.addUserMedicationRequests(userId, archive),
+          this.addUserMessages(userId, archive),
+          ...Object.values(UserObservationCollection).map((collection) =>
+            this.addUserObservations(userId, collection, archive),
+          ),
+          this.addUserQuestionnaireResponses(userId, archive),
+          this.addUserSymptomScores(userId, archive),
+        ]);
+      }
+    });
   }
 
   private async addQuestionnaires(archiver: Archiver): Promise<void> {
-    const questionnaires = await this.databaseService.getQuery((collections) =>
-      collections.questionnaires
+    const questionnaires = await this.databaseService.getQuery(
+      (collections) => collections.questionnaires,
     );
 
     function leafItems(item: FHIRQuestionnaireItem): FHIRQuestionnaireItem[] {
@@ -89,15 +92,19 @@ export class DefaultExportService implements ExportService {
     }
 
     for (const questionnaire of questionnaires) {
-      const items = (questionnaire.content.item ?? [])
-        .flatMap((item) => leafItems(item));
+      const items = (questionnaire.content.item ?? []).flatMap((item) =>
+        leafItems(item),
+      );
 
-      const buffer = await this.createCsvBuffer(
+      const buffer = this.createCsvBuffer(
         ["linkId", "text", "type", "options"],
         items,
         (value) => {
           const options = (value.answerOption ?? [])
-            .map((option) => `${JSON.stringify(option.valueCoding?.display ?? "")} (${option.valueCoding?.code ?? ""})`)
+            .map(
+              (option) =>
+                `${JSON.stringify(option.valueCoding?.display ?? "")} (${option.valueCoding?.code ?? ""})`,
+            )
             .join("|");
 
           return [
@@ -106,28 +113,33 @@ export class DefaultExportService implements ExportService {
             value.type ?? "",
             options,
           ];
-        }
+        },
       );
 
-      archiver.append(buffer, { name: `questionnaire_${questionnaire.id}.csv` });
+      archiver.append(buffer, {
+        name: `questionnaire_${questionnaire.id}.csv`,
+      });
     }
   }
 
-  private async addUserAppointments(userId: string, archiver: Archiver): Promise<void> {
+  private async addUserAppointments(
+    userId: string,
+    archiver: Archiver,
+  ): Promise<void> {
     const appointments = await this.databaseService.getQuery((collections) =>
-      collections.userAppointments(userId)
+      collections.userAppointments(userId),
     );
 
-    const buffer = await this.createCsvBuffer(
+    const buffer = this.createCsvBuffer(
       ["id", "status", "created", "start", "end"],
       appointments,
       (value) => [
         value.id,
         value.content.status,
-        value.content.created.toISOString() ?? "",
-        value.content.start?.toISOString() ?? "",
-        value.content.end?.toISOString() ?? "",
-      ]
+        value.content.created.toISOString(),
+        value.content.start.toISOString(),
+        value.content.end.toISOString(),
+      ],
     );
 
     archiver.append(buffer, { name: `${userId}/appointments.csv` });
@@ -135,14 +147,23 @@ export class DefaultExportService implements ExportService {
 
   private async addUserMessages(
     userId: string,
-    archiver: Archiver
+    archiver: Archiver,
   ): Promise<void> {
     const messages = await this.databaseService.getQuery((collections) =>
-      collections.userMessages(userId)
+      collections.userMessages(userId),
     );
-    
-    const buffer = await this.createCsvBuffer(
-      ["id", "type", "title", "action", "reference", "creationDate", "completionDate", "dueDate"],
+
+    const buffer = this.createCsvBuffer(
+      [
+        "id",
+        "type",
+        "title",
+        "action",
+        "reference",
+        "creationDate",
+        "completionDate",
+        "dueDate",
+      ],
       messages,
       (value) => [
         value.id,
@@ -153,7 +174,7 @@ export class DefaultExportService implements ExportService {
         value.content.creationDate.toISOString(),
         value.content.completionDate?.toISOString() ?? "",
         value.content.dueDate?.toISOString() ?? "",
-      ]
+      ],
     );
 
     archiver.append(buffer, { name: `${userId}/messages.csv` });
@@ -161,19 +182,31 @@ export class DefaultExportService implements ExportService {
 
   private async addUserMedicationRequests(
     userId: string,
-    archiver: Archiver
+    archiver: Archiver,
   ): Promise<void> {
     const medications = await this.databaseService.getQuery((collections) =>
-      collections.userMedicationRequests(userId)
+      collections.userMedicationRequests(userId),
     );
 
-    const buffer = await this.createCsvBuffer(
-      ["id", "medicationCode (RxNorm)", "drugCode (RxNorm)", "quantity", "quantityUnit", "frequencyPerDay"],
+    const buffer = this.createCsvBuffer(
+      [
+        "id",
+        "medicationCode (RxNorm)",
+        "drugCode (RxNorm)",
+        "quantity",
+        "quantityUnit",
+        "frequencyPerDay",
+      ],
       medications,
       (value) => {
-        const referenceParts = value.content.medicationReference?.reference?.split("/") ?? [];
-        const quantity = value.content.dosageInstruction?.at(0)?.doseAndRate?.at(0)?.doseQuantity;
-        const frequency = value.content.dosageInstruction?.at(0)?.timing?.repeat?.frequency;
+        const referenceParts = (
+          value.content.medicationReference?.reference ?? ""
+        ).split("/");
+        const quantity = value.content.dosageInstruction
+          ?.at(0)
+          ?.doseAndRate?.at(0)?.doseQuantity;
+        const frequency =
+          value.content.dosageInstruction?.at(0)?.timing?.repeat?.frequency;
         return [
           value.id,
           referenceParts[1],
@@ -182,37 +215,46 @@ export class DefaultExportService implements ExportService {
           quantity?.unit ?? "",
           frequency?.toString() ?? "",
         ];
-      }
+      },
     );
 
     archiver.append(buffer, { name: `${userId}/medicationRequests.csv` });
   }
 
   private async addUserObservations(
-    userId: string, 
-    collection: UserObservationCollection, 
-    archiver: Archiver
+    userId: string,
+    collection: UserObservationCollection,
+    archiver: Archiver,
   ): Promise<void> {
     const observations = await this.databaseService.getQuery((collections) =>
-      collections.userObservations(userId, collection)
+      collections.userObservations(userId, collection),
     );
-  
+
     let buffer: Buffer;
     switch (collection) {
       case UserObservationCollection.bloodPressure:
-        buffer = await this.createCsvBuffer(
-          ["id", "systolicValue", "systolicUnit", "diastolicValue", "diastolicUnit", "effectiveDateTime"],
+        buffer = this.createCsvBuffer(
+          [
+            "id",
+            "systolicValue",
+            "systolicUnit",
+            "diastolicValue",
+            "diastolicUnit",
+            "effectiveDateTime",
+          ],
           observations,
           (value) => {
             const systolicComponent = value.content.component?.find(
-              (component) => component.code.coding?.some(
-                (coding) => coding.code === LoincCode.systolicBloodPressure,
-              ),
+              (component) =>
+                component.code.coding?.some(
+                  (coding) => coding.code === LoincCode.systolicBloodPressure,
+                ),
             );
             const diastolicComponent = value.content.component?.find(
-              (component) => component.code.coding?.some(
-                (coding) => coding.code === LoincCode.diastolicBloodPressure,
-              ),
+              (component) =>
+                component.code.coding?.some(
+                  (coding) => coding.code === LoincCode.diastolicBloodPressure,
+                ),
             );
             return [
               value.id,
@@ -222,11 +264,11 @@ export class DefaultExportService implements ExportService {
               diastolicComponent?.valueQuantity?.unit ?? "",
               value.content.effectiveDateTime?.toISOString() ?? "",
             ];
-          }
+          },
         );
         break;
       default:
-        buffer = await this.createCsvBuffer(
+        buffer = this.createCsvBuffer(
           ["id", "value", "unit", "effectiveDateTime"],
           observations,
           (value) => [
@@ -234,7 +276,7 @@ export class DefaultExportService implements ExportService {
             value.content.valueQuantity?.value?.toString() ?? "",
             value.content.valueQuantity?.unit ?? "",
             value.content.effectiveDateTime?.toISOString() ?? "",
-          ]
+          ],
         );
         break;
     }
@@ -243,67 +285,121 @@ export class DefaultExportService implements ExportService {
 
   private async addUserQuestionnaireResponses(
     userId: string,
-    archiver: Archiver
+    archiver: Archiver,
   ): Promise<void> {
-    const questionnaireResponses = await this.databaseService.getQuery((collections) =>
-      collections.userQuestionnaireResponses(userId)
+    const questionnaireResponses = await this.databaseService.getQuery(
+      (collections) => collections.userQuestionnaireResponses(userId),
     );
 
     const kccqResponses = questionnaireResponses.filter(
-      (response) => response.content.questionnaire === QuestionnaireLinkId.url(
-        QuestionnaireId.kccq,
-      )
+      (response) =>
+        response.content.questionnaire ===
+        QuestionnaireLinkId.url(QuestionnaireId.kccq),
     );
 
-    const buffer = await this.createCsvBuffer(
-      ["id", "q1a", "q1b", "q1c", "q2", "q3", "q4", "q5", "q6", "q7", "q8a", "q8b", "q8c", "q9", "authored"],
+    const buffer = this.createCsvBuffer(
+      [
+        "id",
+        "q1a",
+        "q1b",
+        "q1c",
+        "q2",
+        "q3",
+        "q4",
+        "q5",
+        "q6",
+        "q7",
+        "q8a",
+        "q8b",
+        "q8c",
+        "q9",
+        "authored",
+      ],
       kccqResponses,
       (value) => {
         return [
           value.id,
-          value.content.leafResponseItem(QuestionnaireLinkId.kccq.question1a)?.answer?.at(0)?.valueCoding?.code ?? "",
-          value.content.leafResponseItem(QuestionnaireLinkId.kccq.question1b)?.answer?.at(0)?.valueCoding?.code ?? "",
-          value.content.leafResponseItem(QuestionnaireLinkId.kccq.question1c)?.answer?.at(0)?.valueCoding?.code ?? "",
-          value.content.leafResponseItem(QuestionnaireLinkId.kccq.question2)?.answer?.at(0)?.valueCoding?.code ?? "",
-          value.content.leafResponseItem(QuestionnaireLinkId.kccq.question3)?.answer?.at(0)?.valueCoding?.code ?? "",
-          value.content.leafResponseItem(QuestionnaireLinkId.kccq.question4)?.answer?.at(0)?.valueCoding?.code ?? "",
-          value.content.leafResponseItem(QuestionnaireLinkId.kccq.question5)?.answer?.at(0)?.valueCoding?.code ?? "",
-          value.content.leafResponseItem(QuestionnaireLinkId.kccq.question6)?.answer?.at(0)?.valueCoding?.code ?? "",
-          value.content.leafResponseItem(QuestionnaireLinkId.kccq.question7)?.answer?.at(0)?.valueCoding?.code ?? "",
-          value.content.leafResponseItem(QuestionnaireLinkId.kccq.question8a)?.answer?.at(0)?.valueCoding?.code ?? "",
-          value.content.leafResponseItem(QuestionnaireLinkId.kccq.question8b)?.answer?.at(0)?.valueCoding?.code ?? "",
-          value.content.leafResponseItem(QuestionnaireLinkId.kccq.question8c)?.answer?.at(0)?.valueCoding?.code ?? "",
-          value.content.leafResponseItem(QuestionnaireLinkId.kccq.question9)?.answer?.at(0)?.valueCoding?.code ?? "",
+          value.content
+            .leafResponseItem(QuestionnaireLinkId.kccq.question1a)
+            ?.answer?.at(0)?.valueCoding?.code ?? "",
+          value.content
+            .leafResponseItem(QuestionnaireLinkId.kccq.question1b)
+            ?.answer?.at(0)?.valueCoding?.code ?? "",
+          value.content
+            .leafResponseItem(QuestionnaireLinkId.kccq.question1c)
+            ?.answer?.at(0)?.valueCoding?.code ?? "",
+          value.content
+            .leafResponseItem(QuestionnaireLinkId.kccq.question2)
+            ?.answer?.at(0)?.valueCoding?.code ?? "",
+          value.content
+            .leafResponseItem(QuestionnaireLinkId.kccq.question3)
+            ?.answer?.at(0)?.valueCoding?.code ?? "",
+          value.content
+            .leafResponseItem(QuestionnaireLinkId.kccq.question4)
+            ?.answer?.at(0)?.valueCoding?.code ?? "",
+          value.content
+            .leafResponseItem(QuestionnaireLinkId.kccq.question5)
+            ?.answer?.at(0)?.valueCoding?.code ?? "",
+          value.content
+            .leafResponseItem(QuestionnaireLinkId.kccq.question6)
+            ?.answer?.at(0)?.valueCoding?.code ?? "",
+          value.content
+            .leafResponseItem(QuestionnaireLinkId.kccq.question7)
+            ?.answer?.at(0)?.valueCoding?.code ?? "",
+          value.content
+            .leafResponseItem(QuestionnaireLinkId.kccq.question8a)
+            ?.answer?.at(0)?.valueCoding?.code ?? "",
+          value.content
+            .leafResponseItem(QuestionnaireLinkId.kccq.question8b)
+            ?.answer?.at(0)?.valueCoding?.code ?? "",
+          value.content
+            .leafResponseItem(QuestionnaireLinkId.kccq.question8c)
+            ?.answer?.at(0)?.valueCoding?.code ?? "",
+          value.content
+            .leafResponseItem(QuestionnaireLinkId.kccq.question9)
+            ?.answer?.at(0)?.valueCoding?.code ?? "",
           value.content.authored?.toISOString() ?? "",
         ];
-      }
+      },
     );
 
-    archiver.append(buffer, { name: `${userId}/questionnaireResponses_kccq.csv` });
+    archiver.append(buffer, {
+      name: `${userId}/questionnaireResponses_kccq.csv`,
+    });
   }
 
   private async addUserSymptomScores(
     userId: string,
-    archiver: Archiver
+    archiver: Archiver,
   ): Promise<void> {
     const symptomScores = await this.databaseService.getQuery((collections) =>
-      collections.userSymptomScores(userId)
+      collections.userSymptomScores(userId),
     );
 
-    const buffer = await this.createCsvBuffer(
-      ["id", "overallScore", "physicalLimitsScore", "socialLimitsScore", "symptomFrequencyScore", "qualityOfLifeScore", "dizzinessScore", "date", "questionnaireResponseId"],
+    const buffer = this.createCsvBuffer(
+      [
+        "id",
+        "overallScore",
+        "physicalLimitsScore",
+        "socialLimitsScore",
+        "symptomFrequencyScore",
+        "qualityOfLifeScore",
+        "dizzinessScore",
+        "date",
+        "questionnaireResponseId",
+      ],
       symptomScores,
       (value) => [
         value.id,
-        value.content.overallScore?.toString() ?? "",
+        value.content.overallScore.toString(),
         value.content.physicalLimitsScore?.toString() ?? "",
         value.content.socialLimitsScore?.toString() ?? "",
         value.content.symptomFrequencyScore?.toString() ?? "",
         value.content.qualityOfLifeScore?.toString() ?? "",
-        value.content.dizzinessScore?.toString() ?? "",
+        value.content.dizzinessScore.toString(),
         value.content.date.toISOString(),
         value.content.questionnaireResponseId ?? "",
-      ]
+      ],
     );
 
     archiver.append(buffer, { name: `${userId}/symptomScores.csv` });
@@ -311,25 +407,25 @@ export class DefaultExportService implements ExportService {
 
   // Helpers - File Creation
 
-  private async createCsvBuffer<T>(
-    headers: string[], 
+  private createCsvBuffer<T>(
+    headers: string[],
     values: T[],
-    row: (item: T) => string[]
-  ): Promise<Buffer> {
+    row: (item: T) => string[],
+  ): Buffer {
     const string = [
       headers.join(";"),
-      ...values.map(item => row(item).join(";"))
+      ...values.map((item) => row(item).join(";")),
     ].join("\n");
     return Buffer.from(string);
   }
 
   private async createZipBuffer(
-    generate: (archiver: Archiver) => Promise<void>
+    generate: (archiver: Archiver) => Promise<void>,
   ): Promise<Buffer> {
     return new Promise<Buffer>((resolve, reject) => {
       const archive = archiver("zip", { zlib: { level: 9 } });
       const chunks: Buffer[] = [];
-      
+
       archive.on("data", (chunk) => {
         chunks.push(chunk);
       });
@@ -343,8 +439,8 @@ export class DefaultExportService implements ExportService {
       });
 
       generate(archive)
-         .then(() => archive.finalize())
-         .catch(reject);
+        .then(() => archive.finalize())
+        .catch(reject);
     });
   }
 }

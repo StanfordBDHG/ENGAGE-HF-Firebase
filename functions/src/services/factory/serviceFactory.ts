@@ -8,6 +8,7 @@
 
 import { type AuthData } from "firebase-functions/v2/tasks";
 import { type Credential } from "../credential/credential.js";
+import { type ExportService } from "../export/exportService.js";
 import { type HealthSummaryService } from "../healthSummary/healthSummaryService.js";
 import { type HistoryService } from "../history/historyService.js";
 import { type MedicationService } from "../medication/medicationService.js";
@@ -19,7 +20,6 @@ import { type DebugDataService } from "../seeding/debugData/debugDataService.js"
 import { type StaticDataService } from "../seeding/staticData/staticDataService.js";
 import { type TriggerService } from "../trigger/triggerService.js";
 import { type UserService } from "../user/userService.js";
-import { ExportService } from "../export/exportService.js";
 
 export interface ServiceFactory {
   // Users

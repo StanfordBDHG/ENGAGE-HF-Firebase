@@ -21,15 +21,15 @@ import {
   VideoSection,
 } from "@stanfordbdhg/engagehf-models";
 import { z } from "zod";
+import { SeedingService } from "../seedingService.js";
+import { DataUpdateQuestionnaireFactory } from "./questionnaireFactory/dataUpdateQuestionnaireFactory.js";
+import { KccqQuestionnaireFactory } from "./questionnaireFactory/kccqQuestionnaireFactory.js";
+import { RegistrationQuestionnaireFactory } from "./questionnaireFactory/registrationQuestionnaireFactory.js";
 import {
   medicationClassSpecificationSchema,
   type RxNormService,
 } from "./rxNorm/rxNormService.js";
 import { type DatabaseService } from "../../database/databaseService.js";
-import { SeedingService } from "../seedingService.js";
-import { DataUpdateQuestionnaireFactory } from "./questionnaireFactory/dataUpdateQuestionnaireFactory.js";
-import { KccqQuestionnaireFactory } from "./questionnaireFactory/kccqQuestionnaireFactory.js";
-import { RegistrationQuestionnaireFactory } from "./questionnaireFactory/registrationQuestionnaireFactory.js";
 
 export class StaticDataService extends SeedingService {
   // Properties

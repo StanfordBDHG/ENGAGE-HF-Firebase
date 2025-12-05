@@ -6,28 +6,37 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { CachingStrategy, DebugDataComponent, StaticDataComponent, UserDebugDataComponent, UserObservationCollection, UserType } from "@stanfordbdhg/engagehf-models";
-import { describeWithEmulators } from "../tests/functions/testEnvironment.js";
-import { exportData } from "./exportData.js";
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+
 import { writeFileSync } from "fs";
+import {
+  CachingStrategy,
+  DebugDataComponent,
+  StaticDataComponent,
+  UserDebugDataComponent,
+  UserObservationCollection,
+  UserType,
+} from "@stanfordbdhg/engagehf-models";
+import yauzl, { type ZipFile } from "yauzl-promise";
 import { _defaultSeed } from "./defaultSeed.js";
+import { exportData } from "./exportData.js";
+import { describeWithEmulators } from "../tests/functions/testEnvironment.js";
 import { TestFlags } from "../tests/testFlags.js";
-import yauzl, { ZipFile } from "yauzl-promise";
 
 describeWithEmulators("function: exportData", (env) => {
   const date = new Date(0);
-  const filePath = 'src/tests/resources/patientExport.zip';
-  const patientId = 'engagehf-patient0-stanford.edu';
+  const filePath = "src/tests/resources/patientExport.zip";
+  const patientId = "engagehf-patient0-stanford.edu";
 
-  it('filters correctly for admin', async () => {
+  it("filters correctly for admin", async () => {
     const patient0 = await env.createUser({
       type: UserType.patient,
-      organization: 'stanford',
+      organization: "stanford",
     });
 
     const patient1 = await env.createUser({
       type: UserType.patient,
-      organization: 'jhu',
+      organization: "jhu",
     });
 
     const admin = await env.createUser({
@@ -43,31 +52,31 @@ describeWithEmulators("function: exportData", (env) => {
       },
     );
 
-    const buffer = Buffer.from(result.content, 'base64');
+    const buffer = Buffer.from(result.content, "base64");
     expect(buffer.length).toBeGreaterThan(0);
 
     const zip = await yauzl.fromBuffer(buffer);
     const entries = await zip.readEntries();
-    const filenames = entries.map(entry => entry.filename);
-    
+    const filenames = entries.map((entry) => entry.filename);
+
     expect(filenames).toContain(`${patient0}/appointments.csv`);
     expect(filenames).toContain(`${patient1}/appointments.csv`);
   }, 10_000);
 
-  it('filters correctly for owner', async () => {
+  it("filters correctly for owner", async () => {
     const patient0 = await env.createUser({
       type: UserType.patient,
-      organization: 'stanford',
+      organization: "stanford",
     });
 
     const patient1 = await env.createUser({
       type: UserType.patient,
-      organization: 'jhu',
+      organization: "jhu",
     });
 
     const owner = await env.createUser({
       type: UserType.owner,
-      organization: 'stanford',
+      organization: "stanford",
     });
 
     const result = await env.call(
@@ -75,29 +84,29 @@ describeWithEmulators("function: exportData", (env) => {
       {},
       {
         uid: owner,
-        token: { type: UserType.owner, organization: 'stanford' },
+        token: { type: UserType.owner, organization: "stanford" },
       },
     );
 
-    const buffer = Buffer.from(result.content, 'base64');
+    const buffer = Buffer.from(result.content, "base64");
     expect(buffer.length).toBeGreaterThan(0);
-    
+
     const zip = await yauzl.fromBuffer(buffer);
     const entries = await zip.readEntries();
-    const filenames = entries.map(entry => entry.filename);
+    const filenames = entries.map((entry) => entry.filename);
     expect(filenames).toContain(`${patient0}/appointments.csv`);
     expect(filenames).not.toContain(`${patient1}/appointments.csv`);
   }, 10_000);
 
-  it('rejects unauthorized users', async () => {
+  it("rejects unauthorized users", async () => {
     const patient = await env.createUser({
       type: UserType.patient,
-      organization: 'stanford',
+      organization: "stanford",
     });
 
     const otherPatient = await env.createUser({
       type: UserType.patient,
-      organization: 'stanford',
+      organization: "stanford",
     });
 
     await expect(
@@ -106,14 +115,14 @@ describeWithEmulators("function: exportData", (env) => {
         { userId: patient },
         {
           uid: otherPatient,
-          token: { type: UserType.patient, organization: 'stanford' },
+          token: { type: UserType.patient, organization: "stanford" },
         },
       ),
-    ).rejects.toThrow('User does not have permission.');
+    ).rejects.toThrow("User does not have permission.");
 
     const clinician = await env.createUser({
       type: UserType.clinician,
-      organization: 'stanford',
+      organization: "stanford",
     });
 
     await expect(
@@ -122,12 +131,12 @@ describeWithEmulators("function: exportData", (env) => {
         { userId: patient },
         {
           uid: clinician,
-          token: { type: UserType.clinician, organization: 'stanford' },
+          token: { type: UserType.clinician, organization: "stanford" },
         },
       ),
-    ).rejects.toThrow('User does not have permission.');
+    ).rejects.toThrow("User does not have permission.");
   }, 5_000);
-  
+
   it("exports data for authenticated user", async () => {
     await _defaultSeed(env.factory, {
       date,
@@ -143,7 +152,7 @@ describeWithEmulators("function: exportData", (env) => {
     });
 
     const adminId = "engagehf-admin0-stanford.edu";
-    
+
     const exportedData = await env.call(
       exportData,
       { userId: patientId },
@@ -162,16 +171,16 @@ describeWithEmulators("function: exportData", (env) => {
       writeFileSync(filePath, data);
     } else {
       await expectZipToBeEquivalent(
-        await yauzl.open(filePath), 
-        await yauzl.fromBuffer(data)
+        await yauzl.open(filePath),
+        await yauzl.fromBuffer(data),
       );
     }
   }, 60_000);
 
-  it('exports all relevant files for a patient', async () => {
+  it("exports all relevant files for a patient", async () => {
     const zip = await yauzl.open(filePath);
     const entries = await zip.readEntries();
-    const filenames = entries.map(entry => entry.filename);
+    const filenames = entries.map((entry) => entry.filename);
 
     const questionnaireIds = [
       "0",
@@ -180,8 +189,10 @@ describeWithEmulators("function: exportData", (env) => {
       "registration_en_US",
     ];
     const expectedFileNames = [
-      ...questionnaireIds.map(id => `questionnaire_${id}.csv`),
-      ...Object.values(UserObservationCollection).map(collection => `${patientId}/${collection}.csv`),
+      ...questionnaireIds.map((id) => `questionnaire_${id}.csv`),
+      ...Object.values(UserObservationCollection).map(
+        (collection) => `${patientId}/${collection}.csv`,
+      ),
       `${patientId}/appointments.csv`,
       `${patientId}/medicationRequests.csv`,
       `${patientId}/messages.csv`,
@@ -194,14 +205,17 @@ describeWithEmulators("function: exportData", (env) => {
       const buffer = await entryBuffer(entry);
       expect(buffer.length).toBeGreaterThan(0);
       const lines = buffer
-        .toString('utf-8')
-        .split('\n')
-        .filter(line => line.trim().length > 0);
+        .toString("utf-8")
+        .split("\n")
+        .filter((line) => line.trim().length > 0);
       expect(lines.length).toBeGreaterThan(0);
     }
   }, 10_000);
 
-  async function expectZipToBeEquivalent(file0: ZipFile, file1: ZipFile): Promise<void> {
+  async function expectZipToBeEquivalent(
+    file0: ZipFile,
+    file1: ZipFile,
+  ): Promise<void> {
     const entries0 = await file0.readEntries();
     const entries1 = await file1.readEntries();
 
@@ -210,7 +224,9 @@ describeWithEmulators("function: exportData", (env) => {
     expect(filenames0).toEqual(filenames1);
 
     for (const entry0 of entries0) {
-      const entry1 = entries1.find((entry) => entry.filename == entry0.filename);
+      const entry1 = entries1.find(
+        (entry) => entry.filename == entry0.filename,
+      );
       expect(entry1).toBeDefined();
 
       const data0 = await entryBuffer(entry0);
@@ -227,7 +243,7 @@ describeWithEmulators("function: exportData", (env) => {
     const stream = await entry.openReadStream();
     const chunks: Buffer[] = [];
     for await (const chunk of stream) {
-      chunks.push(chunk);
+      chunks.push(chunk as Buffer);
     }
     return Buffer.concat(chunks);
   }

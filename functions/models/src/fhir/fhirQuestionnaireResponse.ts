@@ -67,10 +67,9 @@ const fhirQuestionnaireResponseItemBaseConverter = new SchemaConverter({
   }),
 });
 
-export interface FHIRQuestionnaireResponseItemValue
-  extends z.input<
-    typeof fhirQuestionnaireResponseItemBaseConverter.value.schema
-  > {
+export interface FHIRQuestionnaireResponseItemValue extends z.input<
+  typeof fhirQuestionnaireResponseItemBaseConverter.value.schema
+> {
   item?:
     | Array<z.input<typeof fhirQuestionnaireResponseItemConverter.value.schema>>
     | null
@@ -104,10 +103,9 @@ export const fhirQuestionnaireResponseItemConverter = (() => {
   });
 })();
 
-export interface FHIRQuestionnaireResponseItem
-  extends z.output<
-    typeof fhirQuestionnaireResponseItemBaseConverter.value.schema
-  > {
+export interface FHIRQuestionnaireResponseItem extends z.output<
+  typeof fhirQuestionnaireResponseItemBaseConverter.value.schema
+> {
   item?: FHIRQuestionnaireResponseItem[];
 }
 

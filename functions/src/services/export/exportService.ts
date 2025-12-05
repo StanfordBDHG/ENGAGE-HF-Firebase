@@ -7,11 +7,9 @@
 //
 
 export interface ExportService {
-    
-    exportPatientDataForUser(userId: string): Promise<Buffer>;
+  exportPatientDataForUser(userId: string): Promise<Buffer>;
 
-    exportPatientDataForOrganization(organizationId: string): Promise<Buffer>;
+  exportPatientDataForOrganization(organizationId: string): Promise<Buffer>;
 
-    exportPatientDataForAll(): Promise<Buffer>;
-
+  exportPatientDataForAll(): Promise<Buffer>;
 }

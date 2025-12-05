@@ -8,8 +8,8 @@
 
 import { exportDataInputSchema } from "@stanfordbdhg/engagehf-models";
 import { validatedOnCall } from "./helpers.js";
-import { getServiceFactory } from "../services/factory/getServiceFactory.js";
 import { UserRole } from "../services/credential/credential.js";
+import { getServiceFactory } from "../services/factory/getServiceFactory.js";
 
 export const exportData = validatedOnCall(
   "exportData",
@@ -31,7 +31,9 @@ export const exportData = validatedOnCall(
         : []),
       );
 
-      buffer = await exportService.exportPatientDataForUser(request.data.userId);
+      buffer = await exportService.exportPatientDataForUser(
+        request.data.userId,
+      );
     } else {
       const role = await credential.checkAsync(
         () => [UserRole.admin],

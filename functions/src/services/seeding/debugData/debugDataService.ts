@@ -57,9 +57,9 @@ export class DebugDataService extends SeedingService {
 
   async seedCustom(input: CustomSeedingOptions): Promise<string[]> {
     const userIds = await Promise.all(
-      input.users.map((user) => {
+      input.users.map(async (user) => {
         try {
-          return this.createUser(user);
+          return await this.createUser(user);
         } catch (error) {
           logger.error(error);
         }
@@ -91,9 +91,9 @@ export class DebugDataService extends SeedingService {
   async seedUsers() {
     const users = this.readJSONArray("users.json", userSeedingOptionsSchema);
     const userIds = await Promise.all(
-      users.map((user) => {
+      users.map(async (user) => {
         try {
-          return this.createUser(user);
+          return await this.createUser(user);
         } catch (error) {
           logger.error(error);
         }

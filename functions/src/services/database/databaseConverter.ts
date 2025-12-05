@@ -15,9 +15,10 @@ import {
 import { logger } from "firebase-functions";
 import { type z } from "zod";
 
-export class DatabaseConverter<Schema extends z.ZodTypeAny, Encoded>
-  implements FirestoreDataConverter<z.output<Schema>>
-{
+export class DatabaseConverter<
+  Schema extends z.ZodTypeAny,
+  Encoded,
+> implements FirestoreDataConverter<z.output<Schema>> {
   // Properties
 
   private readonly converter: SchemaConverter<Schema, Encoded>;

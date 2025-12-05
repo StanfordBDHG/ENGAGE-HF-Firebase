@@ -16,6 +16,8 @@ import { Flags } from "../../flags.js";
 import { DefaultContraindicationService } from "../contraindication/defaultContraindicationService.js";
 import { Credential } from "../credential/credential.js";
 import { FirestoreService } from "../database/firestoreService.js";
+import { DefaultExportService } from "../export/defaultExportService.js";
+import { type ExportService } from "../export/exportService.js";
 import { DefaultHealthSummaryService } from "../healthSummary/databaseHealthSummaryService.js";
 import { type HealthSummaryService } from "../healthSummary/healthSummaryService.js";
 import { DatabaseHistoryService } from "../history/databaseHistoryService.js";
@@ -42,8 +44,6 @@ import { StaticDataService } from "../seeding/staticData/staticDataService.js";
 import { TriggerService } from "../trigger/triggerService.js";
 import { DatabaseUserService } from "../user/databaseUserService.js";
 import { type UserService } from "../user/userService.js";
-import { DefaultExportService } from "../export/defaultExportService.js";
-import { ExportService } from "../export/exportService.js";
 
 export class DefaultServiceFactory implements ServiceFactory {
   // Properties - Options
@@ -78,7 +78,10 @@ export class DefaultServiceFactory implements ServiceFactory {
 
   private readonly exportService = new Lazy(
     () =>
-      new DefaultExportService(this.databaseService.value, this.userService.value),
+      new DefaultExportService(
+        this.databaseService.value,
+        this.userService.value,
+      ),
   );
 
   private readonly healthSummaryService = new Lazy(
