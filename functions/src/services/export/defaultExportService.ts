@@ -103,13 +103,13 @@ export class DefaultExportService implements ExportService {
           const options = (value.answerOption ?? [])
             .map(
               (option) =>
-                `${JSON.stringify(option.valueCoding?.display ?? "")} (${option.valueCoding?.code ?? ""})`,
+                `${option.valueCoding?.display ?? ""} (${option.valueCoding?.code ?? ""})`,
             )
             .join("|");
 
           return [
             value.linkId ?? "",
-            JSON.stringify(value.text ?? ""),
+            value.text ?? "",
             value.type ?? "",
             options,
           ];
@@ -412,9 +412,21 @@ export class DefaultExportService implements ExportService {
     values: T[],
     row: (item: T) => string[],
   ): Buffer {
+    function escapeCsvField(field: string): string {
+      if (/^[=+\-@]/.test(field)) {
+        field = "'" + field;
+      }
+      // Escape quotes by doubling them
+      // If field contains semicolon, newline, or quote, wrap in quotes
+      if (/[;\n"]/.test(field)) {
+        return `"${field.replace(/"/g, '""')}"`;
+      }
+      return field;
+    }
+
     const string = [
-      headers.join(";"),
-      ...values.map((item) => row(item).join(";")),
+      headers.map(escapeCsvField).join(";"),
+      ...values.map((item) => row(item).map(escapeCsvField).join(";")),
     ].join("\n");
     return Buffer.from(string);
   }

@@ -24,7 +24,7 @@ import { describeWithEmulators } from "../tests/functions/testEnvironment.js";
 import { TestFlags } from "../tests/testFlags.js";
 
 describeWithEmulators("function: exportData", (env) => {
-  const date = new Date(0);
+  const date = new Date(2025, 12, 5, 21, 41, 30);
   const filePath = "src/tests/resources/patientExport.zip";
   const patientId = "engagehf-patient0-stanford.edu";
 
