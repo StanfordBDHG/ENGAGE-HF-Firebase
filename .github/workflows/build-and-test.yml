@@ -23,7 +23,7 @@ jobs:
     uses: StanfordBDHG/.github/.github/workflows/reuse.yml@v2
   markdownlinkcheck:
     name: Markdown Link Check
-    uses: StanfordBDHG/.github/.github/workflows/markdown-link-check.yml@v2
+    uses: StanfordBDHG/.github/.github/workflows/markdown-link-check.yml@v2.3
   lint:
     name: Lint
     runs-on: ubuntu-latest
