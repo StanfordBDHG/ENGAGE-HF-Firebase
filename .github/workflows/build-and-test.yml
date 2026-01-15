@@ -34,10 +34,10 @@ jobs:
           lfs: 'true'
       - name: Git LFS Pull
         run: git lfs pull
-      - name: Use Node.js 22.x
+      - name: Use Node.js (lts)
         uses: actions/setup-node@v4
         with:
-          node-version: 22.6.x
+          node-version: lts
       - name: Install Dependencies
         run: npm run install
       - name: Build
@@ -56,10 +56,10 @@ jobs:
           lfs: 'true'
       - name: Git LFS Pull
         run: git lfs pull
-      - name: Use Node.js 22.x
+      - name: Use Node.js (lts)
         uses: actions/setup-node@v4
         with:
-          node-version: 22.6.x
+          node-version: lts
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
