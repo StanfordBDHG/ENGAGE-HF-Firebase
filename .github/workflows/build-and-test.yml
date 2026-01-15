@@ -60,6 +60,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22.6.x
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'microsoft'
+          java-version: '21'
       - name: Install Dependencies
         run: npm run install
       - name: Install Firebase CLI
