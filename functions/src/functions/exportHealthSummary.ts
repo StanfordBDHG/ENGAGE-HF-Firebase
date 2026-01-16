@@ -10,7 +10,7 @@ import {
   exportHealthSummaryInputSchema,
   type ExportHealthSummaryOutput,
 } from "@stanfordbdhg/engagehf-models";
-import { validatedOnCall } from "./helpers.js";
+import { privilegedServiceAccount, validatedOnCall } from "./helpers.js";
 import { generateHealthSummary } from "../healthSummary/generate.js";
 import { UserRole } from "../services/credential/credential.js";
 import { getServiceFactory } from "../services/factory/getServiceFactory.js";
@@ -63,5 +63,8 @@ export const exportHealthSummary = validatedOnCall(
     });
 
     return { content: pdf.toString("base64") };
+  },
+  {
+    serviceAccount: privilegedServiceAccount,
   },
 );
