@@ -8,7 +8,9 @@
 
 import admin from "firebase-admin";
 
-admin.initializeApp();
+admin.initializeApp({
+  credential: admin.credential.applicationDefault(),
+});
 
 export {
   beforeUserCreatedFunction as beforeUserCreated,
