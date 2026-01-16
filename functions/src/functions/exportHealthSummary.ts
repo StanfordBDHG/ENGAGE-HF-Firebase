@@ -66,5 +66,5 @@ export const exportHealthSummary = validatedOnCall(
   },
   {
     serviceAccount: privilegedServiceAccount,
-  }
+  },
 );
