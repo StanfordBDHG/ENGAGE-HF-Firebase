@@ -30,7 +30,6 @@ export function validatedOnCall<Schema extends z.ZodTypeAny, Return, Stream>(
 ): CallableFunction<z.input<Schema>, Promise<Return>, Stream> {
   return onCall(
     {
-      invoker: "public",
       serviceAccount: defaultServiceAccount,
       ...options,
     },
@@ -70,7 +69,6 @@ export function validatedOnRequest<Schema extends z.ZodTypeAny>(
 ): https.HttpsFunction {
   return onRequest(
     {
-      invoker: "public",
       serviceAccount: defaultServiceAccount,
       ...options,
     },
