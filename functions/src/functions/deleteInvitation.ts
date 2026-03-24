@@ -9,6 +9,7 @@
 import {
   deleteInvitationInputSchema,
   type DeleteInvitationOutput,
+  UserType,
 } from "@stanfordbdhg/engagehf-models";
 import { validatedOnCall } from "./helpers.js";
 import { UserRole } from "../services/credential/credential.js";
@@ -30,7 +31,9 @@ export const deleteInvitation = validatedOnCall(
     credential.check(
       UserRole.admin,
       UserRole.owner(invitation.content.user.organization),
-      UserRole.clinician(invitation.content.user.organization),
+      invitation.content.user.type === UserType.patient ?
+        UserRole.clinician(invitation.content.user.organization)
+      : null,
     );
 
     await userService.deleteInvitation(invitation);

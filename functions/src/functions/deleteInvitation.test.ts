@@ -16,6 +16,7 @@ import {
 } from "@stanfordbdhg/engagehf-models";
 import { deleteInvitation } from "./deleteInvitation.js";
 import { describeWithEmulators } from "../tests/functions/testEnvironment.js";
+import { expectError } from "../tests/helpers.js";
 
 describeWithEmulators("function: deleteInvitation", (env) => {
   it("deletes an invitation successfully", async () => {
@@ -70,5 +71,51 @@ describeWithEmulators("function: deleteInvitation", (env) => {
 
     const actualAppointment = await appointmentRef.get();
     expect(actualAppointment.exists).toBe(false);
+  });
+
+  it("should not allow clinician to delete a clinician invitation", async () => {
+    const invitation = new Invitation({
+      auth: new UserAuth({
+        displayName: "Test User",
+        email: "engagehf-test@stanford.edu",
+      }),
+      code: "TESTCODE",
+      user: new UserRegistration({
+        type: UserType.clinician,
+        disabled: false,
+        selfManaged: false,
+        organization: "stanford",
+        receivesAppointmentReminders: false,
+        receivesInactivityReminders: true,
+        receivesMedicationUpdates: true,
+        receivesQuestionnaireReminders: false,
+        receivesRecommendationUpdates: true,
+        receivesVitalsReminders: false,
+        receivesWeightAlerts: false,
+      }),
+    });
+
+    const invitationRef = env.collections.invitations.doc();
+    await invitationRef.set(invitation);
+
+    await expectError(
+      () =>
+        env.call(
+          deleteInvitation,
+          { invitationCode: invitation.code },
+          {
+            uid: "test",
+            token: { type: UserType.clinician, organization: "stanford" },
+          },
+        ),
+      (error) =>
+        expect(error).toHaveProperty(
+          "message",
+          "User does not have permission.",
+        ),
+    );
+
+    const actualInvitation = await invitationRef.get();
+    expect(actualInvitation.exists).toBe(true);
   });
 });

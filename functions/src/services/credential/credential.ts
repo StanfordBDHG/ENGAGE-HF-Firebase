@@ -72,6 +72,8 @@ export class UserRole {
   }
 }
 
+type UserRoleWithFalsyValues = UserRole | undefined | null;
+
 export class Credential {
   // Stored Properties
 
@@ -99,19 +101,21 @@ export class Credential {
 
   // Methods
 
-  check(...roles: UserRole[]): UserRole {
-    const role = roles.find((role) => this.checkSingle(role));
-    if (role !== undefined) return role;
+  check(...roles: UserRoleWithFalsyValues[]): UserRole {
+    const role = roles.find((role) => role && this.checkSingle(role));
+    if (role !== undefined && role !== null) return role;
     throw this.permissionDeniedError();
   }
 
   async checkAsync(
-    ...promises: Array<() => Promise<UserRole[]> | UserRole[]>
+    ...promises: Array<
+      () => Promise<UserRoleWithFalsyValues[]> | UserRoleWithFalsyValues[]
+    >
   ): Promise<UserRole> {
     for (const promise of promises) {
       const roles = await promise();
-      const role = roles.find((role) => this.checkSingle(role));
-      if (role !== undefined) return role;
+      const role = roles.find((role) => role && this.checkSingle(role));
+      if (role !== undefined && role !== null) return role;
     }
     throw this.permissionDeniedError();
   }

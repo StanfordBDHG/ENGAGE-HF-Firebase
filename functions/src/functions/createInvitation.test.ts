@@ -79,6 +79,70 @@ describeWithEmulators("function: createInvitation", (env) => {
     expect(invitation.code).toMatch(/^[A-Z0-9]{8}$/);
   });
 
+  it("should not allow clinician to create a clinician invitation", async () => {
+    const input: z.input<typeof createInvitationInputSchema> = {
+      auth: {
+        displayName: "Test User",
+        email: "engagehf-test@stanford.edu",
+      },
+      user: {
+        type: UserType.clinician,
+        organization: "stanford",
+        receivesAppointmentReminders: false,
+        receivesInactivityReminders: true,
+        receivesMedicationUpdates: true,
+        receivesQuestionnaireReminders: false,
+        receivesRecommendationUpdates: true,
+        receivesVitalsReminders: false,
+        receivesWeightAlerts: false,
+      },
+    };
+
+    await expectError(
+      () =>
+        env.call(createInvitation, input, {
+          uid: "test",
+          token: { type: UserType.clinician, organization: "stanford" },
+        }),
+      (error) => expect(error).toHaveProperty("code", "permission-denied"),
+    );
+
+    const invitations = await env.collections.invitations.get();
+    expect(invitations.docs).toHaveLength(0);
+  });
+
+  it("should not allow clinician to create an owner invitation", async () => {
+    const input: z.input<typeof createInvitationInputSchema> = {
+      auth: {
+        displayName: "Test User",
+        email: "engagehf-test@stanford.edu",
+      },
+      user: {
+        type: UserType.owner,
+        organization: "stanford",
+        receivesAppointmentReminders: false,
+        receivesInactivityReminders: true,
+        receivesMedicationUpdates: true,
+        receivesQuestionnaireReminders: false,
+        receivesRecommendationUpdates: true,
+        receivesVitalsReminders: false,
+        receivesWeightAlerts: false,
+      },
+    };
+
+    await expectError(
+      () =>
+        env.call(createInvitation, input, {
+          uid: "test",
+          token: { type: UserType.clinician, organization: "stanford" },
+        }),
+      (error) => expect(error).toHaveProperty("code", "permission-denied"),
+    );
+
+    const invitations = await env.collections.invitations.get();
+    expect(invitations.docs).toHaveLength(0);
+  });
+
   it("should not create an invitation without authentication", () => {
     const input: z.input<typeof createInvitationInputSchema> = {
       auth: {

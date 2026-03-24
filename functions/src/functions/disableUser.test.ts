@@ -109,6 +109,43 @@ describeWithEmulators("function: disableUser", (env) => {
     );
   });
 
+  it("should not allow clinician to disable a non-patient user", async () => {
+    const userId = await env.createUser({
+      type: UserType.clinician,
+      organization: "stanford",
+    });
+
+    const callerId = await env.createUser({
+      type: UserType.clinician,
+      organization: "stanford",
+    });
+
+    await expectError(
+      () =>
+        env.call(
+          disableUser,
+          { userId: userId },
+          {
+            uid: callerId,
+            token: {
+              type: UserType.clinician,
+              organization: "stanford",
+              disabled: false,
+            },
+          },
+        ),
+      (error) =>
+        expect(error).toHaveProperty(
+          "message",
+          "User does not have permission.",
+        ),
+    );
+
+    const userService = env.factory.user();
+    const user = await userService.getUser(userId);
+    expect(user?.content.disabled).toBe(false);
+  });
+
   it("keeps disabled users disabled", async () => {
     const clinicianId = await env.createUser({
       type: UserType.clinician,

@@ -9,6 +9,7 @@
 import {
   enableUserInputSchema,
   type EnableUserOutput,
+  UserType,
 } from "@stanfordbdhg/engagehf-models";
 import { privilegedServiceAccount, validatedOnCall } from "./helpers.js";
 import { UserRole } from "../services/credential/credential.js";
@@ -27,12 +28,13 @@ export const enableUser = validatedOnCall(
       () => [UserRole.admin],
       async () => {
         const user = await userService.getUser(request.data.userId);
-        return user?.content.organization !== undefined ?
-            [
-              UserRole.owner(user.content.organization),
-              UserRole.clinician(user.content.organization),
-            ]
-          : [];
+        if (user?.content.organization === undefined) return [];
+        return [
+          UserRole.owner(user.content.organization),
+          user.content.type === UserType.patient ?
+            UserRole.clinician(user.content.organization)
+          : null,
+        ];
       },
     );
 
