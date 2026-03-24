@@ -41,13 +41,18 @@ describeWithEmulators("function: deleteUser", (env) => {
       organization: "stanford",
     });
 
+    const callerId = await env.createUser({
+      type: UserType.owner,
+      organization: "other",
+    });
+
     await expectError(
       () =>
         env.call(
           deleteUser,
           { userId: userId },
           {
-            uid: "user",
+            uid: callerId,
             token: { type: UserType.owner, organization: "other" },
           },
         ),
@@ -60,6 +65,32 @@ describeWithEmulators("function: deleteUser", (env) => {
 
     const actualUser = await env.collections.users.doc(userId).get();
     expect(actualUser.exists).toBe(true);
+  });
+
+  it("should not allow deleting user without Firestore user doc", async () => {
+    const authUser = await env.auth.createUser({});
+
+    const callerId = await env.createUser({
+      type: UserType.owner,
+      organization: "stanford",
+    });
+
+    await expectError(
+      () =>
+        env.call(
+          deleteUser,
+          { userId: authUser.uid },
+          {
+            uid: callerId,
+            token: { type: UserType.owner, organization: "stanford" },
+          },
+        ),
+      (error) =>
+        expect(error).toHaveProperty(
+          "message",
+          "User does not have permission.",
+        ),
+    );
   });
 
   it("should delete a user", async () => {

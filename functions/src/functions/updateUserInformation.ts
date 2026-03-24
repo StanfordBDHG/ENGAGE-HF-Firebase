@@ -25,7 +25,7 @@ export const updateUserInformation = validatedOnCall(
     await credential.checkAsync(
       () => [UserRole.admin, UserRole.user(request.data.userId)],
       async () => {
-        const user = await userService.getUser(credential.userId);
+        const user = await userService.getUser(request.data.userId);
         if (user?.content.organization === undefined)
           throw credential.permissionDeniedError();
         return [

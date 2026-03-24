@@ -26,7 +26,7 @@ export const enableUser = validatedOnCall(
     await credential.checkAsync(
       () => [UserRole.admin],
       async () => {
-        const user = await userService.getUser(credential.userId);
+        const user = await userService.getUser(request.data.userId);
         return user?.content.organization !== undefined ?
             [
               UserRole.owner(user.content.organization),
