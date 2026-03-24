@@ -6,8 +6,10 @@
 // SPDX-License-Identifier: MIT
 //
 
+import { UserType } from "@stanfordbdhg/engagehf-models";
 import { updateUserInformation } from "./updateUserInformation.js";
 import { describeWithEmulators } from "../tests/functions/testEnvironment.js";
+import { expectError } from "../tests/helpers.js";
 
 describeWithEmulators("function: updateUserInformation", (env) => {
   it("updates user information successfully", async () => {
@@ -28,5 +30,74 @@ describeWithEmulators("function: updateUserInformation", (env) => {
 
     const updatedUser = await env.auth.getUser(authUser.uid);
     expect(updatedUser.displayName).toBe("Test User");
+  });
+
+  it("should not allow updating user without Firestore user doc", async () => {
+    const authUser = await env.auth.createUser({});
+
+    const callerId = await env.createUser({
+      type: UserType.owner,
+      organization: "stanford",
+    });
+
+    await expectError(
+      () =>
+        env.call(
+          updateUserInformation,
+          {
+            userId: authUser.uid,
+            data: {
+              auth: {
+                displayName: "Hacked",
+              },
+            },
+          },
+          {
+            uid: callerId,
+            token: { type: UserType.owner, organization: "stanford" },
+          },
+        ),
+      (error) =>
+        expect(error).toHaveProperty(
+          "message",
+          "User does not have permission.",
+        ),
+    );
+  });
+
+  it("should not allow updating user with claims of other organization", async () => {
+    const userId = await env.createUser({
+      type: UserType.patient,
+      organization: "stanford",
+    });
+
+    const callerId = await env.createUser({
+      type: UserType.owner,
+      organization: "other",
+    });
+
+    await expectError(
+      () =>
+        env.call(
+          updateUserInformation,
+          {
+            userId: userId,
+            data: {
+              auth: {
+                displayName: "Hacked",
+              },
+            },
+          },
+          {
+            uid: callerId,
+            token: { type: UserType.owner, organization: "other" },
+          },
+        ),
+      (error) =>
+        expect(error).toHaveProperty(
+          "message",
+          "User does not have permission.",
+        ),
+    );
   });
 });

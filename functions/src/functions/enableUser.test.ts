@@ -9,6 +9,7 @@
 import { UserType } from "@stanfordbdhg/engagehf-models";
 import { enableUser } from "./enableUser.js";
 import { describeWithEmulators } from "../tests/functions/testEnvironment.js";
+import { expectError } from "../tests/helpers.js";
 
 describeWithEmulators("function: enableUser", (env) => {
   it("enables a disabled user", async () => {
@@ -48,6 +49,66 @@ describeWithEmulators("function: enableUser", (env) => {
     expect(user).toBeDefined();
     expect(user?.content.claims.disabled).toBe(false);
     expect(user?.content.disabled).toBe(false);
+  });
+
+  it("should not allow enabling user with claims of other organization", async () => {
+    const userId = await env.createUser({
+      type: UserType.patient,
+      organization: "stanford",
+      disabled: true,
+    });
+
+    const callerId = await env.createUser({
+      type: UserType.owner,
+      organization: "other",
+    });
+
+    await expectError(
+      () =>
+        env.call(
+          enableUser,
+          { userId: userId },
+          {
+            uid: callerId,
+            token: { type: UserType.owner, organization: "other" },
+          },
+        ),
+      (error) =>
+        expect(error).toHaveProperty(
+          "message",
+          "User does not have permission.",
+        ),
+    );
+
+    const userService = env.factory.user();
+    const user = await userService.getUser(userId);
+    expect(user?.content.disabled).toBe(true);
+  });
+
+  it("should not allow enabling user without Firestore user doc", async () => {
+    const authUser = await env.auth.createUser({});
+
+    const callerId = await env.createUser({
+      type: UserType.owner,
+      organization: "stanford",
+    });
+
+    await expectError(
+      () =>
+        env.call(
+          enableUser,
+          { userId: authUser.uid },
+          {
+            uid: callerId,
+            token: { type: UserType.owner, organization: "stanford" },
+          },
+        ),
+      (error) =>
+        expect(error).toHaveProperty(
+          "message",
+          "User does not have permission.",
+        ),
+    );
   });
 
   it("keeps enabled users enabled", async () => {
