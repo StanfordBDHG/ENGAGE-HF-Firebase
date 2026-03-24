@@ -30,7 +30,9 @@ export const createInvitation = validatedOnCall(
       credential.check(
         UserRole.admin,
         UserRole.owner(request.data.user.organization),
-        UserRole.clinician(request.data.user.organization),
+        request.data.user.type === UserType.patient ?
+          UserRole.clinician(request.data.user.organization)
+        : null,
       );
     } else {
       throw credential.permissionDeniedError();

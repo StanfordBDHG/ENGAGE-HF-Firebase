@@ -65,6 +65,42 @@ describeWithEmulators("function: updateUserInformation", (env) => {
     );
   });
 
+  it("should not allow clinician to update a non-patient user", async () => {
+    const userId = await env.createUser({
+      type: UserType.clinician,
+      organization: "stanford",
+    });
+
+    const callerId = await env.createUser({
+      type: UserType.clinician,
+      organization: "stanford",
+    });
+
+    await expectError(
+      () =>
+        env.call(
+          updateUserInformation,
+          {
+            userId: userId,
+            data: {
+              auth: {
+                displayName: "Hacked",
+              },
+            },
+          },
+          {
+            uid: callerId,
+            token: { type: UserType.clinician, organization: "stanford" },
+          },
+        ),
+      (error) =>
+        expect(error).toHaveProperty(
+          "message",
+          "User does not have permission.",
+        ),
+    );
+  });
+
   it("should not allow updating user with claims of other organization", async () => {
     const userId = await env.createUser({
       type: UserType.patient,

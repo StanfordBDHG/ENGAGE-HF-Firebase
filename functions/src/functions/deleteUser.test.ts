@@ -93,6 +93,38 @@ describeWithEmulators("function: deleteUser", (env) => {
     );
   });
 
+  it("should not allow clinician to delete a non-patient user", async () => {
+    const userId = await env.createUser({
+      type: UserType.clinician,
+      organization: "stanford",
+    });
+
+    const callerId = await env.createUser({
+      type: UserType.clinician,
+      organization: "stanford",
+    });
+
+    await expectError(
+      () =>
+        env.call(
+          deleteUser,
+          { userId: userId },
+          {
+            uid: callerId,
+            token: { type: UserType.clinician, organization: "stanford" },
+          },
+        ),
+      (error) =>
+        expect(error).toHaveProperty(
+          "message",
+          "User does not have permission.",
+        ),
+    );
+
+    const actualUser = await env.collections.users.doc(userId).get();
+    expect(actualUser.exists).toBe(true);
+  });
+
   it("should delete a user", async () => {
     const userId = await env.createUser({
       type: UserType.patient,
