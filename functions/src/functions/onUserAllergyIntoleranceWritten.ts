@@ -8,8 +8,8 @@
 
 import { onDocumentWritten } from "firebase-functions/firestore";
 import { Env } from "../env.js";
-import { getServiceFactory } from "../services/factory/getServiceFactory.js";
 import { privilegedServiceAccount } from "./helpers.js";
+import { getServiceFactory } from "../services/factory/getServiceFactory.js";
 
 export const onUserAllergyIntoleranceWritten = onDocumentWritten(
   {

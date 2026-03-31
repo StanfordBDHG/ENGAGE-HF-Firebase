@@ -7,8 +7,8 @@
 //
 
 import { onDocumentWritten } from "firebase-functions/v2/firestore";
+import { defaultServiceAccount } from "./helpers.js";
 import { getServiceFactory } from "../services/factory/getServiceFactory.js";
-import { defaultServiceAccount, privilegedServiceAccount } from "./helpers.js";
 
 export const onHistoryOneLevelDeepWritten = onDocumentWritten(
   {
