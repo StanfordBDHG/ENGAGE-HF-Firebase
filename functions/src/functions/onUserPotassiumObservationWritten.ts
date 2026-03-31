@@ -10,11 +10,13 @@ import { UserObservationCollection } from "@stanfordbdhg/engagehf-models";
 import { onDocumentWritten } from "firebase-functions/firestore";
 import { Env } from "../env.js";
 import { getServiceFactory } from "../services/factory/getServiceFactory.js";
+import { privilegedServiceAccount } from "./helpers.js";
 
 export const onUserPotassiumObservationWritten = onDocumentWritten(
   {
     document: "users/{userId}/potassiumObservations/{observationId}",
     secrets: Env.twilioSecretKeys,
+    serviceAccount: privilegedServiceAccount,
   },
   async (event) => {
     const factory = getServiceFactory();

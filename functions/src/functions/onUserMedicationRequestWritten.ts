@@ -11,11 +11,13 @@ import { onDocumentWritten } from "firebase-functions/firestore";
 import { Env } from "../env.js";
 import { DatabaseConverter } from "../services/database/databaseConverter.js";
 import { getServiceFactory } from "../services/factory/getServiceFactory.js";
+import { privilegedServiceAccount } from "./helpers.js";
 
 export const onUserMedicationRequestWritten = onDocumentWritten(
   {
     document: "users/{userId}/medicationRequests/{medicationRequestId}",
     secrets: Env.twilioSecretKeys,
+    serviceAccount: privilegedServiceAccount,
   },
   async (event) => {
     const beforeData = event.data?.before;

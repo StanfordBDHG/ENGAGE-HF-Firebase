@@ -62,7 +62,7 @@ export const createInvitation = validatedOnCall(
         throw error;
       }
     }
-  },
+  }
 );
 
 function generateInvitationCode(length: number): string {
