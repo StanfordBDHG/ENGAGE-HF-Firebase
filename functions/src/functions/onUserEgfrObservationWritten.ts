@@ -9,12 +9,14 @@
 import { UserObservationCollection } from "@stanfordbdhg/engagehf-models";
 import { onDocumentWritten } from "firebase-functions/firestore";
 import { Env } from "../env.js";
+import { privilegedServiceAccount } from "./helpers.js";
 import { getServiceFactory } from "../services/factory/getServiceFactory.js";
 
 export const onUserEgfrObservationWritten = onDocumentWritten(
   {
     document: "users/{userId}/eGfrObservations/{observationId}",
     secrets: Env.twilioSecretKeys,
+    serviceAccount: privilegedServiceAccount,
   },
   async (event) => {
     const factory = getServiceFactory();
