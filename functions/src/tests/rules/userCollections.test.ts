@@ -34,6 +34,7 @@ describe("firestore.rules: users/{userId}/{collectionName}/{documentId}", () => 
   const clinicianId = "mockClinician";
   const patientId = "mockPatient";
   const userId = "mockUser";
+  const disabledUserId = "disabledMockUser";
 
   let testEnvironment: RulesTestEnvironment;
   let adminFirestore: firebase.firestore.Firestore;
@@ -41,6 +42,7 @@ describe("firestore.rules: users/{userId}/{collectionName}/{documentId}", () => 
   let clinicianFirestore: firebase.firestore.Firestore;
   let patientFirestore: firebase.firestore.Firestore;
   let userFirestore: firebase.firestore.Firestore;
+  let disabledUserFirestore: firebase.firestore.Firestore;
 
   beforeAll(async () => {
     testEnvironment = await initializeTestEnvironment({
@@ -80,6 +82,14 @@ describe("firestore.rules: users/{userId}/{collectionName}/{documentId}", () => 
     userFirestore = testEnvironment
       .authenticatedContext(userId, {})
       .firestore();
+
+    disabledUserFirestore = testEnvironment
+      .authenticatedContext(disabledUserId, {
+        type: UserType.patient,
+        organization: organizationId,
+        disabled: true,
+      })
+      .firestore();
   });
 
   beforeEach(async () => {
@@ -99,6 +109,11 @@ describe("firestore.rules: users/{userId}/{collectionName}/{documentId}", () => 
         .doc(`users/${patientId}`)
         .set({ type: UserType.patient, organization: organizationId });
       await firestore.doc(`users/${userId}`).set({});
+      await firestore.doc(`users/${disabledUserId}`).set({
+        type: UserType.patient,
+        organization: organizationId,
+        disabled: true,
+      });
     });
   });
 
@@ -142,5 +157,19 @@ describe("firestore.rules: users/{userId}/{collectionName}/{documentId}", () => 
     await assertFails(userFirestore.collection(clinicianPath).get());
     await assertFails(userFirestore.collection(patientPath).get());
     await assertSucceeds(userFirestore.collection(userPath).get());
+  });
+
+  it("disabled users cannot access their own nested collections", async () => {
+    const disabledUserPath = `users/${disabledUserId}/allergyIntolerances`;
+
+    // Disabled users should not be able to read their own nested collections
+    await assertFails(disabledUserFirestore.collection(disabledUserPath).get());
+
+    // Admin can still access disabled user's collections
+    await assertSucceeds(adminFirestore.collection(disabledUserPath).get());
+
+    // Owners and clinicians can still access disabled user's collections
+    await assertSucceeds(ownerFirestore.collection(disabledUserPath).get());
+    await assertSucceeds(clinicianFirestore.collection(disabledUserPath).get());
   });
 });
