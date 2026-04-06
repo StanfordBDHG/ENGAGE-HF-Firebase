@@ -12,6 +12,7 @@ import {
   beforeUserCreated,
   beforeUserSignedIn,
 } from "firebase-functions/v2/identity";
+import z from "zod";
 import { privilegedServiceAccount } from "./helpers.js";
 import { Env } from "../env.js";
 import { Flags } from "../flags.js";
@@ -47,11 +48,29 @@ export const beforeUserCreatedFunction = beforeUserCreated(
       return { customClaims: {} };
     }
 
-    logger.info(
-      `${userId}: About to check email address: ${event.data.email}.`,
-    );
+    let emailAddress: string | undefined = undefined;
+    try {
+      emailAddress = z
+        .string()
+        .optional()
+        .parse(
+          event.data.email ??
+            credential.claims?.["upn"] ??
+            credential.claims?.["unique_name"],
+        );
+    } catch (error: unknown) {
+      logger.error(
+        `${userId}: Email address validation failed ${String(error)}.`,
+      );
+      throw new https.HttpsError(
+        "invalid-argument",
+        "Email address validation failed.",
+      );
+    }
 
-    if (event.data.email === undefined) {
+    logger.info(`${userId}: About to check email address: ${emailAddress}.`);
+
+    if (emailAddress === undefined) {
       logger.error(`Email address not set.`);
       throw new https.HttpsError(
         "invalid-argument",
@@ -77,14 +96,12 @@ export const beforeUserCreatedFunction = beforeUserCreated(
       );
     }
 
-    logger.info(
-      `${userId}: About to get invitation by code: ${event.data.email}.`,
-    );
+    logger.info(`${userId}: About to get invitation by code: ${emailAddress}.`);
 
-    const invitation = await userService.getInvitationByCode(event.data.email);
+    const invitation = await userService.getInvitationByCode(emailAddress);
     if (invitation?.content === undefined) {
       logger.error(
-        `${userId}: No valid invitation code found for user with email ${event.data.email}.`,
+        `${userId}: No valid invitation code found for user with email ${emailAddress}.`,
       );
       throw new https.HttpsError(
         "not-found",
