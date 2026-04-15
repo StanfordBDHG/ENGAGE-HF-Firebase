@@ -21,6 +21,16 @@ import {
 } from "../seeding/staticData/questionnaireFactory/questionnaireLinkIds.js";
 import { type UserService } from "../user/userService.js";
 
+interface CsvData {
+  readonly headers: readonly string[];
+  readonly rows: readonly (readonly string[])[];
+}
+
+interface UserCsvExport {
+  readonly filename: string;
+  readonly csv: CsvData;
+}
+
 export class DefaultExportService implements ExportService {
   private readonly databaseService: DatabaseService;
   private readonly userService: UserService;
@@ -63,19 +73,59 @@ export class DefaultExportService implements ExportService {
   private async createPatientsZipBuffer(userIds: string[]): Promise<Buffer> {
     return this.createZipBuffer(async (archive) => {
       await this.addQuestionnaires(archive);
+
+      const mergedCategories = new Map<string, CsvData>();
+
       for (const userId of userIds) {
-        await Promise.all([
-          this.addUserAppointments(userId, archive),
-          this.addUserMedicationRequests(userId, archive),
-          this.addUserMessages(userId, archive),
-          ...Object.values(UserObservationCollection).map((collection) =>
-            this.addUserObservations(userId, collection, archive),
-          ),
-          this.addUserQuestionnaireResponses(userId, archive),
-          this.addUserSymptomScores(userId, archive),
-        ]);
+        const auth = await this.userService.getAuth(userId);
+        const displayName = auth.displayName ?? "";
+
+        const userExports = await this.exportUserData(userId, archive);
+
+        for (const { filename, csv } of userExports) {
+          const existing = mergedCategories.get(filename);
+          const prefixedRows = csv.rows.map((row) => [
+            displayName,
+            userId,
+            ...row,
+          ]);
+          if (existing === undefined) {
+            mergedCategories.set(filename, {
+              headers: ["name", "userId", ...csv.headers],
+              rows: prefixedRows,
+            });
+          } else {
+            mergedCategories.set(filename, {
+              headers: existing.headers,
+              rows: [...existing.rows, ...prefixedRows],
+            });
+          }
+        }
+      }
+
+      for (const [filename, csv] of mergedCategories) {
+        archive.append(this.formatCsvBuffer(csv.headers, csv.rows), {
+          name: filename,
+        });
       }
     });
+  }
+
+  private async exportUserData(
+    userId: string,
+    archive: Archiver,
+  ): Promise<UserCsvExport[]> {
+    const results = await Promise.all([
+      this.addUserAppointments(userId, archive),
+      this.addUserMedicationRequests(userId, archive),
+      this.addUserMessages(userId, archive),
+      ...Object.values(UserObservationCollection).map((collection) =>
+        this.addUserObservations(userId, collection, archive),
+      ),
+      this.addUserQuestionnaireResponses(userId, archive),
+      this.addUserSymptomScores(userId, archive),
+    ]);
+    return results;
   }
 
   private async addQuestionnaires(archiver: Archiver): Promise<void> {
@@ -96,7 +146,7 @@ export class DefaultExportService implements ExportService {
         leafItems(item),
       );
 
-      const buffer = this.createCsvBuffer(
+      const csv = this.createCsvData(
         ["linkId", "text", "type", "options"],
         items,
         (value) => {
@@ -116,7 +166,7 @@ export class DefaultExportService implements ExportService {
         },
       );
 
-      archiver.append(buffer, {
+      archiver.append(this.formatCsvBuffer(csv.headers, csv.rows), {
         name: `questionnaire_${questionnaire.id}.csv`,
       });
     }
@@ -125,12 +175,12 @@ export class DefaultExportService implements ExportService {
   private async addUserAppointments(
     userId: string,
     archiver: Archiver,
-  ): Promise<void> {
+  ): Promise<UserCsvExport> {
     const appointments = await this.databaseService.getQuery((collections) =>
       collections.userAppointments(userId),
     );
 
-    const buffer = this.createCsvBuffer(
+    const csv = this.createCsvData(
       ["id", "status", "created", "start", "end"],
       appointments,
       (value) => [
@@ -142,18 +192,21 @@ export class DefaultExportService implements ExportService {
       ],
     );
 
-    archiver.append(buffer, { name: `${userId}/appointments.csv` });
+    archiver.append(this.formatCsvBuffer(csv.headers, csv.rows), {
+      name: `${userId}/appointments.csv`,
+    });
+    return { filename: "appointments.csv", csv };
   }
 
   private async addUserMessages(
     userId: string,
     archiver: Archiver,
-  ): Promise<void> {
+  ): Promise<UserCsvExport> {
     const messages = await this.databaseService.getQuery((collections) =>
       collections.userMessages(userId),
     );
 
-    const buffer = this.createCsvBuffer(
+    const csv = this.createCsvData(
       [
         "id",
         "type",
@@ -177,18 +230,21 @@ export class DefaultExportService implements ExportService {
       ],
     );
 
-    archiver.append(buffer, { name: `${userId}/messages.csv` });
+    archiver.append(this.formatCsvBuffer(csv.headers, csv.rows), {
+      name: `${userId}/messages.csv`,
+    });
+    return { filename: "messages.csv", csv };
   }
 
   private async addUserMedicationRequests(
     userId: string,
     archiver: Archiver,
-  ): Promise<void> {
+  ): Promise<UserCsvExport> {
     const medications = await this.databaseService.getQuery((collections) =>
       collections.userMedicationRequests(userId),
     );
 
-    const buffer = this.createCsvBuffer(
+    const csv = this.createCsvData(
       [
         "id",
         "medicationCode (RxNorm)",
@@ -218,22 +274,25 @@ export class DefaultExportService implements ExportService {
       },
     );
 
-    archiver.append(buffer, { name: `${userId}/medicationRequests.csv` });
+    archiver.append(this.formatCsvBuffer(csv.headers, csv.rows), {
+      name: `${userId}/medicationRequests.csv`,
+    });
+    return { filename: "medicationRequests.csv", csv };
   }
 
   private async addUserObservations(
     userId: string,
     collection: UserObservationCollection,
     archiver: Archiver,
-  ): Promise<void> {
+  ): Promise<UserCsvExport> {
     const observations = await this.databaseService.getQuery((collections) =>
       collections.userObservations(userId, collection),
     );
 
-    let buffer: Buffer;
+    let csv: CsvData;
     switch (collection) {
       case UserObservationCollection.bloodPressure:
-        buffer = this.createCsvBuffer(
+        csv = this.createCsvData(
           [
             "id",
             "systolicValue",
@@ -268,7 +327,7 @@ export class DefaultExportService implements ExportService {
         );
         break;
       default:
-        buffer = this.createCsvBuffer(
+        csv = this.createCsvData(
           ["id", "value", "unit", "effectiveDateTime"],
           observations,
           (value) => [
@@ -280,13 +339,16 @@ export class DefaultExportService implements ExportService {
         );
         break;
     }
-    archiver.append(buffer, { name: `${userId}/${collection}.csv` });
+    archiver.append(this.formatCsvBuffer(csv.headers, csv.rows), {
+      name: `${userId}/${collection}.csv`,
+    });
+    return { filename: `${collection}.csv`, csv };
   }
 
   private async addUserQuestionnaireResponses(
     userId: string,
     archiver: Archiver,
-  ): Promise<void> {
+  ): Promise<UserCsvExport> {
     const questionnaireResponses = await this.databaseService.getQuery(
       (collections) => collections.userQuestionnaireResponses(userId),
     );
@@ -297,7 +359,7 @@ export class DefaultExportService implements ExportService {
         QuestionnaireLinkId.url(QuestionnaireId.kccq),
     );
 
-    const buffer = this.createCsvBuffer(
+    const csv = this.createCsvData(
       [
         "id",
         "q1a",
@@ -363,20 +425,21 @@ export class DefaultExportService implements ExportService {
       },
     );
 
-    archiver.append(buffer, {
+    archiver.append(this.formatCsvBuffer(csv.headers, csv.rows), {
       name: `${userId}/questionnaireResponses_kccq.csv`,
     });
+    return { filename: "questionnaireResponses_kccq.csv", csv };
   }
 
   private async addUserSymptomScores(
     userId: string,
     archiver: Archiver,
-  ): Promise<void> {
+  ): Promise<UserCsvExport> {
     const symptomScores = await this.databaseService.getQuery((collections) =>
       collections.userSymptomScores(userId),
     );
 
-    const buffer = this.createCsvBuffer(
+    const csv = this.createCsvData(
       [
         "id",
         "overallScore",
@@ -402,22 +465,30 @@ export class DefaultExportService implements ExportService {
       ],
     );
 
-    archiver.append(buffer, { name: `${userId}/symptomScores.csv` });
+    archiver.append(this.formatCsvBuffer(csv.headers, csv.rows), {
+      name: `${userId}/symptomScores.csv`,
+    });
+    return { filename: "symptomScores.csv", csv };
   }
 
   // Helpers - File Creation
 
-  private createCsvBuffer<T>(
-    headers: string[],
+  private createCsvData<T>(
+    headers: readonly string[],
     values: T[],
     row: (item: T) => string[],
+  ): CsvData {
+    return { headers, rows: values.map(row) };
+  }
+
+  private formatCsvBuffer(
+    headers: readonly string[],
+    rows: readonly (readonly string[])[],
   ): Buffer {
     function escapeCsvField(field: string): string {
       if (/^[=+\-@]/.test(field)) {
         field = "'" + field;
       }
-      // Escape quotes by doubling them
-      // If field contains semicolon, newline, or quote, wrap in quotes
       if (/[;\n"]/.test(field)) {
         return `"${field.replace(/"/g, '""')}"`;
       }
@@ -426,7 +497,7 @@ export class DefaultExportService implements ExportService {
 
     const string = [
       headers.map(escapeCsvField).join(";"),
-      ...values.map((item) => row(item).map(escapeCsvField).join(";")),
+      ...rows.map((row) => row.map(escapeCsvField).join(";")),
     ].join("\n");
     return Buffer.from(string);
   }

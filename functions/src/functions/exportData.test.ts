@@ -61,6 +61,7 @@ describeWithEmulators("function: exportData", (env) => {
 
     expect(filenames).toContain(`${patient0}/appointments.csv`);
     expect(filenames).toContain(`${patient1}/appointments.csv`);
+    expect(filenames).toContain("appointments.csv");
   }, 10_000);
 
   it("filters correctly for owner", async () => {
@@ -96,6 +97,7 @@ describeWithEmulators("function: exportData", (env) => {
     const filenames = entries.map((entry) => entry.filename);
     expect(filenames).toContain(`${patient0}/appointments.csv`);
     expect(filenames).not.toContain(`${patient1}/appointments.csv`);
+    expect(filenames).toContain("appointments.csv");
   }, 10_000);
 
   it("rejects unauthorized users", async () => {
@@ -188,16 +190,20 @@ describeWithEmulators("function: exportData", (env) => {
       "postAppointment_en_US",
       "registration_en_US",
     ];
+    const perPatientFiles = [
+      ...Object.values(UserObservationCollection).map(
+        (collection) => `${collection}.csv`,
+      ),
+      "appointments.csv",
+      "medicationRequests.csv",
+      "messages.csv",
+      "questionnaireResponses_kccq.csv",
+      "symptomScores.csv",
+    ];
     const expectedFileNames = [
       ...questionnaireIds.map((id) => `questionnaire_${id}.csv`),
-      ...Object.values(UserObservationCollection).map(
-        (collection) => `${patientId}/${collection}.csv`,
-      ),
-      `${patientId}/appointments.csv`,
-      `${patientId}/medicationRequests.csv`,
-      `${patientId}/messages.csv`,
-      `${patientId}/questionnaireResponses_kccq.csv`,
-      `${patientId}/symptomScores.csv`,
+      ...perPatientFiles.map((file) => `${patientId}/${file}`),
+      ...perPatientFiles,
     ];
     expect(filenames.sort()).toEqual(expectedFileNames.sort());
 
@@ -209,6 +215,11 @@ describeWithEmulators("function: exportData", (env) => {
         .split("\n")
         .filter((line) => line.trim().length > 0);
       expect(lines.length).toBeGreaterThan(0);
+
+      if (perPatientFiles.includes(entry.filename)) {
+        const header = lines[0];
+        expect(header).toMatch(/^name;userId;/);
+      }
     }
   }, 10_000);
 
