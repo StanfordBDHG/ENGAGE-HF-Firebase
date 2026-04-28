@@ -7,7 +7,7 @@
 //
 
 import { exportDataInputSchema } from "@stanfordbdhg/engagehf-models";
-import { validatedOnCall } from "./helpers.js";
+import { privilegedServiceAccount, validatedOnCall } from "./helpers.js";
 import { UserRole } from "../services/credential/credential.js";
 import { getServiceFactory } from "../services/factory/getServiceFactory.js";
 
@@ -59,5 +59,8 @@ export const exportData = validatedOnCall(
     return {
       content: buffer.toString("base64"),
     };
+  },
+  {
+    serviceAccount: privilegedServiceAccount,
   },
 );
