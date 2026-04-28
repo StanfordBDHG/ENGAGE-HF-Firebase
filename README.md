@@ -12,6 +12,14 @@ SPDX-License-Identifier: MIT
 
 Firebase cloud hosting infrastructure for the ENGAGE-HF project.
 
+## Getting Started
+
+**New to ENGAGE-HF?** Start with our comprehensive [Setup Guide](SETUP.md) for step-by-step instructions on:
+- Firebase project configuration
+- Service account setup and IAM permissions
+- Initial deployment
+- Onboarding your first clinicians and patients
+
 ## Behavior
 
 The base functionality of the ENGAGE-HF Firebase Functions revolve around three parts:
