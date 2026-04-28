@@ -10,7 +10,6 @@ import { type User, userConverter } from "@stanfordbdhg/engagehf-models";
 import { logger } from "firebase-functions";
 import { onDocumentWritten } from "firebase-functions/v2/firestore";
 import { Env } from "../env.js";
-import { privilegedServiceAccount } from "./helpers.js";
 import { DatabaseConverter } from "../services/database/databaseConverter.js";
 import { type Document } from "../services/database/databaseService.js";
 import { getServiceFactory } from "../services/factory/getServiceFactory.js";
@@ -19,7 +18,6 @@ export const onUserWritten = onDocumentWritten(
   {
     document: "users/{userId}",
     secrets: Env.twilioSecretKeys,
-    serviceAccount: privilegedServiceAccount,
   },
   async (event) => {
     const factory = getServiceFactory();
