@@ -22,17 +22,17 @@
   ],
   "main": "lib/index.js",
   "dependencies": {
-    "zod": "^3.23.8"
+    "zod": "^3.25.76"
   },
   "devDependencies": {
-    "@stanfordspezi/spezi-web-configurations": "^0.6.0",
+    "@stanfordspezi/spezi-web-configurations": "^0.7.0",
     "@types/node": "^24",
-    "eslint": "^9.34",
-    "jest": "^29",
-    "prettier": "^3.6",
-    "prettier-plugin-tailwindcss": "^0.7.2",
-    "ts-jest": "^29",
+    "eslint": "^9.39.4",
+    "jest": "^30.3.0",
+    "prettier": "^3.8.3",
+    "prettier-plugin-tailwindcss": "^0.8.0",
+    "ts-jest": "^29.4.9",
     "ts-node": "^10.9",
-    "typescript": "^5"
+    "typescript": "^6.0.3"
   }
 }

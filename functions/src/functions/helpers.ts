@@ -40,7 +40,7 @@ export function validatedOnCall<Schema extends z.ZodTypeAny, Return, Stream>(
           `onCall(${name}) from user '${request.auth?.uid}' with '${JSON.stringify(request.data)}'`,
         );
         request.data = schema.parse(request.data) as z.output<Schema>;
-        return await handler(request as CallableRequest<z.output<Schema>>);
+        return await handler(request);
       } catch (error) {
         logger.debug(
           `onCall(${name}) from user '${request.auth?.uid}' failed with '${String(error)}'.`,
