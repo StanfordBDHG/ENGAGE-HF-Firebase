@@ -23,7 +23,7 @@ import { type UserService } from "../user/userService.js";
 
 interface CsvData {
   readonly headers: readonly string[];
-  readonly rows: readonly (readonly string[])[];
+  readonly rows: ReadonlyArray<readonly string[]>;
 }
 
 interface UserCsvExport {
@@ -483,7 +483,7 @@ export class DefaultExportService implements ExportService {
 
   private formatCsvBuffer(
     headers: readonly string[],
-    rows: readonly (readonly string[])[],
+    rows: ReadonlyArray<readonly string[]>,
   ): Buffer {
     function escapeCsvField(field: string): string {
       if (/^[=+\-@]/.test(field)) {
