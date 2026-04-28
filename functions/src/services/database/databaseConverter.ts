@@ -34,7 +34,6 @@ export class DatabaseConverter<
   fromFirestore(snapshot: DocumentSnapshot): z.output<Schema> {
     const data = snapshot.data();
     try {
-      /* eslint-disable-next-line @typescript-eslint/no-unsafe-return */
       return this.converter.schema.parse(data) as z.output<Schema>;
     } catch (error) {
       logger.error(
