@@ -331,7 +331,7 @@ export class DefaultExportService implements ExportService {
     const historyEntries = await this.databaseService.getQuery((collections) =>
       collections.history
         .where("path", ">=", prefix)
-        .where("path", "<", prefix + ""),
+        .where("path", "<", prefix + "\uf8ff"),
     );
 
     const groups = new Map<string, Array<{ date: Date; data: unknown }>>();
