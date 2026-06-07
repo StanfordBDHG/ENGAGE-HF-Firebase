@@ -225,6 +225,10 @@ export class DatabaseUserService implements UserService {
       `DatabaseUserService.finishUserEnrollment(${user.id}): Will copy invitation collections: [${invitationCollections.map((collection) => `'${collection.id}'`).join(", ")}].`,
     );
 
+    // Permanent invitations can be reused: keep the invitation document and its
+    // seeded sub-collection data so the next invitee receives the same data.
+    const isPermanent = invitation.content.permanent;
+
     await Promise.all(
       invitationCollections.map(async (invitationCollection) =>
         this.databaseService.runTransaction(
@@ -237,7 +241,9 @@ export class DatabaseUserService implements UserService {
                 userRef.collection(collectionId).doc(item.id),
                 item.data(),
               );
-              transaction.delete(item.ref);
+              if (!isPermanent) {
+                transaction.delete(item.ref);
+              }
             }
 
             logger.info(
@@ -248,7 +254,9 @@ export class DatabaseUserService implements UserService {
       ),
     );
 
-    await this.deleteInvitation(invitation);
+    if (!isPermanent) {
+      await this.deleteInvitation(invitation);
+    }
   }
 
   async deleteInvitation(invitation: Document<Invitation>): Promise<void> {

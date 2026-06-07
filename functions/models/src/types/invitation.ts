@@ -24,12 +24,14 @@ export const invitationConverter = new Lazy(
           code: z.string(),
           auth: optionalish(z.lazy(() => userAuthConverter.value.schema)),
           user: z.lazy(() => userRegistrationConverter.value.schema),
+          permanent: optionalish(z.boolean()),
         })
         .transform((values) => new Invitation(values)),
       encode: (object) => ({
         code: object.code,
         auth: object.auth ? userAuthConverter.value.encode(object.auth) : null,
         user: userRegistrationConverter.value.encode(object.user),
+        permanent: object.permanent,
       }),
     }),
 );
@@ -40,6 +42,7 @@ export class Invitation {
   readonly code: string;
   readonly auth?: UserAuth;
   readonly user: UserRegistration;
+  readonly permanent: boolean;
 
   // Constructor
 
@@ -47,9 +50,11 @@ export class Invitation {
     code: string;
     auth?: UserAuth;
     user: UserRegistration;
+    permanent?: boolean;
   }) {
     this.code = input.code;
     this.auth = input.auth;
     this.user = input.user;
+    this.permanent = input.permanent ?? false;
   }
 }

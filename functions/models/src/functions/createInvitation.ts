@@ -7,12 +7,14 @@
 //
 
 import { z } from "zod";
+import { optionalish } from "../helpers/optionalish.js";
 import { userAuthConverter } from "../types/userAuth.js";
 import { userRegistrationConverter } from "../types/userRegistration.js";
 
 export const createInvitationInputSchema = z.object({
   auth: z.lazy(() => userAuthConverter.value.schema),
   user: z.lazy(() => userRegistrationConverter.value.schema),
+  permanent: optionalish(z.boolean()),
 });
 export type CreateInvitationInput = z.input<typeof createInvitationInputSchema>;
 

@@ -12,6 +12,9 @@ import { writeFileSync } from "fs";
 import {
   CachingStrategy,
   DebugDataComponent,
+  DrugReference,
+  FHIRMedicationRequest,
+  fhirMedicationRequestConverter,
   StaticDataComponent,
   UserDebugDataComponent,
   UserObservationCollection,
@@ -221,6 +224,124 @@ describeWithEmulators("function: exportData", (env) => {
         expect(header).toMatch(/^name;userId;/);
       }
     }
+  }, 10_000);
+
+  it("reconstructs medication history with lifecycle dates", async () => {
+    const patient = await env.createUser({
+      type: UserType.patient,
+      organization: "stanford",
+    });
+    const admin = await env.createUser({ type: UserType.admin });
+
+    const history = env.factory.history();
+    const encode = (request: FHIRMedicationRequest) =>
+      fhirMedicationRequestConverter.value.encode(request);
+
+    // Medication that was added and later removed: expect exactly one row with
+    // both `created` and `removed` set and no live document.
+    const removedId = "med-removed";
+    const removedPath = `users/${patient}/medicationRequests/${removedId}`;
+    const removedMedication = FHIRMedicationRequest.create({
+      medicationReference: DrugReference.carvedilol3_125,
+      frequencyPerDay: 1,
+      quantity: 1,
+    });
+    await history.recordChange(
+      env.createChange(removedPath, undefined, encode(removedMedication)),
+    );
+    await history.recordChange(
+      env.createChange(removedPath, encode(removedMedication), undefined),
+    );
+
+    // Medication whose dose changed and is still active: expect one row showing
+    // the final dose, `created` set and `removed` empty.
+    const changedId = "med-changed";
+    const changedPath = `users/${patient}/medicationRequests/${changedId}`;
+    const initialDose = FHIRMedicationRequest.create({
+      medicationReference: DrugReference.carvedilol3_125,
+      frequencyPerDay: 1,
+      quantity: 1,
+    });
+    const finalDose = FHIRMedicationRequest.create({
+      medicationReference: DrugReference.carvedilol3_125,
+      frequencyPerDay: 2,
+      quantity: 1,
+    });
+    await history.recordChange(
+      env.createChange(changedPath, undefined, encode(initialDose)),
+    );
+    await history.recordChange(
+      env.createChange(changedPath, encode(initialDose), encode(finalDose)),
+    );
+    await env.collections
+      .userMedicationRequests(patient)
+      .doc(changedId)
+      .set(finalDose);
+
+    // Medication that exists live but has no history (predates tracking):
+    // expect one row with empty lifecycle dates.
+    const liveOnlyId = "med-liveonly";
+    const liveOnlyMedication = FHIRMedicationRequest.create({
+      medicationReference: DrugReference.carvedilol25,
+      frequencyPerDay: 1,
+      quantity: 1,
+    });
+    await env.collections
+      .userMedicationRequests(patient)
+      .doc(liveOnlyId)
+      .set(liveOnlyMedication);
+
+    const result = await env.call(
+      exportData,
+      { userId: patient },
+      { uid: admin, token: { type: UserType.admin } },
+    );
+    const zip = await yauzl.fromBuffer(Buffer.from(result.content, "base64"));
+    const entries = await zip.readEntries();
+    const entry = entries.find(
+      (entry) => entry.filename === `${patient}/medicationRequests.csv`,
+    );
+    expect(entry).toBeDefined();
+
+    const lines = (await entryBuffer(entry!))
+      .toString("utf-8")
+      .split("\n")
+      .filter((line) => line.trim().length > 0);
+
+    expect(lines[0].split(";")).toEqual([
+      "id",
+      "medicationCode (RxNorm)",
+      "drugCode (RxNorm)",
+      "quantity",
+      "quantityUnit",
+      "frequencyPerDay",
+      "created",
+      "lastUpdated",
+      "removed",
+    ]);
+
+    // One row per medication (add+remove collapses to a single row).
+    expect(lines).toHaveLength(4);
+    const rows = new Map(
+      lines.slice(1).map((line) => {
+        const columns = line.split(";");
+        return [columns[0], columns];
+      }),
+    );
+
+    const removedRow = rows.get(removedId)!;
+    expect(removedRow).toBeDefined();
+    expect(removedRow[6]).not.toBe(""); // created
+    expect(removedRow[8]).not.toBe(""); // removed
+
+    const changedRow = rows.get(changedId)!;
+    expect(changedRow[5]).toBe("2"); // final frequencyPerDay
+    expect(changedRow[6]).not.toBe(""); // created
+    expect(changedRow[8]).toBe(""); // still active, not removed
+
+    const liveOnlyRow = rows.get(liveOnlyId)!;
+    expect(liveOnlyRow[6]).toBe(""); // no history -> empty created
+    expect(liveOnlyRow[8]).toBe(""); // not removed
   }, 10_000);
 
   async function expectZipToBeEquivalent(

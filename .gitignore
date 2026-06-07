@@ -2,6 +2,7 @@
 # SPDX-FileCopyrightText: 2023 Stanford University
 # SPDX-License-Identifier: MIT
 
+*.local.*
 .DS_Store
 credentials.json
 

@@ -7,6 +7,7 @@
 //
 
 import {
+  fhirMedicationRequestConverter,
   type FHIRQuestionnaireItem,
   LoincCode,
   UserObservationCollection,
@@ -14,7 +15,10 @@ import {
 import archiver, { type Archiver } from "archiver";
 import { https } from "firebase-functions/v2";
 import { type ExportService } from "./exportService.js";
-import { type DatabaseService } from "../database/databaseService.js";
+import {
+  type DatabaseService,
+  type Document,
+} from "../database/databaseService.js";
 import {
   QuestionnaireId,
   QuestionnaireLinkId,
@@ -29,6 +33,19 @@ interface CsvData {
 interface UserCsvExport {
   readonly filename: string;
   readonly csv: CsvData;
+}
+
+/**
+ * A single document reconstructed across its lifecycle from the global `/history`
+ * collection (merged with the live collection). One record per document, so a
+ * medication that was added and later removed yields exactly one row.
+ */
+interface LifecycleRecord<Content> {
+  readonly id: string;
+  readonly content: Content;
+  readonly created?: Date;
+  readonly lastUpdated?: Date;
+  readonly removed?: Date;
 }
 
 export class DefaultExportService implements ExportService {
@@ -240,8 +257,14 @@ export class DefaultExportService implements ExportService {
     userId: string,
     archiver: Archiver,
   ): Promise<UserCsvExport> {
-    const medications = await this.databaseService.getQuery((collections) =>
+    const liveDocs = await this.databaseService.getQuery((collections) =>
       collections.userMedicationRequests(userId),
+    );
+    const records = await this.lifecycleRecords(
+      userId,
+      "medicationRequests",
+      liveDocs,
+      (data) => fhirMedicationRequestConverter.value.schema.parse(data),
     );
 
     const csv = this.createCsvData(
@@ -252,24 +275,31 @@ export class DefaultExportService implements ExportService {
         "quantity",
         "quantityUnit",
         "frequencyPerDay",
+        "created",
+        "lastUpdated",
+        "removed",
       ],
-      medications,
-      (value) => {
+      records,
+      (record) => {
+        const medication = record.content;
         const referenceParts = (
-          value.content.medicationReference?.reference ?? ""
+          medication.medicationReference?.reference ?? ""
         ).split("/");
-        const quantity = value.content.dosageInstruction
+        const quantity = medication.dosageInstruction
           ?.at(0)
           ?.doseAndRate?.at(0)?.doseQuantity;
         const frequency =
-          value.content.dosageInstruction?.at(0)?.timing?.repeat?.frequency;
+          medication.dosageInstruction?.at(0)?.timing?.repeat?.frequency;
         return [
-          value.id,
+          record.id,
           referenceParts[1],
           referenceParts[3],
           quantity?.value?.toString() ?? "",
           quantity?.unit ?? "",
           frequency?.toString() ?? "",
+          record.created?.toISOString() ?? "",
+          record.lastUpdated?.toISOString() ?? "",
+          record.removed?.toISOString() ?? "",
         ];
       },
     );
@@ -278,6 +308,76 @@ export class DefaultExportService implements ExportService {
       name: `${userId}/medicationRequests.csv`,
     });
     return { filename: "medicationRequests.csv", csv };
+  }
+
+  /**
+   * Reconstructs the lifecycle of every document in a user's sub-collection by
+   * reading the global `/history` collection (range-queried by document path)
+   * and merging it with the live collection. Returns one record per document:
+   * - `created`: earliest history entry date (empty if the doc predates history
+   *   tracking and only exists live).
+   * - `lastUpdated`: latest history entry with non-null data.
+   * - `removed`: date the document was deleted (it no longer exists live).
+   * - `content`: the live content if it still exists, otherwise the most recent
+   *   non-null history snapshot parsed back into the model.
+   */
+  private async lifecycleRecords<Content>(
+    userId: string,
+    subcollection: string,
+    liveDocs: Array<Document<Content>>,
+    parse: (data: unknown) => Content,
+  ): Promise<Array<LifecycleRecord<Content>>> {
+    const prefix = `users/${userId}/${subcollection}/`;
+    const historyEntries = await this.databaseService.getQuery((collections) =>
+      collections.history
+        .where("path", ">=", prefix)
+        .where("path", "<", prefix + ""),
+    );
+
+    const groups = new Map<string, Array<{ date: Date; data: unknown }>>();
+    for (const entry of historyEntries) {
+      const group = groups.get(entry.content.path) ?? [];
+      group.push({ date: entry.content.date, data: entry.content.data });
+      groups.set(entry.content.path, group);
+    }
+
+    const liveById = new Map(liveDocs.map((doc) => [doc.id, doc]));
+    const records: Array<LifecycleRecord<Content>> = [];
+    const seenIds = new Set<string>();
+
+    for (const [path, entries] of groups) {
+      const id = path.substring(path.lastIndexOf("/") + 1);
+      seenIds.add(id);
+      entries.sort((a, b) => a.date.getTime() - b.date.getTime());
+
+      const nonNullEntries = entries.filter((entry) => entry.data != null);
+      const created = entries.at(0)?.date;
+      const lastUpdated = nonNullEntries.at(-1)?.date;
+      const liveDoc = liveById.get(id);
+
+      let content: Content | undefined;
+      let removed: Date | undefined;
+      if (liveDoc !== undefined) {
+        content = liveDoc.content;
+      } else {
+        const latestData = nonNullEntries.at(-1)?.data;
+        content = latestData != null ? parse(latestData) : undefined;
+        removed = entries.at(-1)?.date;
+      }
+
+      // No recoverable data (e.g. only a deletion entry exists) - skip.
+      if (content === undefined) continue;
+
+      records.push({ id, content, created, lastUpdated, removed });
+    }
+
+    // Include live documents that predate history tracking (no history entries).
+    for (const doc of liveDocs) {
+      if (seenIds.has(doc.id)) continue;
+      records.push({ id: doc.id, content: doc.content });
+    }
+
+    return records;
   }
 
   private async addUserObservations(
