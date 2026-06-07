@@ -44,7 +44,7 @@ describeWithEmulators("function: createInvitation", (env) => {
     expect(invitations.docs).toHaveLength(1);
 
     const invitation = invitations.docs[0].data();
-    expect(invitation.code).toBe(input.auth.email);
+    expect(invitation.code).toBe(input.auth?.email);
   });
 
   it("should create an invitation for a patient", async () => {
@@ -108,6 +108,35 @@ describeWithEmulators("function: createInvitation", (env) => {
     const invitations = await env.collections.invitations.get();
     expect(invitations.docs).toHaveLength(1);
     expect(invitations.docs[0].data().permanent).toBe(true);
+  });
+
+  it("should create a permanent invitation without auth", async () => {
+    const input: z.input<typeof createInvitationInputSchema> = {
+      permanent: true,
+      user: {
+        type: UserType.patient,
+        organization: "stanford",
+        receivesAppointmentReminders: false,
+        receivesInactivityReminders: true,
+        receivesMedicationUpdates: true,
+        receivesQuestionnaireReminders: false,
+        receivesRecommendationUpdates: true,
+        receivesVitalsReminders: false,
+        receivesWeightAlerts: false,
+      },
+    };
+
+    await env.call(createInvitation, input, {
+      uid: "test",
+      token: { type: UserType.clinician, organization: "stanford" },
+    });
+
+    const invitations = await env.collections.invitations.get();
+    expect(invitations.docs).toHaveLength(1);
+    const invitation = invitations.docs[0].data();
+    expect(invitation.permanent).toBe(true);
+    expect(invitation.auth).toBeUndefined();
+    expect(invitation.code).toMatch(/^[A-Z0-9]{8}$/);
   });
 
   it("should not allow clinician to create a clinician invitation", async () => {

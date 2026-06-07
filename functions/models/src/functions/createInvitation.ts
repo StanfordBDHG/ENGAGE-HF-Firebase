@@ -12,7 +12,8 @@ import { userAuthConverter } from "../types/userAuth.js";
 import { userRegistrationConverter } from "../types/userRegistration.js";
 
 export const createInvitationInputSchema = z.object({
-  auth: z.lazy(() => userAuthConverter.value.schema),
+  // Optional so that permanent (reusable) invitations can omit per-person auth.
+  auth: optionalish(z.lazy(() => userAuthConverter.value.schema)),
   user: z.lazy(() => userRegistrationConverter.value.schema),
   permanent: optionalish(z.boolean()),
 });
