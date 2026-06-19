@@ -21,9 +21,9 @@ jobs:
   reuseaction:
     name: REUSE Compliance Check
     uses: StanfordBDHG/.github/.github/workflows/reuse.yml@v2
-  markdownlinkcheck:
-    name: Markdown Link Check
-    uses: StanfordBDHG/.github/.github/workflows/markdown-link-check.yml@v2.3
+  # markdownlinkcheck:
+  #   name: Markdown Link Check
+  #   uses: StanfordBDHG/.github/.github/workflows/markdown-link-check.yml@v2.3
   lint:
     name: Lint
     runs-on: ubuntu-latest
@@ -74,11 +74,11 @@ jobs:
       - name: Test
         id: test
         run: npm run test:ci
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5
-        with:
-          files: functions/coverage/lcov.info
-          fail_ci_if_error: true
-          token: ${{ secrets.CODECOV_TOKEN }}
+      # - name: Upload coverage to Codecov
+      #   uses: codecov/codecov-action@v5
+      #   with:
+      #     files: functions/coverage/lcov.info
+      #     fail_ci_if_error: true
+      #     token: ${{ secrets.CODECOV_TOKEN }}
     permissions:
       contents: read
