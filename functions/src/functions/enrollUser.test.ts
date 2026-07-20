@@ -282,4 +282,90 @@ describeWithEmulators("function: enrollUser", (env) => {
       QuestionnaireReference.registration_en_US,
     );
   });
+
+  function patientInvitation(permanent: boolean): Invitation {
+    return new Invitation({
+      auth: new UserAuth({ email: "engagehf-test@stanford.edu" }),
+      code: "TESTCODE",
+      permanent,
+      user: new UserRegistration({
+        type: UserType.patient,
+        disabled: false,
+        selfManaged: false,
+        organization: "stanford",
+        receivesAppointmentReminders: true,
+        receivesInactivityReminders: true,
+        receivesMedicationUpdates: true,
+        receivesQuestionnaireReminders: true,
+        receivesRecommendationUpdates: true,
+        receivesVitalsReminders: true,
+        receivesWeightAlerts: true,
+      }),
+    });
+  }
+
+  async function enrollAndFinish(): Promise<string> {
+    const authUser = await env.auth.createUser({});
+    await env.call(
+      enrollUser,
+      { invitationCode: "TESTCODE" },
+      { uid: authUser.uid },
+    );
+    const userService = env.factory.user();
+    const dbUser = await userService.getUser(authUser.uid);
+    expect(dbUser).toBeDefined();
+    if (dbUser !== undefined) await userService.finishUserEnrollment(dbUser);
+    return authUser.uid;
+  }
+
+  it("allows a permanent invitation to be reused by multiple users", async () => {
+    const invitationRef = env.collections.invitations.doc();
+    await invitationRef.set(patientInvitation(true));
+
+    const seededAppointment = new FHIRAppointment({
+      status: FHIRAppointmentStatus.booked,
+      created: new Date("2023-12-24"),
+      start: new Date("2023-12-31"),
+      end: new Date("2024-01-01"),
+      participant: [],
+    });
+    await env.collections
+      .invitationAppointments(invitationRef.id)
+      .doc()
+      .set(seededAppointment);
+
+    // First enrollee receives the seeded data and the invitation survives.
+    const firstUserId = await enrollAndFinish();
+
+    const invitationsAfterFirst = await env.collections.invitations.get();
+    expect(invitationsAfterFirst.docs).toHaveLength(1);
+    const remainingAppointments = await env.collections
+      .invitationAppointments(invitationRef.id)
+      .get();
+    expect(remainingAppointments.docs).toHaveLength(1);
+    const firstUserAppointments = await env.collections
+      .userAppointments(firstUserId)
+      .get();
+    expect(firstUserAppointments.docs).toHaveLength(1);
+
+    // Second enrollee can reuse the same code and also receives the seeded data.
+    const secondUserId = await enrollAndFinish();
+
+    const invitationsAfterSecond = await env.collections.invitations.get();
+    expect(invitationsAfterSecond.docs).toHaveLength(1);
+    const secondUserAppointments = await env.collections
+      .userAppointments(secondUserId)
+      .get();
+    expect(secondUserAppointments.docs).toHaveLength(1);
+  });
+
+  it("deletes a non-permanent invitation after enrollment", async () => {
+    const invitationRef = env.collections.invitations.doc();
+    await invitationRef.set(patientInvitation(false));
+
+    await enrollAndFinish();
+
+    const invitations = await env.collections.invitations.get();
+    expect(invitations.docs).toHaveLength(0);
+  });
 });

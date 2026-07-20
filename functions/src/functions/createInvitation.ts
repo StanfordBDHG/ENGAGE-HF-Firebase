@@ -43,7 +43,7 @@ export const createInvitation = validatedOnCall(
 
     for (let counter = 0; ; counter++) {
       const invitationCode =
-        isPatient ? generateInvitationCode(8) : request.data.auth.email;
+        isPatient ? generateInvitationCode(8) : request.data.auth?.email;
       if (invitationCode === undefined)
         throw new https.HttpsError(
           "invalid-argument",
