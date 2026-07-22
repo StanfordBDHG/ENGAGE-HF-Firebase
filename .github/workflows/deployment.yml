@@ -1,5 +1,5 @@
 #
-# This source file is part of the Stanford Biodesign Digital Health ENGAGE-HF open-source project
+# This source file is part of the Stanford ENGAGE-HF project
 #
 # SPDX-FileCopyrightText: 2023 Stanford University and the project authors (see CONTRIBUTORS.md)
 #
@@ -75,7 +75,7 @@ jobs:
   deployfirebase:
     name: Deploy Firebase Project
     needs: [buildandtest, determineenvironment, vars]
-    uses: StanfordBDHG/.github/.github/workflows/firebase-deploy.yml@v2
+    uses: SchmiedmayerLab/.github/.github/workflows/firebase-deploy.yml@v0.2
     permissions:
       contents: read
     with:

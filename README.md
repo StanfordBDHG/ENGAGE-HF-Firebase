@@ -1,13 +1,13 @@
 <!-- 
-This source file is part of the ENGAGE-HF project based on the Stanford Spezi Template Application project 
+This source file is part of the Stanford ENGAGE-HF project 
 SPDX-FileCopyrightText: 2023 Stanford University
 SPDX-License-Identifier: MIT 
 -->
 
 # ENGAGE-HF Firebase
 
-[![Build and Test](https://github.com/StanfordBDHG/ENGAGE-HF-Firebase/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/StanfordBDHG/ENGAGE-HF-Firebase/actions/workflows/build-and-test.yml)
-[![Deployment](https://github.com/StanfordBDHG/ENGAGE-HF-Firebase/actions/workflows/deployment.yml/badge.svg)](https://github.com/StanfordBDHG/ENGAGE-HF-Firebase/actions/workflows/deployment.yml)
+[![Build and Test](https://github.com/SchmiedmayerLab/ENGAGE-HF-Firebase/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/SchmiedmayerLab/ENGAGE-HF-Firebase/actions/workflows/build-and-test.yml)
+[![Deployment](https://github.com/SchmiedmayerLab/ENGAGE-HF-Firebase/actions/workflows/deployment.yml/badge.svg)](https://github.com/SchmiedmayerLab/ENGAGE-HF-Firebase/actions/workflows/deployment.yml)
 
 
 Firebase cloud hosting infrastructure for the ENGAGE-HF project.
@@ -25,7 +25,7 @@ To use Firebase functions for your own project or to emulate them for client app
 
 This repository contains two separate packages.
 
-- The package located in [functions/models](functions/models) contains model types including decoding/encoding functions and useful extensions that are shared between the Firebase functions and the web dashboard. This package is released via the npm registry and can be accessed as `@stanfordbdhg/engagehf-models`.
+- The package located in [functions/models](functions/models) contains model types including decoding/encoding functions and useful extensions that are shared between the Firebase functions and the web dashboard. This package is released via the npm registry and can be accessed as `@schmiedmayerlab/engagehf-models`.
 - The package located in [functions](functions) contains the Firebase functions and services that are called from these functions. This package has a local dependency on the package in [functions/models](functions/models). Therefore, the functions package does not work (e.g. for linting, building, etc) without building the models package first.
 
 To make this structure simpler to use, we provide different scripts as part of the [package.json](package.json) file in the root directory of this repository. The file ensures execution order between the two packages. We only document the scripts located in this file, since they cover the most common use cases, feel free to have a look at the individual package.json files of the respective packages to get a deeper understanding and more package-focused operations.
@@ -1018,12 +1018,12 @@ For more detail, please consult the Firestore rules defined in [firestore.rules]
 
 ## License
 
-This project is licensed under the MIT License. See [Licenses](https://github.com/StanfordBDHG/ENGAGE-HF-Firebase/tree/main/LICENSES) for more information.
+This project is licensed under the MIT License. See [Licenses](https://github.com/SchmiedmayerLab/ENGAGE-HF-Firebase/tree/main/LICENSES) for more information.
 
 ## Contributors
 
 This project is developed as part of the Stanford Mussallem Center for Biodesign at Stanford University.
-See [CONTRIBUTORS.md](https://github.com/StanfordBDHG/ENGAGE-HF-Firebase/tree/main/CONTRIBUTORS.md) for a full list of all contributors.
+See [CONTRIBUTORS.md](https://github.com/SchmiedmayerLab/ENGAGE-HF-Firebase/tree/main/CONTRIBUTORS.md) for a full list of all contributors.
 
-![Stanford Mussallem Center for Biodesign Logo](https://raw.githubusercontent.com/StanfordBDHG/.github/main/assets/biodesign-footer-light.png#gh-light-mode-only)
-![Stanford Mussallem Center for Biodesign Logo](https://raw.githubusercontent.com/StanfordBDHG/.github/main/assets/biodesign-footer-dark.png#gh-dark-mode-only)
+![Stanford and Stanford Medicine logos](https://raw.githubusercontent.com/SchmiedmayerLab/.github/main/assets/stanford-footer-light.png#gh-light-mode-only)
+![Stanford and Stanford Medicine logos](https://raw.githubusercontent.com/SchmiedmayerLab/.github/main/assets/stanford-footer-dark.png#gh-dark-mode-only)

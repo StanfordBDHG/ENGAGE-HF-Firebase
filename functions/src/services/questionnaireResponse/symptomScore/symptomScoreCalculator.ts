@@ -1,12 +1,12 @@
 //
-// This source file is part of the ENGAGE-HF project based on the Stanford Spezi Template Application project
+// This source file is part of the Stanford ENGAGE-HF project
 //
 // SPDX-FileCopyrightText: 2023 Stanford University
 //
 // SPDX-License-Identifier: MIT
 //
 
-import { average } from "@stanfordbdhg/engagehf-models";
+import { average } from "@schmiedmayerlab/engagehf-models";
 
 export interface SymptomScoreCalculatorInput {
   answer1a: number;

@@ -1,5 +1,5 @@
 //
-// This source file is part of the ENGAGE-HF project based on the Stanford Spezi Template Application project
+// This source file is part of the Stanford ENGAGE-HF project
 //
 // SPDX-FileCopyrightText: 2023 Stanford University
 //
@@ -9,7 +9,7 @@
 /* eslint-disable @typescript-eslint/require-await */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import { dateTimeConverter } from "@stanfordbdhg/engagehf-models";
+import { dateTimeConverter } from "@schmiedmayerlab/engagehf-models";
 import { type PhoneService } from "./phoneService.js";
 import { type DatabaseService } from "../../database/databaseService.js";
 

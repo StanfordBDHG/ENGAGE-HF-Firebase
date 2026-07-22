@@ -1,5 +1,5 @@
 //
-// This source file is part of the ENGAGE-HF project based on the Stanford Spezi Template Application project
+// This source file is part of the Stanford ENGAGE-HF project
 //
 // SPDX-FileCopyrightText: 2023 Stanford University
 //
@@ -11,7 +11,7 @@ import {
   UserMessage,
   UserMessageType,
   type FHIRQuestionnaireResponse,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { QuestionnaireResponseService } from "./questionnaireResponseService.js";
 import { type SymptomScoreCalculator } from "./symptomScore/symptomScoreCalculator.js";
 import { type Document } from "../database/databaseService.js";

@@ -1,5 +1,5 @@
 //
-// This source file is part of the Stanford Biodesign Digital Health Spezi Firebase Remote Notifications open-source project
+// This source file is part of the Stanford ENGAGE-HF project
 //
 // SPDX-FileCopyrightText: 2025 Stanford University
 //

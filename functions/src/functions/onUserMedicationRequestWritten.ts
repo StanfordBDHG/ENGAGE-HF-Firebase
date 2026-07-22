@@ -1,12 +1,12 @@
 //
-// This source file is part of the ENGAGE-HF project based on the Stanford Spezi Template Application project
+// This source file is part of the Stanford ENGAGE-HF project
 //
 // SPDX-FileCopyrightText: 2023 Stanford University
 //
 // SPDX-License-Identifier: MIT
 //
 
-import { fhirMedicationRequestConverter } from "@stanfordbdhg/engagehf-models";
+import { fhirMedicationRequestConverter } from "@schmiedmayerlab/engagehf-models";
 import { onDocumentWritten } from "firebase-functions/firestore";
 import { Env } from "../env.js";
 import { DatabaseConverter } from "../services/database/databaseConverter.js";

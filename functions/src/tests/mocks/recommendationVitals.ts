@@ -1,12 +1,15 @@
 //
-// This source file is part of the ENGAGE-HF project based on the Stanford Spezi Template Application project
+// This source file is part of the Stanford ENGAGE-HF project
 //
 // SPDX-FileCopyrightText: 2023 Stanford University
 //
 // SPDX-License-Identifier: MIT
 //
 
-import { type Observation, QuantityUnit } from "@stanfordbdhg/engagehf-models";
+import {
+  type Observation,
+  QuantityUnit,
+} from "@schmiedmayerlab/engagehf-models";
 import { type RecommendationVitals } from "../../services/recommendation/recommendationService.js";
 
 export function mockRecommendationVitals(options: {

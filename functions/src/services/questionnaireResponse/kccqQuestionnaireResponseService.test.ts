@@ -1,12 +1,12 @@
 //
-// This source file is part of the ENGAGE-HF project based on the Stanford Spezi Template Application project
+// This source file is part of the Stanford ENGAGE-HF project
 //
 // SPDX-FileCopyrightText: 2023 Stanford University
 //
 // SPDX-License-Identifier: MIT
 //
 
-import { UserMessageType, UserType } from "@stanfordbdhg/engagehf-models";
+import { UserMessageType, UserType } from "@schmiedmayerlab/engagehf-models";
 import { createKccqQuestionnaireResponse } from "./createKccqQuestionnaireResponse.js";
 import { _defaultSeed } from "../../functions/defaultSeed.js";
 import { onUserQuestionnaireResponseWritten } from "../../functions/onUserQuestionnaireResponseWritten.js";

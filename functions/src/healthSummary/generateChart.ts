@@ -1,12 +1,12 @@
 //
-// This source file is part of the ENGAGE-HF project based on the Stanford Spezi Template Application project
+// This source file is part of the Stanford ENGAGE-HF project
 //
 // SPDX-FileCopyrightText: 2023 Stanford University
 //
 // SPDX-License-Identifier: MIT
 //
 
-import { type Observation } from "@stanfordbdhg/engagehf-models";
+import { type Observation } from "@schmiedmayerlab/engagehf-models";
 import * as d3 from "d3";
 import { JSDOM } from "jsdom";
 

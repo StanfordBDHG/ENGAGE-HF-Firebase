@@ -1,5 +1,5 @@
 //
-// This source file is part of the ENGAGE-HF project based on the Stanford Spezi Template Application project
+// This source file is part of the Stanford ENGAGE-HF project
 //
 // SPDX-FileCopyrightText: 2023 Stanford University
 //
@@ -14,7 +14,7 @@ import {
   UserSex,
   UserType,
   QuantityUnit,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { _defaultSeed } from "../../functions/defaultSeed.js";
 import { onUserQuestionnaireResponseWritten } from "../../functions/onUserQuestionnaireResponseWritten.js";
 import { _updateStaticData } from "../../functions/updateStaticData.js";

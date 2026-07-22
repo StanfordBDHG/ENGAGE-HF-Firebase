@@ -1,5 +1,5 @@
 //
-// This source file is part of the ENGAGE-HF project based on the Stanford Spezi Template Application project
+// This source file is part of the Stanford ENGAGE-HF project
 //
 // SPDX-FileCopyrightText: 2023 Stanford University
 //
@@ -16,7 +16,7 @@ import {
   UserMedicationRecommendation,
   type UserMedicationRecommendationDoseSchedule,
   UserMedicationRecommendationType,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { recommendationLocalization } from "./recommendationService+localization.js";
 import { BetaBlockerRecommender } from "./recommenders/betaBlockerRecommender.js";
 import { DiureticRecommender } from "./recommenders/diureticRecommender.js";

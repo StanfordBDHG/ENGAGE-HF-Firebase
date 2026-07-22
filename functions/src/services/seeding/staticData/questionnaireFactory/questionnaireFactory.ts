@@ -1,5 +1,5 @@
 //
-// This source file is part of the ENGAGE-HF project based on the Stanford Spezi Template Application project
+// This source file is part of the Stanford ENGAGE-HF project
 //
 // SPDX-FileCopyrightText: 2023 Stanford University
 //
@@ -22,8 +22,8 @@ import {
   FHIRQuestionnairePublicationStatus,
   LoincCode,
   QuantityUnit,
-} from "@stanfordbdhg/engagehf-models";
-import { type FHIRUsageContext } from "@stanfordbdhg/engagehf-models/lib/fhir/baseTypes/fhirUsageContext";
+} from "@schmiedmayerlab/engagehf-models";
+import { type FHIRUsageContext } from "@schmiedmayerlab/engagehf-models/lib/fhir/baseTypes/fhirUsageContext";
 import {
   medicationClassesForGroup,
   MedicationGroup,

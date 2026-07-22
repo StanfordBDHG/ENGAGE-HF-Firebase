@@ -1,5 +1,5 @@
 //
-// This source file is part of the ENGAGE-HF project based on the Stanford Spezi Template Application project
+// This source file is part of the Stanford ENGAGE-HF project
 //
 // SPDX-FileCopyrightText: 2023 Stanford University
 //
@@ -10,7 +10,7 @@ import {
   UserDevice,
   userDeviceConverter,
   UserDevicePlatform,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { registerDevice } from "./registerDevice.js";
 import { unregisterDevice } from "./unregisterDevice.js";
 import { describeWithEmulators } from "../tests/functions/testEnvironment.js";

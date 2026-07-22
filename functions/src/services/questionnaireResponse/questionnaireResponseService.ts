@@ -1,5 +1,5 @@
 //
-// This source file is part of the ENGAGE-HF project based on the Stanford Spezi Template Application project
+// This source file is part of the Stanford ENGAGE-HF project
 //
 // SPDX-FileCopyrightText: 2023 Stanford University
 //
@@ -18,7 +18,7 @@ import {
   FHIRAppointmentStatus,
   UserObservationCollection,
   MedicationReference,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { logger } from "firebase-functions/v2";
 import { z } from "zod";
 import { medicationClassReference } from "../../models/medicationRequestContext.js";

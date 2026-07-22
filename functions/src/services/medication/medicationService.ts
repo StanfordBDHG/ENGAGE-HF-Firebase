@@ -1,5 +1,5 @@
 //
-// This source file is part of the ENGAGE-HF project based on the Stanford Spezi Template Application project
+// This source file is part of the Stanford ENGAGE-HF project
 //
 // SPDX-FileCopyrightText: 2023 Stanford University
 //
@@ -11,7 +11,7 @@ import {
   type FHIRMedicationRequest,
   type FHIRReference,
   type MedicationClass,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { type MedicationRequestContext } from "../../models/medicationRequestContext.js";
 import { type Document } from "../database/databaseService.js";
 

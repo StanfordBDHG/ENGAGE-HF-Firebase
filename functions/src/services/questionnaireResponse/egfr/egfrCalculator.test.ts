@@ -1,12 +1,12 @@
 //
-// This source file is part of the ENGAGE-HF project based on the Stanford Spezi Template Application project
+// This source file is part of the Stanford ENGAGE-HF project
 //
 // SPDX-FileCopyrightText: 2023 Stanford University
 //
 // SPDX-License-Identifier: MIT
 //
 
-import { QuantityUnit, UserSex } from "@stanfordbdhg/engagehf-models";
+import { QuantityUnit, UserSex } from "@schmiedmayerlab/engagehf-models";
 import { z } from "zod";
 import { EgfrCalculator } from "./egfrCalculator.js";
 import { readCsv } from "../../../tests/helpers/csv.js";

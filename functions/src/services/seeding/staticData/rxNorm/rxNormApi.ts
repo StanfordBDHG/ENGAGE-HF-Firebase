@@ -1,5 +1,5 @@
 //
-// This source file is part of the ENGAGE-HF project based on the Stanford Spezi Template Application project
+// This source file is part of the Stanford ENGAGE-HF project
 //
 // SPDX-FileCopyrightText: 2023 Stanford University
 //
@@ -7,7 +7,7 @@
 //
 
 import * as https from "https";
-import { optionalish } from "@stanfordbdhg/engagehf-models";
+import { optionalish } from "@schmiedmayerlab/engagehf-models";
 import { logger } from "firebase-functions";
 import { z } from "zod";
 import {
