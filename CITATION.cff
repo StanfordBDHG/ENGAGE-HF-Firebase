@@ -1,0 +1,27 @@
+#
+# This source file is part of the ENGAGE-HF Firebase open-source project
+#
+# SPDX-FileCopyrightText: 2024 Stanford University and the project authors (see CONTRIBUTORS.md)
+#
+# SPDX-License-Identifier: MIT
+#
+
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+authors:
+- family-names: "Kraft"
+  given-names: "Paul Johannes"
+  orcid: "https://orcid.org/0000-0001-8157-8151"
+- family-names: "Bachorski"
+  given-names: "Arkadiusz"
+- family-names: "Goldschmidt"
+  given-names: "Paul"
+  orcid: "https://orcid.org/0009-0005-9748-3858"
+- family-names: "Schmiedmayer"
+  given-names: "Paul"
+  orcid: "https://orcid.org/0000-0002-8607-9148"
+title: "ENGAGE-HF Firebase"
+license: MIT
+url: "https://github.com/SchmiedmayerLab/ENGAGE-HF-Firebase"
+repository-code: "https://github.com/SchmiedmayerLab/ENGAGE-HF-Firebase"
