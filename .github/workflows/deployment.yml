@@ -41,6 +41,8 @@ jobs:
   determineenvironment:
     name: Determine Environment
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     outputs:
       environment: ${{ steps.set-env.outputs.environment }}
     steps:
@@ -61,6 +63,7 @@ jobs:
     name: Inject Environment Variables In Deployment Workflow
     needs: determineenvironment
     runs-on: ubuntu-latest
+    permissions: {}
     environment: ${{ needs.determineenvironment.outputs.environment }}
     outputs:
       FIREBASE_PROJECT_ID: ${{ vars.FIREBASE_PROJECT_ID }}
