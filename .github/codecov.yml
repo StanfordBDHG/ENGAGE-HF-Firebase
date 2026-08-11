@@ -8,12 +8,12 @@
 
 coverage:
   status:
-    # Never let overall coverage slip; the project is at 82.76% today.
+    # Coverage may not fall more than 0.5 points below the base commit.
     project:
       default:
         target: auto
         threshold: 0.5%
-    # New code is held above the current project average so coverage climbs.
+    # New code must be better covered than the project average, so the average climbs.
     patch:
       default:
         target: 90%

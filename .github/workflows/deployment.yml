@@ -48,12 +48,15 @@ jobs:
         uses: actions/checkout@v4
       - name: Determine Environment
         id: set-env
+        env:
+          ENVIRONMENT: ${{ inputs.environment }}
         run: |
-          if [[ -z "${{ inputs.environment }}" ]]; then
-            echo "environment=staging" >> "$GITHUB_OUTPUT"
-          else
-            echo "environment=${{ inputs.environment }}" >> "$GITHUB_OUTPUT"
-          fi
+          environment="${ENVIRONMENT:-staging}"
+          case "$environment" in
+            development|staging|production) ;;
+            *) echo "::error::unsupported environment '$environment'"; exit 1 ;;
+          esac
+          printf 'environment=%s\n' "$environment" >> "$GITHUB_OUTPUT"
   vars:
     name: Inject Environment Variables In Deployment Workflow
     needs: determineenvironment
