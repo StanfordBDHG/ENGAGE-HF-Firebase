@@ -1,5 +1,5 @@
 #
-# This source file is part of the Stanford Biodesign Digital Health ENGAGE-HF open-source project
+# This source file is part of the ENGAGE-HF Firebase open-source project
 #
 # SPDX-FileCopyrightText: 2023 Stanford University and the project authors (see CONTRIBUTORS.md)
 #
@@ -31,7 +31,7 @@ jobs:
       environment: production
   publishpackage:
     name: Publish Package
-    uses: StanfordBDHG/.github/.github/workflows/npm-publish-package.yml@v2
+    uses: SchmiedmayerLab/.github/.github/workflows/npm-publish.yml@v0.5
     permissions:
       contents: read
       id-token: write
@@ -40,5 +40,3 @@ jobs:
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     with:
       packageVersion: ${{ github.event.release.tag_name }}
-      cacheDependencyPath: ./functions/models/package-lock.json
-      workingDirectory: ./functions/models

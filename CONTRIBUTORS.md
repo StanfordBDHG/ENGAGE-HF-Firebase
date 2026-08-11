@@ -1,6 +1,6 @@
 <!--
 
-This source file is part of the Stanford Biodesign Digital Health ENGAGE-HF open-source project
+This source file is part of the ENGAGE-HF Firebase open-source project
 
 SPDX-FileCopyrightText: 2023 Stanford University and the project authors (see CONTRIBUTORS.md)
 
@@ -8,7 +8,9 @@ SPDX-License-Identifier: MIT
 
 -->
 
-# Stanford Biodesign Digital Health ENGAGE-HF open-source project
+# ENGAGE-HF Firebase Contributors
 
 - [Paul Johannes Kraft](https://github.com/pauljohanneskraft)
+- [Arkadiusz Bachorski](https://github.com/arkadiuszbachorski)
+- [Paul Goldschmidt](https://github.com/PaulGoldschmidt)
 - [Paul Schmiedmayer](https://github.com/PSchmiedmayer)

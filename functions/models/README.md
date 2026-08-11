@@ -6,4 +6,4 @@ SPDX-License-Identifier: MIT
 
 # ENGAGEHF-Models
 
-This package provides model types and useful functions to interact with the Firestore schema and Firebase functions defined in [https://github.com/StanfordBDHG/ENGAGE-HF-Firebase](https://github.com/StanfordBDHG/ENGAGE-HF-Firebase). 
+This package provides model types and useful functions to interact with the Firestore schema and Firebase functions defined in [https://github.com/SchmiedmayerLab/ENGAGE-HF-Firebase](https://github.com/SchmiedmayerLab/ENGAGE-HF-Firebase). 
