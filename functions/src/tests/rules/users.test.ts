@@ -48,7 +48,7 @@ describe("firestore.rules: users/{userId}", () => {
 
   beforeAll(async () => {
     testEnvironment = await initializeTestEnvironment({
-      projectId: "stanford-bdhg-engage-hf",
+      projectId: "demo-engage-hf",
       firestore: {
         rules: fs.readFileSync("../firestore.rules", "utf8"),
         host: "localhost",

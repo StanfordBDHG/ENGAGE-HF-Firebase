@@ -23,6 +23,7 @@ import {
 import yauzl, { type ZipFile } from "yauzl-promise";
 import { _defaultSeed } from "./defaultSeed.js";
 import { exportData } from "./exportData.js";
+import { createKccqQuestionnaireResponse } from "../services/questionnaireResponse/createKccqQuestionnaireResponse.js";
 import { describeWithEmulators } from "../tests/functions/testEnvironment.js";
 import { TestFlags } from "../tests/testFlags.js";
 
@@ -370,6 +371,64 @@ describeWithEmulators("function: exportData", (env) => {
       expect(data0).toEqual(data1);
     }
   }
+
+  it("includes kccq responses that carry the legacy canonical", async () => {
+    const patient = await env.createUser({
+      type: UserType.patient,
+      organization: "stanford",
+    });
+    const admin = await env.createUser({ type: UserType.admin });
+
+    for (const questionnaire of [
+      "https://www.engage-hf.com/fhir/questionnaire/9528ccc2-d1be-4c4c-9c3c-19f78e51ec19",
+      // Responses recorded before the move to engage-hf.com carry the old canonical.
+      "http://spezi.health/fhir/questionnaire/9528ccc2-d1be-4c4c-9c3c-19f78e51ec19",
+    ]) {
+      await env.collections
+        .userQuestionnaireResponses(patient)
+        .doc()
+        .create(
+          createKccqQuestionnaireResponse({
+            questionnaire,
+            questionnaireResponse: "questionnaireResponse",
+            date,
+            answer1a: 1,
+            answer1b: 2,
+            answer1c: 4,
+            answer2: 2,
+            answer3: 1,
+            answer4: 2,
+            answer5: 3,
+            answer6: 4,
+            answer7: 2,
+            answer8a: 1,
+            answer8b: 2,
+            answer8c: 1,
+            answer9: 3,
+          }),
+        );
+    }
+
+    const exportedData = await env.call(
+      exportData,
+      { userId: patient },
+      { uid: admin, token: { type: UserType.admin } },
+    );
+    const zip = await yauzl.fromBuffer(
+      Buffer.from(exportedData.content, "base64"),
+    );
+    const entries = await zip.readEntries();
+    const entry = entries.find(
+      (item) => item.filename === "questionnaireResponses_kccq.csv",
+    );
+    expect(entry).toBeDefined();
+    const lines = (await entryBuffer(entry!))
+      .toString("utf-8")
+      .split("\n")
+      .filter((line) => line.trim().length > 0);
+    // The header plus one row per response, whichever canonical spelling it uses.
+    expect(lines.length).toBe(3);
+  }, 30_000);
 
   async function entryBuffer(entry: yauzl.Entry): Promise<Buffer> {
     const stream = await entry.openReadStream();

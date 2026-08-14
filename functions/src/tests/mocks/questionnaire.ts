@@ -21,7 +21,7 @@ export function mockQuestionnaire(): FHIRQuestionnaire {
     title: "KCCQ-12",
     language: "en-US",
     status: FHIRQuestionnairePublicationStatus.draft,
-    publisher: "Stanford Biodesign Digital Health",
+    publisher: "Schmiedmayer Lab",
     url: QuestionnaireLinkId.url(QuestionnaireId.kccq),
     item: [
       {

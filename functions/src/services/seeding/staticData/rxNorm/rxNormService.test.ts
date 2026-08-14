@@ -6,7 +6,10 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { LocalizedText, MedicationClass } from "@schmiedmayerlab/engagehf-models";
+import {
+  LocalizedText,
+  MedicationClass,
+} from "@schmiedmayerlab/engagehf-models";
 import {
   type MedicationClassSpecification,
   RxNormService,

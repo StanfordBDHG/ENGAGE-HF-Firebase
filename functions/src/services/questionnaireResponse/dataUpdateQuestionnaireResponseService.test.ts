@@ -279,6 +279,90 @@ describeWithEmulators("DataUpdateQuestionnaireResponseService", (env) => {
       new Date("2025-07-12").toDateString(),
     );
   });
+
+  it("should extract a data update response that carries the legacy FHIR identifiers", async () => {
+    await _updateStaticData(env.factory, {
+      only: Object.values(StaticDataComponent),
+      cachingStrategy: CachingStrategy.expectCache,
+    });
+
+    const userId = await env.createUser({
+      type: UserType.patient,
+      organization: "stanford",
+      selfManaged: true,
+      dateOfBirth: new Date("1980-01-01"),
+      sex: UserSex.female,
+    });
+
+    const previousMedicationRequests = [
+      FHIRMedicationRequest.create({
+        medicationReference: "medications/69749/drugs/349201",
+        frequencyPerDay: 2,
+        quantity: 3,
+      }),
+      FHIRMedicationRequest.create({
+        medicationReference: DrugReference.sotagliflozin200,
+        frequencyPerDay: 5,
+        quantity: 0.5,
+      }),
+      FHIRMedicationRequest.create({
+        medicationReference: DrugReference.furosemide20,
+        frequencyPerDay: 4,
+        quantity: 2,
+      }),
+    ];
+
+    for (const request of previousMedicationRequests) {
+      await env.collections
+        .userMedicationRequests(userId)
+        .doc()
+        .create(request);
+    }
+
+    // Responses recorded before the move to engage-hf.com carry the old identifier base.
+    const legacyResponse = JSON.parse(
+      JSON.stringify(dataUpdateResponseApple)
+        .replaceAll(
+          "https://www.engage-hf.com/fhir/questionnaire/",
+          "http://spezi.health/fhir/questionnaire/",
+        )
+        .replaceAll(
+          "https://www.engage-hf.com/fhir/",
+          "http://engagehf.bdh.stanford.edu/fhir/",
+        ),
+    ) as typeof dataUpdateResponseApple;
+
+    const ref = env.collections.userQuestionnaireResponses(userId).doc();
+    await env.setWithTrigger(onUserQuestionnaireResponseWritten, {
+      ref,
+      data: fhirQuestionnaireResponseConverter.value.schema.parse(
+        legacyResponse,
+      ),
+      params: {
+        userId,
+        questionnaireResponseId: ref.id,
+      },
+    });
+
+    const medicationRequests = await env.collections
+      .userMedicationRequests(userId)
+      .get();
+    expect(medicationRequests.size).toBe(3);
+
+    const valsartan = medicationRequests.docs
+      .map((doc) => doc.data())
+      .find(
+        (req) =>
+          req.medicationReference?.reference ===
+          "medications/69749/drugs/349201",
+      );
+    expect(valsartan).toBeDefined();
+    const valsartanDosageInstruction = valsartan?.dosageInstruction?.at(0);
+    expect(valsartanDosageInstruction?.timing?.repeat?.frequency).toBe(2);
+    expect(
+      valsartanDosageInstruction?.doseAndRate?.at(0)?.doseQuantity?.value,
+    ).toBe(1.5);
+  });
 });
 
 const dataUpdateResponseApple = {
@@ -306,7 +390,7 @@ const dataUpdateResponseApple = {
             code: "yes-unchanged",
             display: "Yes, unchanged since last update",
             system:
-              "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
+              "https://www.engage-hf.com/fhir/ValueSet/medication-exists-update",
           },
         },
       ],
@@ -319,7 +403,7 @@ const dataUpdateResponseApple = {
             code: "yes-changed",
             display: "Yes, changed since last update",
             system:
-              "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
+              "https://www.engage-hf.com/fhir/ValueSet/medication-exists-update",
           },
         },
       ],
@@ -346,7 +430,7 @@ const dataUpdateResponseApple = {
             code: "no",
             display: "No",
             system:
-              "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
+              "https://www.engage-hf.com/fhir/ValueSet/medication-exists-update",
           },
         },
       ],
@@ -359,7 +443,7 @@ const dataUpdateResponseApple = {
             code: "yes-changed",
             display: "Yes, changed since last update",
             system:
-              "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
+              "https://www.engage-hf.com/fhir/ValueSet/medication-exists-update",
           },
         },
       ],
@@ -385,7 +469,7 @@ const dataUpdateResponseApple = {
             code: "yes-unchanged",
             display: "Yes, unchanged since last update",
             system:
-              "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
+              "https://www.engage-hf.com/fhir/ValueSet/medication-exists-update",
           },
         },
       ],
@@ -398,14 +482,15 @@ const dataUpdateResponseApple = {
     },
   ],
   id: "D8083543-1DED-491E-9AEB-771E3FECB70C",
-  questionnaire: "http://spezi.health/fhir/questionnaire/engagehf-data-update",
+  questionnaire:
+    "https://www.engage-hf.com/fhir/questionnaire/engagehf-data-update",
   status: "completed",
 };
 
 const postAppointmentResponseAndroid = {
   resourceType: "QuestionnaireResponse",
   questionnaire:
-    "http://spezi.health/fhir/questionnaire/engagehf-post-appointment",
+    "https://www.engage-hf.com/fhir/questionnaire/engagehf-post-appointment",
   item: [
     {
       linkId: "lab.2160-0.exists",
@@ -556,7 +641,7 @@ const postAppointmentResponseAndroid = {
                 code: "no",
                 display: "No",
                 system:
-                  "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
+                  "https://www.engage-hf.com/fhir/ValueSet/medication-exists-update",
               },
             },
           ],
@@ -580,7 +665,7 @@ const postAppointmentResponseAndroid = {
                 code: "yes-unchanged",
                 display: "Yes, unchanged since last update",
                 system:
-                  "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
+                  "https://www.engage-hf.com/fhir/ValueSet/medication-exists-update",
               },
             },
           ],
@@ -604,7 +689,7 @@ const postAppointmentResponseAndroid = {
                 code: "no",
                 display: "No",
                 system:
-                  "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
+                  "https://www.engage-hf.com/fhir/ValueSet/medication-exists-update",
               },
             },
           ],
@@ -628,7 +713,7 @@ const postAppointmentResponseAndroid = {
                 code: "yes-changed",
                 display: "Yes, changed since last update",
                 system:
-                  "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
+                  "https://www.engage-hf.com/fhir/ValueSet/medication-exists-update",
               },
             },
           ],
@@ -694,7 +779,7 @@ const postAppointmentResponseAndroid = {
                 code: "no",
                 display: "No",
                 system:
-                  "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
+                  "https://www.engage-hf.com/fhir/ValueSet/medication-exists-update",
               },
             },
           ],

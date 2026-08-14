@@ -102,8 +102,7 @@ describe("RecommendationService", () => {
           (x): ExpectedRecommendation => ({
             type: x.displayInformation.type,
             recommendedMedication: x.recommendedMedication?.reference as
-              | MedicationReference
-              | undefined,
+              MedicationReference | undefined,
           }),
         );
 
