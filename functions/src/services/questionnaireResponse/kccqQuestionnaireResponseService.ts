@@ -7,6 +7,7 @@
 //
 
 import {
+  fhirIdentifiersMatch,
   SymptomScore,
   UserMessage,
   UserMessageType,
@@ -54,7 +55,12 @@ export class KccqQuestionnaireResponseService extends QuestionnaireResponseServi
     options: { isNew: boolean },
   ): Promise<boolean> {
     const urls = [QuestionnaireLinkId.url(QuestionnaireId.kccq)];
-    if (!urls.includes(response.content.questionnaire)) return false;
+    if (
+      !urls.some((url) =>
+        fhirIdentifiersMatch(response.content.questionnaire, url),
+      )
+    )
+      return false;
 
     const symptomScore = this.symptomScore(response.content);
     if (symptomScore === null) return false;

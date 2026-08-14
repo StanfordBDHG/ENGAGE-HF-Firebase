@@ -3,14 +3,14 @@
     "id": "1808",
     "extension": [
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
           "reference": "medicationClasses/6",
           "display": "Diuretics"
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/brandName",
         "valueString": "Bumex"
       }
     ],
@@ -29,18 +29,18 @@
     "id": "1998",
     "extension": [
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
           "reference": "medicationClasses/3",
           "display": "ACE inhibitors"
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -80,11 +80,11 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/targetDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -124,7 +124,7 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/brandName",
         "valueString": "Capoten"
       }
     ],
@@ -143,18 +143,18 @@
     "id": "3827",
     "extension": [
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
           "reference": "medicationClasses/3",
           "display": "ACE inhibitors"
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -194,11 +194,11 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/targetDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -238,7 +238,7 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/brandName",
         "valueString": "Vasotec"
       }
     ],
@@ -257,14 +257,14 @@
     "id": "4109",
     "extension": [
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
           "reference": "medicationClasses/6",
           "display": "Diuretics"
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/brandName",
         "valueString": "Edecrin"
       }
     ],
@@ -283,14 +283,14 @@
     "id": "4603",
     "extension": [
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
           "reference": "medicationClasses/6",
           "display": "Diuretics"
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/brandName",
         "valueString": "Lasix"
       }
     ],
@@ -309,18 +309,18 @@
     "id": "9997",
     "extension": [
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
           "reference": "medicationClasses/2",
           "display": "Mineralocorticoid Receptor Antagonists (MRAs)"
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -360,11 +360,11 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/targetDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -404,7 +404,7 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/brandName",
         "valueString": "Aldactone"
       }
     ],
@@ -423,18 +423,18 @@
     "id": "18867",
     "extension": [
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
           "reference": "medicationClasses/3",
           "display": "ACE inhibitors"
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -474,11 +474,11 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/targetDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -518,7 +518,7 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/brandName",
         "valueString": "Lotensin"
       }
     ],
@@ -537,18 +537,18 @@
     "id": "19484",
     "extension": [
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
           "reference": "medicationClasses/0",
           "display": "Beta blockers"
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -588,11 +588,11 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/targetDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -632,7 +632,7 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/brandName",
         "valueString": "Zebeta"
       }
     ],
@@ -651,18 +651,18 @@
     "id": "20352",
     "extension": [
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
           "reference": "medicationClasses/0",
           "display": "Beta blockers"
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -702,11 +702,11 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/targetDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -746,7 +746,7 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/brandName",
         "valueString": "Coreg"
       }
     ],
@@ -765,18 +765,18 @@
     "id": "29046",
     "extension": [
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
           "reference": "medicationClasses/3",
           "display": "ACE inhibitors"
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -816,11 +816,11 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/targetDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -860,7 +860,7 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/brandName",
         "valueString": "Zestril"
       }
     ],
@@ -879,18 +879,18 @@
     "id": "30131",
     "extension": [
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
           "reference": "medicationClasses/3",
           "display": "ACE inhibitors"
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -930,11 +930,11 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/targetDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -974,7 +974,7 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/brandName",
         "valueString": "Univasc"
       }
     ],
@@ -993,18 +993,18 @@
     "id": "35208",
     "extension": [
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
           "reference": "medicationClasses/3",
           "display": "ACE inhibitors"
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -1044,11 +1044,11 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/targetDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -1088,7 +1088,7 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/brandName",
         "valueString": "Accupril"
       }
     ],
@@ -1107,18 +1107,18 @@
     "id": "35296",
     "extension": [
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
           "reference": "medicationClasses/3",
           "display": "ACE inhibitors"
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -1158,11 +1158,11 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/targetDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -1202,7 +1202,7 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/brandName",
         "valueString": "Altace"
       }
     ],
@@ -1221,14 +1221,14 @@
     "id": "38413",
     "extension": [
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
           "reference": "medicationClasses/6",
           "display": "Diuretics"
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/brandName",
         "valueString": "Soaanz"
       }
     ],
@@ -1247,18 +1247,18 @@
     "id": "38454",
     "extension": [
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
           "reference": "medicationClasses/3",
           "display": "ACE inhibitors"
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -1298,11 +1298,11 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/targetDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -1342,7 +1342,7 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/brandName",
         "valueString": "Mavik"
       }
     ],
@@ -1361,18 +1361,18 @@
     "id": "54552",
     "extension": [
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
           "reference": "medicationClasses/3",
           "display": "ACE inhibitors"
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -1412,11 +1412,11 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/targetDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -1456,7 +1456,7 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/brandName",
         "valueString": "Aceon"
       }
     ],
@@ -1475,18 +1475,18 @@
     "id": "69749",
     "extension": [
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
           "reference": "medicationClasses/4",
           "display": "ARBs"
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -1526,11 +1526,11 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/targetDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -1570,7 +1570,7 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/brandName",
         "valueString": "Diovan"
       }
     ],
@@ -1589,18 +1589,18 @@
     "id": "73494",
     "extension": [
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
           "reference": "medicationClasses/4",
           "display": "ARBs"
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -1640,11 +1640,11 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/targetDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -1684,7 +1684,7 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/brandName",
         "valueString": "Micardis"
       }
     ],
@@ -1703,18 +1703,18 @@
     "id": "83515",
     "extension": [
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
           "reference": "medicationClasses/4",
           "display": "ARBs"
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -1754,11 +1754,11 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/targetDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -1798,7 +1798,7 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/brandName",
         "valueString": "Teveten"
       }
     ],
@@ -1817,18 +1817,18 @@
     "id": "83818",
     "extension": [
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
           "reference": "medicationClasses/4",
           "display": "ARBs"
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -1868,11 +1868,11 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/targetDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -1912,7 +1912,7 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/brandName",
         "valueString": "Avapro"
       }
     ],
@@ -1931,18 +1931,18 @@
     "id": "118463",
     "extension": [
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
           "reference": "medicationClasses/4",
           "display": "ARBs"
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -1982,11 +1982,11 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/targetDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -2026,7 +2026,7 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/brandName",
         "valueString": "Benicar"
       }
     ],
@@ -2045,18 +2045,18 @@
     "id": "203160",
     "extension": [
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
           "reference": "medicationClasses/4",
           "display": "ARBs"
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -2096,11 +2096,11 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/targetDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -2140,7 +2140,7 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/brandName",
         "valueString": "Cozaar"
       }
     ],
@@ -2159,18 +2159,18 @@
     "id": "214354",
     "extension": [
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
           "reference": "medicationClasses/4",
           "display": "ARBs"
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -2210,11 +2210,11 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/targetDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -2254,7 +2254,7 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/brandName",
         "valueString": "Atacand"
       }
     ],
@@ -2273,18 +2273,18 @@
     "id": "221124",
     "extension": [
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
           "reference": "medicationClasses/0",
           "display": "Beta blockers"
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -2324,11 +2324,11 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/targetDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -2368,7 +2368,7 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/brandName",
         "valueString": "Toprol XL"
       }
     ],
@@ -2387,18 +2387,18 @@
     "id": "227278",
     "extension": [
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
           "reference": "medicationClasses/3",
           "display": "ACE inhibitors"
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -2438,11 +2438,11 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/targetDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -2482,7 +2482,7 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/brandName",
         "valueString": "Monopril"
       }
     ],
@@ -2501,18 +2501,18 @@
     "id": "298869",
     "extension": [
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
           "reference": "medicationClasses/2",
           "display": "Mineralocorticoid Receptor Antagonists (MRAs)"
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -2552,11 +2552,11 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/targetDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -2596,7 +2596,7 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/brandName",
         "valueString": "Inspra"
       }
     ],
@@ -2615,18 +2615,18 @@
     "id": "668310",
     "extension": [
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
           "reference": "medicationClasses/0",
           "display": "Beta blockers"
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -2666,11 +2666,11 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/targetDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -2710,7 +2710,7 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/brandName",
         "valueString": "Coreg CR"
       }
     ],
@@ -2729,18 +2729,18 @@
     "id": "1091642",
     "extension": [
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
           "reference": "medicationClasses/4",
           "display": "ARBs"
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -2780,11 +2780,11 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/targetDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -2824,7 +2824,7 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/brandName",
         "valueString": "Edarbi"
       }
     ],
@@ -2843,18 +2843,18 @@
     "id": "1373458",
     "extension": [
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
           "reference": "medicationClasses/1",
           "display": "SGLT2 Inhibitors"
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -2894,11 +2894,11 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/targetDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -2938,7 +2938,7 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/brandName",
         "valueString": "Invokana"
       }
     ],
@@ -2957,18 +2957,18 @@
     "id": "1488564",
     "extension": [
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
           "reference": "medicationClasses/1",
           "display": "SGLT2 Inhibitors"
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -3008,11 +3008,11 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/targetDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -3052,7 +3052,7 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/brandName",
         "valueString": "Farxiga"
       }
     ],
@@ -3071,18 +3071,18 @@
     "id": "1545653",
     "extension": [
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
           "reference": "medicationClasses/1",
           "display": "SGLT2 Inhibitors"
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -3122,11 +3122,11 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/targetDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -3166,7 +3166,7 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/brandName",
         "valueString": "Jardiance"
       }
     ],
@@ -3185,18 +3185,18 @@
     "id": "1656339",
     "extension": [
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
           "reference": "medicationClasses/5",
           "display": "Angiotensin Receptor/Neprilysin Inhibitors (ARNI)"
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -3242,11 +3242,11 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/targetDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -3292,7 +3292,7 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/brandName",
         "valueString": "Entresto"
       }
     ],
@@ -3335,18 +3335,18 @@
     "id": "1992672",
     "extension": [
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
           "reference": "medicationClasses/1",
           "display": "SGLT2 Inhibitors"
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -3386,11 +3386,11 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/targetDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -3430,7 +3430,7 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/brandName",
         "valueString": "Steglatro"
       }
     ],
@@ -3449,18 +3449,18 @@
     "id": "2627044",
     "extension": [
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
           "reference": "medicationClasses/1",
           "display": "SGLT2 Inhibitors"
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -3500,11 +3500,11 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/targetDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -3544,7 +3544,7 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/brandName",
         "valueString": "Brenzavvy"
       }
     ],
@@ -3563,18 +3563,18 @@
     "id": "2638675",
     "extension": [
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/medicationClass",
         "valueReference": {
           "reference": "medicationClasses/1",
           "display": "SGLT2 Inhibitors"
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -3614,11 +3614,11 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/targetDailyDose",
         "valueMedicationRequest": {
           "extension": [
             {
-              "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+              "url": "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
               "valueQuantities": [
                 {
                   "system": "http://unitsofmeasure.org",
@@ -3658,7 +3658,7 @@
         }
       },
       {
-        "url": "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
+        "url": "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/brandName",
         "valueString": "Inpefa"
       }
     ],

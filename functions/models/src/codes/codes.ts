@@ -7,13 +7,13 @@
 //
 
 export enum FHIRExtensionUrl {
-  brandName = "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/brandName",
-  medicationClass = "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/medicationClass",
-  minimumDailyDose = "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
+  brandName = "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/brandName",
+  medicationClass = "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/medicationClass",
+  minimumDailyDose = "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/minimumDailyDose",
   questionnaireItemControl = "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
-  targetDailyDose = "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Medication/extension/targetDailyDose",
-  totalDailyDose = "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
-  providerName = "http://engagehf.bdh.stanford.edu/fhir/StructureDefinition/Appointment/extension/providerName",
+  targetDailyDose = "https://www.engage-hf.com/fhir/StructureDefinition/Medication/extension/targetDailyDose",
+  totalDailyDose = "https://www.engage-hf.com/fhir/StructureDefinition/MedicationRequest/extension/totalDailyDose",
+  providerName = "https://www.engage-hf.com/fhir/StructureDefinition/Appointment/extension/providerName",
 }
 
 export enum CodingSystem {

@@ -7,6 +7,7 @@
 //
 
 import {
+  fhirIdentifiersMatch,
   UserMessageType,
   type FHIRQuestionnaireResponse,
 } from "@schmiedmayerlab/engagehf-models";
@@ -53,7 +54,11 @@ export class RegistrationQuestionnaireResponseService extends QuestionnaireRespo
     options: { isNew: boolean },
   ): Promise<boolean> {
     const urls = [QuestionnaireLinkId.url(QuestionnaireId.registration)];
-    if (!urls.includes(response.content.questionnaire)) {
+    if (
+      !urls.some((url) =>
+        fhirIdentifiersMatch(response.content.questionnaire, url),
+      )
+    ) {
       logger.info(
         `${this.constructor.name}.handle(${userId}): Url ${response.content.questionnaire} is not a registration questionnaire, skipping.`,
       );

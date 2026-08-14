@@ -7,6 +7,7 @@
 //
 
 export * from "./codes/codes.js";
+export * from "./codes/identifiers.js";
 export * from "./codes/quantityUnit.js";
 export * from "./codes/references.js";
 export * from "./fhir/baseTypes/fhirCodeableConcept.js";

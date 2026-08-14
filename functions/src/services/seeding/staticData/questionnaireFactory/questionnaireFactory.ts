@@ -481,10 +481,10 @@ export abstract class QuestionnaireFactory<Input> {
       title: input.title,
       language: "en-US",
       status: input.status ?? FHIRQuestionnairePublicationStatus.active,
-      publisher: "Stanford Biodesign Digital Health",
+      publisher: "Schmiedmayer Lab",
       meta: {
         profile: [
-          "http://spezi.health/fhir/StructureDefinition/sdf-Questionnaire",
+          "https://www.engage-hf.com/fhir/StructureDefinition/sdf-Questionnaire",
         ],
         tag: [
           {
@@ -497,7 +497,7 @@ export abstract class QuestionnaireFactory<Input> {
       useContext: input.useContext ?? [],
       contact: [
         {
-          name: "http://spezi.health",
+          name: "https://www.engage-hf.com",
         },
       ],
       subjectType: ["Patient"],

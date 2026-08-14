@@ -7,6 +7,7 @@
 //
 
 import {
+  fhirIdentifiersMatch,
   fhirMedicationRequestConverter,
   type FHIRQuestionnaireItem,
   LoincCode,
@@ -453,10 +454,11 @@ export class DefaultExportService implements ExportService {
       (collections) => collections.userQuestionnaireResponses(userId),
     );
 
-    const kccqResponses = questionnaireResponses.filter(
-      (response) =>
-        response.content.questionnaire ===
+    const kccqResponses = questionnaireResponses.filter((response) =>
+      fhirIdentifiersMatch(
+        response.content.questionnaire,
         QuestionnaireLinkId.url(QuestionnaireId.kccq),
+      ),
     );
 
     const csv = this.createCsvData(

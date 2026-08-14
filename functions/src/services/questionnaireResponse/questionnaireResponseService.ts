@@ -8,6 +8,7 @@
 
 import assert from "assert";
 import {
+  fhirIdentifiersMatch,
   FHIRMedicationRequest,
   LoincCode,
   type Observation,
@@ -137,40 +138,44 @@ export abstract class QuestionnaireResponseService {
         throw new Error(`Missing medication group: ${medicationGroup}.`);
       }
 
-      switch (existsCoding.system) {
-        case linkIds.registrationExistsValueSet.system: {
-          const noCode = linkIds.registrationExistsValueSet.values.no;
-          if (existsCoding.code === noCode) {
-            continue;
-          }
-          assert(
-            existsCoding.code === linkIds.registrationExistsValueSet.values.yes,
-            `Unexpected coding for medication group: ${medicationGroup}. Expected 'yes' or 'no', but got '${existsCoding.code}'.`,
-          );
-          break;
+      if (
+        fhirIdentifiersMatch(
+          existsCoding.system,
+          linkIds.registrationExistsValueSet.system,
+        )
+      ) {
+        const noCode = linkIds.registrationExistsValueSet.values.no;
+        if (existsCoding.code === noCode) {
+          continue;
         }
-        case linkIds.updateExistsValueSet.system: {
-          const yesUnchangedCode =
-            linkIds.updateExistsValueSet.values.yesUnchanged;
-          if (existsCoding.code === yesUnchangedCode) {
-            keepUnchanged.push(medicationGroup);
-            continue;
-          }
-          const noCode = linkIds.updateExistsValueSet.values.no;
-          if (existsCoding.code === noCode) {
-            continue;
-          }
-          assert(
-            existsCoding.code ===
-              linkIds.updateExistsValueSet.values.yesChanged,
-            `Unexpected coding for medication group: ${medicationGroup}. Expected 'yes-changed', 'yes-unchanged' or 'no', but got '${existsCoding.code}'.`,
-          );
-          break;
+        assert(
+          existsCoding.code === linkIds.registrationExistsValueSet.values.yes,
+          `Unexpected coding for medication group: ${medicationGroup}. Expected 'yes' or 'no', but got '${existsCoding.code}'.`,
+        );
+      } else if (
+        fhirIdentifiersMatch(
+          existsCoding.system,
+          linkIds.updateExistsValueSet.system,
+        )
+      ) {
+        const yesUnchangedCode =
+          linkIds.updateExistsValueSet.values.yesUnchanged;
+        if (existsCoding.code === yesUnchangedCode) {
+          keepUnchanged.push(medicationGroup);
+          continue;
         }
-        default:
-          throw new Error(
-            `Unknown coding system for medication group: ${medicationGroup}.`,
-          );
+        const noCode = linkIds.updateExistsValueSet.values.no;
+        if (existsCoding.code === noCode) {
+          continue;
+        }
+        assert(
+          existsCoding.code === linkIds.updateExistsValueSet.values.yesChanged,
+          `Unexpected coding for medication group: ${medicationGroup}. Expected 'yes-changed', 'yes-unchanged' or 'no', but got '${existsCoding.code}'.`,
+        );
+      } else {
+        throw new Error(
+          `Unknown coding system for medication group: ${medicationGroup}.`,
+        );
       }
 
       const drugCoding = response

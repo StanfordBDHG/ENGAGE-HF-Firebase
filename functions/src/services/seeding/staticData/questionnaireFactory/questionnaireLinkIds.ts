@@ -7,6 +7,7 @@
 //
 
 import {
+  fhirIdentifierBase,
   MedicationClassReference,
   type LoincCode,
 } from "@schmiedmayerlab/engagehf-models";
@@ -49,7 +50,7 @@ export enum QuestionnaireId {
 
 export const QuestionnaireLinkId = {
   url(id: QuestionnaireId) {
-    return `http://spezi.health/fhir/questionnaire/${id}`;
+    return `${fhirIdentifierBase}/questionnaire/${id}`;
   },
 
   welcome: "welcome",
@@ -92,7 +93,7 @@ export const QuestionnaireLinkId = {
 
       registrationExistsValueSet: {
         system:
-          "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-registration",
+          "https://www.engage-hf.com/fhir/ValueSet/medication-exists-registration",
         values: {
           yes: "yes",
           no: "no",
@@ -100,7 +101,7 @@ export const QuestionnaireLinkId = {
       },
       updateExistsValueSet: {
         system:
-          "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-update",
+          "https://www.engage-hf.com/fhir/ValueSet/medication-exists-update",
         values: {
           yesChanged: "yes-changed",
           yesUnchanged: "yes-unchanged",

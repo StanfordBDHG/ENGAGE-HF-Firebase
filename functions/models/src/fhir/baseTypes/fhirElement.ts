@@ -17,6 +17,7 @@ import { type FHIRMeta, fhirMetaConverter } from "./fhirMeta.js";
 import { fhirQuantityConverter } from "./fhirQuantity.js";
 import { type FHIRReference, fhirReferenceConverter } from "./fhirReference.js";
 import { type FHIRExtensionUrl } from "../../codes/codes.js";
+import { fhirIdentifiersMatch } from "../../codes/identifiers.js";
 import { QuantityUnit } from "../../codes/quantityUnit.js";
 import { optionalish } from "../../helpers/optionalish.js";
 import { SchemaConverter } from "../../helpers/schemaConverter.js";
@@ -47,14 +48,12 @@ const fhirExtensionBaseConverter = new SchemaConverter({
 export interface FHIRExtensionInput extends z.input<
   typeof fhirExtensionBaseConverter.value.schema
 > {
-  valueCodeableConcept?:
-    | z.input<typeof fhirCodeableConceptConverter.value.schema>
-    | null
-    | undefined;
-  valueMedicationRequest?:
-    | z.input<typeof fhirMedicationRequestConverter.value.schema>
-    | null
-    | undefined;
+  valueCodeableConcept?: z.input<
+    typeof fhirCodeableConceptConverter.value.schema
+  > | null;
+  valueMedicationRequest?: z.input<
+    typeof fhirMedicationRequestConverter.value.schema
+  > | null;
 }
 
 export interface FHIRExtension extends z.output<
@@ -131,8 +130,8 @@ export abstract class FHIRElement {
 
   extensionsWithUrl(url: FHIRExtensionUrl): FHIRExtension[] {
     return (
-      this.extension?.filter(
-        (extension) => extension.url === (url as string),
+      this.extension?.filter((extension) =>
+        fhirIdentifiersMatch(extension.url, url),
       ) ?? []
     );
   }
