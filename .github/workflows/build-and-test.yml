@@ -18,12 +18,6 @@ on:
   workflow_call:
 
 jobs:
-  reuseaction:
-    name: REUSE Compliance Check
-    uses: SchmiedmayerLab/.github/.github/workflows/reuse.yml@v0.5
-  # markdownlinkcheck:
-  #   name: Markdown Link Check
-  #   uses: SchmiedmayerLab/.github/.github/workflows/markdown-links.yml@v0.5
   lint:
     name: Lint
     runs-on: ubuntu-latest
