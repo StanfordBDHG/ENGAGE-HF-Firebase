@@ -1,5 +1,5 @@
 //
-// This source file is part of the ENGAGE-HF project based on the Stanford Spezi Template Application project
+// This source file is part of the ENGAGE-HF Firebase open-source project
 //
 // SPDX-FileCopyrightText: 2023 Stanford University
 //
@@ -13,7 +13,7 @@ import {
   initializeTestEnvironment,
   type RulesTestEnvironment,
 } from "@firebase/rules-unit-testing";
-import { UserType } from "@stanfordbdhg/engagehf-models";
+import { UserType } from "@schmiedmayerlab/engagehf-models";
 import type firebase from "firebase/compat/app";
 import { logger } from "firebase-functions/v2";
 import { TestFlags } from "../testFlags.js";
@@ -44,7 +44,7 @@ describe("firestore.rules: users/{userId}/{collectionName}/{documentId}", () => 
 
   beforeAll(async () => {
     testEnvironment = await initializeTestEnvironment({
-      projectId: "stanford-bdhg-engage-hf",
+      projectId: "demo-engage-hf",
       firestore: {
         rules: fs.readFileSync("../firestore.rules", "utf8"),
         host: "localhost",

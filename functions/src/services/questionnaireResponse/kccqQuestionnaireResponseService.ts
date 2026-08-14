@@ -1,5 +1,5 @@
 //
-// This source file is part of the ENGAGE-HF project based on the Stanford Spezi Template Application project
+// This source file is part of the ENGAGE-HF Firebase open-source project
 //
 // SPDX-FileCopyrightText: 2023 Stanford University
 //
@@ -7,11 +7,12 @@
 //
 
 import {
+  fhirIdentifiersMatch,
   SymptomScore,
   UserMessage,
   UserMessageType,
   type FHIRQuestionnaireResponse,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { QuestionnaireResponseService } from "./questionnaireResponseService.js";
 import { type SymptomScoreCalculator } from "./symptomScore/symptomScoreCalculator.js";
 import { type Document } from "../database/databaseService.js";
@@ -54,7 +55,12 @@ export class KccqQuestionnaireResponseService extends QuestionnaireResponseServi
     options: { isNew: boolean },
   ): Promise<boolean> {
     const urls = [QuestionnaireLinkId.url(QuestionnaireId.kccq)];
-    if (!urls.includes(response.content.questionnaire)) return false;
+    if (
+      !urls.some((url) =>
+        fhirIdentifiersMatch(response.content.questionnaire, url),
+      )
+    )
+      return false;
 
     const symptomScore = this.symptomScore(response.content);
     if (symptomScore === null) return false;

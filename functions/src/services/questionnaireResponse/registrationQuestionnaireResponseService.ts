@@ -1,5 +1,5 @@
 //
-// This source file is part of the ENGAGE-HF project based on the Stanford Spezi Template Application project
+// This source file is part of the ENGAGE-HF Firebase open-source project
 //
 // SPDX-FileCopyrightText: 2023 Stanford University
 //
@@ -7,9 +7,10 @@
 //
 
 import {
+  fhirIdentifiersMatch,
   UserMessageType,
   type FHIRQuestionnaireResponse,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { logger } from "firebase-functions/v2";
 import { QuestionnaireResponseService } from "./questionnaireResponseService.js";
 import { type Document } from "../database/databaseService.js";
@@ -53,7 +54,11 @@ export class RegistrationQuestionnaireResponseService extends QuestionnaireRespo
     options: { isNew: boolean },
   ): Promise<boolean> {
     const urls = [QuestionnaireLinkId.url(QuestionnaireId.registration)];
-    if (!urls.includes(response.content.questionnaire)) {
+    if (
+      !urls.some((url) =>
+        fhirIdentifiersMatch(response.content.questionnaire, url),
+      )
+    ) {
       logger.info(
         `${this.constructor.name}.handle(${userId}): Url ${response.content.questionnaire} is not a registration questionnaire, skipping.`,
       );

@@ -1,5 +1,5 @@
 //
-// This source file is part of the ENGAGE-HF project based on the Stanford Spezi Template Application project
+// This source file is part of the ENGAGE-HF Firebase open-source project
 //
 // SPDX-FileCopyrightText: 2023 Stanford University
 //
@@ -7,6 +7,7 @@
 //
 
 export * from "./codes/codes.js";
+export * from "./codes/identifiers.js";
 export * from "./codes/quantityUnit.js";
 export * from "./codes/references.js";
 export * from "./fhir/baseTypes/fhirCodeableConcept.js";

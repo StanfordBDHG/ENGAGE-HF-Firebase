@@ -1,5 +1,5 @@
 //
-// This source file is part of the ENGAGE-HF project based on the Stanford Spezi Template Application project
+// This source file is part of the ENGAGE-HF Firebase open-source project
 //
 // SPDX-FileCopyrightText: 2023 Stanford University
 //
@@ -14,7 +14,7 @@ import {
   UserSex,
   UserType,
   QuantityUnit,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { _defaultSeed } from "../../functions/defaultSeed.js";
 import { onUserQuestionnaireResponseWritten } from "../../functions/onUserQuestionnaireResponseWritten.js";
 import { _updateStaticData } from "../../functions/updateStaticData.js";
@@ -220,6 +220,55 @@ describeWithEmulators("RegistrationQuestionnaireResponseService", (env) => {
       new Date("2025-07-12").toDateString(),
     );
   });
+
+  it("should extract a registration response that carries the legacy FHIR identifiers", async () => {
+    await _updateStaticData(env.factory, {
+      only: Object.values(StaticDataComponent),
+      cachingStrategy: CachingStrategy.expectCache,
+    });
+
+    const userId = await env.createUser({
+      type: UserType.patient,
+      organization: "stanford",
+    });
+
+    // Responses recorded before the move to engage-hf.com carry the old identifier base.
+    const legacyResponse = JSON.parse(
+      JSON.stringify(registrationResponseApple)
+        .replaceAll(
+          "https://www.engage-hf.com/fhir/questionnaire/",
+          "http://spezi.health/fhir/questionnaire/",
+        )
+        .replaceAll(
+          "https://www.engage-hf.com/fhir/",
+          "http://engagehf.bdh.stanford.edu/fhir/",
+        ),
+    ) as typeof registrationResponseApple;
+
+    const ref = env.collections.userQuestionnaireResponses(userId).doc();
+    await env.setWithTrigger(onUserQuestionnaireResponseWritten, {
+      ref,
+      data: fhirQuestionnaireResponseConverter.value.schema.parse(
+        legacyResponse,
+      ),
+      params: {
+        userId,
+        questionnaireResponseId: ref.id,
+      },
+    });
+
+    const medicationRequests = await env.collections
+      .userMedicationRequests(userId)
+      .get();
+    expect(medicationRequests.size).toBe(2);
+    const references = medicationRequests.docs
+      .map((doc) => doc.data().medicationReference?.reference)
+      .sort();
+    expect(references).toEqual([
+      "medications/2627044/drugs/2637859",
+      "medications/69749/drugs/349201",
+    ]);
+  });
 });
 
 const registrationResponseApple = {
@@ -263,7 +312,7 @@ const registrationResponseApple = {
             code: "no",
             display: "No",
             system:
-              "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-registration",
+              "https://www.engage-hf.com/fhir/ValueSet/medication-exists-registration",
           },
         },
       ],
@@ -276,7 +325,7 @@ const registrationResponseApple = {
             code: "yes",
             display: "Yes",
             system:
-              "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-registration",
+              "https://www.engage-hf.com/fhir/ValueSet/medication-exists-registration",
           },
         },
       ],
@@ -303,7 +352,7 @@ const registrationResponseApple = {
             code: "no",
             display: "No",
             system:
-              "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-registration",
+              "https://www.engage-hf.com/fhir/ValueSet/medication-exists-registration",
           },
         },
       ],
@@ -316,7 +365,7 @@ const registrationResponseApple = {
             code: "yes",
             display: "Yes",
             system:
-              "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-registration",
+              "https://www.engage-hf.com/fhir/ValueSet/medication-exists-registration",
           },
         },
       ],
@@ -342,7 +391,7 @@ const registrationResponseApple = {
             code: "no",
             display: "No",
             system:
-              "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-registration",
+              "https://www.engage-hf.com/fhir/ValueSet/medication-exists-registration",
           },
         },
       ],
@@ -355,13 +404,15 @@ const registrationResponseApple = {
     },
   ],
   id: "D8083543-1DED-491E-9AEB-771E3FECB70C",
-  questionnaire: "http://spezi.health/fhir/questionnaire/engagehf-registration",
+  questionnaire:
+    "https://www.engage-hf.com/fhir/questionnaire/engagehf-registration",
   status: "completed",
 };
 
 const registrationResponseAndroid = {
   resourceType: "QuestionnaireResponse",
-  questionnaire: "http://spezi.health/fhir/questionnaire/engagehf-registration",
+  questionnaire:
+    "https://www.engage-hf.com/fhir/questionnaire/engagehf-registration",
   item: [
     {
       linkId: "de981575-bd5b-4d84-95bb-35ed6c7f5923",
@@ -549,7 +600,7 @@ const registrationResponseAndroid = {
                 code: "no",
                 display: "No",
                 system:
-                  "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-registration",
+                  "https://www.engage-hf.com/fhir/ValueSet/medication-exists-registration",
               },
             },
           ],
@@ -573,7 +624,7 @@ const registrationResponseAndroid = {
                 code: "yes",
                 display: "Yes",
                 system:
-                  "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-registration",
+                  "https://www.engage-hf.com/fhir/ValueSet/medication-exists-registration",
               },
             },
           ],
@@ -639,7 +690,7 @@ const registrationResponseAndroid = {
                 code: "no",
                 display: "No",
                 system:
-                  "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-registration",
+                  "https://www.engage-hf.com/fhir/ValueSet/medication-exists-registration",
               },
             },
           ],
@@ -663,7 +714,7 @@ const registrationResponseAndroid = {
                 code: "yes",
                 display: "Yes",
                 system:
-                  "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-registration",
+                  "https://www.engage-hf.com/fhir/ValueSet/medication-exists-registration",
               },
             },
           ],
@@ -729,7 +780,7 @@ const registrationResponseAndroid = {
                 code: "no",
                 display: "No",
                 system:
-                  "http://engagehf.bdh.stanford.edu/fhir/ValueSet/medication-exists-registration",
+                  "https://www.engage-hf.com/fhir/ValueSet/medication-exists-registration",
               },
             },
           ],

@@ -1,12 +1,12 @@
 //
-// This source file is part of the ENGAGE-HF project based on the Stanford Spezi Template Application project
+// This source file is part of the ENGAGE-HF Firebase open-source project
 //
 // SPDX-FileCopyrightText: 2023 Stanford University
 //
 // SPDX-License-Identifier: MIT
 //
 
-import { Lazy } from "@stanfordbdhg/engagehf-models";
+import { Lazy } from "@schmiedmayerlab/engagehf-models";
 import admin from "firebase-admin";
 import { type AuthData } from "firebase-functions/v2/tasks";
 import { type ServiceFactoryOptions } from "./getServiceFactory.js";

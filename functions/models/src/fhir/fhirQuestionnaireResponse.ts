@@ -1,5 +1,5 @@
 //
-// This source file is part of the ENGAGE-HF project based on the Stanford Spezi Template Application project
+// This source file is part of the ENGAGE-HF Firebase open-source project
 //
 // SPDX-FileCopyrightText: 2023 Stanford University
 //
@@ -70,10 +70,9 @@ const fhirQuestionnaireResponseItemBaseConverter = new SchemaConverter({
 export interface FHIRQuestionnaireResponseItemValue extends z.input<
   typeof fhirQuestionnaireResponseItemBaseConverter.value.schema
 > {
-  item?:
-    | Array<z.input<typeof fhirQuestionnaireResponseItemConverter.value.schema>>
-    | null
-    | undefined;
+  item?: Array<
+    z.input<typeof fhirQuestionnaireResponseItemConverter.value.schema>
+  > | null;
 }
 
 export const fhirQuestionnaireResponseItemConverter = (() => {

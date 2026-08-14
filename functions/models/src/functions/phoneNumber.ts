@@ -1,5 +1,5 @@
 //
-// This source file is part of the ENGAGE-HF project based on the Stanford Spezi Template Application project
+// This source file is part of the ENGAGE-HF Firebase open-source project
 //
 // SPDX-FileCopyrightText: 2023 Stanford University
 //
@@ -17,6 +17,7 @@ export const startPhoneNumberVerificationInputSchema = z.object({
 export type StartPhoneNumberVerificationInput = z.input<
   typeof startPhoneNumberVerificationInputSchema
 >;
+// eslint-disable-next-line sonarjs/redundant-type-aliases -- The named output type is part of the callable function contract.
 export type StartPhoneNumberVerificationOutput = undefined;
 
 export const checkPhoneNumberVerificationInputSchema = z.object({
@@ -26,6 +27,7 @@ export const checkPhoneNumberVerificationInputSchema = z.object({
 export type CheckPhoneNumberVerificationInput = z.input<
   typeof checkPhoneNumberVerificationInputSchema
 >;
+// eslint-disable-next-line sonarjs/redundant-type-aliases -- The named output type is part of the callable function contract.
 export type CheckPhoneNumberVerificationOutput = undefined;
 
 export const deletePhoneNumberInputSchema = z.object({
@@ -34,4 +36,5 @@ export const deletePhoneNumberInputSchema = z.object({
 export type DeletePhoneNumberInput = z.input<
   typeof deletePhoneNumberInputSchema
 >;
+// eslint-disable-next-line sonarjs/redundant-type-aliases -- The named output type is part of the callable function contract.
 export type DeletePhoneNumberOutput = undefined;

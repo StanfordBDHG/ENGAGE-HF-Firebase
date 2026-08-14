@@ -1,5 +1,5 @@
 //
-// This source file is part of the ENGAGE-HF project based on the Stanford Spezi Template Application project
+// This source file is part of the ENGAGE-HF Firebase open-source project
 //
 // SPDX-FileCopyrightText: 2023 Stanford University
 //
@@ -65,6 +65,7 @@ export class QuantityUnit {
     );
   }
 
+  // eslint-disable-next-line sonarjs/no-identical-functions -- The distinct parameter types give the identical comparisons different meanings.
   equals(other: QuantityUnit): boolean {
     return (
       this.code === other.code &&

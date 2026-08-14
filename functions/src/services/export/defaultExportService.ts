@@ -1,5 +1,5 @@
 //
-// This source file is part of the ENGAGE-HF project based on the Stanford Spezi Template Application project
+// This source file is part of the ENGAGE-HF Firebase open-source project
 //
 // SPDX-FileCopyrightText: 2023 Stanford University
 //
@@ -7,11 +7,12 @@
 //
 
 import {
+  fhirIdentifiersMatch,
   fhirMedicationRequestConverter,
   type FHIRQuestionnaireItem,
   LoincCode,
   UserObservationCollection,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import archiver, { type Archiver } from "archiver";
 import { https } from "firebase-functions/v2";
 import { type ExportService } from "./exportService.js";
@@ -453,10 +454,11 @@ export class DefaultExportService implements ExportService {
       (collections) => collections.userQuestionnaireResponses(userId),
     );
 
-    const kccqResponses = questionnaireResponses.filter(
-      (response) =>
-        response.content.questionnaire ===
+    const kccqResponses = questionnaireResponses.filter((response) =>
+      fhirIdentifiersMatch(
+        response.content.questionnaire,
         QuestionnaireLinkId.url(QuestionnaireId.kccq),
+      ),
     );
 
     const csv = this.createCsvData(

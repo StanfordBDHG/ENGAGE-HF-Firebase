@@ -1,5 +1,5 @@
 //
-// This source file is part of the ENGAGE-HF project based on the Stanford Spezi Template Application project
+// This source file is part of the ENGAGE-HF Firebase open-source project
 //
 // SPDX-FileCopyrightText: 2023 Stanford University
 //
@@ -15,7 +15,7 @@ import {
   UserType,
   UserObservationCollection,
   advanceDateByMinutes,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { onUserBodyWeightObservationWritten } from "./onUserBodyWeightObservationWritten.js";
 import { describeWithEmulators } from "../tests/functions/testEnvironment.js";
 

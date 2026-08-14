@@ -1,5 +1,5 @@
 //
-// This source file is part of the ENGAGE-HF project based on the Stanford Spezi Template Application project
+// This source file is part of the ENGAGE-HF Firebase open-source project
 //
 // SPDX-FileCopyrightText: 2023 Stanford University
 //
@@ -12,7 +12,7 @@ import {
   FHIRAppointment,
   FHIRAppointmentStatus,
   advanceDateByHours,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { type DocumentReference } from "firebase-admin/firestore";
 import { onUserAppointmentWritten } from "./onUserAppointmentWritten.js";
 import { describeWithEmulators } from "../tests/functions/testEnvironment.js";

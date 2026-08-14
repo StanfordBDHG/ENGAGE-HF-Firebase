@@ -1,12 +1,12 @@
 //
-// This source file is part of the ENGAGE-HF project based on the Stanford Spezi Template Application project
+// This source file is part of the ENGAGE-HF Firebase open-source project
 //
 // SPDX-FileCopyrightText: 2023 Stanford University
 //
 // SPDX-License-Identifier: MIT
 //
 
-import { UserMessageType, UserType } from "@stanfordbdhg/engagehf-models";
+import { UserMessageType, UserType } from "@schmiedmayerlab/engagehf-models";
 import { createKccqQuestionnaireResponse } from "./createKccqQuestionnaireResponse.js";
 import { _defaultSeed } from "../../functions/defaultSeed.js";
 import { onUserQuestionnaireResponseWritten } from "../../functions/onUserQuestionnaireResponseWritten.js";
@@ -22,7 +22,7 @@ describeWithEmulators("KccqQuestionnaireResponseService", (env) => {
 
     const questionnaireResponse = createKccqQuestionnaireResponse({
       questionnaire:
-        "http://spezi.health/fhir/questionnaire/9528ccc2-d1be-4c4c-9c3c-19f78e51ec19",
+        "https://www.engage-hf.com/fhir/questionnaire/9528ccc2-d1be-4c4c-9c3c-19f78e51ec19",
       questionnaireResponse: "questionnaireResponse",
       date: new Date(),
       answer1a: 1,
@@ -62,6 +62,48 @@ describeWithEmulators("KccqQuestionnaireResponseService", (env) => {
     expect(symptomScore.dizzinessScore).toBe(3);
   });
 
+  it("should extract a kccq response that carries the legacy canonical", async () => {
+    const userId = await env.createUser({
+      type: UserType.patient,
+      organization: "stanford",
+    });
+
+    // Responses recorded before the move to engage-hf.com carry the old canonical.
+    const questionnaireResponse = createKccqQuestionnaireResponse({
+      questionnaire:
+        "http://spezi.health/fhir/questionnaire/9528ccc2-d1be-4c4c-9c3c-19f78e51ec19",
+      questionnaireResponse: "questionnaireResponse",
+      date: new Date(),
+      answer1a: 1,
+      answer1b: 2,
+      answer1c: 4,
+      answer2: 2,
+      answer3: 1,
+      answer4: 2,
+      answer5: 3,
+      answer6: 4,
+      answer7: 2,
+      answer8a: 1,
+      answer8b: 2,
+      answer8c: 1,
+      answer9: 3,
+    });
+
+    const ref = env.collections.userQuestionnaireResponses(userId).doc();
+    await env.setWithTrigger(onUserQuestionnaireResponseWritten, {
+      ref,
+      data: questionnaireResponse,
+      params: {
+        userId,
+        questionnaireResponseId: ref.id,
+      },
+    });
+
+    const symptomScores = await env.collections.userSymptomScores(userId).get();
+    expect(symptomScores.size).toBe(1);
+    expect(symptomScores.docs[0].data().overallScore).toBeCloseTo(28.6458, 4);
+  });
+
   it("should notify the study coordinator about a lower score", async () => {
     const clinicianId = await env.createUser({
       type: UserType.clinician,
@@ -77,7 +119,7 @@ describeWithEmulators("KccqQuestionnaireResponseService", (env) => {
 
     const questionnaireResponse0 = createKccqQuestionnaireResponse({
       questionnaire:
-        "http://spezi.health/fhir/questionnaire/9528ccc2-d1be-4c4c-9c3c-19f78e51ec19",
+        "https://www.engage-hf.com/fhir/questionnaire/9528ccc2-d1be-4c4c-9c3c-19f78e51ec19",
       questionnaireResponse: "questionnaireResponse",
       date: new Date(),
       answer1a: 5,
@@ -107,7 +149,7 @@ describeWithEmulators("KccqQuestionnaireResponseService", (env) => {
 
     const questionnaireResponse1 = createKccqQuestionnaireResponse({
       questionnaire:
-        "http://spezi.health/fhir/questionnaire/9528ccc2-d1be-4c4c-9c3c-19f78e51ec19",
+        "https://www.engage-hf.com/fhir/questionnaire/9528ccc2-d1be-4c4c-9c3c-19f78e51ec19",
       questionnaireResponse: "questionnaireResponse",
       date: new Date(),
       answer1a: 1,

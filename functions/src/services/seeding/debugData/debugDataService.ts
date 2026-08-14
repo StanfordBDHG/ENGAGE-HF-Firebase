@@ -1,5 +1,5 @@
 //
-// This source file is part of the ENGAGE-HF project based on the Stanford Spezi Template Application project
+// This source file is part of the ENGAGE-HF Firebase open-source project
 //
 // SPDX-FileCopyrightText: 2023 Stanford University
 //
@@ -27,7 +27,7 @@ import {
   userSeedingOptionsSchema,
   VideoReference,
   UserObservationCollection,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { type Auth } from "firebase-admin/auth";
 import { type CollectionReference } from "firebase-admin/firestore";
 import { type Storage } from "firebase-admin/storage";

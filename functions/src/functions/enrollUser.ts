@@ -1,12 +1,12 @@
 //
-// This source file is part of the ENGAGE-HF project based on the Stanford Spezi Template Application project
+// This source file is part of the ENGAGE-HF Firebase open-source project
 //
 // SPDX-FileCopyrightText: 2023 Stanford University
 //
 // SPDX-License-Identifier: MIT
 //
 
-import { enrollUserInputSchema } from "@stanfordbdhg/engagehf-models";
+import { enrollUserInputSchema } from "@schmiedmayerlab/engagehf-models";
 import { https, logger } from "firebase-functions";
 import { privilegedServiceAccount, validatedOnCall } from "./helpers.js";
 import { Env } from "../env.js";

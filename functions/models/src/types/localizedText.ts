@@ -1,5 +1,5 @@
 //
-// This source file is part of the ENGAGE-HF project based on the Stanford Spezi Template Application project
+// This source file is part of the ENGAGE-HF Firebase open-source project
 //
 // SPDX-FileCopyrightText: 2023 Stanford University
 //
@@ -71,7 +71,7 @@ export class LocalizedText {
       const exactMatch = this.content[language];
       if (exactMatch) return exactMatch;
 
-      const languagePrefix = language.split(/-|_/).at(0);
+      const languagePrefix = language.split(/[-_]/).at(0);
       if (languagePrefix) {
         const prefixMatch = this.content[languagePrefix];
         if (prefixMatch) return prefixMatch;

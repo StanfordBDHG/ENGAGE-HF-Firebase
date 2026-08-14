@@ -1,5 +1,5 @@
 //
-// This source file is part of the ENGAGE-HF project based on the Stanford Spezi Template Application project
+// This source file is part of the ENGAGE-HF Firebase open-source project
 //
 // SPDX-FileCopyrightText: 2023 Stanford University
 //
@@ -10,7 +10,7 @@ import {
   FHIRQuestionnaire,
   FHIRQuestionnaireItemType,
   FHIRQuestionnairePublicationStatus,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import {
   QuestionnaireId,
   QuestionnaireLinkId,
@@ -21,7 +21,7 @@ export function mockQuestionnaire(): FHIRQuestionnaire {
     title: "KCCQ-12",
     language: "en-US",
     status: FHIRQuestionnairePublicationStatus.draft,
-    publisher: "Stanford Biodesign Digital Health",
+    publisher: "Schmiedmayer Lab",
     url: QuestionnaireLinkId.url(QuestionnaireId.kccq),
     item: [
       {

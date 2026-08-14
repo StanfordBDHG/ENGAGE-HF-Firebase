@@ -1,5 +1,5 @@
 //
-// This source file is part of the ENGAGE-HF project based on the Stanford Spezi Template Application project
+// This source file is part of the ENGAGE-HF Firebase open-source project
 //
 // SPDX-FileCopyrightText: 2023 Stanford University
 //
@@ -9,7 +9,7 @@
 import {
   type createInvitationInputSchema,
   UserType,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { type z } from "zod";
 import { createInvitation } from "./createInvitation.js";
 import { describeWithEmulators } from "../tests/functions/testEnvironment.js";

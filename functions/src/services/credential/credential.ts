@@ -1,5 +1,5 @@
 //
-// This source file is part of the ENGAGE-HF project based on the Stanford Spezi Template Application project
+// This source file is part of the ENGAGE-HF Firebase open-source project
 //
 // SPDX-FileCopyrightText: 2023 Stanford University
 //
@@ -10,7 +10,7 @@ import {
   type UserClaims,
   userClaimsSchema,
   UserType,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { https, logger } from "firebase-functions/v2";
 import { type AuthData } from "firebase-functions/v2/tasks";
 

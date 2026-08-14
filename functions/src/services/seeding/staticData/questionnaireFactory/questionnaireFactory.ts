@@ -1,5 +1,5 @@
 //
-// This source file is part of the ENGAGE-HF project based on the Stanford Spezi Template Application project
+// This source file is part of the ENGAGE-HF Firebase open-source project
 //
 // SPDX-FileCopyrightText: 2023 Stanford University
 //
@@ -22,8 +22,8 @@ import {
   FHIRQuestionnairePublicationStatus,
   LoincCode,
   QuantityUnit,
-} from "@stanfordbdhg/engagehf-models";
-import { type FHIRUsageContext } from "@stanfordbdhg/engagehf-models/lib/fhir/baseTypes/fhirUsageContext";
+} from "@schmiedmayerlab/engagehf-models";
+import { type FHIRUsageContext } from "@schmiedmayerlab/engagehf-models/lib/fhir/baseTypes/fhirUsageContext";
 import {
   medicationClassesForGroup,
   MedicationGroup,
@@ -481,10 +481,10 @@ export abstract class QuestionnaireFactory<Input> {
       title: input.title,
       language: "en-US",
       status: input.status ?? FHIRQuestionnairePublicationStatus.active,
-      publisher: "Stanford Biodesign Digital Health",
+      publisher: "Schmiedmayer Lab",
       meta: {
         profile: [
-          "http://spezi.health/fhir/StructureDefinition/sdf-Questionnaire",
+          "https://www.engage-hf.com/fhir/StructureDefinition/sdf-Questionnaire",
         ],
         tag: [
           {
@@ -497,7 +497,7 @@ export abstract class QuestionnaireFactory<Input> {
       useContext: input.useContext ?? [],
       contact: [
         {
-          name: "http://spezi.health",
+          name: "https://www.engage-hf.com",
         },
       ],
       subjectType: ["Patient"],

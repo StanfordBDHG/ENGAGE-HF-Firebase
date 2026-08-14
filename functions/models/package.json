@@ -1,9 +1,9 @@
 {
-  "name": "@stanfordbdhg/engagehf-models",
+  "name": "@schmiedmayerlab/engagehf-models",
   "description": "Model types for ENGAGE-HF",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/StanfordBDHG/ENGAGE-HF-Firebase.git"
+    "url": "git+https://github.com/SchmiedmayerLab/ENGAGE-HF-Firebase.git"
   },
   "type": "module",
   "scripts": {
@@ -11,7 +11,8 @@
     "lint:fix": "npm run lint -- --fix",
     "lint:strict": "npm run lint -- --max-warnings=0",
     "build": "tsc",
-    "clean": "if [ -f 'tsconfig.tsbuildinfo' ]; then rm tsconfig.tsbuildinfo; fi && if [ -d 'lib' ]; then rm -r lib; fi"
+    "clean": "if [ -f 'tsconfig.tsbuildinfo' ]; then rm tsconfig.tsbuildinfo; fi && if [ -d 'lib' ]; then rm -r lib; fi",
+    "test": "jest"
   },
   "engines": {
     "node": "24"
@@ -25,9 +26,9 @@
     "zod": "^3.25.76"
   },
   "devDependencies": {
-    "@stanfordspezi/spezi-web-configurations": "^0.7.0",
+    "@schmiedmayerlab/grove-configurations": "^0.1.1",
     "@types/node": "^24",
-    "eslint": "^9.39.4",
+    "eslint": "^10.8.0",
     "jest": "^30.3.0",
     "prettier": "^3.8.3",
     "prettier-plugin-tailwindcss": "^0.8.0",
