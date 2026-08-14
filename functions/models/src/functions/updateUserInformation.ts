@@ -19,4 +19,5 @@ export type UpdateUserInformationInput = z.input<
   typeof updateUserInformationInputSchema
 >;
 
+// eslint-disable-next-line sonarjs/redundant-type-aliases -- The named output type is part of the callable function contract.
 export type UpdateUserInformationOutput = undefined;

@@ -40,7 +40,7 @@
   },
   "devDependencies": {
     "@firebase/rules-unit-testing": "^5.0.0",
-    "@stanfordspezi/spezi-web-configurations": "^0.7.0",
+    "@schmiedmayerlab/grove-configurations": "^0.1.1",
     "@types/archiver": "^7.0.0",
     "@types/d3": "^7.4.3",
     "@types/jest": "^30.0.0",
@@ -48,7 +48,7 @@
     "@types/node": "^24",
     "@types/sinon": "^21.0.1",
     "@types/yauzl-promise": "^4.0.1",
-    "eslint": "^9.39.4",
+    "eslint": "^10.8.0",
     "firebase-functions-test": "^3.4",
     "jest": "^30.3.0",
     "prettier": "^3.8.3",

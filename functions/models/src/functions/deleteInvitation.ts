@@ -13,4 +13,5 @@ export const deleteInvitationInputSchema = z.object({
 });
 export type DeleteInvitationInput = z.input<typeof deleteInvitationInputSchema>;
 
+// eslint-disable-next-line sonarjs/redundant-type-aliases -- The named output type is part of the callable function contract.
 export type DeleteInvitationOutput = undefined;

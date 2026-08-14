@@ -65,6 +65,7 @@ export class QuantityUnit {
     );
   }
 
+  // eslint-disable-next-line sonarjs/no-identical-functions -- The distinct parameter types give the identical comparisons different meanings.
   equals(other: QuantityUnit): boolean {
     return (
       this.code === other.code &&

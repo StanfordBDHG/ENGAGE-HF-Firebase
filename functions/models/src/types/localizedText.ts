@@ -71,7 +71,7 @@ export class LocalizedText {
       const exactMatch = this.content[language];
       if (exactMatch) return exactMatch;
 
-      const languagePrefix = language.split(/-|_/).at(0);
+      const languagePrefix = language.split(/[-_]/).at(0);
       if (languagePrefix) {
         const prefixMatch = this.content[languagePrefix];
         if (prefixMatch) return prefixMatch;

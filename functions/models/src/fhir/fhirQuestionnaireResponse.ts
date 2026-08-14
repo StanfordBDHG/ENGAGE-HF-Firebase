@@ -70,10 +70,9 @@ const fhirQuestionnaireResponseItemBaseConverter = new SchemaConverter({
 export interface FHIRQuestionnaireResponseItemValue extends z.input<
   typeof fhirQuestionnaireResponseItemBaseConverter.value.schema
 > {
-  item?:
-    | Array<z.input<typeof fhirQuestionnaireResponseItemConverter.value.schema>>
-    | null
-    | undefined;
+  item?: Array<
+    z.input<typeof fhirQuestionnaireResponseItemConverter.value.schema>
+  > | null;
 }
 
 export const fhirQuestionnaireResponseItemConverter = (() => {

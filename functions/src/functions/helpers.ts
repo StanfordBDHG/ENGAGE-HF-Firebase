@@ -7,8 +7,7 @@
 //
 
 import type express from "express";
-import { logger } from "firebase-functions";
-import { https } from "firebase-functions/v2";
+import { logger, https } from "firebase-functions";
 import {
   type CallableFunction,
   type CallableOptions,

@@ -166,7 +166,7 @@ const fhirQuestionnaireItemBaseConverter = new Lazy(
 export interface FHIRQuestionnaireItemInput extends z.input<
   typeof fhirQuestionnaireItemBaseConverter.value.schema
 > {
-  item?: FHIRQuestionnaireItemInput[] | null | undefined;
+  item?: FHIRQuestionnaireItemInput[] | null;
 }
 
 export interface FHIRQuestionnaireItem extends z.output<

@@ -12,4 +12,5 @@ import { userDeviceConverter } from "../types/userDevice.js";
 export const registerDeviceInputSchema = userDeviceConverter.value.schema;
 export type RegisterDeviceInput = z.input<typeof registerDeviceInputSchema>;
 
+// eslint-disable-next-line sonarjs/redundant-type-aliases -- The named output type is part of the callable function contract.
 export type RegisterDeviceOutput = undefined;

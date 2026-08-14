@@ -16,4 +16,5 @@ export const dismissMessageInputSchema = z.object({
 });
 export type DismissMessageInput = z.input<typeof dismissMessageInputSchema>;
 
+// eslint-disable-next-line sonarjs/redundant-type-aliases -- The named output type is part of the callable function contract.
 export type DismissMessageOutput = undefined;

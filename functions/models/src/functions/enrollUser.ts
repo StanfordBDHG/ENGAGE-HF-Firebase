@@ -13,4 +13,5 @@ export const enrollUserInputSchema = z.object({
 });
 export type EnrollUserInputSchema = z.input<typeof enrollUserInputSchema>;
 
+// eslint-disable-next-line sonarjs/redundant-type-aliases -- The named output type is part of the callable function contract.
 export type EnrollUserOutputSchema = undefined;
