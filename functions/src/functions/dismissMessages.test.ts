@@ -11,7 +11,7 @@ import {
   UserMessage,
   UserMessageType,
   UserType,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { dismissMessages } from "./dismissMessages.js";
 import { describeWithEmulators } from "../tests/functions/testEnvironment.js";
 

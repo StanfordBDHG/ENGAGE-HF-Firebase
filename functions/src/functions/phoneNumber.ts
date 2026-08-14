@@ -13,7 +13,7 @@ import {
   type DeletePhoneNumberOutput,
   startPhoneNumberVerificationInputSchema,
   type StartPhoneNumberVerificationOutput,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { privilegedServiceAccount, validatedOnCall } from "./helpers.js";
 import { Env } from "../env.js";
 import { getServiceFactory } from "../services/factory/getServiceFactory.js";

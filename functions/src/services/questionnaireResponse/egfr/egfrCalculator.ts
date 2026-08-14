@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { QuantityUnit, UserSex } from "@stanfordbdhg/engagehf-models";
+import { QuantityUnit, UserSex } from "@schmiedmayerlab/engagehf-models";
 
 export class EgfrCalculator {
   calculate(input: {

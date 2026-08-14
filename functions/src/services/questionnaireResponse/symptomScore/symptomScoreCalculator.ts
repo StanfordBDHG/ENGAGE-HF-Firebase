@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { average } from "@stanfordbdhg/engagehf-models";
+import { average } from "@schmiedmayerlab/engagehf-models";
 
 export interface SymptomScoreCalculatorInput {
   answer1a: number;

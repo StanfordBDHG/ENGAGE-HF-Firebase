@@ -9,7 +9,7 @@
 import {
   FHIRQuestionnaireResponse,
   type SymptomQuestionnaireResponse,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { QuestionnaireLinkId } from "../seeding/staticData/questionnaireFactory/questionnaireLinkIds.js";
 
 export function createKccqQuestionnaireResponse(

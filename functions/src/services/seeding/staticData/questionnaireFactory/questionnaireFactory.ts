@@ -22,8 +22,8 @@ import {
   FHIRQuestionnairePublicationStatus,
   LoincCode,
   QuantityUnit,
-} from "@stanfordbdhg/engagehf-models";
-import { type FHIRUsageContext } from "@stanfordbdhg/engagehf-models/lib/fhir/baseTypes/fhirUsageContext";
+} from "@schmiedmayerlab/engagehf-models";
+import { type FHIRUsageContext } from "@schmiedmayerlab/engagehf-models/lib/fhir/baseTypes/fhirUsageContext";
 import {
   medicationClassesForGroup,
   MedicationGroup,

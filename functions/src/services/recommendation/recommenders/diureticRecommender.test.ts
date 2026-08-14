@@ -17,7 +17,7 @@ import {
   MedicationClassReference,
   MedicationReference,
   UserMedicationRecommendationType,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { DiureticRecommender } from "./diureticRecommender.js";
 import { type Recommender } from "./recommender.js";
 import { type MedicationRequestContext } from "../../../models/medicationRequestContext.js";

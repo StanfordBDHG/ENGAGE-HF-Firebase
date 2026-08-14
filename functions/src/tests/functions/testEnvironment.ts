@@ -11,7 +11,7 @@ import {
   User,
   type UserSex,
   type UserType,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import admin from "firebase-admin";
 import {
   type DocumentData,

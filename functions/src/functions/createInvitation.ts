@@ -11,7 +11,7 @@ import {
   type CreateInvitationOutput,
   Invitation,
   UserType,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { https } from "firebase-functions/v2";
 import { validatedOnCall } from "./helpers.js";
 import { UserRole } from "../services/credential/credential.js";

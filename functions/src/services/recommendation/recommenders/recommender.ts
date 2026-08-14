@@ -13,7 +13,7 @@ import {
   type Observation,
   QuantityUnit,
   type UserMedicationRecommendationType,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { type MedicationRequestContext } from "../../../models/medicationRequestContext.js";
 import { type ContraindicationService } from "../../contraindication/contraindicationService.js";
 import {

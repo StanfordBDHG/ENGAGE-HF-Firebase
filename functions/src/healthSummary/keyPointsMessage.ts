@@ -10,7 +10,7 @@ import {
   Lazy,
   type LocalizedText,
   localizedTextConverter,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { z } from "zod";
 
 export enum HealthSummarySymptomScoreCategory {

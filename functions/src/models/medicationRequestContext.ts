@@ -13,7 +13,7 @@ import {
   type FHIRMedicationRequest,
   type FHIRReference,
   type MedicationClass,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 
 export interface MedicationRequestContext {
   lastUpdate: Date;

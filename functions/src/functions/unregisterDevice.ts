@@ -9,7 +9,7 @@
 import {
   unregisterDeviceInputSchema,
   type UnregisterDeviceOutput,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { validatedOnCall } from "./helpers.js";
 import { getServiceFactory } from "../services/factory/getServiceFactory.js";
 

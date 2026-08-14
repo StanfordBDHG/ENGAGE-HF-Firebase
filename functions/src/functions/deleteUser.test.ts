@@ -10,7 +10,7 @@ import {
   FHIRAppointment,
   FHIRAppointmentStatus,
   UserType,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { deleteUser } from "./deleteUser.js";
 import { describeWithEmulators } from "../tests/functions/testEnvironment.js";
 import { expectError } from "../tests/helpers.js";

@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { UserMessageType, UserType } from "@stanfordbdhg/engagehf-models";
+import { UserMessageType, UserType } from "@schmiedmayerlab/engagehf-models";
 import { createKccqQuestionnaireResponse } from "./createKccqQuestionnaireResponse.js";
 import { _defaultSeed } from "../../functions/defaultSeed.js";
 import { onUserQuestionnaireResponseWritten } from "../../functions/onUserQuestionnaireResponseWritten.js";

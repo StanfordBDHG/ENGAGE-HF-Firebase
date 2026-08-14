@@ -13,7 +13,7 @@ import {
   FHIRAllergyIntoleranceType,
   MedicationClassReference,
   MedicationReference,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { logger } from "firebase-functions";
 import {
   ContraindicationCategory,

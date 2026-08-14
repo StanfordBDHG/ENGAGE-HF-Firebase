@@ -16,7 +16,7 @@ import {
   type UserMessage,
   userMessageConverter,
   UserMessageType,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import {
   FieldValue,
   type QueryDocumentSnapshot,

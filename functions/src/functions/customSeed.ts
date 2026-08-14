@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { customSeedingOptionsSchema } from "@stanfordbdhg/engagehf-models";
+import { customSeedingOptionsSchema } from "@schmiedmayerlab/engagehf-models";
 import { privilegedServiceAccount, validatedOnRequest } from "./helpers.js";
 import { Flags } from "../flags.js";
 import { getServiceFactory } from "../services/factory/getServiceFactory.js";

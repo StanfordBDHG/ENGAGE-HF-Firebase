@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { UserType } from "@stanfordbdhg/engagehf-models";
+import { UserType } from "@schmiedmayerlab/engagehf-models";
 import { disableUser } from "./disableUser.js";
 import { describeWithEmulators } from "../tests/functions/testEnvironment.js";
 import { expectError } from "../tests/helpers.js";

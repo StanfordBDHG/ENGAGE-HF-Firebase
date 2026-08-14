@@ -9,7 +9,7 @@
 import {
   type createInvitationInputSchema,
   UserType,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { type z } from "zod";
 import { createInvitation } from "./createInvitation.js";
 import { describeWithEmulators } from "../tests/functions/testEnvironment.js";

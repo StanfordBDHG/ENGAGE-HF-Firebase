@@ -27,7 +27,7 @@ import {
   userSeedingOptionsSchema,
   VideoReference,
   UserObservationCollection,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { type Auth } from "firebase-admin/auth";
 import { type CollectionReference } from "firebase-admin/firestore";
 import { type Storage } from "firebase-admin/storage";

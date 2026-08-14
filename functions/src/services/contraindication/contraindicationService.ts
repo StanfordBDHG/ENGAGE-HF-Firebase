@@ -10,7 +10,7 @@ import {
   type FHIRAllergyIntolerance,
   type MedicationClassReference,
   type MedicationReference,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 
 export enum ContraindicationCategory {
   none = 0,

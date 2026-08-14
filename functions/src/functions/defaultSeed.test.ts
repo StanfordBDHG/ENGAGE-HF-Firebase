@@ -13,7 +13,7 @@ import {
   UserDebugDataComponent,
   UserType,
   UserObservationCollection,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { _defaultSeed } from "./defaultSeed.js";
 import { describeWithEmulators } from "../tests/functions/testEnvironment.js";
 

@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { type Observation } from "@stanfordbdhg/engagehf-models";
+import { type Observation } from "@schmiedmayerlab/engagehf-models";
 import * as d3 from "d3";
 import { JSDOM } from "jsdom";
 

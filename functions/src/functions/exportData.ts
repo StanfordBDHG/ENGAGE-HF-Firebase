@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { exportDataInputSchema } from "@stanfordbdhg/engagehf-models";
+import { exportDataInputSchema } from "@schmiedmayerlab/engagehf-models";
 import { privilegedServiceAccount, validatedOnCall } from "./helpers.js";
 import { UserRole } from "../services/credential/credential.js";
 import { getServiceFactory } from "../services/factory/getServiceFactory.js";

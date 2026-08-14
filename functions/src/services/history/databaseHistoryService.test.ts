@@ -10,7 +10,7 @@ import {
   UserDevice,
   userDeviceConverter,
   UserDevicePlatform,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { describeWithEmulators } from "../../tests/functions/testEnvironment.js";
 
 describeWithEmulators("DatabaseHistoryService", (env) => {

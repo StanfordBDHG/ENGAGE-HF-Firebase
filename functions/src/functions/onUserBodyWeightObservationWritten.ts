@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { UserObservationCollection } from "@stanfordbdhg/engagehf-models";
+import { UserObservationCollection } from "@schmiedmayerlab/engagehf-models";
 import { onDocumentWritten } from "firebase-functions/firestore";
 import { Env } from "../env.js";
 import { getServiceFactory } from "../services/factory/getServiceFactory.js";

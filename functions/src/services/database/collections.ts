@@ -26,7 +26,7 @@ import {
   videoConverter,
   videoSectionConverter,
   type UserObservationCollection,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { type Firestore } from "firebase-admin/firestore";
 import { DatabaseConverter } from "./databaseConverter.js";
 import { historyChangeItemConverter } from "../history/historyService.js";

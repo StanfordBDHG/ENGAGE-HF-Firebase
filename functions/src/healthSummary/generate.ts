@@ -12,7 +12,7 @@ import {
   presortedPercentile,
   type Observation,
   UserMedicationRecommendationType,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { logger } from "firebase-functions";
 import 'jspdf-autotable' /* eslint-disable-line */
 import { type CellDef } from 'jspdf-autotable' /* eslint-disable-line */

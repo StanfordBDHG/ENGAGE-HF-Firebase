@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { type Observation, QuantityUnit } from "@stanfordbdhg/engagehf-models";
+import { type Observation, QuantityUnit } from "@schmiedmayerlab/engagehf-models";
 import { type RecommendationVitals } from "../../services/recommendation/recommendationService.js";
 
 export function mockRecommendationVitals(options: {

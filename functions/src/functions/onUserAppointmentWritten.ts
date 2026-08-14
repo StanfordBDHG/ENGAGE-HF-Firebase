@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { fhirAppointmentConverter } from "@stanfordbdhg/engagehf-models";
+import { fhirAppointmentConverter } from "@schmiedmayerlab/engagehf-models";
 import { onDocumentWritten } from "firebase-functions/firestore";
 import { Env } from "../env.js";
 import { DatabaseConverter } from "../services/database/databaseConverter.js";

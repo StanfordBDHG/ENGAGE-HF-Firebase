@@ -1,9 +1,9 @@
 {
-  "name": "@stanfordbdhg/engagehf-models",
+  "name": "@schmiedmayerlab/engagehf-models",
   "description": "Model types for ENGAGE-HF",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/StanfordBDHG/ENGAGE-HF-Firebase.git"
+    "url": "git+https://github.com/SchmiedmayerLab/ENGAGE-HF-Firebase.git"
   },
   "type": "module",
   "scripts": {

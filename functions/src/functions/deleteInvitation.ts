@@ -10,7 +10,7 @@ import {
   deleteInvitationInputSchema,
   type DeleteInvitationOutput,
   UserType,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { validatedOnCall } from "./helpers.js";
 import { UserRole } from "../services/credential/credential.js";
 import { getServiceFactory } from "../services/factory/getServiceFactory.js";

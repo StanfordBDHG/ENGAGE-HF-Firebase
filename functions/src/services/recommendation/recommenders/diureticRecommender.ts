@@ -9,7 +9,7 @@
 import {
   MedicationClassReference,
   UserMedicationRecommendationType,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { Recommender } from "./recommender.js";
 import {
   type RecommendationInput,

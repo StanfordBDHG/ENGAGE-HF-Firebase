@@ -9,7 +9,7 @@
 import {
   LocalizedText,
   type LocalizedTextParams,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 
 export class Localizer<
   Localization extends Record<string, Record<string, string>>,

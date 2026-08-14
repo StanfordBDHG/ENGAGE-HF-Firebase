@@ -9,7 +9,7 @@
 /* eslint-disable @typescript-eslint/require-await */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import { dateTimeConverter } from "@stanfordbdhg/engagehf-models";
+import { dateTimeConverter } from "@schmiedmayerlab/engagehf-models";
 import { type PhoneService } from "./phoneService.js";
 import { type DatabaseService } from "../../database/databaseService.js";
 

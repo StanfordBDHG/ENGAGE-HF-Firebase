@@ -31,7 +31,7 @@ To use Firebase functions for your own project or to emulate them for client app
 
 This repository contains two separate packages.
 
-- The package located in [functions/models](functions/models) contains model types including decoding/encoding functions and useful extensions that are shared between the Firebase functions and the web dashboard. This package is released via the npm registry and can be accessed as `@stanfordbdhg/engagehf-models`.
+- The package located in [functions/models](functions/models) contains model types including decoding/encoding functions and useful extensions that are shared between the Firebase functions and the web dashboard. This package is released via the npm registry and can be accessed as `@schmiedmayerlab/engagehf-models`.
 - The package located in [functions](functions) contains the Firebase functions and services that are called from these functions. This package has a local dependency on the package in [functions/models](functions/models). Therefore, the functions package does not work (e.g. for linting, building, etc) without building the models package first.
 
 To make this structure simpler to use, we provide different scripts as part of the [package.json](package.json) file in the root directory of this repository. The file ensures execution order between the two packages. We only document the scripts located in this file, since they cover the most common use cases, feel free to have a look at the individual package.json files of the respective packages to get a deeper understanding and more package-focused operations.

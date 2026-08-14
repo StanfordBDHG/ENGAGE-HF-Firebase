@@ -19,7 +19,7 @@ import {
   QuestionnaireReference,
   Video,
   VideoSection,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { z } from "zod";
 import { SeedingService } from "../seedingService.js";
 import { DataUpdateQuestionnaireFactory } from "./questionnaireFactory/dataUpdateQuestionnaireFactory.js";

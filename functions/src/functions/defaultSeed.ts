@@ -12,7 +12,7 @@ import {
   type DefaultSeedOutput,
   UserDebugDataComponent,
   UserType,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { logger } from "firebase-functions";
 import { type z } from "zod";
 import {

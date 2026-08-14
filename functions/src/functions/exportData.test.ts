@@ -19,7 +19,7 @@ import {
   UserDebugDataComponent,
   UserObservationCollection,
   UserType,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import yauzl, { type ZipFile } from "yauzl-promise";
 import { _defaultSeed } from "./defaultSeed.js";
 import { exportData } from "./exportData.js";

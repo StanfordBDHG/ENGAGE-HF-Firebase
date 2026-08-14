@@ -15,7 +15,7 @@ import {
   UserType,
   UserObservationCollection,
   advanceDateByMinutes,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { onUserBodyWeightObservationWritten } from "./onUserBodyWeightObservationWritten.js";
 import { describeWithEmulators } from "../tests/functions/testEnvironment.js";
 

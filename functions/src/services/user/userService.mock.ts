@@ -14,7 +14,7 @@ import {
   UserRegistration,
   type UserSex,
   UserType,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { type UserService } from "./userService.js";
 import { type Document } from "../database/databaseService.js";
 

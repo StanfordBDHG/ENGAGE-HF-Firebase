@@ -14,7 +14,7 @@ import {
   type Observation,
   type SymptomScore,
   type UserMedicationRecommendation,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import {
   HealthSummaryDizzinessCategory,
   HealthSummaryMedicationRecommendationsCategory,

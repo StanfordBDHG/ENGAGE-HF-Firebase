@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { enrollUserInputSchema } from "@stanfordbdhg/engagehf-models";
+import { enrollUserInputSchema } from "@schmiedmayerlab/engagehf-models";
 import { https, logger } from "firebase-functions";
 import { privilegedServiceAccount, validatedOnCall } from "./helpers.js";
 import { Env } from "../env.js";

@@ -9,7 +9,7 @@
 import {
   UserMessageType,
   type FHIRQuestionnaireResponse,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { logger } from "firebase-functions/v2";
 import { QuestionnaireResponseService } from "./questionnaireResponseService.js";
 import { type Document } from "../database/databaseService.js";

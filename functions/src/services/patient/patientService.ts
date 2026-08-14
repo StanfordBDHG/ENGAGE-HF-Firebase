@@ -19,7 +19,7 @@ import {
   type UserObservationCollection,
   type LoincCode,
   type FHIRReference,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { type Document } from "../database/databaseService.js";
 
 export interface PatientService {

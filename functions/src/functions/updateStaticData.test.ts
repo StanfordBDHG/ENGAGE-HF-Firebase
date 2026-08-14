@@ -14,7 +14,7 @@ import {
   CachingStrategy,
   LocalizedText,
   StaticDataComponent,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { _updateStaticData } from "./updateStaticData.js";
 import { describeWithEmulators } from "../tests/functions/testEnvironment.js";
 import { TestFlags } from "../tests/testFlags.js";

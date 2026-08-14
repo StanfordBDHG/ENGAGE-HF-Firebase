@@ -16,7 +16,7 @@ import {
   UserMedicationRecommendation,
   type UserMedicationRecommendationDoseSchedule,
   UserMedicationRecommendationType,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { recommendationLocalization } from "./recommendationService+localization.js";
 import { BetaBlockerRecommender } from "./recommenders/betaBlockerRecommender.js";
 import { DiureticRecommender } from "./recommenders/diureticRecommender.js";

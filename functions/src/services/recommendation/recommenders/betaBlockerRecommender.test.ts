@@ -14,7 +14,7 @@ import {
   MedicationReference,
   SymptomScore,
   UserMedicationRecommendationType,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { BetaBlockerRecommender } from "./betaBlockerRecommender.js";
 import { type Recommender } from "./recommender.js";
 import { type HealthSummaryData } from "../../../models/healthSummaryData.js";

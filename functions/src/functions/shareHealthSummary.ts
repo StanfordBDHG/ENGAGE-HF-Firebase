@@ -10,7 +10,7 @@ import {
   dateTimeConverter,
   shareHealthSummaryInputSchema,
   type ShareHealthSummaryOutput,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { privilegedServiceAccount, validatedOnCall } from "./helpers.js";
 import { Env } from "../env.js";
 import { UserRole } from "../services/credential/credential.js";

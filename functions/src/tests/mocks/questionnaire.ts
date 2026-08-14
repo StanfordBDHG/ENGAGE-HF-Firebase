@@ -10,7 +10,7 @@ import {
   FHIRQuestionnaire,
   FHIRQuestionnaireItemType,
   FHIRQuestionnairePublicationStatus,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import {
   QuestionnaireId,
   QuestionnaireLinkId,

@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { UserType } from "@stanfordbdhg/engagehf-models";
+import { UserType } from "@schmiedmayerlab/engagehf-models";
 import { type DecodedIdToken } from "firebase-admin/auth";
 import { type AuthData } from "firebase-functions/v2/tasks";
 import { Credential, UserRole } from "./credential.js";

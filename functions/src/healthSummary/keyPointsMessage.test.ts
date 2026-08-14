@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { LocalizedText } from "@stanfordbdhg/engagehf-models";
+import { LocalizedText } from "@schmiedmayerlab/engagehf-models";
 import {
   HealthSummaryDizzinessCategory,
   type HealthSummaryKeyPointMessage,

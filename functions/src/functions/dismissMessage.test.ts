@@ -10,7 +10,7 @@ import {
   QuestionnaireReference,
   UserMessage,
   UserType,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { dismissMessage } from "./dismissMessage.js";
 import { describeWithEmulators } from "../tests/functions/testEnvironment.js";
 import { expectError } from "../tests/helpers.js";

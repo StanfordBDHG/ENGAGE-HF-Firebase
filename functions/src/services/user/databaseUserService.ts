@@ -17,7 +17,7 @@ import {
   type UserAuth,
   type UserSex,
   UserType,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { type Auth } from "firebase-admin/auth";
 import { type UserRecord } from "firebase-functions/v1/auth";
 import { https, logger } from "firebase-functions/v2";

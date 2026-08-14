@@ -10,7 +10,7 @@ import {
   LocalizedText,
   UserMessage,
   UserMessageType,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import admin from "firebase-admin";
 import { https } from "firebase-functions";
 import { type MessageService } from "./messageService.js";

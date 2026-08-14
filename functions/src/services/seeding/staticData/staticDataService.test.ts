@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { CachingStrategy } from "@stanfordbdhg/engagehf-models";
+import { CachingStrategy } from "@schmiedmayerlab/engagehf-models";
 import admin from "firebase-admin";
 import { type Firestore } from "firebase-admin/firestore";
 import { type StaticDataService } from "./staticDataService.js";

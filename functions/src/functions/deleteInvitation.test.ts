@@ -13,7 +13,7 @@ import {
   UserAuth,
   UserRegistration,
   UserType,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { deleteInvitation } from "./deleteInvitation.js";
 import { describeWithEmulators } from "../tests/functions/testEnvironment.js";
 import { expectError } from "../tests/helpers.js";

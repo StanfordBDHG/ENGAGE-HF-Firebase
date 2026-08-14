@@ -12,7 +12,7 @@ import {
   type UserDevice,
   type UserMessage,
   type UserMessageType,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { type Document } from "../database/databaseService.js";
 
 export interface MessageService {

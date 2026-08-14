@@ -10,7 +10,7 @@ import {
   MedicationClassReference,
   MedicationReference,
   UserMedicationRecommendationType,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { Recommender } from "./recommender.js";
 import { type MedicationRequestContext } from "../../../models/medicationRequestContext.js";
 import { ContraindicationCategory } from "../../contraindication/contraindicationService.js";

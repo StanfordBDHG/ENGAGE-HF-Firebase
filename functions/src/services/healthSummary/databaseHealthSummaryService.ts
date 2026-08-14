@@ -9,7 +9,7 @@
 import {
   advanceDateByDays,
   type QuantityUnit,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { type HealthSummaryService } from "./healthSummaryService.js";
 import {
   HealthSummaryData,

@@ -9,7 +9,7 @@
 import {
   dateTimeConverter,
   SchemaConverter,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { type DocumentSnapshot } from "firebase-admin/firestore";
 import { type Change } from "firebase-functions";
 import { z } from "zod";

@@ -25,7 +25,7 @@ import {
   UserMedicationRecommendationType,
   UserObservationCollection,
   type UserShareCode,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import {
   FieldValue,
   type QueryDocumentSnapshot,

@@ -9,7 +9,7 @@
 import {
   exportHealthSummaryInputSchema,
   type ExportHealthSummaryOutput,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { privilegedServiceAccount, validatedOnCall } from "./helpers.js";
 import { generateHealthSummary } from "../healthSummary/generate.js";
 import { UserRole } from "../services/credential/credential.js";

@@ -18,7 +18,7 @@ import {
   FHIRAppointmentStatus,
   UserObservationCollection,
   MedicationReference,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { logger } from "firebase-functions/v2";
 import { z } from "zod";
 import { medicationClassReference } from "../../models/medicationRequestContext.js";

@@ -15,7 +15,7 @@ import {
   type MedicationClass,
   optionalish,
   QuantityUnit,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { logger } from "firebase-functions";
 import { z } from "zod";
 import { RxNormApi } from "./rxNormApi.js";

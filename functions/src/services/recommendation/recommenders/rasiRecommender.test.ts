@@ -15,7 +15,7 @@ import {
   QuantityUnit,
   SymptomScore,
   UserMedicationRecommendationType,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { RasiRecommender } from "./rasiRecommender.js";
 import { type Recommender } from "./recommender.js";
 import { type MedicationRequestContext } from "../../../models/medicationRequestContext.js";

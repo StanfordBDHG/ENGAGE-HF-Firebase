@@ -13,7 +13,7 @@ import {
   initializeTestEnvironment,
   type RulesTestEnvironment,
 } from "@firebase/rules-unit-testing";
-import { UserType } from "@stanfordbdhg/engagehf-models";
+import { UserType } from "@schmiedmayerlab/engagehf-models";
 import type firebase from "firebase/compat/app";
 import { logger } from "firebase-functions/v2";
 import { TestFlags } from "../testFlags.js";

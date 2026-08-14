@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { type SymptomScore } from "@stanfordbdhg/engagehf-models";
+import { type SymptomScore } from "@schmiedmayerlab/engagehf-models";
 import * as d3 from "d3";
 import { JSDOM } from "jsdom";
 import { type healthSummaryLocalization } from "./generate+localizations.js";

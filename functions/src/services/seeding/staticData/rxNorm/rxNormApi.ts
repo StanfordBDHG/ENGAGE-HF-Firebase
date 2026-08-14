@@ -7,7 +7,7 @@
 //
 
 import * as https from "https";
-import { optionalish } from "@stanfordbdhg/engagehf-models";
+import { optionalish } from "@schmiedmayerlab/engagehf-models";
 import { logger } from "firebase-functions";
 import { z } from "zod";
 import {

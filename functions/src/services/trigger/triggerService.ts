@@ -27,7 +27,7 @@ import {
   UserRegistration,
   advanceDateByHours,
   type FHIRAppointment,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { logger } from "firebase-functions";
 import { _updateStaticData } from "../../functions/updateStaticData.js";
 import { type Document } from "../database/databaseService.js";

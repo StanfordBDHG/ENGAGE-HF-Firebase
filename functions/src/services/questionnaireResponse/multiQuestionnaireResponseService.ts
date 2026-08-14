@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { type FHIRQuestionnaireResponse } from "@stanfordbdhg/engagehf-models";
+import { type FHIRQuestionnaireResponse } from "@schmiedmayerlab/engagehf-models";
 import { QuestionnaireResponseService } from "./questionnaireResponseService.js";
 import { type Document } from "../database/databaseService.js";
 

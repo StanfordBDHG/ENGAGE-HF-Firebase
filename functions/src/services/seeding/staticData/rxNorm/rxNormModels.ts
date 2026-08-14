@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { optionalish } from "@stanfordbdhg/engagehf-models";
+import { optionalish } from "@schmiedmayerlab/engagehf-models";
 import { z } from "zod";
 
 export const rxTermInfo = z.object({

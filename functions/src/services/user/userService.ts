@@ -12,7 +12,7 @@ import {
   type Organization,
   type User,
   type UserAuth,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { type Document } from "../database/databaseService.js";
 
 export interface UserService {

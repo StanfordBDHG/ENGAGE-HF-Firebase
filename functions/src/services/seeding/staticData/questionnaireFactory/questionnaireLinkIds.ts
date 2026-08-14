@@ -9,7 +9,7 @@
 import {
   MedicationClassReference,
   type LoincCode,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 
 export enum MedicationGroup {
   betaBlockers = "betablockers",

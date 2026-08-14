@@ -11,7 +11,7 @@ import {
   UserSex,
   type FHIRMedication,
   type FHIRQuestionnaire,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { QuestionnaireFactory } from "./questionnaireFactory.js";
 import {
   QuestionnaireId,

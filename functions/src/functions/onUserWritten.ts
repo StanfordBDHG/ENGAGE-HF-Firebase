@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { type User, userConverter } from "@stanfordbdhg/engagehf-models";
+import { type User, userConverter } from "@schmiedmayerlab/engagehf-models";
 import { logger } from "firebase-functions";
 import { onDocumentWritten } from "firebase-functions/v2/firestore";
 import { Env } from "../env.js";

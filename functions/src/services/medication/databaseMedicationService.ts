@@ -11,7 +11,7 @@ import {
   type FHIRMedicationRequest,
   type FHIRReference,
   type MedicationClass,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { type MedicationService } from "./medicationService.js";
 import { type MedicationRequestContext } from "../../models/medicationRequestContext.js";
 import {

@@ -14,7 +14,7 @@ import {
   MedicationReference,
   QuantityUnit,
   UserMedicationRecommendationType,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { MraRecommender } from "./mraRecommender.js";
 import { type Recommender } from "./recommender.js";
 import { type MedicationRequestContext } from "../../../models/medicationRequestContext.js";

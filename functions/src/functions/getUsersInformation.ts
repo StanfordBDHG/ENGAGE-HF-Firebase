@@ -11,7 +11,7 @@ import {
   type GetUsersInformationOutput,
   userAuthConverter,
   userConverter,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { https } from "firebase-functions";
 import { privilegedServiceAccount, validatedOnCall } from "./helpers.js";
 import { UserRole } from "../services/credential/credential.js";

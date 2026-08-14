@@ -10,7 +10,7 @@ import {
   StaticDataComponent,
   updateStaticDataInputSchema,
   type UpdateStaticDataOutput,
-} from "@stanfordbdhg/engagehf-models";
+} from "@schmiedmayerlab/engagehf-models";
 import { type z } from "zod";
 import {
   privilegedServiceAccount,
