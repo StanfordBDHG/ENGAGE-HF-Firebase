@@ -12,6 +12,23 @@ on:
   release:
     types: [published]
   workflow_dispatch:
+    inputs:
+      packageVersion:
+        description: Bare semantic version to publish, for example 0.1.0
+        required: true
+        type: string
+      bootstrapPackages:
+        description: >-
+          Unpublished npm packages authorized for one-time token bootstrap.
+          Use comma-separated package names or * for the repository's first release.
+        required: false
+        type: string
+        default: ''
+      dryRun:
+        description: Validate release preparation without publishing or deploying.
+        required: false
+        type: boolean
+        default: false
 
 concurrency:
   group: production
@@ -20,6 +37,7 @@ concurrency:
 jobs:
   deployment:
     name: Production Deployment
+    if: ${{ !inputs.dryRun }}
     uses: ./.github/workflows/deployment.yml
     permissions:
       contents: read
@@ -35,8 +53,9 @@ jobs:
     permissions:
       contents: read
       id-token: write
-      packages: write
     secrets:
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     with:
-      packageVersion: ${{ github.event.release.tag_name }}
+      packageVersion: ${{ github.event.release.tag_name || inputs.packageVersion }}
+      bootstrapPackages: ${{ inputs.bootstrapPackages || '' }}
+      dryRun: ${{ inputs.dryRun || false }}

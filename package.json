@@ -14,5 +14,6 @@
   "workspaces": [
     "functions",
     "functions/models"
-  ]
+  ],
+  "packageManager": "npm@11.19.0"
 }
