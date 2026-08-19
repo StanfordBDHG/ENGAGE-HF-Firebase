@@ -23,17 +23,24 @@
   ],
   "main": "lib/index.js",
   "dependencies": {
-    "zod": "^3.25.76"
+    "@types/archiver": "^8.0.0",
+    "@types/jsdom": "^30.0.0",
+    "@types/sinon": "^22.0.0",
+    "archiver": "^8.0.0",
+    "firebase-admin": "^14.2.0",
+    "jsdom": "^30.0.1",
+    "sinon": "^22.1.0",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@schmiedmayerlab/grove-configurations": "^0.1.1",
-    "@types/node": "^24",
+    "@types/node": "^26",
     "eslint": "^10.8.0",
     "jest": "^30.3.0",
     "prettier": "^3.8.3",
     "prettier-plugin-tailwindcss": "^0.8.0",
     "ts-jest": "^29.4.9",
     "ts-node": "^10.9",
-    "typescript": "^6.0.3"
+    "typescript": "^7.0.2"
   }
 }
